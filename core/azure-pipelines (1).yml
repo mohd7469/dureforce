@@ -18,7 +18,9 @@ steps:
       php -version
   displayName: 'Use PHP version $(phpVersion)'
 - script: COMPOSER=core/composer.json composer install --no-interaction --prefer-dist --no-scripts
-  displayName: 'composer install'
+  displayName: 'composer install' 
+- script: |
+      echo  '$(System.DefaultWorkingDirectory)'
 - script: php artisan migrate
   displayName: 'php ./artisan migrate'
 - task: ArchiveFiles@1
