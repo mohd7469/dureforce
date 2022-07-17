@@ -21,7 +21,7 @@ steps:
 - script: |
     cd core
     dir
-- script:  composer install --no-interaction --prefer-dist
+- script:  composer install --no-interaction --prefer-dist --no-scripts 
   workingDirectory: $(rootFolder)
   displayName: 'composer install' 
 - script: 
