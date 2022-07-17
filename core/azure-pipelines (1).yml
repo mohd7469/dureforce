@@ -26,6 +26,7 @@ steps:
   displayName: 'composer install' 
 - script:
     php artisan storage:link  
+    php artisan config:cache
     php artisan migrate --seed
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
