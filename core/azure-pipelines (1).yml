@@ -22,8 +22,14 @@ steps:
     dir
 - script: COMPOSER=core/composer.json composer install --no-interaction --prefer-dist --no-scripts
   displayName: 'composer install' 
-- script: php core/artisan migrate
-  displayName: 'php core/artisan migrate'
+- script: 
+    php artisan key:generate
+    php artisan config:cache
+    php artisan route:cache
+    npm install
+    npm run prod
+    php artisan migrate --seed
+  displayName: 'php artisan' 
 - task: ArchiveFiles@1
   displayName: 'Archive files'
   inputs:
