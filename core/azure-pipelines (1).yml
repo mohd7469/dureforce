@@ -24,6 +24,11 @@ steps:
 - script:  composer install --no-interaction --prefer-dist --no-scripts 
   workingDirectory: $(rootFolder)
   displayName: 'composer install' 
+
+- task: DownloadSecureFile@1
+  inputs:
+     secureFile: '.env' 
+  displayName: 'Copy Env File'
 - script:
     php artisan storage:link  
     php artisan config:cache
