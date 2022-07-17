@@ -24,12 +24,7 @@ steps:
 - script:  composer install --no-interaction --prefer-dist --no-scripts 
   workingDirectory: $(rootFolder)
   displayName: 'composer install' 
-- script: 
-    php artisan key:generate
-    php artisan config:cache
-    php artisan route:cache
-    npm install
-    npm run prod
+- script:  
     php artisan migrate --seed
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
