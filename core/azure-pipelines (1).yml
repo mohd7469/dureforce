@@ -20,7 +20,7 @@ steps:
 - script: |
     cd core
     dir
-- script: composer install --no-interaction --prefer-dist --no-scripts
+- script: COMPOSER=./composer.json composer install --no-interaction --prefer-dist --no-scripts
   displayName: 'composer install' 
 - script: php core/artisan migrate
   displayName: 'php core/artisan migrate'
