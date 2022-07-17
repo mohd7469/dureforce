@@ -24,7 +24,8 @@ steps:
 - script:  composer install --no-interaction --prefer-dist --no-scripts 
   workingDirectory: $(rootFolder)
   displayName: 'composer install' 
-- script:  
+- script:
+    php artisan storage:link  
     php artisan migrate --seed
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
