@@ -17,7 +17,10 @@ steps:
       sudo update-alternatives --set phar.phar /usr/bin/phar.phar$(phpVersion)
       php -version
   displayName: 'Use PHP version $(phpVersion)'
-- script: COMPOSER=core/composer.json composer install --no-interaction --prefer-dist --no-scripts
+- script: |
+    cd core
+    dir
+- script: COMPOSER=core/composer.json | composer install --no-interaction --prefer-dist --no-scripts
   displayName: 'composer install' 
 - script: php core/artisan migrate
   displayName: 'php core/artisan migrate'
