@@ -8,6 +8,7 @@ pool:
   vmImage: ubuntu-latest
 variables:
   phpVersion: 8.0.2
+  rootFolder: $(System.DefaultWorkingDirectory)/core
 steps:
 - script: |
       sudo update-alternatives --set php /usr/bin/php$(phpVersion)
@@ -20,7 +21,8 @@ steps:
 - script: |
     cd core
     dir
-- script: COMPOSER=core/composer.json composer install --no-interaction --prefer-dist --no-scripts
+- script:  composer install --no-interaction --prefer-dist
+  workingDirectory: $(rootFolder)
   displayName: 'composer install' 
 - script: 
     php artisan key:generate
@@ -29,6 +31,7 @@ steps:
     npm install
     npm run prod
     php artisan migrate --seed
+  workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
 - task: ArchiveFiles@1
   displayName: 'Archive files'
