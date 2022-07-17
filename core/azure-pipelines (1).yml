@@ -30,8 +30,8 @@ steps:
      secureFile: '.env' 
   displayName: 'Copy Env File'
 - script:
-    php artisan storage:link  
-    php artisan config:cache
+    php artisan storage:link
+    php artisan config:clear  
     php artisan migrate --seed
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
