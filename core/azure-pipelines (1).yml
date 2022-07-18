@@ -28,7 +28,7 @@ steps:
 - task: DownloadSecureFile@1
   name: envFile
   inputs:
-     secureFile: '.env' 
+     secureFile: 'env_staging.txt' 
   displayName: 'Copy Env File'
 - script: cp -f $(envFile.secureFilePath) .env
   displayName: 'Copy Env File'
