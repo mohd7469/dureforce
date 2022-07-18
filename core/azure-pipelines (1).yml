@@ -29,12 +29,10 @@ steps:
   name: envFile
   inputs:
      secureFile: 'env_staging.txt' 
-  displayName: 'Copy Env File'
+  displayName: 'Download Env File'
 - script: cp -f $(envFile.secureFilePath) .env
-  displayName: 'Copy Env File'
-- script:
-    php artisan storage:link
-    php artisan config:clear  
+  displayName: 'Copy env File'
+- script: 
     php artisan migrate
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
