@@ -26,13 +26,16 @@ steps:
   displayName: 'composer install' 
 
 - task: DownloadSecureFile@1
+  name: envFile
   inputs:
      secureFile: '.env' 
+  displayName: 'Copy Env File'
+- script: cp -f $(envFile.secureFilePath) .env
   displayName: 'Copy Env File'
 - script:
     php artisan storage:link
     php artisan config:clear  
-    php artisan migrate --seed
+    php artisan migrate
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
 - task: ArchiveFiles@1
