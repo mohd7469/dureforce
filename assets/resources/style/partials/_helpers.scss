@@ -1,0 +1,40 @@
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.d-none {
+  display: none;
+}
+
+.float-right {
+  float: right;
+}
+
+.be-center {
+  display: flex;
+  align-items: center;
+}
+
+//////// Select 2 helper
+.search-select-header{
+  width:250px;
+ 
+}
+.header-select-options {
+  .sp {
+
+    display: block;
+    font-size: 12px;
+  }
+}
+.select2-dropdown--below{
+  width:400px
+}
