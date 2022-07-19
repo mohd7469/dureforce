@@ -3,7 +3,7 @@
 # Add steps that run tests, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/php
 trigger:
-  - dev
+  - master
 pool:
   vmImage: ubuntu-latest
 variables:
@@ -25,12 +25,12 @@ steps:
   workingDirectory: $(rootFolder)
   displayName: 'composer install' 
 - task: DownloadSecureFile@1
-  name: envFile
+  name: envFileProd
   inputs:
-     secureFile: 'env_staging.txt' 
+     secureFile: 'env_prod.txt' 
   displayName: 'Download Env File'
 
-- script: cp -f $(envFile.secureFilePath) $(rootFolder)/.env
+- script: cp -f $(envFileProd.secureFilePath) $(rootFolder)/.env
   displayName: 'Copy env File'
 - script: 
     php artisan migrate
