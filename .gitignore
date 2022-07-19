@@ -13,10 +13,3 @@ core/npm-debug.log
 core/yarn-error.log
 .idea/*
 /storage
-assets/workFile/*
-assets/templates/*
-assets/software/*
-assets/images/*
-assets/errors/*
-assets/admin/*
-assets/font/*
