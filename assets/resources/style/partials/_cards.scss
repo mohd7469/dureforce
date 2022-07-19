@@ -1,0 +1,129 @@
+.grey-card {
+  background: $secondary-color;
+  border-radius: 40px;
+  padding: 2rem;
+}
+
+.avatar-card {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  @extend .default-border-radius;
+  img {
+    object-fit: inherit;
+  }
+  .ant-card-meta-title,
+  .ant-card-meta-description {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  &.ant-card-hoverable:hover {
+    color: white;
+    @extend .bg-primary;
+    .ant-card-meta-title,
+    .ant-card-meta-description {
+      color: white;
+    }
+  }
+}
+.item-card {
+  .item-card-content {
+    min-height: 230px;
+  }
+}
+.item-card {
+  // height: 350px;
+  position: relative;
+  .item-card-title {
+    min-height: 57px;
+  }
+  .rates {
+    background: #7f007f;
+    border-radius: 4px;
+    text-align: center;
+    padding: 7px;
+    color: #fff;
+    .value {
+      color: #fff;
+      display: block;
+      font-weight: 600;
+      font-size: 16px;
+      @extend .black;
+    }
+  }
+  .footer {
+    // padding-top: 20px;
+    bottom: 0px;
+    position: absolute;
+    padding: 15px 30px;
+    left: 0;
+  }
+  .author_detail {
+    font-weight: 500;
+    @extend .black;
+    font-size: 12px;
+  }
+  .tags-container {
+    min-height: 23px;
+  }
+}
+
+.card {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.user_profile_card {
+  padding: 15px 5px;
+
+  height: 345px;
+  position: relative;
+  .card-body {
+    position: absolute;
+    bottom: 0;
+    max-height: 160px;
+  }
+  
+  .image-holder {
+    text-align: center;
+    .picture {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    figcaption {
+      margin-top: 15px;
+      .name {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 20px;
+        display: block;
+      }
+    }
+  }
+  .card-text {
+    font-size: 12px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 84px;
+  }
+  .rating {
+    i.fa-star {
+      margin-right: 15px;
+    }
+    @extend .black;
+  }
+}
+
+.testimonial_card {
+  padding: 30px 15px;
+  .heading {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .para {
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
