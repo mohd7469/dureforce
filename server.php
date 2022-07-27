@@ -9,12 +9,12 @@ server {
      
     server_name _; 
 
-    location / {
-        try_files $uri $uri/ /index.php$is_args$args;
-   }
+    //location / {
+        //try_files $uri $uri/ /index.php$is_args$args;
+   //}
 
    # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm.sock
-   location ~ \.php$ {
+   location / {
     root           /wwwroot/public/;
     fastcgi_pass   20.50.64.3;
     fastcgi_index  index.php;
