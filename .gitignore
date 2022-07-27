@@ -12,7 +12,6 @@ core/Homestead.yaml
 core/npm-debug.log
 core/yarn-error.log
 .idea/*
-/storage
 assets/workFile/*
 assets/templates/*
 assets/software/*
