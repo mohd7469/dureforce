@@ -7,19 +7,20 @@ server {
     
     index index.php index.html index.htm index.nginx-debian.html;
     
-    server_name _;
+    server_name _; 
     
     location / {
-    try_files $uri $uri/ =404;
-    }
-    
-    location @rewrite {
-        rewrite ^/(.*)$ /index.php?_url=/$1;
-    }
-    location / {
-            try_files $uri $uri/ @rewrite;
-    }  
-     
+        try_files $uri $uri/ /index.php$is_args$args;
+   }
+
+   # pass the PHP scripts to FastCGI server listening on /var/run/php5-fpm.sock
+   location ~ \.php$ {
+           try_files $uri /index.php =404;
+           fastcgi_pass unix:/var/run/php8-fpm.sock;
+           fastcgi_index index.php;
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+           include fastcgi_params;
+   }
     $uri = urldecode(
         parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
     );
