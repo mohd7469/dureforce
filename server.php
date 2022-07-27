@@ -3,7 +3,7 @@ server {
     listen 80 default_server;
     listen [::]:80 default_server;
     
-    root  /public;
+    root  /wwwroot/public/;
     
     index index.php index.html index.htm index.nginx-debian.html;
     
