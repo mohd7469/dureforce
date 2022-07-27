@@ -13,12 +13,13 @@ server {
     try_files $uri $uri/ =404;
     }
     
-    location ~ \.php$ {
-    include snippets/fastcgi-php.conf;
-    
-    # With php-fpm (or other unix sockets);
-    fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
-    # With php-fpm (or other unix sockets);
+    location @rewrite {
+        rewrite ^/(.*)$ /index.php?_url=/$1;
+    }
+    location / {
+            try_files $uri $uri/ @rewrite;
+    }  
+     
     $uri = urldecode(
         parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
     );
@@ -31,5 +32,5 @@ server {
     }
     
     require_once __DIR__.'/public/index.php';
-    }
+     
     }
