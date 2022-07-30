@@ -20,6 +20,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+ 
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,8 +30,8 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {
-        $this->app['request']->server->set('HTTPS', true);
+    {  
+        $this->app['request']->server->set('HTTPS', config('app_force_https'));
     }
 
     /**
@@ -39,8 +40,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-
+    { 
         $activeTemplate = activeTemplate();
         $general = GeneralSetting::first();
         $viewShare['paginator']=Paginator::useBootstrap();
@@ -84,7 +84,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        if($general->force_ssl){
+        if(config('app_force_https')){
             \URL::forceScheme('https');
         }
 
