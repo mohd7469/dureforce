@@ -1,0 +1,86 @@
+.portfolio {
+  font-family: "Mulish", sans-serif;
+  background: #F8FAFA !important;
+  .sidebar {
+    .btn--base {
+      background: #7f007f;
+      color: #fff;
+    }
+    .profile-widget-header {
+      .designation {
+        font-size: 16px;
+        font-weight: 700;
+        }
+    }
+    .sub-details {
+      h3 {
+        font-size: 17px;
+        font-weight: 700;
+      }
+    }
+  }
+  #skills {
+    background: none;
+    border:none;
+    option {
+      width: fit-content;
+      background: #007F7F;
+      margin-right: 3px;
+      display: inline-block;
+      color: #fff;
+      border-radius: 20px;
+      padding: 7px 15px;
+      cursor: pointer;
+    }
+  }
+  h2.name {
+    font-weight: 700 !important;
+    font-size: 28px !important;
+  }
+  .item-card-content {
+    min-height: auto !important;
+  }
+  .profile-widget-header {
+    border-bottom: 0 !important;
+  }
+  .item-details-area {
+    border: none;
+  }
+  .product-tab {
+    button {
+      background: #7f007f;
+      color: #fff;
+      border-radius: 5px;
+    }
+    button.nav-link.active {
+      background: #fff;
+      border: 1px solid #7F007F;
+      color: #7f007f;
+      font-weight: bold;
+    }
+  }
+  .details-main {
+    background: #F5FFFF;
+  }
+  .details-list {
+    li {
+      border-bottom: none;
+    }
+  }
+  .welcome-body {
+    .profile-widget {
+    margin-top: -102px;
+    background: white;
+    }
+    .item-card {
+      border: 0;
+    }
+  }
+  .profile-list-area {
+    p{
+      height: 95px;
+      overflow-y: scroll;
+    }
+
+  }
+}

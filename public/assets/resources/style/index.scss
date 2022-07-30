@@ -1,0 +1,118 @@
+//sass --watch index.scss:index.css --style compressed
+
+@import "./partials/variables";
+@import "./partials/typography";
+@import "./partials/mixin";
+@import "./partials/margin";
+@import "./partials/padding";
+@import "./partials/grid";
+@import "./partials/background-color";
+@import "./partials/helpers";
+@import "./partials/border";
+@import "./partials/badge";
+@import "./partials/cards";
+@import "./partials/article";
+@import "./component/banners";
+@import "./component/footer";
+@import "./component/header";
+@import "./component/create-service";
+@import "./component/register-account";
+@import "./component/account-verify";
+@import "./component/profile";
+@import "./component/signup-basic";
+@import "./component/signup-project";
+
+.default-article {
+  .heading {
+    color: #007f7f;
+  }
+}
+.tags-container {
+  .custom_badge {
+    background: #007f7f;
+    color: #fff;
+  }
+}
+button.slide-arrow.next-arrow.slick-arrow {
+  margin: 0px -34px;
+}
+.slick-arrow {
+  top: -35px;
+  height: 28px;
+  width: 28px;
+  border: 1px solid purple;
+  background: none;
+  color: purple;
+  right: 55px;
+  position: absolute;
+  //margin-top: 4px !important;
+}
+.slick-slider-container {
+  .slick-list.draggable {
+    padding: 8px 0px;
+  }
+}
+
+#basic-addon2 {
+  background: #7f007f !important;
+  border-radius: 5px;
+  border: 1px solid #7f007f;
+  color: #fff;
+}
+hr {
+  background-color: #007f7f !important ;
+}
+
+// 
+.hr5 {
+  border: 0;
+  border-top: medium double #CCC;
+  height: 1px;
+  overflow: visible;
+  padding: 0;
+  color: #CCC;
+  text-align: center;
+}
+
+.hr5::after {
+  content: "or";
+  display: inline-block;
+  position: relative;
+  top: -0.7em;
+  font-size: 1.4em;
+  padding: 0 0.3em;
+  background: white;
+}
+.select2-dropdown.select2-dropdown--below {
+  width: 240px !important;
+}
+.custom-table {
+  thead {
+    tr{
+  background: #EFF4F4;
+      border: 1px solid #D0E2E2;
+      th {
+        color: #000;
+        font-weight: 600;
+      }
+    }
+  }
+}
+//.user-profile-form {
+//  .tooltiptxt{
+//    visibility: hidden;
+//    width: 120px;
+//    background-color: black;
+//    color: #fff;
+//    text-align: center;
+//    border-radius: 6px;
+//    padding: 5px 0;
+//
+//    /* Position the tooltip */
+//    position: absolute;
+//    z-index: 1;
+//  }
+//  .tooltipx:hover .tooltiptxt {
+//    visibility: visible;
+//  }
+//}
