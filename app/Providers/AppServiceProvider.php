@@ -30,8 +30,13 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function register()
-    {  
-        $this->app['request']->server->set('HTTPS', config('app_force_https'));
+    {   if(config('app.app_force_https')){ 
+            $this->app['request']->server->set('HTTPS', true);
+         } else
+         {
+            $this->app['request']->server->set('HTTPS', false);
+        }
+
     }
 
     /**
@@ -84,7 +89,7 @@ class AppServiceProvider extends ServiceProvider
             ]);
         });
 
-        if(config('app_force_https')){
+        if(config('app.app_force_https')){ 
             \URL::forceScheme('https');
         }
 
