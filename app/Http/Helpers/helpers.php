@@ -577,7 +577,7 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
     try {
         //Server settings
         $mail->isSMTP();
-        $mail->Host = $config->host;
+        $mail->Host = 'locahost'; //$config->host;
         $mail->SMTPAuth = true;
         $mail->Username = $config->username;
         $mail->Password = $config->password;
