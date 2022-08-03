@@ -33,7 +33,7 @@ steps:
 - script: cp -f $(envFileProd.secureFilePath) $(rootFolder)/.env
   displayName: 'Copy env File'
 - script: 
-    php artisan migrate
+    php artisan migrate --force
   workingDirectory: $(rootFolder)
   displayName: 'php artisan' 
 - task: ArchiveFiles@1
