@@ -533,7 +533,7 @@
 }
 .header-bottom-area .navbar-collapse .main-menu li {
   position: relative;
-  padding-right: 30px;
+  padding-right: 50px;
   color: #515151;
 }
 .header-bottom-area .navbar-collapse .main-menu li:last-child {
@@ -770,10 +770,13 @@
   right: 13px;
   color: #7f007f;
   cursor: pointer;
-  bottom: 13px;
+  bottom: 17px;
 }
 .header-btn-container .search-main .search-select-header {
   width: 104px;
+  height: 39px;
+  border: 3px solid #7f007f;
+
 }
 .header-btn-container .search-main .search-select-header .select2-selection--single {
   border: 1px solid #7f007f !important;
