@@ -41,6 +41,7 @@ return [
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
             'username' => env('MAIL_USERNAME'),
             'password' => env('MAIL_PASSWORD'),
+            'smtpAuth'=>  env('SMTP_Auth', false),
             'timeout' => null,
             'auth_mode' => null,
         ],
