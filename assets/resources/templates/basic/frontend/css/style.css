@@ -997,8 +997,8 @@ h2 {
 }
 
 h3 {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 24px !important;
+  font-weight:600;
 }
 @media only screen and (max-width: 991px) {
   h3 {
