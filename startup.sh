@@ -14,7 +14,7 @@ then
 else
 	echo "assets folder is not a link"
 	mkdir -p /home/site/deployments/assets-record
-	cp -R $ASSETS_FOLDER /home/site/deployments/assets-record/.
+	cp -R $ASSETS_FOLDER/* /home/site/deployments/assets-record/.
 	rm -rf $ASSETS_FOLDER
 	ln -s /home/site/deployments/assets-record $ASSETS_FOLDER
 fi
