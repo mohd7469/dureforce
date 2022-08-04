@@ -774,6 +774,9 @@
 }
 .header-btn-container .search-main .search-select-header {
   width: 104px;
+  height: 39px;
+  border: 3px solid #7f007f;
+
 }
 .header-btn-container .search-main .search-select-header .select2-selection--single {
   border: 1px solid #7f007f !important;
