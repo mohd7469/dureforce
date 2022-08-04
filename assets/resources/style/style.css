@@ -1044,9 +1044,9 @@ h2 {
 }
 
 h3 {
+
   font-size: 22px !important;
   font-weight:600;
-  background-color: black;
 }
 @media only screen and (max-width: 991px) {
   h3 {

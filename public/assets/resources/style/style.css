@@ -1044,8 +1044,8 @@ h2 {
 }
 
 h3 {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 22px !important;
+  font-weight:600;
 }
 @media only screen and (max-width: 991px) {
   h3 {
@@ -5327,3 +5327,6 @@ a.standard-btn-sm {
 
 /*************************************************************************/
 /*=============================June12022 Service Detail page styles END==========================*/
+.btn-circle figure {
+  border: none !important;
+}

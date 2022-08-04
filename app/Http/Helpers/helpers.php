@@ -576,16 +576,17 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
 
     try {
         //Server settings
+       
         $mail->isSMTP();
-        $mail->Host = $config->host;
+        $mail->Host =  $config->host;
         $mail->SMTPAuth = true;
         $mail->Username = $config->username;
         $mail->Password = $config->password;
         if ($config->enc == 'ssl') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        } else {
+        } else if ($config->enc == 'tls') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        }
+        } 
         $mail->Port = $config->port;
         $mail->CharSet = 'UTF-8';
         //Recipients
