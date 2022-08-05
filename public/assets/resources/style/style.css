@@ -2873,7 +2873,7 @@ label {
 
 .item-details-tag ul li a {
   padding: 1px 20px;
-  border: 0px solid #e1e7ec;
+  border: 2px solid #e1e7ec;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -5201,7 +5201,7 @@ a.standard-btn {
   -o-border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
-  background-color: #7f007f;
+  background-color: #008181;
   color: #fff;
 }
 
