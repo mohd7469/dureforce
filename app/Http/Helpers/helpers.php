@@ -115,6 +115,8 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     }
     $image->save($location . '/' . $filename);
 
+    Storage::disk('azure')->put($file_name, $image);
+
     if ($thumb) {
         $thumb = explode('x', $thumb);
         Image::make($file)->resize($thumb[0], $thumb[1])->save($location . '/thumb_' . $filename);
