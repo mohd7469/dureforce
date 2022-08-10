@@ -1,5 +1,5 @@
 <?php
-
+require_once 'vendor/autoload.php';
 use App\Lib\GoogleAuthenticator;
 use App\Lib\SendSms;
 use App\Models\EmailTemplate;
@@ -15,9 +15,11 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-
-
+use PHPMailer\PHPMailer\SMTP; 
+use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
+use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
+use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
+use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 function sidebarVariation()
 {
 
@@ -99,8 +101,12 @@ function getNumber($length = 8)
 
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
-{
+{   
+    
+    $connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
     $path = makeDirectory($location);
+
     if (!$path) throw new Exception('File could not been created.');
 
     if ($old) {
@@ -114,16 +120,34 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
         $image->resize($size[0], $size[1]);
     }
     $image->save($location . '/' . $filename);
+    
+$locations= explode('/', $location);
+$container=end($locations) ;
+$createContainerOptions = new CreateContainerOptions();  
+$createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);  
+try {
 
-    Storage::disk('azure')->put($file_name, $image);
+    $properties=  $blobClient->GetContainerProperties($container);
+} 
+catch (ServiceException $e)
+{  
+    $blobClient->createContainer($container, $createContainerOptions); 
+}
+
+ $content = fopen($file, "r");
+ $blobClient->createBlockBlob($container, $filename, $content);
+ 
 
     if ($thumb) {
         $thumb = explode('x', $thumb);
-        Image::make($file)->resize($thumb[0], $thumb[1])->save($location . '/thumb_' . $filename);
+        $thumbImage= Image::make($file)->resize($thumb[0], $thumb[1]);
+        $thumbImage->save($location . '/thumb_' . $filename);
+        $thumbcontent = fopen($thumbImage, "r");
+        $blobClient->createBlockBlob($container, '/thumb_' .$filename, $thumbcontent);
     }
     return $filename;
-}
 
+}
 function uploadFile($file, $location, $size = null, $old = null)
 {
     $path = makeDirectory($location);
