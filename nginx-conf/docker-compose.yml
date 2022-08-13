@@ -1,8 +1,16 @@
 version: '3.3'
 services:
-  nginx-web:
-    image: 
-      build: Dockerfile
+  # nginx-web:
+  #   build:
+  #     context: ../.
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - php-fpm-host
   php-fpm-host:
-    image: 
-      build: DockerfilePhpMain
+    build:
+      context: ../.
+      dockerfile: DockerfilePhpMain
+    restart: always
