@@ -36,7 +36,9 @@ class AppServiceProvider extends ServiceProvider
          {
             $this->app['request']->server->set('HTTPS', false);
         }
-
+        $this->app->bind('path.public', function() {
+            return base_path().'/';
+        });
     }
 
     /**
