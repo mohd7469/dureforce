@@ -2431,3 +2431,210 @@ hr {
 .btn-circle > figure {
   border: none !important;
 }
+
+/*=====================29June style for admin side manage service page START ==================*/
+.dashboard-sidebar-inner {
+  background-color: #1e2746;
+  padding: 20px 0px;
+  border-radius: 0px !important;
+  height: 100%;
+}
+.menu-header-title-new {
+  font-weight: 700;
+  color: #007f7f;
+  font-size: 16px;
+  /* text-transform: uppercase; */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /*padding-bottom: 10px;*/
+  margin-bottom: 15px;
+  margin-left:13px;
+}
+.dashboard-sidebar-inner hr {
+  background-color: #C7E2E2 !important;
+}
+.sidebar-main-menu {
+  margin-bottom: 20px;
+}
+.sidebar-main-menu:last-child {
+  margin-bottom: 0;
+}
+.sidebar-main-menu li {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+.sidebar-main-menu li.open a {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #2cdd9b;
+  border-left: 2px solid #2cdd9b;
+}
+.sidebar-main-menu li a {
+  position: relative;
+  display: block;
+  padding: 6px 10px;
+  color: white;
+  z-index: 2;
+  transition: all 0.3s;
+  border-radius: 0px;
+}
+.sidebar-main-menu li a:hover {
+  color: #2cdd9b;
+}
+.sidebar-main-menu li a i {
+  margin-right: 5px;
+}
+.sidebar-main-menu li.has-sub.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #2cdd9b;
+  border-left: 2px solid #2cdd9b;
+  border-radius: 5px;
+}
+.sidebar-main-menu li.has-sub a::before {
+  position: absolute;
+  content: '\f105';
+  font-family: "Font Awesome 5 Free";
+  font-weight: 700;
+  color: white;
+  font-size: 11px;
+  right: 20px;
+  top: 10px;
+}
+.sidebar-main-menu li ul {
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
+  z-index: 1;
+}
+.sidebar-main-menu li ul li a {
+  padding-left: 40px;
+}
+.sidebar-main-menu li ul li a::before {
+  display: none;
+}
+.custom-table-new {
+  width: 100%;
+  border-spacing: 0 15px;
+  border-collapse: collapse
+}
+@media only screen and (max-width: 991px) {
+  .custom-table-new thead {
+    display: none;
+  }
+}
+.custom-table-new thead tr {
+  background-color: #EEF4F4;
+  height: 61px;
+  border: 2px solid #D0E2E2;
+}
+.custom-table-new thead tr th {
+  border: none;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+.custom-table-new thead tr th:first-child {
+  /*border-radius: 5px 0 0 5px;*/
+  border-radius: 0px;
+}
+.custom-table-new thead tr th:last-child {
+  /*  border-radius: 0 5px 5px 0;*/
+  border-radius: 0px;
+}
+.custom-table-new tbody tr {
+  background-color: white;
+  /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.09);
+  border-radius: 5px;
+  transition: all 0.5s;*/
+  border: 2px solid #e5e5e5;
+}
+.custom-table-new tbody tr:hover {
+  /*  transform: translateY(-7px);*/
+}
+.custom-table-new tbody tr td {
+  border: none;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  font-size: 14px;
+  padding: 10px 20px;
+  line-height: 17.57px;
+}
+.custom-table-new tbody tr td a {
+  font-weight: 600;
+  font-size: 14px;
+}
+.custom-table-new tbody tr td:first-child {
+  border-radius: 0px;
+}
+.custom-table-new tbody tr td:last-child {
+  border-radius: 0px;
+}
+@media only screen and (max-width: 991px) {
+  .custom-table-new tbody tr td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    border-bottom: 1px solid #e1e7ec;
+  }
+  .custom-table-new tbody tr td:last-child {
+    border: none;
+  }
+  .custom-table-new tbody tr td::before {
+    content: attr(data-label);
+    margin-right: auto;
+    color: #2cdd9b;
+    width: 50%;
+    text-align: left;
+  }
+  .custom-table-new tbody tr:nth-child(even) {
+    background-color: #f6f9f9;
+  }
+}
+.badge--primary {
+  width: 76px;
+  height: 25px;
+  background: #DB8343;
+  border-radius: 7px;
+}
+.badge--success {
+  background-color: #007f7f;
+}
+.badge {
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+.btn--action {
+  /* background-color: #ea5455; */
+  /* position: absolute; */
+  left: 92.5%;
+  right: 5.42%;
+  top: 18.19%;
+  bottom: 79.12%;
+  background: #F1F3F3;
+  border-radius: 6px;
+  height: 30px;
+  width: 26.67px;
+  padding-top: 6%;
+}
+.btn--action .fa, .fas {
+  font-weight: 900;
+  color: #7F007F;
+}
+.del {
+  margin-left:7px;
+}
+/*=====================29June style for admin side manage service page END ==================*/
+
+/*# sourceMappingURL=index.css.map */
