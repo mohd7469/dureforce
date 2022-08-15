@@ -1,5 +1,6 @@
 let stepsRow = $("#step-rows");
 let addOnServiceContainer = $("#add-service-container");
+let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
@@ -25,6 +26,17 @@ $(document).ready(function () {
 
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
+  });
+
+  $(document).on(
+    "mouseover ",
+    ".nicEdit-main,.nicEdit-panelContain",
+    function () {
+      $(".nicEdit-main").focus();
+    }
+  );
+  $("#add-more-customservice").click(function () {
+    addOncustomServiceContainer.append(addOnServiceRowcustom());
   });
 
   $(document).on(
@@ -89,7 +101,7 @@ function addSteps() {
   <div class="col-xl-12 col-lg-12 form-group" >
              <label for="">Step Name</label>
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" class="form-control" required />
+                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control" required />
                 </div>
                 <div>
                 <label for="discription">Step Description</label>
@@ -663,24 +675,19 @@ function validateAddOnRows(element, e) {
 }
 
 function addOnServiceRow() {
-  return `    <div class="row add-ons" id="add-on-service-row">
-   <div class="col-xl-4 col-lg-4 form-group">
-  <label>Title</label>
-      <input type="text" name="extra_title[]" placeholder="Title" class="form-control add-on-title"
-           />
- 
-</div>
-
-<div class="col-xl-4 col-lg-4 form-group">
-  <label>Per Hour Rate</label>
-      <input type="number" class="form-control add_on_price" value=""
-          name="add_on_price[]" placeholder="Per hour rate" >
-</div>
-<div class="col-xl-3 col-lg-3 form-group">
-  <label>Estimated Delivery Time</label>
-      <input type="number" class="form-control add-on-delivery" name="add_on_delivery[]" min="1"
-          placeholder="Enter Hours">
-</div>
+  return `<div class="row add-ons" id="add-on-service-row">
+  <div class="col-xl-4 col-lg-4 form-group">
+      <label>Starting From Price</label>
+      <input type="number" class="form-control add_on_price" name="add_on_price[]"
+          placeholder="E.g. $100" id="add_on_price" step=".01" >
+  </div>
+  <div class="col-xl-4 col-lg-4 form-group">
+      <label>Estimated Lead Time</label>
+      <div class="input-group mb-3">
+          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+              placeholder="Enter Hours">
+      </div>
+</div>  
   <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
   <button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
   </div>
@@ -693,6 +700,36 @@ $(document).on("click", "#removeRow", function () {
     $(this).closest("#add-on-service-row").remove();
   }
 });
+
+
+function addOnServiceRowcustom() {
+  return `<div class="row add-ons" id="add-on-customservice-row">
+  <div class="col-xl-4 col-lg-4 form-group">
+      <label>Starting From Price</label>
+      <input type="number" class="form-control add_on_price" name="add_on_price[]"
+          placeholder="E.g. $100" id="add_on_price" step=".01" >
+  </div>
+  <div class="col-xl-4 col-lg-4 form-group">
+      <label>Estimated Lead Time</label>
+      <div class="input-group mb-3">
+          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+              placeholder="Enter Hours">
+      </div>
+</div>  
+  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+  <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+  </div>
+</div>
+`;
+}
+$(document).on("click", "#removecustomRow", function () {
+  let is_confirm = confirm(`Are you sure you want to remove field ?`);
+  if (is_confirm) {
+    $(this).closest("#add-on-customservice-row").remove();
+  }
+});
+
+
 function requirementFormValidation() {
   $(".user-req-form").submit(function (e) {
     var req = $("#req").val();

@@ -1,41 +1,93 @@
-@extends($activeTemplate.'layouts.frontend')
-@section('content')
-@php
-    $content = getContent('breadcrumbs.content', true);
-@endphp
-{{--  data-background="{{getImage('assets/images/frontend/breadcrumbs/'.$content->data_values->background_image,'1920x1200') }}" --}}
-<section class="account-section ptb-80 bg-overlay-white bg_img">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6">
-                <h1>Well done , You have created a new service </h1>
-                <p>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .email-tag {
+            width: 100%;
+            text-align: center;
+            padding: 30px 0px;
+            background: #3690ff;
+            font-size: 20px;
+            color: white;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .img-logo {
+            text-align: center;
+        }
+
+        .name-tag {
+            text-align: center;
+            color: #585858;
+            margin-bottom: 5px;
+        }
+
+        .btm-line {
+            width: 71px;
+            border: 2px solid #3690ff;
+        }
+
+        .content-main {
+            width: 60%;
+            margin: auto;
+            color: #818080;
+            font-size: 17px;
+        }
+
+        b {
+            font-size: 18px;
+            font-weight: bolder;
+        }
+
+        .alert-msg {
+            align-content: center;
+            color: #ff0000e8;
+        }
+
+        .text-dark {
+            color: #000;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <p class="email-tag">This is a System Generated Email</p>
+        <br />
+        <div class="img-logo">
+            <img src="<?php echo  getImage(imagePath()['logoIcon']['path'] . '/logo.png') ?>" alt="">
+        </div>
+        <div class="content-main">
+            <h2 class="text-dark">Hello <?php echo $service->user->username; ?></h2>
+            <p class="text-dark">
+            Hey Congratulations !
                 You have successfully created a service on [durefore link]. 
-Good Luck!
+                Good Luck!
+            </p>
+            
+            <br />
+            <p class="text-dark">
+                Thank you,
+                <br>
+                The DureForce Team
+            </p>
 
-Thank you
-
-The Dure Force Team
-                </p>
-            </div>
+            <br>
+        
         </div>
     </div>
-</section>                    
-@endsection
+</body>
 
-@push('script')
-<script>
-    (function($){
-        "use strict";
-        $('#code').on('input change', function () {
-          var xx = document.getElementById('code').value;
-          
-              $(this).val(function (index, value) {
-                 value = value.substr(0,7);
-                  return value.replace(/\W/gi, '').replace(/(.{3})/g, '$1 ');
-              });
-          
-      });
-    })(jQuery)
-</script>
-@endpush
+</html>
