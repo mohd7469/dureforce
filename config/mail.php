@@ -39,8 +39,8 @@ return [
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
             'port' => env('MAIL_PORT', 587),
             'encryption' => env('MAIL_ENCRYPTION', 'tls'),
-            'username' => env('dureforce@dure-sameen.com'),
-            'password' => env('b+Pretr?0aTrast=!lc3'),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
             'smtpAuth'=>  env('SMTP_Auth', false),
             'timeout' => null,
             'auth_mode' => null,
@@ -85,8 +85,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'dureforce@dure-sameen.com'),
-        'name' => env('MAIL_FROM_NAME', 'Dureforce Team'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
     /*
