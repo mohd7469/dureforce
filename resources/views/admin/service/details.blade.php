@@ -6,7 +6,7 @@
                 <div class="card-body p-0">
                     <div class="p-3 bg--white">
                         <div>
-                            <img src="{{ getImage('assets/images/service/'. $service->image)}}" alt="@lang('Service image')"
+                            <img src="{{ getAzureImage('service/'. $service->image)}}" alt="@lang('Service image')"
                                  class="b-radius--10 w-100">
                         </div>
                         <div class="mt-10">

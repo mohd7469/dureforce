@@ -9,7 +9,8 @@ if ($folder == 'service') {
 }
 @endphp
 {{-- I Don't know where to move css so i inlined it. secondly used if else to render default image if one is not present --}}
-@if (!empty($model->image))
+@if (empty($model->image))
+ 
     <div class="banner-header">
         {{-- style='background-image: url({{getImage(imagePath()['logoIcon']['path'] .'/service-banner-bg.png')}}); '> --}}
         {{-- <div>
@@ -43,7 +44,7 @@ if ($folder == 'service') {
                 <div class=" col-12 px-0 "> {{-- col-sm-6 removed here from orignal design --}}
                     <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}" style="height: 163px;">
                         <img alt="{{ $model->title }}"
-                            src="{{ getImage('assets/images/' . $folder . '/' . $model->image, imagePath()["$folder"]['size']) }}"
+                            src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
                             style="object-fit: cover;width: 100%;height:163px;">
                     </a>
                 </div>
@@ -53,7 +54,7 @@ if ($folder == 'service') {
 @else
     <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
         <img alt="{{ $model->title }}"
-            src="{{ getImage('assets/images/service/' . $model->image, imagePath()['optionalService']['size']) }}">
+        onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}">
     </a>
 @endif
 
