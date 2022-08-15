@@ -97,7 +97,7 @@
                                                     @foreach ($otherServices as $other)
                                                         <div class="item-card">
                                                             <div class="item-card-thumb">
-                                                                <img src="{{ getImage('assets/images/service/' . $other->image, imagePath()['service']['size']) }}"
+                                                                <img src="{{ getAzureImage('service/' . $other->image, imagePath()['service']['size']) }}"
                                                                     alt="@lang('service-banner')">
                                                                 @if ($other->featured == 1)
                                                                     <div class="item-level">@lang('Featured')</div>

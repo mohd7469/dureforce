@@ -13,7 +13,7 @@
                                             <div class="item-card-wrapper border-0 p-0 list-view">
                                                 <div class="item-card">
                                                     <div class="item-card-thumb">
-                                                        <img src="{{ getImage('assets/images/service/' . $service->image, imagePath()['service']['size']) }}"
+                                                        <img src="{{ getAzureImage('service/' . $service->image, imagePath()['service']['size']) }}"
                                                             alt="@lang('item-banner')">
                                                         @if ($service->featured == 1)
                                                             <div class="item-level">@lang('Featured')</div>

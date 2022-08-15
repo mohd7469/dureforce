@@ -7,7 +7,7 @@
     <meta itemprop="name" content="{{ __($service->title) }}">
     <meta itemprop="description" content="{{ __($service->title) }}">
     <meta itemprop="image"
-          content="{{ getImage('assets/images/service/' . $service->image, imagePath()['service']['size']) }}">
+          content="{{ getAzureImage('service/' . $service->image, imagePath()['service']['size']) }}">
     <meta name="title" Content="DureForce - {{ __($service->title) }}">
     <meta name="description" content="{{ __($service->title) }}">
     <title>DureForce - {{ __($service->title) }}</title>
@@ -15,7 +15,7 @@
     <meta property="og:title" content="{{ __($service->title) }}">
     <meta property="og:description" content="{{ __($service->title) }}">
     <meta property="og:image"
-          content="{{ getImage('assets/images/service/' . $service->image, imagePath()['service']['size']) }}" />
+          content="{{ getAzureImage('service/' . $service->image, imagePath()['service']['size']) }}" />
 @endsection
 @section('content')
     <section class="all-sections pt-3">
@@ -359,7 +359,7 @@
                                                     @foreach ($otherServices as $other)
                                                         <div class="item-card">
                                                             <div class="item-card-thumb">
-                                                                <img src="{{ getImage('assets/images/service/' . $other->image, imagePath()['service']['size']) }}"
+                                                                <img src="{{ getAzureImage('service/' . $other->image, imagePath()['service']['size']) }}"
                                                                      alt="@lang('service-banner')">
                                                                 @if ($other->featured == 1)
                                                                     <div class="item-level">@lang('Featured')</div>
