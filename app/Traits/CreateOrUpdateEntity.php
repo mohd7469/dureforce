@@ -170,7 +170,7 @@ trait CreateOrUpdateEntity {
     }
 
 
-    public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath) : bool 
+    public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
     {   
         $path = imagePath()[$imageStorePath]['path'];
         $size = imagePath()[$imageStorePath]['size'];
