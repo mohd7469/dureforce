@@ -78,7 +78,7 @@
                 @foreach($fservices as $ser)
                     <li class="small-single-item">
                         <div class="thumb">
-                            <img src="{{getImage('assets/images/service/'.$ser->image, imagePath()['service']['size']) }}"
+                            <img src="{{getAzureImage('service/'.$ser->image, imagePath()['service']['size']) }}"
                                  alt="@lang('service image')">
                         </div>
                         <div class="content">

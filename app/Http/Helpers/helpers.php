@@ -105,10 +105,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     
     $connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
     $blobClient = BlobRestProxy::createBlobService($connectionString);
-    $path = makeDirectory($location);
-
-    if (!$path) throw new Exception('File could not been created.');
-
+     
     if ($old) {
         removeFile($location . '/' . $old);
         removeFile($location . '/thumb_' . $old);
@@ -119,8 +116,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
         $size = explode('x', strtolower($size));
         $image->resize($size[0], $size[1]);
     }
-    $image->save($location . '/' . $filename);
-    
+     
 $locations= explode('/', $location);
 $container=end($locations) ;
 $createContainerOptions = new CreateContainerOptions();  
@@ -506,7 +502,32 @@ function getImage($image, $size = null)
     }
     return asset('assets/images/default.png');
 }
+function getAzureImage($image, $size = null)
+{
+    $imagePath= explode('/', $image);
+    $container=$imagePath[0] ;
+    $filename=end($imagePath) ;
+    $url=getenv('AZURE_STORAGE_URL');
+    $imageUrl=$url.'/'.$container.'/'.$filename;
+    info("Image path:".$image);
+    if ($filename!="" && $container!="" ){
+        return $imageUrl;
+    }
+    if ($size) {
+        return route('placeholder.image', $size);
+    }
+    return asset('assets/images/default.png');
+}
 
+function azure_file_exists($image,$container)
+{
+$connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+$blobClient = BlobRestProxy::createBlobService($connectionString);
+$blob = $blobClient->getBlob($container, $image);
+if ($blob) { return true;}
+else
+return false;
+}
 function notify($user, $type, $shortCodes = null)
 {
 
@@ -706,7 +727,8 @@ function menuActive($routeName, $type = null)
 
 function imagePath()
 {
-
+    $url=getenv('AZURE_STORAGE_URL');
+   
     $data['message'] = [
         'path' => 'assets/images/job',
         'size' => '590x300',
@@ -740,7 +762,7 @@ function imagePath()
         'size' => '920x468',
     ];
     $data['service'] = [
-        'path' => 'assets/images/service',
+        'path' => $url.'/service',
         'size' => '920x468',
     ];
     $data['subcategory'] = [
@@ -791,11 +813,11 @@ function imagePath()
     ];
     $data['profile'] = [
         'user' => [
-            'path' => 'assets/images/user/profile',
+            'path' => 'assets/images/user_profile',
             'size' => '590x300'
         ],
         'user_bg' => [
-            'path' => 'assets/images/user/profile',
+            'path' => 'assets/images/user_profile',
             'size' => '590x300'
         ],
         'admin' => [
@@ -803,7 +825,7 @@ function imagePath()
             'size' => '400x400'
         ]
     ];
-    return $data;
+ return $data;
 }
 
 function diffForHumans($date)

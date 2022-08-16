@@ -24,7 +24,7 @@
                                                     <div class="thumb">
                                                         <div class="avatar-preview">
                                                             <div class="profilePicPreview bg_img"
-                                                                 data-background="{{getImage('assets/images/service/'.$service->image,'590x300') }}">
+                                                                 data-background="{{getAzureImage('service/'.$service->image,'590x300') }}">
                                                                 <button type="button" class="remove-image"><i
                                                                             class="fa fa-times"></i></button>
                                                             </div>
