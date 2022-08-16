@@ -18,14 +18,14 @@
 
                     <div id="">
                         <div class="col-md-12">
-                            <label class="mt-4">Company Name <span class="imp">*</span></label>
+                            <label class="mt-4">Company Name  </label>
                             <input type="text" name="name" id="company-name" value="{{ old('name', @$user->company->name) }}"
-                                placeholder="E.g. Microsoft" value="" required>
+                                placeholder="E.g. Microsoft" value="">
                         </div>
                         <div class="col-md-12">
 
 
-                            <label class="mt-4">Company Logo<span class="imp">*</span></label>
+                            <label class="mt-4">Company Logo </label>
                             <div class="profile-img">
                                 <input type="file" name="company_logo" id="img-upload"
                                     accept="image/png, image/gif, image/jpeg" class="imgInp"
@@ -45,43 +45,41 @@
                                 </label> --}}
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone <span class="imp">*</span></label>
+                            <label class="mt-4">Company Phone  </label>
                             <input type="number" name="phone" value="{{ old('name', @$user->company->phone) }}" value=""
-                                placeholder="" required />
+                                placeholder=""  />
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Email Address <span
-                                    class="imp">*</span></label>
+                            <label class="mt-4">Company Email Address </label>
                             <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="{{ old('name', @$user->company->email) }}"
-                                placeholder="" required />
+                                placeholder="" />
                             <div class="col-md-12">
-                                <label class="mt-4">Location <span class="imp">*</span></label>
+                                <label class="mt-4">Location  </label>
                                 <input type="text" id="company-location" name="location"
                                     value="{{ old('name', @$user->company->location) }}" placeholder="City, Country"
-                                    required />
+                                     />
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT <span class="imp">*</span></label>
+                                <label class="mt-4">Company VAT  </label>
                                 <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
-                                    placeholder="" required />
+                                    placeholder=""  />
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">Company Website <span
-                                        class="imp">*</span></label>
+                                <label class="mt-4">Company Website </label>
                                 <input type="text" id="company-website" value="{{ old('name', @$user->company->url) }}" name="url"
-                                    placeholder="website" required />
+                                    placeholder="website"  />
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">LinkdIn URL <span class="imp">*</span></label>
+                                <label class="mt-4">LinkdIn URL  </label>
                                 <input type="text" id="linkedin-website" name="linkedin_url"
                                     value="{{ old('name', @$user->company->linkedin_url) }}" placeholder=""
-                                    required />
+                                     />
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">Facebook URL <span class="imp">*</span></label>
+                                <label class="mt-4">Facebook URL  </label>
                                 <input type="text" id="facebook-website" name="facebook_url"
                                     value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
-                                    required />
+                                     />
                             </div>
                         </div>
 
