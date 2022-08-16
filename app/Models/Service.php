@@ -178,4 +178,9 @@ class Service extends Model
 //                $belongsTo->select(['id', 'name']);
 //            }]
 //    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

@@ -42,4 +42,8 @@ class Job extends Model
         return $this->hasMany(Comment::class, 'job_id');
     }
 
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }

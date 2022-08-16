@@ -142,4 +142,8 @@ class Software extends Model
     {
         return json_decode($this->deliverables);
     }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }
