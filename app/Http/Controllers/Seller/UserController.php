@@ -508,9 +508,11 @@ class UserController extends Controller
 
         $view = "{$this->activeTemplate}profile.signup_basic";
 
+
         if(auth()->user()->type === User::PROJECT_MANAGER) {
             $view = "{$this->activeTemplate}project_profile.signup_basic";
         }
+
 
         return view($view, compact('pageTitle', 'languages', 'languageLevels', 'user', 'skills'));
     }
@@ -674,22 +676,11 @@ class UserController extends Controller
 
     public function saveCompany(Request $request)
     {
+
+
         $user = User::findOrFail(auth()->id());
         $filename = '';
         // @todo create a seperate request validate class
-        $request->validate([
-            'name'         => 'required|string|unique:user_companies',
-            'phone'        => 'required|string|unique:user_companies',
-            'email'        => 'required|string|email|max:90|unique:user_companies',
-            'location'     => 'required|string',
-            'vat'          => 'required|string|unique:user_companies',
-            'linkedin_url' => 'required|string|unique:user_companies',
-            'facebook_url' => 'required|string|unique:user_companies'
-        ], [
-            'linkedin_url.required' => 'Linked In profile url is required',
-            'facebook_url'          => 'Facebook profile url is required'
-        ]);
-
 
         if ($request->hasFile('company_logo')) {
             $location = imagePath()['profile']['user']['path'];
