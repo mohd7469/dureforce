@@ -30,4 +30,8 @@ class Skills extends Model
     {
         return $this->hasMany('App\models\UserSkill');
     }
+    public function moduleSkill()
+    {
+        return $this->belongsTo(ModuleSkill::class, 'skill_id');
+    }
 }

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Status extends Model
+class SkillCategory extends Model
 {
     use HasFactory;
-    public function jobs()
+    public function moduleSkill()
     {
-        return $this->hasMany(Job::class,'status_id');
+        return $this->belongsTo(ModuleSkill::class, 'skill_category_id');
     }
 }

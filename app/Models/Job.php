@@ -19,11 +19,39 @@ class Job extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function projectStage()
+    {
+        return $this->belongsTo(ProjectStage::class, 'project_stage_id');
+    }
 
     public function category()
     {
     	return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
     }
+    public function status()
+    {
+    	return $this->belongsTo(Status::class, 'status_id');
+    }
+    public function rank()
+    {
+    	return $this->belongsTo(Rank::class, 'rank_id');
+    }
+    public function jobType()
+    {
+    	return $this->belongsTo(JobType::class, 'job_type_id');
+    }
+    public function budgetType()
+    {
+    	return $this->belongsTo(BudgetType::class, 'budget_type_id');
+    }
+
+    public function dod()
+    {
+        return $this->belongsToMany(DOD::class, 'job_dod');
+    }
+
+
+
 
     public function subCategory()
     {
@@ -46,4 +74,6 @@ class Job extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+
+
 }

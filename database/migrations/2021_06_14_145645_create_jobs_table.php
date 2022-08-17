@@ -18,11 +18,9 @@ class CreateJobsTable extends Migration
             $table->uuid('uuid')->index('uuid');
             $table->unsignedInteger('user_id')->index();
             $table->unsignedInteger('location_id');// no table for this pkg will be used
-            $table->unsignedInteger('category_id')->nullable();
-            $table->unsignedInteger('sub_category_id')->nullable();
             $table->unsignedInteger('rank_id'); //it will be used as experience level
             $table->unsignedInteger('project_stage_id'); //table created
-            $table->unsignedInteger('status_id'); //only statuses table name with their type
+            $table->unsignedInteger('status_id'); //table created
             $table->unsignedInteger('job_type_id'); //table created
             $table->unsignedInteger('budget_type_id'); // table created
             $table->string('title')->nullable();
@@ -42,8 +40,6 @@ class CreateJobsTable extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('rank_id')->references('id')->on('ranks')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('project_stage_id')->references('id')->on('project_stages')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreign('status_id')->references('id')->on('statuses')->cascadeOnUpdate()->cascadeOnDelete();

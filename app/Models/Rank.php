@@ -9,4 +9,8 @@ class Rank extends Model
 {
     use HasFactory;
 
+    public function jobs()
+    {
+        return $this->hasMany(Job::class,'rank_id');
+    }
 }

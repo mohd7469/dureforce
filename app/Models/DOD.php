@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class DOD extends Model
 {
     use HasFactory;
+    public function job()
+    {
+        return $this->belongsToMany(Job::class, 'job_dod');
+    }
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
+
 }
