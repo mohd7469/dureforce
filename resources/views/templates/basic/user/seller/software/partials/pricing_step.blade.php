@@ -11,11 +11,9 @@ if (!empty($software)) {
     enctype="multipart/form-data">
     @csrf
     <div class="card-body">
-
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
                 <input type="hidden" name="software_id" value="{{ $software->id ?? '' }}">
-
                 <div class="col-lg-4 form-group">
                     <label>@lang('Starting From Price (Base Software)')</label>
                     <input type="number"  class="form-control" name="amount" id="price" step=".01"
@@ -139,8 +137,6 @@ if (!empty($software)) {
                     </div>
                 </div>
                 <hr>
-
-
                 <br />
                 <br />
                 <h4 class="hdng-create col-12">Custom Software Module</h4>
