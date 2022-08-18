@@ -14,19 +14,19 @@ class CreateTaskSkills extends Migration
     public function up()
     {
         Schema::create('task_skills', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('skill_id')->index();
-            $table->unsignedInteger('skill_category_id')->index();
-            $table->unsignedInteger('skill_sub_category_id')->index();
+            $table->unsignedBigInteger('skill_id')->index();
+            $table->unsignedBigInteger('skill_category_id')->index();
+            $table->unsignedBigInteger('skill_sub_category_id')->index();
             $table->integer('module_id')->index();
             $table->string('module_type')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('skill_id')->references('id')->on('skills')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('skill_category_id')->references('id')->on('skill_categories')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('skill_category_id')->references('id')->on('jobs')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('cascade');
+            $table->foreign('skill_sub_category_id')->references('id')->on('jobs')->onDelete('cascade');
 
         });
     }

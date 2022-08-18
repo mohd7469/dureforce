@@ -14,15 +14,14 @@ class CreateDODSTable extends Migration
     public function up()
     {
         Schema::create('d_o_d_s', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('title')->nullable();
-            $table->unsignedInteger('module_id')->index();
+            $table->unsignedBigInteger('module_id')->index();
             $table->timestamps();
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
 
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJobDodTable extends Migration
+class CreateJobDodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,21 @@ class CreateJobDodTable extends Migration
      */
     public function up()
     {
-        Schema::create('job_dod', function (Blueprint $table) {
-            $table->id();
+        Schema::create('job_dods', function (Blueprint $table) {
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('job_id')->unsigned();
-            $table->unsignedInteger('dod_id')->unsigned();
-            $table->timestamps();
+            $table->unsignedBigInteger('job_id')->unsigned();
+            $table->unsignedBigInteger('d_o_d_id')->unsigned();
 
-            $table->foreign('dod_id')
+
+            $table->foreign('d_o_d_id')
                 ->references('id')
                 ->on('d_o_d_s')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
             $table->foreign('job_id')
                 ->references('id')
                 ->on('jobs')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
 
         });
     }

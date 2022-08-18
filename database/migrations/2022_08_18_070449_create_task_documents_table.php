@@ -14,7 +14,7 @@ class CreateTaskDocumentsTable extends Migration
     public function up()
     {
         Schema::create('task_documents', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name')->index();
             $table->string('url')->nullable();
             $table->string('type')->nullable();

@@ -10,7 +10,7 @@ class DOD extends Model
     use HasFactory;
     public function job()
     {
-        return $this->belongsToMany(Job::class, 'job_dod');
+        return $this->belongsToMany(Job::class, 'job_dods');
     }
     public function module()
     {

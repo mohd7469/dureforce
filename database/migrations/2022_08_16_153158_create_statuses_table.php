@@ -14,18 +14,17 @@ class CreateStatusesTable extends Migration
     public function up()
     {
         Schema::create('statuses', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
-            $table->unsignedInteger('module_id')->index();
+            $table->unsignedBigInteger('module_id')->index();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
         });
     }
 

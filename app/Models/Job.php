@@ -47,7 +47,7 @@ class Job extends Model
 
     public function dod()
     {
-        return $this->belongsToMany(DOD::class, 'job_dod');
+        return $this->belongsToMany(DOD::class, 'job_dods');
     }
 
 

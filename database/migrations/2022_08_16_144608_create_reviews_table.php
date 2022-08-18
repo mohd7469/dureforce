@@ -14,11 +14,11 @@ class CreateReviewsTable extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('user_id')->index();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->integer('reviewable_id')->index();
             $table->string('reviewable_type')->index();
-            $table->unsignedInteger('job_id')->index();
+            $table->unsignedBigInteger('job_id')->index();
             $table->string('client_feedback')->nullable();
             $table->string('freelancer_response')->nullable();
             $table->string('freelancer_feedback')->nullable();
@@ -31,13 +31,10 @@ class CreateReviewsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->onDelete('cascade');
             $table->foreign('job_id')
                 ->references('id')
-                ->on('jobs')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->on('jobs')->onDelete('cascade');
         });
     }
 

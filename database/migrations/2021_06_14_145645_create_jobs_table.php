@@ -14,15 +14,15 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->uuid('uuid')->index('uuid');
-            $table->unsignedInteger('user_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
 //            $table->unsignedInteger('location_id');// no table for this pkg will be used
-            $table->unsignedInteger('rank_id'); //it will be used as experience level
-            $table->unsignedInteger('project_stage_id'); //table created
-            $table->unsignedInteger('status_id'); //table created
-            $table->unsignedInteger('job_type_id'); //table created
-            $table->unsignedInteger('budget_type_id'); // table created
+            $table->unsignedBigInteger('rank_id'); //it will be used as experience level
+            $table->unsignedBigInteger('project_stage_id'); //table created
+            $table->unsignedBigInteger('status_id'); //table created
+            $table->unsignedBigInteger('job_type_id'); //table created
+            $table->unsignedBigInteger('budget_type_id'); // table created
             $table->string('title')->nullable();
             $table->string('requirements')->nullable(); // will create a table for documents attached
             $table->longText('description')->nullable();
@@ -39,12 +39,12 @@ class CreateJobsTable extends Migration
             $table->timestamps();
 
 
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('rank_id')->references('id')->on('ranks')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('project_stage_id')->references('id')->on('project_stages')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('status_id')->references('id')->on('statuses')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('job_type_id')->references('id')->on('job_types')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->foreign('budget_type_id')->references('id')->on('budget_types')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('cascade');
+            $table->foreign('project_stage_id')->references('id')->on('project_stages')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('cascade');
+            $table->foreign('budget_type_id')->references('id')->on('budget_types')->onDelete('cascade');
         });
     }
 

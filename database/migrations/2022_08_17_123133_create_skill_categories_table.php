@@ -14,7 +14,7 @@ class CreateSkillCategoriesTable extends Migration
     public function up()
     {
         Schema::create('skill_categories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->softDeletes();
