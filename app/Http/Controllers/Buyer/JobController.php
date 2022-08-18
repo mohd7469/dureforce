@@ -17,7 +17,7 @@ class JobController extends Controller
     }
     public function create()
     {
-    	$pageTitle = "Job Create";
+    	$pageTitle = " Create Job";
     	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }
     public function index()
