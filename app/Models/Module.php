@@ -13,6 +13,10 @@ class Module extends Model
     {
         return $this->hasMany(ProjectStage::class,'module_id');
     }
+    public function deliverable()
+    {
+        return $this->hasMany(Deliverable::class,'module_id');
+    }
     public function jobType()
     {
         return $this->hasMany(JobType::class,'module_id');
