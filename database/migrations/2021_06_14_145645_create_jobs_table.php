@@ -17,7 +17,7 @@ class CreateJobsTable extends Migration
             $table->id();
             $table->uuid('uuid')->index('uuid');
             $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('location_id');// no table for this pkg will be used
+//            $table->unsignedInteger('location_id');// no table for this pkg will be used
             $table->unsignedInteger('rank_id'); //it will be used as experience level
             $table->unsignedInteger('project_stage_id'); //table created
             $table->unsignedInteger('status_id'); //table created
