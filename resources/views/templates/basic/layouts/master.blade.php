@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/templates/basic/frontend/css/create-job.min.css')}}">
 
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     @stack('style-lib')
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
@@ -82,6 +84,8 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/wow.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 @stack('script-lib')
 @stack('script')

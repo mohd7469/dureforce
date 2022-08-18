@@ -1,0 +1,81 @@
+.select2Tag input{
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+.inline{
+    display: inline-flex;
+    float:left;
+}
+
+.card-title{
+
+    color:#007f7f !important;
+    padding:10px;
+
+}
+.card {
+    
+    border: 0px !important;
+    border-radius: 0;
+}
+.card-body .custom-padding {
+    padding: 0rem 0rem !important;
+}
+
+.upload_icon{
+        position: absolute;
+        left: 13%;
+        right: 0%;
+        top: 50.78%;
+        bottom: 22%;
+
+}
+.upload_inner_arrow{
+    position: absolute;
+    left: 3.15%;
+    right: 32.52%;
+    top: 38.12%;
+    bottom: 3.78%;
+}
+.dropzone {
+    background: white;
+    border-radius: 5px;
+    height: 121px;
+    border: 2px dashed #CBDFDF;
+    border-image: none;
+    max-width: 500px;
+    min-height: 126px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.custom--card .card-body .card-form-wrapper input {
+    background-color: white !important;
+    border-radius: 3px;
+    padding: 10px 15px;
+    height: 40px;
+
+}
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    height: 40px;
+}
+.select2-container .select2-selection--multiple {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    min-height: 32px;
+    user-select: none;
+    -webkit-user-select: none;
+    height: 40px;
+}
+
+.form-control {
+    border: 1px solid #e1e7ec;
+    font-size: 14px;
+    font-weight: 500;
+    height: 45px;
+    appearance: auto;
+    background-color: white !important;
+    height: 40px;
+}
