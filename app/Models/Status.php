@@ -12,4 +12,8 @@ class Status extends Model
     {
         return $this->hasMany(Job::class,'status_id');
     }
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
 }

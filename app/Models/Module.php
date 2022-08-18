@@ -25,6 +25,10 @@ class Module extends Model
     {
         return $this->hasMany(BudgetType::class,'module_id');
     }
+    public function status()
+    {
+        return $this->hasMany(Status::class,'module_id');
+    }
     public function moduleSkill()
     {
         return $this->belongsTo(ModuleSkill::class, 'module_id');
