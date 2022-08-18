@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Deliverable extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'slug', 'module_id'];
+    protected $table = "deliverables";
+
     public function module()
     {
         return $this->belongsTo(Module::class, 'module_id');
     }
+
     public function job()
     {
         return $this->belongsToMany(DOD::class, 'job_dods');
