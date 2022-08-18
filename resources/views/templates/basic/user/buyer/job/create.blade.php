@@ -56,7 +56,7 @@
                                             
                                                     <div id="dropzone">
 
-                                                    <div class="dropzone needsclick" id="demo-upload" action="/upload" >
+                                                    <div class="dropzone needsclick" id="demo-upload" action="#" >
                                                         <div>
                                                             <div class="upload_icon">
                                                                 <img src="{{getImage('assets/images/frontend/job/upload.svg')}}" alt="">
@@ -475,10 +475,18 @@
                                         </div>
                                         
                                         {{-- Create Job Button --}}
-                                        <div class="col-xl-12 form-group">
-                                            <button type="submit" class="submit-btn mt-20 w-100">@lang('CREATE JOB')</button>
-                                        </div>
+                                        
+                                        <div id="outer" class="text-right">
+                                            <div class="inner">
+                                                <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
 
+                                            </div>
+                                            <div class="inner">
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn">@lang('Create Job')</button>
+
+                                            </div>
+                                            
+                                          </div>
                             </div>
 
                             </div>
@@ -494,7 +502,80 @@
 
 @push('style')
 <style>
- 
+    .cretae-job-btn{
+        
+        background: #7F007F !important;
+        border-radius: 5px;
+    }
+    #outer
+    {
+        width:100%;
+        text-align: right;
+        padding-right: 7px;
+    }
+    .inner
+    {
+        display: inline-block;
+    }
+    .cancel-job-btn{
+        color: #7F007F;
+        background-color: transparent
+    }
+ .dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 2em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 150%;
+}
+.dropzone .dz-preview .dz-image {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 78px;
+    height: 78px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 1em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 135%;
+}
+.dropzone .dz-preview {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    min-height: 100px;
+}
+.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
+    pointer-events: none;
+    opacity: 0;
+    z-index: 391;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -27px;
+    margin-top: -41px;
+}
     .select2Tag input{
         background-color: transparent !important;
         padding: 0 !important;
@@ -598,6 +679,7 @@
 <script>
     "use strict";
     $(document).ready(function() {
+        
         $('.select2').select2({
             tags: true
         });
@@ -645,25 +727,29 @@
 </script>
 
 <script>
-var dropzone = new Dropzone('#demo-upload', {
-    previewTemplate: document.querySelector('#preview-template').innerHTML,
-    parallelUploads: 2,
-    thumbnailHeight: 120,
-    thumbnailWidth: 120,
-    maxFilesize: 3,
-    filesizeBase: 1000,
-    thumbnail: function(file, dataUrl) {
-      if (file.previewElement) {
-        file.previewElement.classList.remove("dz-file-preview");
-        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-        for (var i = 0; i < images.length; i++) {
-          var thumbnailElement = images[i];
-          thumbnailElement.alt = file.name;
-          thumbnailElement.src = dataUrl;
+    var dropzone = new Dropzone('#demo-upload', {
+                    
+                    previewTemplate: document.querySelector('#preview-template').innerHTML,
+                    parallelUploads: 2,
+                    thumbnailHeight: 60,
+                    thumbnailWidth: 60,
+                    maxFilesize: 3,
+                    filesizeBase: 1000,
+                    thumbnail: function(file, dataUrl) {
+
+                        if (file.previewElement) {
+
+                            file.previewElement.classList.remove("dz-file-preview");
+                            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                            for (var i = 0; i < images.length; i++) {
+                            var thumbnailElement = images[i];
+                            thumbnailElement.alt = file.name;
+                            thumbnailElement.src = dataUrl;
+                            }
+                            setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+
+                        }
         }
-        setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-      }
-    }
   
   });
   
@@ -708,5 +794,6 @@ var dropzone = new Dropzone('#demo-upload', {
     }
   }
 </script>
+
 
 @endpush
