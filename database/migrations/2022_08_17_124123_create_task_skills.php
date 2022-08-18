@@ -20,7 +20,7 @@ class CreateTaskSkills extends Migration
             $table->unsignedInteger('skill_category_id')->index();
             $table->unsignedInteger('skill_sub_category_id')->index();
             $table->integer('module_id')->index();
-            $table->string('module_type')->index();
+            $table->string('module_type')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

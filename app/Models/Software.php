@@ -146,4 +146,12 @@ class Software extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+    public function task_document()
+    {
+        return $this->morphMany(TaskDocument::class, 'module_id');
+    }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'module_id');
+    }
 }
