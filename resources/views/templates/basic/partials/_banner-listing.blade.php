@@ -45,7 +45,7 @@ if ($folder == 'service') {
                     <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}" style="height: 163px;">
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
-                            style="object-fit: cover;width: 100%;height:163px;">
+                            style="object-fit: cover;width: 100%;height:100%;">
                     </a>
                 </div>
             </div>
