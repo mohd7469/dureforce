@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class JobType extends Model
 {
     use HasFactory;
+    protected $fillable = ['title','module_id'];
     public function jobs()
     {
         return $this->hasMany(Job::class,'job_type_id');

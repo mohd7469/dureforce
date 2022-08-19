@@ -9,6 +9,14 @@ class Module extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'module_id'];
+    protected $table = "modules";
+
+    public static $Job	 = 1;
+    public static $Service	 = 2;
+    public static $Software	 = 3;
+
+
     public function projectStage()
     {
         return $this->hasMany(ProjectStage::class,'module_id');

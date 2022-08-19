@@ -57,13 +57,12 @@ class DeliverableController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+            'slug' => 'required',
         ]);
 
         $deliverable->update([
             'name' => $request['name'],
             'slug' => $request['slug'],
-            'module_id' => $request['module_id'],
         ]);
 
         return true;

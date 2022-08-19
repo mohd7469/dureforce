@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Models\BudgetType;
+use App\Models\Category;
+use App\Models\JobType;
+use App\Models\Module;
+use App\Models\Rank;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
@@ -17,7 +22,14 @@ class JobController extends Controller
     }
     public function create()
     {
-    	$pageTitle = " Create Job";
+    	$pageTitle = "Create Job";
+
+
+        $job_types = JobType::where('module_id',Module::$Job)->get();
+        $categories = Category::all();
+        $experience_levels = Rank::all();
+        $budget_types = BudgetType::all();
+
     	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }
     public function index()
