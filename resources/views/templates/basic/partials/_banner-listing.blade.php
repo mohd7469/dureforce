@@ -41,21 +41,37 @@ if ($folder == 'service') {
 
 
 
-                <div class=" col-12 px-0 "> {{-- col-sm-6 removed here from orignal design --}}
-                    <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}" style="height: 163px;">
+                <div class=" col-12 px-0 " 
+                style="height: 200px;width:628px"
+                > {{-- col-sm-6 removed here from orignal design --}}
+                    <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}" >
+
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
-                            style="object-fit: cover;width: 100%;height:100%;">
+                            style="object-fit: cover;height: 159px;width:314px;">
+                        {{-- <img alt="{{ $model->title }}"
+                            src="https://stgdureforcestg.blob.core.windows.net/service/62fa272832b571660561192.png"
+                            style="object-fit: cover;width: 100%;height:100%;"> --}}
                     </a>
                 </div>
             </div>
         </div>
     </div>
 @else
-    <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
+    {{-- <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
         <img alt="{{ $model->title }}"
         onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}">
-    </a>
+    </a> --}}
+    <div class=" col-12 px-0 " 
+    style="height: 200px;width:628px"
+    >
+
+        <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
+            <img alt="{{ $model->title }}"
+            onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}" style="object-fit: cover;height: 159px;width:314px;">
+        </a>
+        
+    </div>
 @endif
 
 {{-- CSS --}}
