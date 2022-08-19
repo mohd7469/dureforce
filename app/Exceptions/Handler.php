@@ -40,6 +40,7 @@ class Handler extends ExceptionHandler
         });
         // redirects user to login page if csrf token expires
         $this->renderable(function(\Exception $e){
+            
             if($e->getPrevious() instanceof TokenMismatchException) {
                 return redirect()->route('login');
             }

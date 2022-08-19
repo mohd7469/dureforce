@@ -146,7 +146,7 @@
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                         <input type="file" name="lead_image" onchange="previewMultiple(event)" id="lead_image">
+                                         <input type="file" name="lead_image" onchange="previewMultiple(event);readURL(this)" id="lead_image">
                                     </label>
                                 </div>
                                 <br />
