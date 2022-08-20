@@ -43,9 +43,6 @@ class JobController extends Controller
 
         $dods = DOD::OnlyJob()->select(['id','title'])->get();
 
-
-
-
     	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }
     public function index()

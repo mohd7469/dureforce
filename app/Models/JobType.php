@@ -9,6 +9,10 @@ class JobType extends Model
 {
     use HasFactory;
     protected $fillable = ['title','module_id'];
+    public function scopeOnlyJob($query)
+    {
+        return $query->where('module_id',Module::$Job);
+    }
     public function jobs()
     {
         return $this->hasMany(Job::class,'job_type_id');

@@ -10,6 +10,10 @@ class DOD extends Model
 
     use HasFactory;
     protected $fillable = ['title','module_id'];
+    public function scopeOnlyJob($query)
+    {
+        return $query->where('module_id',Module::$Job);
+    }
     public function job()
     {
         return $this->belongsToMany(Job::class, 'job_dods');
