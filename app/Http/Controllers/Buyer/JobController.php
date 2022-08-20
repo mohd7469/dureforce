@@ -24,8 +24,9 @@ class JobController extends Controller
     {
         $this->activeTemplate = activeTemplate();
     }
-    public function create()
+    public function create(Request $request)
     {
+
     	$pageTitle = "Create Job";
 
 
@@ -182,5 +183,26 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been closed.'];
         return back()->withNotify($notify);
+    }
+
+
+    public function filterDod(Request $request){
+
+        $query = DOD::OnlyJob()->select('id','title');
+        $query->when(!empty($request->title), function ($query) use ($request) {
+            return $query->where('title', 'LIKE','%'.$request->title.'%');
+        });
+        return $query->get();
+
+    }
+
+    public function filterDeliverable(Request $request){
+
+        $query = Deliverable::OnlyJob()->select('id','title','slug');
+        $query->when(!empty($request->title), function ($query) use ($request) {
+            return $query->where('title', 'LIKE','%'.$request->title.'%');
+        });
+        return $query->get();
+
     }
 }

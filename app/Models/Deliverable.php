@@ -9,7 +9,7 @@ class Deliverable extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'module_id','slug'];
+    protected $fillable = ['name', 'slug', 'module_id'];
     protected $table = "deliverables";
 
     public function scopeOnlyJob($query)

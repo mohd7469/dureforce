@@ -656,6 +656,8 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
                 //Job
                 Route::get('job/create', 'JobController@create')->name('job.create');
+                Route::get('job/create/dod-filter', 'JobController@filterDod')->name('job.create.dodFilter');
+                Route::get('job/create/deliverable-filter', 'JobController@filterDeliverable')->name('job.create.dodFilter');
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
                 Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
