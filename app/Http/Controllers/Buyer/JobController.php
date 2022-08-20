@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\JobType;
 use App\Models\Module;
 use App\Models\Rank;
@@ -25,10 +26,12 @@ class JobController extends Controller
     	$pageTitle = "Create Job";
 
 
-        $job_types = JobType::where('module_id',Module::$Job)->get();
+        $job_types = JobType::where('module_id',Module::$Job)->select(['id','title'])->get();
+        dd($job_types);
         $categories = Category::all();
         $experience_levels = Rank::all();
         $budget_types = BudgetType::all();
+        $deliverables = Deliverable::all();
 
     	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }
