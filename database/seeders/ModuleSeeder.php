@@ -31,7 +31,80 @@ class ModuleSeeder extends Seeder
                         'title' => 'On Going',
                         
                     ]
+                ],
+                'budget_type' =>[
+                        
+                    [
+                        'id' => 1,
+                        'title' => 'Fixed',
+                           
+                    ],
+                    [
+                        'id' => 2,
+                        'title' => 'Hourly',
+                           
+                    ]
+                    
+                ],
+                'deliverables' => [
+                    [
+                        'id' => 1,
+                        'title' => 'Initial design',
+                           
+                    ],
+                    [
+                        'id' => 2,
+                        'title' => 'Time-tracking report ',
+                           
+                    ],
+                    [
+                        'id' => 3,
+                        'title' => 'Project budget report',
+                           
+                    ],
+                    [
+                        'id' => 4,
+                        'title' => 'Progress report ',
+                           
+                    ],
+                    [
+                        'id' => 5,
+                        'title' => 'Final Design ',
+                           
+                    ],
+                    [
+                        'id' => 6,
+                        'title' => 'Final product',
+                           
+                    ],
+                    [
+                        'id' => 7,
+                        'title' => 'Bug Report',
+                           
+                    ],
+                    [
+                        'id' => 8,
+                        'title' => ' Gantt chart',
+                           
+                    ],
+                    [
+                        'id' => 9,
+                        'title' => ' Fully-developed app',
+                           
+                    ],
+                    [
+                        'id' => 10,
+                        'title' => ' Live website',
+                           
+                    ],
+                    [
+                        'id' => 11,
+                        'title' => 'Complete user journey map',
+                           
+                    ]
                 ]
+
+
             ],
             [
                 'id' => 2,
@@ -39,7 +112,23 @@ class ModuleSeeder extends Seeder
                 'description' => 'A buyer will purchase a service',
                 'job_types'    => [
                     
-                ]
+                ],
+                'budget_type' =>[
+                        
+                    [
+                        'id' => 3,
+                        'title' => 'Fixed',
+                           
+                    ],
+                    [
+                        'id' => 4,
+                        'title' => 'Hourly',
+                           
+                    ]
+                    
+                ],
+                'deliverables' => []
+
 
             ],
             [
@@ -48,7 +137,22 @@ class ModuleSeeder extends Seeder
                 'description' => 'A Buyer will purchase a software',
                 'job_types'    => [
                     
-                ]
+                ],
+                'budget_type' =>[
+                        
+                    [
+                        'id' => 5,
+                        'title' => 'Fixed',
+                           
+                    ],
+                    [
+                        'id' => 6,
+                        'title' => 'Hourly',
+                           
+                    ]
+                    
+                    ],
+                'deliverables' => []
             ],
         ];
 
@@ -65,6 +169,20 @@ class ModuleSeeder extends Seeder
                 $module_added->jobType()->updateOrCreate([
                     'id'=> $job_type['id'],
                     'title'=>$job_type['title']
+    
+                ],[]);
+            }
+            foreach ($module['budget_type'] as  $budget_type) {
+                $module_added->budgetTypes()->updateOrCreate([
+                    'id'=> $budget_type['id'],
+                    'title'=>$budget_type['title']
+    
+                ],[]);
+            }
+            foreach ($module['deliverables'] as  $deliverable) {
+                $module_added->deliverable()->updateOrCreate([
+                    'id'=> $deliverable['id'],
+                    'name'=>$deliverable['title']
     
                 ],[]);
             }

@@ -8,8 +8,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BudgetType extends Model
 {
+  
     use HasFactory;
+
     protected $fillable = ['title','module_id'];
+
+    protected static function boot()
+    {
+        
+        parent::boot();
+        
+
+
+    }
+
     public function jobs()
     {
         return $this->hasMany(Job::class,'budget_type_id');
