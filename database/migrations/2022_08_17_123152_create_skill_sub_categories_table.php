@@ -14,9 +14,12 @@ class CreateSkillSubCategoriesTable extends Migration
     public function up()
     {
         Schema::create('skill_sub_categories', function (Blueprint $table) {
+
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
+            $table->unsignedBigInteger('skill_category_id')->index();
+            $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
