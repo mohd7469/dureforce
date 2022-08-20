@@ -9,9 +9,20 @@ class Deliverable extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'module_id'];
+    protected $fillable = ['name', 'slug', 'module_id','slug'];
     protected $table = "deliverables";
 
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            
+            $model->slug = \Str::slug($model->name);
+        });
+
+
+    }
     public function module()
     {
         return $this->belongsTo(Module::class, 'module_id');
