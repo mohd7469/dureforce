@@ -502,6 +502,12 @@
 
 @push('style')
 <style>
+    .dashboard-sidebar-inner {
+        background-color: #1e2746;
+        padding: 20px 10px;
+        border-radius: 2px !important;
+        height: 100%;
+    }
     .cretae-job-btn{
         
         background: #7F007F !important;
