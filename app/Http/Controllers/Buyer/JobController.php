@@ -28,22 +28,23 @@ class JobController extends Controller
     {
     	$pageTitle = "Create Job";
 
+        $data=[];
+        $data['job_types'] = JobType::OnlyJob()->select(['id','title'])->get();
 
-        $job_types = JobType::OnlyJob()->select(['id','title'])->get();
+        $data['categories'] = SkillCategory::select(['id','name','slug'])->get();
 
-        $categories = SkillCategory::select(['id','name','slug'])->get();
+        $data['experience_levels'] = Rank::select(['id','level'])->get();
 
-        $experience_levels = Rank::select(['id','level'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id','title'])->get();
 
-        $budget_types = BudgetType::OnlyJob()->select(['id','title'])->get();
+        $data['deliverables'] = Deliverable::OnlyJob()->select(['id','name','slug'])->get();
 
-        $deliverables = Deliverable::OnlyJob()->select(['id','name','slug'])->get();
+        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id','title'])->get();
 
-        $project_stages = ProjectStage::OnlyJob()->select(['id','title'])->get();
+        $data['dods'] = DOD::OnlyJob()->select(['id','title'])->get();
 
-        $dods = DOD::OnlyJob()->select(['id','title'])->get();
 
-    	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
+    	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle','data'));
     }
     public function index()
     {

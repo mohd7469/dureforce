@@ -102,7 +102,22 @@ class ModuleSeeder extends Seeder
                         'title' => 'Complete user journey map',
                            
                     ]
+                ],
+                'project_stages' =>[
+                    [
+                        'id'    =>1,
+                        'title' => 'unknown'
+                    ],
+                    [
+                        'id'    =>2,
+                        'title' => 'conceptual'
+                    ],
+                    [
+                        'id'    =>3,
+                        'title' => 'full specfications'
+                    ]
                 ]
+
 
 
             ],
@@ -127,7 +142,8 @@ class ModuleSeeder extends Seeder
                     ]
                     
                 ],
-                'deliverables' => []
+                'deliverables' => [],
+                'project_stages' =>[]
 
 
             ],
@@ -152,7 +168,8 @@ class ModuleSeeder extends Seeder
                     ]
                     
                     ],
-                'deliverables' => []
+                'deliverables' => [],
+                'project_stages' =>[]
             ],
         ];
 
@@ -183,6 +200,14 @@ class ModuleSeeder extends Seeder
                 $module_added->deliverable()->updateOrCreate([
                     'id'=> $deliverable['id'],
                     'name'=>$deliverable['title']
+    
+                ],[]);
+            }
+
+            foreach ($module['project_stages'] as  $project_stage) {
+                $module_added->projectStage()->updateOrCreate([
+                    'id'=> $project_stage['id'],
+                    'title'=>$project_stage['title']
     
                 ],[]);
             }

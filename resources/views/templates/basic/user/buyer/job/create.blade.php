@@ -31,7 +31,10 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Job Type')</label>
                                                 <select class="form-control bg--gray" name="jobtype" id="jobtype">
-                                                    
+                                                    <option value="" >@lang('Select Job Type')</option>
+                                                    @foreach ($data['job_types'] as $item)
+                                                        <option value="{{$item->id}}">{{$item->title}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
 
@@ -39,6 +42,10 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
                                                 <label for="joblocation">@lang('Job Location')</label>
                                                 <select name="joblocation" class="form-control joblocation" id="joblocation">
+                                                    <option value="" >@lang('Select Job Type')</option>
+                                                    @foreach ($data['job_types'] as $item)
+                                                        <option value="{{$item->id}}">{{$item->title}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -64,10 +71,11 @@
                                                             </div>
                                                         </div>
                                                         
-                                                        <div class="dz-message needsclick">    
-                                                            Drag or Drop to Upload
+                                                        <div class="dz-message needsclick"> 
+                                                            @lang('Drag or Drop to Upload')   
                                                         <span class="text text-primary">
-                                                            Browse
+                                                            @lang('Browse')  
+                                                            
                                                         </span>
                                                         </div>
                                                     </div>
@@ -82,8 +90,8 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Category')*</label>
                                                 <select class="form-control bg--gray" name="category" id="category" required>
-                                                        <option selected="" disabled="">@lang('Select Category')</option>
-                                                    @foreach($categorys as $category)
+                                                    <option selected="" disabled="">@lang('Select Category')</option>
+                                                    @foreach($data['categories'] as $category)
                                                         <option value="{{__($category->id)}}">{{__($category->name)}}</option>
                                                     @endforeach
                                                 </select>
@@ -100,6 +108,10 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label for="experience">@lang('Experience Level')*</label>
                                                     <select name="experience" class="form-control experience" id="experience" required>
+                                                        <option selected="" disabled="">@lang('Select Experience Level')</option>
+                                                        @foreach($data['experience_levels'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->level)}}</option>
+                                                        @endforeach
                                                     </select>
                                             </div>
 
@@ -111,6 +123,10 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label for="budget">@lang('Budget Type')*</label>
                                                 <select name="budget" class="form-control budget" id="budget" required>
+                                                    <option selected="" disabled="">@lang('Select Budget Type')</option>
+                                                        @foreach($data['budget_types'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
                                                 </select>
                                             </div>
 
@@ -165,7 +181,11 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
                                                 <select name="projectstage" class="form-control budget" id="projectstage">
-                                                    </select>
+                                                    <option selected="" disabled="">@lang('Select Project Stage')</option>
+                                                        @foreach($data['project_stages'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         
@@ -504,7 +524,7 @@
 <style>
     .dashboard-sidebar-inner {
         background-color: #1e2746;
-        padding: 20px 10px;
+        padding: 20px 0px;
         border-radius: 2px !important;
         height: 100%;
     }
