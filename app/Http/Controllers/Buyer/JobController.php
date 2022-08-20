@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DOD;
 use App\Models\JobType;
 use App\Models\Module;
+use App\Models\ProjectStage;
 use App\Models\Rank;
+use App\Models\SkillCategory;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
@@ -26,12 +29,22 @@ class JobController extends Controller
     	$pageTitle = "Create Job";
 
 
-        $job_types = JobType::where('module_id',Module::$Job)->select(['id','title'])->get();
-        dd($job_types);
-        $categories = Category::all();
-        $experience_levels = Rank::all();
-        $budget_types = BudgetType::all();
-        $deliverables = Deliverable::all();
+        $job_types = JobType::OnlyJob()->select(['id','title'])->get();
+
+        $categories = SkillCategory::select(['id','name','slug'])->get();
+
+        $experience_levels = Rank::select(['id','level'])->get();
+
+        $budget_types = BudgetType::OnlyJob()->select(['id','title'])->get();
+
+        $deliverables = Deliverable::OnlyJob()->select(['id','name','slug'])->get();
+
+        $project_stages = ProjectStage::OnlyJob()->select(['id','title'])->get();
+
+        $dods = DOD::OnlyJob()->select(['id','title'])->get();
+
+
+
 
     	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }

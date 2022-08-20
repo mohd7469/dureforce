@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectStage extends Model
 {
     use HasFactory;
-
+    protected $fillable = ['title','module_id'];
     public function jobs()
     {
         return $this->hasMany(Job::class,'project_stage_id');

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DOD extends Model
 {
+
     use HasFactory;
+    protected $fillable = ['title','module_id'];
     public function job()
     {
         return $this->belongsToMany(Job::class, 'job_dods');
