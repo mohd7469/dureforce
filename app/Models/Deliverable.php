@@ -12,6 +12,11 @@ class Deliverable extends Model
     protected $fillable = ['name', 'slug', 'module_id','slug'];
     protected $table = "deliverables";
 
+    public function scopeOnlyJob($query)
+    {
+        return $query->where('module_id',Module::$Job);
+    }
+
     protected static function boot()
     {
         
