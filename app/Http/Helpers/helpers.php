@@ -102,8 +102,12 @@ function getNumber($length = 8)
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
 {   
+    $filename ='';
+    try {
     
-    $connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+    $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+    
+    //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
     $blobClient = BlobRestProxy::createBlobService($connectionString);
      
     if ($old) {
@@ -126,7 +130,8 @@ try {
     $properties=  $blobClient->GetContainerProperties($container);
 } 
 catch (ServiceException $e)
-{  
+{   
+    error($e);
     $blobClient->createContainer($container, $createContainerOptions); 
 }
 
@@ -141,6 +146,11 @@ catch (ServiceException $e)
         $thumbcontent = fopen($thumbImage, "r");
         $blobClient->createBlockBlob($container, '/thumb_' .$filename, $thumbcontent);
     }
+} 
+catch (ServiceException $e)
+{   
+    error($e);
+}
     return $filename;
 
 }
