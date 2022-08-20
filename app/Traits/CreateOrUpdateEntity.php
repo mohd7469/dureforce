@@ -194,6 +194,7 @@ trait CreateOrUpdateEntity {
             try {
                 $filename = uploadImage($file, $path, $size);
             } catch (\Exception $exp) {
+              error($exp);
               return false;
             }
         }
@@ -203,6 +204,7 @@ trait CreateOrUpdateEntity {
             try {
                 $filenameLeadImage = uploadImage($file, $path, $size);
             } catch (\Exception $e) {
+                error($e);
                 return false;
             }
         }
