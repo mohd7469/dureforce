@@ -590,7 +590,10 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::get('/service/edit/{slug}/{id}', 'ServiceController@edit')->name('service.edit');
                     Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
                     Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
-                    Route::get('/category', 'UserController@category')->name('category');
+                    // Route::get('/category', 'UserController@category')->name('category');
+                    Route::get('/category', 'UserController@skillSubCategory')->name('category');
+                    
+                    
                     Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
                     Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
 

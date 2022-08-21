@@ -54,7 +54,7 @@ class ModuleSeeder extends Seeder
                     ],
                     [
                         'id' => 2,
-                        'title' => 'Time-tracking report ',
+                        'title' => 'Time-tracking report',
                            
                     ],
                     [
@@ -117,9 +117,6 @@ class ModuleSeeder extends Seeder
                         'title' => 'full specfications'
                     ]
                 ]
-
-
-
             ],
             [
                 'id' => 2,

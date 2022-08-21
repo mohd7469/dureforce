@@ -62,23 +62,24 @@
                                                 <label>@lang('Required Documents')</label>
                                             
                                                     <div id="dropzone">
-
-                                                    <div class="dropzone needsclick" id="demo-upload" action="#" >
-                                                        <div>
-                                                            <div class="upload_icon">
-                                                                <img src="{{getImage('assets/images/frontend/job/upload.svg')}}" alt="">
-                                                                <img src="{{getImage('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="dz-message needsclick"> 
-                                                            @lang('Drag or Drop to Upload')   
-                                                        <span class="text text-primary">
-                                                            @lang('Browse')  
+                                                        <div class="dropzone needsclick" id="demo-upload" action="#" >
                                                             
-                                                        </span>
+                                                            <div>
+                                                                <div class="upload_icon">
+                                                                    <img src="{{getImage('assets/images/frontend/job/upload.svg')}}" alt="">
+                                                                    <img src="{{getImage('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="dz-message "> 
+                                                                @lang('Drag or Drop to Upload')   
+                                                                <span class="text text-primary ">
+                                                                    @lang('Browse')  
+                                                                    
+                                                                </span>
+                                                            </div>
+
                                                         </div>
-                                                    </div>
                                                     </div>
                                         
                                             </div>
@@ -151,12 +152,15 @@
                                             {{-- deliverables --}}
                                             <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Deliverables')*</label>
-                                                    <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" name="deliverables" value="{{old('deliverables')}}" placeholder="@lang('Enter Deliverables')" required>
-                                                    </div>
+                                                <div class="input-group mb-3">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables" id="deliverables">
+                                                        @foreach($data['deliverables'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                </div>
                                             </div>
-
-                                           
 
                                         </div>
 
@@ -194,7 +198,13 @@
                                         <div class="row col-xl-12 col-lg-12 form-group">
                                             <label>@lang('Defination of Done(DOD)')*</label>
                                                 <div class="input-group mb-3">
-                                                  <input type="text" class="form-control" name="dod" value="" placeholder="@lang('E.g Dev task completed, Ux reviewed, QA tasks completed, PO reviewed, Defects resolved')" required="">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod" id="dod">
+                                                        @foreach($data['dods'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                    
                                                 </div>
                                         </div>
 
@@ -268,6 +278,7 @@
                 
                                                 </div>
                                             </div>
+
                                         </div>
 
                                         
@@ -499,17 +510,14 @@
                                         <div id="outer" class="text-right">
                                             <div class="inner">
                                                 <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
-
                                             </div>
                                             <div class="inner">
                                                 <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn">@lang('Create Job')</button>
-
                                             </div>
-                                            
-                                          </div>
-                            </div>
+                                        </div>
+                                    </div>
 
-                            </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -520,182 +528,20 @@
 </section>
 @endsection
 
-@push('style')
-<style>
-    .dashboard-sidebar-inner {
-        background-color: #1e2746;
-        padding: 20px 0px;
-        border-radius: 2px !important;
-        height: 100%;
-    }
-    .cretae-job-btn{
-        
-        background: #7F007F !important;
-        border-radius: 5px;
-    }
-    #outer
-    {
-        width:100%;
-        text-align: right;
-        padding-right: 7px;
-    }
-    .inner
-    {
-        display: inline-block;
-    }
-    .cancel-job-btn{
-        color: #7F007F;
-        background-color: transparent
-    }
- .dropzone .dz-preview .dz-details {
-    z-index: 20;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    font-size: 11px !important;
-    min-width: 100%;
-    max-width: 100%;
-    padding: 2em 1em;
-    text-align: center;
-    color: rgba(0,0,0,.9);
-    line-height: 150%;
-}
-.dropzone .dz-preview .dz-image {
-    border-radius: 20px;
-    overflow: hidden;
-    width: 78px;
-    height: 78px;
-    position: relative;
-    display: block;
-    z-index: 10;
-}
-.dropzone .dz-preview .dz-details {
-    z-index: 20;
-    position: absolute;
-    top: -3px;
-    left: 0;
-    opacity: 0;
-    font-size: 11px !important;
-    min-width: 100%;
-    max-width: 100%;
-    padding: 1em 1em;
-    text-align: center;
-    color: rgba(0,0,0,.9);
-    line-height: 135%;
-}
-.dropzone .dz-preview {
-    position: relative;
-    display: inline-block;
-    vertical-align: top;
-    margin: 5px;
-    min-height: 100px;
-}
-.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
-    pointer-events: none;
-    opacity: 0;
-    z-index: 391;
-    position: absolute;
-    display: block;
-    top: 50%;
-    left: 50%;
-    margin-left: -27px;
-    margin-top: -41px;
-}
-    .select2Tag input{
-        background-color: transparent !important;
-        padding: 0 !important;
-    }
-    .inline{
-        display: inline-flex;
-        float:left;
-    }
-    div. { 
-        float:left; 
-    }
-    .card-title{
-
-        color:#007f7f !important;
-        padding:10px;
-
-    }
-    .card {
-        
-        border: 0px !important;
-        border-radius: 0;
-    }
-    .card-body .custom-padding {
-        padding: 0rem 0rem !important;
-    }
-   
-    .upload_icon{
-            position: absolute;
-            left: 13%;
-            right: 0%;
-            top: 50.78%;
-            bottom: 22%;
-
-    }
-    .upload_inner_arrow{
-        position: absolute;
-        left: 3.15%;
-        right: 32.52%;
-        top: 38.12%;
-        bottom: 3.78%;
-    }
-    .dropzone {
-        background: white;
-        border-radius: 5px;
-        height: 121px;
-        border: 2px dashed #CBDFDF;
-        border-image: none;
-        max-width: 500px;
-        min-height: 126px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .custom--card .card-body .card-form-wrapper input {
-        background-color: white !important;
-        border-radius: 3px;
-        padding: 10px 15px;
-        height: 40px;
-
-    }
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        height: 40px;
-    }
-    .select2-container .select2-selection--multiple {
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        min-height: 32px;
-        user-select: none;
-        -webkit-user-select: none;
-        height: 40px;
-    }
-    
-    .form-control {
-        border: 1px solid #e1e7ec;
-        font-size: 14px;
-        font-weight: 500;
-        height: 45px;
-        appearance: auto;
-        background-color: white !important;
-        height: 40px;
-    }
-</style>
-@endpush
 
 @push('style-lib')
+
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/create_job.css')}}">
 
 @endpush
 
 @push('script-lib')
+
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset($activeTemplateTrue.'frontend/js/nicEdit.js')}}"></script>
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+
 
 @endpush
 
@@ -703,12 +549,42 @@
 @push('script')
 
 <script>
+    function LoadDropZone()
+{   
+    alert("load drop zone");
+    var dropzone = new Dropzone('#demo-upload', {
+                    
+        previewTemplate: document.querySelector('#demo-upload').innerHTML,
+        parallelUploads: 2,
+        thumbnailHeight: 60,
+        thumbnailWidth: 60,
+        maxFilesize: 3,
+        filesizeBase: 1000,
+        thumbnail: function(file, dataUrl) {
+      
+            if (file.previewElement) {
+      
+                file.previewElement.classList.remove("dz-file-preview");
+                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                for (var i = 0; i < images.length; i++) {
+                var thumbnailElement = images[i];
+                thumbnailElement.alt = file.name;
+                thumbnailElement.src = dataUrl;
+                }
+                setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+      
+            }
+      }
+      
+      });
+}
     "use strict";
     $(document).ready(function() {
         
         $('.select2').select2({
             tags: true
         });
+        LoadDropZone();
 
     });
 
@@ -750,76 +626,7 @@
         });   
     });
 
+
 </script>
-
-<script>
-    var dropzone = new Dropzone('#demo-upload', {
-                    
-                    previewTemplate: document.querySelector('#preview-template').innerHTML,
-                    parallelUploads: 2,
-                    thumbnailHeight: 60,
-                    thumbnailWidth: 60,
-                    maxFilesize: 3,
-                    filesizeBase: 1000,
-                    thumbnail: function(file, dataUrl) {
-
-                        if (file.previewElement) {
-
-                            file.previewElement.classList.remove("dz-file-preview");
-                            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                            for (var i = 0; i < images.length; i++) {
-                            var thumbnailElement = images[i];
-                            thumbnailElement.alt = file.name;
-                            thumbnailElement.src = dataUrl;
-                            }
-                            setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-
-                        }
-        }
-  
-  });
-  
-  
-  // Now fake the file upload, since GitHub does not handle file uploads
-  // and returns a 404
-  
-  var minSteps = 6,
-      maxSteps = 60,
-      timeBetweenSteps = 100,
-      bytesPerStep = 100000;
-  
-  dropzone.uploadFiles = function(files) {
-    var self = this;
-  
-    for (var i = 0; i < files.length; i++) {
-  
-      var file = files[i];
-      totalSteps = Math.round(Math.min(maxSteps, Math.max(minSteps, file.size / bytesPerStep)));
-  
-      for (var step = 0; step < totalSteps; step++) {
-        var duration = timeBetweenSteps * (step + 1);
-        setTimeout(function(file, totalSteps, step) {
-          return function() {
-            file.upload = {
-              progress: 100 * (step + 1) / totalSteps,
-              total: file.size,
-              bytesSent: (step + 1) * file.size / totalSteps
-            };
-  
-            self.emit('uploadprogress', file, file.upload.progress, file.upload.bytesSent);
-            if (file.upload.progress == 100) {
-              file.status = Dropzone.SUCCESS;
-              self.emit("success", file, 'success', null);
-              self.emit("complete", file);
-              self.processQueue();
-              //document.getElementsByClassName("dz-success-mark").style.opacity = "1";
-            }
-          };
-        }(file, totalSteps, step), duration);
-      }
-    }
-  }
-</script>
-
 
 @endpush
