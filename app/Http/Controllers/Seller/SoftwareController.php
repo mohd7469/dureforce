@@ -95,17 +95,18 @@ class SoftwareController extends Controller
 
     public function storePricing(Request $request)
     {
+       
         $softwareId = $request->get('software_id');
 
         if(empty($softwareId)) {
             $notify[] = ['error', 'Recently Created Software is missing.'];
             return redirect()->back()->withNotify($notify);
         }
-
+      
         $software = Software::FindOrFail($softwareId);
-
+      
         $this->savePricing($request, $software, Attribute::SOFTWARE);
-
+      
         $notify[] = ['success', 'Software Pricing Saved Successfully.'];
         return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
     }
@@ -121,12 +122,12 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
+        // $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
 
-        if(!$result) {
-            $notify[] = ['error', 'Some error occured while saving banner.'];
-            return redirect()->back()->withNotify($notify);
-        }
+        // if(!$result) {
+        //     $notify[] = ['error', 'Some error occured while saving banner.'];
+        //     return redirect()->back()->withNotify($notify);
+        // }
 
         if($software->amount == 0) {
             $notify[] = ['error', 'Please complete the software pricing first.'];
@@ -148,10 +149,10 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        if(empty($software->image)) {
-            $notify[] = ['error', 'Please complete the software banners first.'];
-            return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
-        }
+        // if(empty($software->image)) {
+        //     $notify[] = ['error', 'Please complete the software banners first.'];
+        //     return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
+        // }
 
         $this->saveRequirements($request, $software, Attribute::SOFTWARE);
 

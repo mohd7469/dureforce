@@ -16,12 +16,68 @@
                     ?</span>
             </div>
             <br>
+          
             <div class="row ">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>@lang('Maximum number of simultaneous projects')*</label>
                     <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->softwareDetail->max_no_projects}}">
                 </div>
                 <br>
+                <div class="row">
+            <h4 class="hdng-create">
+                 Summary 
+                </h4>
+                <div class="col-xl-12 col-lg-12 form-group">
+                    <table class="table table-striped t1">
+                        <tr>
+                          <th>
+                          Title
+                         </th>
+                         <th>
+                         Base Price
+                         </th> 
+                         <th>
+                         Estimated Lead Time (Hours)
+                         </th>
+                        </tr>
+                        <tr>
+                            <td >Document Management System</td>
+                            <td class="hdng-create">$240.00</td>
+                            <td >400</td>
+                        </tr>
+                    </table>
+</div>
+</div> 
+
+            <div class="container overflow-hidden ">
+            <div class="row gx-5 ">
+                <div class="col">
+                   
+                <div class="p-3 box1">
+                <label>Dureforce Service Fee</label>    
+                20% Dureforce Service Fee<a href="">Explain this</a>
+              <br/>
+              <br/>
+                <h3 class="hdng-create">$778.00</h3>
+            </div>
+               
+            </div>
+                <div class="col">
+                <div class="p-3  box1">
+                <label>You’ll Recieve *</label>
+                The estimated amount you'll receive after service fees
+                <br/>
+              <br/>
+                <h3 class="hdng-create">$3114.40</h3>
+                </div>
+               
+                </div>
+            </div>
+            </div>
+
+            &nbsp;
+            <br>
+               <hr/>
                 <h4 class="hdng-create">Copyright Notice</h4>
                 <p class="lbl-review">By submitting your project, you declare that you either own or have rights to the material posted and
                     that posting these materials does not infringe on any third party's rights. You also acknowledge

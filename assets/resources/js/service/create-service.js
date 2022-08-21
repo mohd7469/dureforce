@@ -1,6 +1,5 @@
 let stepsRow = $("#step-rows");
 let addOnServiceContainer = $("#add-service-container");
-let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
@@ -676,6 +675,18 @@ function validateAddOnRows(element, e) {
 
 function addOnServiceRow() {
   return `<div class="row add-ons" id="add-on-service-row">
+  <div class="col-xl-12 col-lg-12 form-group p-0">
+                                        <label for="">Module Title*</label>
+                                        <input type="text" name="moduletitle[]" id="step" placeholder="Travel Ticket Reservation System"
+                                            class="form-control"     />
+                            
+                                            <br/>
+                                            <label for="discription">Module Description</label>
+                                            <textarea type="text" name="moduledescription[]" id="discription" placeholder="This is a short description." class="form-control"
+                                                ></textarea>
+                                            <br />
+                                            <br />
+                    </div>
   <div class="col-xl-4 col-lg-4 form-group">
       <label>Starting From Price</label>
       <input type="number" class="form-control add_on_price" name="add_on_price[]"
@@ -684,7 +695,7 @@ function addOnServiceRow() {
   <div class="col-xl-4 col-lg-4 form-group">
       <label>Estimated Lead Time</label>
       <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="estimated_lead_time[]"
               placeholder="Enter Hours">
       </div>
 </div>  
@@ -698,34 +709,6 @@ $(document).on("click", "#removeRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
   if (is_confirm) {
     $(this).closest("#add-on-service-row").remove();
-  }
-});
-
-
-function addOnServiceRowcustom() {
-  return `<div class="row add-ons" id="add-on-customservice-row">
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Starting From Price</label>
-      <input type="number" class="form-control add_on_price" name="add_on_price[]"
-          placeholder="E.g. $100" id="add_on_price" step=".01" >
-  </div>
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Estimated Lead Time</label>
-      <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-              placeholder="Enter Hours">
-      </div>
-</div>  
-  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-  <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-  </div>
-</div>
-`;
-}
-$(document).on("click", "#removecustomRow", function () {
-  let is_confirm = confirm(`Are you sure you want to remove field ?`);
-  if (is_confirm) {
-    $(this).closest("#add-on-customservice-row").remove();
   }
 });
 

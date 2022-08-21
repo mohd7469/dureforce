@@ -74,7 +74,10 @@ class Software extends Model
     {
         return $this->hasMany(ExtraSoftware::class, 'software_id');
     }
-
+    public function SoftwareModule()
+    {
+        return $this->hasMany(SoftwareModule::class, 'software_id');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

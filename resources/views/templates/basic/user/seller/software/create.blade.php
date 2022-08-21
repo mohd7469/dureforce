@@ -140,6 +140,23 @@
         box-shadow: 0 0 5px #333;
         z-index: -1;
         }
+ .t1 td:first-child { 
+font-family: 'Mulish';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 18px;
+color: #000000;
+ }
+ .box1{
+    background: #EFF3F3;
+border-radius: 4px;
+ }
+ .box1 a{
+   
+color: #007F7F;
+text-indent: 10px;
+ }
     </style>
 @endpush
 

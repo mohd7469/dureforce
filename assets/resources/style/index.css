@@ -1135,6 +1135,8 @@
 }
 .create-service-main label {
   color: #000;
+  padding: 0;
+  font-weight: 500 !important;
 }
 .create-service-main textarea {
   border: 1px solid #CBDFDF;
@@ -1313,6 +1315,7 @@
   color: #007F7F;
   font-size: 18px;
   font-weight: 500;
+  padding: 0;
 }
 .create-service-main #add-more-service {
   color: #7f007f;

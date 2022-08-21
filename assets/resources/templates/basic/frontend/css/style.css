@@ -5602,3 +5602,6 @@ option {
 .swiper-button-disabled{
   display: none;
 }
+.btn-circle figure {
+  border: none !important;
+}

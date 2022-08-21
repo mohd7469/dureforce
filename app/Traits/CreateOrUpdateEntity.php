@@ -14,6 +14,7 @@ use App\Models\ServiceStep;
 use App\Models\Software;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareStep;
+use App\Models\SoftwareModule;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Razorpay\Api\Entity;
@@ -22,6 +23,7 @@ trait CreateOrUpdateEntity {
 
     public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
+        
          DB::transaction(function () use ($request, $model, $modelId, $type) {
             $model->status = Service::PENDING;
             $model->fill($request->except(['_token']))->save();
@@ -85,11 +87,11 @@ trait CreateOrUpdateEntity {
 
     public function savePricing($request, $model, $type = Attribute::SERVICE) : bool
     {
-
+       
         DB::transaction(function () use ($request, $model, $type) {
 
             $model->status = Service::PENDING;
-
+            
             if($type == Attribute::SERVICE) {
                 $model->update([
                     'price'         => $request->price,
@@ -105,15 +107,15 @@ trait CreateOrUpdateEntity {
                     'delivery_time' => $request->delivery_time
                 ]);
             }
-
+           
             if($type == Attribute::SERVICE) {
               $model->serviceSteps()->delete();
-              $model->extraService()->delete();
+             $model->extraService()->delete();
             } else {
               $model->softwareSteps()->delete();
-              $model->extraSoftware()->delete();
+              $model->SoftwareModule()->delete();
             }
-
+           
             if (!empty($request->steps)) {
                 $steps = [];
                 foreach ($request->get('steps') as $key => $value) {
@@ -129,17 +131,17 @@ trait CreateOrUpdateEntity {
                         ]);
                     }
                 }
+               
                 if($type == Attribute::SERVICE) {
                     $model->serviceSteps()->saveMany($steps);
                 } else {
                     $model->softwareSteps()->saveMany($steps);
                 }
             }
-
-            if (!empty($request->extra_title)) {
-                $extraService = [];
-                foreach ($request->get('extra_title') as $key => $value) {
-                    
+            // if (!empty($request->extra_title)) {
+            //     $extraService = [];
+            //     foreach ($request->get('extra_title') as $key => $value) {
+               
                     if($type == Attribute::SERVICE) {
                         $extraService[] = new ExtraService([
                             'title' => $request->extra_title[$key] ?? '',
@@ -147,28 +149,29 @@ trait CreateOrUpdateEntity {
                             'delivery' => $request->add_on_delivery[$key] ?? ''
                         ]);
                     } else {
-                        $extraService[] = new ExtraSoftware([
-                            'title' => $request->extra_title[$key] ?? '',
+                        $extraService[] = new SoftwareModule([
+                            'module_title' => $request->moduletitle[$key] ?? '',
+                            'module_description' => $request->moduledescription[$key] ?? 0,
                             'price' => $request->add_on_price[$key] ?? 0,
-                            'delivery' => $request->add_on_delivery[$key] ?? ''
+                            'estimated_lead_time' => $request->estimated_lead_time[$key] ?? ''
                         ]);
-                    }
+                //     }
 
-                }
-
-            
+                // }  
                 
                 if($type == Attribute::SERVICE) {
                     $model->extraService()->saveMany($extraService);
                 } else {
-                    $model->extraSoftware()->saveMany($extraService);
+                    $model->SoftwareModule()->saveMany($extraService);
                 }
+             
             }
 
         });
         return true;
     }
 
+    
 
     public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
     {   
