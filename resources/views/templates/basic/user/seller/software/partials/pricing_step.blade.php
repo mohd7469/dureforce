@@ -198,8 +198,6 @@ if (!empty($software)) {
                             CONTINUE')</button>
                     </div>
             </div>
-</div>
-</div>
-        </div>
+</div>     
     </div>
 </form>
