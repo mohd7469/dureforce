@@ -197,7 +197,8 @@ if (!empty($software)) {
                             class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND
                             CONTINUE')</button>
                     </div>
-            </div>
-</div>     
+           
+</div> 
+</div>    
     </div>
 </form>

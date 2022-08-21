@@ -169,8 +169,7 @@ class SoftwareController extends Controller
         }
 
         $software = Software::FindOrFail($request->get('software_id'));
-
-        if(empty($software->image) && $software->price == 0) {
+        if(empty($software->image) && $software->amount == 0) {
             $notify[] = ['error', 'Please complete the previous steps first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-1'])->withNotify($notify);
         }
