@@ -1,6 +1,6 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections ptb-60">
+<section class="all-sections ptb-60" style="padding-top:0px">
     <div class="container-fluid">
         <div class="section-wrapper">
             <div class="row  mb-30-none">
@@ -550,10 +550,8 @@
 
 <script>
     function LoadDropZone()
-{   
-    alert("load drop zone");
-    var dropzone = new Dropzone('#demo-upload', {
-                    
+    {   
+        var dropzone = new Dropzone('#demo-upload', {     
         previewTemplate: document.querySelector('#demo-upload').innerHTML,
         parallelUploads: 2,
         thumbnailHeight: 60,
@@ -574,7 +572,7 @@
                 setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
       
             }
-      }
+        }
       
       });
 }
