@@ -17,49 +17,52 @@ use App\Models\Job;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
-	public function __construct()
+    public function __construct()
     {
         $this->activeTemplate = activeTemplate();
     }
+
     public function create(Request $request)
     {
 
-    	$pageTitle = "Create Job";
+        $pageTitle = "Create Job";
 
 
-        $job_types = JobType::OnlyJob()->select(['id','title'])->get();
+        $job_types = JobType::OnlyJob()->select(['id', 'title'])->get();
 
-        $categories = SkillCategory::select(['id','name','slug'])->get();
+        $categories = SkillCategory::select(['id', 'name', 'slug'])->get();
 
-        $experience_levels = Rank::select(['id','level'])->get();
+        $experience_levels = Rank::select(['id', 'level'])->get();
 
-        $budget_types = BudgetType::OnlyJob()->select(['id','title'])->get();
+        $budget_types = BudgetType::OnlyJob()->select(['id', 'title'])->get();
 
-        $deliverables = Deliverable::OnlyJob()->select(['id','name','slug'])->get();
+        $deliverables = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
-        $project_stages = ProjectStage::OnlyJob()->select(['id','title'])->get();
+        $project_stages = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
-        $dods = DOD::OnlyJob()->select(['id','title'])->get();
+        $dods = DOD::OnlyJob()->select(['id', 'title'])->get();
 
-    	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
+        return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle'));
     }
+
     public function index()
     {
-    	$user = Auth::user();
-    	$pageTitle = "Manage Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::where('user_id', $user->id)->latest()->paginate(getPaginate());
-    	return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        $user = Auth::user();
+        $pageTitle = "Manage Job";
+        $emptyMessage = "No data found";
+        $jobs = Job::where('user_id', $user->id)->latest()->paginate(getPaginate());
+        return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function store(Request $request)
     {
         $general = GeneralSetting::first();
         $user = Auth::user();
-    	$request->validate([
+        $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
@@ -70,10 +73,10 @@ class JobController extends Controller
             'description' => 'required',
             'requirement' => 'required',
         ]);
-    	$job = new Job();
-    	$job->title = $request->title;
-    	$job->user_id = $user->id;
-    	$job->category_id = $request->category;
+        $job = new Job();
+        $job->title = $request->title;
+        $job->user_id = $user->id;
+        $job->category_id = $request->category;
         $job->sub_category_id = $request->subcategory ? $request->subcategory : null;
         $job->amount = $request->amount;
         $job->delivery_time = $request->delivery;
@@ -82,7 +85,7 @@ class JobController extends Controller
         $job->requirements = $request->requirement;
         $path = imagePath()['job']['path'];
         $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->image;
             $this->fileValidate($file);
             try {
@@ -93,7 +96,7 @@ class JobController extends Controller
             }
             $job->image = $filename;
         }
-        if($general->approval_post  == 1){
+        if ($general->approval_post == 1) {
             $job->status = 1;
         }
         $job->updated_at = Carbon::now();
@@ -104,17 +107,17 @@ class JobController extends Controller
 
     public function edit($slug, $id)
     {
-    	$user = Auth::user();
-    	$pageTitle = "Job Update";
-    	$job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-    	return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job')); 
+        $user = Auth::user();
+        $pageTitle = "Job Update";
+        $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
+        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job'));
     }
 
     public function update(Request $request, $id)
     {
         $general = GeneralSetting::first();
         $user = Auth::user();
-    	$request->validate([
+        $request->validate([
             'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|string|max:255',
             'category' => 'required|exists:categories,id',
@@ -125,10 +128,10 @@ class JobController extends Controller
             'description' => 'required',
             'requirement' => 'required',
         ]);
-    	$job = Job::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-    	$job->title = $request->title;
-    	$job->user_id = $user->id;
-    	$job->category_id = $request->category;
+        $job = Job::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+        $job->title = $request->title;
+        $job->user_id = $user->id;
+        $job->category_id = $request->category;
         $job->sub_category_id = $request->subcategory ? $request->subcategory : null;
         $job->amount = $request->amount;
         $job->delivery_time = $request->delivery;
@@ -148,9 +151,9 @@ class JobController extends Controller
             }
             $job->image = $filename;
         }
-        if($general->approval_post == 1){
+        if ($general->approval_post == 1) {
             $job->status = 1;
-        }else{
+        } else {
             $job->status = 0;
             $job->created_at = Carbon::now();
         }
@@ -186,23 +189,31 @@ class JobController extends Controller
     }
 
 
-    public function filterDod(Request $request){
-
-        $query = DOD::OnlyJob()->select('id','title');
-        $query->when(!empty($request->title), function ($query) use ($request) {
-            return $query->where('title', 'LIKE','%'.$request->title.'%');
-        });
-        return $query->get();
-
+    public function filterDod(Request $request)
+    {
+        try {
+            $query = DOD::OnlyJob()->select('id', 'title');
+            $query->when(!empty($request->title), function ($query) use ($request) {
+                return $query->where('title', 'LIKE', '%' . $request->title . '%');
+            });
+            return $query->get();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
     }
 
-    public function filterDeliverable(Request $request){
-
-        $query = Deliverable::OnlyJob()->select('id','title','slug');
-        $query->when(!empty($request->title), function ($query) use ($request) {
-            return $query->where('title', 'LIKE','%'.$request->title.'%');
-        });
-        return $query->get();
-
+    public function filterDeliverable(Request $request)
+    {
+        try {
+            $query = Deliverable::OnlyJob()->select('id', 'name', 'slug');
+            $query->when(!empty($request->name), function ($query) use ($request) {
+                return $query->where('name', 'LIKE', '%' . $request->name . '%');
+            });
+            return $query->get();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+        }
     }
 }
