@@ -23,7 +23,7 @@ class SkillCategorySeeder extends Seeder
             $categories = [
                 [
                     'id' => 1,
-                    'name' => 'Web Development',
+                    'name' => 'Development Type',
                     'sub_categories' => [
                        [
                             'id' => 1,
@@ -151,7 +151,7 @@ class SkillCategorySeeder extends Seeder
                 ],
                 [
                     'id' => 3,
-                    'name' => 'Mobile Application Developemt',
+                    'name' => 'Coding Competence',
                     'sub_categories' =>[
                         [
                             'id' => 5,
@@ -262,7 +262,7 @@ class SkillCategorySeeder extends Seeder
                         ],[]);
                     }
                 }
-
+                $skill_category->save();
             }
 
         } 

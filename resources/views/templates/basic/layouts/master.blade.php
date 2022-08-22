@@ -83,7 +83,6 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/wow.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
-<script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 @stack('script-lib')
