@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTaskSkills extends Migration
+class CategoryAttributes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,16 @@ class CreateTaskSkills extends Migration
      */
     public function up()
     {
-        Schema::create('task_skills', function (Blueprint $table) {
+        Schema::create('category_attributes', function (Blueprint $table) {
+
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('category_id')->index()->nullable();
             $table->unsignedBigInteger('sub_category_id')->index()->nullable();
-            $table->unsignedBigInteger('skill_id')->index()->nullable();
             $table->unsignedBigInteger('skill_category_id')->index()->nullable();
-            $table->unsignedBigInteger('skill_sub_category_id')->index()->nullable();
-            $table->integer('module_id')->index()->nullable();
-            $table->string('module_type')->nullable()->nullable();
-            $table->softDeletes();
-            $table->timestamps();
 
-            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
+$table->timestamps();
             $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('cascade');
-            $table->foreign('skill_sub_category_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
 
@@ -42,6 +36,6 @@ class CreateTaskSkills extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_skills');
+        Schema::dropIfExists('category_attributes');
     }
 }

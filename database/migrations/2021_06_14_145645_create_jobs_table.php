@@ -32,6 +32,7 @@ class CreateJobsTable extends Migration
             $table->integer('offered_amount')->nullable();
             $table->integer('delivery_time')->nullable();
             $table->longText('job_link')->nullable();
+            $table->date('expected_start_date')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('image', 40)->nullable();
