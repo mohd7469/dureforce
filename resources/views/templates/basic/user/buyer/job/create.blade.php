@@ -121,28 +121,43 @@
                                         <div class="row">
 
                                             {{-- Budget Type --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
                                                 <label for="budget">@lang('Budget Type')*</label>
-                                                <select name="budget" class="form-control budget" id="budget" required>
+                                                <select name="budget" class="form-control budget" id="budget_type" required>
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
                                                 </select>
                                             </div>
-
+                                            
                                             {{-- Weekly Range start --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
+                                                
                                                 <label>@lang('Weekly Range(Starting)')</label>
                                                 <input type="number" class="form-control" name="startrange" value="" placeholder="" >
+
                                             </div>
 
                                             {{-- Weekly Range end --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12form-group">
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
+                                                
                                                 <label>@lang('Weekly Range(Ending)')</label>
-                                                    <div class="input-group mb-3">
+                                                <div class="input-group mb-3">
                                                     <input type="number" class="form-control" name="endrange" value="" placeholder="" >
-                                                    </div>
+                                                </div>
+
+                                            </div>
+                                               
+
+                                            {{-- budget amount --}}
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
+
+                                                <label>@lang('Weekly Range(Ending)')</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" name="endrange" value="" placeholder="" >
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -541,6 +556,7 @@
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset($activeTemplateTrue.'frontend/js/nicEdit.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 
 
 @endpush
@@ -549,33 +565,51 @@
 @push('script')
 
 <script>
+
     function LoadDropZone()
     {   
-        var dropzone = new Dropzone('#demo-upload', {     
-        previewTemplate: document.querySelector('#demo-upload').innerHTML,
-        parallelUploads: 2,
-        thumbnailHeight: 60,
-        thumbnailWidth: 60,
-        maxFilesize: 3,
-        filesizeBase: 1000,
-        thumbnail: function(file, dataUrl) {
+        Dropzone.options.someDropzone = {
+            acceptedFiles: ".docx,application/pdf",
+            url: "allegati.php", // Set the url,
+            dictRemoveFileConfirmation: "Sei sicuro?",
+            maxFilesize: 10,
+            maxFiles: 1,
+            thumbnailWidth: 80,
+            thumbnailHeight: null,
+            parallelUploads: 20,
+        };
+        
+    }
+
+    // function LoadDropZone()
+    // {   
+    //     var dropzone = new Dropzone('#demo-upload', {     
+    //     previewTemplate: document.querySelector('#demo-upload').innerHTML,
+    //     parallelUploads: 2,
+    //     thumbnailHeight: 60,
+    //     thumbnailWidth: 60,
+    //     maxFilesize: 3,
+    //     filesizeBase: 1000,
+    //     thumbnail: function(file, dataUrl) {
       
-            if (file.previewElement) {
+    //         if (file.previewElement) {
       
-                file.previewElement.classList.remove("dz-file-preview");
-                var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-                for (var i = 0; i < images.length; i++) {
-                var thumbnailElement = images[i];
-                thumbnailElement.alt = file.name;
-                thumbnailElement.src = dataUrl;
-                }
-                setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+    //             file.previewElement.classList.remove("dz-file-preview");
+    //             var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+    //             for (var i = 0; i < images.length; i++) {
+    //             var thumbnailElement = images[i];
+    //             thumbnailElement.alt = file.name;
+    //             thumbnailElement.src = dataUrl;
+    //             }
+    //             setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
       
-            }
-        }
+    //         }
+    //     }
       
-      });
-}
+    //   });
+
+    // }
+
     "use strict";
     $(document).ready(function() {
         
@@ -593,10 +627,32 @@
             new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
         });
     });
-
+    
     $(document).on("change",".custom-file-input",function(){
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    $('#budget_type').on('change', function(){
+        var budget_type = $(this).val();
+
+        if(budget_type==1){
+
+            $('#budget_amount').show();
+            $('.weekly_range').hide();
+            $('.budget_type').removeClass('col-xl-4 col-lg-4 col-md-4');
+            $('.budget_type').addClass('col-xl-6 col-lg-6 col-md-6');
+
+        }
+        else
+        {
+            $('.weekly_range').show();
+            $('#budget_amount').hide();
+            $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
+            $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');
+        }
+
+             
     });
 
     $('#category').on('change', function(){
