@@ -66,8 +66,8 @@
                                                             
                                                             <div>
                                                                 <div class="upload_icon">
-                                                                    <img src="{{getImage('assets/images/frontend/job/upload.svg')}}" alt="">
-                                                                    <img src="{{getImage('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                                                    <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                                                                    <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
                                                                 </div>
                                                             </div>
                                                             
@@ -582,7 +582,7 @@
         $('.select2').select2({
             tags: true
         });
-        LoadDropZone();
+        // LoadDropZone();
 
     });
 
