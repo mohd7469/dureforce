@@ -74,15 +74,4 @@ class DODController extends Controller
     }
 
 
-    public function filterDod(Request $request){
-
-        $dods = DOD::query();
-        $dods->when(empty($request->title), function ($query) use ($request) {
-            $query->get();
-        });
-        $dods->when(!empty($request->title), function ($query) use ($request) {
-            $query->get();
-        });
-
-    }
 }
