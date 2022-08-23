@@ -21,7 +21,7 @@ class CategoryAttributes extends Migration
             $table->unsignedBigInteger('sub_category_id')->index()->nullable();
             $table->unsignedBigInteger('skill_category_id')->index()->nullable();
 
-$table->timestamps();
+            $table->timestamps();
             $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');

@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Skills extends Model
 {
+    protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
+    protected $table="skills";
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -33,5 +35,13 @@ class Skills extends Model
     public function moduleSkill()
     {
         return $this->belongsTo(ModuleSkill::class, 'skill_id');
+    }
+    public function skill_categories()
+    {
+        return $this->belongsToMany(SkillCategory::class, 'module_skills');
+    }
+    public function skill_sub_categories()
+    {
+        return $this->belongsToMany(SkillSubCategory::class, 'module_skills');
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SkillCategory extends Model
 {
     use HasFactory;
+    protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
 
     protected $fillable = ['name', 'slug'];
     protected $table = "skill_categories";
@@ -31,6 +32,18 @@ class SkillCategory extends Model
             $model->slug = \Str::slug($model->name);
         });
 
+    }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_attributes');
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'module_skills');
+    }
+    public function skill_sub_categories()
+    {
+        return $this->belongsToMany(SkillSubCategory::class, 'module_skills');
     }
 }

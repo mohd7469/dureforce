@@ -12,6 +12,7 @@ use App\Models\Module;
 use App\Models\ProjectStage;
 use App\Models\Rank;
 use App\Models\SkillCategory;
+use App\Models\SkillSubCategory;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
@@ -217,5 +218,14 @@ class JobController extends Controller
             DB::rollBack();
             return $e->getMessage();
         }
+    }
+
+    public function getSkills(Request $request){
+        $request->category_id=1;
+        $request->sub_category_id=1;
+
+        $category = Category::where('id',$request->category_id)->with(['skill_categories.skill_sub_categories.skills'])->get();
+
+
     }
 }

@@ -10,6 +10,7 @@ class SkillSubCategory extends Model
     use HasFactory;
     protected $fillable = ['name', 'slug'];
     protected $table = "skill_sub_categories";
+    protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
     public function moduleSkill()
     {
         return $this->belongsTo(ModuleSkill::class, 'skill_sub_category_id');
@@ -27,6 +28,14 @@ class SkillSubCategory extends Model
             $model->slug = \Str::slug($model->name);
         });
 
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'module_skills','skill_id','skill_sub_category_id');
+    }
+    public function skill_categories()
+    {
+        return $this->belongsToMany(SkillCategory::class, 'module_skills');
     }
 
 }

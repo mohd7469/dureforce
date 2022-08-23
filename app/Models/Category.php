@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Seeders\SkillCategorySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\Self_;
@@ -9,6 +10,7 @@ use phpDocumentor\Reflection\Types\Self_;
 class Category extends Model
 {
     use HasFactory;
+    protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
     protected $fillable = ['name','status'];
 
     const ServiceType = 1;
@@ -61,5 +63,10 @@ class Category extends Model
         if ($index !== false) {
             return $types[$index]['name'];
         }
+    }
+
+    public function skill_categories()
+    {
+        return $this->belongsToMany(SkillCategory::class, 'category_attributes');
     }
 }
