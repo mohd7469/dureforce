@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\Types\Self_;
 class Category extends Model
 {
     use HasFactory;
+    protected $fillable = ['name','status'];
 
     const ServiceType = 1;
     const SoftwareType = 2;

@@ -34,7 +34,7 @@ class JobController extends Controller
 
         $job_types = JobType::OnlyJob()->select(['id', 'title'])->get();
 
-        $categories = SkillCategory::select(['id', 'name', 'slug'])->get();
+        $categories = Category::select(['id', 'name'])->where('status',Category::ACTIVE)->get();
 
         $experience_levels = Rank::select(['id', 'level'])->get();
 
