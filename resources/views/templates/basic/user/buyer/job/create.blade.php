@@ -11,10 +11,12 @@
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
                             <div class="d-flex flex-wrap align-items-center justify-content-between">
-                                <h3 class="card-title mb-0">
+                                <h3 class="card-title mt-1">
                                     {{__($pageTitle)}}
                                 </h3>
+
                             </div>
+
                             <div class="card-body">
                                 <div class="card-form-wrapper">
                                     <div class="justify-content-center">
@@ -145,9 +147,9 @@
                                         </div>
 
                                         <div class="row">
-                                            {{-- Project Expected start Date --}}
+                                            {{-- Project Expected Start Date --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
-                                                <label>@lang('Project Expected start Date')</label>
+                                                <label>@lang('Project Expected Start Date')</label>
                                                     <div class="input-group mb-3">
                                                     <input type="date" class="form-control" name="projectstartdate" value="" placeholder="" required="">
                                                     </div>
