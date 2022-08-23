@@ -69,4 +69,12 @@ class Category extends Model
     {
         return $this->belongsToMany(SkillCategory::class, 'category_attributes');
     }
+    public function expertise()
+    {
+        return $this->belongsToMany(Expertise::class, 'category_attributes');
+    }
+    public function sub_categoires()
+    {
+        return $this->belongsToMany(SubCategory::class, 'category_attributes');
+    }
 }

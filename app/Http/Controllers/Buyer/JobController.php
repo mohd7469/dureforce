@@ -32,24 +32,24 @@ class JobController extends Controller
 
         $pageTitle = "Create Job";
 
-        $data=[];
-        $data['job_types'] = JobType::OnlyJob()->select(['id','title'])->get();
+        $data = [];
+        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
-        $data['categories'] = SkillCategory::select(['id','name','slug'])->get();
+        $data['categories'] = SkillCategory::select(['id', 'name', 'slug'])->get();
 
-        $data['experience_levels'] = Rank::select(['id','level'])->get();
+        $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id','title'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title'])->get();
 
-        $data['deliverables'] = Deliverable::OnlyJob()->select(['id','name','slug'])->get();
+        $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
-        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id','title'])->get();
+        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
-        $data['dods'] = DOD::OnlyJob()->select(['id','title'])->get();
+        $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
 
-    	return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle','data'));
+        return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
-       
+
     }
 
     public function index()
@@ -220,12 +220,28 @@ class JobController extends Controller
         }
     }
 
-    public function getSkills(Request $request){
-        $request->category_id=1;
-        $request->sub_category_id=1;
+    public function getSkills(Request $request)
+    {
+        $request->category_id = 1;
+        $request->sub_category_id = 1;
 
-        $category = Category::where('id',$request->category_id)->with(['skill_categories.skill_sub_categories.skills'])->get();
+        $category = Category::where('id', $request->category_id)->with(['expertise.skill_categories'])->get();
+
+        $skill_categories = $category[0]->expertise;
+        $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
+//        dd($skill_categories);
+        $ucnames = $skill_categories->map(function($item, $key) {
+
+            $grouped_skills=($item->groupby('expertise_type'));
+
+            $result=$grouped_skills->map(function($item, $key) {
+                    return  $item->toArray();
+            });
+
+            return $result->toArray();
 
 
+        });
+        dd($ucnames->toArray());
     }
 }

@@ -23,6 +23,12 @@ class SkillCategory extends Model
         return $this->hasMany(SkillSubCategory::class, 'skill_category_id');
 
     }
+    public function expertise()
+    {
+
+        return $this->hasMany(Expertise::class, 'skill_category_id');
+
+    }
     protected static function boot()
     {
         
