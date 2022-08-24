@@ -10,7 +10,7 @@ use phpDocumentor\Reflection\Types\Self_;
 class Category extends Model
 {
     use HasFactory;
-    protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
+    protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $fillable = ['name','status'];
 
     const ServiceType = 1;
@@ -71,7 +71,7 @@ class Category extends Model
     }
     public function expertise()
     {
-        return $this->belongsToMany(Expertise::class, 'category_attributes');
+        return $this->belongsToMany(Expertise::class, 'category_attributes')->withPivot(['sub_category_id'])->with('skill_categories');
     }
     public function sub_categoires()
     {

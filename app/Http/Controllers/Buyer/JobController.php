@@ -225,23 +225,25 @@ class JobController extends Controller
         $request->category_id = 1;
         $request->sub_category_id = 1;
 
-        $category = Category::where('id', $request->category_id)->with(['expertise.skill_categories'])->get();
+        $category = Category::where('id', $request->category_id)->with(['expertise' => function ($q) {
+            $q->where('sub_category_id', 1);
+        }])->get();
 
         $skill_categories = $category[0]->expertise;
         $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
-//        dd($skill_categories);
-        $ucnames = $skill_categories->map(function($item, $key) {
 
-            $grouped_skills=($item->groupby('expertise_type'));
+        $skills_with_categories = $skill_categories->map(function ($item, $key) {
 
-            $result=$grouped_skills->map(function($item, $key) {
-                    return  $item->toArray();
+            $grouped_skills = ($item->groupby('expertise_type'));
+
+            $result = $grouped_skills->map(function ($item, $key) {
+                return $item->toArray();
             });
 
             return $result->toArray();
 
-
         });
-        dd($ucnames->toArray());
+        dd($skills_with_categories->toArray());
+        return count($skills_with_categories);
     }
 }

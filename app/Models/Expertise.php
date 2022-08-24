@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Expertise extends Model
 {
     use HasFactory;
-    protected $hidden = ['pivot','created_at','updated_at','deleted_at','skill_categories'];
+    protected $hidden = ['created_at','updated_at','deleted_at'];
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'category_attributes');
