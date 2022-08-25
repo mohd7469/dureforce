@@ -328,7 +328,8 @@
                                     
     function loadSkills(data)
     {
-       
+        if(!jQuery.isEmptyObject(data))
+            $('#form_attributes').empty();
         for (var main_category in data) { //heading main
             
             var all_sub_categories=data[main_category];
