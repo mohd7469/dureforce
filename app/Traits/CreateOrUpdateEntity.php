@@ -69,7 +69,7 @@ trait CreateOrUpdateEntity {
                 ]);
             } else {
                 $model->featuresSoftware()->attach($request->features);
-                $model->softwareAttributes()->saveMany($attributes);
+                // $model->softwareAttributes()->saveMany($attributes);
     
                 $model->softwareDetail()->create([
                     'entity_fields' => decodeOrEncodeFields($request->entity_field, false),
@@ -153,7 +153,7 @@ trait CreateOrUpdateEntity {
                             'module_title' => $request->moduletitle[$key] ?? '',
                             'module_description' => $request->moduledescription[$key] ?? 0,
                             'price' => $request->add_on_price[$key] ?? 0,
-                            'estimated_lead_time' => $request->estimated_lead_time[$key] ?? ''
+                            'estimated_lead_time' => $request->add_on_delivery[$key] ?? ''
                         ]);
                 //     }
 
@@ -197,7 +197,7 @@ trait CreateOrUpdateEntity {
             try {
                 $filename = uploadImage($file, $path, $size);
             } catch (\Exception $exp) {
-              error($exp);
+            //   error($exp);
               return false;
             }
         }

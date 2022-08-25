@@ -327,7 +327,7 @@ function overviewFormValidation() {
       }
     }
 
-    if ($("input[name='features[]']:checked").length < 1) {
+    if ($("#features :selected").length < 1) {
       e.preventDefault();
       $(".include_error").after(
         '<span class="error text-danger">This field is required</span>'
@@ -751,3 +751,27 @@ function onSelectChange(parent, back, front) {
     back.show();
   }
 }
+
+$(document).ready(function () {
+  $('#features').select2({
+    ajax: { 
+        type:'GET',
+        url: '/featuresData',
+        placeholder: 'Select Features',
+        dataType: 'json',
+        processResults: function (data) {
+            return {
+                results : $.map(data, function (item) {
+                  itemd = JSON.stringify(item);
+                  console.log(itemd);
+                    return {
+                        text: item.name,
+                        id: item.id
+                    }
+                })
+            };
+        },
+        cache: true
+    }
+});
+});

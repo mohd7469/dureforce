@@ -41,6 +41,7 @@ class SoftwareController extends Controller
 
     public function create($id = null)
     {
+      
         $pageTitle = "Create software";
         $completedOverview = '';
         $completedPricing = '';
@@ -122,12 +123,12 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        // $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
+        $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
 
-        // if(!$result) {
-        //     $notify[] = ['error', 'Some error occured while saving banner.'];
-        //     return redirect()->back()->withNotify($notify);
-        // }
+        if(!$result) {
+            $notify[] = ['error', 'Some error occured while saving banner.'];
+            return redirect()->back()->withNotify($notify);
+        }
 
         if($software->amount == 0) {
             $notify[] = ['error', 'Please complete the software pricing first.'];
@@ -149,10 +150,10 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        // if(empty($software->image)) {
-        //     $notify[] = ['error', 'Please complete the software banners first.'];
-        //     return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
-        // }
+        if(empty($software->image)) {
+            $notify[] = ['error', 'Please complete the software banners first.'];
+            return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
+        }
 
         $this->saveRequirements($request, $software, Attribute::SOFTWARE);
 
@@ -162,6 +163,7 @@ class SoftwareController extends Controller
 
     public function storeReview(ReviewRequest $request)
     {
+        
         if(empty($request->get('software_id')))
         {
             $notify[] = ['error', 'Recently Created Software is missing.'];

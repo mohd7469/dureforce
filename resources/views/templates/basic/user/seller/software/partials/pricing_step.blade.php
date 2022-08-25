@@ -1,7 +1,5 @@
 <?php
-// $softwareSteps = collect([]);
-// $software_module  = collect([]);
-//use App\Models\SoftwareModule;
+print_r($software);
 if (!empty($software)) {
      $software_module = App\Models\SoftwareModule::where('software_id', $software->id)->get();
      $softwareSteps = App\Models\softwareStep::where('software_id', $software->id)->get();
@@ -98,12 +96,12 @@ if (!empty($software)) {
                 <div class="row add-ons" id="add-on-service-row-{{ $exKey }}">
                     <div class="col-xl-12 col-lg-12 form-group p-0">
                                         <label for="">Module Title*</label>
-                                        <input type="text" name="steps[]" id="step" placeholder="Travel Ticket Reservation System"
+                                        <input type="text" name="moduletitle[]" id="step" placeholder="Travel Ticket Reservation System"
                                             class="form-control"     />
                             
                                             <br/>
                                             <label for="discription">Module Description</label>
-                                            <textarea type="text" name="description[]" id="discription" placeholder="This is a short description." class="form-control"
+                                            <textarea type="text" name="moduledescription[]" id="discription" placeholder="This is a short description." class="form-control"
                                                 ></textarea>
                                             <br />
                                             <br />
@@ -120,6 +118,7 @@ if (!empty($software)) {
                             <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
                                 placeholder="@lang('Enter Hours')">
                      </div>
+                   </div>
                         <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
                             <button type="button" class="btn btn-danger"
                                 onclick="removeAddOnRow($('#add-on-service-row-{{ $exKey }}'))"><i
@@ -142,8 +141,8 @@ if (!empty($software)) {
                 <div class="row">
                     <div class="col-lg-12 ">
                         <div class="row" id="step-rows">
+                        @if (!isset($softwareSteps) || $softwareSteps->isEmpty())
                             <div class="col-xl-12 col-lg-12 form-group p-0">
-                                @if (!isset($softwareSteps) || $softwareSteps->isEmpty())
                                     <label for="">Step Name*</label>
                                     <input type="text" name="moduletitle[]" id="step" placeholder="E.g. Initial Requirements"
                                         class="form-control"     />
@@ -152,16 +151,16 @@ if (!empty($software)) {
                                                ></textarea>
                                         <br />
                                         <br />
-                                    </div>
+                                </div>
                                 @else
                                     @foreach ($softwareSteps as $softwareKey => $item)
                                   <div id="add-on-software-row-{{ $softwareKey }}">
                                             @if ($softwareKey != 0)
-                                                <div style="float: right; margin-bottom:1rem">
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="removeAddOnRow($('#add-on-software-row-{{ $softwareKey }}'))"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </div>
+                                            <div style="float: right; margin-bottom:1rem">
+                                                <button type="button" class="btn btn-danger"
+                                                    onclick="removeAddOnRow($('#add-on-software-row-{{ $softwareKey }}'))"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </div>
                                             @endif
                                             <label for="">Step Name </label>
                                             <input type="text" name="steps[]" id="step" placeholder="E.g. Initial Requirements"
@@ -173,7 +172,7 @@ if (!empty($software)) {
                                                 <br />
                                                 <br />
                                             </div>
-                                        </div>
+                                      </div>
                                     @endforeach
                                 @endif
                             </div>
@@ -197,8 +196,7 @@ if (!empty($software)) {
                             class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND
                             CONTINUE')</button>
                     </div>
-           
-</div> 
-</div>    
-    </div>
+                 </div>
+      </div>    
+ </div>
 </form>

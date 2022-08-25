@@ -40,4 +40,16 @@ class FeaturesController extends Controller
     	$notify[] = ['success', 'Features update successfully'];
 	    return back()->withNotify($notify);
     }
+	function search(Request $request){
+
+		$features = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $features = Features::select("id", "name")
+            		->where('name', 'LIKE', "%$search%")
+            		->get();
+        }
+        return response()->json($features);
+    }
+   
 }

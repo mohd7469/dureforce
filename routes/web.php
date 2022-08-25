@@ -357,6 +357,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('features', 'FeaturesController@index')->name('features.index');
             Route::post('features/store', 'FeaturesController@store')->name('features.store');
             Route::post('features/update', 'FeaturesController@update')->name('features.update');
+
         });
 
         Route::middleware('staffaccess:8')->group(function () {
@@ -746,5 +747,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 
+Route::get('/featuresData', 'Admin\FeaturesController@search');
 
 //

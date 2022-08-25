@@ -43,6 +43,7 @@
             <div class="row justify-content-center mb-30-none">
                 @include($activeTemplate . 'partials.seller_sidebar')
                 <div class="col-xl-10 col-lg-12 px-0 mb-30">
+
                     <div class="dashboard-sidebar-open"><i class="las la-bars"></i> @lang('Menu')</div>
 
                     <div class="card custom--card create-service-main mx-0">

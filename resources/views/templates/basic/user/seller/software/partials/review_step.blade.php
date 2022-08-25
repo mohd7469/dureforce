@@ -1,6 +1,12 @@
 <style>
 
 </style>
+<?php
+if (!empty($software)) {
+ $software_module = App\Models\SoftwareModule::where('software_id',$software->id)->get();
+}
+?>
+
 <form role="form" action="{{ route('user.software.store.review') }}" method="POST" class="review-form"
     enctype="multipart/form-data">
     @csrf
@@ -40,11 +46,20 @@
                          Estimated Lead Time (Hours)
                          </th>
                         </tr>
+                       
                         <tr>
-                            <td >Document Management System</td>
-                            <td class="hdng-create">$240.00</td>
-                            <td >400</td>
+                            <td >
+                            @foreach($software_module  as $module)
+                               {{ $module->module_title }} 
+                               
+                            </td>
+                          
+                            <td class="hdng-create">  {{ $module->price }}  </td>
+                            <td class="hdng-create">  {{ $module->estimated_lead_time	 }}  </td>
+                         
+                            @endforeach
                         </tr>
+                      
                     </table>
 </div>
 </div> 
