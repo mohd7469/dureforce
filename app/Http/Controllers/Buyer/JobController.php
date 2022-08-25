@@ -65,19 +65,20 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
         $general = GeneralSetting::first();
         $user = Auth::user();
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'title' => 'required|string|max:255',
-            'category' => 'required|exists:categories,id',
-            'subcategory' => 'nullable|exists:sub_categories,id',
-            'amount' => 'required|numeric|gt:0',
-            'delivery' => 'required|integer|min:1',
-            'skill' => 'required|array|min:3|max:15',
-            'description' => 'required',
-            'requirement' => 'required',
+            'title' => 'required|string|max:150',
+            'description' => 'required|string|max:1000',
+            'job_type_id' => 'required|exists:job_types,id',
+            'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'required|exists:sub_categories,id',
+            'rank_id' => 'required|exists:ranks,id',
+            'budget_type_id' => 'required|exists:budget_types,id',
+            'deliverables' => 'required|array|min:3',
+            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
+            'dod' => 'required|array|min:3',
+            'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
         ]);
 
         $uuid = Str::uuid()->toString();
@@ -89,8 +90,7 @@ class JobController extends Controller
             "category_id"=>$request->category_id,
             "sub_category_id"=>$request->sub_category_id,
             "rank_id"=>$request->rank_id,
-            "project_stage_id"=>$request->project_stage_id,
-            "status_id"=>$request->status_id,
+            "project_stage_id"=>isset( $request->project_stage_id) ?  $request->project_stage_id:null,
             "budget_type_id"=>$request->budget_type_id,
             "title"=>$request->title,
             "description"=>$request->description,
@@ -120,22 +120,18 @@ class JobController extends Controller
         $job->requirements = $request->requirement;
         $path = imagePath()['job']['path'];
         $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
-            }
-            $job->image = $filename;
-        }
-        if ($general->approval_post == 1) {
-            $job->status = 1;
-        }
-        $job->updated_at = Carbon::now();
-        $job->save();
+//        if ($request->hasFile('image')) {
+//            $file = $request->image;
+//            $this->fileValidate($file);
+//            try {
+//                $filename = uploadImage($file, $path, $size);
+//            } catch (\Exception $exp) {
+//                $notify[] = ['error', 'Image could not be uploaded.'];
+//                return back()->withNotify($notify);
+//            }
+//            $job->image = $filename;
+//        }
+
         $notify[] = ['success', 'Job has been created.'];
         return back()->withNotify($notify);
     }
