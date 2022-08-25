@@ -19,7 +19,7 @@
 
                             <div class="card-body">
                                 <div class="card-form-wrapper">
-                                    <div class="justify-content-center" id="form_attributes">
+                                    <div class="justify-content-center" >
 
                                         <div class="row">
 
@@ -225,27 +225,10 @@
                                                     
                                                 </div>
                                         </div>
-                                        
-                                        <h4 class="pb-3">Job Attributes</h4>
+                                        <div id="form_attributes">
+                                            
+                                        </div>
 
-                                        <div class="row" id="563pg">
-                                            <h5>Web Development</h5>
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Frontend</h5></div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                        <div class="inline" id="jmtou">
-                                                            <div class="form-group custom-check-group px-2">
-                                                                 <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="1" value="1"> 
-                                                                 <label for="1" class="services-checks value">php</label> 
-                                                                </div>
-                                                                <div class="form-group custom-check-group px-2"> 
-                                                                    <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="4" value="4">
-                                                                     <label for="4" class="services-checks value">js</label> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div></div><div></div><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>Backend</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="bf8gb"><div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="3" value="3"> <label for="3" class="services-checks value">laravel</label> </div><div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="5" value="5"> <label for="5" class="services-checks value">node js</label> </div></div></div></div></div><div></div></div>
                                        
                                         {{-- Create Job Button --}}
                                         
@@ -294,84 +277,88 @@
 <script>
 
     
-function fetchSubCategories(category)
-{
-    $.ajax({
-        type:"GET",
-        url:"{{route('user.category')}}",
-        data: {category : category},
-        success:function(data){
-            var html = '';
-            if(data.error){
-                $("#subCategorys").empty(); 
-                html += `<option value="" selected disabled>${data.error}</option>`;
-                $(".mySubCatgry").html(html);
-            }
-            else{
-                $("#subCategorys").empty(); 
-                html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                $.each(data, function(index, item) {
-                    html += `<option value="${item.id}">${item.name}</option>`;
+    function fetchSubCategories(category)
+    {
+        $.ajax({
+            type:"GET",
+            url:"{{route('user.category')}}",
+            data: {category : category},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                    $("#subCategorys").empty(); 
+                    html += `<option value="" selected disabled>${data.error}</option>`;
                     $(".mySubCatgry").html(html);
-                });
+                }
+                else{
+                    $("#subCategorys").empty(); 
+                    html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                    $.each(data, function(index, item) {
+                        html += `<option value="${item.id}">${item.name}</option>`;
+                        $(".mySubCatgry").html(html);
+                    });
+                }
             }
-        }
-    });  
-}
-function fetchSkills(category,sub_category=''){
-    $.ajax({
-        type:"GET",
-    url:"{{route('user.job.let.skills')}}",
-        data: {category : category,sub_category:sub_category},
-        success:function(data){
-            var html = '';
-            if(data.error){
-               
-            }
-            else{
-                loadSkills(data);
-                console.log(data);
-               
-            }
-        }
-    });  
+        });  
+    }
 
-}
-
-
-
-const genRand = (len) => {
-  return Math.random().toString(36).substring(2,len+2);
-}                                  
-function loadSkills(data)
-{
-
-    for (var main_category in data) { //heading main
-        
-        var all_sub_categories=data[main_category];
-        var main_category_id=genRand(5);
-        $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
-        for (var sub_category_enum in all_sub_categories) { //front end backend 
-
-            var skills=all_sub_categories[sub_category_enum];
-            var sub_category_id=genRand(5);
-
-            $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
-            for (var skill_index in skills) {
+    function fetchSkills(category,sub_category=''){
+        $.ajax({
+            type:"GET",
+        url:"{{route('user.job.let.skills')}}",
+            data: {category_id : category,sub_category_id:sub_category},
+            success:function(data){
+                var html = '';
+                if(data.error){
                 
-                var skill_id=skills[skill_index].id;
-                var skill_name=skills[skill_index].name;
-                $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
-
-
+                }
+                else{
+                    loadSkills(data);
+                    console.log(data);
+                
+                }
             }
-            $('#'+main_category_id).append('<div/></div></div></div>');
-        }
-        $('#form_attributes').append('</div>');
+        });  
 
     }
 
-}
+    const genRand = (len) => {
+    return Math.random().toString(36).substring(2,len+2);
+    }
+                                    
+    function loadSkills(data)
+    {
+        if(!jQuery.isEmptyObject(data))
+            $('#form_attributes').empty();
+        for (var main_category in data) { //heading main
+            
+            var all_sub_categories=data[main_category];
+            var main_category_id=genRand(5);
+        
+            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+                var skills=all_sub_categories[sub_category_enum];
+                var sub_category_id=genRand(5);
+
+                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                for (var skill_index in skills) {
+                    
+                    var skill_id=skills[skill_index].id;
+                    var skill_name=skills[skill_index].name;
+                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+                }
+                
+            }
+            $('#'+main_category_id).append('<div/></div>');
+        }
+        $('#form_attributes').append('</div>');
+
+
+    }
+    
     "use strict";
     $(document).ready(function() {
         

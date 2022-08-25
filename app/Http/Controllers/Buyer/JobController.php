@@ -222,7 +222,7 @@ class JobController extends Controller
 
     public function getSkills(Request $request)
     {
-        $request->category_id = 1;
+        $request->category_id = 2;
         $request->sub_category_id = 1;
 
         $category = Category::where('id', $request->category_id)->with(['expertise' => function ($q) {
