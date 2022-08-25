@@ -19,6 +19,7 @@ use Carbon\Carbon;
 use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class JobController extends Controller
 {
@@ -222,29 +223,32 @@ class JobController extends Controller
 
     public function getSkills(Request $request)
     {
-        $request->category_id = 1;
-        $request->sub_category_id = 1;
+        try {
+            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use($request){
+                $q->when(isset($request->sub_category_id), function ($q) use ($request) {
+                    $q->where('sub_category_id', $request->sub_category_id);
+                });
 
-        $category = Category::where('id', $request->category_id)->with(['expertise' => function ($q) {
-            $q->where('sub_category_id', 1);
-        }])->get();
+            }])->get();
 
-        $skill_categories = $category[0]->expertise;
-        $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
+            $skill_categories = $category[0]->skill;
+            $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
 
-        $skills_with_categories = $skill_categories->map(function ($item, $key) {
+            $skills_with_categories = $skill_categories->map(function ($item, $key) {
 
-            $grouped_skills = ($item->groupby('expertise_type'));
+                $grouped_skills = ($item->groupby('skill_type'));
 
-            $result = $grouped_skills->map(function ($item, $key) {
-                return $item->toArray();
+                $result = $grouped_skills->map(function ($item, $key) {
+                    return $item->toArray();
+                });
+
+                return $result->toArray();
+
             });
-
-            return $result->toArray();
-
-        });
-        return response()->json($skills_with_categories);
-        // dd($skills_with_categories->toArray());
-        // return count($skills_with_categories);
+            dd($skills_with_categories->toArray());
+            return response()->json($skills_with_categories);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }

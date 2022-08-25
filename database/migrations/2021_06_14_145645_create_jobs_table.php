@@ -17,6 +17,8 @@ class CreateJobsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->index('uuid');
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('sub_category_id')->index();
 //            $table->unsignedInteger('location_id');// no table for this pkg will be used
             $table->unsignedBigInteger('rank_id'); //it will be used as experience level
             $table->unsignedBigInteger('project_stage_id'); //table created
@@ -41,6 +43,8 @@ class CreateJobsTable extends Migration
 
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
             $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('cascade');
             $table->foreign('project_stage_id')->references('id')->on('project_stages')->onDelete('cascade');
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');

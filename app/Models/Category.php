@@ -69,9 +69,9 @@ class Category extends Model
     {
         return $this->belongsToMany(SkillCategory::class, 'category_attributes');
     }
-    public function expertise()
+    public function skill()
     {
-        return $this->belongsToMany(Expertise::class, 'category_attributes')->withPivot(['sub_category_id'])->with('skill_categories');
+        return $this->belongsToMany(Skills::class, 'category_attributes')->withPivot(['sub_category_id'])->with('skill_categories');
     }
     public function sub_categoires()
     {
