@@ -20,6 +20,7 @@ use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class JobController extends Controller
 {
@@ -64,6 +65,7 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
+        dd($request);
         $general = GeneralSetting::first();
         $user = Auth::user();
         $request->validate([
@@ -77,6 +79,35 @@ class JobController extends Controller
             'description' => 'required',
             'requirement' => 'required',
         ]);
+
+        $uuid = Str::uuid()->toString();
+       $job = Job::create([
+            "uuid"=>$uuid,
+            "user_id"=>$user->id,
+            "job_type_id"=>$request->job_type_id,
+//            "location_id"=>$request->location_id,
+            "category_id"=>$request->category_id,
+            "sub_category_id"=>$request->sub_category_id,
+            "rank_id"=>$request->rank_id,
+            "project_stage_id"=>$request->project_stage_id,
+            "status_id"=>$request->status_id,
+            "budget_type_id"=>$request->budget_type_id,
+            "title"=>$request->title,
+            "description"=>$request->description,
+            "fixed_amount"=> isset($request->fixed_amount) ? $request->fixed_amount:null,
+            "hourly_start_range"=> isset($request->hourly_start_range) ? $request->hourly_start_range:null,
+            "hourly_end_range"=>isset($request->hourly_end_range) ? $request->hourly_end_range:null,
+            "delivery_time"=>$request->delivery_time,
+            "job_link"=>$uuid,
+            "expected_start_date"=>$request->expected_start_date,
+
+        ]);
+
+       $job->deliverable()->sync($request->deliverables);
+       $job->dod()->sync($request->dod);
+       $job->skill()->sync($request->skills);
+
+
         $job = new Job();
         $job->title = $request->title;
         $job->user_id = $user->id;
@@ -223,8 +254,6 @@ class JobController extends Controller
 
     public function getSkills(Request $request)
     {
-
-
         try {
             $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use($request){
                 $q->when(isset($request->sub_category_id), function ($q) use ($request) {

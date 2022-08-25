@@ -15,7 +15,7 @@ class CreateJobsTable extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid')->index('uuid');
+            $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('category_id')->index();
             $table->unsignedBigInteger('sub_category_id')->index();
@@ -26,7 +26,6 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('job_type_id'); //table created
             $table->unsignedBigInteger('budget_type_id'); // table created
             $table->string('title')->nullable();
-            $table->string('requirements')->nullable(); // will create a table for documents attached
             $table->longText('description')->nullable();
             $table->decimal('fixed_amount', 28,8)->default(0)->nullable();
             $table->decimal('hourly_start_range', 28,8)->default(0)->nullable();
@@ -37,7 +36,6 @@ class CreateJobsTable extends Migration
             $table->date('expected_start_date')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('image', 40)->nullable();
             $table->softDeletes();
             $table->timestamps();
 

@@ -32,7 +32,7 @@
                                             {{-- Job Type --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Job Type')</label>
-                                                <select class="form-control bg--gray" name="jobtype" id="jobtype">
+                                                <select class="form-control bg--gray" name="job_type_id" id="jobtype">
                                                     <option value="" >@lang('Select Job Type')</option>
                                                     @foreach ($data['job_types'] as $item)
                                                         <option value="{{$item->id}}">{{$item->title}}</option>
@@ -43,7 +43,7 @@
                                             {{-- Job Location --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
                                                 <label for="joblocation">@lang('Job Location')</label>
-                                                <select name="joblocation" class="form-control joblocation" id="joblocation">
+                                                <select name="location_id" class="form-control joblocation" id="joblocation">
                                                     <option value="" >@lang('Select Job Type')</option>
                                                     @foreach ($data['job_types'] as $item)
                                                         <option value="{{$item->id}}">{{$item->title}}</option>
@@ -53,7 +53,7 @@
                                         </div>
                                         
                                         <div class="row">
-                                            {{-- Required documents --}}
+                                            {{-- Description --}}
                                             <div class="col-xl-6 col-lg-6 form-group">
                                                 <label>@lang('Description')*</label>
                                                 <textarea class="form-control bg--gray" name="description" aria-rowspan="3" required></textarea>
@@ -93,7 +93,7 @@
                                             {{-- Category --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Category')*</label>
-                                                <select class="form-control bg--gray" name="category" id="category" required>
+                                                <select class="form-control bg--gray" name="category_id" id="category" required>
                                                     <option selected="" disabled="">@lang('Select Category')</option>
                                                     @foreach($data['categories'] as $category)
                                                         <option value="{{__($category->id)}}">{{__($category->name)}}</option>
@@ -104,14 +104,14 @@
                                             {{-- Sub Category --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label for="subCategorys">@lang('Sub Category')</label>
-                                                    <select name="subcategory" class="form-control mySubCatgry" id="subCategorys">
+                                                    <select name="sub_category_id" class="form-control mySubCatgry" id="subCategorys">
                                                     </select>
                                             </div>
 
                                             {{-- Experienced Level --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label for="experience">@lang('Experience Level')*</label>
-                                                    <select name="experience" class="form-control experience" id="experience" required>
+                                                    <select name="rank_id" class="form-control experience" id="experience" required>
                                                         <option selected="" disabled="">@lang('Select Experience Level')</option>
                                                         @foreach($data['experience_levels'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->level)}}</option>
@@ -126,7 +126,7 @@
                                             {{-- Budget Type --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
                                                 <label for="budget">@lang('Budget Type')*</label>
-                                                <select name="budget" class="form-control budget" id="budget_type" required>
+                                                <select name="budget" class="form-control budget" id="budget_type_id" required>
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
@@ -138,7 +138,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
                                                 
                                                 <label>@lang('Weekly Range(Starting)')</label>
-                                                <input type="number" class="form-control" name="startrange" value="" placeholder="" >
+                                                <input type="number" class="form-control" name="hourly_start_range" value="" placeholder="" >
 
                                             </div>
 
@@ -147,7 +147,7 @@
                                                 
                                                 <label>@lang('Weekly Range(Ending)')</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="endrange" value="" placeholder="" >
+                                                    <input type="number" class="form-control" name="hourly_end_range" value="" placeholder="" >
                                                 </div>
 
                                             </div>
@@ -158,7 +158,7 @@
 
                                                 <label>@lang('Budget Amount')</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="endrange" value="" placeholder="" >
+                                                    <input type="number" class="form-control" name="fixed_amount" value="" placeholder="" >
                                                 </div>
 
                                             </div>
@@ -171,7 +171,7 @@
                                             <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Deliverables')*</label>
                                                 <div class="input-group mb-3">
-                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables" id="deliverables">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables">
                                                         @foreach($data['deliverables'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                                         @endforeach
@@ -187,7 +187,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Expected Start Date')</label>
                                                     <div class="input-group mb-3">
-                                                    <input type="date" class="form-control" name="projectstartdate" value="" placeholder="" required="">
+                                                    <input type="date" class="form-control" name="expected_start_date" value="" placeholder="" required="">
                                                     </div>
                                             </div>
 
@@ -195,14 +195,14 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
-                                                    <input type="integer" class="form-control" name="projectlength" value="{{old('projectlength')}}" placeholder="" required="">
+                                                    <input type="integer" class="form-control" name="delivery_time" value="{{old('projectlength')}}" placeholder="" required="">
                                                     </div>
                                             </div>
 
                                             {{-- project stage --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
-                                                <select name="projectstage" class="form-control budget" id="projectstage">
+                                                <select name="projectstage" class="form-control budget" id="project_stage_id">
                                                     <option selected="" disabled="">@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
@@ -216,7 +216,7 @@
                                         <div class="row col-xl-12 col-lg-12 form-group">
                                             <label>@lang('Defination of Done(DOD)')*</label>
                                                 <div class="input-group mb-3">
-                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod" id="dod">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod">
                                                         @foreach($data['dods'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
