@@ -65,7 +65,9 @@
                                             
                                                     <div id="dropzone">
                                                         <div class="dropzone needsclick" id="demo-upload" action="#" >
-                                                            
+                                                            <div class="fallback">
+                                                                <input name="file" type="file" multiple />
+                                                            </div>
                                                             <div>
                                                                 <div class="upload_icon">
                                                                     <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
@@ -358,14 +360,14 @@
 
 
     }
-
+    Dropzone.autoDiscover = false;
     "use strict";
     $(document).ready(function() {
+     
         
         $('.select2').select2({
             tags: true
         });
-        // LoadDropZone();
 
     });
 
@@ -387,6 +389,7 @@
         var budget_type = $(this).val();
         switchBudgetFileds(budget_type);
     });
+  
     
     $('#subCategorys').on('change', function(){
         var sub_category = $(this).val();
