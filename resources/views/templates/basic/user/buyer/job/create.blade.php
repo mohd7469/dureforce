@@ -328,8 +328,7 @@
                                     
     function loadSkills(data)
     {
-        if(!jQuery.isEmptyObject(data))
-            $('#form_attributes').empty();
+       
         for (var main_category in data) { //heading main
             
             var all_sub_categories=data[main_category];
@@ -358,7 +357,7 @@
 
 
     }
-    
+
     "use strict";
     $(document).ready(function() {
         
@@ -390,7 +389,8 @@
     
     $('#subCategorys').on('change', function(){
         var sub_category = $(this).val();
-        fetchSkills(sub_category);
+        var category = $('#category').find(":selected").val();
+        fetchSkills(category,sub_category);
 
     });
 
