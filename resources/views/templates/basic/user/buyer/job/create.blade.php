@@ -19,7 +19,7 @@
 
                             <div class="card-body">
                                 <div class="card-form-wrapper">
-                                    <div class="justify-content-center">
+                                    <div class="justify-content-center" id="form_attributes">
 
                                         <div class="row">
 
@@ -89,6 +89,7 @@
                                         </div>
                                         
                                         <div class="row">
+
                                             {{-- Category --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Category')*</label>
@@ -155,7 +156,7 @@
                                             {{-- budget amount --}}
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
 
-                                                <label>@lang('Weekly Range(Ending)')</label>
+                                                <label>@lang('Budget Amount')</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" class="form-control" name="endrange" value="" placeholder="" >
                                                 </div>
@@ -224,304 +225,28 @@
                                                     
                                                 </div>
                                         </div>
-
-                                        {{-- job attributes --}}
-                                        <div class="row">
-                                            
-                                            <h4 class="pb-3">Job Attributes</h4>
-                                            <h5>Development Type</h5>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Front End</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input  type="checkbox" name="attrs[] 0" id="11" value="11">
-                                                                    <label for="11" class="services-checks value">PHP</label>
-                                                                </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                    <input  type="checkbox" name="attrs[] 0" id="13" value="13">
-                                                                        <label for="13" class="services-checks value">JAVA</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="14" value="44">
-                                                                <label for="14" class="services-checks value">DOT NET</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="15" value="45">
-                                                                <label for="15" class="services-checks value">PYTHON</label>
-                                                            </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Back End</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-                                                            
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input  type="checkbox" name="attrs[] 0" id="19" value="19">
-                                                                    <label for="19" class="services-checks value">PHP</label>
-                                                                </div>
-                                                            <div class="form-group custom-check-group px-2">
-                                                                    <input  type="checkbox" name="attrs[] 0" id="43" value="43">
-                                                                        <label for="43" class="services-checks value">JAVA</label>
-                                                            </div>
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="44" value="44">
-                                                                <label for="44" class="services-checks value">DOT NET</label>
-                                                            </div>
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="45" value="45">
-                                                                <label for="45" class="services-checks value">PYTHON</label>
-                                                            </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-
-                                        </div>
-
                                         
-                                         {{-- Programming Languages --}}
-                                         <div class="row pt-3">
-                                            
-                                            <h5>Programming Language</h5>
+                                        <h4 class="pb-3">Job Attributes</h4>
 
+                                        <div class="row" id="563pg">
+                                            <h5>Web Development</h5>
                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                 <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Front End</h5> </div>
+                                                    <div class="card-headder"><h5>Frontend</h5></div>
                                                     <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-
+                                                        <div class="inline" id="jmtou">
                                                             <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" id="1"  value="1" name="attrs[]">
-                                                                  <label for="1" class="services-checks value">Javascript</label>
-                                                              </div>
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[]" id="88" value="88">
-                                                                  <label for="88" class="services-checks value">React</label>
-                                                              </div>
-                  
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[]" id="53" value="53">
-                                                                  <label for="53" class="services-checks value">HTML</label>
-                                                              </div>
-                  
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="30"  value="30">
-                                                                  <label for="30" class="services-checks value">CSS</label>
-                                                              </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Back End</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-                                                            
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input  type="checkbox" name="attrs[] 0" id="22" value="22">
-                                                                <label for="22" class="services-checks value">PHP</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                    <input  type="checkbox" name="attrs[] 0" id="23" value="23">
-                                                                       <label for="23" class="services-checks value">JAVA</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                               <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="24" value="24">
-                                                               <label for="24" class="services-checks value">DOT NET</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                              <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="25" value="25">
-                                                               <label for="25" class="services-checks value">PYTHON</label>
-                                                            </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {{-- Coding Competence --}}
-                                        <div class="row">
-                                            
-                                            <h5>Coding Competence</h5>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Backend </h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" id="1"  value="1" name="attrs[]">
-                                                                  <label for="1" class="services-checks value">Javascript</label>
-                                                              </div>
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[]" id="88" value="88">
-                                                                  <label for="88" class="services-checks value">React</label>
-                                                              </div>
-                  
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[]" id="53" value="53">
-                                                                  <label for="53" class="services-checks value">HTML</label>
-                                                              </div>
-                  
-                                                              <div class="form-group custom-check-group px-2">
-                                                                  <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="30"  value="30">
-                                                                  <label for="30" class="services-checks value">CSS</label>
-                                                              </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Front End</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-                                                            
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input  type="checkbox" name="attrs[] 0" id="22" value="22">
-                                                                <label for="22" class="services-checks value">PHP</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                    <input  type="checkbox" name="attrs[] 0" id="23" value="23">
-                                                                       <label for="23" class="services-checks value">JAVA</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                               <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="24" value="24">
-                                                               <label for="24" class="services-checks value">DOT NET</label>
-                                                            </div>
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                              <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="25" value="25">
-                                                               <label for="25" class="services-checks value">PYTHON</label>
-                                                            </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                
-                                        {{-- database competencies --}}
-                                        <div class="row">
-                                            
-                                            <h5>Databases</h5>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Relational</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="90" value="90">
-                                                                    <label for="90" class="services-checks value">MYSQL</label>
+                                                                 <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="1" value="1"> 
+                                                                 <label for="1" class="services-checks value">php</label> 
                                                                 </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                        <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0"  id="91" value="91">
-                                                                            <label for="91" class="services-checks value">ORACLE</label>
+                                                                <div class="form-group custom-check-group px-2"> 
+                                                                    <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="4" value="4">
+                                                                     <label for="4" class="services-checks value">js</label> 
+                                                                    </div>
                                                                 </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                    <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="92" value="92">
-                                                                    <label for="92" class="services-checks value">MONGODB</label>
-                                                                </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                    <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="94" value="94">
-                                                                    <label for="94" class="services-checks value">MSSQYL</label>
-                                                                </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                <div class="card custom-card  pt-3" style="padding-left: 23px">
-                                                    <div class="card-headder"><h5>Non-Relational</h5> </div>
-                                                    <div class="card-body custom-padding mt-3">
-                                                       
-                                                        <div class="inline">
-
-                                                            <div class="form-group custom-check-group px-2">
-                                                                <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="90" value="90">
-                                                                    <label for="90" class="services-checks value">MYSQL</label>
-                                                                </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                        <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0"  id="91" value="91">
-                                                                            <label for="91" class="services-checks value">ORACLE</label>
-                                                                </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                    <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="92" value="92">
-                                                                    <label for="92" class="services-checks value">MONGODB</label>
-                                                                </div>
-
-                                                                <div class="form-group custom-check-group px-2">
-                                                                    <input class="attrs-checkbox-back" type="checkbox" name="attrs[] 0" id="94" value="94">
-                                                                    <label for="94" class="services-checks value">MSSQYL</label>
-                                                                </div>
-
-                                                        </div>
-                                                               
-                                                    </div>
-                
-                                                </div>
-                                            </div>
-                                            
-                                           
-                                        </div>
-                                        
+                                                            </div>
+                                                        </div></div><div></div><div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>Backend</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="bf8gb"><div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="3" value="3"> <label for="3" class="services-checks value">laravel</label> </div><div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="5" value="5"> <label for="5" class="services-checks value">node js</label> </div></div></div></div></div><div></div></div>
+                                       
                                         {{-- Create Job Button --}}
                                         
                                         <div id="outer" class="text-right">
@@ -568,50 +293,85 @@
 
 <script>
 
-    function LoadDropZone()
-    {   
-        Dropzone.options.someDropzone = {
-            acceptedFiles: ".docx,application/pdf",
-            url: "allegati.php", // Set the url,
-            dictRemoveFileConfirmation: "Sei sicuro?",
-            maxFilesize: 10,
-            maxFiles: 1,
-            thumbnailWidth: 80,
-            thumbnailHeight: null,
-            parallelUploads: 20,
-        };
+    
+function fetchSubCategories(category)
+{
+    $.ajax({
+        type:"GET",
+        url:"{{route('user.category')}}",
+        data: {category : category},
+        success:function(data){
+            var html = '';
+            if(data.error){
+                $("#subCategorys").empty(); 
+                html += `<option value="" selected disabled>${data.error}</option>`;
+                $(".mySubCatgry").html(html);
+            }
+            else{
+                $("#subCategorys").empty(); 
+                html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                $.each(data, function(index, item) {
+                    html += `<option value="${item.id}">${item.name}</option>`;
+                    $(".mySubCatgry").html(html);
+                });
+            }
+        }
+    });  
+}
+function fetchSkills(category,sub_category=''){
+    $.ajax({
+        type:"GET",
+    url:"{{route('user.job.let.skills')}}",
+        data: {category : category,sub_category:sub_category},
+        success:function(data){
+            var html = '';
+            if(data.error){
+               
+            }
+            else{
+                loadSkills(data);
+                console.log(data);
+               
+            }
+        }
+    });  
+
+}
+
+
+
+const genRand = (len) => {
+  return Math.random().toString(36).substring(2,len+2);
+}                                  
+function loadSkills(data)
+{
+
+    for (var main_category in data) { //heading main
         
+        var all_sub_categories=data[main_category];
+        var main_category_id=genRand(5);
+        $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+        for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+            var skills=all_sub_categories[sub_category_enum];
+            var sub_category_id=genRand(5);
+
+            $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+            for (var skill_index in skills) {
+                
+                var skill_id=skills[skill_index].id;
+                var skill_name=skills[skill_index].name;
+                $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="sub_category_enum[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+            }
+            $('#'+main_category_id).append('<div/></div></div></div>');
+        }
+        $('#form_attributes').append('</div>');
+
     }
 
-    // function LoadDropZone()
-    // {   
-    //     var dropzone = new Dropzone('#demo-upload', {     
-    //     previewTemplate: document.querySelector('#demo-upload').innerHTML,
-    //     parallelUploads: 2,
-    //     thumbnailHeight: 60,
-    //     thumbnailWidth: 60,
-    //     maxFilesize: 3,
-    //     filesizeBase: 1000,
-    //     thumbnail: function(file, dataUrl) {
-      
-    //         if (file.previewElement) {
-      
-    //             file.previewElement.classList.remove("dz-file-preview");
-    //             var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-    //             for (var i = 0; i < images.length; i++) {
-    //             var thumbnailElement = images[i];
-    //             thumbnailElement.alt = file.name;
-    //             thumbnailElement.src = dataUrl;
-    //             }
-    //             setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-      
-    //         }
-    //     }
-      
-    //   });
-
-    // }
-
+}
     "use strict";
     $(document).ready(function() {
         
@@ -635,51 +395,24 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
+    
     $('#budget_type').on('change', function(){
         var budget_type = $(this).val();
+        switchBudgetFileds(budget_type);
+    });
+    
+    $('#subCategorys').on('change', function(){
+        var sub_category = $(this).val();
+        fetchSkills(sub_category);
 
-        if(budget_type==1){
-
-            $('#budget_amount').show();
-            $('.weekly_range').hide();
-            $('.budget_type').removeClass('col-xl-4 col-lg-4 col-md-4');
-            $('.budget_type').addClass('col-xl-6 col-lg-6 col-md-6');
-
-        }
-        else
-        {
-            $('.weekly_range').show();
-            $('#budget_amount').hide();
-            $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
-            $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');
-        }
-
-             
     });
 
     $('#category').on('change', function(){
         var category = $(this).val();
-            $.ajax({
-                type:"GET",
-                url:"{{route('user.category')}}",
-                data: {category : category},
-                success:function(data){
-                    var html = '';
-                    if(data.error){
-                        $("#subCategorys").empty(); 
-                        html += `<option value="" selected disabled>${data.error}</option>`;
-                        $(".mySubCatgry").html(html);
-                    }
-                    else{
-                        $("#subCategorys").empty(); 
-                        html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                        $.each(data, function(index, item) {
-                            html += `<option value="${item.id}">${item.name}</option>`;
-                            $(".mySubCatgry").html(html);
-                        });
-                    }
-                }
-        });   
+        fetchSubCategories(category);
+        fetchSkills(category);
+        
+         
     });
 
 

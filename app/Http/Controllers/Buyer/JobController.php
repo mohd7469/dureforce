@@ -243,7 +243,8 @@ class JobController extends Controller
             return $result->toArray();
 
         });
-        dd($skills_with_categories->toArray());
-        return count($skills_with_categories);
+        return response()->json($skills_with_categories);
+        // dd($skills_with_categories->toArray());
+        // return count($skills_with_categories);
     }
 }
