@@ -37,7 +37,7 @@ class JobController extends Controller
 
         $data = [];
 
-        $data['continents'] = World::Continents();
+        $data['continents'] = World::Countries();
 
         $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
