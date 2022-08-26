@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d539ee9441a85197cf2448e9d591c910",
+    "content-hash": "57cc303336eccba3256ec881b7724b28",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1348,6 +1348,64 @@
                 }
             ],
             "time": "2022-05-21T17:30:32+00:00"
+        },
+        {
+            "name": "khsing/world",
+            "version": "v9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/khsing/laravel-world.git",
+                "reference": "5caebebe8f0715d6ca022086b035b3e27520ea96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/khsing/laravel-world/zipball/5caebebe8f0715d6ca022086b035b3e27520ea96",
+                "reference": "5caebebe8f0715d6ca022086b035b3e27520ea96",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0|^9.0",
+                "php": ">7.3|^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.5.8|^9.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Khsing\\World\\WorldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Khsing\\World\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Guixing Bai",
+                    "email": "khsing.cn@gmail.com"
+                }
+            ],
+            "description": "Provide countries, states, and cities relations database.",
+            "keywords": [
+                "city",
+                "country",
+                "region",
+                "world"
+            ],
+            "support": {
+                "issues": "https://github.com/khsing/laravel-world/issues",
+                "source": "https://github.com/khsing/laravel-world/tree/v9.0"
+            },
+            "time": "2022-05-13T23:27:49+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -8262,7 +8320,6 @@
         },
         {
             "name": "laravel/sail",
-
             "version": "v1.15.4",
             "source": {
                 "type": "git",
@@ -8273,7 +8330,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/sail/zipball/853dea1fa866a52a93beccc4e5affdc49b98e7d5",
                 "reference": "853dea1fa866a52a93beccc4e5affdc49b98e7d5",
-
                 "shasum": ""
             },
             "require": {
@@ -8320,9 +8376,7 @@
                 "issues": "https://github.com/laravel/sail/issues",
                 "source": "https://github.com/laravel/sail"
             },
-
             "time": "2022-08-17T13:17:15+00:00"
-
         },
         {
             "name": "maximebf/debugbar",
@@ -10441,5 +10495,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
