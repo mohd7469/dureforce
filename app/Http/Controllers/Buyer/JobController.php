@@ -139,6 +139,7 @@ class JobController extends Controller
 //            $job->image = $filename;
 //        }
 
+
         // $notify[] = ['success', 'Job has been created.'];
         // return back()->withNotify($notify);
     }

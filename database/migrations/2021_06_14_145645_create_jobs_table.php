@@ -16,15 +16,15 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->uuid('uuid')->index('uuid')->unique()->nullable();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('sub_category_id')->index();
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('category_id')->index()->nullable();
+            $table->unsignedBigInteger('sub_category_id')->index()->nullable();
 //            $table->unsignedInteger('location_id');// no table for this pkg will be used
-            $table->unsignedBigInteger('rank_id'); //it will be used as experience level
-            $table->unsignedBigInteger('project_stage_id'); //table created
-            $table->unsignedBigInteger('status_id'); //table created
-            $table->unsignedBigInteger('job_type_id'); //table created
-            $table->unsignedBigInteger('budget_type_id'); // table created
+            $table->unsignedBigInteger('rank_id')->nullable(); //it will be used as experience level
+            $table->unsignedBigInteger('project_stage_id')->nullable(); //table created
+            $table->unsignedBigInteger('status_id')->nullable(); //table created
+            $table->unsignedBigInteger('job_type_id')->nullable(); //table created
+            $table->unsignedBigInteger('budget_type_id')->nullable(); // table created
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('fixed_amount', 28,8)->default(0)->nullable();

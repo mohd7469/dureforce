@@ -35,6 +35,6 @@ class Deliverable extends Model
 
     public function job()
     {
-        return $this->belongsToMany(DOD::class, 'job_dods');
+        return $this->belongsToMany(DOD::class, 'job_deliverables');
     }
 }
