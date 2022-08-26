@@ -176,3 +176,7 @@ div. {
     margin-bottom: 1em;
     font-size: 11px;
 }
+
+.dropzone .dz-preview .dz-progress {
+    opacity: 0;
+}

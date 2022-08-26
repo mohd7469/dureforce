@@ -20,6 +20,7 @@ use App\Models\GeneralSetting;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
 
@@ -37,7 +38,7 @@ class JobController extends Controller
 
         $data = [];
 
-        $data['continents'] = World::Countries();
+        $data['countries'] = World::Countries();
 
         $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
@@ -45,7 +46,7 @@ class JobController extends Controller
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title','slug'])->get();
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
@@ -69,9 +70,10 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        $general = GeneralSetting::first();
+        $request_data=[];
+        parse_str($request->data,$request_data);
         $user = Auth::user();
-        $request->validate([
+        $validator = Validator::make($request_data, [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
@@ -84,51 +86,62 @@ class JobController extends Controller
             'dod' => 'required|array|min:3',
             'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
         ]);
+        // $request_data->validate([
+        //     'title' => 'required|string|max:150',
+        //     'description' => 'required|string|max:1000',
+        //     'job_type_id' => 'required|exists:job_types,id',
+        //     'category_id' => 'required|exists:categories,id',
+        //     'sub_category_id' => 'required|exists:sub_categories,id',
+        //     'rank_id' => 'required|exists:ranks,id',
+        //     'budget_type_id' => 'required|exists:budget_types,id',
+        //     'deliverables' => 'required|array|min:3',
+        //     'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
+        //     'dod' => 'required|array|min:3',
+        //     'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
+        // ]);
 
-        $uuid = Str::uuid()->toString();
+       
        $job = Job::create([
-            "uuid"=>$uuid,
             "user_id"=>$user->id,
-            "job_type_id"=>$request->job_type_id,
-//            "location_id"=>$request->location_id,
-            "category_id"=>$request->category_id,
-            "sub_category_id"=>$request->sub_category_id,
-            "rank_id"=>$request->rank_id,
-            "project_stage_id"=>isset( $request->project_stage_id) ?  $request->project_stage_id:null,
-            "budget_type_id"=>$request->budget_type_id,
-            "title"=>$request->title,
-            "description"=>$request->description,
-            "fixed_amount"=> isset($request->fixed_amount) ? $request->fixed_amount:null,
-            "hourly_start_range"=> isset($request->hourly_start_range) ? $request->hourly_start_range:null,
-            "hourly_end_range"=>isset($request->hourly_end_range) ? $request->hourly_end_range:null,
-            "delivery_time"=>$request->delivery_time,
-            "job_link"=>$uuid,
-            "expected_start_date"=>$request->expected_start_date,
-
+            "job_type_id"=>$request_data['job_type_id'],
+            "location_id"=>$request_data['location_id'],
+            "category_id"=>$request_data['category_id'],
+            "sub_category_id"=>isset( $request_data['sub_category_id']) ?  $request_data['sub_category_id']: null ,
+            "rank_id"=>$request_data['rank_id'],
+            "project_stage_id"=>isset( $request_data['project_stage_id']) ?  $request_data['project_stage_id']:null,
+            "budget_type_id"=>isset( $request_data['budget_type_id']) ?  $request_data['budget_type_id']: null ,
+            "title"=>$request_data['title'],
+            "description"=>$request_data['description'],
+            "fixed_amount"=> isset($request_data['fixed_amount']) ? $request_data['fixed_amount']:null,
+            "hourly_start_range"=> isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range']:null,
+            "hourly_end_range"=>isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range']:null,
+            "delivery_time"=>$request_data['delivery_time'],
+            "expected_start_date"=>$request_data['expected_start_date'],
+            'status_id' =>1
         ]);
+        return response()->json(["message" => "Successfully Saved"]);
 
        $job->deliverable()->sync($request->deliverables);
        $job->dod()->sync($request->dod);
        $job->skill()->sync($request->skills);
 
+        // $path = imagePath()['job']['path'];
+        // $size = imagePath()['job']['size'];
+//        if ($request->hasFile('image')) {
+//            $file = $request->image;
+//            $this->fileValidate($file);
+//            try {
+//                $filename = uploadImage($file, $path, $size);
+//            } catch (\Exception $exp) {
+//                $notify[] = ['error', 'Image could not be uploaded.'];
+//                return back()->withNotify($notify);
+//            }
+//            $job->image = $filename;
+//        }
 
-        $path = imagePath()['job']['path'];
-        $size = imagePath()['job']['size'];
 
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
-            }
-            $job->image = $filename;
-        }
-
-        $notify[] = ['success', 'Job has been created.'];
-        return back()->withNotify($notify);
+        // $notify[] = ['success', 'Job has been created.'];
+        // return back()->withNotify($notify);
     }
 
     public function edit($slug, $id)

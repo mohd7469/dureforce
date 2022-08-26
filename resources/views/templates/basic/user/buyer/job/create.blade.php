@@ -7,14 +7,14 @@
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30" style="background-color: #F8FAFA;padding-left:0px;padding-right:0px">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
-                    <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data">
+                    <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
-                            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between" style="border-bottom:1px solid #CBDFDF;">
                                 <h3 class="card-title mt-1">
                                     {{__($pageTitle)}}
                                 </h3>
-
+                                
                             </div>
 
                             <div class="card-body">
@@ -44,8 +44,8 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
                                                 <label for="joblocation">@lang('Job Location')</label>
                                                 <select name="location_id" class="form-control joblocation" id="joblocation">
-                                                    <option value="" >@lang('Select Job Type')</option>
-                                                    @foreach ($data['continents'] as $item)
+                                                    <option value="" >@lang('Select Job Location')</option>
+                                                    @foreach ($data['countries'] as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
@@ -128,7 +128,7 @@
                                             {{-- Budget Type --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
                                                 <label for="budget">@lang('Budget Type')*</label>
-                                                <select name="budget" class="form-control budget" id="budget_type_id" required>
+                                                <select name="budget_type_id" class="form-control budget" id="budget_type_id" required>
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
@@ -170,7 +170,7 @@
                                         <div class="row">
 
                                             {{-- deliverables --}}
-                                            <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12 form-group">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Deliverables')*</label>
                                                 <div class="input-group mb-3">
                                                     <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables">
@@ -181,6 +181,20 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                              {{-- dod --}}
+                                        <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label>@lang('Defination of Done(DOD)')*</label>
+                                                <div class="input-group mb-3">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod">
+                                                        @foreach($data['dods'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                    
+                                                </div>
+                                        </div>
 
                                         </div>
 
@@ -204,7 +218,7 @@
                                             {{-- project stage --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
-                                                <select name="projectstage" class="form-control budget" id="project_stage_id">
+                                                <select name="project_stage_id" class="form-control budget" id="project_stage_id">
                                                     <option selected="" disabled="">@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
@@ -214,19 +228,7 @@
                                         </div>
                                         
 
-                                        {{-- dod --}}
-                                        <div class="row col-xl-12 col-lg-12 form-group">
-                                            <label>@lang('Defination of Done(DOD)')*</label>
-                                                <div class="input-group mb-3">
-                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod">
-                                                        @foreach($data['dods'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
-                                                        @endforeach
-                                                        
-                                                    </select>
-                                                    
-                                                </div>
-                                        </div>
+                                      
                                         <div id="form_attributes">
                                             
                                         </div>
@@ -239,7 +241,7 @@
                                                 <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
                                             </div>
                                             <div class="inner">
-                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn">@lang('Create Job')</button>
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -385,7 +387,7 @@
     });
 
     
-    $('#budget_type').on('change', function(){
+    $('#budget_type_id').on('change', function(){
         var budget_type = $(this).val();
         switchBudgetFileds(budget_type);
     });
