@@ -44,8 +44,8 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
                                                 <label for="joblocation">@lang('Job Location')</label>
                                                 <select name="location_id" class="form-control joblocation" id="joblocation">
-                                                    <option value="" >@lang('Select Job Type')</option>
-                                                    @foreach ($data['continents'] as $item)
+                                                    <option value="" >@lang('Select Job Location')</option>
+                                                    @foreach ($data['countries'] as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
@@ -128,7 +128,7 @@
                                             {{-- Budget Type --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
                                                 <label for="budget">@lang('Budget Type')*</label>
-                                                <select name="budget" class="form-control budget" id="budget_type_id" required>
+                                                <select name="budget_type_id" class="form-control budget" id="budget_type_id" required>
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
@@ -218,7 +218,7 @@
                                             {{-- project stage --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
-                                                <select name="projectstage" class="form-control budget" id="project_stage_id">
+                                                <select name="project_stage_id" class="form-control budget" id="project_stage_id">
                                                     <option selected="" disabled="">@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>

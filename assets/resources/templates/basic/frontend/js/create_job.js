@@ -1,6 +1,7 @@
 $(function() {
   var form_data='';
     var dropzone = new Dropzone('#demo-upload', {
+      url:'store',
       autoProcessQueue: false,
         parallelUploads: 4,
         dictDefaultMessage: "your custom message",
@@ -15,6 +16,8 @@ $(function() {
         init: function() {
           
           this.on("sendingmultiple", function(file, xhr, formData) {
+            var token= $('input[name=_token]').val();
+            formData.append("_token",token);
             formData.append("data", form_data);
           });
           
@@ -29,7 +32,6 @@ $(function() {
             form_data= $(this).serialize();
               e.preventDefault();
               e.stopPropagation();
-              alert("yess");
               myDropzone.processQueue();
           }); 
         },

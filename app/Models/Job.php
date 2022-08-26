@@ -4,17 +4,47 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Job extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        "user_id",
+        "job_type_id",
+        "location_id",
+        "category_id",
+        "sub_category_id",
+        "rank_id",
+        "project_stage_id",
+        "budget_type_id",
+        "title",
+        "description",
+        "fixed_amount",
+        "hourly_start_range",
+        "hourly_end_range",
+        "delivery_time",
+        "expected_start_date",
+        "status_id"
+        ];
     protected $casts = [
         'skill' => 'object'
     ];
 
     const UPDATED_AT = null;
 
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+            $model->job_link = $uuid;
+        });
+
+
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
