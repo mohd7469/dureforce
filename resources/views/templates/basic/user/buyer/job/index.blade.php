@@ -42,15 +42,15 @@
                                                     <td data-label="@lang('Total Bid')">{{$job->jobBiding->count()}}</td>
                                                     <td data-label="@lang('Delivery Time')">{{$job->delivery_time}} @lang('Days')</td>
                                                     <td data-label="@lang('Status')">
-                                                        @if($job->status == 1)
+                                                        @if($job->status->slug == 'approved')
                                                             <span class="badge badge--success">@lang('Approved')</span>
                                                             <br>
                                                             {{diffforhumans($job->created_at)}}
-                                                        @elseif($job->status == 2)
+                                                        @elseif($job->status->slug == 'closed')
                                                             <span class="badge badge--warning">@lang('Closed')</span>
                                                             <br>
                                                              {{diffforhumans($job->created_at)}}
-                                                        @elseif($job->status == 3)
+                                                        @elseif($job->status->slug == 'cancel')
                                                             <span class="badge badge--danger">@lang('Cancel')</span>
                                                             <br>
                                                              {{diffforhumans($job->created_at)}}
@@ -66,13 +66,13 @@
                                                         {{diffforhumans($job->updated_at)}}
                                                     </td>
                                                     <td data-label="Action">
-                                                        @if($job->status == 1 || $job->status == 0)
+                                                        @if($job->status->slug == 'approved' || $job->status->slug == '')
                                                             <a href="{{route('user.job.edit', [slug($job->title), $job->id])}}" class="btn btn--primary text-white ms-1"><i class="fa fa-pencil-alt"></i></a>
                                                         @else
                                                             <span>@lang('N\A')</span>
                                                         @endif
 
-                                                        @if($job->status == 1)
+                                                        @if($job->status->slug== 'approved')
                                                             <a href="javascript:void(0)" class="btn btn--warning text-white cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="las la-times"></i></a>
                                                         @endif
                                                     </td>

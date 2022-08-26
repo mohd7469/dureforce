@@ -119,7 +119,7 @@ class JobController extends Controller
             "expected_start_date"=>$request_data['expected_start_date'],
             'status_id' =>1
         ]);
-        return response()->json(["message" => "Successfully Saved"]);
+        return response()->json([ "redirect" => 'index' , "message" => "Successfully Saved"]);
 
         $skills = Skills::whereIn('id',$request['skills'])->get();
 

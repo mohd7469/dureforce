@@ -1,3 +1,35 @@
+function submitCreateFormData(data)
+{
+  var token= $('input[name=_token]').val();
+    
+  $.ajax({
+      type:"POST",
+      url:"store",
+      data: {data : data,_token:token},
+      success:function(data){
+          var html = '';
+          if(data.error){
+              
+            displayErrorMessage();
+
+          }
+          else{
+            window.location.replace(data.redirect);              
+          }
+      }
+  });  
+}
+
+function displayErrorMessage()
+{
+    $("#job_form_data").before('<div class="alert alert-error" id="alert-error"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i> There is a problem with the files being uploaded. Please check the form below.</div>');
+}
+
+function displaySuccessMessage()
+{
+    $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
+}
+
 $(function() {
   var form_data='';
     var dropzone = new Dropzone('#demo-upload', {
@@ -25,14 +57,32 @@ $(function() {
             var _this=this;
             _this.removeAllFiles();
           });
+
+          this.on("successmultiple", function(files, response) {
+             displaySuccessMessage();
+             window.location.replace(response.redirect);
+          });
+
+        this.on("errormultiple", function(files, response) {
+          displayErrorMessage();
+          exit();
+        });
           
           var myDropzone = this;
   
           $("#job_form_data").submit(function (e) {
             form_data= $(this).serialize();
+              
               e.preventDefault();
               e.stopPropagation();
-              myDropzone.processQueue();
+              if(myDropzone.getQueuedFiles().length>0)
+                  myDropzone.processQueue();  
+              else
+              {
+                submitCreateFormData(form_data);
+              }
+
+              
           }); 
         },
         thumbnail: function(file, dataUrl) {
