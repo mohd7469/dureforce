@@ -50,4 +50,8 @@ class Skills extends Model
     {
         return $this->belongsTo(SkillCategory::class, 'skill_category_id');
     }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'module_id');
+    }
 }

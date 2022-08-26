@@ -121,9 +121,12 @@ class JobController extends Controller
         ]);
         return response()->json([ "redirect" => 'index' , "message" => "Successfully Saved"]);
 
+        $skills = Skills::whereIn('id',$request['skills'])->get();
+
+
        $job->deliverable()->sync($request->deliverables);
        $job->dod()->sync($request->dod);
-       $job->skill()->sync($request->skills);
+       $job->task_skill()->sync($skills);
 
         // $path = imagePath()['job']['path'];
         // $size = imagePath()['job']['size'];
