@@ -112,29 +112,20 @@ class JobController extends Controller
        $job->skill()->sync($request->skills);
 
 
-        $job = new Job();
-        $job->title = $request->title;
-        $job->user_id = $user->id;
-        $job->category_id = $request->category;
-        $job->sub_category_id = $request->subcategory ? $request->subcategory : null;
-        $job->amount = $request->amount;
-        $job->delivery_time = $request->delivery;
-        $job->skill = $request->skill;
-        $job->description = $request->description;
-        $job->requirements = $request->requirement;
         $path = imagePath()['job']['path'];
         $size = imagePath()['job']['size'];
-//        if ($request->hasFile('image')) {
-//            $file = $request->image;
-//            $this->fileValidate($file);
-//            try {
-//                $filename = uploadImage($file, $path, $size);
-//            } catch (\Exception $exp) {
-//                $notify[] = ['error', 'Image could not be uploaded.'];
-//                return back()->withNotify($notify);
-//            }
-//            $job->image = $filename;
-//        }
+
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+            $this->fileValidate($file);
+            try {
+                $filename = uploadImage($file, $path, $size);
+            } catch (\Exception $exp) {
+                $notify[] = ['error', 'Image could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+            $job->image = $filename;
+        }
 
         $notify[] = ['success', 'Job has been created.'];
         return back()->withNotify($notify);

@@ -16,6 +16,7 @@ class CreateJobTypesTable extends Migration
         Schema::create('job_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
+            $table->string('slug')->after('title')->nullable();
             $table->unsignedBigInteger('module_id')->index();
             $table->softDeletes();
             $table->timestamps();
