@@ -36,6 +36,9 @@ class JobController extends Controller
         $pageTitle = "Create Job";
 
         $data = [];
+
+        $data['continents'] = World::Continents();
+
         $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
         $data['categories'] = SkillCategory::select(['id', 'name', 'slug'])->get();
