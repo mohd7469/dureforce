@@ -41,7 +41,7 @@ class JobController extends Controller
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title','slug'])->get();
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
@@ -65,8 +65,8 @@ class JobController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
-        $general = GeneralSetting::first();
+        // dd($request->all());
+        // $general = GeneralSetting::first();
         $user = Auth::user();
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
