@@ -153,6 +153,8 @@ function switchBudgetFileds(budget_type)
     if(budget_type==2){
 
         $('#budget_amount').show();
+        $('#budget_amount').prop('required',true);
+        $('.weekly_range').prop('required',false);
         $('.weekly_range').hide();
         $('.budget_type').removeClass('col-xl-4 col-lg-4 col-md-4');
         $('.budget_type').addClass('col-xl-6 col-lg-6 col-md-6');
@@ -161,6 +163,8 @@ function switchBudgetFileds(budget_type)
     else
     {
         $('.weekly_range').show();
+        $('.weekly_range').prop('required',true);
+        $('#budget_amount').prop('required',false);
         $('#budget_amount').hide();
         $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
         $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');

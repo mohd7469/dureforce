@@ -158,7 +158,7 @@
                                             {{-- budget amount --}}
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
 
-                                                <label>@lang('Budget Amount')</label>
+                                                <label>@lang('Budget Amount')*</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" class="form-control" name="fixed_amount" value="" placeholder="" >
                                                 </div>
@@ -212,7 +212,7 @@
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
                                                     <input type="integer" class="form-control" name="delivery_time" value="{{old('projectlength')}}" placeholder="" required>
-                                                    </div>
+                                                </div>
                                             </div>
 
                                             {{-- project stage --}}
