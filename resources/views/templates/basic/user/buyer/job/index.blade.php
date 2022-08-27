@@ -1,94 +1,94 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections ptb-60">
+<section class="all-sections zero_top_padding">
     <div class="container-fluid">
-        <div class="section-wrapper">
+        <div class="section-wrapper ">
             <div class="row justify-content-center mb-30-none">
                 @include($activeTemplate . 'partials.buyer_sidebar')
-                <div class="col-xl-9 col-lg-12 mb-30">
-                    <div class="dashboard-sidebar-open"><i class="las la-bars"></i> @lang('Menu')</div>
-                    <div class="table-section">
-                        <div class="row justify-content-center">
-                            <div class="col-xl-12">
-                                <div class="table-area">
-                                    <table class="custom-table">
-                                        <thead>
-                                            <tr>
-                                                <th>@lang('Title')</th>
-                                                <th>@lang('Category')</th>
-                                                <th>@lang('Budget')</th>
-                                                <th>@lang('Total Bid')</th>
-                                                <th>@lang('Delivery Time')</th>
-                                                <th>@lang('Status')</th>
-                                                <th>@lang('Last Update')</th>
-                                                <th>@lang('Action')</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @forelse($jobs as $job)
-                                                <tr>
-                                                    <td data-label="@lang('Title')" class="text-start">
-                                                        <div class="author-info">
-                                                            <div class="thumb">
-                                                                <img src="{{getImage('assets/images/job/'.$job->image,'590x300') }}" alt="@lang('Job Image')">
-                                                            </div>
-                                                            <div class="content">
-                                                                <a href="{{route('job.details', [slug($job->title), encrypt($job->id)])}}" title="">{{__(str_limit($job->title, 20))}}</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="@lang('Category')">{{__($job->category->name)}}</td>
-                                                    <td data-label="@lang('Budget')">{{showAmount($job->amount)}} {{$general->cur_text}}</td>
-                                                    <td data-label="@lang('Total Bid')">{{$job->jobBiding->count()}}</td>
-                                                    <td data-label="@lang('Delivery Time')">{{$job->delivery_time}} @lang('Days')</td>
-                                                    <td data-label="@lang('Status')">
-                                                        @if($job->status->slug == 'approved')
-                                                            <span class="badge badge--success">@lang('Approved')</span>
-                                                            <br>
-                                                            {{diffforhumans($job->created_at)}}
-                                                        @elseif($job->status->slug == 'closed')
-                                                            <span class="badge badge--warning">@lang('Closed')</span>
-                                                            <br>
-                                                             {{diffforhumans($job->created_at)}}
-                                                        @elseif($job->status->slug == 'cancel')
-                                                            <span class="badge badge--danger">@lang('Cancel')</span>
-                                                            <br>
-                                                             {{diffforhumans($job->created_at)}}
-                                                        @else
-                                                            <span class="badge badge--primary">@lang('Pending')</span>
-                                                            <br>
-                                                             {{diffforhumans($job->created_at)}}
-                                                        @endif
-                                                        </td>
-                                                    <td data-label="@lang('Last Update')">
-                                                        {{showDateTime($job->updated_at)}}
-                                                        <br>
-                                                        {{diffforhumans($job->updated_at)}}
-                                                    </td>
-                                                    <td data-label="Action">
-                                                        @if($job->status->slug == 'approved' || $job->status->slug == '')
-                                                            <a href="{{route('user.job.edit', [slug($job->title), $job->id])}}" class="btn btn--primary text-white ms-1"><i class="fa fa-pencil-alt"></i></a>
-                                                        @else
-                                                            <span>@lang('N\A')</span>
-                                                        @endif
+                <div class="col-xl-9 col-lg-12 mb-30 ">
+                    
+                    <table class="table table-bordered">
+                                
+                        <thead class="table-header">
+                          <tr>
 
-                                                        @if($job->status->slug== 'approved')
-                                                            <a href="javascript:void(0)" class="btn btn--warning text-white cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="las la-times"></i></a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @empty
-                                                <tr>
-                                                    <td colspan="100%">{{ __($emptyMessage) }}</td>
-                                                </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                    {{$jobs->links()}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <th>@lang('Title')</th>
+                            <th>@lang('Proposals')</th>
+                            <th>@lang('Messages')</th>
+                            <th>@lang('Hired')</th>
+                            <th>@lang('Status')</th>
+                            <th>@lang('Last Update')</th>
+                            <th>@lang('Action')</th>
+
+                          </tr>
+                        </thead>
+
+                         <tbody>
+                            @forelse($jobs as $key => $job)
+                                <tr class="{{ $key% 2==1 ? 'info-row' : ''}}">
+                                    <td data-label="@lang('Title')" class="text-start">
+                                        <a href="{{route('job.details', [slug($job->title), encrypt($job->id)])}}" title="">{{__(str_limit($job->title, 20))}}</a>
+                                    </td>
+                                    <td data-label="@lang('Proposals')">
+                                        {{ ''}}
+                                    </td>
+                                    <td data-label="@lang('Messages')">
+                                        {{ '' }}
+                                    </td>
+                                    <td data-label="@lang('Hired')">
+                                        {{ '' }}
+                                    </td>
+                                    
+                                    <td data-label="@lang('Status')">
+                                            @if($job->status->slug == 'approved')
+                                                <span class="status-btn status-approved">@lang('Approved')</span>
+                                                
+                                            @elseif($job->status->slug == 'draft')
+                                                <span class="status-btn status-draft">@lang('Draft')</span>
+                                            
+                                            @elseif($job->status->slug == 'pending')
+                                                <span class="status-btn status-pending">@lang('Pending')</span>
+                                                
+                                            @elseif($job->status->slug == 'rejected')
+                                                <span class="status-btn status-pending">@lang('Cancel')</span>
+
+                                            @elseif($job->status->slug == 'approved')
+                                                <span class="status-btn status-pending">@lang('Approved')</span>
+                                            
+                                            @else
+                                                <button class="status-btn status-approved">@lang('Approved')</button>
+                                                
+                                            @endif
+
+                                    </td>
+
+                                    <td data-label="@lang('Last Update')">
+                                        {{showDateTime($job->updated_at)}}
+                                        {{-- <br> --}}
+                                        {{-- {{diffforhumans($job->updated_at)}} --}}
+                                    </td>
+                                    <td data-label="Action">
+                                        @if($job->status->slug != 'approved')
+                                            <a href="{{route('user.job.edit', [slug($job->title), $job->id])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                        @else
+                                            <span>@lang('N\A')</span>
+                                        @endif
+
+                                        @if($job->status->slug!= 'approved')
+                                            <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="100%">{{ __($emptyMessage) }}</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
+                    
+                    {{$jobs->links()}}
                 </div>
             </div>
         </div>

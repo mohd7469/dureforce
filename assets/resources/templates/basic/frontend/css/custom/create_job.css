@@ -164,11 +164,7 @@ div. {
     
 }
 
-.dashboard-sidebar-wrapper-inner {
-    position: sticky;
-    top: 10px;
-    padding-left: 15px !important;
-}
+
 .hide{
     display: none;
 }
