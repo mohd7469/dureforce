@@ -10,19 +10,36 @@ function submitCreateFormData(data)
           var html = '';
           if(data.error){
               
-            displayErrorMessage();
+            displayErrorMessage(data.error);
 
           }
           else{
-            window.location.replace(data.redirect);              
+            alert("Else");
+            // window.location.replace(data.redirect);              
           }
       }
   });  
 }
-
-function displayErrorMessage()
+function displayAlertMessage(message)
 {
-    $("#job_form_data").before('<div class="alert alert-error" id="alert-error"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i> There is a problem with the files being uploaded. Please check the form below.</div>');
+  iziToast.error({
+    message: message,
+    position: "topRight",
+  });
+  // $("#job_form_data").before('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+}
+function displayErrorMessage(validation_errors)
+{
+    $('input,select,textarea').removeClass('error-field');
+    $('.select2').next().removeClass("error-field");
+    for (var error in validation_errors) { 
+          
+        var error_message=validation_errors[error];
+        $('[name="'+error+'"]').addClass('error-field');
+        $('#'+error).next().addClass('error-field');
+        displayAlertMessage(error_message);
+      
+    }
 }
 
 function displaySuccessMessage()
@@ -153,8 +170,6 @@ function switchBudgetFileds(budget_type)
     if(budget_type==2){
 
         $('#budget_amount').show();
-        $('#budget_amount').prop('required',true);
-        $('.weekly_range').prop('required',false);
         $('.weekly_range').hide();
         $('.budget_type').removeClass('col-xl-4 col-lg-4 col-md-4');
         $('.budget_type').addClass('col-xl-6 col-lg-6 col-md-6');
@@ -163,8 +178,7 @@ function switchBudgetFileds(budget_type)
     else
     {
         $('.weekly_range').show();
-        $('.weekly_range').prop('required',true);
-        $('#budget_amount').prop('required',false);
+
         $('#budget_amount').hide();
         $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
         $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');

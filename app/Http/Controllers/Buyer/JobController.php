@@ -87,10 +87,15 @@ class JobController extends Controller
             'deliverables' => 'required|array|min:3',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
             'dod' => 'required|array|min:3',
-            'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
+            'skills' => 'required|array',
+            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
 
-       
+        if ($validator->fails())
+        {
+            return response()->json(["error" =>$validator->errors()]);
+
+        }
        $job = Job::create([
             "user_id"=>$user->id,
             "job_type_id"=>$request_data['job_type_id'],
