@@ -12,6 +12,7 @@ use App\Models\Module;
 use App\Models\ProjectStage;
 use App\Models\Rank;
 use App\Models\SkillCategory;
+use App\Models\Skills;
 use App\Models\SkillSubCategory;
 use Illuminate\Http\Request;
 use App\Models\Job;
@@ -64,7 +65,8 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod')->latest()->paginate(getPaginate());
+
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -73,6 +75,7 @@ class JobController extends Controller
         $request_data=[];
         parse_str($request->data,$request_data);
         $user = Auth::user();
+
         $validator = Validator::make($request_data, [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
@@ -86,19 +89,6 @@ class JobController extends Controller
             'dod' => 'required|array|min:3',
             'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
         ]);
-        // $request_data->validate([
-        //     'title' => 'required|string|max:150',
-        //     'description' => 'required|string|max:1000',
-        //     'job_type_id' => 'required|exists:job_types,id',
-        //     'category_id' => 'required|exists:categories,id',
-        //     'sub_category_id' => 'required|exists:sub_categories,id',
-        //     'rank_id' => 'required|exists:ranks,id',
-        //     'budget_type_id' => 'required|exists:budget_types,id',
-        //     'deliverables' => 'required|array|min:3',
-        //     'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-        //     'dod' => 'required|array|min:3',
-        //     'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
-        // ]);
 
        
        $job = Job::create([
@@ -106,6 +96,7 @@ class JobController extends Controller
             "job_type_id"=>$request_data['job_type_id'],
             "location_id"=>$request_data['location_id'],
             "category_id"=>$request_data['category_id'],
+
             "sub_category_id"=>isset( $request_data['sub_category_id']) ?  $request_data['sub_category_id']: null ,
             "rank_id"=>$request_data['rank_id'],
             "project_stage_id"=>isset( $request_data['project_stage_id']) ?  $request_data['project_stage_id']:null,
@@ -119,28 +110,37 @@ class JobController extends Controller
             "expected_start_date"=>$request_data['expected_start_date'],
             'status_id' =>1
         ]);
+
+
+
+        $deliverables = Deliverable::whereIn('id',$request_data['deliverables'])->get();
+        $job->deliverable()->sync($deliverables);
+
+        $dods = DOD::whereIn('id',$request_data['dod'])->get();
+        $job->dod()->sync($dods);
+
+        $skills = Skills::whereIn('id',$request_data['skills'])->get();
+        $job->skill()->saveMany($skills);
+
+
         return response()->json([ "redirect" => 'index' , "message" => "Successfully Saved"]);
 
-        $skills = Skills::whereIn('id',$request['skills'])->get();
 
 
-       $job->deliverable()->sync($request->deliverables);
-       $job->dod()->sync($request->dod);
-       $job->task_skill()->sync($skills);
 
-        // $path = imagePath()['job']['path'];
-        // $size = imagePath()['job']['size'];
-//        if ($request->hasFile('image')) {
-//            $file = $request->image;
-//            $this->fileValidate($file);
-//            try {
-//                $filename = uploadImage($file, $path, $size);
-//            } catch (\Exception $exp) {
-//                $notify[] = ['error', 'Image could not be uploaded.'];
-//                return back()->withNotify($notify);
-//            }
-//            $job->image = $filename;
-//        }
+         $path = imagePath()['job']['path'];
+         $size = imagePath()['job']['size'];
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+            $this->fileValidate($file);
+            try {
+                $filename = uploadImage($file, $path, $size);
+            } catch (\Exception $exp) {
+                $notify[] = ['error', 'Image could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+            $job->image = $filename;
+        }
 
 
         // $notify[] = ['success', 'Job has been created.'];

@@ -16,11 +16,10 @@ class CreateTaskSkills extends Migration
         Schema::create('task_skills', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('skills_id')->index()->nullable();
-            $table->integer('module_id')->index()->nullable();
-            $table->string('module_type')->nullable()->nullable();
+            $table->unsignedBigInteger('job_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
-
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
             $table->foreign('skills_id')->references('id')->on('skills')->onDelete('cascade');
 
         });

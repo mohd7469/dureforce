@@ -38,7 +38,7 @@
                                                         </div>
                                                     </td>
                                                     <td data-label="@lang('Category')">{{__($job->category->name)}}</td>
-                                                    <td data-label="@lang('Budget')">{{showAmount($job->amount)}} {{$general->cur_text}}</td>
+                                                    <td data-label="@lang('Budget')">{{showAmount($job->fixed_amount)}} {{$general->cur_text}}</td>
                                                     <td data-label="@lang('Total Bid')">{{$job->jobBiding->count()}}</td>
                                                     <td data-label="@lang('Delivery Time')">{{$job->delivery_time}} @lang('Days')</td>
                                                     <td data-label="@lang('Status')">
