@@ -140,7 +140,7 @@ trait CreateOrUpdateEntity {
             }
             // if (!empty($request->extra_title)) {
             //     $extraService = [];
-            //     foreach ($request->get('extra_title') as $key => $value) {
+                foreach ($request->get('moduletitle') as $key => $value) {
                
                     if($type == Attribute::SERVICE) {
                         $extraService[] = new ExtraService([
@@ -155,7 +155,7 @@ trait CreateOrUpdateEntity {
                             'price' => $request->add_on_price[$key] ?? 0,
                             'estimated_lead_time' => $request->add_on_delivery[$key] ?? ''
                         ]);
-                //     }
+                    }
 
                 // }  
                 

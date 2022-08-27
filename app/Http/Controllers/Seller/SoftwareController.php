@@ -10,6 +10,7 @@ use App\Http\Requests\ReviewRequest;
 use Illuminate\Http\Request;
 use App\Models\Software;
 use App\Models\Features;
+use App\Models\SoftwareModule;
 use App\Models\OptionalImage;
 use App\Models\Attribute;
 use App\Models\EntityField;

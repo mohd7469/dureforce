@@ -11,6 +11,7 @@ class SoftwareModule extends Model
 
     protected $table  = 'software_module';
     protected $fillable = [
+        'id',
         'software_id',
         'module_title',
         'module_description',

@@ -1,9 +1,8 @@
-<style>
-
-</style>
 <?php
+use App\Models\SoftwareModule;
+$software_moduled  = new SoftwareModule();
 if (!empty($software)) {
- $software_module = App\Models\SoftwareModule::where('software_id',$software->id)->get();
+    $module = $software_moduled::where('software_id',$software->id)->groupBy('id')->get();
 }
 ?>
 
@@ -13,7 +12,7 @@ if (!empty($software)) {
     <input type="hidden" name="software_id" value="{{ empty($software->id) ? '' : $software->id }}">
     <div class="card-body">
         <div class="card-form-wrapper">
-            <div>
+           
                 <h4 class="hdng-create">
                     Finalize
                 </h4>
@@ -23,13 +22,13 @@ if (!empty($software)) {
             </div>
             <br>
           
-            <div class="row ">
+          <div class="row ">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>@lang('Maximum number of simultaneous projects')*</label>
                     <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->softwareDetail->max_no_projects}}">
                 </div>
-                <br>
-                <div class="row">
+                <br/>
+          <div class="row">
             <h4 class="hdng-create">
                  Summary 
                 </h4>
@@ -46,50 +45,88 @@ if (!empty($software)) {
                          Estimated Lead Time (Hours)
                          </th>
                         </tr>
-                       
+                        @if (!isset($module) || $module->isEmpty())
                         <tr>
-                            <td >
-                            @foreach($software_module  as $module)
-                               {{ $module->module_title }} 
-                               
-                            </td>
-                          
-                            <td class="hdng-create">  {{ $module->price }}  </td>
-                            <td class="hdng-create">  {{ $module->estimated_lead_time	 }}  </td>
-                         
-                            @endforeach
+                          </tr>
+                          @else
+                          <?php
+                          $sum = 0;
+                          $lead_time=0;
+                          $total = 0;
+                          $service_fee=0;
+                          ?>
+                        @foreach ($module as  $extra)
+                        <tr>
+                            <td>  {{ $extra->module_title }} </td>
+                            <td class="hdng-create"> $ {{ $extra->price }}  </td>
+                            <td class="hdng-create">  {{ $extra->estimated_lead_time }}  </td>
                         </tr>
-                      
+                       
+                            <?php
+                        $sum+= $extra->price;
+                        $lead_time+=$extra->estimated_lead_time;
+                        $service_fee = 20*$sum/100; 
+                        $total = $service_fee+ $sum;
+                        ?>
+                        @endforeach
+                        <tr>
+                        <th> Total </th>
+                            <td class="hdng-create"> {{   $sum }}   </td>
+                            <td class="hdng-create"> {{ $lead_time }} </td>
+                        </tr>
+                        @endif
                     </table>
-</div>
-</div> 
-
-            <div class="container overflow-hidden ">
+              </div>
+         </div> 
+         @if (!isset($module) || $module->isEmpty())
+       <div class="container overflow-hidden ">
             <div class="row gx-5 ">
                 <div class="col">
-                   
-                <div class="p-3 box1">
+                   <div class="p-3 box1">
                 <label>Dureforce Service Fee</label>    
                 20% Dureforce Service Fee<a href="">Explain this</a>
               <br/>
               <br/>
-                <h3 class="hdng-create">$778.00</h3>
+                <h3 class="hdng-create"></h3>
+             </div>
             </div>
-               
-            </div>
-                <div class="col">
+             <div class="col">
                 <div class="p-3  box1">
                 <label>You’ll Recieve *</label>
                 The estimated amount you'll receive after service fees
                 <br/>
+                  <br/>
+                <h3 class="hdng-create"></h3>
+              
+                 </div>
+                </div>
+             </div>
+         </div>
+           @else
+           <div class="container overflow-hidden ">
+            <div class="row gx-5 ">
+                <div class="col">
+                   <div class="p-3 box1">
+                <label>Dureforce Service Fee</label>    
+                20% Dureforce Service Fee<a href="">Explain this</a>
               <br/>
-                <h3 class="hdng-create">$3114.40</h3>
-                </div>
-               
-                </div>
+              <br/>
+                <h3 class="hdng-create">${{$service_fee}}</h3>
+             </div>
             </div>
-            </div>
-
+             <div class="col">
+                <div class="p-3  box1">
+                <label>You’ll Recieve *</label>
+                The estimated amount you'll receive after service fees
+                <br/>
+                  <br/>
+                <h3 class="hdng-create">${{$total}}</h3>
+              
+                 </div>
+                </div>
+             </div>
+         </div>
+         @endif
             &nbsp;
             <br>
                <hr/>

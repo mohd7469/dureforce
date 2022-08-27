@@ -695,7 +695,7 @@ function addOnServiceRow() {
   <div class="col-xl-4 col-lg-4 form-group">
       <label>Estimated Lead Time</label>
       <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="estimated_lead_time[]"
+          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
               placeholder="Enter Hours">
       </div>
 </div>  

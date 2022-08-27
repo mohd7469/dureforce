@@ -1,5 +1,4 @@
 <?php
-print_r($software);
 if (!empty($software)) {
      $software_module = App\Models\SoftwareModule::where('software_id', $software->id)->get();
      $softwareSteps = App\Models\softwareStep::where('software_id', $software->id)->get();
@@ -64,12 +63,12 @@ if (!empty($software)) {
                     <br/>
                     <div class="col-xl-12 col-lg-12 form-group p-0">
                                         <label for="">Module Title*</label>
-                                        <input type="text" name="steps[]" id="step" placeholder="Travel Ticket Reservation System"
+                                        <input type="text" name="moduletitle[]" id="step" placeholder="Travel Ticket Reservation System"
                                             class="form-control"     />
                             
                                             <br/>
                                             <label for="discription">Module Description</label>
-                                            <textarea type="text" name="description[]" id="discription" placeholder="This is a short description." class="form-control"
+                                            <textarea type="text" name="moduledescription[]" id="discription" placeholder="This is a short description." class="form-control"
                                                 ></textarea>
                                             <br />
                                             <br />

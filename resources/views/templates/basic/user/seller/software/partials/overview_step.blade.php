@@ -76,15 +76,15 @@
           <label>@lang('Include Feature')*</label><p class="include_error"></p>
           @if (!empty($software))
           
-          <select   placeholder="features" name="features[]" id='features' class="form-control features bg--gray">
+          <select     name="features[]" id='features' class="form-control features bg--gray">
           @foreach($features as $feature)
           <option selected="true"> {{ $feature->name }}</option>
           @endforeach
         </select>
          
           @else
-          <select  placeholder="Select Features"  multiple  name="features[]" id='features' class="features form-control">
-          <option selected="" disabled="">@lang('Select Features')</option>
+          <select    multiple  name="features[]" id='features' class="features form-control">
+          <option selected="true"> </option>
           </select>
           @endif
         </div>
@@ -138,11 +138,11 @@
                 
                 <br>
 
-                <!-- @if (empty($software))
+                @if (empty($software))
                     @include($activeTemplate . 'user.seller.shared.attributes')
                 @else
                     @include($activeTemplate . 'user.seller.shared.attributes_edit_software', ['model' => $software])
-                @endif -->
+                @endif
 
             </div>
             <hr />
