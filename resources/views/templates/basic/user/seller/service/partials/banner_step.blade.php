@@ -170,7 +170,7 @@
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                         <input type="file" name="lead_image" onchange="previewMultiple(event)" id="lead_image">
+                                         <input type="file" name="lead_image" onchange="previewMultiple(event);readURL(this)" id="lead_image">
                                     </label>
                                 <br />
                             </div>
@@ -179,8 +179,7 @@
                             <div class="px-4">
                                 <label class="logo-div">@lang('Technology Logos (Select only 3)') *</label>
                                     <ul class="logo-ul">
-                                        {{-- Will Change this when icons arrive --}}
-                                        @include($activeTemplate.'user.seller.shared.logos', ['model' => $service])
+                                                           
                                     </ul>
                                 <br />
                             </div>
