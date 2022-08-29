@@ -1,16 +1,16 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections ptb-60" style="padding-top:0px">
+<section class="all-sections ptb-60 zero_top_padding" >
     <div class="container-fluid">
         <div class="section-wrapper">
             <div class="row  mb-30-none">
                 @include($activeTemplate . 'partials.buyer_sidebar')
-                <div class="col-xl-9 col-lg-12 mb-30" style="background-color: #F8FAFA;padding-left:0px;padding-right:0px">
+                <div class="col-xl-9 col-lg-12 mb-30 page_div">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
                     <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
-                            <div class="d-flex flex-wrap align-items-center justify-content-between" style="border-bottom:1px solid #CBDFDF;">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between bottom_border_light" >
                                 <h3 class="card-title mt-1">
                                     {{__($pageTitle)}}
                                 </h3>
