@@ -90,7 +90,7 @@ class JobController extends Controller
             'dod.*' => 'required|string|distinct|exists:d_o_ds,id',
         ]);
 
-       
+
        $job = Job::create([
             "user_id"=>$user->id,
             "job_type_id"=>$request_data['job_type_id'],
@@ -127,24 +127,22 @@ class JobController extends Controller
 
 
 
-
          $path = imagePath()['job']['path'];
-         $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
+
+        if ($request->hasFile('file')) {
+            foreach ($request->file as $file) {
+                $this->fileValidate($file);
+                try {
+                    $filename = uploadImage($file, $path);
+                } catch (\Exception $exp) {
+                    $notify[] = ['error', 'Image could not be uploaded.'];
+                    return back()->withNotify($notify);
+                }
+                $job->image = $filename;
             }
-            $job->image = $filename;
+
         }
 
-
-        // $notify[] = ['success', 'Job has been created.'];
-        // return back()->withNotify($notify);
     }
 
     public function edit($slug, $id)
