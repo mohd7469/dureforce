@@ -2668,6 +2668,7 @@ border: 1px solid #D0E2E2;
 .status-btn{
   height: 25px;
   border-radius: 7px;
+  color: white;
 }
 
 .status-btn.status-approved{
