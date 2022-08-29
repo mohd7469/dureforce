@@ -52,6 +52,10 @@ class Skills extends Model
     }
     public function task_skill()
     {
-        return $this->morphMany(TaskSkill::class, 'module_id');
+        return $this->morphMany(TaskSkill::class, 'task_skill');
+    }
+    public function job()
+    {
+        return $this->belongsToMany(Job::class, 'task_skills');
     }
 }

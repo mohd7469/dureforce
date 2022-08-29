@@ -11,7 +11,6 @@
                                 
                         <thead class="table-header">
                           <tr>
-
                             <th>@lang('Title')</th>
                             <th>@lang('Proposals')</th>
                             <th>@lang('Messages')</th>
