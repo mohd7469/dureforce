@@ -48,7 +48,7 @@ if ($folder == 'service') {
 
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
-                            style="object-fit: cover;height: 159px;width:314px;">
+                            style="object-fit: cover;height: 159px;width:320px;">
                         {{-- <img alt="{{ $model->title }}"
                             src="https://stgdureforcestg.blob.core.windows.net/service/62fa272832b571660561192.png"
                             style="object-fit: cover;width: 100%;height:100%;"> --}}
@@ -68,8 +68,12 @@ if ($folder == 'service') {
 
         <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
             <img alt="{{ $model->title }}"
-            onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}" style="object-fit: cover;height: 159px;width:314px;">
+            onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}" style="object-fit: cover;height: 159px;width:320px;">
         </a>
+        {{-- <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
+            <img alt="{{ $model->title }}"
+            onerror="this.src='placeholder-image/920x468'"  src="{{'https://stgdureforcestg.blob.core.windows.net/service/62fa36ae1673a1660565166.jpeg'}}" style="object-fit: cover;height: 159px;width:320px;">
+        </a> --}}
         
     </div>
 @endif
