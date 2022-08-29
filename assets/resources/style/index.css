@@ -2639,6 +2639,10 @@ hr {
 .del {
   margin-left:7px;
 }
+
+.error-field{
+  border:1px solid red !important;
+}
 .dashboard-sidebar-wrapper-inner {
   position: sticky;
   top: 10px;
