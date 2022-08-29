@@ -7,11 +7,11 @@
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     
-                    <table class="table table-bordered">
+                    <table class="table text-center" style="border: 2px solid #e6eeee !important">
                                 
-                        <thead class="table-header">
+                        <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                           <tr>
-                            <th>@lang('Title')</th>
+                            <th style="width: 20%">@lang('Title')</th>
                             <th>@lang('Proposals')</th>
                             <th>@lang('Messages')</th>
                             <th>@lang('Hired')</th>
@@ -22,20 +22,21 @@
                           </tr>
                         </thead>
 
-                         <tbody>
+                         <tbody class="text-center">
                             @forelse($jobs as $key => $job)
                                 <tr class="{{ $key% 2==1 ? 'info-row' : ''}}">
                                     <td data-label="@lang('Title')" class="text-start">
-                                        <a href="{{route('job.details', [slug($job->title), encrypt($job->id)])}}" title="">{{__(str_limit($job->title, 20))}}</a>
+                                        {{-- route('job.details', [slug($job->title), encrypt($job->id)]) --}}
+                                        <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                     </td>
                                     <td data-label="@lang('Proposals')">
-                                        {{ ''}}
+                                        {{ '2'}} @lang('Proposals')
                                     </td>
                                     <td data-label="@lang('Messages')">
-                                        {{ '' }}
+                                        {{ '3' }} @lang('Messages')
                                     </td>
                                     <td data-label="@lang('Hired')">
-                                        {{ '' }}
+                                        {{ '1' }}
                                     </td>
                                     
                                     <td data-label="@lang('Status')">
@@ -68,7 +69,8 @@
                                     </td>
                                     <td data-label="Action">
                                         @if($job->status->slug != 'approved')
-                                            <a href="{{route('user.job.edit', [slug($job->title), $job->id])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                        {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
+                                            <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
                                         @else
                                             <span>@lang('N\A')</span>
                                         @endif
