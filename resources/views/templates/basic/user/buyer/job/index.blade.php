@@ -69,16 +69,16 @@
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>
                                         <td data-label="Action">
-                                            @if($job->status->slug != 'approved')
+                                            {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
                                                 <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
-                                            @else
+                                            {{--  @else
                                                 <span>@lang('N\A')</span>
-                                            @endif
+                                            @endif  --}}
 
-                                            @if($job->status->slug!= 'approved')
+                                            {{--  @if($job->status->slug!= 'approved')  --}}
                                                 <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
-                                            @endif
+                                            {{--  @endif  --}}
                                         </td>
                                     </tr>
                                 @empty
