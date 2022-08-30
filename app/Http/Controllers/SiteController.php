@@ -43,6 +43,7 @@ class SiteController extends Controller
     {
         $pageTitle = "Home";
         $emptyMessage = "No data found";
+        $services =[];
         $services = Service::Active()->Featured()->whereHas('category', function ($q) {
             $q->where('status', 1);
         })->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
@@ -50,6 +51,8 @@ class SiteController extends Controller
                 $belongsTo->select(['id', 'name']);
             }]);
         }])->get();
+
+        
 
         $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
 

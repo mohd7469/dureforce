@@ -711,7 +711,7 @@ Route::get('blog/{id}/{slug}', 'SiteController@blogDetails')->name('blog.details
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholder.image');
 
 //Service
-Route::get('/', 'SiteController@index')->name('home');
+Route::get('/', 'SiteController@index')->name('home');//Landing Page
 Route::get('/service', 'ServiceController@index')->name('service');
 Route::get('/service/details/{slug}/{id}', 'SiteController@serviceDetails')->name('service.details');
 Route::get('/search/item/filter', 'FilterController@allServiceSearch')->name('home.search.item');
