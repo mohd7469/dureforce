@@ -5,107 +5,249 @@
         <div class="section-wrapper">
             <div class="row justify-content-center mb-30-none">
                 @include($activeTemplate . 'partials.buyer_sidebar')
-                <div class="col-xl-9 col-lg-12 mb-30">
-                    <div class="dashboard-sidebar-open"><i class="las la-bars"></i> @lang('Menu')</div>
-                    <form class="user-profile-form" action="{{route('user.job.update', $job->id)}}" method="POST" enctype="multipart/form-data">
+                <div class="col-xl-9 col-lg-12 mb-30 page_div">
+                    <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
+                    <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
-                        <div class="card custom--card">
-                            <div class="card-header d-flex flex-wrap align-items-center justify-content-between">
-                                <h4 class="card-title mb-0">
+                        <div class="card custom--card" style="background-color: #F8FAFA;">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between bottom_border_light" >
+                                <h3 class="card-title mt-1">
                                     {{__($pageTitle)}}
-                                </h4>
+                                </h3>
+                                
                             </div>
+
                             <div class="card-body">
                                 <div class="card-form-wrapper">
-                                    <div class="row justify-content-center">
-                                        <div class="col-xl-12 col-lg-12 form-group">
-                                            <label>@lang('Title')*</label>
-                                            <input type="text" name="title" maxlength="255" value="{{__($job->title)}}" class="form-control" placeholder="@lang("Enter Title")" required="">
-                                        </div>
+                                    <div class="justify-content-center" >
 
-                                        <div class="col-xl-6 col-lg-6 form-group">
-                                            <label>@lang('Category')*</label>
-                                            <select class="form-control bg--gray" name="category" id="category" required="">
-                                                    <option selected="" disabled="">@lang('Select Category')</option>
-                                                   @foreach($categorys as $category)
-                                                        <option value="{{($category->id)}}"  
-                                                            @if($category->id==$job->category_id)
-                                                                selected 
-                                                            @endif 
-                                                        >{{__($category->name)}}</option>
-                                                    @endforeach
-                                            </select>
-                                        </div>
+                                        <div class="row">
 
-                                        <div class="col-xl-6 col-lg-6 form-group">
-                                            <label for="subCategorys">@lang('Sub Category')</label>
-                                                <select name="subcategory" class="form-control mySubCatgry" id="subCategorys">
-                                                    @foreach($categorys->find($job->category_id)->subCategory as $sub)
-                                                        <option 
-                                                            @if($sub->id==$job->sub_category_id)
-                                                                selected 
-                                                            @endif
-                                                        value="{{$sub->id}}">{{$sub->name}}</option>
+                                            {{-- Job Title --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Title')*</label>
+                                                <input type="text" name="title" maxlength="255" value="{{$job->title}}" class="form-control" placeholder="@lang("Enter Title")" ="">
+                                            </div>
+
+                                            {{-- Job Type --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Job Type')*</label>
+                                                <select class="form-control bg--gray" name="job_type_id" id="jobtype" >
+                                                    <option value="" >@lang('Select Job Type')</option>
+                                                    @foreach ($data['job_types'] as $item)
+                                                        <option value="{{$item->id}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+
+                                            {{-- Job Location --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
+                                                <label for="joblocation">@lang('Job Location')</label>
+                                                <select name="location_id" class="form-control joblocation" id="joblocation">
+                                                    <option value="" >@lang('Select Job Location')</option>
+                                                    @foreach ($data['countries'] as $item)
+                                                        <option value="{{$item->id}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{$item->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            {{-- Description --}}
+                                            <div class="col-xl-6 col-lg-6 form-group">
+                                                <label>@lang('Description')*</label>
+                                                <textarea class="form-control bg--gray" name="description" aria-rowspan="3" >
+                                                    {{$job->description}}
+                                                </textarea>
+                                            </div>
+
+                                            {{-- Required documents --}}
+                                            <div class="col-xl-6 col-lg-6 form-group">
+                                                <label>@lang('Required Documents')</label>
+                                            
+                                                    <div id="dropzone">
+                                                        <div class="dropzone needsclick" id="demo-upload" action="#" >
+                                                            <div class="fallback">
+                                                                <input name="file" type="file" multiple />
+                                                            </div>
+                                                            <div>
+                                                                <div class="upload_icon">
+                                                                    <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                                                                    <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="dz-message "> 
+                                                                @lang('Drag or Drop to Upload')   
+                                                                <span class="text text-primary ">
+                                                                    @lang('Browse')  
+                                                                    
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                        
+                                            </div>
+
+                                        </div>
+                                        
+                                        <div class="row">
+
+                                            {{-- Category --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Category')*</label>
+                                                <select class="form-control bg--gray" name="category_id" id="category" >
+                                                    <option selected="" disabled="">@lang('Select Category')</option>
+                                                    @foreach($data['categories'] as $category)
+                                                        <option value="{{__($category->id)}}" {{$job->category->id==$category->id ? 'selected' :''}}>{{__($category->name)}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                            {{-- Sub Category --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label for="subCategorys">@lang('Sub Category')*</label>
+                                                    <select name="sub_category_id" class="form-control mySubCatgry" id="subCategorys" >
+                                                    </select>
+                                            </div>
+
+                                            {{-- Experienced Level --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label for="experience">@lang('Experience Level')*</label>
+                                                    <select name="rank_id" class="form-control experience" id="experience" >
+                                                        <option selected="" disabled="">@lang('Select Experience Level')</option>
+                                                        @foreach($data['experience_levels'] as $item)
+                                                            <option value="{{__($item->id)}}" {{$job->rank  ->id==$item->id ? 'selected' :''}}>{{__($item->level)}}</option>
+                                                        @endforeach
+                                                    </select>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            {{-- Budget Type --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
+                                                <label for="budget">@lang('Budget Type')*</label>
+                                                <select name="budget_type_id" class="form-control budget" id="budget_type_id" >
+                                                    <option selected="" disabled="">@lang('Select Budget Type')</option>
+                                                        @foreach($data['budget_types'] as $item)
+                                                            <option value="{{__($item->id)}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{__($item->title)}}</option>
+                                                        @endforeach
+                                                </select>
+                                            </div>
+                                            
+                                            {{-- Weekly Range start --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
+                                                
+                                                <label>@lang('Weekly Range(Starting)')*</label>
+                                                <input type="number" class="form-control" name="hourly_start_range" value="{{$job->hourly_start_range}}" placeholder="" >
+
+                                            </div>
+
+                                            {{-- Weekly Range end --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
+                                                
+                                                <label>@lang('Weekly Range(Ending)')*</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" name="hourly_end_range" value="{{$job->hourly_end_range}}" placeholder="" >
+                                                </div>
+
+                                            </div>
+                                               
+
+                                            {{-- budget amount --}}
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
+
+                                                <label>@lang('Budget Amount')*</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="number" class="form-control" name="fixed_amount" value="{{$job->fixed_amount}}" placeholder="" >
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            {{-- deliverables --}}
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Deliverables')*</label>
+                                                <div class="input-group mb-3">
+                                                    <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables" >
+                                                        @foreach($data['deliverables'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                              {{-- dod --}}
+                                        <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                            <label>@lang('Defination of Done(DOD)')*</label>
+                                                <div class="input-group mb-3">
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
+                                                        @foreach($data['dods'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
+                                                        
+                                                    </select>
+                                                    
+                                                </div>
+                                        </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            {{-- Project Expected Start Date --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Project Expected Start Date')*</label>
+                                                    <div class="input-group mb-3">
+                                                    <input type="date" class="form-control" name="expected_start_date" value="{{$job->expected_start_date}}" placeholder="" >
+                                                    </div>
+                                            </div>
+
+                                            {{-- project length --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Project Length')*</label>
+                                                    <div class="input-group mb-3">
+                                                    <input type="integer" class="form-control" name="delivery_time" value="{{$job->delivery_time}}" placeholder="" >
+                                                </div>
+                                            </div>
+
+                                            {{-- project stage --}}
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                                <label>@lang('Project Stage')*</label>
+                                                <select name="project_stage_id" class="form-control budget" id="project_stage_id">
+                                                    <option selected="" disabled="">@lang('Select Project Stage')</option>
+                                                        @foreach($data['project_stages'] as $item)
+                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                        @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+
+                                        <input type="checkbox" name="skills[]" style="display: none">
+                                        <div id="form_attributes">
+                                            
                                         </div>
 
                                        
-                                        <div class="col-xl-6 col-lg-6 form-group">
-                                            <label>@lang('Budget')*</label>
-                                            <div class="input-group mb-3">
-                                                <input type="text" class="form-control" name="amount" value="{{getAmount($job->amount)}}" placeholder="@lang('Enter Budget')" required="">
-                                              <span class="input-group-text" id="basic-addon2">{{__($general->cur_text)}}</span>
+                                        {{-- Create Job Button --}}
+                                        
+                                        <div id="outer" class="text-right">
+                                            <div class="inner">
+                                                <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
                                             </div>
-                                        </div>
-
-                                        <div class="col-xl-6 col-lg-6 form-group">
-                                            <label>@lang('Delivery Time')</label>
-                                                <div class="input-group mb-3">
-                                                  <input type="text" class="form-control" name="delivery" value="{{$job->delivery_time}}" placeholder="@lang('Delivery Time')" required="">
-                                                  <span class="input-group-text" id="basic-addon2">@lang('Days')</span>
-                                                </div>
-                                        </div>
-
-                                        <div class="col-xl-6 col-lg-6 form-group">
-                                            <label>@lang('Image')</label>
-                                            <div class="custom-file-wrapper removeImage">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" name="image" id="customFile">
-                                                    <label class="custom-file-label" for="customFile">@lang('Choose file')</label>
-                                                     <small>@lang('Supported files: jpeg, jpg, png. Image will be resized into 590x300 px')</small>
-                                                </div>
+                                            <div class="inner">
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
                                             </div>
-                                        </div>
-
-                                         <div class="col-xl-6 col-lg-6 form-group select2Tag">
-                                            <label>@lang('Skill')*</label>
-                                            <select class="form-control select2" name="skill[]" multiple="multiple" required="">
-                                                 @foreach($job->skill as $name)
-                                                    <option value="{{$name}}" selected="true">{{__($name)}}</option>
-                                                @endforeach
-                                            </select>
-                                            <small>@lang('Tag and enter press')</small>
-                                        </div>
-
-                                        <div class="col-xl-12 col-lg-12 form-group">
-                                            <label>@lang('Description')*</label>
-                                            <textarea class="form-control bg--gray nicEdit" name="description">
-                                                @php echo $job->description @endphp
-                                            </textarea>
-                                        </div>
-
-                                        <div class="col-xl-12 col-lg-12 form-group">
-                                            <label>@lang('Requirement')*</label>
-                                            <textarea class="form-control bg--gray nicEdit" name="requirement">
-                                                 @php echo $job->requirements @endphp
-                                            </textarea>
-                                        </div>
-
-                                        <div class="col-xl-12 form-group">
-                                            <button type="submit" class="submit-btn mt-20 w-100">@lang('Update Job')</button>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -129,11 +271,15 @@
 
 @push('style-lib')
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/create_job.css')}}">
+
 @endpush
 
 @push('script-lib')
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset($activeTemplateTrue.'frontend/js/nicEdit.js')}}"></script>
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 @endpush
 
 @push('script')

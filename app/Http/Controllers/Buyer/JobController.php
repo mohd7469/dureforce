@@ -32,11 +32,8 @@ class JobController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function create(Request $request)
+    public function getJobData()
     {
-
-        $pageTitle = "Create Job";
-
         $data = [];
 
         $data['countries'] = World::Countries();
@@ -54,6 +51,15 @@ class JobController extends Controller
         $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+
+        return $data;
+    }
+    public function create(Request $request)
+    {
+
+        $pageTitle = "Create Job";
+        $data=$this->getJobData();
+        
 
         return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
@@ -152,12 +158,18 @@ class JobController extends Controller
         // return back()->withNotify($notify);
     }
 
-    public function edit($slug, $id)
+    public function destroy($uuid)
     {
-        $user = Auth::user();
+        dd("destroy");
+    }
+    public function edit($uuid)
+    {
+        $job=Job::withAll()->where('uuid',$uuid)->first();
+        $data=$this->getJobData();
+
         $pageTitle = "Job Update";
-        $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job'));
+        // $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
+        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job','data'));
     }
 
     public function update(Request $request, $id)

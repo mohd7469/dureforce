@@ -45,6 +45,9 @@ class Job extends Model
 
 
     }
+    public static function scopeWithAll($query){
+        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
