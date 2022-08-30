@@ -108,9 +108,9 @@ class Job extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
-    public function task_document()
+    public function documents()
     {
-        return $this->morphMany(TaskDocument::class, 'module_id');
+        return $this->morphMany(TaskDocument::class, 'module');
     }
     public function task_skill()
     {

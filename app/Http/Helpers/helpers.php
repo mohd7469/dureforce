@@ -1,5 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
+
 use App\Lib\GoogleAuthenticator;
 use App\Lib\SendSms;
 use App\Models\EmailTemplate;
@@ -15,11 +16,12 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP; 
+use PHPMailer\PHPMailer\SMTP;
 use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
 use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
+
 function sidebarVariation()
 {
 
@@ -101,59 +103,55 @@ function getNumber($length = 8)
 
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
-{   
-    $filename ='';
+{
+    $filename = '';
     try {
-    
-    $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-    
-    //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
-    $blobClient = BlobRestProxy::createBlobService($connectionString);
-     
-    if ($old) {
-        removeFile($location . '/' . $old);
-        removeFile($location . '/thumb_' . $old);
-    }
-    $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
-    $image = Image::make($file);
-    if ($size) {
-        $size = explode('x', strtolower($size));
-        $image->resize($size[0], $size[1]);
-    }
-     
-$locations= explode('/', $location);
-$container=end($locations) ;
-$createContainerOptions = new CreateContainerOptions();  
-$createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);  
-try {
 
-    $properties=  $blobClient->GetContainerProperties($container);
-} 
-catch (ServiceException $e)
-{   
-    error($e);
-    $blobClient->createContainer($container, $createContainerOptions); 
-}
+        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+        //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
 
- $content = fopen($file, "r");
- $blobClient->createBlockBlob($container, $filename, $content);
- 
+        if ($old) {
+            removeFile($location . '/' . $old);
+            removeFile($location . '/thumb_' . $old);
+        }
+        $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
+        $image = Image::make($file);
+        if ($size) {
+            $size = explode('x', strtolower($size));
+            $image->resize($size[0], $size[1]);
+        }
 
-    if ($thumb) {
-        $thumb = explode('x', $thumb);
-        $thumbImage= Image::make($file)->resize($thumb[0], $thumb[1]);
-        $thumbImage->save($location . '/thumb_' . $filename);
-        $thumbcontent = fopen($thumbImage, "r");
-        $blobClient->createBlockBlob($container, '/thumb_' .$filename, $thumbcontent);
+        $locations = explode('/', $location);
+        $container = end($locations);
+        $createContainerOptions = new CreateContainerOptions();
+        $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
+        try {
+
+            $properties = $blobClient->GetContainerProperties($container);
+        } catch (ServiceException $e) {
+            error($e);
+            $blobClient->createContainer($container, $createContainerOptions);
+        }
+
+        $content = fopen($file, "r");
+        $blobClient->createBlockBlob($container, $filename, $content);
+
+
+        if ($thumb) {
+            $thumb = explode('x', $thumb);
+            $thumbImage = Image::make($file)->resize($thumb[0], $thumb[1]);
+            $thumbImage->save($location . '/thumb_' . $filename);
+            $thumbcontent = fopen($thumbImage, "r");
+            $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
+        }
+    } catch (ServiceException $e) {
+        error($e);
     }
-} 
-catch (ServiceException $e)
-{   
-    error($e);
-}
     return $filename;
 
 }
+
 function uploadFile($file, $location, $size = null, $old = null)
 {
     $path = makeDirectory($location);
@@ -167,6 +165,53 @@ function uploadFile($file, $location, $size = null, $old = null)
     $file->move($location, $filename);
     return $filename;
 }
+
+
+function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
+{
+    $filename = '';
+    try {
+
+        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+        //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
+
+        if ($old) {
+            removeFile($location . '/' . $old);
+            removeFile($location . '/thumb_' . $old);
+        }
+        $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
+
+
+        $locations = explode('/', $location);
+        $container = end($locations);
+        $createContainerOptions = new CreateContainerOptions();
+        $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
+        try {
+            $properties = $blobClient->GetContainerProperties($container);
+        } catch (ServiceException $e) {
+
+            $blobClient->createContainer($container, $createContainerOptions);
+        }
+
+        $content = fopen($file, "r");
+        $blobClient->createBlockBlob($container, $filename, $content);
+
+
+        if ($thumb) {
+            $thumb = explode('x', $thumb);
+            $thumbImage = Image::make($file)->resize($thumb[0], $thumb[1]);
+            $thumbImage->save($location . '/thumb_' . $filename);
+            $thumbcontent = fopen($thumbImage, "r");
+            $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
+        }
+    } catch (ServiceException $e) {
+        error($e);
+    }
+    return $filename;
+
+}
+
 
 function makeDirectory($path)
 {
@@ -512,15 +557,16 @@ function getImage($image, $size = null)
     }
     return asset('assets/images/default.png');
 }
+
 function getAzureImage($image, $size = null)
 {
-    $imagePath= explode('/', $image);
-    $container=$imagePath[0] ;
-    $filename=end($imagePath) ;
-    $url=getenv('AZURE_STORAGE_URL');
-    $imageUrl=$url.'/'.$container.'/'.$filename;
-    info("Image path:".$image);
-    if ($filename!="" && $container!="" ){
+    $imagePath = explode('/', $image);
+    $container = $imagePath[0];
+    $filename = end($imagePath);
+    $url = getenv('AZURE_STORAGE_URL');
+    $imageUrl = $url . '/' . $container . '/' . $filename;
+    info("Image path:" . $image);
+    if ($filename != "" && $container != "") {
         return $imageUrl;
     }
     if ($size) {
@@ -529,15 +575,17 @@ function getAzureImage($image, $size = null)
     return asset('assets/images/default.png');
 }
 
-function azure_file_exists($image,$container)
+function azure_file_exists($image, $container)
 {
-$connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
-$blobClient = BlobRestProxy::createBlobService($connectionString);
-$blob = $blobClient->getBlob($container, $image);
-if ($blob) { return true;}
-else
-return false;
+    $connectionString = "DefaultEndpointsProtocol=https;AccountName=" . getenv('AZURE_STORAGE_NAME') . ";AccountKey=" . getenv('AZURE_STORAGE_KEY');
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
+    $blob = $blobClient->getBlob($container, $image);
+    if ($blob) {
+        return true;
+    } else
+        return false;
 }
+
 function notify($user, $type, $shortCodes = null)
 {
 
@@ -633,9 +681,9 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
 
     try {
         //Server settings
-       
+
         $mail->isSMTP();
-        $mail->Host =  $config->host;
+        $mail->Host = $config->host;
         $mail->SMTPAuth = true;
         $mail->Username = $config->username;
         $mail->Password = $config->password;
@@ -643,7 +691,7 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } else if ($config->enc == 'tls') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        } 
+        }
         $mail->Port = $config->port;
         $mail->CharSet = 'UTF-8';
         //Recipients
@@ -737,8 +785,8 @@ function menuActive($routeName, $type = null)
 
 function imagePath()
 {
-    $url=getenv('AZURE_STORAGE_URL');
-   
+    $url = getenv('AZURE_STORAGE_URL');
+
     $data['message'] = [
         'path' => 'assets/images/job',
         'size' => '590x300',
@@ -749,6 +797,9 @@ function imagePath()
     ];
     $data['advertisement'] = [
         'path' => 'assets/images/advertisement',
+    ];
+    $data['attachments'] = [
+        'path' => $url . '/attachments',
     ];
     $data['optionalService'] = [
         'path' => 'assets/images/optionalService',
@@ -772,7 +823,7 @@ function imagePath()
         'size' => '920x468',
     ];
     $data['service'] = [
-        'path' => $url.'/service',
+        'path' => $url . '/service',
         'size' => '920x468',
     ];
     $data['subcategory'] = [
@@ -835,7 +886,7 @@ function imagePath()
             'size' => '400x400'
         ]
     ];
- return $data;
+    return $data;
 }
 
 function diffForHumans($date)
@@ -1066,3 +1117,11 @@ function authorizeAdmin($user)
     }
 }
 
+
+function getFileExtension($file)
+{
+
+    $extension = strtolower($file->getClientOriginalExtension());
+    return $extension;
+
+}

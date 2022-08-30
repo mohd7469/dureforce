@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TaskDocument extends Model
 {
     use HasFactory;
-    public function reviewable()
+    public function module()
     {
         return $this->morphTo();
     }

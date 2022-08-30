@@ -150,8 +150,8 @@ class Software extends Model
     {
         return $this->morphMany(TaskDocument::class, 'module_id');
     }
-    public function task_skill()
+    public function documents()
     {
-        return $this->morphMany(TaskSkill::class, 'module_id');
+        return $this->morphMany(TaskDocument::class, 'module');
     }
 }
