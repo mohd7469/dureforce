@@ -83,7 +83,7 @@ class JobController extends Controller
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'required|exists:sub_categories,id',
+            'sub_category_id' => 'exists:sub_categories,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array|min:3',
@@ -92,11 +92,12 @@ class JobController extends Controller
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
-
         if ($validator->fails()) {
+
             return response()->json(["error" => $validator->errors()]);
 
         }
+
         try {
             DB::beginTransaction();
             $job = Job::create([
@@ -161,6 +162,7 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            dd($exp);
             return response()->json(["error" => $exp]);
         }
 

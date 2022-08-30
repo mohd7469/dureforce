@@ -71,20 +71,19 @@ $(function() {
           });
           
           this.on("complete", function(file, xhr, formData) {
-            var _this=this;
-            _this.removeAllFiles();
           });
 
           this.on("successmultiple", function(files, response) {
-             displaySuccessMessage();
-             window.location.replace(response.redirect);
+
+              if(response.error)
+              {
+                displayErrorMessage(response.error);
+              }
+              if(response.redirect)
+                window.location.replace(response.redirect);
+                
           });
 
-        this.on("errormultiple", function(files, response) {
-          displayErrorMessage();
-          exit();
-        });
-          
           var myDropzone = this;
   
           $("#job_form_data").submit(function (e) {
@@ -93,7 +92,7 @@ $(function() {
               e.preventDefault();
               e.stopPropagation();
               if(myDropzone.getQueuedFiles().length>0)
-                  myDropzone.processQueue();  
+                  myDropzone.processQueue();
               else
               {
                 submitCreateFormData(form_data);
