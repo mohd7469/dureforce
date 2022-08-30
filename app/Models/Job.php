@@ -124,6 +124,11 @@ class Job extends Model
     {
         return $this->belongsToMany(Skills::class, 'task_skills');
     }
+    function getJobSkills()
+    {
+        return $this->skill ? implode(',',$this->skill->pluck('id')->toArray()) : '';
+        // dd($result);
+    }
 
 
 }

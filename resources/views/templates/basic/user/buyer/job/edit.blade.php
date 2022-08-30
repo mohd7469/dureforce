@@ -229,7 +229,7 @@
                                             </div>
                                         </div>
                                         
-
+                                        <input type="hidden" value="{{$job->getJobSkills()}}" name="job_skills" id="job_skills" >
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div id="form_attributes">
                                             
@@ -284,7 +284,95 @@
 
 @push('script')
 <script>
+
+    function fetchSubCategories(category)
+    {
+        $.ajax({
+            type:"GET",
+            url:"{{route('user.category')}}",
+            data: {category : category},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                    $("#subCategorys").empty(); 
+                    html += `<option value="" selected disabled>${data.error}</option>`;
+                    $(".mySubCatgry").html(html);
+                }
+                else{
+                    $("#subCategorys").empty(); 
+                    html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                    $.each(data, function(index, item) {
+                        html += `<option value="${item.id}">${item.name}</option>`;
+                        $(".mySubCatgry").html(html);
+                    });
+                }
+            }
+        });  
+    }
+
+    function fetchSkills(category,sub_category=''){
+        $.ajax({
+            type:"GET",
+        url:"{{route('user.job.let.skills')}}",
+            data: {category_id : category,sub_category_id:sub_category},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                
+                }
+                else{
+                    loadSkills(data);
+                    console.log(data);
+                
+                }
+            }
+        });  
+
+    }
+
+    const genRand = (len) => {
+
+        return Math.random().toString(36).substring(2,len+2);
+
+    }
+                                    
+    function loadSkills(data)
+    {
+
+       var selected_skills=$('#job_skills').val();
+       alert(selected_skills);
+        $('#form_attributes').empty();
+        for (var main_category in data) { //heading main
+            
+            var all_sub_categories=data[main_category];
+            var main_category_id=genRand(5);
+        
+            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+                var skills=all_sub_categories[sub_category_enum];
+                var sub_category_id=genRand(5);
+
+                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                for (var skill_index in skills) {
+                    
+                    var skill_id=skills[skill_index].id;
+                    var skill_name=skills[skill_index].name;
+                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+                }
+                
+            }
+            $('#'+main_category_id).append('<div/></div>');
+        }
+        $('#form_attributes').append('</div>');
+
+
+    }
+    Dropzone.autoDiscover = false;
     "use strict";
+    
     $(document).ready(function() {
         $('.select2').select2({
             tags: true
@@ -296,6 +384,10 @@
             $(this).attr("id","nicEditor"+index);
             new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
         });
+        var category = $('#category').find(":selected").val();
+        var sub_category = $('#subCategorys').find(":selected").val();
+        fetchSkills(category,sub_category);
+
     });
 
     (function($){
@@ -310,30 +402,26 @@
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
+    $('#budget_type_id').on('change', function(){
+        var budget_type = $(this).val();
+        switchBudgetFileds(budget_type);
+    });
+  
+    
+    $('#subCategorys').on('change', function(){
+        var sub_category = $(this).val();
+        var category = $('#category').find(":selected").val();
+        fetchSkills(category,sub_category);
+
+    });
 
     $('#category').on('change', function(){
         var category = $(this).val();
-            $.ajax({
-                type:"GET",
-                url:"{{route('user.category')}}",
-                data: {category : category},
-                success:function(data){
-                    var html = '';
-                    if(data.error){
-                        $("#subCategorys").empty(); 
-                        html += `<option value="" selected disabled>${data.error}</option>`;
-                        $(".mySubCatgry").html(html);
-                    }
-                    else{
-                        $("#subCategorys").empty(); 
-                        html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                        $.each(data, function(index, item) {
-                            html += `<option value="${item.id}">${item.name}</option>`;
-                            $(".mySubCatgry").html(html);
-                        });
-                    }
-                }
-        });   
+        fetchSubCategories(category);
+        fetchSkills(category);
+        
+         
     });
+
 </script>
 @endpush

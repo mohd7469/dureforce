@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
+use PhpParser\Node\Stmt\TryCatch;
 
 class JobController extends Controller
 {
@@ -164,11 +165,10 @@ class JobController extends Controller
     }
     public function edit($uuid)
     {
+        
         $job=Job::withAll()->where('uuid',$uuid)->first();
         $data=$this->getJobData();
-
         $pageTitle = "Job Update";
-        // $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
         return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job','data'));
     }
 
