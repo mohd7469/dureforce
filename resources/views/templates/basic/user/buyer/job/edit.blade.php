@@ -177,7 +177,7 @@
                                                 <div class="input-group mb-3">
                                                     <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables" >
                                                         @foreach($data['deliverables'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                                            <option value="{{__($item->id)}}" {{in_array($item->id,$job->deliverable->pluck('id')->toArray()) ? 'selected' :''}} >{{__($item->name)}}</option>
                                                         @endforeach
                                                         
                                                     </select>
@@ -190,7 +190,7 @@
                                                 <div class="input-group mb-3">
                                                     <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
                                                         @foreach($data['dods'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                            <option value="{{__($item->id)}}" {{in_array($item->id,$job->dod->pluck('id')->toArray()) ? 'selected' :''}}>{{__($item->title)}}</option>
                                                         @endforeach
                                                         
                                                     </select>
