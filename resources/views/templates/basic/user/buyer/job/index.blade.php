@@ -64,7 +64,7 @@
                                         </td>
 
                                         <td data-label="@lang('Price')">
-                                            {{showDateTime($job->updated_at)}}
+                                            {{ $job->budgetType->id==1 ? "10$ to 15$ per hour" : '1200$'}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>

@@ -71,6 +71,7 @@ $(function() {
           });
           
           this.on("complete", function(file, xhr, formData) {
+           
           });
 
           this.on("successmultiple", function(files, response) {
@@ -83,6 +84,8 @@ $(function() {
                 window.location.replace(response.redirect);
                 
           });
+
+          
 
           var myDropzone = this;
   

@@ -103,7 +103,7 @@ class JobController extends Controller
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
         if ($validator->fails()) {
-
+            
             return response()->json(["error" => $validator->errors()]);
 
         }
