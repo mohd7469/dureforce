@@ -21,11 +21,11 @@ function submitCreateFormData(data)
 }
 function displayAlertMessage(message)
 {
-  iziToast.error({
-    message: message,
-    position: "topRight",
-  });
-  // $("#job_form_data").before('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+    iziToast.error({
+      message: message,
+      position: "topRight",
+    });
+
 }
 function displayErrorMessage(validation_errors)
 {
@@ -48,8 +48,9 @@ function displaySuccessMessage()
 
 $(function() {
   var form_data='';
+  var action_url=$("#job_form_data").attr('action');
     var dropzone = new Dropzone('#demo-upload', {
-      url:'store',
+      url:action_url,
       autoProcessQueue: false,
         parallelUploads: 4,
         dictDefaultMessage: "your custom message",
