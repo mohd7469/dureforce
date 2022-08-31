@@ -64,7 +64,7 @@
                                         </td>
 
                                         <td data-label="@lang('Price')">
-                                            {{ $job->budgetType->id==1 ? "10$ to 15$ per hour" : '1200$'}}
+                                            {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? $job->hourly_start_range."$ to " .$job->hourly_end_range."$ per hour" : $job->fixed_amount.'$'}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>

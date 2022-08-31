@@ -12,6 +12,9 @@ class BudgetType extends Model
     use HasFactory;
 
     protected $fillable = ['title','module_id'];
+    public static $hourly = 1;
+    public static $fixed = 2;
+
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);
