@@ -93,6 +93,7 @@ class JobController extends Controller
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
+            'project_stage_id' => 'exists:project_stages,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array|min:3',
@@ -203,6 +204,7 @@ class JobController extends Controller
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
+            'project_stage_id' => 'required|exists:project_stages,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
@@ -222,7 +224,9 @@ class JobController extends Controller
 
         try {
             DB::beginTransaction();
-            $job = Job::where("uuid", $uuid)->first()::update([
+            $job = Job::where("uuid", $uuid)->first();
+
+            $job->update([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
                 "location_id" => $request_data['location_id'],
@@ -247,6 +251,7 @@ class JobController extends Controller
 
             $dods = DOD::whereIn('id', $request_data['dod'])->get();
             $job->dod()->sync($dods);
+
 
             $skills = Skills::whereIn('id', $request_data['skills'])->get();
             $job->skill()->sync($skills);
