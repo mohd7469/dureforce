@@ -150,7 +150,7 @@ class JobController extends Controller
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
-                        $url = $path . $filename;
+                        $url = $path .'/'. $filename;
 
                         $document = new TaskDocument;
                         $document->name = $filename;
