@@ -192,7 +192,6 @@ class JobController extends Controller
 
     public function update(Request $request, $uuid)
     {
-dd($request->all());
 
         $request_data = [];
         parse_str($request->data, $request_data);
