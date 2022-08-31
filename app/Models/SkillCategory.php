@@ -17,12 +17,7 @@ class SkillCategory extends Model
     {
         return $this->belongsTo(ModuleSkill::class, 'skill_category_id');
     }
-    public function skill_sub_category()
-    {
 
-        return $this->hasMany(SkillSubCategory::class, 'skill_category_id');
-
-    }
     public function skill()
     {
 
@@ -48,8 +43,5 @@ class SkillCategory extends Model
     {
         return $this->belongsToMany(Skills::class, 'module_skills');
     }
-    public function skill_sub_categories()
-    {
-        return $this->belongsToMany(SkillSubCategory::class, 'module_skills');
-    }
+
 }
