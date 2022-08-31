@@ -226,7 +226,7 @@
                                                 <select name="project_stage_id" class="form-control budget" id="project_stage_id">
                                                     <option selected="" disabled="">@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                            <option value="{{__($item->id)}}" {{$job->projectStage->id==$item->id ? 'selected' : ''}}>{{__($item->title)}}</option>
                                                         @endforeach
                                                 </select>
                                             </div>
