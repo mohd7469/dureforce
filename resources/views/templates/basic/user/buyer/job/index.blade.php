@@ -25,7 +25,7 @@
 
                             <tbody class="text-center">
                                 @forelse($jobs as $key => $job)
-                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}">
+                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$job->uuid}}">
                                         <td data-label="@lang('Title')" class="text-start">
                                             {{-- route('job.details', [slug($job->title), encrypt($job->id)]) --}}
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
@@ -112,11 +112,11 @@
                
                     <input type="hidden" name="job_id" id="job_id">
                     <div class="modal-body">
-                        <p>@lang('Are you sure to close this job')</p>
+                        <p>@lang('Are you sure to delete this job')</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn--danger btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                         <button type="button" class="btn btn--success btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
+                        <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
+                         <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
                     </div>
                 
     </div>
@@ -130,12 +130,29 @@
     
     function displaySuccessMessage(message)
     {
-        $("#job-listing").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>'+message+'</div>');
+        iziToast.success({
+            message: message,
+            position: "topRight",
+        });
     }
 
     function delteJob(uuid)
     {
-        
+        $.ajax({
+            type:"GET",
+            url:"destroy/"+uuid,
+            data: {},
+            success:function(data){
+                
+                if(data.error){
+                   
+                }
+                else{
+                    $('#'+uuid).remove();
+                    displaySuccessMessage(data.message);
+                }
+            }
+        });  
     }
 
     'use strict';
@@ -152,6 +169,8 @@
 
         uuid=$('#job_id').val();
         delteJob(uuid);
+        var modal = $('#confirmationModal');
+        modal.modal('hide');
        
     });
 
