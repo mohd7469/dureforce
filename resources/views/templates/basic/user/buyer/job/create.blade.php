@@ -332,7 +332,7 @@
                                     
     function loadSkills(data)
     {
-        if(!jQuery.isEmptyObject(data))
+        // if(!jQuery.isEmptyObject(data))
             $('#form_attributes').empty();
         for (var main_category in data) { //heading main
             
@@ -395,6 +395,7 @@
     
     $('#subCategorys').on('change', function(){
         var sub_category = $(this).val();
+        $('input[name="skills"]').prop('checked', $(this).is(':checked'));
         var category = $('#category').find(":selected").val();
         fetchSkills(category,sub_category);
 
@@ -402,6 +403,7 @@
 
     $('#category').on('change', function(){
         var category = $(this).val();
+
         fetchSubCategories(category);
         fetchSkills(category);
         

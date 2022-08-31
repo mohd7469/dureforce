@@ -17,7 +17,7 @@
                                 <th>@lang('Messages')</th>
                                 <th>@lang('Hired')</th>
                                 <th>@lang('Status')</th>
-                                <th>@lang('Last Update')</th>
+                                <th>@lang('Price')</th>
                                 <th>@lang('Action')</th>
 
                             </tr>
@@ -31,10 +31,10 @@
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            {{ '2'}} @lang('Proposals')
+                                            {{ '2'}}
                                         </td>
                                         <td data-label="@lang('Messages')">
-                                            {{ '3' }} @lang('Messages')
+                                            {{ '3' }}
                                         </td>
                                         <td data-label="@lang('Hired')">
                                             {{ '1' }}
@@ -63,22 +63,22 @@
 
                                         </td>
 
-                                        <td data-label="@lang('Last Update')">
+                                        <td data-label="@lang('Price')">
                                             {{showDateTime($job->updated_at)}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>
                                         <td data-label="Action">
-                                            @if($job->status->slug != 'approved')
+                                            {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
-                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
-                                            @else
-                                                <span>@lang('N\A')</span>
-                                            @endif
 
-                                            @if($job->status->slug!= 'approved')
+                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                            {{-- @else --}}
+                                                <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
+
+                                            {{--  @if($job->status->slug!= 'approved')  --}}
                                                 <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
-                                            @endif
+                                            {{--  @endif  --}}
                                         </td>
                                     </tr>
                                 @empty

@@ -14,6 +14,7 @@ use App\Models\Rank;
 use App\Models\SkillCategory;
 use App\Models\Skills;
 use App\Models\SkillSubCategory;
+use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
@@ -46,7 +47,7 @@ class JobController extends Controller
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title','slug'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
@@ -73,15 +74,16 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod','status')->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod', 'status')->latest()->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function store(Request $request)
     {
-        $request_data=[];
-        parse_str($request->data,$request_data);
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
         $user = Auth::user();
 
         $validator = Validator::make($request_data, [
@@ -89,7 +91,7 @@ class JobController extends Controller
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'required|exists:sub_categories,id',
+            'sub_category_id' => 'exists:sub_categories,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array|min:3',
@@ -98,66 +100,81 @@ class JobController extends Controller
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
+        if ($validator->fails()) {
 
-        if ($validator->fails())
-        {
-            return response()->json(["error" =>$validator->errors()]);
+            return response()->json(["error" => $validator->errors()]);
 
         }
-       $job = Job::create([
-            "user_id"=>$user->id,
-            "job_type_id"=>$request_data['job_type_id'],
-            "location_id"=>$request_data['location_id'],
-            "category_id"=>$request_data['category_id'],
 
-            "sub_category_id"=>isset( $request_data['sub_category_id']) ?  $request_data['sub_category_id']: null ,
-            "rank_id"=>$request_data['rank_id'],
-            "project_stage_id"=>isset( $request_data['project_stage_id']) ?  $request_data['project_stage_id']:null,
-            "budget_type_id"=>isset( $request_data['budget_type_id']) ?  $request_data['budget_type_id']: null ,
-            "title"=>$request_data['title'],
-            "description"=>$request_data['description'],
-            "fixed_amount"=> isset($request_data['fixed_amount']) ? $request_data['fixed_amount']:null,
-            "hourly_start_range"=> isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range']:null,
-            "hourly_end_range"=>isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range']:null,
-            "delivery_time"=>$request_data['delivery_time'],
-            "expected_start_date"=>$request_data['expected_start_date'],
-            'status_id' =>1
-        ]);
-
-
-
-        $deliverables = Deliverable::whereIn('id',$request_data['deliverables'])->get();
-        $job->deliverable()->sync($deliverables);
-
-        $dods = DOD::whereIn('id',$request_data['dod'])->get();
-        $job->dod()->sync($dods);
-
-        $skills = Skills::whereIn('id',$request_data['skills'])->get();
-        $job->skill()->saveMany($skills);
+        try {
+            DB::beginTransaction();
+            $job = Job::create([
+                "user_id" => $user->id,
+                "job_type_id" => $request_data['job_type_id'],
+                "location_id" => $request_data['location_id'],
+                "category_id" => $request_data['category_id'],
+                "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
+                "rank_id" => $request_data['rank_id'],
+                "project_stage_id" => isset($request_data['project_stage_id']) ? $request_data['project_stage_id'] : null,
+                "budget_type_id" => isset($request_data['budget_type_id']) ? $request_data['budget_type_id'] : null,
+                "title" => $request_data['title'],
+                "description" => $request_data['description'],
+                "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
+                "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
+                "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
+                "delivery_time" => $request_data['delivery_time'],
+                "expected_start_date" => $request_data['expected_start_date'],
+                'status_id' => 1
+            ]);
 
 
-        return response()->json([ "redirect" => 'index' , "message" => "Successfully Saved"]);
+            $deliverables = Deliverable::whereIn('id', $request_data['deliverables'])->get();
+            $job->deliverable()->sync($deliverables);
 
+            $dods = DOD::whereIn('id', $request_data['dod'])->get();
+            $job->dod()->sync($dods);
 
+            $skills = Skills::whereIn('id', $request_data['skills'])->get();
+            $job->skill()->saveMany($skills);
 
+            $path = imagePath()['attachments']['path'];
 
-         $path = imagePath()['job']['path'];
-         $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
+            if ($request->hasFile('file')) {
+
+                foreach ($request->file as $file) {
+
+                    $this->fileValidate($file);
+                    try {
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . $filename;
+
+                        $document = new TaskDocument;
+                        $document->name = $filename;
+                        $document->url = $url;
+                        $document->type = $file_extension;
+                        $document->is_published = "Active";
+                        $job->documents()->save($document);
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Image could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
+                }
             }
-            $job->image = $filename;
+
+            DB::commit();
+            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            dd($exp);
+            return response()->json(["error" => $exp]);
         }
 
 
-        // $notify[] = ['success', 'Job has been created.'];
-        // return back()->withNotify($notify);
     }
 
     public function destroy($uuid)
@@ -185,13 +202,14 @@ class JobController extends Controller
 
     private function fileValidate($file)
     {
-        $allowedExts = array('jpeg', 'jpg', 'png');
+        $allowedExts = array('jpeg', 'jpg', 'png', 'pdf');
         $ext = strtolower($file->getClientOriginalExtension());
         if (!in_array($ext, $allowedExts)) {
             $notify = 'Only jpeg, jpg, png files are allowed';
             return back()->withNotify($notify);
         }
     }
+
 
     public function cancelBy(Request $request)
     {
@@ -239,7 +257,7 @@ class JobController extends Controller
     public function getSkills(Request $request)
     {
         try {
-            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use($request){
+            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use ($request) {
                 $q->when(isset($request->sub_category_id), function ($q) use ($request) {
                     $q->where('sub_category_id', $request->sub_category_id);
                 });
