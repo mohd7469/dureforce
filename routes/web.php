@@ -591,6 +591,9 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
                     Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
                     Route::get('/category', 'UserController@category')->name('category');
+                    // Route::get('/category', 'UserController@skillSubCategory')->name('category');
+                    
+                    
                     Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
                     Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
 
@@ -656,11 +659,15 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
                 //Job
                 Route::get('job/create', 'JobController@create')->name('job.create');
+
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
-                Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
+                Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
+                Route::get('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
+
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
+                Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
             });
 
             //JobBiding

@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Skills extends Model
 {
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+    protected $table="skills";
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -29,5 +31,31 @@ class Skills extends Model
     public function userSkills()
     {
         return $this->hasMany('App\models\UserSkill');
+    }
+    public function moduleSkill()
+    {
+        return $this->belongsTo(ModuleSkill::class, 'skill_id');
+    }
+
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_attributes');
+    }
+    public function sub_categoires()
+    {
+        return $this->belongsToMany(SubCategory::class, 'category_attributes');
+    }
+    public function skill_categories()
+    {
+        return $this->belongsTo(SkillCategory::class, 'skill_category_id');
+    }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'task_skill');
+    }
+    public function job()
+    {
+        return $this->belongsToMany(Job::class, 'task_skills');
     }
 }
