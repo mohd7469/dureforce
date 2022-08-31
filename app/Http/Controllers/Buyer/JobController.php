@@ -195,6 +195,7 @@ class JobController extends Controller
     public function update(Request $request, $uuid)
     {
 
+
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
@@ -285,7 +286,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
