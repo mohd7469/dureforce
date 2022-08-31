@@ -7,7 +7,7 @@
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 page_div">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
-                    <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
+                    <form class="user-profile-form" action="{{route('user.job.update',$job->uuid)}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
                             <div class="d-flex flex-wrap align-items-center justify-content-between bottom_border_light" >
@@ -109,6 +109,9 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label for="subCategorys">@lang('Sub Category')*</label>
                                                     <select name="sub_category_id" class="form-control mySubCatgry" id="subCategorys" >
+                                                        @foreach($data['sub_categories'] as $sub_category)
+                                                        <option value="{{__($sub_category->id)}}" {{$job->subCategory->id==$sub_category->id ? 'selected' :''}}>{{__($sub_category->name)}}</option>
+                                                    @endforeach
                                                     </select>
                                             </div>
 
@@ -229,7 +232,7 @@
                                             </div>
                                         </div>
                                         
-                                        <input type="hidden" value="{{$job->getJobSkills()}}" name="job_skills" id="job_skills" >
+                                        <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div id="form_attributes">
                                             
@@ -335,12 +338,22 @@
         return Math.random().toString(36).substring(2,len+2);
 
     }
-                                    
+           
+    function isChecked(skill_id,selected_skills){
+
+        if(selected_skills.includes(skill_id))
+            return 'checked';
+        else
+            return '';
+    }
+    
     function loadSkills(data)
     {
 
-       var selected_skills=$('#job_skills').val();
-       alert(selected_skills);
+        var selected_skills=$('#job_skills').val();
+        selected_skills=(selected_skills.split(','));
+        selected_skills=selected_skills.map(Number);
+
         $('#form_attributes').empty();
         for (var main_category in data) { //heading main
             
@@ -358,7 +371,7 @@
                     
                     var skill_id=skills[skill_index].id;
                     var skill_name=skills[skill_index].name;
-                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
 
 
                 }

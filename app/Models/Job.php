@@ -10,6 +10,7 @@ class Job extends Model
 {
     use HasFactory;
     protected $fillable = [
+
         "user_id",
         "job_type_id",
         "location_id",
@@ -26,10 +27,9 @@ class Job extends Model
         "delivery_time",
         "expected_start_date",
         "status_id"
-        ];
-    protected $casts = [
-        'skill' => 'object'
+
     ];
+    
 
     const UPDATED_AT = null;
 
@@ -46,12 +46,16 @@ class Job extends Model
 
     }
     public static function scopeWithAll($query){
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable');
+
+        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory');
+
     }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     public function projectStage()
     {
         return $this->belongsTo(ProjectStage::class, 'project_stage_id');
@@ -61,18 +65,22 @@ class Job extends Model
     {
     	return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
     }
+
     public function status()
     {
     	return $this->belongsTo(Status::class, 'status_id');
     }
+
     public function rank()
     {
     	return $this->belongsTo(Rank::class, 'rank_id');
     }
+
     public function jobType()
     {
     	return $this->belongsTo(JobType::class, 'job_type_id');
     }
+
     public function budgetType()
     {
     	return $this->belongsTo(BudgetType::class, 'budget_type_id');
@@ -82,19 +90,16 @@ class Job extends Model
     {
         return $this->belongsToMany(DOD::class, 'job_dods');
     }
+
     public function deliverable()
     {
         return $this->belongsToMany(Deliverable::class, 'job_deliverables');
     }
 
-
-
-
     public function subCategory()
     {
     	return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
-
 
     public function jobBiding()
     {
@@ -111,10 +116,12 @@ class Job extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+
     public function task_document()
     {
         return $this->morphMany(TaskDocument::class, 'module_id');
     }
+
     public function task_skill()
     {
         return $this->morphMany(TaskSkill::class, 'task_skill');
@@ -124,11 +131,7 @@ class Job extends Model
     {
         return $this->belongsToMany(Skills::class, 'task_skills');
     }
-    function getJobSkills()
-    {
-        return $this->skill ? implode(',',$this->skill->pluck('id')->toArray()) : '';
-        // dd($result);
-    }
+    
 
 
 }

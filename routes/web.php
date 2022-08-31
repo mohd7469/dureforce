@@ -663,6 +663,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
                 Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
+                Route::post('job/update/{id}', 'JobController@update')->name('job.update');
                 Route::delete('job/delete/{id}', 'JobController@destroy')->name('job.delete');
 
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
