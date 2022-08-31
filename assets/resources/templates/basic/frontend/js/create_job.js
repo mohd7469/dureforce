@@ -11,6 +11,7 @@ function submitCreateFormData(data)
           if(data.error){
               
             displayErrorMessage(data.error);
+            $("#submit-all").attr("disabled", false);
 
           }
           else{
@@ -21,6 +22,8 @@ function submitCreateFormData(data)
 }
 function displayAlertMessage(message)
 {
+  var toast = document.querySelector('.wait'); // Selector of your toast
+  iziToast.hide({}, toast);
     iziToast.error({
       message: message,
       position: "topRight",
@@ -44,6 +47,14 @@ function displayErrorMessage(validation_errors)
 function displaySuccessMessage()
 {
     $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
+}
+function displayInfoAlertMessage(message)
+{
+        iziToast.info({
+            class:"wait",
+            message: message,
+            position: "topRight",
+        });
 }
 
 $(function() {
@@ -79,6 +90,9 @@ $(function() {
               if(response.error)
               {
                 displayErrorMessage(response.error);
+                $("#submit-all").attr("disabled", false);
+
+
               }
               if(response.redirect)
                 window.location.replace(response.redirect);
@@ -94,13 +108,16 @@ $(function() {
               
               e.preventDefault();
               e.stopPropagation();
-              if(myDropzone.getQueuedFiles().length>0)
+              if(myDropzone.getQueuedFiles().length>0){
                   myDropzone.processQueue();
+              }
               else
               {
                 submitCreateFormData(form_data);
-
               }
+              $("#submit-all").attr("disabled", true);
+              displayInfoAlertMessage("Processing Plz Wait");
+
 
               
           }); 
