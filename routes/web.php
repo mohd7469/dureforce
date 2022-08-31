@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
+use App\Http\Controllers\Job\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +13,7 @@ Route::get('/clear', function () {
 |--------------------------------------------------------------------------
 */
 
+Route::get('single-job', 'job\jobcontroller@singleJob')->name('job.index');
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 
@@ -666,6 +667,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
+                Route::get('job/single-job', 'JobController@singleJob')->name('job.single.job');
             });
 
             //JobBiding

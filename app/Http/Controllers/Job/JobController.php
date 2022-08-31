@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Job;
-
 use App\Http\Controllers\BaseController;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -91,5 +90,13 @@ class JobController extends BaseController
     public function destroy($id)
     {
         //
+    }
+    public function singleJob(){
+        
+        $pageTitle = "All Jobs";
+        return view('templates.basic.jobs.single-job', compact('pageTitle'));
+    
+    
+
     }
 }
