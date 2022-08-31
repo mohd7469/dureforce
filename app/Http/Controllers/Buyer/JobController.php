@@ -151,7 +151,6 @@ class JobController extends Controller
 
                         $file_extension = getFileExtension($file);
                         $url = $path .'/'. $filename;
-
                         $document = new TaskDocument;
                         $document->name = $filename;
                         $document->uploaded_name = $file->getClientOriginalName();
@@ -389,6 +388,8 @@ class JobController extends Controller
             DB::beginTransaction();
             $job = Job::where("uuid", $uuid)->first();
             $job->documents()->delete();
+            $job->deliverable()->delete();
+            $job->dod()->delete();
             $job->delete();
             DB::commit();
             return response()->json(["message" => "Successfully Deleted"]);

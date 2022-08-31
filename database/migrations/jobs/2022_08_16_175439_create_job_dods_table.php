@@ -19,7 +19,8 @@ class CreateJobDodsTable extends Migration
             $table->unsignedBigInteger('job_id')->unsigned();
             $table->unsignedBigInteger('d_o_d_id')->unsigned();
 
-
+            $table->softDeletes();
+            $table->timestamps();
             $table->foreign('d_o_d_id')
                 ->references('id')
                 ->on('d_o_d_s')

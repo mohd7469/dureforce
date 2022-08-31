@@ -17,6 +17,7 @@ class CreateBudgetTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->unsignedBigInteger('module_id')->index();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('module_id')
