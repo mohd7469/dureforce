@@ -74,7 +74,7 @@
 
                                                 <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
                                             {{-- @else --}}
-                                                <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
+                                                {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 
                                             {{--  @if($job->status->slug!= 'approved')  --}}
                                                 <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
