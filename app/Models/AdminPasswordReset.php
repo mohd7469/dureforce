@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdminPasswordReset extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     protected $table = "admin_password_resets";
     protected $guarded = ['id'];
     public $timestamps = false;

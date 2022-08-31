@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SubCategory extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
     protected $hidden = ['pivot','created_at','updated_at','deleted_at'];
 
 
