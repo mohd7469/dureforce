@@ -154,6 +154,7 @@ class JobController extends Controller
 
                         $document = new TaskDocument;
                         $document->name = $filename;
+                        $document->uploaded_name = $file->getClientOriginalName();
                         $document->url = $url;
                         $document->type = $file_extension;
                         $document->is_published = "Active";
