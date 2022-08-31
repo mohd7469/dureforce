@@ -176,9 +176,7 @@ class JobController extends Controller
 
     }
 
-    public function destroy($uuid)
-    {
-    }
+    
     public function edit($uuid)
     {
         

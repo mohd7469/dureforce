@@ -8,7 +8,7 @@
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     <div class="table-responsive">
 
-                        <table class="table text-center " style="border: 2px solid #e6eeee !important">
+                        <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
                                     
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -77,7 +77,7 @@
                                                 {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 
                                             {{--  @if($job->status->slug!= 'approved')  --}}
-                                                <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
+                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
                                             {{--  @endif  --}}
                                         </td>
                                     </tr>
@@ -100,7 +100,7 @@
 </section>
 
 
-<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
@@ -109,18 +109,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-                <form method="POST" action="{{route('user.job.delete',1)}}">
-                    @csrf
-                    <input type="hidden" name="id">
+               
+                    <input type="hidden" name="job_id" id="job_id">
                     <div class="modal-body">
                         <p>@lang('Are you sure to close this job')</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--danger btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                         <button type="submit" class="btn btn--success btn-rounded text-white">@lang('Confirm')</button>
+                         <button type="button" class="btn btn--success btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
                     </div>
-                </form>
-        </div>
+                
     </div>
 </div>
 @endsection
@@ -129,11 +127,33 @@
 
 @push('script')
 <script>
+    
+    function displaySuccessMessage(message)
+    {
+        $("#job-listing").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>'+message+'</div>');
+    }
+
+    function delteJob(uuid)
+    {
+        
+    }
+
     'use strict';
-    $('.cancelBtn').on('click', function () {
-        var modal = $('#cancelModal');
-        modal.find('input[name=id]').val($(this).data('id'))
+    
+    $('.delete_btn').on('click', function () {
+
+        var modal = $('#confirmationModal');
+        modal.find('input[name=job_id]').val($(this).data('id'));
         modal.modal('show');
+
     });
+
+    $('#confirmation_btn').on('click', function () {
+
+        uuid=$('#job_id').val();
+        delteJob(uuid);
+       
+    });
+
 </script>
 @endpush
