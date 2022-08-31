@@ -17,7 +17,7 @@
                                 <th>@lang('Messages')</th>
                                 <th>@lang('Hired')</th>
                                 <th>@lang('Status')</th>
-                                <th>@lang('Last Update')</th>
+                                <th>@lang('Price')</th>
                                 <th>@lang('Action')</th>
 
                             </tr>
@@ -31,10 +31,10 @@
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            {{ '2'}} @lang('Proposals')
+                                            {{ '2'}}
                                         </td>
                                         <td data-label="@lang('Messages')">
-                                            {{ '3' }} @lang('Messages')
+                                            {{ '3' }}
                                         </td>
                                         <td data-label="@lang('Hired')">
                                             {{ '1' }}
@@ -63,7 +63,7 @@
 
                                         </td>
 
-                                        <td data-label="@lang('Last Update')">
+                                        <td data-label="@lang('Price')">
                                             {{showDateTime($job->updated_at)}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
