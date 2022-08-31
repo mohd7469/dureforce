@@ -662,7 +662,10 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
-                Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
+                Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
+                Route::post('job/update/{id}', 'JobController@update')->name('job.update');
+                Route::delete('job/delete/{id}', 'JobController@destroy')->name('job.delete');
+
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/delete/{uuid}', 'JobController@destroy')->name('job.delete');

@@ -8,7 +8,7 @@
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     <div class="table-responsive">
 
-                        <table class="table text-center" style="border: 2px solid #e6eeee !important">
+                        <table class="table text-center " style="border: 2px solid #e6eeee !important">
                                     
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -71,10 +71,10 @@
                                         <td data-label="Action">
                                             {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
+
+                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                            {{-- @else --}}
                                                 <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
-                                            {{--  @else
-                                                <span>@lang('N\A')</span>
-                                            @endif  --}}
 
                                             {{--  @if($job->status->slug!= 'approved')  --}}
                                                 <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
@@ -89,7 +89,7 @@
                             </tbody>
 
                         </table>
-                        
+
                     </div>
                     
                     {{$jobs->links()}}
@@ -109,7 +109,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-                <form method="POST" action="{{route('user.job.cancel')}}">
+                <form method="POST" action="{{route('user.job.delete',1)}}">
                     @csrf
                     <input type="hidden" name="id">
                     <div class="modal-body">

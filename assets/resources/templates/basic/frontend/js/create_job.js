@@ -1,10 +1,10 @@
 function submitCreateFormData(data)
 {
   var token= $('input[name=_token]').val();
-    
+  var action_url=$("#job_form_data").attr('action');
   $.ajax({
       type:"POST",
-      url:"store",
+      url:action_url,
       data: {data : data,_token:token},
       success:function(data){
           var html = '';
@@ -14,8 +14,7 @@ function submitCreateFormData(data)
 
           }
           else{
-            alert("Else");
-            // window.location.replace(data.redirect);              
+            window.location.replace(data.redirect);              
           }
       }
   });  
@@ -96,6 +95,7 @@ $(function() {
               else
               {
                 submitCreateFormData(form_data);
+
               }
 
               
@@ -177,7 +177,6 @@ function switchBudgetFileds(budget_type)
     else
     {
         $('.weekly_range').show();
-
         $('#budget_amount').hide();
         $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
         $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');

@@ -19,12 +19,14 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
+use PhpParser\Node\Stmt\TryCatch;
 
 class JobController extends Controller
 {
@@ -33,11 +35,8 @@ class JobController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function create(Request $request)
+    public function getJobData()
     {
-
-        $pageTitle = "Create Job";
-
         $data = [];
 
         $data['countries'] = World::Countries();
@@ -55,6 +54,15 @@ class JobController extends Controller
         $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+
+        return $data;
+    }
+    public function create(Request $request)
+    {
+
+        $pageTitle = "Create Job";
+        $data=$this->getJobData();
+        
 
         return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
@@ -168,62 +176,26 @@ class JobController extends Controller
 
     }
 
-    public function edit($slug, $id)
+    public function destroy($uuid)
     {
-        $user = Auth::user();
+    }
+    public function edit($uuid)
+    {
+        
+        $job=Job::withAll()->where('uuid',$uuid)->first();
+        $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
+        $data=$this->getJobData();
+        $data['selected_skills']=$job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        $data['sub_categories']=$sub_category;
         $pageTitle = "Job Update";
-        $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job'));
+
+        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job','data'));
     }
 
     public function update(Request $request, $id)
     {
-        $general = GeneralSetting::first();
-        $user = Auth::user();
-        $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'title' => 'required|string|max:255',
-            'category' => 'required|exists:categories,id',
-            'subcategory' => 'nullable|exists:sub_categories,id',
-            'amount' => 'required|numeric|gt:0',
-            'delivery' => 'required|integer|min:1',
-            'skill' => 'required|array|min:3|max:15',
-            'description' => 'required',
-            'requirement' => 'required',
-        ]);
-        $job = Job::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-        $job->title = $request->title;
-        $job->user_id = $user->id;
-        $job->category_id = $request->category;
-        $job->sub_category_id = $request->subcategory ? $request->subcategory : null;
-        $job->amount = $request->amount;
-        $job->delivery_time = $request->delivery;
-        $job->skill = $request->skill;
-        $job->description = $request->description;
-        $job->requirements = $request->requirement;
-        $path = imagePath()['job']['path'];
-        $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size, $job->image);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
-            }
-            $job->image = $filename;
-        }
-        if ($general->approval_post == 1) {
-            $job->status = 1;
-        } else {
-            $job->status = 0;
-            $job->created_at = Carbon::now();
-        }
-        $job->updated_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been updated.'];
-        return back()->withNotify($notify);
+        dd("In Job Update");
+       
     }
 
 
