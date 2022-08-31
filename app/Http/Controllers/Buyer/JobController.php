@@ -162,7 +162,6 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            dd($exp);
             return response()->json(["error" => $exp]);
         }
 
@@ -309,6 +308,22 @@ class JobController extends Controller
             });
             return response()->json($skills_with_categories);
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+    }
+
+    public function destroy($uuid)
+    {
+        try {
+            DB::beginTransaction();
+            $job =  Job::where("uuid", $uuid)->first();
+            $job->documents()->delete();
+            $job->delete();
+            DB::commit();
+            return response()->json(["message" => "Successfully Deleted"]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
             Log::error($e->getMessage());
         }
     }

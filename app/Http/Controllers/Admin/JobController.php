@@ -171,9 +171,5 @@ class JobController extends Controller
         $notify[] = ['success', 'Job has been deleted'];
         return back()->withNotify($notify);
     }
-    public function deleteJob($uuid)
-    {
-        $job = Job::where("uuid",$uuid)->first()->get();
-        return true;
-    }
+
 }

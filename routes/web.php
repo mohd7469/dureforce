@@ -665,7 +665,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
-                Route::post('job/delete/{uuid}', 'JobController@deleteJob')->name('job.delete');
+                Route::get('job/delete/{uuid}', 'JobController@destroy')->name('job.delete');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
             });
 
