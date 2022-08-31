@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Job;
 use App\Http\Controllers\BaseController;
 use App\Models\Job;
+
+use Illuminate\Support\Facades\Response as FacadeResponse;
+
+
 use Illuminate\Http\Request;
 use function getPaginate;
 use function view;
@@ -91,12 +95,39 @@ class JobController extends BaseController
     {
         //
     }
-    public function singleJob(){
+    public function singleJob($uuid){
+
+        // dd(($uuid));
+
+        
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status'])->first();
+       
+        
+        
         
         $pageTitle = "All Jobs";
-        return view('templates.basic.jobs.single-job', compact('pageTitle'));
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
     
     
 
     }
+    // public function downnloadAttach(){
+
+    //     // $file= public_path(). 'sample.pdf';
+
+    //     $file= public_path(). "public/sample.pdf";
+    //    // dd($file);
+
+
+    //     $headers = [
+    //         'Content-Type' => 'application/pdf',
+    //      ];
+
+    //     return response()->download($file, 'filename.pdf', $headers);
+    
+      
+    
+     
+    // }
+   
 }

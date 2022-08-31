@@ -13,7 +13,13 @@ Route::get('/clear', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('single-job', 'job\jobcontroller@singleJob')->name('job.index');
+Route::get('single-job/{uuid}', 'job\jobcontroller@singleJob')->name('job.index');
+// Route::get('/job/download', 'job\jobcontroller@downnloadAttach')->name('job.download');
+
+
+
+
+
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 

@@ -13,7 +13,9 @@
                         <div class="item-section item-details-section">
                             <div class="container">
                                 <div class="item-details-content" style="padding-top: 0px;">
-                                    <h2 class="title">Event Management</h2>
+                                @if(!empty($job->category->name))
+                                    <h2 class="title">{{$job->category->name}} > {{$job->subCategory->name}}</h2>
+                                @endif
                                 </div>
                                 <div class="row justify-content-center mb-30-none">
                                     <div class="col-xl-9 col-lg-9 mb-30">
@@ -25,7 +27,7 @@
                                                 <div class="col-md-9">    
                                                 <div class="left mb20">
                                                         <h3 class="title">
-                                                            Build multiply Jira cloud service demo
+                                                            {{$job->title}}
                                                             </h3>
                                                         <div class="item-details-tag">
                                                             <ul class="tags-wrapper">
@@ -40,8 +42,8 @@
                                                 </div>
                                                     <div class="col-md-3">
 
-                                                    <p class="job_staus">Job Status <a href="#">Open</a></p>
-                                                    <p class="p-date">Posted on: 22-2-2222</p>
+                                                    <p class="job_staus">Job Status <a href="#">{{$job->status->name ? $job->status->name : '' }}</a></p>
+                                                    <p class="p-date">Posted on: {{$job->created_at->format('Y-m-d') }}</p>
                                                     </div>
                                                  </div>
 
@@ -70,24 +72,31 @@
                                                         <div class="product-desc-content">
                                                         You will immediately start creating interactive Web3 prototypes, mockups, storyboards, journey maps, user flows, usability metrics informed by competitive analysis, user personas, and real-world users. This position will work closely with our development team to enhance our Web3 products.
                                                         <ul class="list_desc">
-                                                            <li>Design vision, process and team to deliver the best possible experience to our customers.</li>
-                                                            <li>Resolve UX issues picking the best path forward.</li>
-                                                            <li>Experience building Illustrations</li>
-                                                            <li>Corporate Branding</li>
-                                                            <li>Build storyboards to conceptualize designs to accurately convey project plans to clients and team members.</li>
-                                                            <li>Design the aesthetics to be implemented within a website or products, from the layout menus and drop-down options to colors and fonts allowing for interface edits as needed</li>
+                                                        <li>{{$job->description}}</li>
+                                                         
                                                         </ul>
-                                                        <h3>Requirements:</h3>
-                                                            <ul>
-                                                            <li> Demonstrated experience in creating and implementing Web3 UX design </li> 
-                                                            <li> Proficient with visual design programs such as Adobe Photoshop, Illustrator and Figma</li>
-                                                            <li>Continued education and research into UX trends and current design strategy and technologies</li>
-                                                            <li>Communication(Written and interpersonal skills)</li>
-                                                            <li>Ability to prioritize and manage several milestones and projects efficiently</li>
-                                                            <li>Account for challenges using problem-solving skills and seek to optimize data for the - best possible outcome</li>
-                                                            <li>Experience creating storyboards and website mapping</li>
 
-                                                            </ul>
+                                                        <div class="service_subtitle2 mt-20">
+                                                             Definition of Done (DOD)
+                                                             <span>{{$job->dod}}</span>
+                                                        </div>
+
+                                                        <div>
+
+                                                        <div class="service_subtitle2 mt-20">
+                                                                 Attatchments
+                                                        </div>
+                                                        <!-- <a href="{{route('job.download')}}" class="btn btn-large pull-right"><i class="icon-download-alt"> </i> Download Brochure </a> -->
+
+                                                        </div>
+
+                                                        
+
+                                                        
+
+
+                                                        
+                                                       
 
                                                         </div>
                                                        
@@ -254,25 +263,44 @@
                                             <div class="widget custom-widget mb-30">
 
                                                 <ul class="sidebar-title1">
-                                                    <li><span>Price</span>
-                                                        <span>$200.00/hr</span>
+                                                    <li><span>Per Hour Rate</span>
+                                                        <span>$20-$50</span>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
-                                                    <li><span>Estimated Delivery Time</span>
-                                                        <span>1 Hours</span>
+                                                    <li><span>Resource Location</span>
+                                                        <span>k</span>
                                                     </li>
                                                 </ul>
 
                                                 <ul class="sidebar-list">
-                                                    <li><span>Number of Revisions</span>
-                                                        <span>10</span>
+                                                    <li><span>Budget Type</span>
+                                                        <span>{{$job->budgetType->title}}</span>
                                                     </li>
                                                                                                     </ul>
+                                                                                                    <ul class="sidebar-title2">
+                                                    <li><span>Est. Project Duration</span>
+                                                        <span>1-2 Weeks</span>
+                                                    </li>
+                                                </ul>
+                                                <ul class="sidebar-title2">
+                                                    <li><span>Project Start Date:</span>
+                                                        <span>{{$job->expected_start_date}}</span>
+                                                    </li>
+                                                </ul>
+                                                <ul class="sidebar-title2">
+                                                    <li><span>Project Stage</span>
+                                                        <span>{{$job->projectStage->title}}</span>
+                                                    </li>
+                                                </ul>
+                                                <ul class="sidebar-title2">
+                                                    <li><span>Experience Level</span>
+                                                        <span>{{$job->rank->level ?  $job->rank->level : ''}}</span>
+                                                    </li>
+                                                </ul>
 
                                                 <div class="widget-btn- mt-20">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">Book
-                                                        Developer</a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">View Proposals (22)</a>
 
 
                                                 </div>
