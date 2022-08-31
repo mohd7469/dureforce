@@ -57,12 +57,13 @@ class JobController extends Controller
 
         return $data;
     }
+
     public function create(Request $request)
     {
 
         $pageTitle = "Create Job";
-        $data=$this->getJobData();
-        
+        $data = $this->getJobData();
+
 
         return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
@@ -175,24 +176,118 @@ class JobController extends Controller
 
 
     }
-    
+
     public function edit($uuid)
     {
-        
-        $job=Job::withAll()->where('uuid',$uuid)->first();
+
+        $job = Job::withAll()->where('uuid', $uuid)->first();
         $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
-        $data=$this->getJobData();
-        $data['selected_skills']=$job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        $data['sub_categories']=$sub_category;
+        $data = $this->getJobData();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        $data['sub_categories'] = $sub_category;
         $pageTitle = "Job Update";
 
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job','data'));
+        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        dd("In Job Update");
-       
+dd($request->all());
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $user = Auth::user();
+
+        $validator = Validator::make($request_data, [
+            'title' => 'required|string|max:150',
+            'description' => 'required|string|max:1000',
+            'job_type_id' => 'required|exists:job_types,id',
+            'category_id' => 'required|exists:categories,id',
+            'sub_category_id' => 'exists:sub_categories,id',
+            'rank_id' => 'required|exists:ranks,id',
+            'budget_type_id' => 'required|exists:budget_types,id',
+            'deliverables' => 'required|array|min:3',
+            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
+            'dod' => 'required|array|min:3',
+            'skills' => 'required|array',
+            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
+        ]);
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        }
+
+
+
+        try {
+            DB::beginTransaction();
+            $job = Job::where("uuid", $uuid)->first()::update([
+                "user_id" => $user->id,
+                "job_type_id" => $request_data['job_type_id'],
+                "location_id" => $request_data['location_id'],
+                "category_id" => $request_data['category_id'],
+                "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
+                "rank_id" => $request_data['rank_id'],
+                "project_stage_id" => isset($request_data['project_stage_id']) ? $request_data['project_stage_id'] : null,
+                "budget_type_id" => isset($request_data['budget_type_id']) ? $request_data['budget_type_id'] : null,
+                "title" => $request_data['title'],
+                "description" => $request_data['description'],
+                "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
+                "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
+                "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
+                "delivery_time" => $request_data['delivery_time'],
+                "expected_start_date" => $request_data['expected_start_date'],
+                'status_id' => 1
+            ]);
+
+
+            $deliverables = Deliverable::whereIn('id', $request_data['deliverables'])->get();
+            $job->deliverable()->sync($deliverables);
+
+            $dods = DOD::whereIn('id', $request_data['dod'])->get();
+            $job->dod()->sync($dods);
+
+            $skills = Skills::whereIn('id', $request_data['skills'])->get();
+            $job->skill()->sync($skills);
+
+            $path = imagePath()['attachments']['path'];
+
+            if ($request->hasFile('file')) {
+
+                foreach ($request->file as $file) {
+
+                    $this->fileValidate($file);
+                    try {
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . $filename;
+
+                        $document = new TaskDocument;
+                        $document->name = $filename;
+                        $document->url = $url;
+                        $document->type = $file_extension;
+                        $document->is_published = "Active";
+                        $job->documents()->save($document);
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Image could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
+                }
+            }
+
+            DB::commit();
+            return response()->json(["redirect" => 'index', "message" => "Job Successfully Updated"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp]);
+        }
+
+
     }
 
 
@@ -285,7 +380,7 @@ class JobController extends Controller
     {
         try {
             DB::beginTransaction();
-            $job =  Job::where("uuid", $uuid)->first();
+            $job = Job::where("uuid", $uuid)->first();
             $job->documents()->delete();
             $job->delete();
             DB::commit();
