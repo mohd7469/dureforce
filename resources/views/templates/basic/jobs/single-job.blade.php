@@ -43,7 +43,7 @@
                                                     <div class="col-md-3">
 
                                                     <p class="job_staus">Job Status <a href="#">{{$job->status->name ? $job->status->name : '' }}</a></p>
-                                                    <p class="p-date">Posted on: {{$job->created_at->format('Y-m-d') }}</p>
+                                                    <p class="p-date">Posted on: <span>{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</span></p>
                                                     </div>
                                                  </div>
 
@@ -72,13 +72,15 @@
                                                         <div class="product-desc-content">
                                                         You will immediately start creating interactive Web3 prototypes, mockups, storyboards, journey maps, user flows, usability metrics informed by competitive analysis, user personas, and real-world users. This position will work closely with our development team to enhance our Web3 products.
                                                         <ul class="list_desc">
-                                                        <li>{{$job->description}}</li>
+                                                        <li>{{$job->description ? $job->description  : ''}}</li>
                                                          
                                                         </ul>
 
-                                                        <div class="service_subtitle2 mt-20">
-                                                             Definition of Done (DOD)
-                                                             <span>{{$job->dod}}</span>
+                                                        <div class="service_subtitle2 mt-20 dod-text">
+                                                            <p> Definition of Done (DOD)</p>
+                                                             @foreach ($job->dod as $dod)
+                                                             <span>{{$dod->title ? $dod->title  : ''}}</span>
+                                                             @endforeach
                                                         </div>
 
                                                         <div>
@@ -86,7 +88,7 @@
                                                         <div class="service_subtitle2 mt-20">
                                                                  Attatchments
                                                         </div>
-                                                        <!-- <a href="{{route('job.download')}}" class="btn btn-large pull-right"><i class="icon-download-alt"> </i> Download Brochure </a> -->
+                                                        <a href="{{route('job.download')}}" class="btn btn-large pull-right attachment-icon"><i class="icon-download-alt"> </i> Download Brochure </a>
 
                                                         </div>
 
@@ -210,72 +212,29 @@
                                                 </div>
 
 
-                                                <div class="item-details-thumb-area item-details-footer-v mt-0">
-                                                <h2 class="hheading-c">Developer’s Recent History (2)</h2>
-
-                                                                                            <!--Comments Section Start-->
-                                                <div class="row comment-banner">
-                                                    <div class="col-md-6">Create AWS Development</div>
-                                                    <div class="col-md-6 date-align">Jan 2022 - Feb 2022 Fixed-price $200.00</div>
-                                                </div>
-                                             <ul class="custom_rating">
-                                                 <li>
-                                                     <h4>Feedback Receieved from <a href="#">Rekab M:</a></h4>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-
-                                                     <p>Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray.
-                                                 </p>
-                                                 </li>
-                                                 <li>
-                                                     <h4>Feedback Receieved from <a href="#">Rekab M:</a></h4>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-
-                                                     <p>Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray.
-                                                 </p>
-                                                 </li>
-                                                 <li>
-                                                     <h4>Feedback Receieved from <a href="#">Rekab M:</a></h4>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <i class="fa fa-regular fa fa-star"></i>
-                                                     <p>Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray Mam, eager to work again in future! Great experience to work with Ms. Gray.
-                                                 </p>
-                                                 </li>
-                                             </ul>
-
-                                                </div>
+                                             
                                               </div>
 
                                         </div>
                                     </div>
                                     <div class="col-xl-3 col-lg-3 mb-30">
                                         <div class="sidebar">
-                                            <div class="widget custom-widget mb-30">
+                                            <div class="widget custom-widget mb-30 cstm-sidebar">
 
                                                 <ul class="sidebar-title1">
                                                     <li><span>Per Hour Rate</span>
-                                                        <span>$20-$50</span>
+                                                        <!-- <span>${{$job->hourly_start_range}}-${{$job->hourly_end_range}}</span> -->
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Resource Location</span>
-                                                        <span>k</span>
+                                                        <span>{{$job->country->name ? $job->country->name : '' }}</span>
                                                     </li>
                                                 </ul>
 
                                                 <ul class="sidebar-list">
                                                     <li><span>Budget Type</span>
-                                                        <span>{{$job->budgetType->title}}</span>
+                                                        <span>{{$job->budgetType->title ? $job->budgetType->title : ''}}</span>
                                                     </li>
                                                                                                     </ul>
                                                                                                     <ul class="sidebar-title2">
@@ -285,12 +244,12 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Start Date:</span>
-                                                        <span>{{$job->expected_start_date}}</span>
+                                                        <span>{{$job->expected_start_date ? $job->expected_start_date  : ''}}</span>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Stage</span>
-                                                        <span>{{$job->projectStage->title}}</span>
+                                                        <span>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</span>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
@@ -299,8 +258,9 @@
                                                     </li>
                                                 </ul>
 
-                                                <div class="widget-btn- mt-20">
+                                                <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">View Proposals (22)</a>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">Edit Job</a>
 
 
                                                 </div>
@@ -332,7 +292,7 @@
 @endpush
 <style>
 .container {
-    max-width: 1240px !important;
+    max-width: 1390px !important;
 }
 .row.custom_cards_s {
     margin-bottom: 60px;
@@ -430,5 +390,89 @@ p.job_staus a {
 .list_desc ul li {
     text-decoration: none!important;
     
+}
+.cstm-btn {
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+.cstm-btn a.standard-btn {
+    padding: 9px 14px;
+    float: left;
+    display: inline-block;
+}
+.cstm-sidebar{
+    display: inline-block;
+}
+h2.title {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 28px;
+    color: #000;
+    /* margin-bottom: 20px; */
+    padding: 10px 10px 18px 10px;
+    display: inline-block;
+}
+h3.title {
+    font-weight: 600;
+    font-size: 22px !important;
+    line-height: 28px;
+    color: #000000;
+    padding-bottom: 15px;
+}
+.item-details-thumb-area{
+    background-color: #F8FAFA;
+}
+.item-details-tag ul li a {
+    padding: 3px 30px !important;
+    font-size: 14px;
+    /* line-height: 15px; */
+}
+p.job_staus {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+}
+p.job_staus a {
+    padding: 8px 20px;
+    background: #72C1C1;
+    border-radius: 4px;
+    font-weight: 400;
+}
+p.p-date {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+.attachment-icon {
+    position: relative;
+    padding-left: 20px !important;
+    display: inline-block;
+}
+.attachment-icon:before {
+    width: 30px;
+    height: 30px;
+    background: url(/assets/images/job/attachment-icon.png) no-repeat;
+    content: '';
+    position: absolute;
+    left: 0px;
+    top: 11px;
+}
+.dod-text p {
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+    margin-bottom: 5px;
+}
+.dod-text span {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-transform: capitalize !important;
 }
 </style>

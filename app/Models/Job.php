@@ -122,5 +122,10 @@ class Job extends Model
         return $this->belongsToMany(Skills::class, 'task_skills');
     }
 
+    public function country(){
+
+        return  $this->HasOne(Country::class, 'id', 'location_id');
+    }
+
 
 }

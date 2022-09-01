@@ -97,37 +97,21 @@ class JobController extends BaseController
     }
     public function singleJob($uuid){
 
-        // dd(($uuid));
-
-        
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status'])->first();
-       
-        
-        
-        
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod'])->first();
+          
+      
         $pageTitle = "All Jobs";
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
-    
-    
 
     }
-    // public function downnloadAttach(){
+    public function downnloadAttach(){
 
-    //     // $file= public_path(). 'sample.pdf';
+        $file= public_path(). "public/sample.pdf";
+        $headers = [
+            'Content-Type' => 'application/pdf',
+         ];
 
-    //     $file= public_path(). "public/sample.pdf";
-    //    // dd($file);
-
-
-    //     $headers = [
-    //         'Content-Type' => 'application/pdf',
-    //      ];
-
-    //     return response()->download($file, 'filename.pdf', $headers);
-    
-      
-    
-     
-    // }
+        return response()->download($file, 'filename.pdf', $headers);
+    }
    
 }
