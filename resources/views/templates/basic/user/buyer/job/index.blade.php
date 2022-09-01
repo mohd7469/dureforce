@@ -64,7 +64,7 @@
                                         </td>
 
                                         <td data-label="@lang('Price')">
-                                            {{ $job->budgetType->id==1 ? "10$ to 15$ per hour" : '1200$'}}
+                                            {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? $job->hourly_start_range."$ to " .$job->hourly_end_range."$ per hour" : $job->fixed_amount.'$'}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>
@@ -72,12 +72,13 @@
                                             {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
 
-                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                                <a href="{{route('user.job.single.view', [$job->uuid])}} " ><i class="fa fa-eye icon-color" style="margin-right:7px; "></i></a>
+                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" style="margin-right:7px; "></i></a>
                                             {{-- @else --}}
                                                 {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 
                                             {{--  @if($job->status->slug!= 'approved')  --}}
-                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
+                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color" style="margin-right:7px; "></i></a>
                                             {{--  @endif  --}}
                                         </td>
                                     </tr>

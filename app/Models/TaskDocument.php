@@ -13,4 +13,10 @@ class TaskDocument extends Model
     {
         return $this->morphTo();
     }
+    public function taskDocument()
+    {
+        return $this->belongsToMany(Job::class, 'id');
+    }
+
+
 }

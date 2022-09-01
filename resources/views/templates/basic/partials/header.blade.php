@@ -33,7 +33,7 @@
                                         @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
                             </ul>
-                            <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%;">
+                            <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
                                 <a class="btn--post btn active mr-1 d-inline-block "
                                     href="{{ route('user.job.create') }}">Post a Job</a>
                                 <div class="search-main">
@@ -46,7 +46,7 @@
 
                             <div class="header-right  header-action">
                                 @guest
-                                    <a href="{{ route('user.login') }}" class="btn--base active">@lang('Sign In')</a>
+                                    <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login In')</a>
                                     <a href="{{ route('user.register') }}" class="btn--base">@lang('Sign Up')</a>
                                 @endguest
 
@@ -64,3 +64,11 @@
 
     </div>
 </header>
+<style>
+    .header-bottom-area .navbar-expand-lg .select2-container--default .select2-selection--single {
+    border: 1px solid #7f007f;
+    height: 39px;
+    display: flex;
+    align-items: center;
+}
+</style>

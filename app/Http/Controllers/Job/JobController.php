@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Job;
-
 use App\Http\Controllers\BaseController;
 use App\Models\Job;
+
+use Illuminate\Support\Facades\Response as FacadeResponse;
+
+
 use Illuminate\Http\Request;
 use function getPaginate;
 use function view;
@@ -92,4 +95,6 @@ class JobController extends BaseController
     {
         //
     }
+   
+   
 }

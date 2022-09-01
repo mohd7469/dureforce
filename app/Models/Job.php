@@ -134,5 +134,10 @@ class Job extends Model
     }
     
 
+    public function country(){
+
+        return  $this->HasOne(Country::class, 'id', 'location_id');
+    }
+
 
 }

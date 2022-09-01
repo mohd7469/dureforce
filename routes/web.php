@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
+use App\Http\Controllers\Job\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +12,13 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
+Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
+
+
+
+
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
@@ -669,6 +676,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
+                Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
             });
 
             //JobBiding
@@ -714,7 +722,7 @@ Route::get('blog/{id}/{slug}', 'SiteController@blogDetails')->name('blog.details
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholder.image');
 
 //Service
-Route::get('/', 'SiteController@index')->name('home');
+Route::get('/', 'SiteController@index')->name('home');//Landing Page
 Route::get('/service', 'ServiceController@index')->name('service');
 Route::get('/service/details/{slug}/{id}', 'SiteController@serviceDetails')->name('service.details');
 Route::get('/search/item/filter', 'FilterController@allServiceSearch')->name('home.search.item');

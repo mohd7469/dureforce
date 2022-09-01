@@ -69,20 +69,20 @@
                     </select>
                 </div>
                 <div class="col-xl-12 col-lg-12 position-relative">
+
                     <label class="d-inline-block mx-1">@lang('Include Feature')*</label>
-                    <span title="
-Support : Provide customer service and resolve various issues online
+                    <span title="  Support : Provide customer service and resolve various issues online
 
-Consultancy : Provide consultancy or advice with particular service
+                                    Consultancy : Provide consultancy or advice with particular service
 
-Training : Provide customer training related to particular service
+                                    Training : Provide customer training related to particular service
 
-Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
+                                    Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
 
-Software Development : Provide key aspects of software development (programming , testing , deployment and  support
+                                    Software Development : Provide key aspects of software development (programming , testing , deployment and  support">
+                                <i class="fa fa-info-circle"></i>
+                    </span>
 
- ">
-                        <i class="fa fa-info-circle"></i></span>
                     <p class="include_error"></p>
                     @if (!empty($service))
                     <div class="col-xl-12 col-lg-12 form-group mt-2 d-flex flex-wrap back">
