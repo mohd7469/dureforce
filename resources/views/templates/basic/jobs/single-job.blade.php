@@ -222,8 +222,8 @@
                                             <div class="widget custom-widget mb-30 cstm-sidebar">
 
                                                 <ul class="sidebar-title1">
-                                                    <li><span>Per Hour Rate</span>
-                                                        <!-- <span>${{$job->hourly_start_range}}-${{$job->hourly_end_range}}</span> -->
+                                                    <li><span>Per Hour Rate:</span>
+                                                    ${{round($job->hourly_start_range, 0)}}-${{round($job->hourly_end_range, 0)}}
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
@@ -239,7 +239,7 @@
                                                                                                     </ul>
                                                                                                     <ul class="sidebar-title2">
                                                     <li><span>Est. Project Duration</span>
-                                                        <span>1-2 Weeks</span>
+                                                        <span>{{$job->delivery_time}}-Weeks</span>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">

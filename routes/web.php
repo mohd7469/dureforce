@@ -13,8 +13,8 @@ Route::get('/clear', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('single-job/{uuid}', 'job\jobcontroller@singleJob')->name('job.index');
-Route::get('/job/download', 'job\jobcontroller@downnloadAttach')->name('job.download');
+Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
+Route::get('/job/download', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
 
 
 

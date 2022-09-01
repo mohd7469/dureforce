@@ -292,4 +292,22 @@ class JobController extends Controller
             Log::error($e->getMessage());
         }
     }
+    public function singleJob($uuid){
+
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod'])->first();
+         
+      
+        $pageTitle = "All Jobs";
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
+
+    }
+    public function downnloadAttach(){
+
+        $file= public_path(). "public/sample.pdf";
+        $headers = [
+            'Content-Type' => 'application/pdf',
+         ];
+
+        return response()->download($file, 'filename.pdf', $headers);
+    }
 }
