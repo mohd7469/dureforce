@@ -88,10 +88,12 @@
                                                         <div class="service_subtitle2 mt-20">
                                                                  Attatchments
                                                         </div>
+                                                        @foreach($job->documents as $decumentUrl)
                                                         
-                                                        <a href="{{route('job.download')}}" class="btn btn-large pull-right"><i class="fa fa-paperclip font-style" aria-hidden="true"></i> Download Brochure </a>
-
+                                                        <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i> Download Brochure </a>
+                                                        @endforeach
                                                         </div>
+
 
                                                        </div>
                                                        
@@ -111,28 +113,29 @@
 
                                                     <div class="row custom_cards_s">
                                                         <h4 class="d-heading">Development Type</h4>
+                                                        @foreach($job->skill as $skil)
                                                         <div class="col-md-6">
                                                         <div class="card" >
                                                             <div class="card-body">
-                                                                <h5 class="card-title">Backend</h5>
+                                                                <h5 class="card-title">{{$skil->skill_type}}</h5>
                                                                 <div class="row">
                                                                     <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
+                                                                        <p class="card-text">{{$skil->name}}</p>
+                                                                        <!-- <p class="card-text">Some quick</p>
+                                                                        <p class="card-text">Some quick</p> -->
                                                                     </div>
-                                                                    <div class="col-md-6">
+                                                                    <!-- <div class="col-md-6">
                                                                         <p class="card-text">Some quick</p>
                                                                         <p class="card-text">Some quick</p>
                                                                         <p class="card-text">Some quick</p>
-                                                                    </div>
+                                                                    </div> -->
                                                                 </div>
                                                                
                                                             </div>
                                                             </div>
 
                                                         </div>
-                                                        <div class="col-md-6">
+                                                        <!-- <div class="col-md-6">
 
                                                         <div class="card" >
                                                             <div class="card-body">
@@ -152,7 +155,8 @@
                                                             </div>
                                                             </div>
 
-                                                        </div>
+                                                        </div> -->
+                                                        @endforeach
 
                                                     </div>
 
@@ -281,6 +285,27 @@
         $('#defaultSearch').on('change', function() {
             this.form.submit();
         });
+
+        function attach(id) {
+            
+            $.ajax({
+                type: "GET",
+                url: '{{url("job/attachment")}}',
+                data: {
+                    id: id,
+                },
+                success: function (data) {
+                 var blob = new Blob([data]);
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Sample.pdf";
+                link.click();
+              
+                },
+            });
+        }
+
+
     </script>
 @endpush
 <style>
@@ -396,7 +421,7 @@ a.standard-btn {
   -o-border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
-  background-color: #7f007f;
+  background-color: #007f7f;
   color: #fff;
 }
 
