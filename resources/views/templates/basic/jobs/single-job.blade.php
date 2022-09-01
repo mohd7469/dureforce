@@ -88,19 +88,12 @@
                                                         <div class="service_subtitle2 mt-20">
                                                                  Attatchments
                                                         </div>
-                                                        <a href="{{route('job.download')}}" class="btn btn-large pull-right attachment-icon"><i class="icon-download-alt"> </i> Download Brochure </a>
+                                                        
+                                                        <a href="{{route('job.download')}}" class="btn btn-large pull-right"><i class="fa fa-paperclip font-style" aria-hidden="true"></i> Download Brochure </a>
 
                                                         </div>
 
-                                                        
-
-                                                        
-
-
-                                                        
-                                                       
-
-                                                        </div>
+                                                       </div>
                                                        
                                                         <div class="sep-solid"></div>
                                                         <div class="mt-10">
@@ -446,20 +439,7 @@ p.p-date {
     line-height: 16px;
     color: #000000;
 }
-.attachment-icon {
-    position: relative;
-    padding-left: 20px !important;
-    display: inline-block;
-}
-.attachment-icon:before {
-    width: 30px;
-    height: 30px;
-    background: url(/assets/images/job/attachment-icon.png) no-repeat;
-    content: '';
-    position: absolute;
-    left: 0px;
-    top: 11px;
-}
+
 .dod-text p {
     font-weight: 600 !important;
     font-size: 16px !important;
@@ -474,5 +454,9 @@ p.p-date {
     line-height: 18px;
     color: #000000;
     text-transform: capitalize !important;
+}
+.font-style{
+    font-size: 13px !important;
+color: #58a7a8 !important;
 }
 </style>
