@@ -17,7 +17,7 @@ class CreateJobDeliverableTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('deliverable_id')->index();
             $table->unsignedBigInteger('job_id')->index();
-
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');

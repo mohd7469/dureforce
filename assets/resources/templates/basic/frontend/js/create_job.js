@@ -1,32 +1,34 @@
 function submitCreateFormData(data)
 {
   var token= $('input[name=_token]').val();
-    
+  var action_url=$("#job_form_data").attr('action');
   $.ajax({
       type:"POST",
-      url:"store",
+      url:action_url,
       data: {data : data,_token:token},
       success:function(data){
           var html = '';
           if(data.error){
               
             displayErrorMessage(data.error);
+            $("#submit-all").attr("disabled", false);
 
           }
           else{
-            alert("Else");
-            // window.location.replace(data.redirect);              
+            window.location.replace(data.redirect);              
           }
       }
   });  
 }
 function displayAlertMessage(message)
 {
-  iziToast.error({
-    message: message,
-    position: "topRight",
-  });
-  // $("#job_form_data").before('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+message+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+  var toast = document.querySelector('.wait'); // Selector of your toast
+  iziToast.hide({}, toast);
+    iziToast.error({
+      message: message,
+      position: "topRight",
+    });
+
 }
 function displayErrorMessage(validation_errors)
 {
@@ -46,11 +48,20 @@ function displaySuccessMessage()
 {
     $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
 }
+function displayInfoAlertMessage(message)
+{
+        iziToast.info({
+            class:"wait",
+            message: message,
+            position: "topRight",
+        });
+}
 
 $(function() {
   var form_data='';
+  var action_url=$("#job_form_data").attr('action');
     var dropzone = new Dropzone('#demo-upload', {
-      url:'store',
+      url:action_url,
       autoProcessQueue: false,
         parallelUploads: 4,
         dictDefaultMessage: "your custom message",
@@ -71,20 +82,25 @@ $(function() {
           });
           
           this.on("complete", function(file, xhr, formData) {
-            var _this=this;
-            _this.removeAllFiles();
+           
           });
 
           this.on("successmultiple", function(files, response) {
-             displaySuccessMessage();
-             window.location.replace(response.redirect);
+
+              if(response.error)
+              {
+                displayErrorMessage(response.error);
+                $("#submit-all").attr("disabled", false);
+
+
+              }
+              if(response.redirect)
+                window.location.replace(response.redirect);
+                
           });
 
-        this.on("errormultiple", function(files, response) {
-          displayErrorMessage();
-          exit();
-        });
           
+
           var myDropzone = this;
   
           $("#job_form_data").submit(function (e) {
@@ -92,12 +108,16 @@ $(function() {
               
               e.preventDefault();
               e.stopPropagation();
-              if(myDropzone.getQueuedFiles().length>0)
-                  myDropzone.processQueue();  
+              if(myDropzone.getQueuedFiles().length>0){
+                  myDropzone.processQueue();
+              }
               else
               {
                 submitCreateFormData(form_data);
               }
+              $("#submit-all").attr("disabled", true);
+              displayInfoAlertMessage("Processing Plz Wait");
+
 
               
           }); 
@@ -178,7 +198,6 @@ function switchBudgetFileds(budget_type)
     else
     {
         $('.weekly_range').show();
-
         $('#budget_amount').hide();
         $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
         $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');

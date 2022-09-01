@@ -8,7 +8,7 @@
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     <div class="table-responsive">
 
-                        <table class="table text-center" style="border: 2px solid #e6eeee !important">
+                        <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
                                     
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -17,7 +17,7 @@
                                 <th>@lang('Messages')</th>
                                 <th>@lang('Hired')</th>
                                 <th>@lang('Status')</th>
-                                <th>@lang('Last Update')</th>
+                                <th>@lang('Price')</th>
                                 <th>@lang('Action')</th>
 
                             </tr>
@@ -25,16 +25,16 @@
 
                             <tbody class="text-center">
                                 @forelse($jobs as $key => $job)
-                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}">
+                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$job->uuid}}">
                                         <td data-label="@lang('Title')" class="text-start">
                                             {{-- route('job.details', [slug($job->title), encrypt($job->id)]) --}}
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            {{ '2'}} @lang('Proposals')
+                                            {{ '2'}}
                                         </td>
                                         <td data-label="@lang('Messages')">
-                                            {{ '3' }} @lang('Messages')
+                                            {{ '3' }}
                                         </td>
                                         <td data-label="@lang('Hired')">
                                             {{ '1' }}
@@ -63,22 +63,22 @@
 
                                         </td>
 
-                                        <td data-label="@lang('Last Update')">
-                                            {{showDateTime($job->updated_at)}}
+                                        <td data-label="@lang('Price')">
+                                            {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? $job->hourly_start_range."$ to " .$job->hourly_end_range."$ per hour" : $job->fixed_amount.'$'}}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>
                                         <td data-label="Action">
-                                            @if($job->status->slug != 'approved')
+                                            {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
-                                                <a href="#" ><i class="fa fa-edit icon-color" ></i></a>
-                                            @else
-                                                <span>@lang('N\A')</span>
-                                            @endif
 
-                                            @if($job->status->slug!= 'approved')
-                                                <a href="javascript:void(0)" class=" cancelBtn" data-id="{{$job->id}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
-                                            @endif
+                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                            {{-- @else --}}
+                                                {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
+
+                                            {{--  @if($job->status->slug!= 'approved')  --}}
+                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
+                                            {{--  @endif  --}}
                                         </td>
                                     </tr>
                                 @empty
@@ -89,7 +89,7 @@
                             </tbody>
 
                         </table>
-                        
+
                     </div>
                     
                     {{$jobs->links()}}
@@ -100,7 +100,7 @@
 </section>
 
 
-<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
@@ -109,18 +109,16 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
-                <form method="POST" action="{{route('user.job.cancel')}}">
-                    @csrf
-                    <input type="hidden" name="id">
+               
+                    <input type="hidden" name="job_id" id="job_id">
                     <div class="modal-body">
-                        <p>@lang('Are you sure to close this job')</p>
+                        <p>@lang('Are you sure to delete this job')</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn--danger btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                         <button type="submit" class="btn btn--success btn-rounded text-white">@lang('Confirm')</button>
+                        <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
+                         <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
                     </div>
-                </form>
-        </div>
+                
     </div>
 </div>
 @endsection
@@ -129,11 +127,52 @@
 
 @push('script')
 <script>
+    
+    function displaySuccessMessage(message)
+    {
+        iziToast.success({
+            message: message,
+            position: "topRight",
+        });
+    }
+
+    function delteJob(uuid)
+    {
+        $.ajax({
+            type:"GET",
+            url:"destroy/"+uuid,
+            data: {},
+            success:function(data){
+                
+                if(data.error){
+                   
+                }
+                else{
+                    $('#'+uuid).remove();
+                    displaySuccessMessage(data.message);
+                }
+            }
+        });  
+    }
+
     'use strict';
-    $('.cancelBtn').on('click', function () {
-        var modal = $('#cancelModal');
-        modal.find('input[name=id]').val($(this).data('id'))
+    
+    $('.delete_btn').on('click', function () {
+
+        var modal = $('#confirmationModal');
+        modal.find('input[name=job_id]').val($(this).data('id'));
         modal.modal('show');
+
     });
+
+    $('#confirmation_btn').on('click', function () {
+
+        uuid=$('#job_id').val();
+        delteJob(uuid);
+        var modal = $('#confirmationModal');
+        modal.modal('hide');
+       
+    });
+
 </script>
 @endpush

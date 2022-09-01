@@ -27,9 +27,9 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('budget_type_id')->nullable(); // table created
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
-            $table->decimal('fixed_amount', 28,4)->default(0)->nullable();
-            $table->decimal('hourly_start_range', 28,4)->default(0)->nullable();
-            $table->decimal('hourly_end_range', 28,4)->default(0)->nullable();
+            $table->decimal('fixed_amount', 28,2)->default(0)->nullable();
+            $table->decimal('hourly_start_range', 28,2)->default(0)->nullable();
+            $table->decimal('hourly_end_range', 28,2)->default(0)->nullable();
             $table->integer('offered_amount')->nullable();
             $table->integer('delivery_time')->nullable();
             $table->longText('job_link')->nullable();

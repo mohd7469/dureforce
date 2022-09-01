@@ -2669,6 +2669,8 @@ border: 1px solid #D0E2E2;
   height: 25px;
   border-radius: 7px;
   color: white;
+  width: -webkit-fill-available;
+
 }
 
 .status-btn.status-approved{
@@ -2697,6 +2699,7 @@ border: 1px solid #D0E2E2;
 .icon-color{
   color: #7F007F;
 }
+
 /*=====================29June style for admin side manage service page END ==================*/
 
 /*# sourceMappingURL=index.css.map */

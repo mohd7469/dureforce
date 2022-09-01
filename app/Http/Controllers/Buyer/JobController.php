@@ -14,16 +14,19 @@ use App\Models\Rank;
 use App\Models\SkillCategory;
 use App\Models\Skills;
 use App\Models\SkillSubCategory;
+use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
+use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
+use PhpParser\Node\Stmt\TryCatch;
 
 class JobController extends Controller
 {
@@ -32,11 +35,8 @@ class JobController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function create(Request $request)
+    public function getJobData()
     {
-
-        $pageTitle = "Create Job";
-
         $data = [];
 
         $data['countries'] = World::Countries();
@@ -47,13 +47,23 @@ class JobController extends Controller
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title','slug'])->get();
+        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
         $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+
+        return $data;
+    }
+
+    public function create(Request $request)
+    {
+
+        $pageTitle = "Create Job";
+        $data = $this->getJobData();
+
 
         return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
@@ -65,15 +75,16 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod','status')->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod', 'status')->latest()->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function store(Request $request)
     {
-        $request_data=[];
-        parse_str($request->data,$request_data);
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
         $user = Auth::user();
 
         $validator = Validator::make($request_data, [
@@ -81,7 +92,8 @@ class JobController extends Controller
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'required|exists:sub_categories,id',
+            'sub_category_id' => 'exists:sub_categories,id',
+            'project_stage_id' => 'exists:project_stages,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array|min:3',
@@ -90,134 +102,211 @@ class JobController extends Controller
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
-
-        if ($validator->fails())
-        {
-            return response()->json(["error" =>$validator->errors()]);
+        if ($validator->fails()) {
+            
+            return response()->json(["error" => $validator->errors()]);
 
         }
-       $job = Job::create([
-            "user_id"=>$user->id,
-            "job_type_id"=>$request_data['job_type_id'],
-            "location_id"=>$request_data['location_id'],
-            "category_id"=>$request_data['category_id'],
 
-            "sub_category_id"=>isset( $request_data['sub_category_id']) ?  $request_data['sub_category_id']: null ,
-            "rank_id"=>$request_data['rank_id'],
-            "project_stage_id"=>isset( $request_data['project_stage_id']) ?  $request_data['project_stage_id']:null,
-            "budget_type_id"=>isset( $request_data['budget_type_id']) ?  $request_data['budget_type_id']: null ,
-            "title"=>$request_data['title'],
-            "description"=>$request_data['description'],
-            "fixed_amount"=> isset($request_data['fixed_amount']) ? $request_data['fixed_amount']:null,
-            "hourly_start_range"=> isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range']:null,
-            "hourly_end_range"=>isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range']:null,
-            "delivery_time"=>$request_data['delivery_time'],
-            "expected_start_date"=>$request_data['expected_start_date'],
-            'status_id' =>1
-        ]);
-
-
-
-        $deliverables = Deliverable::whereIn('id',$request_data['deliverables'])->get();
-        $job->deliverable()->sync($deliverables);
-
-        $dods = DOD::whereIn('id',$request_data['dod'])->get();
-        $job->dod()->sync($dods);
-
-        $skills = Skills::whereIn('id',$request_data['skills'])->get();
-        $job->skill()->saveMany($skills);
+        try {
+            DB::beginTransaction();
+            $job = Job::create([
+                "user_id" => $user->id,
+                "job_type_id" => $request_data['job_type_id'],
+                "location_id" => $request_data['location_id'],
+                "category_id" => $request_data['category_id'],
+                "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
+                "rank_id" => $request_data['rank_id'],
+                "project_stage_id" => isset($request_data['project_stage_id']) ? $request_data['project_stage_id'] : null,
+                "budget_type_id" => isset($request_data['budget_type_id']) ? $request_data['budget_type_id'] : null,
+                "title" => $request_data['title'],
+                "description" => $request_data['description'],
+                "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
+                "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
+                "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
+                "delivery_time" => $request_data['delivery_time'],
+                "expected_start_date" => $request_data['expected_start_date'],
+                'status_id' => 1
+            ]);
 
 
-        return response()->json([ "redirect" => 'index' , "message" => "Successfully Saved"]);
+            $deliverables = Deliverable::whereIn('id', $request_data['deliverables'])->get();
+            $job->deliverable()->sync($deliverables);
 
+            $dods = DOD::whereIn('id', $request_data['dod'])->get();
+            $job->dod()->sync($dods);
 
+            $skills = Skills::whereIn('id', $request_data['skills'])->get();
+            $job->skill()->saveMany($skills);
 
-         $path = imagePath()['job']['path'];
+            $path = imagePath()['attachments']['path'];
 
-        if ($request->hasFile('file')) {
-            foreach ($request->file as $file) {
-                $this->fileValidate($file);
-                try {
-                    $filename = uploadImage($file, $path);
-                } catch (\Exception $exp) {
-                    $notify[] = ['error', 'Image could not be uploaded.'];
-                    return back()->withNotify($notify);
+            if ($request->hasFile('file')) {
+
+                foreach ($request->file as $file) {
+
+                    $this->fileValidate($file);
+                    try {
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path .'/'. $filename;
+                        $document = new TaskDocument;
+                        $document->name = $filename;
+                        $document->uploaded_name = $file->getClientOriginalName();
+                        $document->url = $url;
+                        $document->type = $file_extension;
+                        $document->is_published = "Active";
+                        $job->documents()->save($document);
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Image could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
                 }
-                $job->image = $filename;
             }
 
+            DB::commit();
+            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp]);
         }
+
 
     }
 
-    public function edit($slug, $id)
+
+    public function edit($uuid)
     {
-        $user = Auth::user();
+
+        $job = Job::withAll()->where('uuid', $uuid)->first();
+        $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
+        $data = $this->getJobData();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        $data['sub_categories'] = $sub_category;
         $pageTitle = "Job Update";
-        $job = Job::where('user_id', $user->id)->where('id', $id)->firstOrFail();
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job'));
+
+        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $uuid)
     {
-        $general = GeneralSetting::first();
+
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
         $user = Auth::user();
-        $request->validate([
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'title' => 'required|string|max:255',
-            'category' => 'required|exists:categories,id',
-            'subcategory' => 'nullable|exists:sub_categories,id',
-            'amount' => 'required|numeric|gt:0',
-            'delivery' => 'required|integer|min:1',
-            'skill' => 'required|array|min:3|max:15',
-            'description' => 'required',
-            'requirement' => 'required',
+
+        $validator = Validator::make($request_data, [
+            'title' => 'required|string|max:150',
+            'description' => 'required|string|max:1000',
+            'job_type_id' => 'required|exists:job_types,id',
+            'category_id' => 'required|exists:categories,id',
+            'project_stage_id' => 'required|exists:project_stages,id',
+            'sub_category_id' => 'exists:sub_categories,id',
+            'rank_id' => 'required|exists:ranks,id',
+            'budget_type_id' => 'required|exists:budget_types,id',
+            'deliverables' => 'required|array|min:3',
+            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
+            'dod' => 'required|array|min:3',
+            'skills' => 'required|array',
+            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
-        $job = Job::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-        $job->title = $request->title;
-        $job->user_id = $user->id;
-        $job->category_id = $request->category;
-        $job->sub_category_id = $request->subcategory ? $request->subcategory : null;
-        $job->amount = $request->amount;
-        $job->delivery_time = $request->delivery;
-        $job->skill = $request->skill;
-        $job->description = $request->description;
-        $job->requirements = $request->requirement;
-        $path = imagePath()['job']['path'];
-        $size = imagePath()['job']['size'];
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            $this->fileValidate($file);
-            try {
-                $filename = uploadImage($file, $path, $size, $job->image);
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        }
+
+
+
+        try {
+            DB::beginTransaction();
+            $job = Job::where("uuid", $uuid)->first();
+
+            $job->update([
+                "user_id" => $user->id,
+                "job_type_id" => $request_data['job_type_id'],
+                "location_id" => $request_data['location_id'],
+                "category_id" => $request_data['category_id'],
+                "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
+                "rank_id" => $request_data['rank_id'],
+                "project_stage_id" => isset($request_data['project_stage_id']) ? $request_data['project_stage_id'] : null,
+                "budget_type_id" => isset($request_data['budget_type_id']) ? $request_data['budget_type_id'] : null,
+                "title" => $request_data['title'],
+                "description" => $request_data['description'],
+                "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
+                "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
+                "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
+                "delivery_time" => $request_data['delivery_time'],
+                "expected_start_date" => $request_data['expected_start_date'],
+                'status_id' => 1
+            ]);
+
+
+            $deliverables = Deliverable::whereIn('id', $request_data['deliverables'])->get();
+            $job->deliverable()->sync($deliverables);
+
+            $dods = DOD::whereIn('id', $request_data['dod'])->get();
+            $job->dod()->sync($dods);
+
+
+            $skills = Skills::whereIn('id', $request_data['skills'])->get();
+            $job->skill()->sync($skills);
+
+            $path = imagePath()['attachments']['path'];
+
+            if ($request->hasFile('file')) {
+
+                foreach ($request->file as $file) {
+
+                    $this->fileValidate($file);
+                    try {
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . $filename;
+
+                        $document = new TaskDocument;
+                        $document->name = $filename;
+                        $document->url = $url;
+                        $document->type = $file_extension;
+                        $document->is_published = "Active";
+                        $job->documents()->save($document);
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Image could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
+                }
             }
-            $job->image = $filename;
+
+            DB::commit();
+            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp]);
         }
-        if ($general->approval_post == 1) {
-            $job->status = 1;
-        } else {
-            $job->status = 0;
-            $job->created_at = Carbon::now();
-        }
-        $job->updated_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been updated.'];
-        return back()->withNotify($notify);
+
+
     }
 
 
     private function fileValidate($file)
     {
-        $allowedExts = array('jpeg', 'jpg', 'png');
+        $allowedExts = array('jpeg', 'jpg', 'png', 'pdf');
         $ext = strtolower($file->getClientOriginalExtension());
         if (!in_array($ext, $allowedExts)) {
             $notify = 'Only jpeg, jpg, png files are allowed';
             return back()->withNotify($notify);
         }
     }
+
 
     public function cancelBy(Request $request)
     {
@@ -265,7 +354,7 @@ class JobController extends Controller
     public function getSkills(Request $request)
     {
         try {
-            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use($request){
+            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use ($request) {
                 $q->when(isset($request->sub_category_id), function ($q) use ($request) {
                     $q->where('sub_category_id', $request->sub_category_id);
                 });
@@ -292,6 +381,7 @@ class JobController extends Controller
             Log::error($e->getMessage());
         }
     }
+
     public function singleJob($uuid){
 
         $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod'])->first();
@@ -301,13 +391,33 @@ class JobController extends Controller
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
 
     }
-    public function downnloadAttach(){
+    public function downnloadAttach()
+    {
 
-        $file= public_path(). "public/sample.pdf";
+        $file = public_path() . "public/sample.pdf";
         $headers = [
             'Content-Type' => 'application/pdf',
-         ];
+        ];
 
         return response()->download($file, 'filename.pdf', $headers);
+
+    }
+    public function destroy($uuid)
+    {
+        try {
+            DB::beginTransaction();
+            $job = Job::where("uuid", $uuid)->first();
+            $job->documents()->delete();
+            $job->deliverable()->delete();
+            $job->dod()->delete();
+            $job->delete();
+            DB::commit();
+            return response()->json(["message" => "Successfully Deleted"]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+        }
+
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Database\Seeders\SkillCategorySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use phpDocumentor\Reflection\Types\Self_;
 
 class Category extends Model
