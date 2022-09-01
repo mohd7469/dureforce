@@ -384,9 +384,8 @@ class JobController extends Controller
 
     public function singleJob($uuid){
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod'])->first();
-         
-      
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents'])->first();
+        
         $pageTitle = "All Jobs";
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
 
