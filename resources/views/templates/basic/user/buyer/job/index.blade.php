@@ -72,12 +72,13 @@
                                             {{--  @if($job->status->slug != 'approved')  --}}
                                             {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
 
-                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" ></i></a>
+                                                <a href="{{route('user.job.single.view', [$job->uuid])}} " ><i class="fa fa-eye icon-color" style="margin-right:7px; "></i></a>
+                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" style="margin-right:7px; "></i></a>
                                             {{-- @else --}}
                                                 {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 
                                             {{--  @if($job->status->slug!= 'approved')  --}}
-                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color"></i></a>
+                                                <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color" style="margin-right:7px; "></i></a>
                                             {{--  @endif  --}}
                                         </td>
                                     </tr>

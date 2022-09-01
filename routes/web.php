@@ -675,7 +675,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
-                Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.job');
+                Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
             });
 
             //JobBiding
