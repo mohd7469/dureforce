@@ -1,6 +1,6 @@
+var token= $('input[name=_token]').val();
 function submitCreateFormData(data)
 {
-  var token= $('input[name=_token]').val();
   var action_url=$("#job_form_data").attr('action');
   $.ajax({
       type:"POST",
@@ -22,8 +22,7 @@ function submitCreateFormData(data)
 }
 function displayAlertMessage(message)
 {
-  var toast = document.querySelector('.wait'); // Selector of your toast
-  iziToast.hide({}, toast);
+  
     iziToast.error({
       message: message,
       position: "topRight",
@@ -35,25 +34,32 @@ function displayErrorMessage(validation_errors)
     $('input,select,textarea').removeClass('error-field');
     $('.select2').next().removeClass("error-field");
     for (var error in validation_errors) { 
-          
         var error_message=validation_errors[error];
+
         $('[name="'+error+'"]').addClass('error-field');
         $('#'+error).next().addClass('error-field');
+
         displayAlertMessage(error_message);
+
       
     }
+    $("#submit-all").attr("disabled", false);
+
 }
 
 function displaySuccessMessage()
 {
     $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
 }
+
 function displayInfoAlertMessage(message)
 {
         iziToast.info({
             class:"wait",
             message: message,
-            position: "topRight",
+            position: "center",
+            timeOut: 50000,
+            extendedTimeOut: 0
         });
 }
 
@@ -76,7 +82,6 @@ $(function() {
         init: function() {
           
           this.on("sendingmultiple", function(file, xhr, formData) {
-            var token= $('input[name=_token]').val();
             formData.append("_token",token);
             formData.append("data", form_data);
           });
@@ -99,27 +104,38 @@ $(function() {
                 
           });
 
-          
-
           var myDropzone = this;
   
           $("#job_form_data").submit(function (e) {
             form_data= $(this).serialize();
-              
               e.preventDefault();
-              e.stopPropagation();
-              if(myDropzone.getQueuedFiles().length>0){
-                  myDropzone.processQueue();
-              }
-              else
-              {
-                submitCreateFormData(form_data);
-              }
-              $("#submit-all").attr("disabled", true);
-              displayInfoAlertMessage("Processing Plz Wait");
+              e.stopPropagation(); 
+              var action_url='job_data_validate';
+              $.ajax({
+                  type:"POST",
+                  url:action_url,
+                  data: {data : form_data,_token:token},
+                  success:function(data){
 
+                      if(data.validated){
 
-              
+                          if(myDropzone.getQueuedFiles().length>0){
+                            myDropzone.processQueue();
+                          }
+                          else
+                          {
+                            submitCreateFormData(form_data);
+                          }
+                          $("#submit-all").attr("disabled", true);
+                          displayInfoAlertMessage("Processing Plz Wait");
+
+                      }
+                      else{
+                        displayErrorMessage(data.error);
+
+                      }
+                  }
+              });
           }); 
         },
         thumbnail: function(file, dataUrl) {
