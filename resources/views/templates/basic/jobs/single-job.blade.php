@@ -384,16 +384,23 @@ p.job_staus a {
     text-decoration: none!important;
     
 }
-.cstm-btn {
-    text-align: center;
-    display: inline-block;
-    width: 100%;
+
+
+a.standard-btn {
+  padding: 9px 7px!important;
+  border: 0px solid #e1e7ec;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  background-color: #7f007f;
+  color: #fff;
 }
-.cstm-btn a.standard-btn {
-    padding: 9px 14px;
-    float: left;
-    display: inline-block;
-}
+
+
 .cstm-sidebar{
     display: inline-block;
 }
