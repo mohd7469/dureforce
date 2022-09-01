@@ -5174,6 +5174,38 @@ background-color: #ebf7f77e;
   padding-bottom: 0px;
 }
 
+.developmenttype .development-table-title {
+ 
+font-family: 'Mulish';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+width: 100%;
+padding-left: 0;
+justify-content: space-evenly;
+
+
+}
+.attributes-card{
+  width: 360px;
+   height: 206px;
+}
+.developmenttype .development-table-title li{
+     list-style: none;
+    display: inline-block;
+align-items: center;
+letter-spacing: 0.25px;
+color: rgba(0, 0, 0, 0.87);
+padding: 5px 43px 18px;
+
+
+}
+.developmenttype .development-table-title li:nth-child(odd) { clear: left; }
+
 .service_subtitle3 .service-table li {
   display: flex;
   flex-wrap: wrap;
@@ -5330,4 +5362,16 @@ a.standard-btn-sm {
 /*=============================June12022 Service Detail page styles END==========================*/
 .btn-circle figure {
   border: none !important;
+}
+
+.content p {
+  font-family: 'Mulish';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+color: #000000;
+}
+.content  li:before {
+   content: "*" 
 }

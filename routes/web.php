@@ -195,6 +195,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::middleware('staffaccess:7')->group(function () {
             //Manage Job
+            
             Route::get('job/index', 'JobController@index')->name('job.index');
             Route::get('job/closed', 'JobController@closed')->name('job.closed');
             Route::get('job/pending', 'JobController@pending')->name('job.pending');
@@ -661,6 +662,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
+
             });
 
             //JobBiding
@@ -746,5 +748,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 
+Route::get('jobview', 'jobController@jobview')->name('job.jobview');
 
 //
