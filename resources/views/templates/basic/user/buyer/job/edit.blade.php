@@ -56,9 +56,7 @@
                                             {{-- Description --}}
                                             <div class="col-xl-6 col-lg-6 form-group">
                                                 <label>@lang('Description')*</label>
-                                                <textarea class="form-control bg--gray" name="description" aria-rowspan="3" >
-                                                    {{$job->description}}
-                                                </textarea>
+                                                <textarea class="form-control bg--gray" name="description" aria-rowspan="3" >{{$job->description}}</textarea>
                                             </div>
 
                                             {{-- Required documents --}}
@@ -236,7 +234,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
+                                        <input type="hidden" value="{{$data['documents']}}" name="job_documents" id="job_documents" >
                                         <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         
@@ -298,7 +297,17 @@
 
 @push('script')
 <script>
-
+    function loadFiles()
+    {
+        var documents=JSON.parse($('#job_documents').val());
+        for (const item of documents) {
+            var mockFile = { name: item.uploaded_name, size: 12345 };
+            myDropzone.options.addedfile.call(myDropzone, mockFile);
+            // myDropzone.options.thumbnail.call(myDropzone, mockFile, item.url);
+        }
+       
+        
+    }
     function fetchSubCategories(category)
     {
         $.ajax({
@@ -401,6 +410,7 @@
         $('.select2').select2({
             tags: true
         });
+        loadFiles();
     });
 
     bkLib.onDomLoaded(function() {

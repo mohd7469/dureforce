@@ -199,6 +199,7 @@ class JobController extends Controller
         $data = $this->getJobData();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $data['sub_categories'] = $sub_category;
+        $data['documents']=json_encode($job->documents->toArray());
         $pageTitle = "Job Update";
 
         return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));

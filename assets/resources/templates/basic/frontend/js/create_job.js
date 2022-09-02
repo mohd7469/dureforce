@@ -1,4 +1,5 @@
 var token= $('input[name=_token]').val();
+var myDropzone='';
 function submitCreateFormData(data)
 {
   var action_url=$("#job_form_data").attr('action');
@@ -104,7 +105,7 @@ $(function() {
                 
           });
 
-          var myDropzone = this;
+          myDropzone = this;
   
           $("#job_form_data").submit(function (e) {
             form_data= $(this).serialize();
