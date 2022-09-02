@@ -79,14 +79,11 @@ class JobController extends Controller
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
-
-    public function store(Request $request)
+    public function jobDataValidate(Request $request)
     {
-
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
-
         $validator = Validator::make($request_data, [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
@@ -107,6 +104,16 @@ class JobController extends Controller
             return response()->json(["error" => $validator->errors()]);
 
         }
+        else
+            return response()->json(["validated" => "Job Data Is Valid"]);
+
+    }
+    public function store(Request $request)
+    {
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $user = Auth::user();
 
         try {
             DB::beginTransaction();
