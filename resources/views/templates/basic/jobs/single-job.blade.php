@@ -29,15 +29,8 @@
                                                         <h3 class="title">
                                                             {{$job->title}}
                                                             </h3>
-                                                        <div class="item-details-tag">
-                                                            <ul class="tags-wrapper">
-                                                            <!--<li class="caption">Tags</li>-->
-                                                            <li><a href="javascript:void(0)">devops</a></li>
-                                                            <li><a href="javascript:void(0)">ci</a></li>
-                                                            <li><a href="javascript:void(0)">cd</a> </li>
-                                                            <li><a href="javascript:void(0)">azure</a></li>
-                                                            </ul>
-                                                        </div>
+                                                        
+                                                      
                                                     </div>
                                                 </div>
                                                     <div class="col-md-3">
@@ -48,21 +41,7 @@
                                                  </div>
 
 
-                                                    <div class="right mb-20">
-                                                        <div class="social-area">
-                                                            <ul class="footer-social">
-                                                                <li>
-                                                                    <a href="http://www.facebook.com/sharer.php?u=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9" target="__blank"><i class="fab fa-facebook-f"></i></a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="http://twitter.com/share?url=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9&amp;text=Add &quot;Azure CI/CD&quot; Pipelines to your devops&amp;hashtags=Add &quot;Azure CI/CD&quot; Pipelines to your devops" target="__blank"><i class="fab fa-twitter"></i></a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9" target="__blank"><i class="fab fa-linkedin-in"></i></a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     
 
                                                     
@@ -70,7 +49,7 @@
                                                         
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content">
-                                                        You will immediately start creating interactive Web3 prototypes, mockups, storyboards, journey maps, user flows, usability metrics informed by competitive analysis, user personas, and real-world users. This position will work closely with our development team to enhance our Web3 products.
+                                                        <!-- You will immediately start creating interactive Web3 prototypes, mockups, storyboards, journey maps, user flows, usability metrics informed by competitive analysis, user personas, and real-world users. This position will work closely with our development team to enhance our Web3 products. -->
                                                         <ul class="list_desc">
                                                         <li>{{$job->description ? $job->description  : ''}}</li>
                                                          
@@ -421,7 +400,7 @@ a.standard-btn {
   -o-border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
-  background-color: #007f7f;
+  background-color: #007f7f !important;
   color: #fff;
 }
 
@@ -458,6 +437,7 @@ p.job_staus {
     font-size: 14px;
     line-height: 18px;
     color: #000000;
+    margin-top: 10px;
 }
 p.job_staus a {
     padding: 8px 20px;
@@ -470,6 +450,9 @@ p.p-date {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
+}
+.cstm-sidebar .sidebar-title2 li span {
+    font-size: 13px !important;
 }
 
 .dod-text p {
