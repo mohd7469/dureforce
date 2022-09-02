@@ -239,6 +239,12 @@
                                         
                                         <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
                                         <input type="checkbox" name="skills[]" style="display: none">
+                                        
+                                        <div style="display:inline;display:none" id="skills_heading">
+                                            <h4 class="" style="display:inline">Job Attributes* </h4>
+                                            <small>(Atlease One Skill is required)</small>
+                                        </div>
+                                        
                                         <div id="form_attributes">
                                             
                                         </div>
