@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Job extends Model
 {
     use HasFactory, SoftDeletes;
-    public static $attachment_path = "/attachments";
+    public static $attachment_path = "attachments";
     protected $fillable = [
 
         "user_id",
@@ -91,12 +91,12 @@ class Job extends Model
 
     public function dod()
     {
-        return $this->belongsToMany(DOD::class, 'job_dods');
+        return $this->belongsToMany(DOD::class, 'job_dods')->whereNull('job_dods.deleted_at')->withTimestamps();
     }
 
     public function deliverable()
     {
-        return $this->belongsToMany(Deliverable::class, 'job_deliverables');
+        return $this->belongsToMany(Deliverable::class, 'job_deliverables')->whereNull('job_deliverables.deleted_at')->withTimestamps();
     }
 
     public function subCategory()
