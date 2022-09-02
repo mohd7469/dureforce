@@ -2639,6 +2639,67 @@ hr {
 .del {
   margin-left:7px;
 }
+
+.error-field{
+  border:1px solid red !important;
+}
+.dashboard-sidebar-wrapper-inner {
+  position: sticky;
+  top: 10px;
+  padding-left: 15px !important;
+}
+.zero_top_padding{
+  
+  padding-top: 0px;
+}
+.page_div{
+  background-color: #F8FAFA;padding-left:0px;padding-right:0px
+}
+.bottom_border_light{
+  border-bottom:1px solid #CBDFDF;
+}
+.info-row{
+  background-color:#F7F9F9;
+}
+.table-header{
+  background: #EFF4F4;
+border: 1px solid #D0E2E2;
+}
+.status-btn{
+  height: 25px;
+  border-radius: 7px;
+  color: white;
+  width: -webkit-fill-available;
+
+}
+
+.status-btn.status-approved{
+  background: #007F7F;
+
+}
+
+.status-btn.status-draft{
+  background: #5BACF7;
+
+}
+
+.status-btn.status-pending{
+  background: #DB8343;
+
+}
+
+.status-btn.status-approved{
+  background: #007F7F;
+
+}
+.status-btn.status-rejected{
+  background: #007F7F;
+
+}
+.icon-color{
+  color: #7F007F;
+}
+
 /*=====================29June style for admin side manage service page END ==================*/
 
 /*# sourceMappingURL=index.css.map */

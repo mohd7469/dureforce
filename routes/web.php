@@ -1,6 +1,6 @@
 <?php
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
+use App\Http\Controllers\Job\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +12,13 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
+
+Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
+Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
+
+
+
+
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
@@ -592,6 +599,9 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
                     Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
                     Route::get('/category', 'UserController@category')->name('category');
+                    // Route::get('/category', 'UserController@skillSubCategory')->name('category');
+                    
+                    
                     Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
                     Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
 
@@ -657,11 +667,17 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
                 //Job
                 Route::get('job/create', 'JobController@create')->name('job.create');
+                
+                Route::post('job/job_data_validate', 'JobController@jobDataValidate')->name('job.validate');
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
-                Route::get('job/edit/{slug}/{id}', 'JobController@edit')->name('job.edit');
+                Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
                 Route::post('job/update/{id}', 'JobController@update')->name('job.update');
+                Route::get('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
+
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
+                Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
+                Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
 
             });
 
@@ -708,7 +724,7 @@ Route::get('blog/{id}/{slug}', 'SiteController@blogDetails')->name('blog.details
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholder.image');
 
 //Service
-Route::get('/', 'SiteController@index')->name('home');
+Route::get('/', 'SiteController@index')->name('home');//Landing Page
 Route::get('/service', 'ServiceController@index')->name('service');
 Route::get('/service/details/{slug}/{id}', 'SiteController@serviceDetails')->name('service.details');
 Route::get('/search/item/filter', 'FilterController@allServiceSearch')->name('home.search.item');
@@ -747,6 +763,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
-Route::get('jobview', 'jobController@jobview')->name('job.jobview');
+Route::get('jobview', 'Job\JobController@jobview')->name('job.jobview');
 
 //

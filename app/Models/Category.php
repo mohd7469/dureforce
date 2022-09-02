@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Database\Seeders\SkillCategorySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use phpDocumentor\Reflection\Types\Self_;
 
 class Category extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+    protected $fillable = ['name','status'];
 
     const ServiceType = 1;
     const SoftwareType = 2;
@@ -60,5 +64,18 @@ class Category extends Model
         if ($index !== false) {
             return $types[$index]['name'];
         }
+    }
+
+    public function skill_categories()
+    {
+        return $this->belongsToMany(SkillCategory::class, 'category_attributes');
+    }
+    public function skill()
+    {
+        return $this->belongsToMany(Skills::class, 'category_attributes')->withPivot(['sub_category_id'])->with('skill_categories');
+    }
+    public function sub_categoires()
+    {
+        return $this->belongsToMany(SubCategory::class, 'category_attributes');
     }
 }

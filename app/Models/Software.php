@@ -142,4 +142,16 @@ class Software extends Model
     {
         return json_decode($this->deliverables);
     }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+    public function task_document()
+    {
+        return $this->morphMany(TaskDocument::class, 'module_id');
+    }
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module');
+    }
 }
