@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
+use App\Models\ProjectLength;
 use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,9 +52,13 @@ class JobController extends Controller
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
+        $data['project_length'] = ProjectLength::OnlyJob()->select(['id', 'name'])->get();
+
+
         $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+
 
         return $data;
     }
@@ -179,7 +184,7 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            return response()->json(["error" => $exp]);
+            return response()->json(["error" => $exp->getMessage()]);
         }
 
 

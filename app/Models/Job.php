@@ -33,6 +33,7 @@ class Job extends Model
     
 
     const UPDATED_AT = null;
+    
 
     protected static function boot()
     {

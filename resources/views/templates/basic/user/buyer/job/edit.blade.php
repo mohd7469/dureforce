@@ -212,12 +212,17 @@
                                                     </div>
                                             </div>
 
+                                            
                                             {{-- project length --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Length')*</label>
-                                                    <div class="input-group mb-3">
-                                                    <input type="integer" class="form-control" name="delivery_time" value="{{$job->delivery_time}}" placeholder="" >
-                                                </div>
+                                                    <select name="delivery_time" class="form-control budget" id="project_length_id">
+                                                        <option selected="" disabled="">@lang('Select Project Length')</option>
+                                                            @foreach($data['project_length'] as $item)
+                                                                <option value="{{__($item->id)}}" {{$job->delivery_time == $item->id ? 'selected':''}}>{{__($item->name)}}</option>
+                                                            @endforeach
+                                                    </select>
+
                                             </div>
 
                                             {{-- project stage --}}
