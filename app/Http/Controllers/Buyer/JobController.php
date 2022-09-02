@@ -384,8 +384,8 @@ class JobController extends Controller
 
     public function singleJob($uuid){
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents'])->first();
-        //  dd($job);
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        
         
         $skillCats = SkillCategory::select('name', 'id')->get();
 
@@ -405,11 +405,13 @@ class JobController extends Controller
     public function downnloadAttach(Request $request)
     {
 
-
+       
         $file = TaskDocument::find($request->id);
         $filename = $file->name;
         $tempImage = tempnam(sys_get_temp_dir(), $filename);
-        copy('https://stgdureforcestg.blob.core.windows.net/attachments/630f75e0a74461661957600.pdf', $tempImage);
+        copy($file->url, $tempImage);     
+
+
 
         return response()->download($tempImage, $filename);
         

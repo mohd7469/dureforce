@@ -27,7 +27,7 @@
                                                 <div class="col-md-9">    
                                                 <div class="left mb20">
                                                         <h3 class="title">
-                                                            {{$job->title}}
+                                                            {{$job->title? $job->title : '' }}
                                                             </h3>
                                                         
                                                       
@@ -54,11 +54,21 @@
                                                         <li>{{$job->description ? $job->description  : ''}}</li>
                                                          
                                                         </ul>
+                                                       
+                                                        <div class="service_subtitle2 mt-20 dod-text">
+                                                            <p> Deliverables</p>
+                                                             @foreach ($job->deliverable as $deliverable)
+                                                                
+                                                             <span> {{$deliverable->name}},</span>
+                                                             
+                                                             @endforeach
+                                                        </div>
+                                                    
 
                                                         <div class="service_subtitle2 mt-20 dod-text">
                                                             <p> Definition of Done (DOD)</p>
                                                              @foreach ($job->dod as $dod)
-                                                             <span>{{$dod->title ? $dod->title  : ''}}</span>
+                                                             <span>{{$dod->title ? $dod->title  : ''}},</span>
                                                              @endforeach
                                                         </div>
 
@@ -69,7 +79,7 @@
                                                         </div>
                                                         @foreach($job->documents as $decumentUrl)
                                                         
-                                                        <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i> Download Brochure </a>
+                                                        <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->name}} </a>
                                                         @endforeach
                                                         </div>
 
@@ -274,10 +284,13 @@
                     id: id,
                 },
                 success: function (data) {
+                console.log(data);
                  var blob = new Blob([data]);
                 var link = document.createElement('a');
+                
                 link.href = window.URL.createObjectURL(blob);
-                link.download = "Sample.pdf";
+                link.download = 
+                'sample.pdf'
                 link.click();
               
                 },
