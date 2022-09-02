@@ -211,7 +211,12 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
-                                                    <input type="integer" class="form-control" name="delivery_time" value="{{old('projectlength')}}" placeholder="" >
+                                                        <select name="delivery_time" class="form-control budget" id="project_length_id">
+                                                            <option selected="" disabled="">@lang('Select Project Length')</option>
+                                                                @foreach($data['project_length'] as $item)
+                                                                    <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                                                @endforeach
+                                                        </select>
                                                 </div>
                                             </div>
 
@@ -229,6 +234,10 @@
                                         
 
                                         <input type="checkbox" name="skills[]" style="display: none">
+                                        <div style="display:inline;display:none" id="skills_heading">
+                                            <h4 class="" style="display:inline">Job Attributes* </h4>
+                                            <small>(Atlease One Skill is required)</small>
+                                        </div>
                                         <div id="form_attributes">
                                             
                                         </div>
@@ -332,14 +341,15 @@
                                     
     function loadSkills(data)
     {
-        // if(!jQuery.isEmptyObject(data))
+        $('#skills_heading').show();
+        // if(jQuery.isEmptyObject(data))
             $('#form_attributes').empty();
         for (var main_category in data) { //heading main
             
             var all_sub_categories=data[main_category];
             var main_category_id=genRand(5);
         
-            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
             for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                 var skills=all_sub_categories[sub_category_enum];
