@@ -234,9 +234,10 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
                                         <input type="hidden" value="{{$data['documents']}}" name="job_documents" id="job_documents" >
                                         <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
+                                        
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         
                                         <div style="display:inline;display:none" id="skills_heading">

@@ -232,7 +232,7 @@
                                             </div>
                                         </div>
                                         
-
+                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
