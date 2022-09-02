@@ -64,7 +64,7 @@
                                         </td>
 
                                         <td data-label="@lang('Price')">
-                                            {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? $job->hourly_start_range."$ to " .$job->hourly_end_range."$ per hour" : $job->fixed_amount.'$'}}
+                                            {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? 'Hourly:$'.$job->hourly_start_range."-$" .$job->hourly_end_range : "Fixed:$".$job->fixed_amount    }}
                                             {{-- <br> --}}
                                             {{-- {{diffforhumans($job->updated_at)}} --}}
                                         </td>
@@ -111,14 +111,15 @@
                 </button>
             </div>
                
-                    <input type="hidden" name="job_id" id="job_id">
-                    <div class="modal-body">
-                        <p>@lang('Are you sure to delete this job')</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                         <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
-                    </div>
+            <input type="hidden" name="job_id" id="job_id">
+            <div class="modal-body">
+                <p>@lang('Are you sure to delete this job')</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
+                    <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
+            </div>
                 
     </div>
 </div>

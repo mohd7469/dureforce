@@ -100,9 +100,9 @@ class JobController extends Controller
             'project_stage_id' => 'exists:project_stages,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
-            'deliverables' => 'required|array|min:3',
+            'deliverables' => 'required|array',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-            'dod' => 'required|array|min:3',
+            'dod' => 'required|array',
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
