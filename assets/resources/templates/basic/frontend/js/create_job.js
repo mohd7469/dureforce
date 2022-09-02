@@ -97,8 +97,6 @@ $(function() {
               {
                 displayErrorMessage(response.error);
                 $("#submit-all").attr("disabled", false);
-
-
               }
               if(response.redirect)
                 window.location.replace(response.redirect);
@@ -111,10 +109,10 @@ $(function() {
             form_data= $(this).serialize();
               e.preventDefault();
               e.stopPropagation(); 
-              var action_url='job_data_validate';
+              var validate_url=$('#job_validate_url').val();
               $.ajax({
                   type:"POST",
-                  url:action_url,
+                  url:validate_url,
                   data: {data : form_data,_token:token},
                   success:function(data){
 

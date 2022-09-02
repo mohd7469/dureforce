@@ -88,6 +88,7 @@ class JobController extends Controller
     public function jobDataValidate(Request $request)
     {
         $request_data = [];
+
         parse_str($request->data, $request_data);
         $user = Auth::user();
         $validator = Validator::make($request_data, [
@@ -123,6 +124,7 @@ class JobController extends Controller
 
         try {
             DB::beginTransaction();
+
             $job = Job::create([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
@@ -137,7 +139,7 @@ class JobController extends Controller
                 "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
                 "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
-                "delivery_time" => $request_data['delivery_time'],
+                "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
                 'status_id' => 1
             ]);
@@ -213,28 +215,6 @@ class JobController extends Controller
         parse_str($request->data, $request_data);
         $user = Auth::user();
 
-        $validator = Validator::make($request_data, [
-            'title' => 'required|string|max:150',
-            'description' => 'required|string|max:1000',
-            'job_type_id' => 'required|exists:job_types,id',
-            'category_id' => 'required|exists:categories,id',
-            'project_stage_id' => 'required|exists:project_stages,id',
-            'sub_category_id' => 'exists:sub_categories,id',
-            'rank_id' => 'required|exists:ranks,id',
-            'budget_type_id' => 'required|exists:budget_types,id',
-            'deliverables' => 'required|array|min:3',
-            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-            'dod' => 'required|array|min:3',
-            'skills' => 'required|array',
-            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-        ]);
-        if ($validator->fails()) {
-
-            return response()->json(["error" => $validator->errors()]);
-
-        }
-
-
         try {
             DB::beginTransaction();
             $job = Job::where("uuid", $uuid)->first();
@@ -253,7 +233,7 @@ class JobController extends Controller
                 "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
                 "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
-                "delivery_time" => $request_data['delivery_time'],
+                "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
                 'status_id' => 1
             ]);

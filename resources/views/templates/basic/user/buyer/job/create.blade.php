@@ -211,7 +211,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
-                                                        <select name="delivery_time" class="form-control budget" id="project_length_id">
+                                                        <select name="project_length_id" class="form-control budget" id="project_length_id">
                                                             <option selected="" disabled="">@lang('Select Project Length')</option>
                                                                 @foreach($data['project_length'] as $item)
                                                                     <option value="{{__($item->id)}}">{{__($item->name)}}</option>
@@ -232,7 +232,7 @@
                                             </div>
                                         </div>
                                         
-
+                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
