@@ -84,6 +84,7 @@ class JobController extends Controller
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
+
     public function jobDataValidate(Request $request)
     {
         $request_data = [];
@@ -105,14 +106,14 @@ class JobController extends Controller
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
         if ($validator->fails()) {
-            
+
             return response()->json(["error" => $validator->errors()]);
 
-        }
-        else
+        } else
             return response()->json(["validated" => "Job Data Is Valid"]);
 
     }
+
     public function store(Request $request)
     {
 
@@ -162,7 +163,7 @@ class JobController extends Controller
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
-                        $url = $path .'/'. $filename;
+                        $url = $path . '/' . $filename;
                         $document = new TaskDocument;
                         $document->name = $filename;
                         $document->uploaded_name = $file->getClientOriginalName();
@@ -193,7 +194,6 @@ class JobController extends Controller
 
     public function edit($uuid)
     {
-
         $job = Job::withAll()->where('uuid', $uuid)->first();
         $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
         $data = $this->getJobData();
@@ -232,7 +232,6 @@ class JobController extends Controller
             return response()->json(["error" => $validator->errors()]);
 
         }
-
 
 
         try {
@@ -394,26 +393,27 @@ class JobController extends Controller
         }
     }
 
-    public function singleJob($uuid){
+    public function singleJob($uuid)
+    {
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents'])->first();
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country', 'dod', 'documents'])->first();
         //  dd($job);
-        
+
         $skillCats = SkillCategory::select('name', 'id')->get();
 
-        foreach($skillCats as $skillCat){
+        foreach ($skillCats as $skillCat) {
             // dd($skillCat);
 
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
 
-        
-        
+
         $pageTitle = "All Jobs";
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
 
     }
+
     public function downnloadAttach(Request $request)
     {
 
@@ -424,17 +424,25 @@ class JobController extends Controller
         copy('https://stgdureforcestg.blob.core.windows.net/attachments/630f75e0a74461661957600.pdf', $tempImage);
 
         return response()->download($tempImage, $filename);
-        
+
 
         // return redirect()->back();
 
 
     }
+
     public function destroy($uuid)
     {
         try {
             DB::beginTransaction();
             $job = Job::where("uuid", $uuid)->first();
+
+//            foreach ($job->documents as $document) {
+//                $path = Job::$attachment_path.'/'.$document->name;
+//                dump($document->name);
+//                removeFile($path);
+//                dd($document->url);
+//            }
             $job->documents()->delete();
             $job->deliverable()->delete();
             $job->dod()->delete();
