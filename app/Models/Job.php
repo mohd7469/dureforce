@@ -26,7 +26,7 @@ class Job extends Model
         "fixed_amount",
         "hourly_start_range",
         "hourly_end_range",
-        "delivery_time",
+        "project_length_id",
         "expected_start_date",
         "status_id"
 
@@ -87,6 +87,10 @@ class Job extends Model
     public function budgetType()
     {
     	return $this->belongsTo(BudgetType::class, 'budget_type_id');
+    }
+    public function project_length()
+    {
+    	return $this->belongsTo(ProjectLength::class, 'project_length_id');
     }
 
     public function dod()
