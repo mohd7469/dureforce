@@ -107,7 +107,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     $filename = '';
     try {
 
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL'); 
+        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
         $blobClient = BlobRestProxy::createBlobService($connectionString);
 
         if ($old) {
@@ -221,17 +221,30 @@ function makeDirectory($path)
 
 function removeFile($path)
 {
-    $imagePath = explode('/', $path);
-    $container = $imagePath[0];
-    $filename = end($imagePath);
-    $connectionString = getenv('AZURE_STORAGE_SAS_URL'); 
-    $blobClient = BlobRestProxy::createBlobService($connectionString);
-    $blob = $blobClient->getBlob($container, $filename);
-    if ($blob) {
-        $blobClient->deleteBlob($container, $filename);
-        return true;
-    } else
+    try {
+
+        $imagePath = explode('/', $path);
+        $container = $imagePath[0];
+        $filename = end($imagePath);
+
+        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
+
+        $blob = $blobClient->getBlob($container, $filename);
+
+
+        if ($blob) {
+
+            $blobClient->deleteBlob($container, $filename);
+            return true;
+        } else {
+            return false;
+        }
+    } catch (\Exception $e) {
+
         return false;
+
+    }
 }
 
 

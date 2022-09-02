@@ -432,22 +432,27 @@ class JobController extends Controller
             DB::beginTransaction();
             $job = Job::where("uuid", $uuid)->first();
 
-//            foreach ($job->documents as $document) {
-//                $path = Job::$attachment_path.'/'.$document->name;
-//                dump($document->name);
-//                removeFile($path);
-//                dd($document->url);
-//            }
+            foreach ($job->documents as $document) {
+                $path = Job::$attachment_path . '/' . $document->name;
+                removeFile($path);
+            }
+
             $job->documents()->delete();
-            $job->deliverable()->delete();
-            $job->dod()->delete();
+
+
+            DB::table('job_deliverables')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+            DB::table('job_dods')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+
             $job->delete();
             DB::commit();
             return response()->json(["message" => "Successfully Deleted"]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
+            return response()->json(["error" => "Failed to delete job"]);
+
         }
 
     }
