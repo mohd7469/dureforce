@@ -91,12 +91,12 @@ class Job extends Model
 
     public function dod()
     {
-        return $this->belongsToMany(DOD::class, 'job_dods')->whereNull('job_dods.deleted_at')->withTimestamps();
+        return $this->belongsToMany(DOD::class, 'job_dods')->wherePivot('deleted_at', '=',null);
     }
 
     public function deliverable()
     {
-        return $this->belongsToMany(Deliverable::class, 'job_deliverables')->whereNull('job_deliverables.deleted_at')->withTimestamps();
+        return $this->belongsToMany(Deliverable::class, 'job_deliverables')->wherePivot('deleted_at', '=',null);
     }
 
     public function subCategory()
