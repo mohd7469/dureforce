@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class Job extends Model
 {
     use HasFactory, SoftDeletes;
+    public static $attachment_path = "/attachments";
     protected $fillable = [
 
         "user_id",
