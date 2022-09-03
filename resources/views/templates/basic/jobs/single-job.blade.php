@@ -14,8 +14,11 @@
                             <div class="container">
                                 <div class="item-details-content" style="padding-top: 0px;">
                                     <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
+                                    
                                     <input type="hidden" value="{{$job->category_id}}" id="category_id">
                                     <input type="hidden" {{$job->sub_category_id}} id="sub_category_id">
+                                    <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
+
                                 </div>
                                 <div class="row justify-content-center mb-30-none">
                                     <div class="col-md-9 col-lg-9 col-xs-9 col-sm-12 col-xs-12 mb-30">
@@ -39,10 +42,7 @@
 
                                                         <div class="col-md-5 col-lg-5 col-xl-5 col-sm-12 col-xs-12 float-right" >
                                                             <div class="float-right">
-                                                                <p class="job_staus" style="display: inline">Job Status: <span style="
-                                                                    display:inline-block;height: 26px;       
-                                                                    background: #72C1C1;
-                                                                    border-radius: 4px;margin-right:10px" > {{$job->status->name ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
+                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status->name ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
                                                                 
                                                             </div>
                                                             
@@ -190,29 +190,42 @@
 
         function populateSkills(data)
         {
-            if(jQuery.isEmptyObject(data))
-                $('#form_attributes').empty();
+            var selected_skills=$('#job_skills').val();
+            selected_skills=(selected_skills.split(','));
+            selected_skills=selected_skills.map(Number);
+
+           
             for (var main_category in data) { //heading main
                 
                 var all_sub_categories=data[main_category];
                 var main_category_id=genRand(5);
-                
+                var remove =true;
                 $('#form_attributes').append('<div class="row custom_cards_s" id="'+main_category_id+'"><h4 class="d-heading">'+main_category+'</h4>');
                 for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                     var skills=all_sub_categories[sub_category_enum];
                     var sub_category_id=genRand(5);
-                    $('#'+main_category_id).append('<div class="col-md-6"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="row"><div class="col-md-6">');
-                    
-                        for (var skill_index in skills) {
+                    var sub_skills=skills.map(a => a.id);
+                    if(selected_skills.some(r => sub_skills.includes(r))){
+                        remove=false
+                        $('#'+main_category_id).append('<div class="col-md-6"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="row" id="'+sub_category_id+'"><div class="col-md-6">');
                         
-                        var skill_id=skills[skill_index].id;
-                        var skill_name=skills[skill_index].name;
-                        $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                            for (var skill_index in skills) {
+                            
+                            var skill_id=skills[skill_index].id;
+                            var skill_name=skills[skill_index].name;
+                            
+                            $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                        }
                     }
+                    
                     
                 }
                 $('#'+main_category_id).append('<div/></div>');
+                if(remove)
+                    $('#'+main_category_id).remove();
+ 
+                
             }
             $('#form_attributes').append('</div>');
 
@@ -458,5 +471,15 @@ line-height: 18px;
 .font-style{
     font-size: 13px !important;
 color: #58a7a8 !important;
+}
+.status_btn{
+    display: inline-block;
+    height: 32px;
+    background: #72C1C1;
+    border-radius: 4px;
+    margin-right: 10px;
+    padding-top: 6px;
+    width: 68px;
+    padding-left: 8px;
 }
 </style>

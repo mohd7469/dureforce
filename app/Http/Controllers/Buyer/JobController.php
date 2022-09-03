@@ -388,9 +388,9 @@ class JobController extends Controller
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
-
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $pageTitle = "All Jobs";
-        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job','data'));
 
     }
 
