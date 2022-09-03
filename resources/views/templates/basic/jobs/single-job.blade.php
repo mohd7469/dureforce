@@ -78,7 +78,7 @@
                                                                     Attatchments
                                                         </div>
                                                             @foreach($job->documents as $decumentUrl)
-                                                                <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->name}} </a>
+                                                                <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
                                                             @endforeach
                                                         </div>
 
