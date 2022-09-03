@@ -108,7 +108,6 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     try {
 
         $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-        //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
         $blobClient = BlobRestProxy::createBlobService($connectionString);
 
         if ($old) {
@@ -222,7 +221,30 @@ function makeDirectory($path)
 
 function removeFile($path)
 {
-    return file_exists($path) && is_file($path) ? @unlink($path) : false;
+    try {
+
+        $imagePath = explode('/', $path);
+        $container = $imagePath[0];
+        $filename = end($imagePath);
+
+        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
+
+        $blob = $blobClient->getBlob($container, $filename);
+
+
+        if ($blob) {
+
+            $blobClient->deleteBlob($container, $filename);
+            return true;
+        } else {
+            return false;
+        }
+    } catch (\Exception $e) {
+
+        return false;
+
+    }
 }
 
 

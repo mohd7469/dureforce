@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class Job extends Model
 {
     use HasFactory, SoftDeletes;
+    public static $attachment_path = "attachments";
     protected $fillable = [
 
         "user_id",
@@ -25,7 +26,7 @@ class Job extends Model
         "fixed_amount",
         "hourly_start_range",
         "hourly_end_range",
-        "delivery_time",
+        "project_length_id",
         "expected_start_date",
         "status_id"
 
@@ -33,6 +34,7 @@ class Job extends Model
     
 
     const UPDATED_AT = null;
+    
 
     protected static function boot()
     {
@@ -86,15 +88,19 @@ class Job extends Model
     {
     	return $this->belongsTo(BudgetType::class, 'budget_type_id');
     }
+    public function project_length()
+    {
+    	return $this->belongsTo(ProjectLength::class, 'project_length_id');
+    }
 
     public function dod()
     {
-        return $this->belongsToMany(DOD::class, 'job_dods');
+        return $this->belongsToMany(DOD::class, 'job_dods')->wherePivot('deleted_at', '=',null);
     }
 
     public function deliverable()
     {
-        return $this->belongsToMany(Deliverable::class, 'job_deliverables');
+        return $this->belongsToMany(Deliverable::class, 'job_deliverables')->wherePivot('deleted_at', '=',null);
     }
 
     public function subCategory()
