@@ -333,7 +333,39 @@
             }
         });  
     }
+    function loadSkills(data)
+    {
+        $('#skills_heading').show();
+        // if(jQuery.isEmptyObject(data))
+            $('#form_attributes').empty();
+        for (var main_category in data) { //heading main
+            
+            var all_sub_categories=data[main_category];
+            var main_category_id=genRand(5);
+        
+            $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            for (var sub_category_enum in all_sub_categories) { //front end backend 
 
+                var skills=all_sub_categories[sub_category_enum];
+                var sub_category_id=genRand(5);
+
+                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                for (var skill_index in skills) {
+                    
+                    var skill_id=skills[skill_index].id;
+                    var skill_name=skills[skill_index].name;
+                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+                }
+                
+            }
+            $('#'+main_category_id).append('<div/></div>');
+        }
+        $('#form_attributes').append('</div>');
+
+
+    }
     function fetchSkills(category,sub_category=''){
         $.ajax({
             type:"GET",
@@ -368,42 +400,7 @@
             return '';
     }
     
-    function loadSkills(data)
-    {
-
-        var selected_skills=$('#job_skills').val();
-        selected_skills=(selected_skills.split(','));
-        selected_skills=selected_skills.map(Number);
-
-        $('#form_attributes').empty();
-        for (var main_category in data) { //heading main
-            
-            var all_sub_categories=data[main_category];
-            var main_category_id=genRand(5);
-        
-            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
-            for (var sub_category_enum in all_sub_categories) { //front end backend 
-
-                var skills=all_sub_categories[sub_category_enum];
-                var sub_category_id=genRand(5);
-
-                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
-                for (var skill_index in skills) {
-                    
-                    var skill_id=skills[skill_index].id;
-                    var skill_name=skills[skill_index].name;
-                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
-
-
-                }
-                
-            }
-            $('#'+main_category_id).append('<div/></div>');
-        }
-        $('#form_attributes').append('</div>');
-
-
-    }
+   
     Dropzone.autoDiscover = false;
     "use strict";
     
