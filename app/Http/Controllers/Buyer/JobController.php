@@ -374,12 +374,12 @@ class JobController extends Controller
         }
     }
 
-    public function singleJob($uuid)
-    {
+    public function singleJob($uuid){
+        
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country', 'dod', 'documents'])->first();
-        //  dd($job);
-
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        
+        
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
@@ -388,21 +388,22 @@ class JobController extends Controller
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
-
-
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $pageTitle = "All Jobs";
-        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job','data'));
 
     }
 
     public function downnloadAttach(Request $request)
     {
 
-
+       
         $file = TaskDocument::find($request->id);
         $filename = $file->name;
         $tempImage = tempnam(sys_get_temp_dir(), $filename);
-        copy('https://stgdureforcestg.blob.core.windows.net/attachments/630f75e0a74461661957600.pdf', $tempImage);
+        copy($file->url, $tempImage);     
+
+
 
         return response()->download($tempImage, $filename);
 
@@ -442,4 +443,22 @@ class JobController extends Controller
         }
 
     }
+    public function proposal($uuid)
+    {
+        
+        
+        $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach($skillCats as $skillCat){
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        
+        }
+        
+        $pageTitle = "Proposal";
+
+        return view('templates.basic.jobs.proposal', compact('pageTitle','proposal','skills'));
+
+    }
+
 }

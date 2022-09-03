@@ -333,41 +333,6 @@
             }
         });  
     }
-
-    function fetchSkills(category,sub_category=''){
-        $.ajax({
-            type:"GET",
-        url:"{{route('user.job.let.skills')}}",
-            data: {category_id : category,sub_category_id:sub_category},
-            success:function(data){
-                var html = '';
-                if(data.error){
-                
-                }
-                else{
-                    loadSkills(data);
-                    console.log(data);
-                
-                }
-            }
-        });  
-
-    }
-
-    const genRand = (len) => {
-
-        return Math.random().toString(36).substring(2,len+2);
-
-    }
-           
-    function isChecked(skill_id,selected_skills){
-
-        if(selected_skills.includes(skill_id))
-            return 'checked';
-        else
-            return '';
-    }
-    
     function loadSkills(data)
     {
 
@@ -404,6 +369,41 @@
 
 
     }
+    function fetchSkills(category,sub_category=''){
+        $.ajax({
+            type:"GET",
+        url:"{{route('user.job.let.skills')}}",
+            data: {category_id : category,sub_category_id:sub_category},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                
+                }
+                else{
+                    loadSkills(data);
+                    console.log(data);
+                
+                }
+            }
+        });  
+
+    }
+
+    const genRand = (len) => {
+
+        return Math.random().toString(36).substring(2,len+2);
+
+    }
+           
+    function isChecked(skill_id,selected_skills){
+
+        if(selected_skills.includes(skill_id))
+            return 'checked';
+        else
+            return '';
+    }
+    
+   
     Dropzone.autoDiscover = false;
     "use strict";
     
