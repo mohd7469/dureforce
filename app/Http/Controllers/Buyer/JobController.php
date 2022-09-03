@@ -383,6 +383,7 @@ class JobController extends Controller
     }
 
     public function singleJob($uuid){
+        
 
         $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
         
@@ -396,8 +397,6 @@ class JobController extends Controller
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
 
-        
-        
         $pageTitle = "All Jobs";
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
 
@@ -438,4 +437,22 @@ class JobController extends Controller
         }
 
     }
+    public function proposal($uuid)
+    {
+        
+        
+        $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach($skillCats as $skillCat){
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        
+        }
+        
+        $pageTitle = "Proposal";
+
+        return view('templates.basic.jobs.proposal', compact('pageTitle','proposal','skills'));
+
+    }
+
 }

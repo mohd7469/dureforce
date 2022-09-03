@@ -209,7 +209,7 @@
 
                                                 <ul class="sidebar-title1">
                                                     <li><span>Per Hour Rate:</span>
-                                                    ${{round($job->hourly_start_range, 0)}}-${{round($job->hourly_end_range, 0)}}
+                                                    {{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? $job->hourly_start_range."$ to " .$job->hourly_end_range : $proposal->fixed_amount.'$'}}
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
