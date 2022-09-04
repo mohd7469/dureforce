@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
+use App\Models\ProjectLength;
 use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -51,9 +52,13 @@ class JobController extends Controller
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
+        $data['project_length'] = ProjectLength::OnlyJob()->select(['id', 'name'])->get();
+
+
         $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+
 
         return $data;
     }
@@ -80,13 +85,12 @@ class JobController extends Controller
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
-    public function store(Request $request)
+    public function jobDataValidate(Request $request)
     {
-
         $request_data = [];
+
         parse_str($request->data, $request_data);
         $user = Auth::user();
-
         $validator = Validator::make($request_data, [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
@@ -96,20 +100,31 @@ class JobController extends Controller
             'project_stage_id' => 'exists:project_stages,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
-            'deliverables' => 'required|array|min:3',
+            'deliverables' => 'required|array',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-            'dod' => 'required|array|min:3',
+            'dod' => 'required|array',
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ]);
         if ($validator->fails()) {
-            
+
             return response()->json(["error" => $validator->errors()]);
 
-        }
+        } else
+            return response()->json(["validated" => "Job Data Is Valid"]);
+
+    }
+
+    public function store(Request $request)
+    {
+
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $user = Auth::user();
 
         try {
             DB::beginTransaction();
+
             $job = Job::create([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
@@ -124,7 +139,7 @@ class JobController extends Controller
                 "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
                 "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
-                "delivery_time" => $request_data['delivery_time'],
+                "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
                 'status_id' => 1
             ]);
@@ -150,7 +165,7 @@ class JobController extends Controller
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
-                        $url = $path .'/'. $filename;
+                        $url = $path . '/' . $filename;
                         $document = new TaskDocument;
                         $document->name = $filename;
                         $document->uploaded_name = $file->getClientOriginalName();
@@ -172,7 +187,7 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            return response()->json(["error" => $exp]);
+            return response()->json(["error" => $exp->getMessage()]);
         }
 
 
@@ -181,12 +196,12 @@ class JobController extends Controller
 
     public function edit($uuid)
     {
-
         $job = Job::withAll()->where('uuid', $uuid)->first();
         $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
         $data = $this->getJobData();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $data['sub_categories'] = $sub_category;
+        $data['documents']=json_encode($job->documents->toArray());
         $pageTitle = "Job Update";
 
         return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
@@ -199,29 +214,6 @@ class JobController extends Controller
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
-
-        $validator = Validator::make($request_data, [
-            'title' => 'required|string|max:150',
-            'description' => 'required|string|max:1000',
-            'job_type_id' => 'required|exists:job_types,id',
-            'category_id' => 'required|exists:categories,id',
-            'project_stage_id' => 'required|exists:project_stages,id',
-            'sub_category_id' => 'exists:sub_categories,id',
-            'rank_id' => 'required|exists:ranks,id',
-            'budget_type_id' => 'required|exists:budget_types,id',
-            'deliverables' => 'required|array|min:3',
-            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-            'dod' => 'required|array|min:3',
-            'skills' => 'required|array',
-            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-        ]);
-        if ($validator->fails()) {
-
-            return response()->json(["error" => $validator->errors()]);
-
-        }
-
-
 
         try {
             DB::beginTransaction();
@@ -241,7 +233,7 @@ class JobController extends Controller
                 "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
                 "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
-                "delivery_time" => $request_data['delivery_time'],
+                "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
                 'status_id' => 1
             ]);
@@ -390,17 +382,18 @@ class JobController extends Controller
         
         $skillCats = SkillCategory::select('name', 'id')->get();
 
-        foreach($skillCats as $skillCat){
+        foreach ($skillCats as $skillCat) {
             // dd($skillCat);
 
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
-
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $pageTitle = "All Jobs";
-        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job'));
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job','data'));
 
     }
+
     public function downnloadAttach(Request $request)
     {
 
@@ -413,27 +406,40 @@ class JobController extends Controller
 
 
         return response()->download($tempImage, $filename);
-        
+
 
         // return redirect()->back();
 
 
     }
+
     public function destroy($uuid)
     {
         try {
             DB::beginTransaction();
             $job = Job::where("uuid", $uuid)->first();
+
+            foreach ($job->documents as $document) {
+                $path = Job::$attachment_path . '/' . $document->name;
+                removeFile($path);
+            }
+
             $job->documents()->delete();
-            $job->deliverable()->delete();
-            $job->dod()->delete();
+
+
+            DB::table('job_deliverables')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+            DB::table('job_dods')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+
             $job->delete();
             DB::commit();
             return response()->json(["message" => "Successfully Deleted"]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error($e->getMessage());
+            return response()->json(["error" => "Failed to delete job"]);
+
         }
 
     }

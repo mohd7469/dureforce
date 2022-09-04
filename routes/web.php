@@ -203,6 +203,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::middleware('staffaccess:7')->group(function () {
             //Manage Job
+            
             Route::get('job/index', 'JobController@index')->name('job.index');
             Route::get('job/closed', 'JobController@closed')->name('job.closed');
             Route::get('job/pending', 'JobController@pending')->name('job.pending');
@@ -667,7 +668,8 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
                 //Job
                 Route::get('job/create', 'JobController@create')->name('job.create');
-
+                
+                Route::post('job/job_data_validate', 'JobController@jobDataValidate')->name('job.validate');
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
                 Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
@@ -677,6 +679,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
+
             });
 
             //JobBiding
@@ -761,6 +764,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
-
+Route::get('jobview', 'Job\JobController@jobview')->name('job.jobview');
 
 //

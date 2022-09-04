@@ -95,6 +95,12 @@ class JobController extends BaseController
     {
         //
     }
-   
-   
+
+    
+    public function jobview(){
+      
+        $pageTitle = "View Jobs";
+         return view($this->activeTemplate .'job_view',compact('pageTitle'));
+     }
+
 }

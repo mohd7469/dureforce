@@ -25,13 +25,14 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('status_id')->nullable(); //table created
             $table->unsignedBigInteger('job_type_id')->nullable(); //table created
             $table->unsignedBigInteger('budget_type_id')->nullable(); // table created
+            $table->unsignedBigInteger('project_length_id')->nullable();
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('fixed_amount', 28,2)->default(0)->nullable();
             $table->decimal('hourly_start_range', 28,2)->default(0)->nullable();
             $table->decimal('hourly_end_range', 28,2)->default(0)->nullable();
             $table->integer('offered_amount')->nullable();
-            $table->integer('delivery_time')->nullable();
+
             $table->longText('job_link')->nullable();
             $table->date('expected_start_date')->nullable();
             $table->date('start_date')->nullable();
@@ -48,6 +49,7 @@ class CreateJobsTable extends Migration
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('cascade');
             $table->foreign('budget_type_id')->references('id')->on('budget_types')->onDelete('cascade');
+            $table->foreign('project_length_id')->references('id')->on('project_lengths')->onDelete('cascade');
         });
     }
 

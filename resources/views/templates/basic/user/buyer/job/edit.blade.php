@@ -35,7 +35,7 @@
                                                 <select class="form-control bg--gray" name="job_type_id" id="jobtype" >
                                                     <option value="" >@lang('Select Job Type')</option>
                                                     @foreach ($data['job_types'] as $item)
-                                                        <option value="{{$item->id}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{$item->title}}</option>
+                                                        <option value="{{$item->id}}" {{$job->job_type_id==$item->id ? 'selected' :''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -46,7 +46,7 @@
                                                 <select name="location_id" class="form-control joblocation" id="joblocation">
                                                     <option value="" >@lang('Select Job Location')</option>
                                                     @foreach ($data['countries'] as $item)
-                                                        <option value="{{$item->id}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{$item->name}}</option>
+                                                        <option value="{{$item->id}}" {{$job->location_id   ==$item->id ? 'selected' :''}}>{{$item->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -56,9 +56,7 @@
                                             {{-- Description --}}
                                             <div class="col-xl-6 col-lg-6 form-group">
                                                 <label>@lang('Description')*</label>
-                                                <textarea class="form-control bg--gray" name="description" aria-rowspan="3" >
-                                                    {{$job->description}}
-                                                </textarea>
+                                                <textarea class="form-control bg--gray" name="description" aria-rowspan="3" >{{$job->description}}</textarea>
                                             </div>
 
                                             {{-- Required documents --}}
@@ -100,7 +98,7 @@
                                                 <select class="form-control bg--gray" name="category_id" id="category" >
                                                     <option selected="" disabled="">@lang('Select Category')</option>
                                                     @foreach($data['categories'] as $category)
-                                                        <option value="{{__($category->id)}}" {{$job->category->id==$category->id ? 'selected' :''}}>{{__($category->name)}}</option>
+                                                        <option value="{{__($category->id)}}" {{$job->category_id==$category->id ? 'selected' :''}}>{{__($category->name)}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -110,7 +108,7 @@
                                                 <label for="subCategorys">@lang('Sub Category')*</label>
                                                     <select name="sub_category_id" class="form-control mySubCatgry" id="subCategorys" >
                                                         @foreach($data['sub_categories'] as $sub_category)
-                                                        <option value="{{__($sub_category->id)}}" {{$job->subCategory->id==$sub_category->id ? 'selected' :''}}>{{__($sub_category->name)}}</option>
+                                                        <option value="{{__($sub_category->id)}}" {{$job->sub_category_id==$sub_category->id ? 'selected' :''}}>{{__($sub_category->name)}}</option>
                                                     @endforeach
                                                     </select>
                                             </div>
@@ -121,7 +119,7 @@
                                                     <select name="rank_id" class="form-control experience" id="experience" >
                                                         <option selected="" disabled="">@lang('Select Experience Level')</option>
                                                         @foreach($data['experience_levels'] as $item)
-                                                            <option value="{{__($item->id)}}" {{$job->rank  ->id==$item->id ? 'selected' :''}}>{{__($item->level)}}</option>
+                                                            <option value="{{__($item->id)}}" {{$job->rank_id==$item->id ? 'selected' :''}}>{{__($item->level)}}</option>
                                                         @endforeach
                                                     </select>
                                             </div>
@@ -131,18 +129,18 @@
                                         <div class="row">
 
                                             {{-- Budget Type --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group budget_type" >
+                                            <div class=" {{$job->budget_type_id == \App\Models\BudgetType::$fixed ? 'col-xl-6 col-lg-6 col-md-6 ':'col-xl-4 col-lg-4 col-md-4 '}} col-sm-12 col-xs-12 form-group budget_type" >
                                                 <label for="budget">@lang('Budget Type')*</label>
                                                 <select name="budget_type_id" class="form-control budget" id="budget_type_id" >
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
-                                                            <option value="{{__($item->id)}}" {{$job->jobType->id==$item->id ? 'selected' :''}}>{{__($item->title)}}</option>
+                                                            <option value="{{__($item->id)}}" {{$job->budget_type_id==$item->id ? 'selected' :''}}>{{__($item->title)}}</option>
                                                         @endforeach
                                                 </select>
                                             </div>
                                             
                                             {{-- Weekly Range start --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range {{$job->budget_type_id == \App\Models\BudgetType::$hourly ? '' : 'hide'}}"  >
                                                 
                                                 <label>@lang('Weekly Range(Starting)')*</label>
                                                 <input type="number" class="form-control" name="hourly_start_range" value="{{$job->hourly_start_range}}" placeholder="" >
@@ -150,7 +148,7 @@
                                             </div>
 
                                             {{-- Weekly Range end --}}
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
+                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range {{$job->budget_type_id == \App\Models\BudgetType::$hourly ? '' : 'hide'}}">
                                                 
                                                 <label>@lang('Weekly Range(Ending)')*</label>
                                                 <div class="input-group mb-3">
@@ -161,7 +159,7 @@
                                                
 
                                             {{-- budget amount --}}
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group {{$job->budget_type_id == \App\Models\BudgetType::$fixed ? '' : 'hide'}}" id="budget_amount">
 
                                                 <label>@lang('Budget Amount')*</label>
                                                 <div class="input-group mb-3">
@@ -212,12 +210,17 @@
                                                     </div>
                                             </div>
 
+                                            
                                             {{-- project length --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Length')*</label>
-                                                    <div class="input-group mb-3">
-                                                    <input type="integer" class="form-control" name="delivery_time" value="{{$job->delivery_time}}" placeholder="" >
-                                                </div>
+                                                    <select name="project_length_id" class="form-control budget" id="project_length_id">
+                                                        <option selected="" disabled="">@lang('Select Project Length')</option>
+                                                            @foreach($data['project_length'] as $item)
+                                                                <option value="{{__($item->id)}}" {{$job->project_length_id == $item->id ? 'selected':''}}>{{__($item->name)}}</option>
+                                                            @endforeach
+                                                    </select>
+
                                             </div>
 
                                             {{-- project stage --}}
@@ -231,9 +234,17 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
+                                        <input type="hidden" value="{{$data['documents']}}" name="job_documents" id="job_documents" >
                                         <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
+                                        
                                         <input type="checkbox" name="skills[]" style="display: none">
+                                        
+                                        <div style="display:inline;display:none" id="skills_heading">
+                                            <h4 class="" style="display:inline">Job Attributes* </h4>
+                                            <small>(Atlease One Skill is required)</small>
+                                        </div>
+                                        
                                         <div id="form_attributes">
                                             
                                         </div>
@@ -287,7 +298,17 @@
 
 @push('script')
 <script>
-
+    function loadFiles()
+    {
+        var documents=JSON.parse($('#job_documents').val());
+        for (const item of documents) {
+            var mockFile = { name: item.uploaded_name, size: 12345 };
+            myDropzone.options.addedfile.call(myDropzone, mockFile);
+            // myDropzone.options.thumbnail.call(myDropzone, mockFile, item.url);
+        }
+       
+        
+    }
     function fetchSubCategories(category)
     {
         $.ajax({
@@ -312,41 +333,6 @@
             }
         });  
     }
-
-    function fetchSkills(category,sub_category=''){
-        $.ajax({
-            type:"GET",
-        url:"{{route('user.job.let.skills')}}",
-            data: {category_id : category,sub_category_id:sub_category},
-            success:function(data){
-                var html = '';
-                if(data.error){
-                
-                }
-                else{
-                    loadSkills(data);
-                    console.log(data);
-                
-                }
-            }
-        });  
-
-    }
-
-    const genRand = (len) => {
-
-        return Math.random().toString(36).substring(2,len+2);
-
-    }
-           
-    function isChecked(skill_id,selected_skills){
-
-        if(selected_skills.includes(skill_id))
-            return 'checked';
-        else
-            return '';
-    }
-    
     function loadSkills(data)
     {
 
@@ -383,6 +369,41 @@
 
 
     }
+    function fetchSkills(category,sub_category=''){
+        $.ajax({
+            type:"GET",
+        url:"{{route('user.job.let.skills')}}",
+            data: {category_id : category,sub_category_id:sub_category},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                
+                }
+                else{
+                    loadSkills(data);
+                    console.log(data);
+                
+                }
+            }
+        });  
+
+    }
+
+    const genRand = (len) => {
+
+        return Math.random().toString(36).substring(2,len+2);
+
+    }
+           
+    function isChecked(skill_id,selected_skills){
+
+        if(selected_skills.includes(skill_id))
+            return 'checked';
+        else
+            return '';
+    }
+    
+   
     Dropzone.autoDiscover = false;
     "use strict";
     
@@ -390,6 +411,7 @@
         $('.select2').select2({
             tags: true
         });
+        loadFiles();
     });
 
     bkLib.onDomLoaded(function() {
