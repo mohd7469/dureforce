@@ -353,7 +353,7 @@
                                             <path d="M647.286 353.191H616.991V354.448H647.286V353.191Z" fill="white"/>
                                         </svg>
                                     </figure>
-                                    <article class="col-md-6 ">
+                                    <article class="col-md-6 mt-h" >
                                         <h1 class="heading"><strong>Cloud Products Freelancing Platform</strong></h1>
                                         <p class="para ">Hire the best solution architects to upscale your
                                             business.
@@ -366,10 +366,13 @@
                                             <a class="btn--search active" href="#">Search Job</a>
                                         </div>
                                         <div class="pt-3">
+                                            
                                             <ul class="inline-list">
+                                                
                                                 <li>Free estimate</li>
                                                 <li>No obligation to hire</li>
                                                 <li>100% risk-free</li>
+
                                             </ul>
                                         </div>
                                     </article>
@@ -496,6 +499,16 @@
     </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
+@push('style')
+<style>
+    .mt-h{
+
+        margin-top: -158px;
+
+    }
+</style>
+@endpush
+
 @push('script')
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>

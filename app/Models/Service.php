@@ -178,4 +178,17 @@ class Service extends Model
 //                $belongsTo->select(['id', 'name']);
 //            }]
 //    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module');
+    }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'module_id');
+    }
 }

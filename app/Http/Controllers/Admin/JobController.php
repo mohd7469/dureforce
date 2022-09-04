@@ -171,4 +171,5 @@ class JobController extends Controller
         $notify[] = ['success', 'Job has been deleted'];
         return back()->withNotify($notify);
     }
+
 }

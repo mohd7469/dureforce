@@ -21,6 +21,7 @@ use App\Models\Booking;
 use App\Models\Language;
 use App\Models\LanguageLevel;
 use App\Models\Skills;
+use App\Models\SkillSubCategory;
 use App\Models\User;
 use App\Models\UserCompany;
 use App\Models\UserEducation;
@@ -433,6 +434,16 @@ class UserController extends Controller
     public function category(Request $request)
     {
         $sub_category = SubCategory::where('category_id', $request->category)->get();
+        if ($sub_category->isEmpty()) {
+            return response()->json(['error' => "Sub category not available under this category"]);
+        } else {
+            return response()->json($sub_category);
+        }
+    }
+
+    public function skillSubCategory(Request $request)
+    {
+        $sub_category = SkillSubCategory::where('skill_category_id', $request->category)->get();
         if ($sub_category->isEmpty()) {
             return response()->json(['error' => "Sub category not available under this category"]);
         } else {
