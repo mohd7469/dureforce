@@ -294,10 +294,10 @@
                      </ul>
                      <div class="widget-btn- mt-20">
                         <a href="javascript:void(0)" data-bs-toggle="modal"
-                           data-bs-target="#depoModal" class="standard-btn mr-15">@lang('View Prosposals')</a>
+                           data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Submit Proposal')</a>
                         <a href="javascript:void(0)" data-bs-toggle="modal"
                            data-bs-target="#depoModal"
-                           class="standard-btn-1">@lang('Edit Job')</a>
+                           class="standard-btn-1">@lang('Save Job')</a>
                      </div>
                   </div>
                </div>
@@ -324,9 +324,26 @@
 <div class="location">
     <ul>
     <li><i class="fa fa-map-marker" aria-hidden="true"></i>USA</li>
-    <li><i class="fa fa-map-marker"></i>12:37 pm local time</li>
+    <li><i class="fa fas-clock-o" aria-hidden="true"></i> 12:37 pm local time</li>
 </ul>
 </div>
+<div class="sep-solid"></div>
+<div class="paymentsection">
+    <ul><li><svg style="width:34%;height:33%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+        <rect width="25" height="25" fill="none"/><path d="M54.5,201.5c-9.2-9.2-3.1-28.5-7.8-39.8S24,140.5,24,128s17.8-22,22.7-33.7-1.4-30.6,7.8-39.8S83,51.4,94.3,46.7,115.5,24,128,24s22,17.8,33.7,22.7,30.6-1.4,39.8,7.8,3.1,28.5,7.8,39.8S232,115.5,232,128s-17.8,22-22.7,33.7,1.4,30.6-7.8,39.8-28.5,3.1-39.8,7.8S140.5,232,128,232s-22-17.8-33.7-22.7S63.7,210.7,54.5,201.5Z" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/><polyline points="172 104 113.3 160 84 132" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/></svg>
+Payment method verified
+    </li>
+<li>
+<span class="fa-solid fa-star checked"></span>
+<span class="fa-solid fa-star checked"></span>
+<span class="fa-solid fa-star checked"></span>
+<span class="fa-solid fa-star"></span>
+<span>4.98 of 32 reviews</span> 
+</li>
+</ul>
+
+</div>
+
 <div class="sep-solid"></div>
 </div>
 </div>
@@ -419,11 +436,12 @@
    }
    .hheading-c{
    font-size: 22px;
-   margin-bottom: 50px;
+   margin-bottom: 16px;
    width: 100%;
    display: inline-block;
    border-bottom: 1px solid #8b8989;
-   padding-bottom: 30px;
+   padding-bottom: 5px;
+    text-align: left;
    }
    p.job_staus a {
    background: #018181;
@@ -441,7 +459,7 @@
    text-decoration: none!important;
    }
    a.standard-btn {
-   padding: 9px 7px!important;
+   padding: 11px 16px !important;
    border: 0px solid #e1e7ec;
    border-radius: 5px;
    -webkit-border-radius: 5px;
@@ -503,6 +521,7 @@
    font-size: 16px !important;
    line-height: 20px !important;
    margin-bottom: 5px;
+
    }
    .dod-text span {
    font-size: 12px;
@@ -530,16 +549,43 @@
    }
    .location ul{
    display: flex;
-  flex-direction: row; <-- not needed as this is the default behavior
+  flex-direction: row; 
   flex-wrap: wrap;
 }
 .location li {
     list-style: none;
     display: inline-block;
     text-align: center;
-    width: 100%;
+    width: 46%;
     height: 54px;
     font-size: 14px;
+    font-weight: 500;
+    line-height:17.57px;
+    padding-top: 20px
+  }
+  .paymentsection li{
+   font-weight: 500;
+    color: #000000;
+    font-size: 15px;
+     
+  }
+  .paymentsection ul , .paymentsection li{
+    text-align: left; 
+     margin: 0;
+     padding: 0;
+     color:#007F7F;
+  }
+  .paymentsection ul , .paymentsection li span{
+    text-align: left; 
+     margin: 0;
+     padding: 6px;
+  }
+  .paymentsection p{
+    
+     color:#007F7F;
   }
 
+ .checked {
+  color: #007F7F;
+}
 </style>
