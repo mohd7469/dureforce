@@ -12,7 +12,7 @@ class Country extends Model
 
     public function job(){
 
-        return  $this->belongsTo(Job::class, 'location_id');
+        return  $this->belongsTo(Job::class);
     }
 
  
