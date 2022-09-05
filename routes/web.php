@@ -12,7 +12,8 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
+Route::get('product', 'buyer\jobcontroller@product')->name('job.product');
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
 
@@ -202,6 +203,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::middleware('staffaccess:7')->group(function () {
             //Manage Job
+            
             Route::get('job/index', 'JobController@index')->name('job.index');
             Route::get('job/closed', 'JobController@closed')->name('job.closed');
             Route::get('job/pending', 'JobController@pending')->name('job.pending');
@@ -677,6 +679,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
+
             });
 
             //JobBiding
@@ -761,6 +764,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
-
+Route::get('jobview', 'Job\JobController@jobview')->name('job.jobview');
 
 //
