@@ -43,7 +43,7 @@
                                             {{-- Job Location --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12  form-group">
                                                 <label for="joblocation">@lang('Job Location')</label>
-                                                <select name="location_id" class="form-control joblocation" id="joblocation">
+                                                <select name="country_id" class="form-control joblocation" id="joblocation">
                                                     <option value="" >@lang('Select Job Location')</option>
                                                     @foreach ($data['countries'] as $item)
                                                         <option value="{{$item->id}}">{{$item->name}}</option>
