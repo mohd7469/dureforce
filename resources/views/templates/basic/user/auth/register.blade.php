@@ -4,20 +4,32 @@
     $content = getContent('breadcrumbs.content', true);
 @endphp
 {{--  data-background="{{getImage('assets/images/frontend/breadcrumbs/'.$content->data_values->background_image,'1920x1200') }}" --}}
-<section class="account-section ptb-80 bg-overlay-white bg_img">
+<!-- <section class="account-section"> -->
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12 col-md-12">
-                <div class="account-form-area m-auto pb-4">
-                    {{-- <div class="account-logo-area col-md-6 m-auto pb-4 pt-2 text-center">
-                        <div class="account-logo">
-                            <a href="{{route('home')}}"><img src="{{getImage(imagePath()['logoIcon']['path'] .'/logo.png')}}" alt="{{__($general->sitename)}}"></a>
-                        </div>
-                    </div> --}}
-                    <div class="account-header col-md-6 m-auto pb-4 text-center">
+
+    <div
+        class="modal fade"
+        id="signUpModal"
+        tabindex="-1"
+        aria-labelledby="signUpModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                    ></button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="account-header text-center">
                         <h3 class="title">@lang('Complete Your Free Account Setup')</h3>
                     </div>
-                    <form class="account-form col-md-6 m-auto" action="{{ route('user.register') }}" method="POST" onsubmit="return submitUserForm();">
+                    <form class="account-form col-md-12 m-auto" action="{{ route('user.register') }}" method="POST" onsubmit="return submitUserForm();">
                         @csrf
                         <div class="row ml-b-20">
                             <div class="col-lg-6 form-group">
@@ -80,8 +92,8 @@
                                     <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary btn-hire" for="btnradio2">@lang('Hire For A Project')</label>
                                 </div>
-{{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}
-{{--                                    <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label>--}}
+                                {{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}
+                                {{--                                    <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label>--}}
                                   </div>
                             </div>
 
@@ -117,7 +129,9 @@
             </div>
         </div>
     </div>
-</section>
+
+    </div>
+<!-- </section> -->
 
 
 <div class="modal fade" id="existModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -227,6 +241,9 @@
 @push('script')
     <script>
       "use strict";
+      $(document).ready(function(){
+            $("#signUpModal").modal('show');
+        });
         function submitUserForm() {
             var response = grecaptcha.getResponse();
             if (response.length == 0) {
