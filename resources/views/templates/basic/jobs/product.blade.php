@@ -304,6 +304,7 @@ select#Filters {
     padding: 8px 17px 8px 34px;
     color: #007F7F;
     font-size: 16px;
+    margin-right: -13px;
 }
 select#bestmatch {
         float: right;
@@ -314,11 +315,11 @@ select#bestmatch {
     color: #007F7F;
     font-size: 16px;
     position: relative;
-    right: -29px;
+    right: -27px;
 }
 
 p.sort-p {
-    width: 83%;
+    width: 80%;
     display: inline-block;
     float: left;
     text-align: right;
@@ -331,6 +332,106 @@ p.sort-p {
 .row.btns-s {
     position: relative;
     left: 23px;
+}
+
+@media only screen and (max-width:1200px){
+    a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 13px;
+}
+p.sort-p {
+    width: 70%;
+    }
+
+
+}
+@media only screen and (max-width:1190px){
+    select#bestmatch{
+        right: 0px;
+    }
+}
+@media only screen and (max-width:767px){
+    .p_desription p{
+        width: 100%;
+        text-align: center;
+    }
+    a.btn-products-s {
+   
+    width: 200px;
+    text-align: CENTER;
+    margin: 8px auto;
+    display: block;
+}
+ul.skills-listing li{
+    margin-right: 2%;
+    margin-bottom: 14px;
+}
+select#bestmatch {
+    float: none;
+    width: 100%;
+    margin-bottom: 15px;
+    right: 0px;
+}
+
+select#Filters {
+    float: none;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 8px 17px 8px 34px;
+    width: 100%;
+    margin-right: -13px;
+}
+p.rateperh{
+    text-align: center;
+}
+p.perhourprice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-align: CENTER;
+    margin-bottom: 20px;
+}
+.row.borderleftc {
+    text-align: center;
+    margin-top: 30px;
+}
+.borderleftc:after{
+    display: none;
+}
+.plocation {
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+    padding-left: 0px;
+    margin-top: 2px;
+    margin-bottom: 40px !important;
+    margin-top: 16px;
+    display: inline-block;
+}
+p.plocation:before{
+    left: -24px;
+}
+.row.btns-s {
+    position: relative;
+    left: 0px;
+}
+ul.skills-listing {
+    margin-top: 15px;
+    text-align: center;
+    display: inline-block;
+}
+ul.skills-listing li{
+    float: none;
+    display: inline-block;
+}
+.skills-c h2{
+    text-align: center;
+}
 }
 </style>
 @endpush
