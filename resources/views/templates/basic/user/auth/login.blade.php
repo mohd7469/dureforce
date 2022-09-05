@@ -10,7 +10,7 @@
     <div
         class="modal fade"
         id="loginModal"
-        tabindex="-1"
+        tabindex="1"
         aria-labelledby="loginModalLabel"
         aria-hidden="true"
     >
@@ -149,18 +149,22 @@
 
                    
                             <div class="col-lg-12 form-group text-center">
-                                <button type="submit" class="submit-btn w-100"> Continue with Email</button>
+                                <button type="button" class="submit-btn w-100"> Continue with Email</button>
                             </div>
                             <div class="col-lg-12 text-center">
                                 <div class="account-item mt-10">
                                     <label
                                         >@lang('Already Have An Account')?
-                                        <a
+                                        <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                        @lang('Log in')
+                                        </button>
+                                        <!-- <a
                                             data-toggle="modal" 
                                             data-target="#loginModal"
                                             class="text--base"
                                             >@lang('Log in')</a
-                                        ></label
+                                        > -->
+                                        </label
                                     >
                                 </div>
                             </div>
@@ -174,12 +178,21 @@
 </div>
 <!-- </section> -->
 @endsection
-
+@push('style')
+<style>
+   .modal:nth-of-type(even) {
+    z-index: 1062 !important;
+    }
+    .modal-backdrop.show:nth-of-type(even) {
+        z-index: 1061 !important;
+    }
+</style>
+@endpush
 @push('script')
     <script>
         "use strict";
         $(document).ready(function(){
-            $("#loginModal").modal('show');
+            $("#loginWithGmail").modal('show');
         });
         function submitUserForm() {
             var response = grecaptcha.getResponse();
