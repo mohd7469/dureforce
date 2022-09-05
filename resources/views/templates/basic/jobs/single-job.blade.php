@@ -73,13 +73,16 @@
                                                         </div>
 
                                                         <div>
+                                                        @if($job->documents->count()>0)
+                                                            <div class="service_subtitle2 mt-20" >
+                                                                        Attachments
+                                                            </div>
 
-                                                        <div class="service_subtitle2 mt-20">
-                                                                    Attachments
-                                                        </div>
                                                             @foreach($job->documents as $decumentUrl)
                                                                 <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
                                                             @endforeach
+
+                                                            @endif
                                                         </div>
 
 
@@ -110,15 +113,26 @@
                                     <div class="col-xl-3 col-lg-3 mb-30">
                                         <div class="sidebar">
                                             <div class="widget custom-widget mb-30 cstm-sidebar">
+                                                @if($job->budget_type_id == \App\Models\BudgetType::$hourly)
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Per Hour Rate:</span>
+                                                            <span>{{ '$'.$job->hourly_start_range." - $".$job->hourly_end_range }}</span>
+                                                        </li>
+                                                    </ul>
+                                                @else
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Fixed Amount:</span>
+                                                            <span>{{ '$'.$job->fixed_amount}}</span>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+
+
+
 
                                                 <ul class="sidebar-title2">
-                                                    <li><span>Per Hour Rate:</span>
-                                                    <span>{{ $job->budget_type_id == \App\Models\BudgetType::$hourly ? '$'.$job->hourly_start_range." - $".$job->hourly_end_range : $proposal->fixed_amount.'$'}}</span>
-                                                    </li>
-                                                </ul>
-                                                <ul class="sidebar-title2">
                                                     <li><span>Resource Location</span>
-                                                        <p>{{$job->country->name ? $job->country->name : '' }}</p>
+                                                        <p>{{$job->country ? $job->country->name : '' }}</p>
                                                     </li>
                                                 </ul>
 
@@ -150,7 +164,7 @@
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="javascript:void(0)"   class="standard-btn mr-15">View Proposals (22)</a>
-                                                    <a href="javascript:void(0)"   class="standard-btn mr-15" style="background: #EEF7F7 !important;border:5px solid #EEF7F7">Edit Job</a>
+                                                    <a href="{{route('user.job.edit',$job->uuid)}}"   class="standard-btn mr-15" style="">Edit Job</a>
 
 
                                                 </div>
