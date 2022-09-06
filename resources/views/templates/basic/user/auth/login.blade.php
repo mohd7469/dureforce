@@ -16,20 +16,23 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                    ></button>
-                </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="account-header text-center">
-                        <h3 class="title">
-                            @lang('Sign in to') {{__($general->sitename)}}
-                        </h3>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn-close float-end"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                    </div> -->
+                    <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h3 class="title">
+                                @lang('Sign in to') {{__($general->sitename)}}
+                            </h3>
+                        </div>
                     </div>
                     <form
                         class="account-form"
@@ -113,20 +116,34 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                    ></button>
-                </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="account-header text-center">
-                        <h3 class="title">
-                            Create your free account
-                        </h3>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn-close float-end"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                    </div> -->
+                    <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h3 class="title">
+                                Create your free account
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                            <a href="#" class="btn btn-primary google-button">
+                            <i class="fab fa-google float-start mt-1" aria-hidden="true"></i> Continue with Google
+                            </a>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="or-seperator">
+                            <i><b>or</b></i>
+                        </div>
                     </div>
                     <form
                         class="account-form"
@@ -142,7 +159,7 @@
                                     id="username"
                                     name="username"
                                     value="{{old('username')}}"
-                                    placeholder="@lang('Enter email')"
+                                    placeholder="@lang('Enter address')"
                                     required=""
                                 />
                             </div>
@@ -180,8 +197,35 @@
 @endsection
 @push('style')
 <style>
+    .google-button{
+        width: 100%; border-radius: 50px;
+    }
+    .or-seperator {
+        margin: 30px 0 10px;
+        text-align: center;
+        border-top: 1px solid #ccc;
+    }
+    .modal-header .btn-close {
+        margin-bottom: 30px;
+        height: 1px !important;
+    }
+    .account-header {
+        margin-bottom: 15px;
+    }
+    .modal-body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 2rem;
+    }
+    .or-seperator i {
+        padding: 0 10px;
+        background: #ffffff;
+        position: relative;
+        top: -11px;
+        z-index: 1;
+    }
    .modal:nth-of-type(even) {
-    z-index: 1062 !important;
+        z-index: 1062 !important;
     }
     .modal-backdrop.show:nth-of-type(even) {
         z-index: 1061 !important;

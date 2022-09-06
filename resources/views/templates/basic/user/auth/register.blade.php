@@ -16,18 +16,24 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                    ></button>
-                </div>
+                
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="account-header text-center">
-                        <h3 class="title">@lang('Complete Your Free Account Setup')</h3>
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn-close float-end"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                    </div> -->
+                <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h3 class="title">
+                                @lang('Complete Your Free Account Setup')
+                            </h3>
+                        </div>
                     </div>
                     <form class="account-form col-md-12 m-auto" action="{{ route('user.register') }}" method="POST" onsubmit="return submitUserForm();">
                         @csrf
@@ -232,6 +238,18 @@
     .input-popup p.success::before {
         content: "\f058";
         color: #28c76f;
+    }
+    .modal-header .btn-close {
+        margin-bottom: 30px;
+        height: 1px !important;
+    }
+    .account-header {
+        margin-bottom: 15px;
+    }
+    .modal-body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 2rem;
     }
 </style>
 @endpush
