@@ -191,4 +191,21 @@ class Service extends Model
     {
         return $this->morphMany(TaskSkill::class, 'module_id');
     }
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module');
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
 }
