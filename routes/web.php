@@ -13,6 +13,7 @@ Route::get('/clear', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
+Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
 Route::get('product', 'buyer\jobcontroller@product')->name('job.product');
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
@@ -764,6 +765,5 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
-Route::get('jobview', 'Job\JobController@jobview')->name('job.jobview');
 
 //
