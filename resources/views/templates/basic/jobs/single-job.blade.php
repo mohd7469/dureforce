@@ -75,10 +75,10 @@
                                                         <div>
 
                                                         <div class="service_subtitle2 mt-20">
-                                                                    Attatchments
+                                                                    Attachments
                                                         </div>
                                                             @foreach($job->documents as $decumentUrl)
-                                                                <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                                                <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
                                                             @endforeach
                                                         </div>
 
