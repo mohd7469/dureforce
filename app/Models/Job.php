@@ -15,7 +15,7 @@ class Job extends Model
 
         "user_id",
         "job_type_id",
-        "location_id",
+        "country_id",
         "category_id",
         "sub_category_id",
         "rank_id",
@@ -50,7 +50,7 @@ class Job extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('documents');
+        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents');
 
     }
 
@@ -142,7 +142,7 @@ class Job extends Model
 
     public function country(){
 
-        return  $this->HasOne(Country::class, 'id', 'location_id');
+        return  $this->hasOne(Country::class, 'id', 'country_id');
     }
 
 
