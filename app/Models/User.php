@@ -89,6 +89,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Job::class)->where('status', 1);
     }
+    public function proposal_attachment()
+    {
+        return $this->hasMany(ProposalAttachment::class)->where('status', 1);
+    }
+    public function proposal()
+    {
+        return $this->hasMany(Proposal::class);
+    }
 
     public function skills()
     {
@@ -113,6 +121,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function rate()
     {
         return $this->hasOne('App\Models\UserRate');
+    }
+
+    public function milestone()
+    {
+        return $this->hasMany(Milestone::class);
     }
 
     public function company()
