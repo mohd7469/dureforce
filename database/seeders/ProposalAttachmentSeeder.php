@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class proposal_attachmentSeeder extends Seeder
+class ProposalAttachmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.

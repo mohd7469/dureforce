@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class delivery_modesSeeder extends Seeder
+class ServiceFeeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,17 +13,17 @@ class delivery_modesSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('delivery_modes')->truncate();
+        \DB::table('proposal_attachments')->truncate();
         
-        \DB::table('delivery_modes')->insert(array (
+        \DB::table('proposal_attachments')->insert(array (
             0 => 
             array (
                 'id' => 1,
                 'title' => 'abc',
                 'slug' => 'sss',
-                'module_id' => 11,
-                'module_type' => App\Model,
+                'fee' => 10,
                 'is_active' => 1,
+                'module_id' => 11,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),
@@ -32,9 +32,9 @@ class delivery_modesSeeder extends Seeder
                 'id' => 2,
                 'title' => 'abc',
                 'slug' => 'sss',
-                'module_id' => 22,
-                'module_type' => App\Model,
+                'fee' => 10,
                 'is_active' => 1,
+                'module_id' => 22,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),
