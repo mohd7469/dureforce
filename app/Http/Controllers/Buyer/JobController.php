@@ -477,4 +477,15 @@ class JobController extends Controller
 
     }
 
+
+
+
+    public function jobview($uuid){
+        $pageTitle = "View Jobs";
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+    }
+
+
+
 }
