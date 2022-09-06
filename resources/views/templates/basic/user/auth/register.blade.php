@@ -144,17 +144,24 @@
     aria-hidden="true">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <!-- <div class="modal-header">
                 <h5 class="modal-title" id="ModalLabel">@lang('You are with us')</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
-            </div>
+            </div> -->
             <div class="modal-body">
-                <h6>@lang('You already have an account please Sign in ')</h6>
+                <div class="row"> 
+                    <div class="account-header col-md-12 col-sm-12 text-center">
+                        <h3 class="title">
+                            @lang('You are with us')
+                        </h3>
+                    </div>
+                </div>
+                <h6 class="text-center">@lang('You already have an account please Sign in ')</h6>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn--danger btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                <a href="" class="btn btn--primary btn-rounded text-white">@lang('Login')</a>
+                <a href="{{route('user.login')}}" class="btn btn--primary btn-rounded text-white">@lang('Login')</a>
             </div>
         </div>
     </div>
@@ -250,6 +257,21 @@
         position: relative;
         flex: 1 1 auto;
         padding: 2rem;
+    }
+    .btn-outline-secondary{
+        color: #007F7F;
+        background-color: #ccffff;
+        border-radius: 4px;
+    }
+    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.hover, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: #007F7F;
+        border-color: #007F7F;
+    }
+    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:active {
+        color: #fff;
+        background-color: #007F7F;
+        border-color: #007F7F;
     }
 </style>
 @endpush
