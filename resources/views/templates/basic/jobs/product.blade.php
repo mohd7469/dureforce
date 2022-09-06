@@ -10,7 +10,7 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        <h2 class="prosals-h">All Proposals</h2>
+                        <h2 class="prosals-h">All Proposals</h2> 
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
@@ -89,12 +89,12 @@
                                                         <p class="perhourprice">$55 / Per Hour</p>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <p class="rateperh">Rate Per Hour</p>
-                                                        <p class="perhourprice">$55 / Per Hour</p>
+                                                        <p class="rateperh">Total Earnings</p>
+                                                        <p class="perhourprice">$120k + earned</p>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <p class="rateperh">Rate Per Hour</p>
-                                                        <p class="perhourprice">$55 / Per Hour</p>
+                                                        <p class="rateperh">Job Success Rate</p>
+                                                        <p class="perhourprice">90%</p>
                                                     </div>
                                             </div>
                                             </div>
