@@ -23,10 +23,7 @@ class CreateProposalsTable extends Migration
             $table->decimal('amount_receive', 28, 2)->default(0)->nullable();
             $table->integer('start_hour_limit')->nullable();
             $table->integer('end_hour_limit')->nullable();
-            $table->string('module_type')->nullable()->nullable();
             $table->longText('cover_letter')->nullable()->nullable();
-            // create a table for dureforce fee
-            //create a table for milestones
 
             $table->softDeletes();
             $table->timestamps();
