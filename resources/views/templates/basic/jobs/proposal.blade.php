@@ -6,146 +6,313 @@
          <article class="main-section">
             <div class="section-inner">
                <div class="item-section item-details-section">
-                  <div class="container single-jobc">
-                     <div class="item-details-content" style="padding-top: 0px;">
-                        <h2 class="title" style="color:#4d9d97">Submit a Proposal</h2>
+                  
+                  {{-- Page container --}}
+                  <div class="container">
+                     {{--  Page Heading --}}
+                     <div>
+                        <h2 class="title title-color" >Submit a Proposal</h2>
                      </div>
-                     <div  class="jobdetail-c">
-                                     Job Details
-                                </div>
-                     {{-- Job Details --}}
-                 <div class="" >
-                       
-                     <div class="row justify-content-center mb-30-none">
-                        <div class="col-xl-9 col-lg-9 mb-30" >
-                           <div class="item-details-area">
-                              <div class="item-details-box">
-                             
-                                 <div class="item-details-thumb-area item-details-footer mt-0">
-                                
-                                    <div class="left mb20">
+
+                     {{-- Job Details--}}
+                     <div class="row">
+                        
+                        <div class="card  mb-3 card_div">
+                           
+                           {{-- card header --}}
+                           <div class="card-header bg-default">
+                              {{-- div title --}}
+                              <h3>Job Details</h3>
+                           </div>
+                           {{-- card body --}}
+                           <div class="card-body" style="background: #F8FAFA;">
+                                 
+                              <div class="row">
+                                 {{-- job main info --}}
+                                 <div class="col-md-9 col-lg-9 col-sm-12 col-xs-12">
+                                 
+                                    {{-- title and created at --}}
+                                    <div class="left">
                                        <p class="jb-title" >{{$proposal->title? $proposal->title : ''}}</p>
                                        <span class="simpletext"> {{$proposal->created_at->format('Y-m-d') ? $proposal->created_at->format('Y-m-d') : '' }}</span> 
                                     </div>
-                                    <div class=" col-12 px-0 pt-3">
+                                    
+                                    {{-- description and job post link --}}
+                                    <div>
+                                       
                                        <p class="simpletext">
-                                       
-                                       {{str_limit($proposal->description, 500 )}}
+                                          {{str_limit($proposal->description, 500 )}}
                                        </p>
+
                                        <div>
-                                          <button style=""> View job posting</button>
+                                          <a href="#" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
                                        </div>
                                     </div>
-                                    <div class="item-details-content">
-                                       
-                                       <div class="mt-10">
-                                        <div class="service_subtitle2">
-                                            Skills and Expertise
-                                         </div>
-                                         <div>
-                                         @foreach($proposal->skill as $skil)
-                                          <span class="attr">{{$skil->name}}</span>
-                                         @endforeach
-                                         </div>
 
-                                       </div>
-                                      
-                                       <div class="sep-solid"></div>
-                                       
-                                    </div>
                                  </div>
-                                 
-                                 
-                              </div>
-                             
-                           </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-3 mb-30">
-                           <div class="sidebar">
-                              <div class="widget custom-widget text-center mb-30">
-                                 <ul class="sidebar-title2">
-                                    <li><span>Hourly Range</span>
-                                    <span>{{ $proposal->budget_type_id == \App\Models\BudgetType::$hourly ? $proposal->hourly_start_range."$ to " .$proposal->hourly_end_range : $proposal->fixed_amount.'$'}}</span>
-                                    
-                                    </li>
-                                 </ul>
-                                 <ul class="sidebar-list">
-                                    <li><span>Location</span>
-                                       <span>{{$proposal->country->name ? $proposal->country->name : '' }}</span>
-                                    </li><li><span>Project Length</span>
-                                       <span>{{$proposal->delivery_time}}-Weeks</span>
-                                    </li>
-                                    <li><span>Job Type</span>
-                                       <span>{{$proposal->budgetType->title ? $proposal->budgetType->title : ''}}</span>
-                                    </li>
-                                    <li><span>Stage</span>
-                                       <span>{{$proposal->projectStage->title ? $proposal->projectStage->title  : ''}}</span>
-                                    </li>
-                                    <li><span>Experience Level</span>
-                                       <span>{{$proposal->rank->level ?  $proposal->rank->level : ''}}</span>
-                                    </li>
-                                    
 
-                                    
-                                 </ul>
-                                 <div class="widget-btn- mt-20">
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">Book
-                                    Developer</a>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn">Message</a>
+                                 {{-- job summary --}}
+                                 <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+                                    <div class="sidebar">
+                                       <div class="widget custom-widget mb-30 cstm-sidebar">
+                                           @if($proposal->budget_type_id == \App\Models\BudgetType::$hourly)
+                                               <ul class="sidebar-title2 sidebar-heading-border">
+                                                   <li><span>Hourly Range:</span>
+                                                       <span>{{ '$'.$proposal->hourly_start_range." - $".$proposal->hourly_end_range }}</span>
+                                                   </li>
+                                               </ul>
+                                           @else
+                                               <ul class="sidebar-title2 sidebar-heading-border">
+                                                   <li><span>Fixed Amount:</span>
+                                                       <span>{{ '$'.$proposal->fixed_amount}}</span>
+                                                   </li>
+                                               </ul>
+                                           @endif
+
+
+                                           <ul class="sidebar-title2">
+                                               <li><span>Location</span>
+                                                   <p>{{$proposal->country ? $proposal->country->name : '' }}</p>
+                                               </li>
+                                           </ul>
+
+                                           <ul class="sidebar-title2">
+                                               <li><span>Budget Type</span>
+                                                   <p>{{$proposal->budgetType->title ? $proposal->budgetType->title : ''}}</p>
+                                               </li>
+                                           </ul>
+                                           <ul class="sidebar-title2">
+                                               <li><span>Project Length</span>
+                                                   <p>{{$proposal->project_length ? $proposal->project_length->name : ''}}</p>
+                                               </li>
+                                           </ul>
+                                           
+                                           <ul class="sidebar-title2">
+                                               <li><span>Project Stage</span>
+                                                   <p>{{$proposal->projectStage ? $proposal->projectStage->title  : ''}}</p>
+                                               </li>
+                                           </ul>
+                                           <ul class="sidebar-title2">
+                                               <li><span>Experience Level</span>
+                                                   <p>{{$proposal->rank->level ?  $proposal->rank->level : ''}}</p>
+                                               </li>
+                                           </ul>
+
+                                           
+                                       </div>
+                                   </div>
                                  </div>
 
                               </div>
-                             
+
                            </div>
+
+                           {{-- card footer --}}
+                           <div class="card-footer bg-transparent ">
+                              
+                              <div class="service_subtitle2" style="padding-top: 2px">
+                                 Skills and Expertise
+                              </div>
+                             
+                              @foreach($proposal->skill as $skil)
+                                 <span class="attr">{{$skil->name}}</span>
+                              @endforeach
+                              
+                           </div>
+
                         </div>
+
                      </div>
 
-
-
-                     {{-- Proposal Terms --}}
-                     <div class="pt-4" >
-                        <div style="padding: 0.5rem 1rem;
-                        margin-bottom: 0;
-                        background-color: rgba(0,0,0,.03);" class="pt-3 pb-3">
-                                Proposal Terms
-                        </div>
+                      {{-- Proposal Terms --}}
+                      <div class="row">
                         
-                     </div>
+                        <div class="card  mb-3" style="padding:0px;border:none">
+                           
+                           {{-- card header --}}
+                           <div class="card-header bg-default">
+                              {{-- div title --}}
+                              <h3>Proposal Terms</h3>
+                           </div>
+                           {{-- card body --}}
+                           <div class="card-body text-success div-background" >
+                              
+                              {{-- Freelancder Profile attributes --}}
+                              <div class="row section-end-line" >
 
-                    {{-- Cover letter --}}
-                     <div class="pt-4" >
-                        <div style="padding: 0.5rem 1rem;
-                        margin-bottom: 0;
-                        background-color: rgba(0,0,0,.03);" class="pt-3 pb-3">
-                                Additional Detail
-                        </div>
-                        <div class="row justify-content-center mb-30-none ">
-                            <div class="col-xl-12 col-lg-12 mb-30" >
-                            <div class="item-details-area">
-                                <div class="item-details-box">
-                                    <div class="item-details-thumb-area item-details-footer mt-0">
-                                        <div class="mb20" style="width: 100%">
-                                        <h3 class="title" >Cover Letter</h3>
-                                        <div>
-                                            <textarea> </textarea>
-                                        </div>
-                                        </div>
-                                        <div class=" col-12 px-0 pt-3">
+                                 <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                                    
+                                    <ul class="list-group">
+                                 
+                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                          What is the rate you'd like to bid for this job?
+                                         <span class="badge badge-primary badge-pill"></span>
+                                       </li>
                                        
-                                        </div>
-                         
+                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                          Your Profile Rate
+                                         <span class="badge badge-primary badge-pill">$30.00/hr</span>
+                                       </li>
+                                       
+                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                          Client’s Weekly Hourly Range
+                                         <span class="badge badge-primary badge-pill">$15.00 - $25.00/hr</span>
+                                       </li>
+      
+                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                          Estimated Project Start Date
+                                         <span class="badge badge-primary badge-pill">7/22/2022 </span>
+                                       </li>
+      
+                                    </ul>
+
+                                 </div>
+                              </div>
+                              
+                              <form>
+                                  {{-- Bidding Rate --}}
+                                 <div class="row section-end-line">
+                                    
+                                    {{-- hourly rate --}}
+                                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
+                                          <div class="form-group pt-3">
+                                             <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
+                                             <small id="emailHelp" class="form-text text-muted">Total amount the client will see on your proposal</small>
+                                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                          </div>
                                     </div>
                                     
+                                    {{-- service fee --}}
+                                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12 bg-default">
+                                       
+                                       <div class="form-group pt-3">
+                                          <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
+                                          <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
+                                          <span class="pt-2 text-dark">$12.00</span>
+                                       </div>
+
+                                    </div>
                                     
-                                </div>
-                                
-                            </div>
-                            </div>
-                            
+                                    {{-- freelancer recieving amount --}}
+                                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
+                                       <div class="form-group pt-3">
+                                          <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
+                                          <small id="emailHelp" class="form-text text-muted">The estimated amount you'll receive after service fees</small>
+                                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                       </div>
+                                    </div>
+
+                                 </div>
+
+                                 <div class="row ">
+                                    
+                                    {{-- hours Limit --}}
+                                    <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                                          <div class="form-group pt-3">
+                                             <label for=""><strong class="text-dark">What is your weekly working hours limit?</strong></label>
+                                             <div class="row">
+                                                <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
+
+                                                   <small id="emailHelp" class="form-text text-dark">Min. Hours Per Week</small>
+                                                   <input type="integer" class="form-control" id="min_hours" name="min_hours">
+
+                                                </div>
+                                                <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
+
+                                                   <small id="emailHelp" class="form-text text-dark">Max. Hours Per Week</small>
+                                                   <input type="integer" class="form-control" id="max_hours" name="max_hours">
+
+                                                </div>
+                                             </div>
+
+                                          </div>
+                                    </div>
+                                    
+                                   
+                                    {{-- Mode of Work Delivery --}}
+                                    <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                                       <div class="form-group pt-3">
+                                          <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
+                                          <small id="emailHelp" class="form-text text-dark">Mode of Devlivery *</small>
+                                          <select name="mode_of_delivery" id="mode_of_delivery" class="form-control">
+                                             <option value="">Select Mode Of Delivery</option>
+                                          </select>
+                                       </div>
+                                    </div>
+
+                                 </div>
+
+
+                              </form>
+                              
+                             
+
+                           </div>
+
                         </div>
+
                      </div>
-                    </div>
+
+                     {{-- Additional Detail--}}
+                     <div class="row">
+                        
+                        <div class="card  mb-3 card_div" >
+                           
+                           {{-- card header --}}
+                           <div class="card-header bg-default ">
+                              {{-- div title --}}
+                              <h3>Additional Detail </h3>
+                           </div>
+                           {{-- card body --}}
+                           <div class="card-body div-background" >
+                              
+                              {{-- Cover Letter --}}
+                              <div class="form-group">
+                                 <label for="cover_letter">Cover Letter</label>
+                                 <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
+                               </div>
+
+                              {{-- Required documents --}}
+                              <div class="form-group">
+                                 <label>@lang('Required Documents')</label>
+                              
+                                    <div id="dropzone">
+                                       <div class="dropzone needsclick" id="demo-upload" action="#" >
+                                          <div class="fallback">
+                                                <input name="file" type="file" multiple />
+                                          </div>
+                                          <div>
+                                                <div class="upload_icon">
+                                                   <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                                                   <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                                </div>
+                                          </div>
+                                          
+                                          <div class="dz-message"> 
+                                                @lang('Drag or Drop to Upload')  <br> 
+                                                <span class="text text-primary ">
+                                                   @lang('Browse')  
+                                                   
+                                                </span>
+                                          </div>
+
+                                       </div>
+                                    </div>
+                                 <small>
+                                    Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
+                                    Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your proposal.
+                                 </small>
+                           
+                              </div>
+                           </div>
+
+                        </div>
+
+                     </div>
+
+                     
                   </div>
+
                </div>
             </div>
          </article>
@@ -154,212 +321,27 @@
 </section>
 @include($activeTemplate . 'partials.end_ad')
 @endsection
+
+@push('style-lib')
+
+    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
+
+@endpush
+@push('script-lib')
+
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+
+
+@endpush
+
 @push('script')
 <script>
    'use strict';
+   Dropzone.autoDiscover = false;
+
    $('#defaultSearch').on('change', function() {
        this.form.submit();
    });
 </script>
 @endpush
-<style>
-   .container {
-   max-width: 1390px !important;
-   }
-   .btn-view-job {
-   color: #007bff;
-   background-color: transparent;
-   background-image: none;
-   border-color: #007bff;
-   }
-   .row.custom_cards_s {
-   margin-bottom: 60px;
-   }
-   .d-heading{
-   font-size: 20px;
-   padding: 20px 0px;
-   width: 100%;
-   display: inline-block;
-   }
-   .custom_cards_s .card {
-   border: none;
-   box-shadow: rgb(100 100 111 / 7%) 0px 7px 18px 0px;
-   padding: 15px 11px 10px 10px;
-   }
-   .custom_cards_s h5.card-title {
-   font-size: 18px;
-   font-weight: bold;
-   margin-bottom: 30px;
-   }
-   .product-desc-content ul {
-   margin: 25px 0px 40px 0px;
-   list-style-type: "*"!important;
-   }
-   .product-desc-content ul li{
-   margin-bottom: 8px;
-   position: relative;
-   padding-left: 24px;
-   list-style-type: "*"!important;
-   }
-   .product-desc-content h3{
-   font-size: 20px !important;
-   font-weight: 400;
-   }
-   .custom_cards_s .card:first-child {
-   margin-left: 0px;
-   }
-   ul.custom_rating li {
-   background: #e3fafa;
-   margin-bottom: 25px;
-   padding: 10px 17px 10px 24px;
-   }
-   ul.custom_rating li h4{
-   font-size: 16px;
-   font-weight: 400;
-   margin-bottom: 6px;
-   width: 100%;
-   display: inline-block;
-   color: #000;
-   }
-   ul.custom_rating li h4 a{
-   color: #007F7F
-   }
-   ul.custom_rating li p{
-   font-size: 16px;
-   width: 100%;
-   display: block;
-   line-height: 1.5;
-   }
-   .date-align{
-   text-align: right;
-   }
-   .comment-banner{
-   width: 100%;
-   margin-bottom: 20px;
-   border-bottom: 1px solid #ccc;
-   padding-bottom: 18px;
-   }
-   .hheading-c{
-   font-size: 22px;
-   margin-bottom: 50px;
-   width: 100%;
-   display: inline-block;
-   border-bottom: 1px solid #8b8989;
-   padding-bottom: 30px;
-   }
-   p.job_staus a {
-   background: #018181;
-   display: inline-block;
-   padding: 0px 22px;
-   border-radius: 4px;
-   color: #fff;
-   font-size: 16px;
-   margin-left: 8px;
-   }
-   .custom_rating i{
-   color: #007F7F;
-   }
-   .list_desc ul li {
-   text-decoration: none!important;
-   }
-   .cstm-btn {
-   text-align: center;
-   display: inline-block;
-   width: 100%;
-   }
-   .cstm-btn a.standard-btn {
-   padding: 9px 14px;
-   float: left;
-   display: inline-block;
-   }
-   .cstm-sidebar{
-   display: inline-block;
-   }
-   h2.title {
-   font-weight: 700;
-   font-size: 22px;
-   line-height: 28px;
-   color: #000;
-   / margin-bottom: 20px; /
-   padding: 10px 10px 18px 10px;
-   display: inline-block;
-   }
-   h3.title {
-   font-weight: 600;
-   font-size: 22px !important;
-   line-height: 28px;
-   color: #000000;
-   padding-bottom: 15px;
-   }
-   .item-details-thumb-area{
-   background-color: #F8FAFA;
-   }
-   .item-details-tag ul li a {
-   padding: 3px 30px !important;
-   font-size: 14px;
-   / line-height: 15px; /
-   }
-   p.job_staus {
-   font-weight: 600;
-   font-size: 14px;
-   line-height: 18px;
-   color: #000000;
-   }
-   p.job_staus a {
-   padding: 8px 20px;
-   background: #72C1C1;
-   border-radius: 4px;
-   font-weight: 400;
-   }
-   p.p-date {
-   font-weight: 600;
-   font-size: 14px;
-   line-height: 16px;
-   color: #000000;
-   }
-   .attachment-icon {
-   position: relative;
-   padding-left: 20px !important;
-   display: inline-block;
-   }
-   .attachment-icon:before {
-   width: 30px;
-   height: 30px;
-   background: url(/assets/images/job/attachment-icon.png) no-repeat;
-   content: '';
-   position: absolute;
-   left: 0px;
-   top: 11px;
-   }
-   .dod-text p {
-   font-weight: 600 !important;
-   font-size: 16px !important;
-   line-height: 20px !important;
-   margin-bottom: 5px;
-   }
-   .dod-text span {
-   font-size: 12px;
-   font-style: normal;
-   font-weight: 400;
-   font-size: 14px;
-   line-height: 18px;
-   color: #000000;
-   text-transform: capitalize !important;
-   }
-   .jobdetail-c {
-    width: 100%;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
-    background: #F3F6F6;
-    padding: 18px 25px;
-    margin-top: 30px;
-}
-   .jb-title{
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 23px;
-    color: #000000;
-    padding: 20px 0px;
-   }
-</style>

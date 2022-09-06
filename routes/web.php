@@ -12,7 +12,7 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
-Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
+
 Route::get('product', 'buyer\jobcontroller@product')->name('job.product');
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
@@ -679,6 +679,9 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
+
+
+                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.proposal');
 
             });
 

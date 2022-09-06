@@ -1,0 +1,87 @@
+
+.dz-message {
+
+    text-align: center !important;
+    position: relative;
+    top:50%;
+    left:5%
+}
+
+.upload_icon{
+    position: absolute;
+    left: 8%;
+    right: 0%;
+    top: 60%;
+    bottom: 22%;
+    text-align: center;
+
+}
+.upload_inner_arrow{
+    
+    position: absolute;
+    top: 19.12%;
+    bottom: 4.5%;
+    right: 49.4%;
+    text-align: center;
+}
+.card_div{
+    padding:0px;
+    background: #F3F6F6;
+    border:none;
+}
+
+.title-color{
+    color:#4d9d97 !important;
+}
+.btn-border{
+    border: 1px solid #007F7F;
+    color: #007F7F;
+    margin-top: 8px;
+    padding: 8px;
+}
+.dropzone {
+    
+    background: white;
+    border-radius: 5px;
+    height: 121px;
+    border: 2px dashed #CBDFDF;
+    border-image: none;
+    min-height: 126px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.cover-letter{
+    min-height:120px !important;
+    max-height:125px !important;
+}
+.sidebar-title2 li{
+    border: none !important;
+}
+.sidebar-heading-border{
+    border-bottom: 1px solid #c5e0e0;
+}
+.bg-default{
+background-color: #F3F6F6 !important;
+}
+.div-background{
+    background-color: #F8FAFA;
+}
+.section-end-line{
+    border-bottom: 2px solid #D0E2E2;
+    
+}
+.badge-pill{
+    color: #007F7F !important;
+    font-weight: 450 !important;
+    text-align: left !important;
+ }
+ .list-group-item{
+   
+    border:none !important;
+    background-color: transparent !important;
+    color: #000000 !important;
+    font-weight: 500;
+     
+}
