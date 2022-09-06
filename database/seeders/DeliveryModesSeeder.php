@@ -22,7 +22,7 @@ class DeliveryModesSeeder extends Seeder
                 'title' => 'abc',
                 'slug' => 'sss',
                 'module_id' => 11,
-                'module_type' => App\Model,
+                'module_type' => 'App\Model',
                 'is_active' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
@@ -33,7 +33,7 @@ class DeliveryModesSeeder extends Seeder
                 'title' => 'abc',
                 'slug' => 'sss',
                 'module_id' => 22,
-                'module_type' => App\Model,
+                'module_type' => 'App\Model',
                 'is_active' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
