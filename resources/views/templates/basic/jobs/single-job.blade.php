@@ -13,251 +13,158 @@
                         <div class="item-section item-details-section">
                             <div class="container">
                                 <div class="item-details-content" style="padding-top: 0px;">
-                                @if(!empty($job->category->name))
-                                    <h2 class="title">{{$job->category->name}} > {{$job->subCategory->name}}</h2>
-                                @endif
+                                    <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
+                                    
+                                    <input type="hidden" value="{{$job->category_id}}" id="category_id">
+                                    <input type="hidden" {{$job->sub_category_id}} id="sub_category_id">
+                                    <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
+
                                 </div>
                                 <div class="row justify-content-center mb-30-none">
-                                    <div class="col-xl-9 col-lg-9 mb-30">
+                                    <div class="col-md-9 col-lg-9 col-xs-9 col-sm-12 col-xs-12 mb-30">
+                                        
                                         <div class="item-details-area">
                                             <div class="item-details-box">
 
                                                 <div class="item-details-thumb-area item-details-footer-v mt-0">
-                                                 <div class="row">   
-                                                <div class="col-md-9">    
-                                                <div class="left mb20">
-                                                        <h3 class="title">
-                                                            {{$job->title}}
-                                                            </h3>
-                                                        <div class="item-details-tag">
-                                                            <ul class="tags-wrapper">
-                                                            <!--<li class="caption">Tags</li>-->
-                                                            <li><a href="javascript:void(0)">devops</a></li>
-                                                            <li><a href="javascript:void(0)">ci</a></li>
-                                                            <li><a href="javascript:void(0)">cd</a> </li>
-                                                            <li><a href="javascript:void(0)">azure</a></li>
-                                                            </ul>
+                                                 
+                                                    <div class="row" >  
+
+                                                        <div class="col-md-7 col-lg-7 col-xs-7 col-sm-12 col-xs-12">   
+
+                                                            <div class="left ">
+                                                                <h3 class="title">
+                                                                    {{$job->title? $job->title : '' }}
+                                                                </h3>
+                                                            </div>
+                                                            
+                                                        </div>
+
+                                                        <div class="col-md-5 col-lg-5 col-xl-5 col-sm-12 col-xs-12 float-right" >
+                                                            <div class="float-right">
+                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status->name ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
+                                                                
+                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
-                                                </div>
-                                                    <div class="col-md-3">
 
-                                                    <p class="job_staus">Job Status <a href="#">{{$job->status->name ? $job->status->name : '' }}</a></p>
-                                                    <p class="p-date">Posted on: <span>{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</span></p>
-                                                    </div>
-                                                 </div>
-
-
-                                                    <div class="right mb-20">
-                                                        <div class="social-area">
-                                                            <ul class="footer-social">
-                                                                <li>
-                                                                    <a href="http://www.facebook.com/sharer.php?u=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9" target="__blank"><i class="fab fa-facebook-f"></i></a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="http://twitter.com/share?url=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9&amp;text=Add &quot;Azure CI/CD&quot; Pipelines to your devops&amp;hashtags=Add &quot;Azure CI/CD&quot; Pipelines to your devops" target="__blank"><i class="fab fa-twitter"></i></a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://127.0.0.1:8003/service/details/add-azure-cicd-pipelines-to-your-devops/eyJpdiI6Iko5aVJRakhvekxZZEZIWGs2VVA5Zmc9PSIsInZhbHVlIjoiSnpZWkRaZmUvVk9rRFI5MU9QUkMvdz09IiwibWFjIjoiOThhYmU4NDk1YzBkMjEwNThiMmYyNmJhNWJiOTcxNzU5Y2Y2ZGE4Y2Y5Yjc1ZWE3Mzc2ZDYwMzAwYmVhNzE1OCIsInRhZyI6IiJ9" target="__blank"><i class="fab fa-linkedin-in"></i></a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    
-
-                                                    
-                                                    <div class="item-details-content">
+                                                    <div >
                                                         
                                                         <div class="sep-solid"></div>
-                                                        <div class="product-desc-content">
-                                                        You will immediately start creating interactive Web3 prototypes, mockups, storyboards, journey maps, user flows, usability metrics informed by competitive analysis, user personas, and real-world users. This position will work closely with our development team to enhance our Web3 products.
-                                                        <ul class="list_desc">
-                                                        <li>{{$job->description ? $job->description  : ''}}</li>
-                                                         
-                                                        </ul>
+                                                        <div class="product-desc-content" >
+                                                            {!!$job->description !!}
+                                                        
+                                                        <div class="service_subtitle2 mt-20 dod-text">
+                                                            <p> Deliverables</p>
+                                                                @foreach ($job->deliverable as $deliverable)
+                                                                
+                                                                <span> {{$deliverable->name}},</span>
+                                                                
+                                                                @endforeach
+                                                        </div>
+                                                    
 
                                                         <div class="service_subtitle2 mt-20 dod-text">
                                                             <p> Definition of Done (DOD)</p>
-                                                             @foreach ($job->dod as $dod)
-                                                             <span>{{$dod->title ? $dod->title  : ''}}</span>
-                                                             @endforeach
+                                                                @foreach ($job->dod as $dod)
+                                                                <span>{{$dod->title ? $dod->title  : ''}},</span>
+                                                                @endforeach
                                                         </div>
 
                                                         <div>
+                                                        @if($job->documents->count()>0)
+                                                            <div class="service_subtitle2 mt-20" >
+                                                                        Attachments
+                                                            </div>
 
-                                                        <div class="service_subtitle2 mt-20">
-                                                                 Attatchments
+                                                            @foreach($job->documents as $decumentUrl)
+                                                                <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                                            @endforeach
+
+                                                            @endif
                                                         </div>
-                                                        @foreach($job->documents as $decumentUrl)
+
+
+                                                        </div>
                                                         
-                                                        <a onclick="attach('{{$decumentUrl->id}}');" href="#" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i> Download Brochure </a>
-                                                        @endforeach
-                                                        </div>
+                                                        <div class="sep-solid mt-10 " ></div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div class="service_subtitle2 mt-20"  id="skills_heading">
+                                                        Job Attributes
+                                                    </div>
 
-
-                                                       </div>
+                                                    
+                                                    <div id="form_attributes">
                                                        
-                                                        <div class="sep-solid"></div>
-                                                        <div class="mt-10">
-                                                                         </div>
-                                                        <!-- foreach ($service->serviceAttributes as $val)
-                                                            {$val->attribute->name}
-                                                        endforeach -->
-                                                        <div class="service_subtitle2 mt-20">
-                                                            Steps
-                                                        </div>
-                                                        <div class="sep-solid"></div>
-                                                        <div class="simpletext">
-                                                          </div>
                                                     </div>
+                                                    
 
-                                                    <div class="row custom_cards_s">
-                                                        <h4 class="d-heading">Development Type</h4>
-                                                        @foreach($job->skill as $skil)
-                                                        <div class="col-md-6">
-                                                        <div class="card" >
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">{{$skil->skill_type}}</h5>
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">{{$skil->name}}</p>
-                                                                        <!-- <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p> -->
-                                                                    </div>
-                                                                    <!-- <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div> -->
-                                                                </div>
-                                                               
-                                                            </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <!-- <div class="col-md-6">
-
-                                                        <div class="card" >
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">Card title</h5>
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-
-                                                        </div> -->
-                                                        @endforeach
-
-                                                    </div>
-
-                                                    <div class="row custom_cards_s">
-                                                    <h4 class="d-heading">Development Type</h4>
-                                                        <div class="col-md-6">
-                                                        <div class="card" >
-                                                            <div class="card-body">
-                                                                <h5 class="card-title">Backend</h5>
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                </div>
-                                                               
-                                                            </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="col-md-6">
-
-                                                        <div class="card" >
-                                                            <div class="card-body">
-                                                            <h5 class="card-title">Backend</h5>
-                                                            <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                        <p class="card-text">Some quick</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            </div>
-
-                                                        </div>
-
-                                                    </div>
+                                                    
                                                 </div>
 
-
-                                             
                                               </div>
 
                                         </div>
                                     </div>
+
                                     <div class="col-xl-3 col-lg-3 mb-30">
                                         <div class="sidebar">
                                             <div class="widget custom-widget mb-30 cstm-sidebar">
+                                                @if($job->budget_type_id == \App\Models\BudgetType::$hourly)
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Per Hour Rate:</span>
+                                                            <span>{{ '$'.$job->hourly_start_range." - $".$job->hourly_end_range }}</span>
+                                                        </li>
+                                                    </ul>
+                                                @else
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Fixed Amount:</span>
+                                                            <span>{{ '$'.$job->fixed_amount}}</span>
+                                                        </li>
+                                                    </ul>
+                                                @endif
 
-                                                <ul class="sidebar-title1">
-                                                    <li><span>Per Hour Rate:</span>
-                                                    ${{round($job->hourly_start_range, 0)}}-${{round($job->hourly_end_range, 0)}}
+
+
+
+                                                <ul class="sidebar-title2">
+                                                    <li><span>Resource Location</span>
+                                                        <p>{{$job->country ? $job->country->name : '' }}</p>
+                                                    </li>
+                                                </ul>
+
+                                                <ul class="sidebar-title2">
+                                                    <li><span>Budget Type</span>
+                                                        <p>{{$job->budgetType->title ? $job->budgetType->title : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
-                                                    <li><span>Resource Location</span>
-                                                        <span>{{$job->country->name ? $job->country->name : '' }}</span>
-                                                    </li>
-                                                </ul>
-
-                                                <ul class="sidebar-list">
-                                                    <li><span>Budget Type</span>
-                                                        <span>{{$job->budgetType->title ? $job->budgetType->title : ''}}</span>
-                                                    </li>
-                                                                                                    </ul>
-                                                                                                    <ul class="sidebar-title2">
                                                     <li><span>Est. Project Duration</span>
-                                                        <span>{{$job->delivery_time}}-Weeks</span>
+                                                        <p>{{$job->project_length->name}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Start Date:</span>
-                                                        <span>{{$job->expected_start_date ? $job->expected_start_date  : ''}}</span>
+                                                        <p>{{$job->expected_start_date ? $job->expected_start_date  : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Stage</span>
-                                                        <span>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</span>
+                                                        <p>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Experience Level</span>
-                                                        <span>{{$job->rank->level ?  $job->rank->level : ''}}</span>
+                                                        <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
                                                     </li>
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">View Proposals (22)</a>
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#depoModal" class="standard-btn mr-15">Edit Job</a>
+                                                    <a href="javascript:void(0)"   class="standard-btn mr-15">View Proposals (22)</a>
+                                                    <a href="{{route('user.job.edit',$job->uuid)}}"   class="standard-btn mr-15" style="">Edit Job</a>
 
 
                                                 </div>
@@ -267,24 +174,98 @@
                                 </div>
 
                             
-                                    </div>
-                                        </div>
-                                             </div>
-                                                  </article>
-                                                       </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
 
-                                                          </div>
-                                                           </section>
+        </div>
+    </section>
 
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 
 @push('script')
-    <script>
+<script>
         'use strict';
+        
+        $(document).ready(function() {
+            fetchSkills();
+         });
+
         $('#defaultSearch').on('change', function() {
             this.form.submit();
         });
+        
+        const genRand = (len) => {
+            return Math.random().toString(36).substring(2,len+2);
+        }
+
+        function populateSkills(data)
+        {
+            var selected_skills=$('#job_skills').val();
+            selected_skills=(selected_skills.split(','));
+            selected_skills=selected_skills.map(Number);
+
+           
+            for (var main_category in data) { //heading main
+                
+                var all_sub_categories=data[main_category];
+                var main_category_id=genRand(5);
+                var remove =true;
+                $('#form_attributes').append('<div class="row custom_cards_s" id="'+main_category_id+'"><h4 class="d-heading">'+main_category+'</h4>');
+                for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+                    var skills=all_sub_categories[sub_category_enum];
+                    var sub_category_id=genRand(5);
+                    var sub_skills=skills.map(a => a.id);
+                    if(selected_skills.some(r => sub_skills.includes(r))){
+                        remove=false
+                        $('#'+main_category_id).append('<div class="col-md-6"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="row" id="'+sub_category_id+'"><div class="col-md-6">');
+                        
+                            for (var skill_index in skills) {
+                            
+                            var skill_id=skills[skill_index].id;
+                            var skill_name=skills[skill_index].name;
+                            
+                            $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                        }
+                    }
+                    
+                    
+                }
+                $('#'+main_category_id).append('<div/></div>');
+                if(remove)
+                    $('#'+main_category_id).remove();
+ 
+                
+            }
+            $('#form_attributes').append('</div>');
+
+
+        }
+
+        function fetchSkills() {
+            var category_id    = $('#category_id').val();
+            var sub_catgory_id = $('#sub_category_id').val();
+            $.ajax({
+                type:"GET",
+                url:"{{route('user.job.let.skills')}}",
+                data: {category_id : category_id,sub_category_id:sub_catgory_id},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                    
+                    }
+                    else{
+                        populateSkills(data);
+                        console.log(data);
+                    
+                    }
+                }
+            });  
+        }
 
         function attach(id) {
             
@@ -295,10 +276,13 @@
                     id: id,
                 },
                 success: function (data) {
+                console.log(data);
                  var blob = new Blob([data]);
                 var link = document.createElement('a');
+                
                 link.href = window.URL.createObjectURL(blob);
-                link.download = "Sample.pdf";
+                link.download = 
+                'sample.pdf'
                 link.click();
               
                 },
@@ -421,7 +405,7 @@ a.standard-btn {
   -o-border-radius: 5px;
   font-size: 15px;
   font-weight: 400;
-  background-color: #007f7f;
+  background-color: #007f7f !important;
   color: #fff;
 }
 
@@ -458,6 +442,7 @@ p.job_staus {
     font-size: 14px;
     line-height: 18px;
     color: #000000;
+    margin-top: 10px;
 }
 p.job_staus a {
     padding: 8px 20px;
@@ -470,6 +455,16 @@ p.p-date {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
+}
+.cstm-sidebar .sidebar-title2 li span {
+font-weight: 600;
+font-size: 16px;
+line-height: 20px;
+}
+.cstm-sidebar .sidebar-title2 li p{
+    font-weight: 400;
+font-size: 14px;
+line-height: 18px;
 }
 
 .dod-text p {
@@ -490,5 +485,15 @@ p.p-date {
 .font-style{
     font-size: 13px !important;
 color: #58a7a8 !important;
+}
+.status_btn{
+    display: inline-block;
+    height: 32px;
+    background: #72C1C1;
+    border-radius: 4px;
+    margin-right: 10px;
+    padding-top: 6px;
+    width: 68px;
+    padding-left: 8px;
 }
 </style>

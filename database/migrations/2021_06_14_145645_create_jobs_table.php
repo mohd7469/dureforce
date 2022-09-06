@@ -19,7 +19,7 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('category_id')->index()->nullable();
             $table->unsignedBigInteger('sub_category_id')->index()->nullable();
-            $table->unsignedInteger('location_id')->nullable();//
+            $table->unsignedBigInteger('country_id')->nullable();//
             $table->unsignedBigInteger('rank_id')->nullable(); //it will be used as experience level
             $table->unsignedBigInteger('project_stage_id')->nullable(); //table created
             $table->unsignedBigInteger('status_id')->nullable(); //table created
@@ -50,6 +50,7 @@ class CreateJobsTable extends Migration
             $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('cascade');
             $table->foreign('budget_type_id')->references('id')->on('budget_types')->onDelete('cascade');
             $table->foreign('project_length_id')->references('id')->on('project_lengths')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
         });
     }
 

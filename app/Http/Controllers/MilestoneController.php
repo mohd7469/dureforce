@@ -1,33 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Job;
-use App\Http\Controllers\BaseController;
-use App\Models\Job;
+namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Response as FacadeResponse;
-
-
+use App\Models\Milestone;
 use Illuminate\Http\Request;
-use function getPaginate;
-use function view;
 
-class JobController extends BaseController
+class MilestoneController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $pageTitle = "All Jobs";
-        $emptyMessage = "No data found";
-        $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where($this->applyFilters($request))->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate())->withQueryString();
-        // return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
-        return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
     }
 
     /**
@@ -54,10 +41,10 @@ class JobController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Milestone $milestone)
     {
         //
     }
@@ -65,10 +52,10 @@ class JobController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Milestone $milestone)
     {
         //
     }
@@ -77,10 +64,10 @@ class JobController extends BaseController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Milestone $milestone)
     {
         //
     }
@@ -88,14 +75,11 @@ class JobController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Milestone  $milestone
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Milestone $milestone)
     {
         //
     }
-
-
-
 }

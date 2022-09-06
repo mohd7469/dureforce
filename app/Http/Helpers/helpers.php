@@ -232,7 +232,6 @@ function removeFile($path)
 
         $blob = $blobClient->getBlob($container, $filename);
 
-
         if ($blob) {
 
             $blobClient->deleteBlob($container, $filename);
