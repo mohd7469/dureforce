@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DeliverMode;
+use App\Models\DeliveryMode;
 use Illuminate\Http\Request;
 
 class DeliverModeController extends Controller
@@ -41,10 +41,10 @@ class DeliverModeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DeliverMode  $deliverMode
+     * @param  \App\Models\DeliveryMode  $deliverMode
      * @return \Illuminate\Http\Response
      */
-    public function show(DeliverMode $deliverMode)
+    public function show(DeliveryMode $deliverMode)
     {
         //
     }
@@ -52,10 +52,10 @@ class DeliverModeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DeliverMode  $deliverMode
+     * @param  \App\Models\DeliveryMode  $deliverMode
      * @return \Illuminate\Http\Response
      */
-    public function edit(DeliverMode $deliverMode)
+    public function edit(DeliveryMode $deliverMode)
     {
         //
     }
@@ -64,10 +64,10 @@ class DeliverModeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DeliverMode  $deliverMode
+     * @param  \App\Models\DeliveryMode  $deliverMode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, DeliverMode $deliverMode)
+    public function update(Request $request, DeliveryMode $deliverMode)
     {
         //
     }
@@ -75,10 +75,10 @@ class DeliverModeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DeliverMode  $deliverMode
+     * @param  \App\Models\DeliveryMode  $deliverMode
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeliverMode $deliverMode)
+    public function destroy(DeliveryMode $deliverMode)
     {
         //
     }

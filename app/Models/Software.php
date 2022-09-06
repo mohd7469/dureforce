@@ -154,4 +154,21 @@ class Software extends Model
     {
         return $this->morphMany(TaskDocument::class, 'module');
     }
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module');
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
 }
