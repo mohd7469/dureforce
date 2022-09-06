@@ -15,6 +15,7 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('delivery_mode_id')->index()->nullable();
             $table->integer('module_id')->index()->nullable();
