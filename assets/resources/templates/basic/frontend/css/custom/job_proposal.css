@@ -69,7 +69,7 @@ background-color: #F3F6F6 !important;
     background-color: #F8FAFA;
 }
 .section-end-line{
-    border-bottom: 2px solid #D0E2E2;
+    border-bottom: 1px solid #D0E2E2;
     
 }
 .badge-pill{
@@ -84,4 +84,13 @@ background-color: #F3F6F6 !important;
     color: #000000 !important;
     font-weight: 500;
      
+}
+.card-header{
+    border-bottom: none !important;
+}
+.add-milestone-btn{
+    background-color: #007F7F;
+    width: 131.51px;
+    margin-left: 10px;
+    margin-bottom: 6px;
 }
