@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class DeliveryMode extends Model
 {
     use HasFactory;
+    protected $fillable = ['title','slug','end_date','module_id','module_type','is_active'];
 
     public function proposal()
     {
