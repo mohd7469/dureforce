@@ -162,16 +162,9 @@
                                                     </li>
                                                 </ul>
 
-                                                <div class="widget-btn- mt-20 cstm-btn">
-                                                    <a href="javascript:void(0)"   class="standard-btn mr-15">View Proposals (22)</a>
-                                                    <a href="{{route('user.job.edit',$job->uuid)}}"   role="button" class="" style="position: absolute;
-                                                        width: 330px;
-                                                        height: 402px;
-                                                        left: 917px;
-                                                        top: 230px;
-                                                        
-                                                        background: #EEF7F7;">Edit Job</a>
-
+                                                <div class="widget-btn- mt-20 cstm-btn" style="display: inline">
+                                                    <a href="javascript:void(0)"   class="standard-btn mr-15">Submit Proposal</a>
+                                                    <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
 
                                                 </div>
                                             </div>
@@ -324,15 +317,15 @@
 .product-desc-content ul {
     margin: 25px 0px 40px 0px;
     list-style-type: "*"!important;
-    
+
 }
 .product-desc-content ul li{
     margin-bottom: 8px;
     position: relative;
     padding-left: 24px;
     list-style-type: "*"!important;
-    
-  
+
+
 }
 
 
@@ -397,7 +390,7 @@ p.job_staus a {
 }
 .list_desc ul li {
     text-decoration: none!important;
-    
+
 }
 
 

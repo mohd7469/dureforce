@@ -491,7 +491,7 @@ class JobController extends Controller
         
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
     }
 
 
