@@ -164,6 +164,7 @@ I can provide you a top-notch logo design that you can without any problem show 
         display: block;
         padding: 7px 20%;
         display: inline-block;
+    
     }
     ul.skills-listing li {
     margin-right: 1% !important;
@@ -280,6 +281,83 @@ ul.skills-listing li {
     margin-bottom: 14px !important;
     font-size: 12px !important;
     padding: 1px 3% !important;
+    }
+
+}
+@media only screen and (min-width:767px) and (max-width:992px){
+    a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 6px 5px !important;
+    font-weight: 600;
+    font-size: 10px !important;
+}
+p.rateperh {
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #007F7F;
+    font-weight: 600;
+    margin-top: 6px;
+}
+h4.pname-c {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 23px;
+    color: #7F007F;
+    margin-top: 16px;
+}
+p.pdesination-c {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #000000;
+}
+p.perhourprice {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 12px !important;
+    color: #000000;
+}
+select#Filters {
+    float: right;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 6px 6px 7px 11px !important;
+    color: #007F7F;
+    font-size: 16px;
+    margin-right: -13px;
+}
+select#bestmatch {
+    float: right;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 4px 0px 7px 2px !important;
+    color: #007F7F;
+    font-size: 16px;
+    position: relative;
+    right: -27px;
+}
+.plocation {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #000000;
+    position: relative;
+    padding-left: 2px !important;
+    margin-top: 48px !important;
+}
+p.plocation:before {
+    width: 20px;
+    height: 20px;
+    background: red;
+    position: absolute;
+    left: -19px !important;
+    top: 8px !important; 
+    content: '';
+    background: url(/assets/images/job/location-icon.png) no-repeat;
+}
 }
 </style>
 @push('script')
