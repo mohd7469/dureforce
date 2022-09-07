@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
                                  
-                                    <div class="col-md-9">
+                                    <div class="col-md-9 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
                                             <div class="col-md-10">
@@ -150,6 +150,138 @@ I can provide you a top-notch logo design that you can without any problem show 
 @push('style')
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
+<style>
+
+@media only screen and (max-width:767px){
+    .p_desription p{
+        width: 100%;
+        text-align: center;
+    }
+    a.btn-products-s {
+        width: auto !important;
+        text-align: CENTER;
+        margin: 8px auto;
+        display: block;
+        padding: 7px 20%;
+        display: inline-block;
+    }
+    ul.skills-listing li {
+    margin-right: 1% !important;
+    margin-bottom: 14px !important;
+    font-size: 12px !important;
+    padding: 2px 2% !important;
+}
+
+select#Filters {
+    float: none;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 8px 17px 8px 34px;
+    width: 100%;
+    margin-right: -13px;
+}
+p.rateperh{
+    text-align: center;
+}
+p.perhourprice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-align: CENTER;
+    margin-bottom: 20px;
+}
+.row.borderleftc {
+    text-align: center;
+    margin-top: 30px;
+}
+.borderleftc:after{
+    display: none;
+}
+.plocation {
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+    padding-left: 0px;
+    margin-top: 2px;
+    margin-bottom: 40px !important;
+    margin-top: 16px;
+    display: inline-block;
+}
+p.plocation:before{
+    left: -24px;
+}
+.row.btns-s {
+    position: relative;
+    left: 0px;
+    text-align: center;
+}
+.row.btns-s .col-md-4{
+    display: inline-block;
+    flex: auto;
+    width: 3.33%;
+}
+ul.skills-listing {
+    margin-top: 15px;
+    text-align: center;
+    display: inline-block;
+}
+ul.skills-listing li{
+    float: none;
+    display: inline-block;
+}
+.skills-c h2{
+    text-align: center;
+}
+.col-md-9.sorting-mbl .col-md-2 {
+    width: 40%;
+    float: left;
+    display: inline-block;
+}
+.col-md-9.sorting-mbl .col-md-10 {
+    width: 60%;
+    float: left;
+    display: inline-block;
+}
+select#bestmatch {
+    
+    float: right !important;
+    width: 84% !important;
+    margin-bottom: 15px;
+    right: 0px;
+
+}
+p.sort-p {
+    width: auto !important;
+}
+.col-md-9.sorting-mbl {
+    margin-top: 20px;
+}
+}
+
+@media only screen and (max-width:414px){
+    select#bestmatch{
+        right: -15px !important;
+    }
+    select#bestmatch {
+    padding: 8px 5px 8px 5px !important;
+    color: #007F7F;
+    font-size: 13px !important;
+    width: 77% !important;
+
+}
+select#Filters {
+    padding: 8px 17px 8px 13px !important;
+    font-size: 13px !important;
+}
+ul.skills-listing li {
+    margin-right: 1% !important;
+    margin-bottom: 14px !important;
+    font-size: 12px !important;
+    padding: 1px 3% !important;
+}
+</style>
 @push('script')
 <script>
    'use strict';

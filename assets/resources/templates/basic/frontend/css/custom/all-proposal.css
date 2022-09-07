@@ -201,21 +201,29 @@ p.sort-p {
         text-align: center;
     }
     a.btn-products-s {
-   
-    width: 200px;
-    text-align: CENTER;
-    margin: 8px auto;
-    display: block;
-}
-ul.skills-listing li{
-    margin-right: 2%;
-    margin-bottom: 14px;
-}
+        width: auto;
+        text-align: CENTER;
+        margin: 8px auto;
+        display: block;
+        padding: 7px 20%;
+        display: inline-block;
+    }
+    ul.skills-listing li {
+        margin-right: 1%;
+        margin-bottom: 14px;
+        font-size: 12px !important;
+        padding: 2px 2%;
+    }
 select#bestmatch {
-    float: none;
-    width: 100%;
+    
+    float: right;
+    width: 84%;
     margin-bottom: 15px;
     right: 0px;
+
+}
+p.sort-p {
+    width: auto;
 }
 
 select#Filters {
@@ -261,6 +269,12 @@ p.plocation:before{
 .row.btns-s {
     position: relative;
     left: 0px;
+    text-align: center;
+}
+.row.btns-s .col-md-4{
+    display: inline-block;
+    flex: auto;
+    width: 3.33%;
 }
 ul.skills-listing {
     margin-top: 15px;
