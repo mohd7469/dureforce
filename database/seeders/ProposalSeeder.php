@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use App\Models\Proposal;
+use App\Models\User;
 
 class ProposalSeeder extends Seeder
 {
@@ -14,16 +16,13 @@ class ProposalSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('proposals')->truncate();
-        
-        \DB::table('proposals')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
-                'user_id' => 1,
+        $user = User::where('username', 'ana123')->with(['jobs'])->first();
+        {
+            Proposal::create([
+                'user_id' => $user->id,
                 'delivery_mode_id' => 1,
-                'module_id' => 1,
-                'module_type' => 'App\Model',
+                'module_id' => $user->jobs()->pluck('uuid') ? $user->jobs()->pluck('uuid') : '',
+                'module_type' =>'App\Models\Job',
                 'hourly_bid_rate' => 0.2,
                 'amount_receive' => 1.3,
                 'start_hour_limit' => 12,
@@ -31,23 +30,10 @@ class ProposalSeeder extends Seeder
                 'cover_letter' => 'Dollar néo-zélandais',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ),
-            1 => 
-            array (
-                'id' => 2,
-                'user_id' =>  2,
-                'delivery_mode_id' => 1,
-                'module_id' => 1,
-                'module_type' => 'App\Model',
-                'hourly_bid_rate' => 0.2,
-                'amount_receive' => 1.3,
-                'start_hour_limit' => 12,
-                'end_hour_limit' => 22,
-                'cover_letter' => "Dollar néo-zélandais",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ),
-        ));
+            ]);
+        }
+    
+ }
         
     }
-}
+

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ServiceFeeSeeder extends Seeder
@@ -13,9 +13,9 @@ class ServiceFeeSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('proposal_attachments')->truncate();
+        \DB::table('service_fees')->truncate();
         
-        \DB::table('proposal_attachments')->insert(array (
+        \DB::table('service_fees')->insert(array (
             0 => 
             array (
                 'id' => 1,
