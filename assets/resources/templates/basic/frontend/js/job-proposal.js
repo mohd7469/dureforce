@@ -1,10 +1,14 @@
 
 var myDropzone='';
+var row_id=1;
+'use strict';
+Dropzone.autoDiscover = false;
+  
 $(function() {
 
     var form_data='';
     var action_url=$("#job_form_data").attr('action');
-      var dropzone = new Dropzone('#demo-upload', {
+    var dropzone = new Dropzone('#demo-upload', {
         url:action_url,
         autoProcessQueue: false,
           parallelUploads: 4,
@@ -91,8 +95,80 @@ $(function() {
             }
           }
         
-        });
+    });
+
+    $('#defaultSearch').on('change', function() {
+      this.form.submit();
+    });
+
+    $("#milestone_btn").click(function(){
+          addRow();
+    });
         
         
         
 });
+
+function removerow(row)
+{
+    var div_to_remove='#milestone'+row;
+    $(div_to_remove).remove();
+}
+
+function addRow()
+{
+    var div_to_add_row='#milestiones';
+    row_id+=1;
+    $(div_to_add_row).append(
+          '<div class="row" id="milestone'+row_id+'">'+
+          '<div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">'+
+            '<label>Description</label>'+
+            '<input type="text" name="description" maxlength="255" value="" class="form-control" >'+
+          '</div>'+
+
+          '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
+            '<label>Start Date</label>'+
+            '<div class="input-group mb-3">'+
+            '<input type="date" class="form-control" name="start_date" value="" >'+
+            '</div>'+
+          '</div>'+
+
+          '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
+            '<label>Due Date</label>'+
+            '<div class="input-group mb-3">'+
+            '<input type="date" class="form-control" name="due_date" value=""  >'+
+            '</div>'+
+          '</div>'+
+
+          '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
+            '<label>Amount</label>'+
+            '<input type="integer" name="title" maxlength="255" value="" class="form-control" >'+
+          '</div>'+
+
+          '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >'+
+            '<Button class="btn btn-danger " id="delete_btn'+row_id+'" onclick="removerow('+row_id+')"><i class="fa fa-trash"></i></button> '+
+          '</div>'+
+      '</div>'
+
+    );
+}
+
+function byMilestone()
+{
+  if(!$(this).is(':checked')){
+    $('#by_project_section').addClass('d-none');
+    $('#by_milestone_section').removeClass('d-none');
+
+  }
+}
+function byProject()
+{
+  if(!$(this).is(':checked')){
+    
+    $('#by_milestone_section').addClass('d-none');
+    $('#by_project_section').removeClass('d-none');
+
+  }
+
+}
+

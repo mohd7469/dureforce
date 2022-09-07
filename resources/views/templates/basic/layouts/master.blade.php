@@ -92,6 +92,7 @@
 <script>
     (function ($) {
         "use strict";
+
         $(".langSel").on("change", function () {
             window.location.href = "{{route('home')}}/change/" + $(this).val();
         });
