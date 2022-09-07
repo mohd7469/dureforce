@@ -83,7 +83,7 @@
                                            </div>
 
                                             <div class="col-md-5">
-                                                <div class="row">
+                                                <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
                                                         <p class="perhourprice">$55 / Per Hour</p>
@@ -96,7 +96,7 @@
                                                         <p class="rateperh">Job Success Rate</p>
                                                         <p class="perhourprice">90%</p>
                                                     </div>
-                                            </div>
+                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
@@ -223,6 +223,12 @@ p.plocation:before{
     flex: auto;
     width: 3.33%;
 }
+.row.btns-per .col-md-4{
+    display:inline-block;
+    float: left;
+    width: 33%;
+}
+
 ul.skills-listing {
     margin-top: 15px;
     text-align: center;
