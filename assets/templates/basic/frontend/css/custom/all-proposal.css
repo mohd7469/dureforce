@@ -18,6 +18,15 @@ line-height: 18px;
 color: #000000;
 
 }
+.sorting-mbl .row {
+    text-align: right;
+    display: initial;
+}
+.sorting-mbl .col-md-4 {
+    width: 17%;
+    float: right;
+    text-align: right;
+}
 ul.skills-listing {
     margin-top: 15px;
 }
@@ -124,11 +133,17 @@ div#custom-search-input {
     background: #EFF8F8;
     border: 1px solid #CBDFDF;
     border-radius: 6px;
+    width: 100%;
 }
+
 div#custom-search-input input {
     background: transparent;
     border: none;
+    padding: 0px;
+    height: 40px;
+    padding: 10px 15px;
 }
+
 
 div#custom-search-input .input-group {
     margin-bottom: 0px;
@@ -146,7 +161,10 @@ select#Filters {
     padding: 8px 17px 8px 34px;
     color: #007F7F;
     font-size: 16px;
-    margin-right: -13px;
+    width: 100%;
+    appearance: none;
+    background: #EFF8F8 url(/assets/images/job/arrow.png) no-repeat !important;
+    background-position: 93% center !important;
 }
 select#bestmatch {
         float: right;
@@ -157,7 +175,10 @@ select#bestmatch {
     color: #007F7F;
     font-size: 16px;
     position: relative;
-    right: -27px;
+    appearance: none;
+    background: #EFF8F8 url(/assets/images/job/arrow.png) no-repeat !important;
+    background-position: 93% center !important;
+    width: 100%;
 }
 
 p.sort-p {
@@ -187,12 +208,18 @@ p.sort-p {
 p.sort-p {
     width: 70%;
     }
+    .sorting-mbl .col-md-4{
+        width:22% !important;
+    }
 
 
 }
 @media only screen and (max-width:1190px){
     select#bestmatch{
         right: 0px;
+    }
+    .sorting-mbl .col-md-4{
+        width:28% !important;
     }
 }
 @media only screen and (max-width:767px){
@@ -226,6 +253,7 @@ select#Filters {
     padding: 8px 17px 8px 34px;
     width: 100%;
     margin-right: -13px;
+   
 }
 p.rateperh{
     text-align: center;
@@ -274,4 +302,27 @@ ul.skills-listing li{
 .skills-c h2{
     text-align: center;
 }
+.sorting-mbl .col-md-4{
+    width:33% !important;
+    padding: 5px !important;
+}
+}
+@media only screen and (max-width:414px){
+    .sorting-mbl .col-md-4:first-child {
+        display: block !important;
+        width: 100% !important;
+        float: none;
+    }
+    .sorting-mbl .col-md-4 {
+        width: 50% !important;
+        padding: 5px !important;
+    }
+    select#Filters{
+        margin-right: 0px !important;
+    }
+    select#bestmatch{
+        width: 100% !important;
+        right: 0px !important;
+    }
+    
 }

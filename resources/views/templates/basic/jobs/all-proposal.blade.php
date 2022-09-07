@@ -10,31 +10,35 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        <h2 class="prosals-h">All Proposals</h2> 
+                        
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
-                                    <div class="col-md-3">
-                                        <div id="custom-search-input">
-                                            <div class="input-group">
-                                                <input type="text" class="search-query form-control" placeholder="Search" />
-                                                <span class="input-group-btn">
-                                                    <button type="button" disabled>
-                                                        <span class="fa fa-search"></span>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-2">
+                                        <h2 class="prosals-h">All Proposals</h2> 
+                                        
                                     </div>
                                  
-                                    <div class="col-md-9 sorting-mbl">
+                                    <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
-                                            <div class="col-md-10">
-                                                <div class="row">
+                                            <div class="col-md-4">
+                                                
+                                                   
+                                                        <div id="custom-search-input">
+                                                            <div class="input-group">
+                                                                <input type="text" class="search-query form-control" placeholder="Search" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" disabled>
+                                                                        <span class="fa fa-search"></span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                </div>       
+                                                    <div class="col-md-4">
                                                     
-                                                    <div class="col-md-12">
-                                                    <p class="sort-p"> Sort </p>
                                                         <form>
                                                             <select name="Best match" id="bestmatch">
                                                                 <option>Best match</option>
@@ -45,11 +49,11 @@
                                                             </select>
                                                         </form>
                                                     </div>
-                                                </div>
-                                            </div>
+                                               
+                                            
                                          <!--Sorting Section End-->
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                         <form>
                                             <select name="Filters" id="Filters">
                                                 <option>Filters</option>
@@ -329,21 +333,23 @@ select#Filters {
     background: #EFF8F8;
     border: 1px solid #CBDFDF;
     border-radius: 5px;
-    padding: 6px 6px 7px 11px !important;
+    padding: 8px 17px 8px 11px;
     color: #007F7F;
     font-size: 16px;
-    margin-right: -13px;
+    width: 123px !important;
 }
 select#bestmatch {
     float: right;
     background: #EFF8F8;
     border: 1px solid #CBDFDF;
     border-radius: 5px;
-    padding: 4px 0px 7px 2px !important;
+    padding: 10px 15px 8px 10px;
     color: #007F7F;
-    font-size: 16px;
+    font-size: 14px;
     position: relative;
-    right: -27px;
+    width: 120px;
+    top: 0px;
+}
 }
 .plocation {
     font-weight: 600;
