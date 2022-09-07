@@ -1981,8 +1981,8 @@ label {
   transition: all 0.3s;
 }
 .right-item li a {
-  width: 58px;
-  height: 40px;
+  width: 67px;
+  height: 41px;
   line-height: 35px;
   display: inline-block;
   text-align: center;
@@ -3567,7 +3567,7 @@ font-size: 14px;
   border-radius: 0px;
   padding: 20px;
   background-color: #ebf7f77e;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 .widget-btn a {

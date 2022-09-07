@@ -44,7 +44,7 @@ class JobController extends Controller
 
         $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
-        $data['categories'] = SkillCategory::select(['id', 'name', 'slug'])->get();
+        $data['categories'] = Category::select(['id', 'name'])->get();
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->get();
 
@@ -128,7 +128,7 @@ class JobController extends Controller
             $job = Job::create([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
-                "location_id" => $request_data['location_id'],
+                "country_id" => $request_data['country_id'],
                 "category_id" => $request_data['category_id'],
                 "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
                 "rank_id" => $request_data['rank_id'],
@@ -210,7 +210,6 @@ class JobController extends Controller
     public function update(Request $request, $uuid)
     {
 
-
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
@@ -222,7 +221,7 @@ class JobController extends Controller
             $job->update([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
-                "location_id" => $request_data['location_id'],
+                "country_id" => $request_data['country_id'],
                 "category_id" => $request_data['category_id'],
                 "sub_category_id" => isset($request_data['sub_category_id']) ? $request_data['sub_category_id'] : null,
                 "rank_id" => $request_data['rank_id'],
@@ -251,6 +250,14 @@ class JobController extends Controller
 
             $path = imagePath()['attachments']['path'];
 
+            foreach ($job->documents as $document) {
+                $path = Job::$attachment_path . '/' . $document->name;
+
+                removeFile($path);
+            }
+
+            $job->documents()->delete();
+
             if ($request->hasFile('file')) {
 
                 foreach ($request->file as $file) {
@@ -260,10 +267,10 @@ class JobController extends Controller
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
-                        $url = $path . $filename;
-
+                        $url = $path . '/' . $filename;
                         $document = new TaskDocument;
                         $document->name = $filename;
+                        $document->uploaded_name = $file->getClientOriginalName();
                         $document->url = $url;
                         $document->type = $file_extension;
                         $document->is_published = "Active";
@@ -460,5 +467,25 @@ class JobController extends Controller
         return view('templates.basic.jobs.proposal', compact('pageTitle','proposal','skills'));
 
     }
+    public function product()
+    {
+        
+        
+        $pageTitle = "Product";
+
+        return view('templates.basic.jobs.product', compact('pageTitle'));
+
+    }
+
+
+
+
+    public function jobview($uuid){
+        $pageTitle = "View Jobs";
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+    }
+
+
 
 }
