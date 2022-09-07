@@ -59,7 +59,7 @@
                                 <!-- <label for="password">@lang('Password')*</label> -->
                                 <input type="password" class="form-control
                                 form--control" id="password" name="password"
-                                placeholder="@lang("Enter password")"
+                                placeholder="@lang('Enter password')"
                                 required="">
                             </div>
 

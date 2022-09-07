@@ -25,6 +25,12 @@ Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 
+// route for signup design 
+Route::view('/password/code-verif-design', 'templates.basic.user.auth.passwords.code_verify_design');
+Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email_design');
+Route::view('/verify-design', 'auth.verify_design');
+
+
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'Paypal\ProcessController@ipn')->name('Paypal');
