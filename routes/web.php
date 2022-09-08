@@ -29,7 +29,9 @@ Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 Route::view('/password/code-verif-design', 'templates.basic.user.auth.passwords.code_verify_design');
 Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email_design');
 Route::view('/verify-design', 'auth.verify_design');
-Route::view('/profile-design', 'templates.basic.project_profile.partials.profile_design');
+Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.profile_design');
+Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
+Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 
 
 
