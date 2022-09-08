@@ -15,6 +15,7 @@ Route::get('/clear', function () {
 Route::get('product', 'buyer\jobcontroller@product')->name('job.product');
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
+Route::get('proposal', 'ProposalController@index')->name('proposal.index');
 
 
 
