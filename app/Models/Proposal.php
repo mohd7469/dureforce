@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proposal extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id ','delivery_mode_id ','module_id','	module_type','hourly_bid_rate','amount_receive','start_hour_limit','end_hour_limit','cover_letter','deleted_at'];
+    protected $fillable = ['user_id ','service_fees_id','delivery_mode_id ','module_id','module_type','hourly_bid_rate','amount_receive','start_hour_limit','end_hour_limit','cover_letter','deleted_at'];
 
     public function module()
     {

@@ -39,8 +39,9 @@ class servicefeesRequest extends FormRequest
             'slug.required' => 'slug is required',
             'fee.required' => 'fee is required',
             'module_id.required' => 'module id is required',
+            'is_active.required' => 'is active is required',
             'created_by.required' => 'created by is required',
-             'updated_by.required' => 'updated  by is required',
+             'updated_by.required' => 'updated by is required',
         ];
     }
 }

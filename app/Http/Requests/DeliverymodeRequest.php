@@ -37,8 +37,8 @@ class DeliverymodeRequest extends FormRequest
         return [
             'title.required'        => 'Please fill title',
             'slug.required'         =>  'slug is required',
-            'module_id.required'      => 'module_id is required',
-            'module_type.required'      => 'module_type is required',
+            'module_id.required'      => 'module id is required',
+            'module_type.required'      => 'module type is required',
             'is_active.required'       => 'is_active is required',
         ];
     }

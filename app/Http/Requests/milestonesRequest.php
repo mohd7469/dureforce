@@ -32,6 +32,7 @@ class milestonesRequest extends FormRequest
               'user_id'=> 'required',
                'module_id'=> 'required',
                'module_type'=> 'required',
+              'proposal_id'=> 'required',
 
         ];
     }
@@ -46,6 +47,7 @@ class milestonesRequest extends FormRequest
             'user_id.required' => 'Please fill user_id',
             'module_id.required'      => 'module_id is required',
             'module_type.required'      => 'module_type is required',
+             'proposal_id.required'      => 'proposal id is required',
 
         ];
     }

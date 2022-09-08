@@ -30,7 +30,8 @@ class proposalattachmentsRequest extends FormRequest
             'is_published' => 'required|max:255',
             'module_id'=> 'required',
             'module_type'=>'required',
-            'user_id' => 'required'
+            'user_id' => 'required',
+
         ];
     }
     public function messages()
