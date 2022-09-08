@@ -30,7 +30,8 @@
         "stripe/stripe-php": "^7.72",
         "textmagic/sdk": "dev-master",
         "twilio/sdk": "^6.23",
-        "vonage/client": "^2.4"
+        "vonage/client": "^2.4",
+        "webpatser/laravel-uuid": "^4.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.3",
