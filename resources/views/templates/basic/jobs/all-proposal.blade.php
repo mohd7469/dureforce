@@ -149,14 +149,14 @@
 
                          <!--Skills Section Start-->
                             <div class="row skills-c">
-
-                                    <h2>Has 7 relevant skills to your job</h2>
+                                     @isset($proposal->user->skills)
+                                    <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
+                                   
                                     <ul class="skills-listing">
-                                        @isset($proposal->user->skills)
+                                     
                                         @foreach ($proposal->user->skills as  $skills)
                                          <li>{{$skills->name}} </li>
                                         @endforeach
-                                        @endisset
                                         
                                         {{-- <li>HTML</li>
                                         <li>CSS</li>
@@ -165,6 +165,7 @@
                                         <li>jQuery</li>
                                         <li>React</li> --}}
                                     </ul>
+                                    @endisset
 
                                     <!--Skills Section End-->
                             </div> 
