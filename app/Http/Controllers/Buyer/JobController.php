@@ -464,7 +464,7 @@ class JobController extends Controller
         
         $pageTitle = "Proposal";
 
-        return view('templates.basic.jobs.proposal', compact('pageTitle','proposal','skills'));
+        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','proposal','skills'));
 
     }
     public function product()
@@ -476,5 +476,16 @@ class JobController extends Controller
         return view('templates.basic.jobs.all-proposal', compact('pageTitle'));
 
     }
+
+
+
+
+    public function jobview($uuid){
+        $pageTitle = "View Jobs";
+        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+    }
+
+
 
 }

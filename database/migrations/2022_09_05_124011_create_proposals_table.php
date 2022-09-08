@@ -15,8 +15,10 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('delivery_mode_id')->index()->nullable();
+            $table->unsignedBigInteger('service_fees_id')->index()->nullable();
             $table->integer('module_id')->index()->nullable();
             $table->string('module_type')->nullable()->nullable();
             $table->decimal('hourly_bid_rate', 28, 2)->default(0)->nullable();
@@ -29,6 +31,7 @@ class CreateProposalsTable extends Migration
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('delivery_mode_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('service_fees_id')->references('id')->on('service_fees')->onDelete('cascade');
 
         });
     }
