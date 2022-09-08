@@ -125,6 +125,7 @@ div#custom-search-input {
     background: #EFF8F8;
     border: 1px solid #CBDFDF;
     border-radius: 6px;
+    
 }
 div#custom-search-input input {
     background: transparent;
@@ -281,6 +282,7 @@ ul.skills-listing {
     margin-top: 15px;
     text-align: center;
     display: inline-block;
+    width: 100%;
 }
 ul.skills-listing li{
     float: none;

@@ -22,10 +22,8 @@
                                     <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
-                                            <div class="col-md-4">
-                                                
-                                                   
-                                                        <div id="custom-search-input">
+                                                  <div class="col-md-4">
+                                                       <div id="custom-search-input">
                                                             <div class="input-group">
                                                                 <input type="text" class="search-query form-control" placeholder="Search" />
                                                                 <span class="input-group-btn">
@@ -34,9 +32,9 @@
                                                                     </button>
                                                                 </span>
                                                             </div>
-                                                        
-                                                    </div>
-                                                </div>       
+                                                           
+                                                        </div>
+                                                    </div>       
                                                     <div class="col-md-4">
                                                     
                                                         <form>
@@ -125,8 +123,10 @@ I can provide you a top-notch logo design that you can without any problem show 
                          <!--Product Description End-->
 
                          <!--Skills Section Start-->
+
                             <div class="row skills-c">
-                                    <h2>Has 7 relevant skills to your job</h2>
+                                <div class="col-md-7">
+                                    <h2> Has 7 relevant skills to your job</h2>
                                     <ul class="skills-listing">
                                         <li>HTML</li>
                                         <li>CSS</li>
@@ -135,16 +135,31 @@ I can provide you a top-notch logo design that you can without any problem show 
                                         <li>jQuery</li>
                                         <li>React</li>
                                     </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="attachment">
+                                        <div class="service_subtitle2 mt-20 heading-text">
+                                       Attachments
+                                          </div>
+                            
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                            
+                                        </div>
+                                  </div>
+
+                                </div>
 
                                     <!--Skills Section End-->
                             </div> 
+                       
                         </div>
                     </div>
                   </div>
                </div>
             </div>
          </article>
-      </div>
+        
    </div>
 </section>
 
@@ -155,8 +170,51 @@ I can provide you a top-notch logo design that you can without any problem show 
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    .attachment{
+        display: inline-block;
+    width: 100%;
+    
+    margin: top;
+    margin-top: -50px;
+    }
+    .heading-text{
+        text-align: left;
+    }
+ @media only screen and (min-width:768px){
+.sorting-mbl .col-md-4:first-child {
+  
+    width: 30%;
+ 
+}
+div#custom-search-input {
+    
+    position: relative;
+    top: -16px;
+}
+.col-md-10.sorting-mbl {
+    text-align: right;
+    display: inline-block;
+    /* width: 100%; */
+}
 
+.sorting-mbl .col-md-4 {
+    width: 17%;
+    /* float: right; */
+    text-align: right;
+    display: inline-block;
+    clear: right;
+}
+} 
 @media only screen and (max-width:767px){
+    .attachment{
+        margin-top:-20px;
+    }
+    ul.skills-listing{
+        width: 100%;
+    }
+    .sorting-mbl .col-md-4{
+        float: left !important;
+    }
     .p_desription p{
         width: 100%;
         text-align: center;

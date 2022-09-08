@@ -24,7 +24,7 @@ color: #000000;
 }
 .sorting-mbl .col-md-4 {
     width: 17%;
-    float: right;
+    /* float: right; */
     text-align: right;
 }
 ul.skills-listing {
