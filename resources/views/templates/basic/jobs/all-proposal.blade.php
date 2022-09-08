@@ -10,31 +10,35 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        <h2 class="prosals-h">All Proposals</h2> 
+                        
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
-                                    <div class="col-md-3">
-                                        <div id="custom-search-input">
-                                            <div class="input-group">
-                                                <input type="text" class="search-query form-control" placeholder="Search" />
-                                                <span class="input-group-btn">
-                                                    <button type="button" disabled>
-                                                        <span class="fa fa-search"></span>
-                                                    </button>
-                                                </span>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-2">
+                                        <h2 class="prosals-h">All Proposals</h2> 
+                                        
                                     </div>
                                  
-                                    <div class="col-md-9">
+                                    <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
-                                            <div class="col-md-10">
-                                                <div class="row">
+                                            <div class="col-md-4">
+                                                
+                                                   
+                                                        <div id="custom-search-input">
+                                                            <div class="input-group">
+                                                                <input type="text" class="search-query form-control" placeholder="Search" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" disabled>
+                                                                        <span class="fa fa-search"></span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                        
+                                                    </div>
+                                                </div>       
+                                                    <div class="col-md-4">
                                                     
-                                                    <div class="col-md-12">
-                                                    <p class="sort-p"> Sort </p>
                                                         <form>
                                                             <select name="Best match" id="bestmatch">
                                                                 <option>Best match</option>
@@ -45,11 +49,11 @@
                                                             </select>
                                                         </form>
                                                     </div>
-                                                </div>
-                                            </div>
+                                               
+                                            
                                          <!--Sorting Section End-->
 
-                                        <div class="col-md-2">
+                                        <div class="col-md-4">
                                         <form>
                                             <select name="Filters" id="Filters">
                                                 <option>Filters</option>
@@ -83,7 +87,7 @@
                                            </div>
 
                                             <div class="col-md-5">
-                                                <div class="row">
+                                                <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
                                                         <p class="perhourprice">$55 / Per Hour</p>
@@ -96,7 +100,7 @@
                                                         <p class="rateperh">Job Success Rate</p>
                                                         <p class="perhourprice">90%</p>
                                                     </div>
-                                            </div>
+                                                 </div>
                                             </div>
 
                                             <div class="col-md-3">
@@ -150,6 +154,224 @@ I can provide you a top-notch logo design that you can without any problem show 
 @push('style')
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
+<style>
+
+@media only screen and (max-width:767px){
+    .p_desription p{
+        width: 100%;
+        text-align: center;
+    }
+    a.btn-products-s {
+        width: auto !important;
+        text-align: CENTER;
+        margin: 8px auto;
+        display: block;
+        padding: 7px 20%;
+        display: inline-block;
+    
+    }
+    ul.skills-listing li {
+    margin-right: 1% !important;
+    margin-bottom: 14px !important;
+    font-size: 12px !important;
+    padding: 2px 2% !important;
+}
+
+select#Filters {
+    float: none;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 8px 17px 8px 34px;
+    width: 100%;
+    margin-right: -13px;
+}
+p.rateperh{
+    text-align: center;
+}
+p.perhourprice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-align: CENTER;
+    margin-bottom: 20px;
+}
+.row.borderleftc {
+    text-align: center;
+    margin-top: 30px;
+}
+.borderleftc:after{
+    display: none;
+}
+.plocation {
+    font-weight: 600;
+    font-size: 14px;
+    position: relative;
+    padding-left: 0px;
+    margin-top: 2px;
+    margin-bottom: 40px !important;
+    margin-top: 16px;
+    display: inline-block;
+}
+p.plocation:before{
+    left: -24px;
+}
+.row.btns-s {
+    position: relative;
+    left: 0px;
+    text-align: center;
+}
+.row.btns-s .col-md-4{
+    display: inline-block;
+    flex: auto;
+    width: 3.33%;
+}
+.row.btns-per .col-md-4{
+    display:inline-block;
+    float: left;
+    width: 33%;
+}
+
+ul.skills-listing {
+    margin-top: 15px;
+    text-align: center;
+    display: inline-block;
+}
+ul.skills-listing li{
+    float: none;
+    display: inline-block;
+}
+.skills-c h2{
+    text-align: center;
+}
+.col-md-9.sorting-mbl .col-md-2 {
+    width: 40%;
+    float: left;
+    display: inline-block;
+}
+.col-md-9.sorting-mbl .col-md-10 {
+    width: 60%;
+    float: left;
+    display: inline-block;
+}
+select#bestmatch {
+    
+    float: right !important;
+    width: 84% !important;
+    margin-bottom: 15px;
+    right: 0px;
+
+}
+p.sort-p {
+    width: auto !important;
+}
+.col-md-9.sorting-mbl {
+    margin-top: 20px;
+}
+}
+
+@media only screen and (max-width:414px){
+    select#bestmatch{
+        right: -15px !important;
+    }
+    select#bestmatch {
+    padding: 8px 5px 8px 5px !important;
+    color: #007F7F;
+    font-size: 13px !important;
+    width: 77% !important;
+
+}
+select#Filters {
+    padding: 8px 17px 8px 13px !important;
+    font-size: 13px !important;
+}
+ul.skills-listing li {
+    margin-right: 1% !important;
+    margin-bottom: 14px !important;
+    font-size: 12px !important;
+    padding: 1px 3% !important;
+    }
+
+}
+@media only screen and (min-width:767px) and (max-width:992px){
+    a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 6px 5px !important;
+    font-weight: 600;
+    font-size: 10px !important;
+}
+p.rateperh {
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #007F7F;
+    font-weight: 600;
+    margin-top: 6px;
+}
+h4.pname-c {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 23px;
+    color: #7F007F;
+    margin-top: 16px;
+}
+p.pdesination-c {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #000000;
+}
+p.perhourprice {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 12px !important;
+    color: #000000;
+}
+select#Filters {
+    float: right;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 8px 17px 8px 11px;
+    color: #007F7F;
+    font-size: 16px;
+    width: 123px !important;
+}
+select#bestmatch {
+    float: right;
+    background: #EFF8F8;
+    border: 1px solid #CBDFDF;
+    border-radius: 5px;
+    padding: 10px 15px 8px 10px;
+    color: #007F7F;
+    font-size: 14px;
+    position: relative;
+    width: 120px;
+    top: 0px;
+}
+}
+.plocation {
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 18px;
+    color: #000000;
+    position: relative;
+    padding-left: 2px !important;
+    margin-top: 48px !important;
+}
+p.plocation:before {
+    width: 20px;
+    height: 20px;
+    background: red;
+    position: absolute;
+    left: -19px !important;
+    top: 8px !important; 
+    content: '';
+    background: url(/assets/images/job/location-icon.png) no-repeat;
+}
+}
+</style>
 @push('script')
 <script>
    'use strict';
