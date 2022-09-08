@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProposalAttachment extends Model
 {
     use HasFactory;
+    protected $fillable = ['name','uploaded_name ','url','type','is_published','user_id','module_id','module_type','deleted_at'];
 
     public function module()
     {

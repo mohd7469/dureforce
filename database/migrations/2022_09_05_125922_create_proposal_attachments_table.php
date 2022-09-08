@@ -20,14 +20,11 @@ class CreateProposalAttachmentsTable extends Migration
             $table->string('url')->nullable();
             $table->string('type')->nullable();
             $table->enum('is_published', [ 'Deactivated', 'Active']);
-            $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->integer('module_id')->index();
-            $table->string('module_type')->nullable();
+            $table->unsignedBigInteger('proposal_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
 
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('cascade');
 
         });
     }

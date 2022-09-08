@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/line-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/style/style.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/custom/custom.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     {{-- <link rel="stylesheet" href="{{asset('/assets/resources/style/index.scss')}}"> --}}
 
