@@ -12,7 +12,13 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
+<<<<<<< HEAD
+Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
+Route::get('all-proposal', 'buyer\jobcontroller@product')->name('job.all.product');
+Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
+=======
 Route::get('product', 'buyer\jobcontroller@product')->name('job.product');
+>>>>>>> 240c16677fe5eaee84ef209f5625417e60369f0c
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
 Route::get('proposal', 'ProposalController@index')->name('proposal.index');
