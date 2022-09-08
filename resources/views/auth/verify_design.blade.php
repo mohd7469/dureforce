@@ -47,7 +47,14 @@
                                 </div>
                         </div>
                         <div class="col-lg-12 text-center">
-                            <a href="{{ url('/register') }}" class="submit-btn w-50">resend COde</a>
+                            <div class="account-item">
+                                <label><a
+                                        href="{{ route('user.password.code.resend', ['email' => session()->get('pass_res_mail') ?? '']) }}"
+                                        class="text--base">@lang('Change email address')</a></label>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <a href="{{ url('/register') }}" class="submit-btn w-70 text-decoration-none">Resend Verfication Email</a>
                         </div>
                     </div>
                 </div>
