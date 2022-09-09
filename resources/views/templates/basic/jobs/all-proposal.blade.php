@@ -68,6 +68,13 @@
                                 </div>
 
                                  <!--Bio Profile Section Start-->
+                            
+                                @foreach ($proposals as $proposal)
+            
+                                    
+                                    <div class="" > 
+
+                       
                                         <div class="row biorow">
                                            <div class="col-md-4">
                                               <div class="row borderleftc"> 
@@ -75,11 +82,22 @@
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
                                                 <div class="col-md-5">
-                                                    <h4 class="pname-c"> Dumitru G</h4>
-                                                    <p class="pdesination-c">Full Stack Developer</p>
+                                                    @isset($proposal->user->username)
+                                                    <h4 class="pname-c"> 
+                                                               {{$proposal->user->username}}
+                                                     </h4>
+                                                     @endisset
+                                                     @isset($proposal->user->designation)
+                                                      <p class="pdesination-c"> {{$proposal->user->designation}} </p>
+                                                     @endisset
+                                                    
                                                  </div>
                                                     <div class="col-md-4">
-                                                        <p class="plocation">London, UK</p>
+                                                        @isset($proposal->user->address->address)
+                                                        <p class="plocation"> {{@$proposal->user->address->address }}</p>
+                                                        @endisset
+
+                                                       
                                                     </div>
                                               </div>
                                            </div>
@@ -88,7 +106,10 @@
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
-                                                        <p class="perhourprice">$55 / Per Hour</p>
+                                                        @isset($proposal->module->hourly_start_range)
+                                                        <p class="perhourprice">${{ $proposal->module->hourly_start_range}}  / Per Hour</p>
+                                                        @endisset
+                                                        
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Total Earnings</p>
@@ -114,8 +135,10 @@
                         <!--Product Description Start-->
                         <div class="row p_desription">
                             <div class="col-md-12">
-                           <p> <strong>Cover Letter -  </strong> Hi have a vision. I solve problems. Over the last 10 years I've delivered and supported Mediawiki based solutions for companies, non-commercial bodies,and enthusiasts. I also guarantee prompt and clear communication.
-I can provide you a top-notch logo design that you can without any problem show your main mission,and that will look perfect and clean.</p>
+                                @isset($proposal->cover_letter)
+                                <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
+                                @endisset
+                         
 
                             </div>
                         </div>
@@ -126,14 +149,22 @@ I can provide you a top-notch logo design that you can without any problem show 
 
                             <div class="row skills-c">
                                 <div class="col-md-7">
-                                    <h2> Has 7 relevant skills to your job</h2>
+                                    {{-- <h2> Has 7 relevant skills to your job</h2> --}}
+                                     @isset($proposal->user->skills)
+                                    <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
+                                   
                                     <ul class="skills-listing">
-                                        <li>HTML</li>
+                                     
+                                        @foreach ($proposal->user->skills as  $skills)
+                                         <li>{{$skills->name}} </li>
+                                        @endforeach
+                                        
+                                        {{-- <li>HTML</li>
                                         <li>CSS</li>
                                         <li>Javascript</li>
                                         <li>Bootstrap</li>
                                         <li>jQuery</li>
-                                        <li>React</li>
+                                        <li>React</li> --}}
                                     </ul>
                                 </div>
                                 <div class="col-md-5">
@@ -153,6 +184,12 @@ I can provide you a top-notch logo design that you can without any problem show 
                                     <!--Skills Section End-->
                             </div> 
                        
+                                    @endisset
+
+                                    <!--Skills Section End-->
+                            </div> 
+                          </div>
+                          @endforeach
                         </div>
                     </div>
                   </div>
