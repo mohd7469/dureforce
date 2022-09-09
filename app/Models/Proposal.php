@@ -13,14 +13,20 @@ class Proposal extends Model
 
 
 
+
     protected static function boot()
     {
 
         parent::boot();
-        static::saving(function ($model)  {
-            $uuid=Str::uuid()->toString();
-            $model->uuid =  $uuid;
+        static::saving(function ($model) {
+            $uuid = Str::uuid()->toString();
+            $model->uuid = $uuid;
         });
+
+    }
+    public static function scopeWithAll($query){
+
+        return $query->with('module')->with('user')->with('user.skills');
 
 
     }

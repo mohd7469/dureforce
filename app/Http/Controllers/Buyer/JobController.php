@@ -17,6 +17,7 @@ use App\Models\SkillSubCategory;
 use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Proposal;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
 use App\Models\ProjectLength;
@@ -470,10 +471,10 @@ class JobController extends Controller
     public function product()
     {
         
-        
+        $proposals = Proposal::WithAll()->get();
         $pageTitle = "Product";
 
-        return view('templates.basic.jobs.all-proposal', compact('pageTitle'));
+        return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
 

@@ -103,7 +103,8 @@ p.plocation:before {
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
 .biorow{
-    margin-top: 20px;
+    margin-top: 60px;
+
 }
 .borderleftc{
     position: relative;
