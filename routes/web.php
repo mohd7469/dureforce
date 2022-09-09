@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
 use Illuminate\Http\Request;
@@ -205,7 +206,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::middleware('staffaccess:7')->group(function () {
             //Manage Job
-            
+
             Route::get('job/index', 'JobController@index')->name('job.index');
             Route::get('job/closed', 'JobController@closed')->name('job.closed');
             Route::get('job/pending', 'JobController@pending')->name('job.pending');
@@ -550,7 +551,7 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::middleware(['checkStatus'])->group(function () {
             Route::namespace('Seller')->prefix('seller')->group(function () {
 
-                Route::middleware('is-profile-completed')->group(function(){
+                Route::middleware('is-profile-completed')->group(function () {
                     Route::get('dashboard', 'UserController@home')->name('home');
 
                     Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
@@ -587,14 +588,11 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::get('/service/create/{id?}', 'ServiceController@create')->name('service.create');
                     Route::post('/service/store', 'ServiceController@store')->name('service.store');
 
-                    Route::post('/service/store-overview','ServiceController@storeOverview')->name('service.store.overview');
-                    Route::post('/service/store-banner','ServiceController@storeBanner')->name('service.store.banner');
-                    Route::post('/service/store-pricing','ServiceController@storePricing')->name('service.store.pricing');
-                    Route::post('/service/store-requirement','ServiceController@storeRequirements')->name('service.store.requirement');
-                    Route::post('/service/store-review','ServiceController@storeReview')->name('service.store.review');
-
-
-
+                    Route::post('/service/store-overview', 'ServiceController@storeOverview')->name('service.store.overview');
+                    Route::post('/service/store-banner', 'ServiceController@storeBanner')->name('service.store.banner');
+                    Route::post('/service/store-pricing', 'ServiceController@storePricing')->name('service.store.pricing');
+                    Route::post('/service/store-requirement', 'ServiceController@storeRequirements')->name('service.store.requirement');
+                    Route::post('/service/store-review', 'ServiceController@storeReview')->name('service.store.review');
 
 
                     Route::post('/service/update/{id}', 'ServiceController@update')->name('service.update');
@@ -603,8 +601,8 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
                     Route::get('/category', 'UserController@category')->name('category');
                     // Route::get('/category', 'UserController@skillSubCategory')->name('category');
-                    
-                    
+
+
                     Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
                     Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
 
@@ -615,11 +613,11 @@ Route::name('user.')->prefix('user')->group(function () {
 
                     Route::get('/software/create/{id?}', 'SoftwareController@create')->name('software.create');
 
-                    Route::post('/software/store-overview','SoftwareController@storeOverview')->name('software.store.overview');
-                    Route::post('/software/store-banner','SoftwareController@storeBanner')->name('software.store.banner');
-                    Route::post('/software/store-pricing','SoftwareController@storePricing')->name('software.store.pricing');
-                    Route::post('/software/store-requirement','SoftwareController@storeRequirements')->name('software.store.requirement');
-                    Route::post('/software/store-review','SoftwareController@storeReview')->name('software.store.review');
+                    Route::post('/software/store-overview', 'SoftwareController@storeOverview')->name('software.store.overview');
+                    Route::post('/software/store-banner', 'SoftwareController@storeBanner')->name('software.store.banner');
+                    Route::post('/software/store-pricing', 'SoftwareController@storePricing')->name('software.store.pricing');
+                    Route::post('/software/store-requirement', 'SoftwareController@storeRequirements')->name('software.store.requirement');
+                    Route::post('/software/store-review', 'SoftwareController@storeReview')->name('software.store.review');
 
                     Route::post('/software/store', 'SoftwareController@store')->name('software.store');
                     Route::get('/software/edit/{slug}/{id}', 'SoftwareController@edit')->name('software.edit');
@@ -637,8 +635,8 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::post('/save-company', 'UserController@saveCompany')->name('profile.save.company');
 
                     Route::post('/save-payment-methods', 'UserPaymentMethodController@store')->name('profile.save.payment-methods');
-                    Route::get('/change-payment-status/{id}','UserPaymentMethodController@changeStatus')->name('profile.change-payment-status');
-                    Route::delete('/destroy-payment/{id}','UserPaymentMethodController@destroy')->name('profile.destroy.payment');
+                    Route::get('/change-payment-status/{id}', 'UserPaymentMethodController@changeStatus')->name('profile.change-payment-status');
+                    Route::delete('/destroy-payment/{id}', 'UserPaymentMethodController@destroy')->name('profile.destroy.payment');
                     Route::get('/edit/{id}', 'UserController@editProfile')->name('edit.profile');
                 });
             });
@@ -670,7 +668,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
                 //Job
                 Route::get('job/create', 'JobController@create')->name('job.create');
-                
+
                 Route::post('job/job_data_validate', 'JobController@jobDataValidate')->name('job.validate');
                 Route::post('job/store', 'JobController@store')->name('job.store');
                 Route::get('job/index', 'JobController@index')->name('job.index');
@@ -684,6 +682,11 @@ Route::name('user.')->prefix('user')->group(function () {
 
 
                 Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
+
+            });
+
+            Route::namespace('Seller')->prefix('seller')->group(function () {
+                Route::get('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
 
             });
 
