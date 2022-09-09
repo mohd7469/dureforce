@@ -178,14 +178,14 @@
                          
                                         <div class="card-block">
                                         <ul class="row">
-                                        <div class="col-md-3 col-sm-3">
-                                        <img class="btn-md" src="{{ !empty($user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $user->image, 'profile_image'): getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
+                                        <div class="col-md-3 col-sm-3 profile-img">
+                                        <img class="btn-md " src="{{ !empty($user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $user->image, 'profile_image'): getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
                                         
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">
                                             <div class="profile_title">
-                                                <h2 class="card-title custom-card">{{$job->user->username ? $job->user->username  : ''}}</h2>
-                                                    <span>Member since {{$job->user->created_at->format('Y-m-d') ? $job->user->created_at->format('Y-m-d') : '' }} </span>
+                                                <strong class="card-title ">{{$job->user->username ? $job->user->username  : ''}}</strong><br>
+                                                    <small>Member since {{$job->user->created_at->format('Y-m-d') ? $job->user->created_at->format('Y-m-d') : '' }} </small>
                                             </div>
                                             </div>
                                             <div class="sep-solid"></div>
@@ -194,6 +194,7 @@
                                                 <li>
                                                     <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user->address->address ? $job->user->address->address  : ''}} </span>
                                                     <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> 12:37 pm local time</span>
+                                                </li>
                                                 
                                             </ul>
                                             </div>
@@ -206,7 +207,7 @@
                                                         <svg style="height:33%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
                                                             <rect width="25" height="25" fill="none"/><path d="M54.5,201.5c-9.2-9.2-3.1-28.5-7.8-39.8S24,140.5,24,128s17.8-22,22.7-33.7-1.4-30.6,7.8-39.8S83,51.4,94.3,46.7,115.5,24,128,24s22,17.8,33.7,22.7,30.6-1.4,39.8,7.8,3.1,28.5,7.8,39.8S232,115.5,232,128s-17.8,22-22.7,33.7,1.4,30.6-7.8,39.8-28.5,3.1-39.8,7.8S140.5,232,128,232s-22-17.8-33.7-22.7S63.7,210.7,54.5,201.5Z" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/><polyline points="172 104 113.3 160 84 132" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
                                                         </svg>
-                                                        Payment method verified
+                                                        <span class="text-dark">Payment method verified</span>
                                                     </div>
                                                 </li>
                                                 <li>
@@ -233,10 +234,10 @@
 
                                             <div class="sep-solid"></div>
                                             <div class="mb-3">
-                                            <label for="exampleFormControlTextarea1" class="form-label">Job Link</label>
+                                            <label for="exampleFormControlTextarea1" class="form-label" style="padding-top:3px">Job Link</label>
                                             <input type="text" class="form-control" id="" placeholder="{{ Request::url()}}">
                                             </div>
-                                        
+                                            <button type="button" class="copy-link-btn" >Copy Link</button>
                                         </div>
 
                                     </div>
@@ -260,385 +261,5 @@
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
 
 @endpush
-<style>
-.container {
-    max-width: 1390px !important;
-}
-.row.custom_cards_s {
-    margin-bottom: 60px;
-}
-.d-heading{
-    font-size: 20px;
-    padding: 20px 0px;
-    width: 100%;
-    display: inline-block;
-}
-.custom_cards_s .card {
-    border: none;
-    box-shadow: rgb(100 100 111 / 7%) 0px 7px 18px 0px;
-    padding: 15px 11px 10px 10px;
-}
-.custom_cards_s h5.card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-.product-desc-content ul {
-    margin: 25px 0px 40px 0px;
-    list-style-type: "*"!important;
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
 
-}
-.product-desc-content ul li{
-    margin-bottom: 8px;
-    position: relative;
-    padding-left: 24px;
-    list-style-type: "*"!important;
-
-
-}
-.job_count_label_padding{
-    padding-left: 5px;
-}
-.job-count-color{
-    color: #007F7F;
-}
-.product-desc-content h3{
-    font-size: 20px !important;
-    font-weight: 400;
-}
-.custom_cards_s .card:first-child {
-    margin-left: 0px;
-}
-ul.custom_rating li {
-    background: #e3fafa;
-    margin-bottom: 25px;
-    padding: 10px 17px 10px 24px;
-}
-ul.custom_rating li h4{
-    font-size: 16px;
-    font-weight: 400;
-    margin-bottom: 6px;
-    width: 100%;
-    display: inline-block;
-    color: #000;
-
-}
-ul.custom_rating li h4 a{
-    color: #007F7F
-}
-ul.custom_rating li p{
-    font-size: 16px;
-    width: 100%;
-    display: block;
-    line-height: 1.5;
-}
-.date-align{
-    text-align: right;
-}
-.comment-banner{
-    width: 100%;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 18px;
-}
-.hheading-c{
-    font-size: 22px;
-    margin-bottom: 50px;
-    width: 100%;
-    display: inline-block;
-    border-bottom: 1px solid #8b8989;
-    padding-bottom: 30px;
-}
-p.job_staus a {
-    background: #018181;
-    display: inline-block;
-    padding: 0px 22px;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 16px;
-    margin-left: 8px;
-}
-.custom_rating i{
-    color: #007F7F;
-}
-.list_desc ul li {
-    text-decoration: none!important;
-
-}
-
-
-a.standard-btn {
-  padding: 9px 7px!important;
-  border: 0px solid #e1e7ec;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  font-size: 15px;
-  font-weight: 400;
-  background-color: #007f7f !important;
-  color: #fff;
-}
-
-.sidebar-heading-border{
-    border-bottom: 1px solid #c5e0e0;
-    margin-bottom: 7px;
-}
-.cstm-sidebar{
-    display: inline-block;
-}
-h2.title {
-    font-weight: 700;
-    font-size: 22px;
-    line-height: 28px;
-    color: #000;
-    /* margin-bottom: 20px; */
-    padding: 10px 10px 18px 10px;
-    display: inline-block;
-}
-h3.title {
-    font-weight: 600;
-    font-size: 22px !important;
-    line-height: 28px;
-    color: #000000;
-    padding-bottom: 15px;
-}
-.item-details-thumb-area{
-    background-color: #F8FAFA;
-}
-.item-details-tag ul li a {
-    padding: 3px 30px !important;
-    font-size: 14px;
-    /* line-height: 15px; */
-}
-p.job_staus {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 18px;
-    color: #000000;
-    margin-top: 10px;
-}
-p.job_staus a {
-    padding: 8px 20px;
-    background: #72C1C1;
-    border-radius: 4px;
-    font-weight: 400;
-}
-.sidebar-title2 li {
-    border-bottom: NONE !important;
-}
-p.p-date {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: #000000;
-}
-.cstm-sidebar .sidebar-title2 li span {
-font-weight: 600;
-font-size: 16px;
-line-height: 20px;
-}
-.cstm-sidebar .sidebar-title2 li p{
-    font-weight: 400;
-font-size: 14px;
-line-height: 18px;
-}
-
-.dod-text p {
-    font-weight: 600 !important;
-    font-size: 16px !important;
-    line-height: 20px !important;
-    margin-bottom: 5px;
-}
-.dod-text span {
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
-    color: #000000;
-    text-transform: capitalize !important;
-}
-.font-style{
-    font-size: 13px !important;
-color: #58a7a8 !important;
-}
-.status_btn{
-    display: inline-block;
-    height: 32px;
-    background: #72C1C1;
-    border-radius: 4px;
-    margin-right: 10px;
-    padding-top: 6px;
-    width: 68px;
-    padding-left: 8px;
-}
-
-  
-
-   
-   
-   
-   .hheading-c{
-      font-size: 22px;
-      margin-bottom: 16px;
-      width: 100%;
-      display: inline-block;
-      border-bottom: 1px solid #8b8989;
-      padding-bottom: 5px;
-      text-align: left;
-   }
-   p.job_staus a {
-      background: #018181;
-      display: inline-block;
-      padding: 0px 22px;
-      border-radius: 4px;
-      color: #fff;
-      font-size: 16px;
-      margin-left: 8px;
-   }
-   .custom_rating i{
-      color: #007F7F;
-   }
-   .list_desc ul li {
-      text-decoration: none!important;
-   }
-   a.standard-btn {
-      padding: 11px 16px !important;
-      border: 0px solid #e1e7ec;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      -ms-border-radius: 5px;
-      -o-border-radius: 5px;
-      font-size: 15px;
-      font-weight: 400;
-      background-color: #007f7f;
-      color: #fff;
-   }
-   .cstm-sidebar{
-      display: inline-block;
-   }
-   h2.title {
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 28px;
-      color: #000;
-      / margin-bottom: 20px; /
-      padding: 10px 10px 18px 10px;
-      display: inline-block;
-   }
-   h3.title {
-      font-weight: 600;
-      font-size: 22px !important;
-      line-height: 28px;
-      color: #000000;
-      padding-bottom: 15px;
-   }
-   .item-details-thumb-area{
-      background-color: #F8FAFA;
-   }
-   .item-details-tag ul li a {
-      padding: 3px 30px !important;
-      font-size: 14px;
-      / line-height: 15px; /
-   }
-   p.job_staus {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 18px;
-      color: #000000;
-   }
-   p.job_staus a {
-      padding: 8px 20px;
-      background: #72C1C1;
-      border-radius: 4px;
-      font-weight: 400;
-   }
-   p.p-date {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 16px;
-      color: #000000;
-   }
-   .dod-text p {
-      font-weight: 600 !important;
-      font-size: 16px !important;
-      line-height: 20px !important;
-      margin-bottom: 5px;
-
-   }
-   .dod-text span {
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 18px;
-      color: #000000;
-      text-transform: capitalize !important;
-   }
-   .font-style{
-      font-size: 13px !important;
-      color: #58a7a8 !important;
-   }
-   .profile_title{
-      text-align: left;
-      width: 100%
-
-   }
-   .profile_title span{
-      text-align: left;
-      margin-bottom: 10px;
-      width: 100%;
-      font-size:12px;
-   }
- 
-   .location li {
-      
-      padding-top: 7px;
-      padding-bottom: 7px
-
-   }
-   .paymentsection li{
-      font-weight: 500;
-      color: #000000;
-      font-size: 15px;
-
-   }
-   .paymentsection ul , .paymentsection li{
-      margin: 0;
-      padding: 0;
-      color:#007F7F;
-
-   }
-   .paymentsection ul , .paymentsection li span{
-      text-align: left;
-      margin: 0;
-      padding: 6px;
-      display: inline-block;
-   }
-   .paymentsection p{
-
-      color:black;
-   }
-   .paymentsection{
-      height: 89px;
-   }
-   .checked {
-      color: #007F7F;
-   }
-   .custom-card{
-      font-size: 16px;
-      font-weight: 700;
-   }
-   .sidebar-title-custom{
-      width: 70%;
-      font-weight: 600;
-      font-size: 14px;
-   }
-   .job_subtitle2 h4{
-      font-size: 16px;
-      font-weight: 600;
-   }
-</style>
