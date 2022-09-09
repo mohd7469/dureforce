@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests\PropsalStoreRequest;
 use App\Models\Job;
 use App\Models\Milestone;
 use App\Models\Proposal;
@@ -55,11 +55,10 @@ class ProposalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $job_uuid)
+    public function store(PropsalStoreRequest $request, $job_uuid)
     {
         $user = Auth::user();
         $job_id = Job::where('uuid',$job_uuid)->pluck('id')->first();
-
         try {
             DB::beginTransaction();
 

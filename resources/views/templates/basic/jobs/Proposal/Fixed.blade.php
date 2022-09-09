@@ -165,6 +165,10 @@
                      <small  class="form-text text-dark">Mode of Devlivery *</small>
                      <select name="mode_of_delivery" id="mode_of_delivery" class="form-control">
                         <option value="">Select Mode Of Delivery</option>
+                        @foreach ($delivery_modes as $mode)
+                           <option value="{{$mode->id}}">{{$mode->title}}</option>
+                            
+                        @endforeach
                      </select>
                   </div>
                </div>

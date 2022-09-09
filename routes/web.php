@@ -553,6 +553,8 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::middleware('is-profile-completed')->group(function () {
                     Route::get('dashboard', 'UserController@home')->name('home');
+                 
+                 Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
 
                     Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
                     Route::post('profile-setting', 'UserController@submitProfile');
@@ -685,10 +687,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             });
 
-            Route::namespace('Seller')->prefix('seller')->group(function () {
-                Route::get('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
-
-            });
+           
 
             //JobBiding
             Route::post('job/biding', 'JobBidingController@store')->name('job.biding.store');
