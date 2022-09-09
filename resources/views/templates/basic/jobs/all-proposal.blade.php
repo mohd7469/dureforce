@@ -71,7 +71,7 @@
 
                                  <!--Bio Profile Section Start-->
                             
-                                @foreach ($proposals as $proposal)
+                            @foreach ($proposals as $proposal)
             
                                     
                                     <div class="" > 
@@ -131,45 +131,57 @@
                                                     <div class="col-md-4"><a href="#" class="btn-products-s phire">Hire</a></div>
                                                 </div>
                                             </div>
-                            </div>
-                        <!--===  Bio Profile Section End ===-->
+                                     </div>
+                                            <!--===  Bio Profile Section End ===-->
 
-                        <!--Product Description Start-->
-                        <div class="row p_desription">
-                            <div class="col-md-12">
-                                @isset($proposal->cover_letter)
-                                <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
-                                @endisset
-                         
+                                        <!--Product Description Start-->
+                                            <div class="row p_desription">
+                                                <div class="col-md-12">
+                                                    @isset($proposal->cover_letter)
+                                                    <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
+                                                    @endisset
+                                            
 
-                            </div>
-                        </div>
+                                                </div>
+                                            </div>
 
-                         <!--Product Description End-->
+                                            <!--Product Description End-->
 
-                         <!--Skills Section Start-->
-                            <div class="row skills-c">
-                                     @isset($proposal->user->skills)
-                                    <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
-                                   
-                                    <ul class="skills-listing">
-                                     
-                                        @foreach ($proposal->user->skills as  $skills)
-                                         <li>{{$skills->name}} </li>
-                                        @endforeach
-                                        
-                                        {{-- <li>HTML</li>
-                                        <li>CSS</li>
-                                        <li>Javascript</li>
-                                        <li>Bootstrap</li>
-                                        <li>jQuery</li>
-                                        <li>React</li> --}}
-                                    </ul>
-                                    @endisset
+                                            <!--Skills Section Start-->
+                                        <div class="row skills-c">
+                                                @isset($proposal->user->skills)
+                                                <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
+                                            
+                                                <ul class="skills-listing">
+                                                
+                                                    @foreach ($proposal->user->skills as  $skills)
+                                                    <li>{{$skills->name}} </li>
+                                                    @endforeach
+                                                    
+                                                    {{-- <li>HTML</li>
+                                                    <li>CSS</li>
+                                                    <li>Javascript</li>
+                                                    <li>Bootstrap</li>
+                                                    <li>jQuery</li>
+                                                    <li>React</li> --}}
+                                                </ul>
+                                                @endisset
 
-                                    <!--Skills Section End-->
-                            </div> 
-                          </div>
+                                                <!--Skills Section End-->
+                                        </div> 
+
+                                        <div class="col-md-5">
+                                            <div class="attachment">
+                                                <div class="service_subtitle2 mt-20 heading-text">
+                                            <h2> Attachments</h2>
+                                                </div>
+                                    
+                                                        <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
+                                                        <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                                    
+                                                </div>
+                                        </div>
+                                    </div>
                           @endforeach
                         </div>
                     </div>
