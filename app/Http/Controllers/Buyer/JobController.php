@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\DOD;
 use App\Models\JobType;
 use App\Models\Module;
@@ -457,6 +458,7 @@ class JobController extends Controller
         
         $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
         $skillCats = SkillCategory::select('name', 'id')->get();
+        $delivery_modes = DeliveryMode::all()->Active();
 
         foreach($skillCats as $skillCat){
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
@@ -465,7 +467,7 @@ class JobController extends Controller
         
         $pageTitle = "Proposal";
 
-        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','proposal','skills'));
+        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','proposal','skills','delivery_modes'));
 
     }
     public function product()
