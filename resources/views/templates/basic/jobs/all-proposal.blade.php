@@ -69,7 +69,7 @@
 
                                  <!--Bio Profile Section Start-->
                             
-                                @foreach ($proposals as $proposal)
+                            @foreach ($proposals as $proposal)
             
                                     
                                     <div class="" > 
@@ -129,21 +129,21 @@
                                                     <div class="col-md-4"><a href="#" class="btn-products-s phire">Hire</a></div>
                                                 </div>
                                             </div>
-                            </div>
-                        <!--===  Bio Profile Section End ===-->
+                                     </div>
+                                            <!--===  Bio Profile Section End ===-->
 
-                        <!--Product Description Start-->
-                        <div class="row p_desription">
-                            <div class="col-md-12">
-                                @isset($proposal->cover_letter)
-                                <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
-                                @endisset
-                         
+                                        <!--Product Description Start-->
+                                            <div class="row p_desription">
+                                                <div class="col-md-12">
+                                                    @isset($proposal->cover_letter)
+                                                    <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
+                                                    @endisset
+                                            
 
-                            </div>
-                        </div>
+                                                </div>
+                                            </div>
 
-                         <!--Product Description End-->
+                                            <!--Product Description End-->
 
                          <!--Skills Section Start-->
 
@@ -186,9 +186,8 @@
                        
                                     @endisset
 
-                                    <!--Skills Section End-->
-                            </div> 
-                          </div>
+
+                                   
                           @endforeach
                         </div>
                     </div>

@@ -470,7 +470,6 @@ class JobController extends Controller
     {
         
         $proposals = Proposal::WithAll()->get();
-        dd($proposals);
         $pageTitle = "Product";
 
         return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
