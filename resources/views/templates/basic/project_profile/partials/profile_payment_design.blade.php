@@ -1087,171 +1087,6 @@
                     <div class="col-12 col-md-8 p-0">
 
                         <div class="tab-content ">
-                            <input type="hidden" name="_token" value="bNpyRs3QyOnT5UorUY5izFnvouKTq47tM6AHF2tp">                            <div id="profile" role="tabpanel" class="tab-pane">
-                                <div class="setProfile" id="basic-profile">
-    <form action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-basic" method="POST" id="form-basic-save" enctype="multipart/form-data">
-        <input type="hidden" name="_token" value="bNpyRs3QyOnT5UorUY5izFnvouKTq47tM6AHF2tp">        <div class="container-fluid welcome-body">
-            <h1 class="mb-4">Welcome Muhammad Shahzaib</h1>
-            <span class="cmnt pb-4">
-                Complete your profile to join our global community of freelancers and start
-                selling
-                your
-                service
-                to growing network of businesses.</span>
-            <div>
-
-                <label class="mt-4">Profile Picture <span class="imp">*</span></label>
-                <div class="profile-img col-md-12" action="" style="background-color: transparent;">
-                    <input type="file" name="image" id="img-upload" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after" onchange="previewFile(this)" title="">
-
-                    <img width="100" height="100" id="preview-img" src="https://azapp-dureforce-dev.azurewebsites.net/assets/images/default.png">
-                    
-                </div>
-                <div class="col-md-12">
-                    <p style="font-size: 12px">Drop file here or Browse to add</p>
-                </div>
-                <div class="col-md-12">
-                    <label class="mt-4">Job Title <span class="imp">*</span></label>
-                    <input type="text" name="designation" placeholder="E.g. Full Stack Developer" value="">
-                </div>
-                <div class="col-md-12">
-                    <label class="mt-4">About You <span class="imp">*</span></label>
-                    <textarea cols="20" rows="5" name="about_me" placeholder="Describe yourself to clients"></textarea>
-                </div>
-                <div class="col-md-12">
-                    <label class="mt-4">Location <span class="imp">*</span></label>
-                    <input type="text" name="location" value="" placeholder="City, Country">
-                </div>
-                <div class="col-md-12">
-                    <label class="mt-4">Phone</label>
-                    <input type="number" name="mobile" placeholder="" value="">
-                </div>
-                <div class="language-container row" id="language-row" style="justify-content: space-between !important">
-                                            <div class="col-md-6 col-sm-12">
-                            <label class="mt-4">Language <span class="imp">*</span></label>
-                            <select name="languages[]" class="form-control select-lang" id="">
-                                <option value="" selected="">
-                                    Spoken Language(s)
-                                </option>
-                                                                    <option value="1">
-                                        English
-                                    </option>
-                                                            </select>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-                            <select name="language_level[]" class="form-control selected-level select-lang" id="">
-                                <option value="" selected="">
-                                    My Level is
-                                </option>
-                                                                    <option value="1">
-                                        B1 (Pre-Intermediate)
-                                    </option>
-                                                                    <option value="2">
-                                        B2 (Intermediate)
-                                    </option>
-                                                                    <option value="3">
-                                        C1 (Upper-Intermediate)
-                                    </option>
-                                                                    <option value="4">
-                                        C2 (Advanced)
-                                    </option>
-                                                            </select>
-                        </div>
-                                    </div>
-
-                <button type="button" class="my-2" id="add-language" onclick="addMoreLanguages()">Add another
-                </button>
-            </div>
-        </div>
-
-        <div class="setProfile">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-continue m-0 btn-secondary ">
-                    Continue
-                </button>
-            </div>
-        </div>
-    </form>
-</div>
-                            </div>
-
-                            <div id="profile2" role="tabpanel" class="tab-pane">
-                                <style>
-    .img-box {
-        margin-top: 4px;
-        width: 100px;
-        height: 100px;
-    }
-
-</style>
-<div class="setProfile" id="">
-    <form action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-company" method="POST" id="" enctype="multipart/form-data">
-        <input type="hidden" name="_token" value="bNpyRs3QyOnT5UorUY5izFnvouKTq47tM6AHF2tp">        <div class="container-fluid welcome-body" id="">
-            <h1 class="mb-4">Company</h1>
-            <span class="cmnt pb-4">Complete your profile to search from thousands of skilled freelancers and
-                request proposals.</span>
-            <div>
-                <div id="company-container">
-
-                    <div id="">
-                        <div class="col-md-12">
-                            <label class="mt-4">Company Name  </label>
-                            <input type="text" name="name" id="company-name" value="" placeholder="E.g. Microsoft">
-                        </div>
-                        <div class="col-md-12">
-
-
-                            <label class="mt-4">Company Logo </label>
-                            <div class="profile-img" style="background-color: transparent;">
-                                <input type="file" name="company_logo" id="img-upload" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after" onchange="previewCompanyFile(this)">
-                                <img width="100" height="100" id="preview-img-company" src="https://azapp-dureforce-dev.azurewebsites.net/assets/images/default.png">
-                                                            </div>
-                            
-                        </div>
-                        <div class="col-md-12">
-                            <label class="mt-4">Company Phone  </label>
-                            <input type="number" name="phone" value="" placeholder="">
-                        </div>
-                        <div class="col-md-12">
-                            <label class="mt-4">Company Email Address </label>
-                            <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="" placeholder="">
-                            <div class="col-md-12">
-                                <label class="mt-4">Location  </label>
-                                <input type="text" id="company-location" name="location" value="" placeholder="City, Country">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mt-4">Company VAT  </label>
-                                <input type="text" id="company-vat" value="" name="vat" placeholder="">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mt-4">Company Website </label>
-                                <input type="text" id="company-website" value="" name="url" placeholder="website">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mt-4">LinkdIn URL  </label>
-                                <input type="text" id="linkedin-website" name="linkedin_url" value="" placeholder="">
-                            </div>
-                            <div class="col-md-12">
-                                <label class="mt-4">Facebook URL  </label>
-                                <input type="text" id="facebook-website" name="facebook_url" value="" placeholder="">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class=" mt-3 p-0">
-                <div class="col-md-6">
-                    <button type="submit" class="m-0 my-2 btn btn-continue btn-secondary ">
-                        Continue
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-                            </div>
                             <div id="profile3" role="tabpanel" class="tab-pane active">
                                                                     <div class="setProfile" id="">
 
@@ -1300,11 +1135,41 @@
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Country <span class="imp">*</span></label>
-                            <input type="text" name="country" value="" placeholder="" required="">
+                            <select
+                                name="languages[]"
+                                class="form-control select-lang"
+                                id=""
+                                >
+                                <option
+                                    value=""
+                                    selected=""
+                                    >
+                                </option>
+                                <option
+                                    value="1"
+                                >
+                                    Pakistan
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">City <span class="imp">*</span></label>
-                            <input type="text" name="city" value="" placeholder="" required="">
+                            <select
+                                name="languages[]"
+                                class="form-control select-lang"
+                                id=""
+                                >
+                                <option
+                                    value=""
+                                    selected=""
+                                    >
+                                </option>
+                                <option
+                                    value="1"
+                                >
+                                    Lahore
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>

@@ -10,10 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Cache;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, HasFactory;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;
@@ -87,7 +88,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function jobs()
     {
-        return $this->hasMany(Job::class)->where('status', 1);
+        // return $this->hasMany(Job::class)->where('status', 1);
+        return $this->hasMany(Job::class);
     }
     public function proposal_attachment()
     {

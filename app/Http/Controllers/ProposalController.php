@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ProposalController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->activeTemplate = activeTemplate();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,9 @@ class ProposalController extends Controller
      */
     public function index()
     {
-        //
+        $pageTitle = "Submit a proposal";
+        return view($this->activeTemplate .'proposal',compact('pageTitle'));
+
     }
 
     /**
