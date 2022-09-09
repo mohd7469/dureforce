@@ -114,14 +114,14 @@
                                         <div class="sidebar">
                                             <div class="widget custom-widget mb-30 cstm-sidebar">
                                                 @if($job->budget_type_id == \App\Models\BudgetType::$hourly)
-                                                    <ul class="sidebar-title2 sidebar-heading-border">
+                                                    <ul class="sidebar-title2">
                                                         <li><span>Per Hour Rate:</span>
                                                             <span>{{ '$'.$job->hourly_start_range." - $".$job->hourly_end_range }}</span>
                                                         </li>
                                                     </ul>
                                                 @else
-                                                    <ul class="sidebar-title2 sidebar-heading-border" >
-                                                        <li ><span>Fixed Amount:</span>
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Fixed Amount:</span>
                                                             <span>{{ '$'.$job->fixed_amount}}</span>
                                                         </li>
                                                     </ul>
@@ -162,85 +162,16 @@
                                                     </li>
                                                 </ul>
 
-                                                <div class="widget-btn- mt-20 cstm-btn" style="display: inline">
-                                                    <a href="{{route('user.job.submit.proposal',$job->uuid)}}"   class="standard-btn mr-15">Submit Proposal</a>
-                                                    <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
+                                                <div class="widget-btn- mt-20 cstm-btn">
+                                                    <a href="javascript:void(0)"   class="standard-btn mr-15">View Proposals</a>
+                                                    <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
+
+
 
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xl-3 col-lg-3 mb-30">
-                                                <div class="custom-widget widget mb-30" style="width: 330px; height: 455px">
-                                                   <h5 class="hheading-c">About the client</h5>
-                                               
-                                                <div class="col-12">
-                         
-                                        <div class="card-block">
-                                        <ul class="row">
-                                        <div class="col-md-3 col-sm-3">
-                                        <img class="btn-md" src="{{ !empty($user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $user->image, 'profile_image'): getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
-                                        
-                                        </div>
-                                        <div class="col-md-9 col-sm-19 text-center">
-                                            <div class="profile_title">
-                                                <h2 class="card-title custom-card">{{$job->user->username ? $job->user->username  : ''}}</h2>
-                                                    <span>Member since {{$job->user->created_at->format('Y-m-d') ? $job->user->created_at->format('Y-m-d') : '' }} </span>
-                                            </div>
-                                            </div>
-                                            <div class="sep-solid"></div>
-                                            <div >
-                                            <ul class="location">
-                                                <li>
-                                                    <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user->address->address ? $job->user->address->address  : ''}} </span>
-                                                    <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> 12:37 pm local time</span>
-                                                
-                                            </ul>
-                                            </div>
-                                            <div class="sep-solid"></div>
-                                            <div class="paymentsection">
-                                            <ul>
-                                               
-                                                <li>
-                                                    <div>
-                                                        <svg style="height:33%;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                                                            <rect width="25" height="25" fill="none"/><path d="M54.5,201.5c-9.2-9.2-3.1-28.5-7.8-39.8S24,140.5,24,128s17.8-22,22.7-33.7-1.4-30.6,7.8-39.8S83,51.4,94.3,46.7,115.5,24,128,24s22,17.8,33.7,22.7,30.6-1.4,39.8,7.8,3.1,28.5,7.8,39.8S232,115.5,232,128s-17.8,22-22.7,33.7,1.4,30.6-7.8,39.8-28.5,3.1-39.8,7.8S140.5,232,128,232s-22-17.8-33.7-22.7S63.7,210.7,54.5,201.5Z" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/><polyline points="172 104 113.3 160 84 132" fill="none" stroke="#007F7F" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
-                                                        </svg>
-                                                        Payment method verified
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <i class="fa fa-star "></i>
-                                                    <i class="fa fa-star "></i>
-                                                    <i class="fa fa-star "></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <span>4.98 of 32 reviews</i>
-                                                </li>
-                                            </ul>
-                                            </div>
-                                            <div class="sep-solid"></div>
-                                            
-                                            <ul class="sidebar-title-custom">
-                                                <li>
-                                                        <span class="job-count-color">22</span>
-                                                         <span class="job_count_label_padding"> Jobs posted</span>
-                                                </li>
-                                                <li>
-                                                    <span class="job-count-color">05</span>
-                                                    <span class="job_count_label_padding"> Open jobs</span>
-                                                </li>
-                                            </ul>
-
-                                            <div class="sep-solid"></div>
-                                            <div class="mb-3">
-                                            <label for="exampleFormControlTextarea1" class="form-label">Job Link</label>
-                                            <input type="text" class="form-control" id="" placeholder="{{ Request::url()}}">
-                                            </div>
-                                        
-                                        </div>
-
                                     </div>
-
                                 </div>
 
                             
@@ -258,7 +189,6 @@
 
 @push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
-
 @endpush
 <style>
 .container {
@@ -286,22 +216,18 @@
 .product-desc-content ul {
     margin: 25px 0px 40px 0px;
     list-style-type: "*"!important;
-
+    
 }
 .product-desc-content ul li{
     margin-bottom: 8px;
     position: relative;
     padding-left: 24px;
     list-style-type: "*"!important;
+    
+  
+}
 
 
-}
-.job_count_label_padding{
-    padding-left: 5px;
-}
-.job-count-color{
-    color: #007F7F;
-}
 .product-desc-content h3{
     font-size: 20px !important;
     font-weight: 400;
@@ -363,7 +289,7 @@ p.job_staus a {
 }
 .list_desc ul li {
     text-decoration: none!important;
-
+    
 }
 
 
@@ -381,10 +307,7 @@ a.standard-btn {
   color: #fff;
 }
 
-.sidebar-heading-border{
-    border-bottom: 1px solid #c5e0e0;
-    margin-bottom: 7px;
-}
+
 .cstm-sidebar{
     display: inline-block;
 }
@@ -424,9 +347,6 @@ p.job_staus a {
     background: #72C1C1;
     border-radius: 4px;
     font-weight: 400;
-}
-.sidebar-title2 li {
-    border-bottom: NONE !important;
 }
 p.p-date {
     font-weight: 600;
@@ -474,171 +394,4 @@ color: #58a7a8 !important;
     width: 68px;
     padding-left: 8px;
 }
-
-  
-
-   
-   
-   
-   .hheading-c{
-      font-size: 22px;
-      margin-bottom: 16px;
-      width: 100%;
-      display: inline-block;
-      border-bottom: 1px solid #8b8989;
-      padding-bottom: 5px;
-      text-align: left;
-   }
-   p.job_staus a {
-      background: #018181;
-      display: inline-block;
-      padding: 0px 22px;
-      border-radius: 4px;
-      color: #fff;
-      font-size: 16px;
-      margin-left: 8px;
-   }
-   .custom_rating i{
-      color: #007F7F;
-   }
-   .list_desc ul li {
-      text-decoration: none!important;
-   }
-   a.standard-btn {
-      padding: 11px 16px !important;
-      border: 0px solid #e1e7ec;
-      border-radius: 5px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      -ms-border-radius: 5px;
-      -o-border-radius: 5px;
-      font-size: 15px;
-      font-weight: 400;
-      background-color: #007f7f;
-      color: #fff;
-   }
-   .cstm-sidebar{
-      display: inline-block;
-   }
-   h2.title {
-      font-weight: 700;
-      font-size: 22px;
-      line-height: 28px;
-      color: #000;
-      / margin-bottom: 20px; /
-      padding: 10px 10px 18px 10px;
-      display: inline-block;
-   }
-   h3.title {
-      font-weight: 600;
-      font-size: 22px !important;
-      line-height: 28px;
-      color: #000000;
-      padding-bottom: 15px;
-   }
-   .item-details-thumb-area{
-      background-color: #F8FAFA;
-   }
-   .item-details-tag ul li a {
-      padding: 3px 30px !important;
-      font-size: 14px;
-      / line-height: 15px; /
-   }
-   p.job_staus {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 18px;
-      color: #000000;
-   }
-   p.job_staus a {
-      padding: 8px 20px;
-      background: #72C1C1;
-      border-radius: 4px;
-      font-weight: 400;
-   }
-   p.p-date {
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 16px;
-      color: #000000;
-   }
-   .dod-text p {
-      font-weight: 600 !important;
-      font-size: 16px !important;
-      line-height: 20px !important;
-      margin-bottom: 5px;
-
-   }
-   .dod-text span {
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 18px;
-      color: #000000;
-      text-transform: capitalize !important;
-   }
-   .font-style{
-      font-size: 13px !important;
-      color: #58a7a8 !important;
-   }
-   .profile_title{
-      text-align: left;
-      width: 100%
-
-   }
-   .profile_title span{
-      text-align: left;
-      margin-bottom: 10px;
-      width: 100%;
-      font-size:12px;
-   }
- 
-   .location li {
-      
-      padding-top: 7px;
-      padding-bottom: 7px
-
-   }
-   .paymentsection li{
-      font-weight: 500;
-      color: #000000;
-      font-size: 15px;
-
-   }
-   .paymentsection ul , .paymentsection li{
-      margin: 0;
-      padding: 0;
-      color:#007F7F;
-
-   }
-   .paymentsection ul , .paymentsection li span{
-      text-align: left;
-      margin: 0;
-      padding: 6px;
-      display: inline-block;
-   }
-   .paymentsection p{
-
-      color:black;
-   }
-   .paymentsection{
-      height: 89px;
-   }
-   .checked {
-      color: #007F7F;
-   }
-   .custom-card{
-      font-size: 16px;
-      font-weight: 700;
-   }
-   .sidebar-title-custom{
-      width: 70%;
-      font-weight: 600;
-      font-size: 14px;
-   }
-   .job_subtitle2 h4{
-      font-size: 16px;
-      font-weight: 600;
-   }
 </style>

@@ -678,7 +678,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
 
 
-                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.proposal');
+                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
 
             });
 
