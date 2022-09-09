@@ -472,7 +472,7 @@ class JobController extends Controller
         
         $pageTitle = "Product";
 
-        return view('templates.basic.jobs.product', compact('pageTitle'));
+        return view('templates.basic.jobs.all-proposal', compact('pageTitle'));
 
     }
 
