@@ -139,7 +139,7 @@ I can provide you a top-notch logo design that you can without any problem show 
                                 <div class="col-md-5">
                                     <div class="attachment">
                                         <div class="service_subtitle2 mt-20 heading-text">
-                                       Attachments
+                                      <h2> Attachments</h2>
                                           </div>
                             
                                                 <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
