@@ -392,7 +392,6 @@ class JobController extends Controller
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
-            // dd($skillCat);
 
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         }
@@ -486,7 +485,16 @@ class JobController extends Controller
     public function jobview($uuid){
         $pageTitle = "View Jobs";
         $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach ($skillCats as $skillCat) {
+
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        }
+        
+        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
     }
 
 

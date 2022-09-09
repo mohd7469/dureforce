@@ -24,8 +24,6 @@ Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.
 Route::get('proposal', 'ProposalController@index')->name('proposal.index');
 
 
-
-
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 
@@ -683,7 +681,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
 
 
-                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.proposal');
+                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
 
             });
 
