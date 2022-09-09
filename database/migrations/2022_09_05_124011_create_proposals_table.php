@@ -28,7 +28,7 @@ class CreateProposalsTable extends Migration
             $table->integer('start_hour_limit')->nullable();
             $table->integer('end_hour_limit')->nullable();
             $table->longText('cover_letter')->nullable();
-
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

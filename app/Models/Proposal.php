@@ -44,5 +44,13 @@ class Proposal extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function milestone()
+    {
+        return $this->hasMany(Milestone::class);
+    }
+    public function attachment()
+    {
+        return $this->hasMany(ProposalAttachment::class);
+    }
 
 }

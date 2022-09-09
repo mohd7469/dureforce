@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 
 use App\Models\Job;
+use App\Models\Milestone;
 use App\Models\Proposal;
+use App\Models\ProposalAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,55 +63,48 @@ class ProposalController extends Controller
         try {
             DB::beginTransaction();
 
-            $job = Proposal::create([
+            $proposal = Proposal::create([
                 "user_id" => $user->id,
                 "delivery_mode_id" => $request['delivery_mode_id'],
                 "service_fees_id" => $request['service_fees_id'],
                 "module_id" => $job_id,
-                "hourly_bid_rate" => isset($request_data['project_stage_id']) ? $request_data['project_stage_id'] : null,
-                "budget_type_id" => isset($request_data['budget_type_id']) ? $request_data['budget_type_id'] : null,
-                "title" => $request_data['title'],
-                "description" => $request_data['description'],
-                "fixed_amount" => isset($request_data['fixed_amount']) ? $request_data['fixed_amount'] : null,
-                "hourly_start_range" => isset($request_data['hourly_start_range']) ? $request_data['hourly_start_range'] : null,
-                "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
-                "project_length_id" => $request_data['project_length_id'],
-                "expected_start_date" => $request_data['expected_start_date'],
-                'status_id' => 1
+                "hourly_bid_rate" => isset($request['hourly_bid_rate']) ? $request['hourly_bid_rate'] : null,
+                "fixed_bid_amount" => isset($request['fixed_bid_amount']) ? $request['fixed_bid_amount'] : null,
+                "bid_type" => $request['bid_type'],
+                "amount_receive" => $request['amount_receive'],
+                "start_hour_limit" => isset($request_data['start_hour_limit']) ? $request_data['start_hour_limit'] : null,
+                "end_hour_limit" => isset($request_data['end_hour_limit']) ? $request_data['end_hour_limit'] : null,
+                "cover_letter" => $request_data['cover_letter'],
             ]);
 
-
-            $deliverables = Deliverable::whereIn('id', $request_data['deliverables'])->get();
-            $job->deliverable()->sync($deliverables);
-
-            $dods = DOD::whereIn('id', $request_data['dod'])->get();
-            $job->dod()->sync($dods);
-
-            $skills = Skills::whereIn('id', $request_data['skills'])->get();
-            $job->skill()->saveMany($skills);
-
-            $path = imagePath()['attachments']['path'];
+            if ($request->has('bid_type') AND $request['bid_type']=="Milestone"){
+                $milestone = new Milestone();
+                $milestone->description = $request['description'];
+                $milestone->start_date = $request['start_date'];
+                $milestone->end_date = $request['end_date'];
+                $milestone->amount = $request['amount'];
+                $milestone->proposal()->save($proposal);
+            }
 
             if ($request->hasFile('file')) {
 
                 foreach ($request->file as $file) {
-
-                    $this->fileValidate($file);
+                    $path = imagePath()['attachments']['path'];
                     try {
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
                         $url = $path . '/' . $filename;
-                        $document = new TaskDocument;
-                        $document->name = $filename;
-                        $document->uploaded_name = $file->getClientOriginalName();
-                        $document->url = $url;
-                        $document->type = $file_extension;
-                        $document->is_published = "Active";
-                        $job->documents()->save($document);
+                        $proposal_attachment = new ProposalAttachment;
+                        $proposal_attachment->name = $filename;
+                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
+                        $proposal_attachment->url = $url;
+                        $proposal_attachment->type = $file_extension;
+                        $proposal_attachment->is_published = "Active";
+                        $proposal_attachment->proposal()->save($proposal);
 
                     } catch (\Exception $exp) {
-                        $notify[] = ['error', 'Image could not be uploaded.'];
+                        $notify[] = ['error', 'Document could not be uploaded.'];
                         return back()->withNotify($notify);
                     }
 
@@ -117,7 +112,7 @@ class ProposalController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => 'index', "message" => "Proposal submitted"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
