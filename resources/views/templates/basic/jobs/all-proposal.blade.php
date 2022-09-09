@@ -156,7 +156,7 @@
                                     <ul class="skills-listing">
                                      
                                         @foreach ($proposal->user->skills as  $skills)
-                                         <li>{{$skills->name}} </li>
+                                         <li>{{$skills->skill->name}} </li>
                                         @endforeach
                                         
                                         {{-- <li>HTML</li>
@@ -186,7 +186,7 @@
                        
                                     @endisset
 
-
+                          <hr>
                                    
                           @endforeach
                         </div>
