@@ -13,7 +13,8 @@
                      <div>
                         <h2 class="title title-color" >Submit a Proposal</h2>
                      </div>
-                        <form>
+                        <form action="{{route('user.proposal.store',$job->uuid)}}" method="post">
+                           @csrf
                            {{-- Job Details--}}
                            <div class="row">
                               
@@ -33,15 +34,15 @@
                                        
                                           {{-- title and created at --}}
                                           <div class="left">
-                                             <p class="jb-title" >{{$proposal->title? $proposal->title : ''}}</p>
-                                             <span class="simpletext"> {{$proposal->created_at->format('Y-m-d') ? $proposal->created_at->format('Y-m-d') : '' }}</span> 
+                                             <p class="jb-title" >{{$job->title? $job->title : ''}}</p>
+                                             <span class="simpletext"> {{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</span> 
                                           </div>
                                           
                                           {{-- description and job post link --}}
                                           <div>
                                              
                                              <p class="simpletext">
-                                                {{str_limit($proposal->description, 500 )}}
+                                                {{str_limit($job->description, 500 )}}
                                              </p>
 
                                              <div>
@@ -55,16 +56,16 @@
                                        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                           <div class="sidebar">
                                              <div class="widget custom-widget mb-30 cstm-sidebar">
-                                                @if($proposal->budget_type_id == \App\Models\BudgetType::$hourly)
+                                                @if($job->budget_type_id == \App\Models\BudgetType::$hourly)
                                                    <ul class="sidebar-title2 sidebar-heading-border">
                                                          <li><span>Hourly Range:</span>
-                                                            <span>{{ '$'.$proposal->hourly_start_range." - $".$proposal->hourly_end_range }}</span>
+                                                            <span>{{ '$'.$job->hourly_start_range." - $".$job->hourly_end_range }}</span>
                                                          </li>
                                                    </ul>
                                                 @else
                                                    <ul class="sidebar-title2 sidebar-heading-border">
                                                          <li><span>Fixed Amount:</span>
-                                                            <span>{{ '$'.$proposal->fixed_amount}}</span>
+                                                            <span>{{ '$'.$job->fixed_amount}}</span>
                                                          </li>
                                                    </ul>
                                                 @endif
@@ -72,29 +73,29 @@
 
                                                 <ul class="sidebar-title2">
                                                    <li><span>Location</span>
-                                                         <p>{{$proposal->country ? $proposal->country->name : '' }}</p>
+                                                         <p>{{$job->country ? $job->country->name : '' }}</p>
                                                    </li>
                                                 </ul>
 
                                                 <ul class="sidebar-title2">
                                                    <li><span>Budget Type</span>
-                                                         <p>{{$proposal->budgetType->title ? $proposal->budgetType->title : ''}}</p>
+                                                         <p>{{$job->budgetType->title ? $job->budgetType->title : ''}}</p>
                                                    </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                    <li><span>Project Length</span>
-                                                         <p>{{$proposal->project_length ? $proposal->project_length->name : ''}}</p>
+                                                         <p>{{$job->project_length ? $job->project_length->name : ''}}</p>
                                                    </li>
                                                 </ul>
                                                 
                                                 <ul class="sidebar-title2">
                                                    <li><span>Project Stage</span>
-                                                         <p>{{$proposal->projectStage ? $proposal->projectStage->title  : ''}}</p>
+                                                         <p>{{$job->projectStage ? $job->projectStage->title  : ''}}</p>
                                                    </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                    <li><span>Experience Level</span>
-                                                         <p>{{$proposal->rank->level ?  $proposal->rank->level : ''}}</p>
+                                                         <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
                                                    </li>
                                                 </ul>
 
@@ -114,7 +115,7 @@
                                        Skills and Expertise
                                     </div>
                                  
-                                    @foreach($proposal->skill as $skil)
+                                    @foreach($job->skill as $skil)
                                        <span class="attr">{{$skil->name}}</span>
                                     @endforeach
                                     
@@ -123,7 +124,7 @@
                               </div>
 
                            </div>
-                           @if ($proposal->budget_type_id==App\Models\BudgetType::$hourly)
+                           @if ($job->budget_type_id==App\Models\BudgetType::$hourly)
                               @include('templates.basic.jobs.Proposal.hourly')
                            @else
                               @include('templates.basic.jobs.Proposal.fixed')
@@ -178,7 +179,7 @@
                                           </div>
                                        <small>
                                           Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
-                                          Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your proposal.
+                                          Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your job.
                                        </small>
                                  
                                     </div>
@@ -187,6 +188,14 @@
                               </div>
 
                            </div>
+                           <div id="outer" class="text-right">
+                              <div class="inner">
+                                  <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
+                              </div>
+                              <div class="inner">
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
+                              </div>
+                          </div>
                         </form>
 
                      
@@ -209,7 +218,7 @@
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-job.js')}}"></script>
 
 
 @endpush

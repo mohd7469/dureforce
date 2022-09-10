@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\DOD;
 use App\Models\JobType;
 use App\Models\Module;
@@ -391,7 +392,9 @@ class JobController extends Controller
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
+
          $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
@@ -453,8 +456,10 @@ class JobController extends Controller
     {
         
         
-        $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $job = Job::where('uuid',$uuid)->withAll()->first();
         $skillCats = SkillCategory::select('name', 'id')->get();
+
+        $delivery_modes = DeliveryMode::Active()->select(['id','title'])->get();
 
         foreach($skillCats as $skillCat){
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
@@ -463,7 +468,7 @@ class JobController extends Controller
         
         $pageTitle = "Proposal";
 
-        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','proposal','skills'));
+        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','job','skills','delivery_modes'));
 
     }
     public function product()
@@ -482,7 +487,16 @@ class JobController extends Controller
     public function jobview($uuid){
         $pageTitle = "View Jobs";
         $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach ($skillCats as $skillCat) {
+
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        }
+        
+        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
     }
 
 

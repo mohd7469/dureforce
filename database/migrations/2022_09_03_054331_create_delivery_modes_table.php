@@ -19,7 +19,7 @@ class CreateDeliveryModesTable extends Migration
             $table->longText('slug')->nullable()->nullable();
             $table->integer('module_id')->index()->nullable();
             $table->string('module_type')->nullable()->nullable();
-            $table->boolean('is_active')->default(false)->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
