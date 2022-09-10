@@ -393,7 +393,8 @@ class JobController extends Controller
 
         foreach ($skillCats as $skillCat) {
 
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+         $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
