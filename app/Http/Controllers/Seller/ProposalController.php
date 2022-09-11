@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropsalStoreRequest;
+use App\Models\BudgetType;
 use App\Models\Job;
+use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 use function activeTemplate;
 use function back;
 use function dd;
@@ -55,20 +59,22 @@ class ProposalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PropsalStoreRequest $request, $job_uuid)
+    public function store(Request $request, $job_uuid)
     {
         $user = Auth::user();
         $job_id = Job::where('uuid',$job_uuid)->pluck('id')->first();
+        $request_data = [];
+        parse_str($request->data, $request_data);
+
         try {
             DB::beginTransaction();
 
             $proposal = Proposal::create([
                 "user_id" => $user->id,
-                "delivery_mode_id" => $request['delivery_mode_id'],
-                "service_fees_id" => $request['service_fees_id'],
-                "module_id" => $job_id,
-                "hourly_bid_rate" => isset($request['hourly_bid_rate']) ? $request['hourly_bid_rate'] : null,
-                "fixed_bid_amount" => isset($request['fixed_bid_amount']) ? $request['fixed_bid_amount'] : null,
+                "delivery_mode_id" => $request_data['delivery_mode_id'],
+                "job_id" => $job_id,
+                "hourly_bid_rate" => isset($request_data['hourly_bid_rate']) ? $request_data['hourly_bid_rate'] : null,
+                "fixed_bid_amount" => isset($request_data['fixed_bid_amount']) ? $request_data['fixed_bid_amount'] : null,
                 "bid_type" => $request['bid_type'],
                 "amount_receive" => $request['amount_receive'],
                 "start_hour_limit" => isset($request_data['start_hour_limit']) ? $request_data['start_hour_limit'] : null,
@@ -111,7 +117,8 @@ class ProposalController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Proposal submitted"]);
+
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Proposal submitted"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -162,5 +169,50 @@ class ProposalController extends Controller
     public function destroy(Proposal $proposal)
     {
         //
+    }
+
+    public function validatePropsal(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $rules=[];
+       
+        if($request_data['job_type'] == BudgetType::$hourly){
+            
+            $validator = Validator::make($request_data, 
+                [
+                    'delivery_mode_id' => 'required|exists:delivery_modes,id',
+                    'hourly_bid_rate' => 'required|integer|min:1',
+                    'amount_receive' => 'integer',
+                    'start_hour_limit' => 'integer|min:1',
+                    'end_hour_limit' => 'integer|min:1',
+                    'cover_letter' => 'string',
+                ]
+            
+            );
+        }
+
+        elseif($request_data['job_type'] == BudgetType::$fixed)
+        {
+            $validator = Validator::make($request_data, 
+            [
+                    'delivery_mode_id' => 'required|exists:delivery_modes,id',
+                    'hourly_bid_rate' => 'required|integer|min:1',
+                    'amount_receive' => 'integer',
+                    'start_hour_limit' => 'integer|min:1',
+                    'end_hour_limit' => 'integer|min:1',
+                    'cover_letter' => 'string',
+            ]
+            
+            );
+        }
+        
+
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        } else
+            return response()->json(["validated" => "Propsal Data Is Valid"]);
     }
 }

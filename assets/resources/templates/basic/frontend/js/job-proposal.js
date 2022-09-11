@@ -1,9 +1,68 @@
-
+var token= $('input[name=_token]').val();
 var myDropzone='';
 var row_id=1;
 'use strict';
 Dropzone.autoDiscover = false;
   
+
+function displayAlertMessage(message)
+{
+  
+    iziToast.error({
+      message: message,
+      position: "topRight",
+    });
+
+}
+
+function displayErrorMessage(validation_errors)
+{
+    $('input,select,textarea').removeClass('error-field');
+    for (var error in validation_errors) { 
+        var error_message=validation_errors[error];
+
+        $('[name="'+error+'"]').addClass('error-field');
+        $('#'+error).next().addClass('error-field');
+
+        displayAlertMessage(error_message);
+
+      
+    }
+    $("#submit-all").attr("disabled", false);
+
+}
+function submitProposal(data)
+{
+  var action_url=$("#propsal_form").attr('action');
+  $.ajax({
+      type:"POST",
+      url:action_url,
+      data: {data : data,_token:token},
+      success:function(data){
+          var html = '';
+          console.log(data);
+          if(data.error){
+              
+            displayErrorMessage(data.error);
+            $("#submit-all").attr("disabled", false);
+
+          }
+          else{
+            window.location.replace(data.redirect);              
+          }
+      }
+  });  
+}
+function displayInfoAlertMessage(message)
+{
+  iziToast.info({
+      class:"wait",
+      message: message,
+      position: "center",
+      timeOut: 50000,
+      extendedTimeOut: 0
+  });
+}
 $(function() {
 
     var form_data='';
@@ -46,11 +105,11 @@ $(function() {
   
             myDropzone = this;
     
-            $("#job_form_data").submit(function (e) {
+            $("#propsal_form").submit(function (event) {
               form_data= $(this).serialize();
-                e.preventDefault();
-                e.stopPropagation(); 
-                var validate_url=$('#job_validate_url').val();
+                event.preventDefault();
+                event.stopPropagation(); 
+                var validate_url='/user/seller/job/validate-job-proposal';
                 $.ajax({
                     type:"POST",
                     url:validate_url,
@@ -61,16 +120,20 @@ $(function() {
   
                             if(myDropzone.getQueuedFiles().length>0){
                               myDropzone.processQueue();
+                              
+                              displayInfoAlertMessage("Processing Plz Wait");
+                              $("#submit-all").attr("disabled", true);
+
+
                             }
                             else
                             {
-                              submitCreateFormData(form_data);
+                              submitProposal(form_data);
                             }
-                            $("#submit-all").attr("disabled", true);
-                            displayInfoAlertMessage("Processing Plz Wait");
   
                         }
                         else{
+
                           displayErrorMessage(data.error);
   
                         }
@@ -105,7 +168,19 @@ $(function() {
           addRow();
     });
         
-        
+    $("#hourly_bid_rate").focusout(function(){
+       
+      var rate_per_hour = $(this).val();
+      if(rate_per_hour<0){
+        displayAlertMessage("Rate Per hour should be greater than 0 ");
+        $(this).val("");
+      }
+      else{
+
+        $('#amount_receive').val(rate_per_hour*0.80);
+
+      }
+    });
         
 });
 
