@@ -862,7 +862,7 @@
                                 <div
                                     class="collapse navbar-collapse d-flex justify-content-between"
                                     id="navbarSupportedContent"
-                                >
+                                    >
                                     <ul
                                         class="navbar-nav main-menu ms-auto me-auto"
                                     >

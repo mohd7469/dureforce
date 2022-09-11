@@ -38,8 +38,9 @@ Route::view('/profile-company-design', 'templates.basic.project_profile.partials
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
 
-
-
+// freelancer design
+Route::view('/selection-design', 'auth.user_selection_design');
+Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
