@@ -539,6 +539,9 @@ Route::name('user.')->group(function () {
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify.code');
 });
 
+Route::get('/seller_profile', 'seller\UserController@seller_profile')->name('seller_profile');
+
+
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('verified')->group(function () {
 

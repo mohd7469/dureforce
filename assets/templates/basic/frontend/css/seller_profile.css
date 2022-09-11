@@ -1,0 +1,89 @@
+.fb-profile-block {
+    position: relative;
+    margin: 0 auto;
+    min-width: 100%;
+
+}
+.cover-container{
+    background: grey;
+}
+.cover-container img{
+    min-width: 100%;
+}
+.fb-profile-block-thumb{
+    display: block;
+    height: 159px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+}
+.upper-tab .active{
+    background: #FFFFFF;
+    height: 52px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 34px;
+    border-bottom-color: #007F7F;
+    border-bottom: 3px solid #007F7F;
+}
+.upper-tab{
+    background: #FFFFFF;
+    font-size: 15px;
+    line-height: 34px;
+}
+.wrapper{
+    background: #F8FAFA;
+}
+#navlist li a:visited {
+    border-bottom-color: #007F7F;
+    border-bottom: 3px solid #007F7F;
+
+}
+.profile-card {
+    margin-top: 2.2em;
+    position: relative;
+ }
+.thumbnail {
+    width: 124px;
+    height: 124px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5em;
+    border-radius: 100%;
+    box-shadow:shadow;
+}
+.wrapper-card {
+    width: 343px;
+    height: 540px;
+    background: #FDFEFF;
+    transition: background .6s ease;
+    border-radius: 10px;
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0 8px 40px rgba(#000000, .2);
+    position: absolute;
+    bottom: 2px;
+    top: -139px;
+    left: 99px;
+}
+
+.wrapper .mt-3 {
+    margin-top: -4rem!important;
+}
+.card-text-tab h4{
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+}
+.card-text-tab h5{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}
+.card-text-tab ul li span{
+    color:#007F7F;
+    font-size: 12px;
+    padding: 7px 8px;
+
+}

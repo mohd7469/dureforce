@@ -725,4 +725,8 @@ class UserController extends Controller
         $notify[] = ['success', 'Successfully Updated Profile.'];
         return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
+    public function seller_profile(){
+        $pageTitle = 'Seller Profile';
+        return   view($this->activeTemplate.'seller.seller_profile',compact('pageTitle'));
+    }
 }
