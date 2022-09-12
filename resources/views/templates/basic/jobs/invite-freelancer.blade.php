@@ -312,7 +312,7 @@
                                         <li>HTML</li>
                                         <li>CSS</li>
                                         <li>Javascript</li>
-                                        <li>Html</li>
+                                        <li>HTml</li>
                                         <li>Bootstrap</li>
                                         
                                     </ul>
