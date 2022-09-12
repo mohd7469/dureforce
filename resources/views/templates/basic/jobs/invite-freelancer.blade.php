@@ -175,6 +175,171 @@
                                    
                          
                         </div>
+                        <hr>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12"></div>
+                                    <div class="col-md-3">
+                                        <h2 class="prosals-h">Invited Freelancers</h2> 
+                                        
+                                    </div>
+                                 
+                                    <div class="col-md-9 sorting-mbl">
+                                        <div class="row">
+                                            <!--Sorting Section Start-->
+                                                  <div class="col-md-4">
+                                                       <div id="custom-search-input">
+                                                            <div class="input-group">
+                                                                <input type="text" class="search-query form-control" placeholder="Search" />
+                                                                <span class="input-group-btn">
+                                                                    <button type="button" disabled>
+                                                                        <span class="fa fa-search"></span>
+                                                                    </button>
+                                                                </span>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                    </div>       
+                                                    <div class="col-md-4">
+                                                    
+                                                        <form>
+                                                            <select name="Best match" id="bestmatch">
+                                                                <option>Best match</option>
+                                                                <option>1</option>
+                                                                <option>1</option>
+                                                                <option>1</option>
+                                                                <option>1</option>
+                                                            </select>
+                                                        </form>
+                                                    </div>
+                                               
+                                            
+                                         <!--Sorting Section End-->
+
+                                        <div class="col-md-4">
+                                        <form>
+                                            <select name="Filters" id="Filters">
+                                                <option>Filters</option>
+                                                <option>1</option>
+                                                <option>1</option>
+                                                <option>1</option>
+                                                <option>1</option>
+                                            </select>
+                                        </form>
+                                        </div>
+
+                                       </div>
+                                    </div>
+                                </div>
+
+                                 <!--Bio Profile Section Start-->
+                            
+                            
+            
+                                    
+                                    <div class="" > 
+
+                       
+                                        <div class="row biorow">
+                                           <div class="col-md-4">
+                                              <div class="row borderleftc"> 
+                                                <div class="col-md-3">
+                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                </div>
+                                                <div class="col-md-5">
+                                                   
+                                                    <h4 class="pname-c"> 
+                                                        Zack J.
+                                                     </h4>
+                                                   
+                                                   
+                                                       <p class="pdesination-c">  Full Stack Developer</p> 
+                                                    
+                                                    
+                                                 </div>
+                                                    <div class="col-md-4">
+                                                      
+                                                        <p class="plocation"> London, UK</p>
+                                                       
+
+                                                       
+                                                    </div>
+                                              </div>
+                                           </div>
+
+                                            <div class="col-md-5">
+                                                <div class="row btns-per">
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Rate Per Hour</p>
+                                                        
+                                                        <p class="perhourprice">$55/per Hour</p>
+                                                        
+                                                        
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Total Earnings</p>
+                                                        <p class="perhourprice">$120k + earned</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Job Success Rate</p>
+                                                        <p class="perhourprice">90%</p>
+                                                    </div>
+                                                 </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="row btns-s">
+                                                    {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
+                                                    <a href="#" class="btn-products-s">Hire</a>
+                                                    <a href="#" class="btn-products-s phire">invite a job</a>
+                                                    <a href="#" class="btn-products-s phire">View</a>
+                                                </div>
+                                            </div>
+                                     </div>
+                                            <!--===  Bio Profile Section End ===-->
+
+                         <!--Skills Section Start-->
+
+                            <div class="row skills-c">
+                                <div class="col-md-7">
+                                     
+                                    <h2>Has relevant skills to your job</h2>
+                                   
+                                    <ul class="skills-listing">
+                                     
+                                    
+                                        
+                                        <li>HTML</li>
+                                        <li>CSS</li>
+                                        <li>Javascript</li>
+                                        <li>Html</li>
+                                        <li>Bootstrap</li>
+                                        
+                                    </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="attachment">
+                                        <div class="service_subtitle2 mt-20 heading-text">
+                                      <h2> Attachments</h2>
+                                          </div>
+                            
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                            
+                                        </div>
+                                  </div>
+
+                                </div>
+
+                                    <!--Skills Section End-->
+                            </div> 
+                       
+                                  
+
+                        
+                                   
+                         
+                        </div>
                     </div>
                   </div>
                </div>
