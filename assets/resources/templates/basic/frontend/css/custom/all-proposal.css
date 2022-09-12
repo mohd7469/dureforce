@@ -42,6 +42,8 @@ a.btn-products-s {
     font-size: 14px;
     line-height: 18px;
     color: #7F007F;
+    width: auto !important;
+    margin:0px 1%;
 
 }
 a.btn-products-s.phire {
@@ -180,13 +182,14 @@ p.sort-p {
 }
 
 @media only screen and (max-width:1200px){
-    a.btn-products-s {
+    /* a.btn-products-s {
     border: 1px solid #7F007F;
     border-radius: 4px;
     padding: 6px 8px;
     font-weight: 600;
     font-size: 13px;
-}
+    
+} */
 p.sort-p {
     width: 70%;
     }
