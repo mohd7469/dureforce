@@ -185,7 +185,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -287,7 +287,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();

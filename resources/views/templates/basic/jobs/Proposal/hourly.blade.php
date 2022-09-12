@@ -51,8 +51,8 @@
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                   <div class="form-group pt-3">
                      <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
-                     <small id="emailHelp" class="form-text text-muted">Total amount the client will see on your proposal</small>
-                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                     <small id="hourly_bid_rate_small" class="form-text text-muted">Total amount the client will see on your proposal</small>
+                     <input type="number" name="hourly_bid_rate" class="form-control" id="hourly_bid_rate"  min="1">
                   </div>
             </div>
             
@@ -71,8 +71,8 @@
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                <div class="form-group pt-3">
                   <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
-                  <small id="emailHelp" class="form-text text-muted">The estimated amount you'll receive after service fees</small>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
+                  <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" readonly>
                </div>
             </div>
 
@@ -87,14 +87,14 @@
                      <div class="row">
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small id="emailHelp" class="form-text text-dark">Min. Hours Per Week</small>
-                           <input type="integer" class="form-control" id="min_hours" name="min_hours">
+                           <small id="start_hour_limit" class="form-text text-dark">Min. Hours Per Week</small>
+                           <input type="integer" class="form-control" id="start_hour_limit" name="start_hour_limit">
 
                         </div>
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small id="emailHelp" class="form-text text-dark">Max. Hours Per Week</small>
-                           <input type="integer" class="form-control" id="max_hours" name="max_hours">
+                           <small id="end_hour_limit" class="form-text text-dark">Max. Hours Per Week</small>
+                           <input type="integer" class="form-control" id="end_hour_limit" name="end_hour_limit">
 
                         </div>
                      </div>
@@ -108,18 +108,17 @@
                <div class="form-group pt-3">
                   <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
                   <small id="emailHelp" class="form-text text-dark">Mode of Devlivery *</small>
-                  <select name="mode_of_delivery" id="mode_of_delivery" class="form-control">
+                  <select name="delivery_mode_id" id="mode_of_delivery" class="form-control">
                      <option value="">Select Mode Of Delivery</option>
+                     @foreach ($delivery_modes as $mode)
+                     <option value="{{$mode->id}}">{{$mode->title}}</option>
+                         
+                     @endforeach
                   </select>
                </div>
             </div>
 
          </div>
-
-
-         
-          
-         
 
        </div>
 

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -555,7 +556,8 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::middleware('is-profile-completed')->group(function () {
                     Route::get('dashboard', 'UserController@home')->name('home');
                  
-                 Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
+                    Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
+                    Route::post('job/validate-job-proposal', 'ProposalController@validatePropsal')->name('job.submit.proposal.validate');
 
                     Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
                     Route::post('profile-setting', 'UserController@submitProfile');
@@ -682,8 +684,6 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
-
-
                 Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
 
             });
