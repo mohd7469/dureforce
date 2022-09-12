@@ -480,7 +480,12 @@ class JobController extends Controller
         return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
+       public function inviteFreelancer(){
+        
+        $pageTitle = "inviteProposal";
 
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle'));
+       }
 
 
 
