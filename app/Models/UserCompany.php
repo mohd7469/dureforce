@@ -9,6 +9,8 @@ class UserCompany extends Model
 {
     use HasFactory;
 
+     protected $table =  "user_companies";
+
     protected $fillable = [
         'name',
         'logo',

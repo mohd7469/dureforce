@@ -14,23 +14,20 @@ class CreateUserLanguageTable extends Migration
     public function up()
     {
         Schema::create('user_languages', function (Blueprint $table) {
-            $table->id();
-            $table->string('level')->nullable();
-            $table->unsignedBigInteger('language_id');
-            $table->unsignedBigInteger('user_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('language_id')->index()->nullable();
+            $table->enum('proficiency_level', [ 'Basic', 'Conversational','Fluent','Native or Bilingual']);
+
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('language_id')->references('id')->on('world_languages')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
 
-        
-        Schema::table('user_languages', function (Blueprint $table) {
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
 
-            $table->foreign('language_id')
-                ->references('id')
-                ->on('languages');
-        });
     }
 
     /**
