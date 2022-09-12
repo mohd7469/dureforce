@@ -1115,7 +1115,7 @@
                                                             </div>
                                                             <div
                                                                 class="col-md-12"
-                                                            >
+                                                                >
                                                                 <label
                                                                     class="mt-4"
                                                                     >Location
@@ -1321,60 +1321,22 @@
                                                                 placeholder="E.g. University Of London"
                                                             />
                                                         </div>
-                                                        <div class="row">
-                                                        <div class="col-md-6">
-                                                            <label class="mt-4"
-                                                                >Degree
-                                                                <span
-                                                                    class="imp"
-                                                                    >*</span
-                                                                ></label
-                                                            >
-                                                            <select
-                                                                name=""
-                                                                class="form-control select-lang"
-                                                                >
-                                                                <option
-                                                                    value=""
-                                                                    selected=""
-                                                                >
-                                                                    Select Degree
-                                                                </option>
-                                                                <option
-                                                                    value="1"
-                                                                >
-                                                                    BSCS
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <label class="mt-4"
-                                                                >Field Of Study
-                                                                <span
-                                                                    class="imp"
-                                                                    >*</span
-                                                                ></label
-                                                            >
-                                                            <select
-                                                                name=""
-                                                                class="form-control select-lang"
-                                                                >
-                                                                <option
-                                                                    value=""
-                                                                    selected=""
-                                                                >
-                                                                    Select Fiels
-                                                                </option>
-                                                                <option
-                                                                    value="1"
-                                                                >
-                                                                    Abc
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                        </div>
-                                                        <div
-                                                                class="col-md-12 mt-1"
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label class="mt-4">Degree <span class="imp">*</span>
+                                                                    </label>
+                                                                    <select name="" class="form-control select-lang">
+                                                                    <option value="" selected=""> Select Degree </option>
+                                                                    <option value="1"> BSCS </option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label class="mt-4">Field Of Study <span class="imp">*</span>
+                                                                    </label>
+                                                                    <input type="text" name="field[]" placeholder="Visual Arts" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt-1"
                                                                 >
                                                                 <div
                                                                     class="form-check"
@@ -1533,15 +1495,18 @@
                                                                     >*</span
                                                                 ></label
                                                             >
-                                                            <input
+                                                            <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                                <input
                                                                 type="number"
                                                                 name="rates"
                                                                 class="field-rate col-md-6"
-                                                                placeholder="$"
                                                                 min="0"
                                                                 id="rate"
                                                                 value=""
                                                             />
+                                                            </div>
+                                                            
                                                             <div class="mt-4">
                                                                 <h4>
                                                                     DureForce
@@ -1561,6 +1526,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <hr>
                                                     <div class="row mt-3"
                                                         id="skill-row"
                                                     >
@@ -1965,8 +1931,13 @@
                                                     <input type="text" name="company[]" placeholder="E.g. Microsoft">
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label class="mt-4">Location <span class="imp">*</span></label>
-                                                    <input type="text" name="job_location[]" placeholder="City, Country" />
+                                                <label class="mt-4">Location <span class="imp">*</span>
+                                                </label>
+                                                <select name="job_location[]" class="form-control select-lang" id="languages">
+                                                    <option value="" selected=""> Seect Country </option>
+                                                    <option value="1"> Pakistan </option>
+                                                    <option value="2"> Turky </option>
+                                                </select>
                                                 </div>
                                                 <div class="col-md-12 mt-1">
                                                                     <div class="form-check">
@@ -2010,12 +1981,23 @@
                                                     <input type="text" name="institute_name[]" placeholder="E.g. University Of London">
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label class="mt-4">Degree <span class="imp">*</span></label>
+                                                    <label class="mt-4">Education <span class="imp">*</span></label>
                                                     <input type="text" name="degree[]" placeholder="E.g. BA Arts">
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <label class="mt-4">Field Of Study <span class="imp">*</span></label>
-                                                    <input type="text" name="field[]" placeholder="Visual Arts" />
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="mt-4">Degree <span class="imp">*</span>
+                                                        </label>
+                                                        <select name="" class="form-control select-lang">
+                                                        <option value="" selected=""> Select Degree </option>
+                                                        <option value="1"> BSCS </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="mt-4">Field Of Study <span class="imp">*</span>
+                                                        </label>
+                                                        <input type="text" name="field[]" placeholder="Visual Arts" />
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label class="mt-4">Dates Attended <span class="imp">*</span></label>

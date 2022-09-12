@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="col-lg-12 form-group text-center">
-                                <button type="submit" class="submit-btn w-100">@lang('Create Account')</button>
+                                <button type="submit" class="submit-btn w-50">@lang('Create Account')</button>
                             </div>
 
                             <div class="col-lg-12 text-center">
