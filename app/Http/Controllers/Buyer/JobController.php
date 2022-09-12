@@ -483,7 +483,6 @@ class JobController extends Controller
        public function inviteFreelancer(){
         
         $pageTitle = "inviteProposal";
-
         return view('templates.basic.jobs.invite-freelancer', compact('pageTitle'));
        }
 

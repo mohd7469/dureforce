@@ -16,8 +16,8 @@ Route::get('/clear', function () {
 
 Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
 Route::get('all-proposal', 'buyer\jobcontroller@product')->name('job.all.product');
-Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
 Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
+Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
 
 
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
