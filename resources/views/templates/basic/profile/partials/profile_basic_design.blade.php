@@ -1484,9 +1484,9 @@
                                                     <div
                                                         class="row mt-3"
                                                         id="rate-row"
-                                                    >
+                                                        >
                                                         <div
-                                                            class="col-xl-12 col-md-12 col-lg-12 form-group select2Tag"
+                                                            class="col-xl-7 col-md-7 col-lg-7 form-group select2Tag"
                                                             >
                                                             <label class=""
                                                                 >Hourly Rate
@@ -1500,7 +1500,7 @@
                                                                 <input
                                                                 type="number"
                                                                 name="rates"
-                                                                class="field-rate col-md-6"
+                                                                class="field-rate col-md-10"
                                                                 min="0"
                                                                 id="rate"
                                                                 value=""
@@ -1508,10 +1508,6 @@
                                                             </div>
                                                             
                                                             <div class="mt-4">
-                                                                <h4>
-                                                                    DureForce
-                                                                    Service Fee
-                                                                </h4>
                                                                 <p>
                                                                     The
                                                                     DureForce
@@ -1524,6 +1520,16 @@
                                                                 </p>
                                                             </div>
                                                         </div>
+                                                        <div
+                                                            class="col-xl-5 col-md-5 col-lg-5"
+                                                            >
+                                                            <div class="card w-100 bg-light">
+                                                                <div class="card-body form-group pt-3">
+                                                                    <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
+                                                                    <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
+                                                                    <span class="pt-2 text-dark">$12.00</span>
+                                                                </div>
+                                                            </div>
                                                     </div>
                                                 </div>
                                                 <hr>
