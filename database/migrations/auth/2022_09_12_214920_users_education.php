@@ -17,7 +17,6 @@ class UsersEducation extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('degree_id')->index()->nullable();
-            $table->unsignedBigInteger('field_id')->index()->nullable();
             $table->string('education')->nullable();
             $table->string('school_name')->nullable();
             $table->string('field_of_study')->nullable();
@@ -29,7 +28,6 @@ class UsersEducation extends Migration
             $table->timestamps();
 
             $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
-            $table->foreign('field_id')->references('id')->on('fields')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
         });

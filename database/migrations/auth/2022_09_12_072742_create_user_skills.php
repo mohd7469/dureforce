@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserLanguageTable extends Migration
+class CreateUserSkills extends Migration
 {
     /**
      * Run the migrations.
@@ -13,21 +13,17 @@ class CreateUserLanguageTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_languages', function (Blueprint $table) {
+        Schema::create('user_skills', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->unsignedBigInteger('language_id')->index()->nullable();
-            $table->enum('proficiency_level', [ 'Basic', 'Conversational','Fluent','Native or Bilingual']);
+            $table->unsignedBigInteger('skill_id')->index()->nullable();
 
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('language_id')->references('id')->on('world_languages')->onDelete('cascade');
+            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
         });
-
-
     }
 
     /**
@@ -37,6 +33,6 @@ class CreateUserLanguageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_languages');
+        Schema::dropIfExists('user_skills');
     }
 }

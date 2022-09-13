@@ -26,9 +26,9 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->boolean('email_verified')->default(false)->nullable();
-            $table->timestamps('email_verified_at');
+            $table->timestamp('email_verified_at')->nullable();
             $table->boolean('sms_verified')->default(false)->nullable();
-            $table->timestamps('sms_verified_at');
+            $table->timestamp('sms_verified_at')->nullable();
             $table->boolean('is_active')->default(true)->nullable();
             $table->decimal('rate_per_hour', 28,2)->default(0)->nullable();
 
