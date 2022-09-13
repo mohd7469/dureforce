@@ -29,6 +29,19 @@ Route::get('proposal', 'ProposalController@index')->name('proposal.index');
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
 Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 
+// route for signup design 
+Route::view('/password/code-verif-design', 'templates.basic.user.auth.passwords.code_verify_design');
+Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email_design');
+Route::view('/verify-design', 'auth.verify_design');
+Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.profile_design');
+Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
+Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
+Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
+
+// freelancer design
+Route::view('/selection-design', 'auth.user_selection_design');
+Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
+
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'Paypal\ProcessController@ipn')->name('Paypal');
