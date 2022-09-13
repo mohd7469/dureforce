@@ -167,12 +167,13 @@ $(function() {
     $("#milestone_btn").click(function(){
           addRow();
     });
-        
+    
+    //hourly bid rate
     $("#hourly_bid_rate").focusout(function(){
        
       var rate_per_hour = $(this).val();
       if(rate_per_hour<0){
-        displayAlertMessage("Rate Per hour should be greater than 0 ");
+        displayAlertMessage("Rate Per hour should be greater than $0 ");
         $(this).val("");
       }
       else{
@@ -181,7 +182,35 @@ $(function() {
 
       }
     });
-        
+    
+    $("#total_milestones_amount").focusout(function(){
+       
+      var total_cost = $(this).val();
+      if(total_cost<0){
+        displayAlertMessage("Project Cost should be greater than $0 ");
+        $(this).val("");
+      }
+      else{
+
+        $('#milestones_amount_receive').val(total_cost*0.80);
+
+      }
+    });
+
+
+    //milestones sum
+    $(document).on('focusout', '.milestones_amount', function() {
+      var total_amount=0;
+        $(".milestones_amount").each(function() {
+          var milestone_amount=$(this).val();
+          total_amount=total_amount+parseInt(milestone_amount);
+        });
+        $('#total_milestones_amount').val(total_amount);
+        $('#milestones_amount_receive').val(total_amount*0.80);
+    });
+
+  
+    
 });
 
 function removerow(row)
@@ -197,27 +226,27 @@ function addRow()
     $(div_to_add_row).append(
           '<div class="row" id="milestone'+row_id+'">'+
           '<div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">'+
-            '<label>Description</label>'+
-            '<input type="text" name="description" maxlength="255" value="" class="form-control" >'+
+            '<label>Description*</label>'+
+            '<input type="text" name="milestones['+row_id+'][description]" maxlength="255" value="" class="form-control" >'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
-            '<label>Start Date</label>'+
+            '<label>Start Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="start_date" value="" >'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][start_date]" value="" >'+
             '</div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
-            '<label>Due Date</label>'+
+            '<label>Due Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="due_date" value=""  >'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][end_date]" value=""  >'+
             '</div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
-            '<label>Amount</label>'+
-            '<input type="integer" name="title" maxlength="255" value="" class="form-control" >'+
+            '<label>Amount*</label>'+
+            '<input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  >'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >'+
@@ -233,6 +262,7 @@ function byMilestone()
   if(!$(this).is(':checked')){
     $('#by_project_section').addClass('d-none');
     $('#by_milestone_section').removeClass('d-none');
+    $('#total_milestones_amount').attr("readonly", true); 
 
   }
 }
@@ -242,6 +272,8 @@ function byProject()
     
     $('#by_milestone_section').addClass('d-none');
     $('#by_project_section').removeClass('d-none');
+    $('#total_milestones_amount').attr("readonly", false); 
+
 
   }
 
