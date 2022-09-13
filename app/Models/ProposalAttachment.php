@@ -10,12 +10,13 @@ class ProposalAttachment extends Model
     use HasFactory;
     protected $fillable = ['name','uploaded_name ','url','type','is_published','user_id','module_id','module_type','deleted_at'];
 
-    public function module()
-    {
-        return $this->morphTo();
-    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function proposal()
+    {
+        return $this->belongsTo(Proposal::class, 'proposal_id');
     }
 }

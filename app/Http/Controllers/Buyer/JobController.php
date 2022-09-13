@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\DOD;
 use App\Models\JobType;
 use App\Models\Module;
@@ -17,6 +18,7 @@ use App\Models\SkillSubCategory;
 use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Proposal;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
 use App\Models\ProjectLength;
@@ -183,7 +185,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -285,7 +287,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -390,9 +392,9 @@ class JobController extends Controller
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
-            // dd($skillCat);
 
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+         $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
@@ -454,8 +456,10 @@ class JobController extends Controller
     {
         
         
-        $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $job = Job::where('uuid',$uuid)->withAll()->first();
         $skillCats = SkillCategory::select('name', 'id')->get();
+
+        $delivery_modes = DeliveryMode::Active()->select(['id','title'])->get();
 
         foreach($skillCats as $skillCat){
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
@@ -464,26 +468,39 @@ class JobController extends Controller
         
         $pageTitle = "Proposal";
 
-        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','proposal','skills'));
+        return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','job','skills','delivery_modes'));
 
     }
     public function product()
     {
         
-        
+        $proposals = Proposal::WithAll()->get();
         $pageTitle = "Product";
 
-        return view('templates.basic.jobs.all-proposal', compact('pageTitle'));
+        return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
-
+       public function inviteFreelancer(){
+        
+        $pageTitle = "inviteProposal";
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle'));
+       }
 
 
 
     public function jobview($uuid){
         $pageTitle = "View Jobs";
         $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job'));
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach ($skillCats as $skillCat) {
+
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        }
+        
+        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
     }
 
 

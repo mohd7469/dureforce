@@ -189,6 +189,209 @@
 
 @push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
-
 @endpush
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
+<style>
+.container {
+    max-width: 1390px !important;
+}
+.row.custom_cards_s {
+    margin-bottom: 60px;
+}
+.d-heading{
+    font-size: 20px;
+    padding: 20px 0px;
+    width: 100%;
+    display: inline-block;
+}
+.custom_cards_s .card {
+    border: none;
+    box-shadow: rgb(100 100 111 / 7%) 0px 7px 18px 0px;
+    padding: 15px 11px 10px 10px;
+}
+.custom_cards_s h5.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+.product-desc-content ul {
+    margin: 25px 0px 40px 0px;
+    list-style-type: "*"!important;
+    
+}
+.product-desc-content ul li{
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 24px;
+    list-style-type: "*"!important;
+    
+  
+}
+
+
+.product-desc-content h3{
+    font-size: 20px !important;
+    font-weight: 400;
+}
+.custom_cards_s .card:first-child {
+    margin-left: 0px;
+}
+ul.custom_rating li {
+    background: #e3fafa;
+    margin-bottom: 25px;
+    padding: 10px 17px 10px 24px;
+}
+ul.custom_rating li h4{
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    width: 100%;
+    display: inline-block;
+    color: #000;
+
+}
+ul.custom_rating li h4 a{
+    color: #007F7F
+}
+ul.custom_rating li p{
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    line-height: 1.5;
+}
+.date-align{
+    text-align: right;
+}
+.comment-banner{
+    width: 100%;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 18px;
+}
+.hheading-c{
+    font-size: 22px;
+    margin-bottom: 50px;
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid #8b8989;
+    padding-bottom: 30px;
+}
+p.job_staus a {
+    background: #018181;
+    display: inline-block;
+    padding: 0px 22px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 8px;
+}
+.custom_rating i{
+    color: #007F7F;
+}
+.list_desc ul li {
+    text-decoration: none!important;
+    
+}
+
+
+a.standard-btn {
+  padding: 9px 7px!important;
+  border: 0px solid #e1e7ec;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  background-color: #007f7f !important;
+  color: #fff;
+}
+
+
+.cstm-sidebar{
+    display: inline-block;
+}
+h2.title {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 28px;
+    color: #000;
+    /* margin-bottom: 20px; */
+    padding: 10px 10px 18px 10px;
+    display: inline-block;
+}
+h3.title {
+    font-weight: 600;
+    font-size: 22px !important;
+    line-height: 28px;
+    color: #000000;
+    padding-bottom: 15px;
+}
+.item-details-thumb-area{
+    background-color: #F8FAFA;
+}
+.item-details-tag ul li a {
+    padding: 3px 30px !important;
+    font-size: 14px;
+    /* line-height: 15px; */
+}
+p.job_staus {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    margin-top: 10px;
+}
+p.job_staus a {
+    padding: 8px 20px;
+    background: #72C1C1;
+    border-radius: 4px;
+    font-weight: 400;
+}
+p.p-date {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: #000000;
+}
+.cstm-sidebar .sidebar-title2 li span {
+font-weight: 600;
+font-size: 16px;
+line-height: 20px;
+}
+.cstm-sidebar .sidebar-title2 li p{
+    font-weight: 400;
+font-size: 14px;
+line-height: 18px;
+}
+
+.dod-text p {
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+    margin-bottom: 5px;
+}
+.dod-text span {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    text-transform: capitalize !important;
+}
+.font-style{
+    font-size: 13px !important;
+color: #58a7a8 !important;
+}
+.status_btn{
+    display: inline-block;
+    height: 32px;
+    background: #72C1C1;
+    border-radius: 4px;
+    margin-right: 10px;
+    padding-top: 6px;
+    width: 68px;
+    padding-left: 8px;
+}
+</style>

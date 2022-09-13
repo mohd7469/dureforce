@@ -14,27 +14,26 @@ class CreateUserCompaniesTable extends Migration
     public function up()
     {
         Schema::create('user_companies', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('country_id')->index()->nullable();
             $table->string('name')->nullable();
             $table->string('logo')->nullable();
-            $table->string('phone')->nullable();
+            $table->integer('number')->nullable();
             $table->string('email')->nullable();
-            $table->string('location')->nullable();
             $table->string('vat')->nullable();
-            $table->string('url')->nullable();
+            $table->string('website')->nullable();
+            $table->string('linked_url')->nullable();
             $table->string('facebook_url')->nullable();
-            $table->string('linkedin_url')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
 
-        Schema::table('user_companies', function(Blueprint $table){
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users')
-                  ->cascadeOnDelete()
-                  ->cascadeOnUpdate();
-        });
+
     }
 
     /**
