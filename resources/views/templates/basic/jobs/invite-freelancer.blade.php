@@ -76,12 +76,12 @@
 
                        
                                         <div class="row biorow">
-                                           <div class="col-md-4">
+                                           <div class="col-md-3">
                                               <div class="row borderleftc"> 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-8">
                                                    
                                                     <h4 class="pname-c"> 
                                                         Travis T.
@@ -89,16 +89,11 @@
                                                    
                                                    
                                                        <p class="pdesination-c">  Full Stack Developer</p> 
+                                                       <p class="plocation"> London, UK</p>
                                                     
                                                     
                                                  </div>
-                                                    <div class="col-md-4">
-                                                      
-                                                        <p class="plocation"> London, UK</p>
-                                                       
-
-                                                       
-                                                    </div>
+                                                  
                                               </div>
                                            </div>
 
@@ -127,7 +122,7 @@
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="#" class="btn-products-s">Hire</a>
                                                     <a href="#" class="btn-products-s phire">invite a job</a>
-                                                    <a href="#" class="btn-products-s phire">View</a>
+                                                    <a href="#" class="btn-products-s">View Profile</a>
                                                 </div>
                                             </div>
                                      </div>
@@ -152,17 +147,7 @@
                                         <li>React</li>
                                     </ul>
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="attachment">
-                                        <div class="service_subtitle2 mt-20 heading-text">
-                                      <h2> Attachments</h2>
-                                          </div>
-                            
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
-                            
-                                        </div>
-                                  </div>
+                               
 
                                 </div>
 
@@ -287,11 +272,11 @@
                                                  </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="#" class="btn-products-s">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">invite a job</a>
+                                                    <a href="#" class="btn-products-s phire">Invite a job</a>
                                                     <a href="#" class="btn-products-s phire">View</a>
                                                 </div>
                                             </div>
@@ -317,17 +302,7 @@
                                         
                                     </ul>
                                 </div>
-                                <div class="col-md-5">
-                                    <div class="attachment">
-                                        <div class="service_subtitle2 mt-20 heading-text">
-                                      <h2> Attachments</h2>
-                                          </div>
-                            
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
-                            
-                                        </div>
-                                  </div>
+                               
 
                                 </div>
 
@@ -378,6 +353,11 @@
     margin:0px 1%;
 
 }
+.row.btns-s{
+    width: 330px;
+    left: 68px !important;
+}
+
  @media only screen and (min-width:768px){
 .sorting-mbl .col-md-4:first-child {
   
@@ -426,6 +406,9 @@ div#custom-search-input {
         display: inline-block;
     
     }
+    .row.btns-s{
+    width: 100%;
+}
     ul.skills-listing li {
     margin-right: 1% !important;
     margin-bottom: 14px !important;
@@ -525,6 +508,9 @@ p.sort-p {
 .col-md-9.sorting-mbl {
     margin-top: 20px;
 }
+select#bestmatch, select#Filters{
+    font-size: 12px !important;
+}
 }
 
 @media only screen and (max-width:414px){
@@ -613,15 +599,15 @@ select#bestmatch {
     line-height: 18px;
     color: #000000;
     position: relative;
-    padding-left: 2px !important;
-    margin-top: 48px !important;
+    padding-left: 20px !important;
+    margin-top: 12px !important;
 }
 p.plocation:before {
     width: 20px;
     height: 20px;
     background: red;
     position: absolute;
-    left: -19px !important;
+    left: 0px !important;
     top: 8px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
