@@ -14,6 +14,7 @@ class UserPayment extends Model
     const ACTIVE = 1;
     const IN_ACTIVE = 0;
 
+    protected $table = "user_payments";
 
     protected $fillable = [
         'card_number',

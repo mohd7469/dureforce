@@ -18,21 +18,6 @@ class Skills extends Migration
             $table->string('name', 250);
         });
 
-        Schema::create('user_skills', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('skill_id');
-            $table->unsignedBigInteger('user_id');
-
-            $table->foreign('skill_id')
-                ->references('id')
-                ->on('skills')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-        });
     }
 
     /**

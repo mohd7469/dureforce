@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiceFeeSeeder::class);
         $this->call(DeliveryModesSeeder::class);
         $this->call(milestoneSeeder::class);
-        
+        $this->call(DegreeSeeder::class);
+
     }
 }
