@@ -76,12 +76,12 @@
 
                        
                                         <div class="row biorow">
-                                           <div class="col-md-4">
+                                           <div class="col-md-3">
                                               <div class="row borderleftc"> 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-8">
                                                     @isset($proposal->user->username)
                                                     <h4 class="pname-c"> 
                                                                {{$proposal->user->username}}
@@ -90,15 +90,16 @@
                                                      @isset($proposal->user->designation)
                                                       <p class="pdesination-c"> {{$proposal->user->designation}} </p>
                                                      @endisset
-                                                    
-                                                 </div>
-                                                    <div class="col-md-4">
+
+                                                     <div class="col-md-4">
                                                         @isset($proposal->user->address->address)
                                                         <p class="plocation"> {{@$proposal->user->address->address }}</p>
                                                         @endisset
 
                                                        
                                                     </div>
+                                                 </div>
+                                                   
                                               </div>
                                            </div>
 
@@ -122,12 +123,12 @@
                                                  </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
+                                                    <a href="#" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">View</a>
                                                 </div>
                                             </div>
                                      </div>
@@ -220,7 +221,7 @@
 .row.btns-s {
     position: relative;
     left: 23px;
-    width: 300px;
+    /* width: 300px; */
 }
 a.btn-products-s {
     border: 1px solid #7F007F;
@@ -471,15 +472,15 @@ select#bestmatch {
     line-height: 18px;
     color: #000000;
     position: relative;
-    padding-left: 2px !important;
-    margin-top: 48px !important;
+    padding-left: 20px !important;
+    margin-top: 12px !important;
 }
 p.plocation:before {
     width: 20px;
     height: 20px;
     background: red;
     position: absolute;
-    left: -19px !important;
+    left: 0px !important;
     top: 4px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
