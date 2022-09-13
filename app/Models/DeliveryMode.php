@@ -10,6 +10,8 @@ class DeliveryMode extends Model
     use HasFactory;
     protected $fillable = ['title','slug','module_id','module_type','is_active'];
 
+
+
     public function proposal()
     {
         return $this->hasMany(Proposal::class,'delivery_mode_id');
@@ -17,5 +19,8 @@ class DeliveryMode extends Model
     public function module()
     {
         return $this->morphTo();
+    }
+    public function scopeActive($query){
+        return $query->where('is_active',true);
     }
 }

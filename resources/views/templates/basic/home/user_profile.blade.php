@@ -11,7 +11,10 @@
                                 style="background-image:url({{ imagePath()['profile']['user']['path'] . '/' . $seller->image }})"
                                 alt="Card image cap">
                             <figcaption><span class="name">{{ $seller->username ?? $seller->email }}</span>
-                                <span>{{ $seller->address->address }}</span>
+                                @isset( $seller->address->address)
+                                    <span>{{ $seller->address->address }}</span>
+                                @endisset
+                               
                             </figcaption>
                         </figure>
                     </div>

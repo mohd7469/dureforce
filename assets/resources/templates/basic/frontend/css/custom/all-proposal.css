@@ -42,6 +42,8 @@ a.btn-products-s {
     font-size: 14px;
     line-height: 18px;
     color: #7F007F;
+    width: auto !important;
+    margin:0px 1%;
 
 }
 a.btn-products-s.phire {
@@ -95,7 +97,8 @@ p.plocation:before {
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
 .biorow{
-    margin-top: 20px;
+    margin-top: 60px;
+ 
 }
 .borderleftc{
     position: relative;
@@ -125,6 +128,7 @@ div#custom-search-input {
     background: #EFF8F8;
     border: 1px solid #CBDFDF;
     border-radius: 6px;
+    
 }
 div#custom-search-input input {
     background: transparent;
@@ -178,13 +182,14 @@ p.sort-p {
 }
 
 @media only screen and (max-width:1200px){
-    a.btn-products-s {
+    /* a.btn-products-s {
     border: 1px solid #7F007F;
     border-radius: 4px;
     padding: 6px 8px;
     font-weight: 600;
     font-size: 13px;
-}
+    
+} */
 p.sort-p {
     width: 70%;
     }
@@ -281,6 +286,7 @@ ul.skills-listing {
     margin-top: 15px;
     text-align: center;
     display: inline-block;
+    width: 100%;
 }
 ul.skills-listing li{
     float: none;

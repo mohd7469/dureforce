@@ -24,7 +24,7 @@ color: #000000;
 }
 .sorting-mbl .col-md-4 {
     width: 17%;
-    float: right;
+    /* float: right; */
     text-align: right;
 }
 ul.skills-listing {
@@ -98,12 +98,13 @@ p.plocation:before {
     background: red;
     position: absolute;
     left: 0px;
-    top: 2px;
+    top: 2px !important;
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
 .biorow{
-    margin-top: 20px;
+    margin-top: 60px;
+
 }
 .borderleftc{
     position: relative;

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryModesSeeder extends Seeder
 {
@@ -14,28 +15,34 @@ class DeliveryModesSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('delivery_modes')->truncate();
         
-        \DB::table('delivery_modes')->insert(array (
+        DB::table('delivery_modes')->insert(array (
             0 => 
             array (
                 'id' => 1,
-                'title' => 'abc',
-                'slug' => 'sss',
-                'module_id' => 11,
-                'module_type' => 'App\Model',
-                'is_active' => 1,
+                'title' => 'Hourly',
+                'slug' => 'Hourly-slug',
+                'module_id' => 1,
+                'module_type' => 'App\Models\Job',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),
             1 => 
             array (
                 'id' => 2,
-                'title' => 'abc',
-                'slug' => 'sss',
-                'module_id' => 22,
-                'module_type' => 'App\Model',
-                'is_active' => 1,
+                'title' => 'Weekly',
+                'slug' => 'Weekly-slug',
+                'module_id' => 1,
+                'module_type' => 'App\Models\Job',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ),
+            array (
+                'id' => 3,
+                'title' => 'Monthly',
+                'slug' => 'Monthly-slug',
+                'module_id' => 1,
+                'module_type' => 'App\Models\Job',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),
