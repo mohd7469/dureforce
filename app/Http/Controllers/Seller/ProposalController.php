@@ -204,7 +204,7 @@ class ProposalController extends Controller
             $rules=[
                 'delivery_mode_id' => 'required|exists:delivery_modes,id',
                 'hourly_bid_rate' => 'required|integer|min:1',
-                'amount_receive' => 'integer',
+                'amount_receive' => 'required',
                 'start_hour_limit' => 'integer|min:1|max:40',
                 'end_hour_limit' => 'integer|min:1|max:40',
                 'cover_letter' => 'string'
