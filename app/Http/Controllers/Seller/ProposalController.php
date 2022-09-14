@@ -81,7 +81,7 @@ class ProposalController extends Controller
                 "cover_letter" => $request_data['cover_letter'],
             ]);
 
-            if ( $request_data['bid_type'] == Proposal::$bid_type_milestone){
+            if ( isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone){
                 $milestones_data=array_values($request_data['milestones']);
                 if(count($milestones_data)>0){
                     
@@ -93,7 +93,7 @@ class ProposalController extends Controller
                 }
                 
             }
-            elseif($request_data['bid_type'] ==  Proposal::$by_project){
+            elseif( isset($request_data['bid_type']) && $request_data['bid_type'] ==  Proposal::$by_project){
                 
                 $proposal->amount_receive=$request_data['total_project_price']*0.80;
                 $proposal->project_start_date=$request_data['project_start_date'];
@@ -205,8 +205,8 @@ class ProposalController extends Controller
                 'delivery_mode_id' => 'required|exists:delivery_modes,id',
                 'hourly_bid_rate' => 'required|integer|min:1',
                 'amount_receive' => 'integer',
-                'start_hour_limit' => 'integer|min:1',
-                'end_hour_limit' => 'integer|min:1',
+                'start_hour_limit' => 'integer|min:1|max:40',
+                'end_hour_limit' => 'integer|min:1|max:40',
                 'cover_letter' => 'string'
             ];
             
