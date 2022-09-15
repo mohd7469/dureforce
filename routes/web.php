@@ -41,6 +41,7 @@ Route::view('/profile-payment-view-design', 'templates.basic.project_profile.par
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
 
 
+
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
