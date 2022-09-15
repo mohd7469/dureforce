@@ -526,7 +526,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 */
 
 
-Auth::routes(['verify' => true]);
 
 Route::name('user.')->group(function () {
     Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -737,7 +736,8 @@ Route::name('user.')->prefix('user')->group(function () {
             //Review
             Route::post('review', 'ReviewController@store')->name('review.store');
         });
-    });
+    }
+    );
 });
 
 Route::get('/contact', 'SiteController@contact')->name('contact');
@@ -790,3 +790,7 @@ Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 
 //
+
+
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
