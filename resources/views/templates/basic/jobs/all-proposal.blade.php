@@ -125,9 +125,10 @@
 
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
+                                                    
+                                                    <a href="{{ url('/withdraw-offer') }}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
-                                                    <a href="#" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
                                             </div>
@@ -382,7 +383,15 @@ p.sort-p {
     margin-top: 20px;
 }
 }
+@media only screen and (max-width:767px) and (min-width:481px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 13px !important;
+    }
 
+}
 @media only screen and (max-width:414px){
     select#bestmatch{
         right: -15px !important;
@@ -407,7 +416,28 @@ ul.skills-listing li {
     .row.btns-s{
         width: 100% !important;
     }  
+    .container.single-jobc {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 
+}
+@media only screen and (max-width:480px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 12px !important;
+    }
+    a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 13px;
+    width: 45% !important;
+    margin: 6px 2.5% !important;
+}
 }
 @media only screen and (min-width:767px) and (max-width:992px){
     a.btn-products-s {
@@ -465,7 +495,7 @@ select#bestmatch {
     width: 120px;
     top: 0px;
 }
-}
+
 .plocation {
     font-weight: 600;
     font-size: 12px !important;
@@ -486,10 +516,16 @@ p.plocation:before {
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
 }
+@media only screen and (max-width:320px){
+a.btn-products-s {
+    padding: 7px 10px !important;
+}
+}
 </style>
 @push('script')
 <script>
    'use strict';
+   
    $('#defaultSearch').on('change', function() {
        this.form.submit();
    });

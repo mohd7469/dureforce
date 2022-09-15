@@ -37,6 +37,9 @@ Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.p
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
+// route for offer pages design 
+Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
+
 
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
