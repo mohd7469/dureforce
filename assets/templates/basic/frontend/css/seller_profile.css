@@ -12,7 +12,7 @@
 }
 .fb-profile-block-thumb{
     display: block;
-    height: 159px;
+    height:25vh;
     overflow: hidden;
     position: relative;
     text-decoration: none;
@@ -73,6 +73,7 @@
 }
 .card-text-tab {
     margin-bottom: 12px;
+    border-bottom: 1px solid #e1e7ec;
 
 }
 .card-text-tab h4{
@@ -220,4 +221,22 @@ blockquote cite:before {
     background: #FAF5FD;
     border-radius: 3px;
 
+}
+@media (min-width: 768px){
+    .container {
+        max-width: 100%;
+    }
+}
+button.standard-btn-sm-edit {
+    padding: 5px 16px;
+    border: 0px solid #e1e7ec;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    background-color: #7f007f;
+    color: #fff;
 }
