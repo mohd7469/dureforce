@@ -12,7 +12,8 @@
                         <p class="text-dark-heading">Offer Sent to Dumitru Gi</p>
                       </div>
                       <div class="mb-2 mt-1">
-                        <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                        <p class="text-dark">We’ll notify you when Dumitru G
+                          respond to your offer. </p>
                       </div>
                     
                      
@@ -32,7 +33,8 @@
                             I'm done hiring for this job
                           </label>
                         </div>
-                        <div class="pl-3 text-muted">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod quis vero eligendi quae mollitia quia debitis iste soluta reiciendis? Repellendus dolores ullam qui esse suscipit praesentium vel est ex quidem!</div>
+                        <div class="pl-3 text-muted">When the freelancer accepts, your job post will be closed to new proposals.  Don’t worry - the original job post, 
+                          all the freelancers you messaged, shortlisted or archived for this job will be saved.</div>
                       </div>
 
                       <div class="p-3">
@@ -42,7 +44,7 @@
                             I plan to hire more freelancer for this job
                           </label>
                         </div>
-                        <div class="text-muted" >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod quis vero eligendi quae mollitia quia debitis iste soluta reiciendis? Repellendus dolores ullam qui esse suscipit praesentium vel est ex quidem!</div>
+                        <div class="text-muted" >Your job post will remain open to new proposals</div>
                       </div>
                       
                      
