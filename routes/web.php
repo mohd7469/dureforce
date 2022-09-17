@@ -19,7 +19,6 @@ Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposa
 Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
 Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
 
-
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
 Route::get('proposal', 'seller\ProposalController@index')->name('proposal.index');
