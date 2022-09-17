@@ -386,7 +386,7 @@ class JobController extends Controller
     public function singleJob($uuid){
         
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $job = Job::where('uuid', $uuid)->withAll()->first();
         
         
         $skillCats = SkillCategory::select('name', 'id')->get();

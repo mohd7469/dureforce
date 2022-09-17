@@ -70,11 +70,7 @@
                                  <!--Bio Profile Section Start-->
                             
                             @foreach ($proposals as $proposal)
-            
-                                    
                                     <div class="" > 
-
-                       
                                         <div class="row biorow">
                                            <div class="col-md-3">
                                               <div class="row borderleftc"> 
@@ -475,16 +471,16 @@ select#bestmatch {
     padding-left: 20px !important;
     margin-top: 12px !important;
 }
-p.plocation:before {
-    width: 20px;
-    height: 20px;
-    background: red;
-    position: absolute;
-    left: 0px !important;
-    top: 4px !important; 
-    content: '';
-    background: url(/assets/images/job/location-icon.png) no-repeat;
-}
+    p.plocation:before {
+        width: 20px;
+        height: 20px;
+        background: red;
+        position: absolute;
+        left: 0px !important;
+        top: 4px !important; 
+        content: '';
+        background: url(/assets/images/job/location-icon.png) no-repeat;
+    }
 }
 </style>
 @push('script')

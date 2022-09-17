@@ -75,8 +75,7 @@ class ProposalController extends Controller
 
             $propsal=Proposal::where('uuid',$proposal)->first();
             $proposals = Proposal::WithAll()->get();
-            $pageTitle = "View a proposal";
-            // dd($this->activeTemplate);
+            $pageTitle = "View a Proposal";
             return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','propsal','proposals'));
             
 
@@ -117,5 +116,13 @@ class ProposalController extends Controller
     public function destroy(Proposal $proposal)
     {
         //
+    }
+
+    public function jobPropsals($job_uuid)
+    {
+        $proposals = Proposal::WithAll()->get();
+        $pageTitle = "Job Propsals";
+       
+        return view($this->activeTemplate .'jobs.Proposal.all-proposal',compact('pageTitle','proposals'));
     }
 }
