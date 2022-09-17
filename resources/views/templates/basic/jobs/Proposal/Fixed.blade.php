@@ -85,14 +85,14 @@
                   <div class="row" id="milestone1">
                      <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                         <label>@lang('Description')*</label>
-                        <input type="text" name="milestones[1][description]" maxlength="255" value="" class="form-control" >
+                        <input type="text" name="milestones[1][description]" maxlength="255" value="" class="form-control" id="milestones.1.description">
                      </div>
       
                      {{-- start date --}}
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Start Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="milestones[1][start_date]" value="" >
+                        <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date">
                         </div>
                      </div>
       
@@ -100,14 +100,14 @@
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Due Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="milestones[1][end_date]" value=""  >
+                        <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date">
                         </div>
                      </div>
       
                      {{-- amount --}}
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Amount')*</label>
-                        <input type="number" name="milestones[1][amount]" maxlength="255" value="" class="form-control milestones_amount"  >
+                        <input type="number" name="milestones[1][amount]" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount">
                      </div>
                   </div>
                   

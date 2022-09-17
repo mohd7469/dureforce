@@ -16,14 +16,13 @@ Route::get('/clear', function () {
 */
 
 Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
-Route::get('all-proposal', 'buyer\jobcontroller@product')->name('job.all.product');
 Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
 Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
 
 
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
-Route::get('proposal', 'ProposalController@index')->name('proposal.index');
+Route::get('proposal', 'seller\ProposalController@index')->name('proposal.index');
 
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
@@ -704,6 +703,9 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
                 Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
+                Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
+                Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
+
 
             });
 
