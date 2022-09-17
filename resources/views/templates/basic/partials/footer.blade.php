@@ -62,7 +62,7 @@ $socialIcons = getContent('social_icon.element', false);
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30">
                         <div class="footer-widget">
-                            <h3 class="title">@lang('LEGEL')</h3>
+                            <h3 class="title">@lang('LEGAL')</h3>
                             <ul class="footer-links">
                                 <li><a href="{{ route('blog') }}">@lang('Blog')</a></li>
                                 @foreach ($footer_menu as $value)
