@@ -221,7 +221,7 @@ class ProposalController extends Controller
                 $rules=[
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'milestones.*.description' => 'string|required',
-                    'milestones.*.start_date' => 'date|required',
+                    'milestones.*.start_date' => 'date|required|after_or_equal:now',
                     'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
                     'milestones.*.amount' => 'string|required',
                     'total_project_price' => 'required|integer',
@@ -234,7 +234,7 @@ class ProposalController extends Controller
 
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'project_end_date' => 'required|date|after_or_equal:project_start_date',
-                    'project_start_date' => 'required|date',
+                    'project_start_date' => 'required|date|after_or_equal:now',
                     'total_project_price' => 'required|integer',
                     'amount_receive' => 'integer|required',
                     'cover_letter' => 'string|min:20'
