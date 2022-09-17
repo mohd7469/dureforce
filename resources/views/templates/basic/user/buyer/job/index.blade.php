@@ -31,7 +31,7 @@
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            {{ $job->proposal->count() }}
+                                            <a href="{{route('user.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                         </td>
                                         <td data-label="@lang('Messages')">
                                             {{ '3' }}

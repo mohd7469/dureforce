@@ -152,7 +152,7 @@ class Job extends Model
 
     public function proposal()
     {
-        return $this->morphMany(Proposal::class, 'module');
+        return $this->morphMany(Proposal::class, 'module')->withAll();
     }
     public function proposal_document()
     {
