@@ -28,8 +28,6 @@ class Proposal extends Model
     public static function scopeWithAll($query){
 
         return $query->with('module')->with('user')->with('user.skills');
-
-
     }
 
     public function module()
