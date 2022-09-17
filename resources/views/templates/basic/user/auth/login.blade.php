@@ -29,12 +29,13 @@
                     </div> -->
                     <div class="row"> 
                         <div class="account-header col-md-12 col-sm-12 text-center">
-                            <h3 class="title">
-                                @lang('Sign in to') {{__($general->sitename)}}
-                            </h3>
+                            <h2 class="title">
+                                @lang('Log in to') {{__($general->sitename)}}
+                            </h2>
                         </div>
                     </div>
                     <form
+                    autocomplete="nope"
                         class="account-form"
                         method="POST"
                         action="{{ route('user.login')}}"
@@ -43,39 +44,40 @@
                         @csrf
                         <div class="row ml-b-20">
                             <div class="col-lg-12 form-group">
-                                <!-- <label for="username">@lang('Username or email')*</label> -->
+                                <label class="label-color" for="username">@lang('Username / Email')*</label>
                                 <input
                                     type="text"
+                                    autocomplete="off"
                                     class="form-control form--control"
                                     id="username"
                                     name="username"
                                     value="{{old('username')}}"
-                                    placeholder="@lang('Enter username or email')"
+                                    placeholder="@lang('Username / Email')"
                                     required=""
                                 />
                             </div>
 
                             <div class="col-lg-12 form-group">
-                                <!-- <label for="password">@lang('Password')*</label> -->
+                                <label class="label-color" for="password">@lang('Password')*</label>
                                 <input type="password" class="form-control
                                 form--control" id="password" name="password"
                                 placeholder="@lang('Enter password')"
                                 required="">
                             </div>
 
-                            <div class="col-lg-12 form-group">
+                            <!-- <div class="col-lg-12 form-group">
                                 @php echo loadReCaptcha() @endphp
-                            </div>
+                            </div> -->
 
                             @include($activeTemplate.'partials.custom_captcha')
 
                             <div class="col-lg-12 form-group">
-                                <div class="forgot-item">
+                                <div class="forgot-item float-end">
                                     <label
                                         ><a
                                             href="{{route('user.password.request')}}"
-                                            class="text--base"
-                                            >@lang('Forgot Password')?</a
+                                            class="text--base "
+                                            ><span class="span-color">@lang('Forgot Password')?</span></a
                                         ></label
                                     >
                                 </div>
@@ -88,11 +90,11 @@
                             <div class="col-lg-12 text-center">
                                 <div class="account-item mt-10">
                                     <label
-                                        >@lang('Already Have An Account')?
+                                        ><span class="span-color">@lang('Already Have An Account')?</span>
                                         <a
                                             href="{{ route('user.register') }}"
                                             class="text--base"
-                                            >@lang('Register Now')</a
+                                            ><span class="label-color">@lang('Register Now')</span></a
                                         ></label
                                     >
                                 </div>
@@ -103,8 +105,7 @@
             </div>
         </div>
     </div>
-
-        <!-- end login form modal -->
+    <!-- end login form modal -->
 
         <!-- login with gmail modal form -->
     <div
@@ -197,8 +198,15 @@
 @endsection
 @push('style')
 <style>
+    .modal { position: fixed; top:10%; } 
     .google-button{
         width: 100%; border-radius: 50px;
+    }
+    .span-color{
+        color: #7F007F;
+    }
+    .label-color{
+        color: #007F7F;
     }
     .or-seperator {
         margin: 30px 0 10px;
@@ -215,7 +223,7 @@
     .modal-body {
         position: relative;
         flex: 1 1 auto;
-        padding: 2rem;
+        padding: 3rem;
     }
     .or-seperator i {
         padding: 0 10px;
@@ -236,7 +244,12 @@
     <script>
         "use strict";
         $(document).ready(function(){
-            $("#loginWithGmail").modal('show');
+            $("#loginModal").modal('show');
+        });
+        $(function(){                                               
+            setTimeout(function(){
+                $("input#username").attr("type","username");
+            },10);
         });
         function submitUserForm() {
             var response = grecaptcha.getResponse();

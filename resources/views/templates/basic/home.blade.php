@@ -497,6 +497,106 @@
             </div>
         </div>
     </section>
+        <!-- log in form modal  -->
+        <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="1"
+        aria-labelledby="loginModalLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn-close float-end"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                    </div> -->
+                    <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h2 class="title">
+                                @lang('Log in to') {{__($general->sitename)}}
+                            </h2>
+                        </div>
+                    </div>
+                    <form
+                    autocomplete="nope"
+                        class="account-form"
+                        method="POST"
+                        action="{{ route('user.login')}}"
+                        onsubmit="return submitUserForm();"
+                    >
+                        @csrf
+                        <div class="row ml-b-20">
+                            <div class="col-lg-12 form-group">
+                                <label class="label-color" for="username">@lang('Username / Email')*</label>
+                                <input
+                                    type="text"
+                                    autocomplete="off"
+                                    class="form-control form--control"
+                                    id="username"
+                                    name="username"
+                                    value="{{old('username')}}"
+                                    placeholder="@lang('Username / Email')"
+                                    required=""
+                                />
+                            </div>
+
+                            <div class="col-lg-12 form-group">
+                                <label class="label-color" for="password">@lang('Password')*</label>
+                                <input type="password" class="form-control
+                                form--control" id="password" name="password"
+                                placeholder="@lang('Enter password')"
+                                required="">
+                            </div>
+
+                            <!-- <div class="col-lg-12 form-group">
+                                @php echo loadReCaptcha() @endphp
+                            </div> -->
+
+                            @include($activeTemplate.'partials.custom_captcha')
+
+                            <div class="col-lg-12 form-group">
+                                <div class="forgot-item float-end">
+                                    <label
+                                        ><a
+                                            href="{{route('user.password.request')}}"
+                                            class="text--base "
+                                            ><span class="span-color">@lang('Forgot Password')?</span></a
+                                        ></label
+                                    >
+                                </div>
+                            </div>
+                            <div class="col-lg-12 form-group text-center">
+                                <button type="submit" class="submit-btn w-100">
+                                    @lang('Login Now')
+                                </button>
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <div class="account-item mt-10">
+                                    <label
+                                        ><span class="span-color">@lang('Already Have An Account')?</span>
+                                        <a
+                                            href="{{ route('user.register') }}"
+                                            class="text--base"
+                                            ><span class="label-color">@lang('Register Now')</span></a
+                                        ></label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end login form modal -->
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
@@ -506,6 +606,51 @@
         margin-top: -158px;
 
     }
+    .modal { position: fixed; top:15%; } 
+    .google-button{
+        width: 100%; border-radius: 50px;
+    }
+    .span-color{
+        color: #7F007F;
+    }
+    .label-color{
+        color: #007F7F;
+    }
+    .modal-header .btn-close {
+        margin-bottom: 30px;
+        height: 1px !important;
+    }
+    .account-header {
+        margin-bottom: 15px;
+    }
+    .modal-body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 3rem;
+    }
+
+
+</style>
+@endpush
+@push('script')
+    <script>
+        "use strict";
+        $(document).ready(function(){
+            $("#loginModal").modal('show');
+        });
+        $(function(){                                               
+            setTimeout(function(){
+                $("input#username").attr("type","username");
+            },10);
+        });
+        function submitUserForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                document.getElementById('g-recaptcha-error').innerHTML = '<span class="text-danger">@lang("Captcha field is required.")</span>';
+                return false;
+            }
+            return true;
+        }
 </style>
 @endpush
 
@@ -515,6 +660,9 @@
 
     <script>
         'use strict';
+        $(document).ready(function(){
+            $("#loginModal").modal('show');
+        });
         $('#defaultSearch').on('change', function () {
             this.form.submit();
         });
