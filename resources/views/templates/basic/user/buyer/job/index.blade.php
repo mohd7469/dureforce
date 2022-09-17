@@ -31,7 +31,7 @@
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            {{ '2'}}
+                                            {{ $job->proposal->count() }}
                                         </td>
                                         <td data-label="@lang('Messages')">
                                             {{ '3' }}

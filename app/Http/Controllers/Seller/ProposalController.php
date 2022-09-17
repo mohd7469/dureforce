@@ -62,17 +62,16 @@ class ProposalController extends Controller
     public function store(Request $request, $job_uuid)
     {
         $user = Auth::user();
-        $job_id = Job::where('uuid',$job_uuid)->pluck('id')->first();
+        $job = Job::where('uuid',$job_uuid)->first();
         $request_data = [];
         parse_str($request->data, $request_data);
         
         try {
             DB::beginTransaction();
 
-            $proposal = Proposal::create([
+            $proposal =$job->proposal()->create([
                 "user_id" => $user->id,
                 "delivery_mode_id" => $request_data['delivery_mode_id'],
-                "job_id" => $job_id,
                 "hourly_bid_rate" => isset($request_data['hourly_bid_rate']) ? $request_data['hourly_bid_rate'] : null,
                 "fixed_bid_amount" => isset($request_data['total_project_price']) ? $request_data['total_project_price'] : null,
                 "bid_type" => isset($request_data['bid_type']) ? $request_data['bid_type'] : '' ,
@@ -80,6 +79,9 @@ class ProposalController extends Controller
                 "end_hour_limit" => isset($request_data['end_hour_limit']) ? $request_data['end_hour_limit'] : null,
                 "cover_letter" => $request_data['cover_letter'],
             ]);
+
+
+
 
             if ( isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone){
                 $milestones_data=array_values($request_data['milestones']);
