@@ -23,13 +23,17 @@
             <div class="col-md-8">
                 <div class="flex-md-row mb-4 box-shadow h-md-250">
                     <div class="d-flex flex-column align-items-start pright-spacing ">
+
+                      
                       <h4 class="heading">
                         Are you done Hiring for the job "UX Designer?"
                       </h4>
                       <div class="p-3">
                         <div class="form-check mt-2">
-                          <input class="form-check-input" type="radio" value="" id="flexCheckDefault">
-                          <label class="form-check-label" style="padding-left: 10px" for="flexCheckDefault">
+                          {{-- <input class="form-check-input" type="radio"  name="choice" value="" id="flexCheckDefault11" checked> --}}
+                          <input type="radio" name="choice" value="choice-1" id="choice-1"  class="form-check-input"checked>
+                         
+                          <label class="form-check-label" style="padding-left: 10px" for="flexCheckDefault1">
                              <p> I'm done hiring for this job</p>
                             <div class="pl-3 text-muted">When the freelancer accepts, your job post will be closed to new proposals.  Don’t worry - the original job post, 
                               all the freelancers you messaged, shortlisted or archived for this job will be saved......</div>
@@ -40,8 +44,11 @@
 
                       <div class="p-3">
                         <div class="form-check">
-                          <input class="form-check-input" type="radio" value="" id="flexCheckDefault">
-                          <label class="form-check-label" style="padding-left: 10px" for="flexCheckDefault">
+                          <input type="radio"  name="choice" class="form-check-input"   value="" id="flexCheckDefault199">
+
+                          <input type="radio" name="choice"  class="form-check-input" value="choice-2" id="choice-2">
+                            
+                          <label class="form-check-label" style="padding-left: 10px" for="flexCheckDefault199">
                             I plan to hire more freelancer for this job
                             <div class="text-muted" >Your job post will remain open to new proposals</div>
                           </label>
