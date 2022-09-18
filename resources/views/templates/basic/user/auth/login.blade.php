@@ -48,7 +48,7 @@
                                 <input
                                     type="text"
                                     autocomplete="off"
-                                    class="form-control form--control"
+                                    class="form-control form-control-lg form--control"
                                     id="username"
                                     name="username"
                                     value="{{old('username')}}"
@@ -59,7 +59,7 @@
 
                             <div class="col-lg-12 form-group">
                                 <label class="label-color" for="password">@lang('Password')*</label>
-                                <input type="password" class="form-control
+                                <input type="password" class="form-control form-control-lg
                                 form--control" id="password" name="password"
                                 placeholder="@lang('Enter password')"
                                 required="">
@@ -114,7 +114,7 @@
         tabindex="-1"
         aria-labelledby="loginWithGmailLabel"
         aria-hidden="true"
-    >
+        >
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal body -->
@@ -156,7 +156,7 @@
                                 <!-- <label for="username">@lang('Username or email')*</label> -->
                                 <input
                                     type="text"
-                                    class="form-control form--control"
+                                    class="form-control form-control-lg form--control"
                                     id="username"
                                     name="username"
                                     value="{{old('username')}}"
