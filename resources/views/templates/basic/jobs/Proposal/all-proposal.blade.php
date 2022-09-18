@@ -122,7 +122,6 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     
-                                                    <a href="{{ url('/withdraw-offer') }}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
                                                     <a href="{{route('user.proposal.buyer.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
