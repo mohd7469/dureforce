@@ -107,7 +107,7 @@
                                 <input
                                     type="text"
                                     autocomplete="off"
-                                    class="form-control form--control"
+                                    class="form-control form-control-lg form--control"
                                     id="username"
                                     name="username"
                                     value="{{old('username')}}"
@@ -118,7 +118,7 @@
 
                             <div class="col-lg-12 form-group">
                                 <label class="label-color" for="password">@lang('Password')*</label>
-                                <input type="password" class="form-control
+                                <input type="password" class="form-control form-control-lg
                                 form--control" id="password" name="password"
                                 placeholder="@lang('Enter password')"
                                 required="">
@@ -185,6 +185,9 @@
     .modal-header .btn-close {
         margin-bottom: 30px;
         height: 1px !important;
+    }
+    .form-control-lg{
+        height: 50px !important;
     }
     .account-header {
         margin-bottom: 15px;

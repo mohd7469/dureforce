@@ -217,6 +217,9 @@
         margin-bottom: 30px;
         height: 1px !important;
     }
+    .form-control-lg{
+        height: 50px !important;
+    }
     .account-header {
         margin-bottom: 15px;
     }
