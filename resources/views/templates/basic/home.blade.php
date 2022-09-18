@@ -508,6 +508,19 @@
     }
 </style>
 @endpush
+@push('script')
+    <script>
+        "use strict";
+        function submitUserForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                document.getElementById('g-recaptcha-error').innerHTML = '<span class="text-danger">@lang("Captcha field is required.")</span>';
+                return false;
+            }
+            return true;
+        }
+</style>
+@endpush
 
 @push('script')
     <script type="text/javascript"

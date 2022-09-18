@@ -163,7 +163,7 @@
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
-                                                    <a href="{{route('user.job.all.proposals',$job->uuid)}}"   class="standard-btn mr-15">View Proposals ({{$job->proposal->count()}})</a>
+                                                    <a href="{{route('user.job.all.proposals',$job->uuid)}}"    class="standard-btn ">View Proposals ({{$job->proposal->count()}})</a>
                                                     <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
 
 

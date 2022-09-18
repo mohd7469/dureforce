@@ -122,13 +122,9 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     
-                                                    <a href="{{ url('/withdraw-offer') }}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
-<<<<<<< HEAD:resources/views/templates/basic/jobs/all-proposal.blade.php
-=======
                                                     <a href="{{route('user.proposal.buyer.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
->>>>>>> e6011937db27cc49b7b2ad613592f8fbc558a5a1:resources/views/templates/basic/jobs/Proposal/all-proposal.blade.php
                                                     <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
                                             </div>
@@ -208,7 +204,6 @@
 @push('style')
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
-<<<<<<< HEAD:resources/views/templates/basic/jobs/all-proposal.blade.php
 <style>
     .attachment{
         display: inline-block;
@@ -523,9 +518,7 @@ a.btn-products-s {
 }
 }
 </style>
-=======
 
->>>>>>> e6011937db27cc49b7b2ad613592f8fbc558a5a1:resources/views/templates/basic/jobs/Proposal/all-proposal.blade.php
 @push('script')
 <script>
    'use strict';

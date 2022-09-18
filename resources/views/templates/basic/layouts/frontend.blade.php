@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/seller_profile.css')}}">
 
+
     {{-- <link rel="stylesheet" href="{{asset('/assets/resources/style/index.scss')}}"> --}}
 
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
