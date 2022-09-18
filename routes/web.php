@@ -792,5 +792,6 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
+Route::get('/skills', 'SkillCategoryController@skills')->name('skills');;
 
 //
