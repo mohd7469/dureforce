@@ -635,14 +635,9 @@
 @push('script')
     <script>
         "use strict";
-        $(document).ready(function(){
-            $("#loginModal").modal('show');
-        });
-        $(function(){                                               
-            setTimeout(function(){
-                $("input#username").attr("type","username");
-            },10);
-        });
+        // $(document).ready(function(){
+        //     $("#loginModal").modal('show');
+        // });
         function submitUserForm() {
             var response = grecaptcha.getResponse();
             if (response.length == 0) {
@@ -660,9 +655,6 @@
 
     <script>
         'use strict';
-        $(document).ready(function(){
-            $("#loginModal").modal('show');
-        });
         $('#defaultSearch').on('change', function () {
             this.form.submit();
         });
