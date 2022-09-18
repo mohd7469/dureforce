@@ -6,9 +6,11 @@
 }
 .cover-container{
     background: grey;
+    height: 25vh;
 }
 .cover-container img{
     min-width: 100%;
+    height: 25vh;
 }
 .fb-profile-block-thumb{
     display: block;
@@ -97,6 +99,27 @@
     margin-bottom: 12px;
     margin-left: 23px;
 }
+.profile h4{
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 23px;
+    margin-bottom: 12px;
+    margin-left: 23px;
+}
+.profile h5{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 12px;
+    margin-left: 23px
+}
+
+.profile button{
+    display: inline;
+    margin-left: 7rem;
+    margin-bottom: 2rem;
+
+}
 .card-text-tab1 h5{
     font-weight: 600;
     font-size: 16px;
@@ -131,6 +154,12 @@
     font-size: 16px;
     font-weight:500;
      margin-left: 21px;
+}
+.profile .short-text{
+    display: inline;
+    font-size: 16px;
+    font-weight:500;
+    margin-left: 0rem;
 }
 .timeline{
     padding-left: 20px;
@@ -239,4 +268,140 @@ button.standard-btn-sm-edit {
     font-weight: 400;
     background-color: #7f007f;
     color: #fff;
+}
+button.standard-btn-sm-exp{
+    padding: 11px 10px;
+    border: 0px solid #e1e7ec;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    background-color: #7f007f;
+    color: #fff;
+    width: 10rem;
+}
+.profile .sep-solid {
+    border-top: 1px solid #c5e0e0;
+}
+.profile .profile-data{
+    background: #F5FFFF;
+}
+.profile .profile-data h5{
+    align-items: center;
+    margin-top: 0.55rem
+}
+.profile .profile-data span{
+    margin-left: 1rem;
+    margin-top: -0.45rem;
+    color: #007F7F;
+    font-weight: 600;
+    font-size: 18px;
+
+}
+.moretext {
+    display: none;
+}
+.profile .article{
+    width: 21rem;
+    justify-content: center;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+    word-wrap: break-word;
+}
+.editprofileheader{
+    background: #EDEDED;
+    border-radius: 2px;
+}
+.editprofileheader h5{
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    color: #007F7F;
+}
+
+#editprofile .btn-save {
+    background-color: #7f007f;
+    border-radius: 5px;
+    border: 1px solid #7f007f;
+    color: #fff;
+    padding: 6px 2px;
+    font-size: 13px;
+    width: 5rem !important;
+}
+#editprofile .btn-cancel {
+    color:  #7F007F ;
+    padding: 6px 2px;
+    font-size: 13px;
+    width: 5rem !important;
+}
+
+#editprofile .btnclose
+{
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 6px;
+    color: #007F7F;
+    background:#ECFCFC url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 2px solid #007F7F;
+    border-radius:11.25rem;
+
+}
+#addexperience .btn-save {
+    background-color: #7f007f;
+    border-radius: 5px;
+    border: 1px solid #7f007f;
+    color: #fff;
+    padding: 6px 2px;
+    font-size: 13px;
+    width: 5rem !important;
+}
+#addexperience .btn-cancel {
+    color:  #7F007F ;
+    padding: 6px 2px;
+    font-size: 13px;
+    width: 5rem !important;
+}
+
+#addexperience .btnclose
+{
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 6px;
+    color: #007F7F;
+    background:#ECFCFC url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+    border: 2px solid #007F7F;
+    border-radius:11.25rem;
+
+}
+li.my-custom-css {
+    background-color:red;
+}
+.profile .tags-container .custom_badge {
+    background: #007f7f;
+    color: #fff;
+}
+.profile .grey_badge {
+    background-color: #d9d9d9;
+    color: #636060;
+}
+.profile .custom_badge {
+    display: inline-block;
+    padding: 0.45em 0.67em;
+    font-size: 100%;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 2.25rem;
+    margin: 8px;
 }
