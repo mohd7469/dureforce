@@ -3,6 +3,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
         <title>DureForce - Welcome To Dureforce</title>
         <meta name="title" content="DureForce - Welcome To Dureforce" />
@@ -1051,11 +1053,8 @@
                                             id="form-experience-save"
                                             class="form-experience-save"
                                         >
-                                            <input
-                                                type="hidden"
-                                                name="_token"
-                                                value="VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL"
-                                            />
+                                             {{ csrf_field() }}
+
                                             <div
                                                 class="container-fluid welcome-body px-5"
                                                 id=""
@@ -1125,9 +1124,9 @@
                                                                     ></label
                                                                 >
                                                                 <select
-                                                                name="languages[]"
+                                                                name="location[]"
                                                                 class="form-control select-lang"
-                                                                id="languages"
+                                                                id="ex_location"
                                                                 >
                                                                 <option
                                                                     value=""
@@ -1136,12 +1135,12 @@
                                                                     Seect Country
                                                                 </option>
                                                                 <option
-                                                                    value="1"
+                                                                    value="Pakistan"
                                                                 >
                                                                     Pakistan
                                                                 </option>
                                                                 <option
-                                                                    value="2"
+                                                                    value="Turky"
                                                                 >
                                                                     Turky
                                                                 </option>
@@ -1154,11 +1153,12 @@
                                                                     class="form-check"
                                                                 >
                                                                     <input
-                                                                        class="form-check-input check current-working-check"
+                                                                        class="form-check-input check current-working-check isCurrentmessageCheckbox"
                                                                         onclick="checkDate($(this), $('.end-date-job-0'))"
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
+                                                                        value="1"
                                                                     />
                                                                     <label
                                                                         class="form-check-label"
@@ -1188,7 +1188,7 @@
                                                                     <input
                                                                         type="date"
                                                                         name="start_date_job[]"
-                                                                        id="start_date"
+                                                                        id="ex_start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
                                                                     />
                                                                 </div>
@@ -1207,7 +1207,7 @@
                                                                     >
                                                                     <input
                                                                         class="end-date-job-0"
-                                                                        id="end-date-job"
+                                                                        id="ex_end_date"
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
@@ -1248,7 +1248,7 @@
                                                 <div class="col-md-12">
                                                     <button
                                                         type="submit"
-                                                        class="btn btn-continue btn-secondary"
+                                                        class="btn btn-continue btn-secondary experiance-submit"
                                                     >
                                                         Continue
                                                     </button>
@@ -2096,13 +2096,14 @@
         <script>
             'use strict';
             $(document).on('click', '.subscribe-btn', function() {
+            
                 var email = $("#emailSub").val();
                 if (email) {
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": "VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL",
                         },
-                        url: "https://azapp-dureforce-dev.azurewebsites.net/subscribe",
+                        url: "user/profile",
                         method: "POST",
                         data: {
                             email: email
@@ -2122,6 +2123,40 @@
                 }
             });
         </script>
+
+
+<script>
+    'use strict';
+    $(document).on('click', '.experiance-submit', function() {
+        // console.log('heere');
+        // return
+    
+        
+            $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('profile.save') }}",
+                method: "POST",
+                data:$('#form-experience-save').serialize(),
+                type:'json',
+
+                success: function(response) {
+             
+                    if (response.success) {
+                        notify('success', response.success);
+                        $("#form-experience-save")[0].reset();
+
+                    } else {
+                        $.each(response, function(i, val) {
+                            notify('error', val);
+                        });
+                    }
+                }
+            });
+
+    });
+</script>
         <link
             rel="stylesheet"
             href="https://azapp-dureforce-dev.azurewebsites.net/assets/global/css/iziToast.min.css"
