@@ -98,3 +98,119 @@ background-color: #F3F6F6 !important;
 .pt-custom{
     padding-top: 2.35rem!important;
 }
+#outer
+{
+    width:100%;
+    text-align: right;
+    padding-right: 7px;
+}
+.inner
+{
+    display: inline-block;
+}
+.cretae-job-btn{
+    
+    background-color: #007F7F !important;
+    border: 1px solid #007F7F !important;
+    border-radius: 6px !important;
+}
+
+.cancel-job-btn{
+    background-color: transparent !important;
+    border: 1px solid #007F7F !important;
+    border-radius: 6px !important;
+    color:#007F7F !important;
+
+}
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 2em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 150%;
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: -51px;
+    overflow: hidden;
+    width: 64px;
+    height: 63px;
+    position: relative;
+    display: list-item;
+    z-index: 10;
+    margin-left: 5px;
+    margin-top: -19px;
+    margin-bottom: 19px;
+}
+
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    top:-26px !important;
+    left: 0;
+    opacity: 1 !important;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 1em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 135%;
+}
+
+.dropzone .dz-preview .dz-remove {
+    margin-top: -75px;
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    border: none;
+}
+
+.dropzone .dz-preview {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    min-height: 100px;
+}
+.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
+    pointer-events: none;
+    opacity: 0;
+    z-index: 391;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -27px;
+    margin-top: -41px;
+
+}
+
+.dropzone .dz-preview .dz-progress {
+    opacity: 0;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-image {
+    border-radius: 10px;
+    top: -7px;
+    background: #999;
+    background: linear-gradient(to bottom, #eee, #ddd);
+}
+.dropzone .dz-preview .dz-details .dz-filename:not(:hover) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dropzone .dz-preview .dz-details .dz-filename {
+    white-space: nowrap;
+}
+
+.dropzone.dz-clickable * {
+    cursor: default;
+}

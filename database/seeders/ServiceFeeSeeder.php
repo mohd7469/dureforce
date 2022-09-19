@@ -19,22 +19,22 @@ class ServiceFeeSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'title' => 'abc',
-                'slug' => 'sss',
+                'title' => 'new-user',
+                'slug' => 'new-user',
                 'fee' => 10,
                 'is_active' => 1,
-                'module_id' => 11,
+                'module_id' => 35,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),
             1 => 
             array (
                 'id' => 2,
-                'title' => 'abc',
+                'title' => 'top-rated-user',
                 'slug' => 'sss',
                 'fee' => 10,
                 'is_active' => 1,
-                'module_id' => 22,
+                'module_id' => 36,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ),

@@ -22,10 +22,8 @@
                                     <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
-                                            <div class="col-md-4">
-                                                
-                                                   
-                                                        <div id="custom-search-input">
+                                                  <div class="col-md-4">
+                                                       <div id="custom-search-input">
                                                             <div class="input-group">
                                                                 <input type="text" class="search-query form-control" placeholder="Search" />
                                                                 <span class="input-group-btn">
@@ -34,9 +32,9 @@
                                                                     </button>
                                                                 </span>
                                                             </div>
-                                                        
-                                                    </div>
-                                                </div>       
+                                                           
+                                                        </div>
+                                                    </div>       
                                                     <div class="col-md-4">
                                                     
                                                         <form>
@@ -71,19 +69,15 @@
 
                                  <!--Bio Profile Section Start-->
                             
-                                @foreach ($proposals as $proposal)
-            
-                                    
+                            @foreach ($proposals as $proposal)
                                     <div class="" > 
-
-                       
                                         <div class="row biorow">
-                                           <div class="col-md-4">
+                                           <div class="col-md-3">
                                               <div class="row borderleftc"> 
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-8">
                                                     @isset($proposal->user->username)
                                                     <h4 class="pname-c"> 
                                                                {{$proposal->user->username}}
@@ -92,15 +86,16 @@
                                                      @isset($proposal->user->designation)
                                                       <p class="pdesination-c"> {{$proposal->user->designation}} </p>
                                                      @endisset
-                                                    
-                                                 </div>
-                                                    <div class="col-md-4">
+
+                                                     <div class="col-md-4">
                                                         @isset($proposal->user->address->address)
                                                         <p class="plocation"> {{@$proposal->user->address->address }}</p>
                                                         @endisset
 
                                                        
                                                     </div>
+                                                 </div>
+                                                   
                                               </div>
                                            </div>
 
@@ -124,38 +119,43 @@
                                                  </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="row btns-s">
-                                                    <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div>
-                                                    <div class="col-md-4"><a href="#" class="btn-products-s">Message</a></div>
-                                                    <div class="col-md-4"><a href="#" class="btn-products-s phire">Hire</a></div>
+                                                    
+                                                    <a href="#" class="btn-products-s">Shortlist</a>
+                                                    <a href="#" class="btn-products-s">Message</a>
+                                                    <a href="{{route('user.proposal.buyer.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
+                                                    <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
                                             </div>
-                            </div>
-                        <!--===  Bio Profile Section End ===-->
+                                     </div>
+                                            <!--===  Bio Profile Section End ===-->
 
-                        <!--Product Description Start-->
-                        <div class="row p_desription">
-                            <div class="col-md-12">
-                                @isset($proposal->cover_letter)
-                                <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
-                                @endisset
-                         
+                                        <!--Product Description Start-->
+                                            <div class="row p_desription">
+                                                <div class="col-md-12">
+                                                    @isset($proposal->cover_letter)
+                                                    <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
+                                                    @endisset
+                                            
 
-                            </div>
-                        </div>
+                                                </div>
+                                            </div>
 
-                         <!--Product Description End-->
+                                            <!--Product Description End-->
 
                          <!--Skills Section Start-->
+
                             <div class="row skills-c">
+                                <div class="col-md-7">
+                                    {{-- <h2> Has 7 relevant skills to your job</h2> --}}
                                      @isset($proposal->user->skills)
                                     <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
                                    
                                     <ul class="skills-listing">
                                      
                                         @foreach ($proposal->user->skills as  $skills)
-                                         <li>{{$skills->name}} </li>
+                                         <li>{{$skills->skill->name}} </li>
                                         @endforeach
                                         
                                         {{-- <li>HTML</li>
@@ -165,11 +165,28 @@
                                         <li>jQuery</li>
                                         <li>React</li> --}}
                                     </ul>
-                                    @endisset
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="attachment">
+                                        <div class="service_subtitle2 mt-20 heading-text">
+                                      <h2> Attachments</h2>
+                                          </div>
+                            
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                            
+                                        </div>
+                                  </div>
+
+                                </div>
 
                                     <!--Skills Section End-->
                             </div> 
-                          </div>
+                       
+                                    @endisset
+
+                          <hr>
+                                   
                           @endforeach
                         </div>
                     </div>
@@ -177,7 +194,7 @@
                </div>
             </div>
          </article>
-      </div>
+        
    </div>
 </section>
 
@@ -188,8 +205,67 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    .attachment{
+        display: inline-block;
+    width: 100%;
+    
+    margin: top;
+    margin-top: -50px;
+    }
+    .heading-text{
+        text-align: left;
+    }
+.row.btns-s {
+    position: relative;
+    left: 23px;
+    /* width: 300px; */
+}
+a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 8px 2% !important;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7F007F;
+    width: auto !important;
+    margin: 0px 2.5% !important;
+}
+ @media only screen and (min-width:768px){
+.sorting-mbl .col-md-4:first-child {
+  
+    width: 30%;
+ 
+}
+div#custom-search-input {
+    
+    position: relative;
+    top: -16px;
+}
+.col-md-10.sorting-mbl {
+    text-align: right;
+    display: inline-block;
+    /* width: 100%; */
+}
 
+.sorting-mbl .col-md-4 {
+    width: 17%;
+    /* float: right; */
+    text-align: right;
+    display: inline-block;
+    clear: right;
+}
+} 
 @media only screen and (max-width:767px){
+    .attachment{
+        margin-top:-20px;
+    }
+    ul.skills-listing{
+        width: 100%;
+    }
+    .sorting-mbl .col-md-4{
+        float: left !important;
+    }
     .p_desription p{
         width: 100%;
         text-align: center;
@@ -303,7 +379,15 @@ p.sort-p {
     margin-top: 20px;
 }
 }
+@media only screen and (max-width:767px) and (min-width:481px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 13px !important;
+    }
 
+}
 @media only screen and (max-width:414px){
     select#bestmatch{
         right: -15px !important;
@@ -325,7 +409,31 @@ ul.skills-listing li {
     font-size: 12px !important;
     padding: 1px 3% !important;
     }
+    .row.btns-s{
+        width: 100% !important;
+    }  
+    .container.single-jobc {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 
+}
+@media only screen and (max-width:480px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 12px !important;
+    }
+    a.btn-products-s {
+    border: 1px solid #7F007F;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-weight: 600;
+    font-size: 13px;
+    width: 45% !important;
+    margin: 6px 2.5% !important;
+}
 }
 @media only screen and (min-width:767px) and (max-width:992px){
     a.btn-products-s {
@@ -383,31 +491,38 @@ select#bestmatch {
     width: 120px;
     top: 0px;
 }
-}
+
 .plocation {
     font-weight: 600;
     font-size: 12px !important;
     line-height: 18px;
     color: #000000;
     position: relative;
-    padding-left: 2px !important;
-    margin-top: 48px !important;
+    padding-left: 20px !important;
+    margin-top: 12px !important;
 }
 p.plocation:before {
     width: 20px;
     height: 20px;
     background: red;
     position: absolute;
-    left: -19px !important;
-    top: 8px !important; 
+    left: 0px !important;
+    top: 4px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
 }
+@media only screen and (max-width:320px){
+a.btn-products-s {
+    padding: 7px 10px !important;
+}
+}
 </style>
+
 @push('script')
 <script>
    'use strict';
+   
    $('#defaultSearch').on('change', function() {
        this.form.submit();
    });

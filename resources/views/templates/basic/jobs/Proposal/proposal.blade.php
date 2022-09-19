@@ -13,7 +13,7 @@
                      <div>
                         <h2 class="title title-color" >Submit a Proposal</h2>
                      </div>
-                        <form action="{{route('user.proposal.store',$job->uuid)}}" method="post">
+                        <form action="{{route('user.proposal.store',$job->uuid)}}" method="post" id="propsal_form" enctype="multipart/form-data">
                            @csrf
                            {{-- Job Details--}}
                            <div class="row">
@@ -124,6 +124,7 @@
                               </div>
 
                            </div>
+                           <input type="hidden" name="job_type" id="" value="{{$job->budget_type_id}}">
                            @if ($job->budget_type_id==App\Models\BudgetType::$hourly)
                               @include('templates.basic.jobs.Proposal.hourly')
                            @else
@@ -190,10 +191,10 @@
                            </div>
                            <div id="outer" class="text-right">
                               <div class="inner">
-                                  <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
+                                  <button type="button" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</button>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Propsal')</button>
                               </div>
                           </div>
                         </form>
@@ -218,7 +219,7 @@
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-job.js')}}"></script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
 
 
 @endpush

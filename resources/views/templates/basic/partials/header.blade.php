@@ -35,7 +35,7 @@
                             </ul>
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
                                 <a class="btn--post btn active mr-1 d-inline-block "
-                                   href="{{ route('user.job.create') }}" >Post a Job</a>
+                                    href="{{ route('user.job.create') }}" >Post a Job</a>
                                 <div class="search-main">
                                     <select class="search-select-header">
                                         <option></option>
@@ -45,8 +45,8 @@
                             </div>
 
                             <div class="header-right  header-action">
-                            @guest
-                                <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
+                                @guest
+                                    <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
                                     <a href="#loginModal" data-bs-toggle="modal" class="btn--base active">@lang('Login')</a>
                                     <a href="{{ route('user.register') }}" class="btn--base">@lang('Sign Up')</a>
                                 @endguest
@@ -72,39 +72,39 @@
         tabindex="1"
         aria-labelledby="loginModalLabel"
         aria-hidden="true"
->
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal body -->
-            <div class="modal-body">
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                    <button
-                            type="button"
-                            class="btn-close float-end"
-                            data-bs-dismiss="modal"
-                        ></button>
+        >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="row">
+                        <div class="col-md-12">
+                        <button
+                                type="button"
+                                class="btn-close float-end"
+                                data-bs-dismiss="modal"
+                            ></button>
+                        </div>
+                    </div> -->
+                    <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h2 class="title">
+                                @lang('Log in to') {{__($general->sitename)}}
+                            </h2>
+                        </div>
                     </div>
-                </div> -->
-                <div class="row">
-                    <div class="account-header col-md-12 col-sm-12 text-center">
-                        <h2 class="title">
-                            @lang('Log in to') {{__($general->sitename)}}
-                        </h2>
-                    </div>
-                </div>
-                <form
-                        autocomplete="nope"
+                    <form
+                    autocomplete="nope"
                         class="account-form"
                         method="POST"
                         action="{{ route('user.login')}}"
                         onsubmit="return submitUserForm();"
-                >
-                    @csrf
-                    <div class="row ml-b-20">
-                        <div class="col-lg-12 form-group">
-                            <label class="label-color" for="username">@lang('Username / Email')*</label>
-                            <input
+                    >
+                        @csrf
+                        <div class="row ml-b-20">
+                            <div class="col-lg-12 form-group">
+                                <label class="label-color" for="username">@lang('Username / Email')*</label>
+                                <input
                                     type="text"
                                     autocomplete="off"
                                     class="form-control form-control-lg form--control"
@@ -113,66 +113,66 @@
                                     value="{{old('username')}}"
                                     placeholder="@lang('Username / Email')"
                                     required=""
-                            />
-                        </div>
+                                />
+                            </div>
 
-                        <div class="col-lg-12 form-group">
-                            <label class="label-color" for="password">@lang('Password')*</label>
-                            <input type="password" class="form-control form-control-lg
+                            <div class="col-lg-12 form-group">
+                                <label class="label-color" for="password">@lang('Password')*</label>
+                                <input type="password" class="form-control form-control-lg
                                 form--control" id="password" name="password"
-                                   placeholder="@lang('Enter password')"
-                                   required="">
-                        </div>
+                                placeholder="@lang('Enter password')"
+                                required="">
+                            </div>
 
-                    <!-- <div class="col-lg-12 form-group">
+                            <!-- <div class="col-lg-12 form-group">
                                 @php echo loadReCaptcha() @endphp
                             </div> -->
 
-                        @include($activeTemplate.'partials.custom_captcha')
+                            @include($activeTemplate.'partials.custom_captcha')
 
-                        <div class="col-lg-12 form-group">
-                            <div class="forgot-item float-end">
-                                <label
-                                ><a
+                            <div class="col-lg-12 form-group">
+                                <div class="forgot-item float-end">
+                                    <label
+                                        ><a
                                             href="{{route('user.password.request')}}"
                                             class="text--base "
-                                    ><span class="span-color">@lang('Forgot Password')?</span></a
-                                    ></label
-                                >
+                                            ><span class="span-color">@lang('Forgot Password')?</span></a
+                                        ></label
+                                    >
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 form-group text-center">
-                            <button type="submit" class="submit-btn w-100">
-                                @lang('Login Now')
-                            </button>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <div class="account-item mt-10">
-                                <label
-                                ><span class="span-color">@lang('Already Have An Account')?</span>
-                                    <a
+                            <div class="col-lg-12 form-group text-center">
+                                <button type="submit" class="submit-btn w-100">
+                                    @lang('Login Now')
+                                </button>
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <div class="account-item mt-10">
+                                    <label
+                                        ><span class="span-color">@lang('Already Have An Account')?</span>
+                                        <a
                                             href="{{ route('user.register') }}"
                                             class="text--base"
-                                    ><span class="label-color">@lang('Register Now')</span></a
-                                    ></label
-                                >
+                                            ><span class="label-color">@lang('Register Now')</span></a
+                                        ></label
+                                    >
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- end login form modal -->
+    <!-- end login form modal -->
 <style>
     .header-bottom-area .navbar-expand-lg .select2-container--default .select2-selection--single {
-        border: 1px solid #7f007f;
-        height: 39px;
-        display: flex;
-        align-items: center;
+    border: 1px solid #7f007f;
+    height: 39px;
+    display: flex;
+    align-items: center;
     }
-    .modal { position: fixed; top:15%; }
+.modal { position: fixed; top:15%; } 
     .google-button{
         width: 100%; border-radius: 50px;
     }

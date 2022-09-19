@@ -5096,7 +5096,7 @@ font-size: 14px;
   z-index: 9999;
 }
 .modal .form-control {
-  height: auto;
+  /* height: auto; */
 }
 .deposit-item-footer .btn--base {
   background: transparent;
