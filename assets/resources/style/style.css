@@ -5296,24 +5296,8 @@ a.standard-btn {
   background-color: #007F7F;
   color: #fff;
 }
-.inner-tab .standard-btn {
-  padding: 9px 20px;
-  border: 0px solid #e1e7ec;
-  border-radius: 1px 0px 0px 1px;
-  font-size: 15px;
-  font-weight: 400;
-  background-color: #007F7F;
-  color: #fff;
-}
-.inner-tab .standard-btn:focus   {
-  padding: 9px 20px;
-  border: 0px solid #e1e7ec;
-  border-radius: 1px 0px 0px 1px;
-  font-size: 15px;
-  font-weight: 400;
-  background-color: #CBDFDF;
-  color: #90BCBC;
-}
+
+
 a.standard-btn-1 {
   padding: 6px 20px;
   border: 2px solid #007F7F;
