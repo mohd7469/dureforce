@@ -46,8 +46,8 @@
 
                             <div class="header-right  header-action">
                                 @guest
-                                    <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a>
-                                    <a href="{{ route('user.register') }}" class="btn--base">@lang('Sign Up')</a>
+                                    <a href="#" class="btn--base active">@lang('Login')</a>
+                                    <a href="#" class="btn--base">@lang('Sign Up')</a>
                                 @endguest
 
                                 @auth

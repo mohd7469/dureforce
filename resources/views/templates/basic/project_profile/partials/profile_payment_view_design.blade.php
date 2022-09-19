@@ -1139,15 +1139,15 @@
                     </div>
                     <div class="col-xl-3 col-md-3 col-lg-3 form-group ">
                     <button type="button" class="btn btn-light" style="
-    background: #FFFFFF !important;
-    border: 2px solid #7F007F;
-    border-radius: 5px;
-    position: absolute;
-    width: 125px;
-    height: 40px;
-    text-align: center;
-    padding-top: 5px;
-">Light</button>
+                    background: #FFFFFF !important;
+                    border: 2px solid #7F007F;
+                    border-radius: 5px;
+                    position: absolute;
+                    width: 125px;
+                    height: 40px;
+                    text-align: center;
+                    padding-top: 5px;
+                    ">Light</button>
                         <!-- <span>Primary</span> -->
                     </div>
                     <div class="col-xl-2 col-md-3 col-lg-3 form-group mt-2">

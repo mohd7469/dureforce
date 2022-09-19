@@ -37,6 +37,8 @@ Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.p
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
+Route::view('/user_profile', 'templates.basic.project_profile.signup_basic');
+
 
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
@@ -552,7 +554,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 //     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 //     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify.code');
 // });
-
 Route::get('/seller_profile', 'seller\UserController@seller_profile')->name('seller_profile');
 
 

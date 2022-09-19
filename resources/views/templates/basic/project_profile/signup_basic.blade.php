@@ -50,7 +50,7 @@
     $content = getContent('breadcrumbs.content', true);
 
     @endphp
-    <section class="account-section bg-overlay-white bg_img">
+    <section class="account-section">
         <div class="container">
             <div id="viewport">
                 <div class="row justify-content-center">
@@ -59,21 +59,21 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='{{ auth()->user()->getLanguagesMoreThanOneCount()? 'completed-span': '' }}'>1</span>
+                                    class='completed-span'>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getCompaniesMoreThanOneCount()? 'completed-span': '' }}">2</span>
+                                    class="completed-span">2</span>
                                 <a data-toggle="tab" href="#profile2" class="">
                                     Company
                                 </a>
                             </li>
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getPaymentMethodsMoreThanOneCount()? 'completed-span': '' }}">3</span>
+                                    class="completed-span">3</span>
                                 <a data-toggle="tab" href="#profile3" class="">
                                     Payment Methods
                                 </a>
@@ -87,7 +87,7 @@
                         <div class="tab-content ">
                             @csrf
                             <div id="profile" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
+                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : 'active' }}">
                                 @include($activeTemplate . 'project_profile.partials.profile')
                             </div>
 
@@ -97,11 +97,8 @@
                             </div>
                             <div id="profile3" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                @if (auth()->user()->getPaymentMethodsMoreThanOneCount())
                                     @include($activeTemplate . 'project_profile.partials.payment_methods_index')
-                                @else
-                                    @include($activeTemplate . 'project_profile.partials.payment_methods_store')
-                                @endif
+
                             </div>
                             <div id="profile4" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
@@ -122,6 +119,25 @@
         .select2Tag input {
             background-color: transparent !important;
             padding: 0 !important;
+        }
+        .payment-box-active{
+            background: #DDF2F2;
+            border: 2px solid #007F7F;
+            border-radius: 6px;
+        }
+        .payment-box-default{
+            background: #EFF4F4;
+            border-radius: 6px;
+        }
+        .payment-box-light-button{
+            background: #FFFFFF !important;
+            border: 2px solid #7F007F;
+            border-radius: 5px;
+            position: absolute;
+            width: 125px;
+            height: 40px;
+            text-align: center;
+            padding-top: 5px;
         }
 
     </style>
@@ -331,9 +347,5 @@
         }
     </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script>
-        let _languages = {!! json_encode($languages->toArray()) !!};
-        let _languages_levels = {!! json_encode($languageLevels->toArray()) !!};
-    </script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>
 @endpush
