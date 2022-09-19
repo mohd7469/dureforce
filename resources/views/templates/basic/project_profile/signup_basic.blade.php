@@ -66,14 +66,14 @@
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
-                                    class="completed-span">2</span>
+                                    class="">2</span>
                                 <a data-toggle="tab" href="#profile2" class="">
                                     Company
                                 </a>
                             </li>
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
-                                    class="completed-span">3</span>
+                                    class="">3</span>
                                 <a data-toggle="tab" href="#profile3" class="">
                                     Payment Methods
                                 </a>

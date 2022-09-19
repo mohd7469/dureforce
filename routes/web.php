@@ -43,6 +43,8 @@ Route::view('/user_profile', 'templates.basic.project_profile.signup_basic');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
+Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
+
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {

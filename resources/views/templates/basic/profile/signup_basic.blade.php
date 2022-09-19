@@ -59,43 +59,39 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='{{ auth()->user()->getLanguagesMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}'>1</span>
+                                    class='completed-span'>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getExperienceMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}">2</span>
+                                    class="">2</span>
                                 <a data-toggle="tab" href="#profile2" class="">
                                     Experience
                                 </a>
                             </li>
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getEduationMoreThanOneCount()? 'completed-span': '' }}">3</span>
+                                    class="">3</span>
                                 <a data-toggle="tab" href="#profile3" class="">
                                     Education
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getSkillsMoreThanOneCount()? 'completed-span': '' }}">4</span>
+                                    class="">4</span>
                                 <a data-toggle="tab" href="#profile4" class="">
-                                    Expertise & Skills
+                                    Skills & Rate
                                 </a>
                             </li>
-                            <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
+                            <!-- <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getRateMoreThanOneCount()? 'completed-span': '' }}">5</span>
+                                    class="">5</span>
                                 <a data-toggle="tab" href="#profile5" class="">
                                     Rates
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <!-- Content -->
@@ -105,7 +101,7 @@
                         <div class="tab-content ">
                             @csrf
                             <div id="profile" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
+                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : 'active' }}">
                                 @include($activeTemplate . 'profile.partials.user_profile')
                             </div>
 
@@ -140,7 +136,10 @@
             background-color: transparent !important;
             padding: 0 !important;
         }
-
+        span.select2-selection.select2-selection--multiple {
+            width: 25em;
+            height: 3em;
+        }
     </style>
 @endpush
 @push('style-lib')
@@ -403,9 +402,5 @@
         }
     </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script>
-        let _languages = {!! json_encode($languages->toArray()) !!};
-        let _languages_levels = {!! json_encode($languageLevels->toArray()) !!};
-    </script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>
 @endpush

@@ -714,7 +714,7 @@
                                                         style="
                                                             justify-content: space-between !important;
                                                         "
-                                                    >
+                                                        >
                                                         <div
                                                             class="col-md-6 col-sm-12"
                                                             >
@@ -746,7 +746,7 @@
                                                         </div>
                                                         <div
                                                             class="col-md-6 col-sm-12"
-                                                        >
+                                                           >
                                                             <label class="mt-4"
                                                                 >Profeciency
                                                                 Level
@@ -795,7 +795,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                        >
+                                                            >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -905,7 +905,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                        >
+                                                            >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -1019,7 +1019,7 @@
                                                         class="my-2"
                                                         id="add-language"
                                                         onclick="addMoreLanguages()"
-                                                    >
+                                                        >
                                                         Add another
                                                     </button>
                                                 </div>
@@ -1288,7 +1288,7 @@
                                                 <div>
                                                     <div
                                                         id="education-container"
-                                                    >
+                                                        >
                                                         <div class="col-md-12">
                                                             <label class="mt-4"
                                                                 >School /
@@ -1529,13 +1529,12 @@
                                                                     <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
                                                                     <span class="pt-2 text-dark">$12.00</span>
                                                                 </div>
-                                                            </div>
+                                                                Dureforce Service Fee                                   </div>
                                                     </div>
                                                 </div>
-                                                <hr>
                                                     <div class="row mt-3"
                                                         id="skill-row"
-                                                    >
+                                                        >
                                                         <div
                                                             class="col-xl-6 col-md-12 col-lg-6 form-group select2Tag mb-4"
                                                         >
