@@ -1,5 +1,5 @@
 <div class="setProfile" id="basic-profile">
-   <form action="{{ route('user.profile.save') }}" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
+   <form action="{{ route('profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
       @csrf
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Welcome Shahzaib</h1>
@@ -30,8 +30,9 @@
                      ></label
                      >
                   <select
-                     name="category_id"
-                     class="form-control select-lang"
+                     name="category_id[]"
+                     class=" form-control select-lang select2 select2-hidden-accessible"
+                     multiple="" data-placeholder="Select Categories"  tabindex="-1" aria-hidden="true" style="width: 100% !important"
                      id="languages"
                      >
                      <option
@@ -148,8 +149,8 @@
                      >
                   <select
                      name="languages[0][language_id]"
-                     class="form-control select-lang select2"
-                     id="languages"
+                     class="form-control select-lang "
+                     id="languages.0.language_id"
                      >
                      <option
                         value=""
@@ -188,7 +189,7 @@
                   <select
                      name="languages[0][language_level]"
                      class="form-control selected-level select-lang"
-                     id="langLevel"
+                     id="languages.0.language_level"
                      >
                      <option value="" selected="" >
                         Proficiency Level

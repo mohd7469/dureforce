@@ -48,7 +48,10 @@ class ProfileController extends Controller
     public function getProfileData()
     {
         $languages=WorldLanguage::select('id','iso_language_name')->get();
-        return response()->json(['languages' => $languages ]);
+        $language_levels=LanguageLevel::select('id','name')->get();
+
+        return response()->json(['languages' => $languages,'language_levels' => $language_levels ]);
+
     }
 
    
@@ -66,7 +69,8 @@ class ProfileController extends Controller
 
         $rules=[
             'file ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'category_id'  => 'required|exists:categories,id',
+            'category_id'  => 'required|array',
+            'category_id.*' =>'exists:categories,id',
             'designation'  =>'required|string',
             'about'   =>  'required|string',
             'phone_number'   =>  'required|integer',
@@ -96,7 +100,10 @@ class ProfileController extends Controller
                 return response()->json(["success_message" => "User Basics Updated Successfully"]);
                 
             } catch (\Throwable $exception) {
-                return response()->json(["server_error" => $exception->getMessage()]);
+                
+                $notify[] = ['error', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+                
             }
         }
     }

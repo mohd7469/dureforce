@@ -44,6 +44,8 @@ Route::view('/user_profile', 'templates.basic.project_profile.signup_basic');
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::get('/freelancer-profile-design', 'ProfileController@profile');
 Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
+Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
+
 
 Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
 

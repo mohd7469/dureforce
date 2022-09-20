@@ -98,7 +98,7 @@
 
                     <div class="col-12 col-md-8 p-0">
 
-                        <div class="tab-content ">
+                        <div class="tab-content " id="content-div">
                             @csrf
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : 'active' }}">
@@ -132,14 +132,12 @@
 @endsection
 @push('style')
     <style>
-        .select2Tag input {
-            background-color: transparent !important;
-            padding: 0 !important;
-        }
         span.select2-selection.select2-selection--multiple {
-            width: 25em;
-            height: 3em;
+            width: 100% !important;
+            padding: 10px !important;
+            border: 1px solid #CBDFDF;
         }
+        
     </style>
 @endpush
 @push('style-lib')
@@ -151,7 +149,9 @@
 @endpush
 @push('script')
     <script>
+        
         "use strict";
+
         var languageRow = $('#language-row');
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
@@ -165,10 +165,13 @@
         let date = $('.checkedDate')
         let startDate = $('input[name="start_date_job[]"]');
         let startDateInsti = $('input[name="start_date_institute[]"]');
-        let selectedLevels = [];
 
+        var user_basic_form=$('#form-basic-save');
+        var token= $('input[name=_token]').val();
+        
+        let selectedLevels = [];
         var _languages = [];
-        let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
+        let _languages_levels = [];
 
 
         $('document').ready(function() {
@@ -177,6 +180,11 @@
 
             $('.select2').select2({
                 tags: true
+            });
+            user_basic_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserBasic();
             });
 
             if (previewImg.length > 0) {
@@ -203,8 +211,10 @@
                     type:"GET",
                     url:"{{route('profile.basics.data')}}",
                     success:function(data){
-                       _languages=data.languages;
-                       console.log(_languages);
+                      
+                        _languages=data.languages;
+                        _languages_levels=data.language_levels;
+
                     }
                 });  
         }
@@ -387,42 +397,98 @@
             }
         }
 
-        function formBasicSave() {
-            $('#form-basic-save').submit();
+        function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('#'+error).addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
         }
-function addMoreLanguages() {
-        languageRow.append(`
-                            <div id="moreLanguage-row">
-                                        <hr>
-                                <div class="row" style="align-items: center; justify-content: space-between!important">
-                                    <div class="col-md-6 col-sm-10">
-                                        <label class="mt-4">Language <span class="imp">*</span></label>
-                                        <select name="languages[]" class="form-control select-lang py-2" id="">
-                                            <option value="" disabled selected>
-                                            Spoken Language(s)
-                                            </option>
-                                        ${_languages?.map((language) => {
-                                            return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
-                                        })}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-5 col-sm-10">
-                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-                                        <select name="language_level[]" class="form-control select-lang"
-                                            id="" required>
-                                            <option value="" disabled selected>
-                                                                    My Level is
-                                                                    </option>
-                                            ${_languages_levels?.map((level) => {
-                                            return ` <option value="${level.id}"> ${level.name}</option>`;
-                                            })}
-                                        </select>
-                                    </div>
-                                    <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
-                                </div>
-                            </div>
-`                       );
-}
+
+        function saveUserBasic() {
+
+            var form_data = user_basic_form.serialize();
+            $.ajax({
+                  type:"POST",
+                  url:"{{route('profile.basics.save')}}",
+                  data: {data : form_data,_token:token},
+                  success:function(data){
+
+                      if(data.success_message){
+                        displayAlertSuccessMessage(data.success_message);
+                      }
+                      else if(data.validation_errors){
+                        displayErrorMessage(data.validation_errors);
+                      }
+                      else{
+                        
+
+                      }
+
+                  }
+              });
+             
+        }
+
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+            message: message,
+            position: "topRight",
+            });
+        }
+
+        function displayAlertSuccessMessage(message)
+        {
+            iziToast.success({
+            message: message,
+            position: "topRight",
+            });
+        }
+       
+        function addMoreLanguages() 
+        {
+                languageRow.append(`
+                                    <div id="moreLanguage-row">
+                                                <hr>
+                                        <div class="row" style="align-items: center; justify-content: space-between!important">
+                                            <div class="col-md-6 col-sm-10">
+                                                <label class="mt-4">Language <span class="imp">*</span></label>
+                                                <select name="languages[]" class="form-control select-lang py-2" id="">
+                                                    <option value="" disabled selected>
+                                                    Spoken Language(s)
+                                                    </option>
+                                                ${_languages?.map((language) => {
+                                                    return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
+                                                })}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 col-sm-10">
+                                                <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                                <select name="language_level[]" class="form-control select-lang"
+                                                    id="" required>
+                                                    <option value="" disabled selected>
+                                                                            My Level is
+                                                                            </option>
+                                                    ${_languages_levels?.map((level) => {
+                                                    return ` <option value="${level.id}"> ${level.name}</option>`;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+                                        </div>
+                                    </div>`                  
+                                 );
+        }
         /**
          * Checks if value is empty. Deep-checks arrays and objects
          * Note: isEmpty([]) == true, isEmpty({}) == true, isEmpty([{0:false},"",0]) == true, isEmpty({0:1}) == false
@@ -453,3 +519,4 @@ function addMoreLanguages() {
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>
 @endpush
+
