@@ -43,6 +43,8 @@ Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 
 Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.save');
+Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
+Route::post('/payment/save', 'Profile\ProfileController@storePayment')->name('payment.save');
 
 
 
