@@ -72,7 +72,7 @@
 
 .wrapper .mt-3 {
     margin-top: -4rem!important;
-    width: 340px;
+
 }
 .card-text-tab {
     margin-bottom: 12px;
@@ -158,7 +158,7 @@
 }
 .profile .short-text{
     display: inline;
-    font-size: 14px;
+    font-size: 12px;
     font-weight:500;
     margin-left: 0rem;
 }
@@ -201,56 +201,54 @@
 .techno.on ~ .techno.on::before {
     content: ', ';
 }
-blockquote {
+.quote .blockquote {
     font-family: 'Mulish';
     font-style: italic;
     display: block;
     max-width: 100%;
     position: relative;
-    padding: 22px 42px;
-    height: 252px;
-    line-height: 1.45;
+    padding: 21px 4px;
+    height: 192px;
     color: #383838;
-    margin-bottom: 9rem!important;
+
 }
 @media only screen and (min-width: 600px) {
-    blockquote {
+    .quote .blockquote {
         font-family: 'Mulish';
         font-style: italic;
         display: block;
         max-width: 100%;
         position: relative;
-        padding: 22px 42px;
-        height: 252px;
-        line-height: 1.45;
+        padding: 21px 4px;
+        height: 192px;
         color: #383838;
-        margin-bottom: 9rem !important;
+
     }
 }
 
-blockquote:before {
-    display: block;
-    padding-left: 10px;
-    content: "\201C";
-    font-size: 80px;
-    position: absolute;
-    left: -7px;
-    top: -6px;
-    color: #80005f5e;
-}
-blockquote:after {
-    display: block;
-    padding-left: 10px;
-    content: "\201D";
-    font-size: 80px;
-    position: absolute;
-    left: 739px;
-    top: 86px;
-    color: #80005f5e;
-}
+/*blockquote:before {*/
+/*    display: block;*/
+/*    padding-left: 10px;*/
+/*    content: "\201C";*/
+/*    font-size: 80px;*/
+/*    position: absolute;*/
+/*    left: -7px;*/
+/*    top: -6px;*/
+/*    color: #80005f5e;*/
+/*}*/
+/*blockquote:after {*/
+/*    display: block;*/
+/*    padding-left: 10px;*/
+/*    content: "\201D";*/
+/*    font-size: 80px;*/
+/*    position: absolute;*/
+/*    left: 739px;*/
+/*    top: 86px;*/
+/*    color: #80005f5e;*/
+/*}*/
 
-blockquote .cite {
-    font-family: 'Inter';
+.quote .cite{
+
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -259,10 +257,10 @@ blockquote .cite {
     color: #515151;
 }
 
-blockquote cite:before {
+.quote.cite:before {
     content: "\2014 \2009";
 }
-.quote{
+.quote  .blockquote  .cite{
     background: #FAF5FD;
     border-radius: 3px;
 
@@ -484,7 +482,7 @@ li.my-custom-css {
         font-weight: 400;
         background-color: #7f007f;
         color: #fff;
-        margin-left: 95px;
+        margin-left: 83px;
     }
 }
 
@@ -527,4 +525,16 @@ li.my-custom-css {
     font-size: 1em;
     font-weight: bold;
     padding: 0 4px;
+}
+blockquote::before {
+    content: open-quote;
+    color:#80005f5e;
+    font-size: 28px;
+    font-weight: 700;
+}
+blockquote::after {
+    content: close-quote;
+    color: #80005f5e;
+    font-size: 28px;
+    font-weight: 700;
 }

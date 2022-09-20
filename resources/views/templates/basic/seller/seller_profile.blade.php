@@ -13,7 +13,7 @@
 
             <div class="container">
                 <div class="row wrapper">
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-4">
+                    <div class="col-md-4 col-xl-3 col-lg-4 col-sm-4">
                         <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-xl-8 col-lg-8 col-sm-8 ">
+                    <div class="col-md-8 col-xl-9 col-lg-8 col-sm-8 ">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="container upper-tab">
@@ -376,11 +376,22 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="tes">
-                                        <blockquote class="quote blockquote">
+                                <div class="quote">
+                                        <blockquote class="blockquote">
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                            <p class="cite"><b>Simon King</b> <br>
-                                                Director Marketing, Global Solutions Ltd</p>
+                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                         </blockquote>
+                                <p class="cite"><b>Simon King</b> <br>
+                                    Director Marketing, Global Solutions Ltd</p>
+                                </div>
+                                <div class="quote">
+                                    <blockquote class="blockquote">
+                                        Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
+                                    </blockquote>
+                                    <p class="cite"><b>Janet Hill
+                                          </b> <br>
+                                        Senior Marketing Manager, Global Solutions Ltd</p>
+                                </div>
                             </div>
                         </div>
                     </div>
