@@ -22,6 +22,8 @@ function displayErrorMessage(validation_errors)
         var error_message=validation_errors[error];
 
         $('[name="'+error+'"]').addClass('error-field');
+        $('[id="'+error+'"]').addClass('error-field');
+
         $('#'+error).next().addClass('error-field');
 
         displayAlertMessage(error_message);
@@ -197,21 +199,26 @@ $(function() {
       }
     });
 
-
     //milestones sum
     $(document).on('focusout', '.milestones_amount', function() {
-      var total_amount=0;
-        $(".milestones_amount").each(function() {
-          var milestone_amount=$(this).val();
-          total_amount=total_amount+parseInt(milestone_amount);
-        });
-        $('#total_milestones_amount').val(total_amount);
-        $('#milestones_amount_receive').val(total_amount*0.80);
+      calculateMilestoneAmountSum();
     });
 
   
     
 });
+
+function calculateMilestoneAmountSum()
+{
+    var total_amount=0;
+    $(".milestones_amount").each(function() {
+      var milestone_amount=$(this).val();
+      total_amount=total_amount+parseInt(milestone_amount);
+    });
+    $('#total_milestones_amount').val(total_amount);
+    $('#milestones_amount_receive').val(total_amount*0.80);
+
+}
 
 function removerow(row)
 {
@@ -227,26 +234,26 @@ function addRow()
           '<div class="row" id="milestone'+row_id+'">'+
           '<div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">'+
             '<label>Description*</label>'+
-            '<input type="text" name="milestones['+row_id+'][description]" maxlength="255" value="" class="form-control" >'+
+            '<input type="text" name="milestones['+row_id+'][description]" maxlength="255" value="" class="form-control"  id="milestones.'+row_id+'.description">'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Start Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="milestones['+row_id+'][start_date]" value="" >'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][start_date]" value="" id="milestones.'+row_id+'.start_date">'+
             '</div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Due Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="milestones['+row_id+'][end_date]" value=""  >'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][end_date]" value=""  id="milestones.'+row_id+'.end_date">'+
             '</div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Amount*</label>'+
-            '<input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  >'+
+            '<input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  id="milestones.'+row_id+'.amount">'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >'+

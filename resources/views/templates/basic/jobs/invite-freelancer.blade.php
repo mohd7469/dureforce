@@ -72,9 +72,7 @@
                             
             
                                     
-                                    <div class="" > 
-
-                       
+                                    <div class=""> 
                                         <div class="row biorow">
                                            <div class="col-md-3">
                                               <div class="row borderleftc"> 
@@ -82,16 +80,11 @@
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
                                                 <div class="col-md-8">
-                                                   
                                                     <h4 class="pname-c"> 
                                                         Travis T.
                                                      </h4>
-                                                   
-                                                   
                                                        <p class="pdesination-c">  Full Stack Developer</p> 
                                                        <p class="plocation"> London, UK</p>
-                                                    
-                                                    
                                                  </div>
                                                   
                                               </div>
@@ -120,9 +113,10 @@
                                             <div class="col-md-3">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="#" class="btn-products-s">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">invite a job</a>
                                                     <a href="#" class="btn-products-s">View Profile</a>
+                                                    <a href="#" class="btn-products-s">Hire</a>
+                                                    <a href="#" class="btn-products-s phire">Invite a job</a>
+                                                  
                                                 </div>
                                             </div>
                                      </div>
@@ -134,11 +128,7 @@
                                 <div class="col-md-7">
                                      
                                     <h2>Has relevant skills to your job</h2>
-                                   
                                     <ul class="skills-listing">
-                                     
-                                    
-                                        
                                         <li>HTML</li>
                                         <li>CSS</li>
                                         <li>Javascript</li>
@@ -147,174 +137,88 @@
                                         <li>React</li>
                                     </ul>
                                 </div>
-                               
-
                                 </div>
 
                                     <!--Skills Section End-->
                             </div> 
                        
-                                  
+                            <hr>
 
                         
+                            <div class=""> 
+                                <div class="row biorow">
+                                   <div class="col-md-3">
+                                      <div class="row borderleftc"> 
+                                        <div class="col-md-4">
+                                            <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                        </div>
+                                        <div class="col-md-8">
+                                            <h4 class="pname-c"> 
+                                                Travis T.
+                                             </h4>
+                                               <p class="pdesination-c">  Full Stack Developer</p> 
+                                               <p class="plocation"> London, UK</p>
+                                         </div>
+                                          
+                                      </div>
+                                   </div>
+
+                                    <div class="col-md-5">
+                                        <div class="row btns-per">
+                                            <div class="col-md-4">
+                                                <p class="rateperh">Rate Per Hour</p>
+                                                
+                                                <p class="perhourprice">$55/per Hour</p>
+                                                
+                                                
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="rateperh">Total Earnings</p>
+                                                <p class="perhourprice">$120k + earned</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p class="rateperh">Job Success Rate</p>
+                                                <p class="perhourprice">90%</p>
+                                            </div>
+                                         </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="row btns-s">
+                                            {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
+                                            <a href="#" class="btn-products-s">View Profile</a>
+                                            <a href="#" class="btn-products-s">Hire</a>
+                                            <a href="#" class="btn-products-s phire">Invite a job</a>
+                                            
+                                        </div>
+                                    </div>
+                             </div>
+                                    <!--===  Bio Profile Section End ===-->
+
+                 <!--Skills Section Start-->
+
+                    <div class="row skills-c">
+                        <div class="col-md-7">
+                             
+                            <h2>Has relevant skills to your job</h2>
+                            <ul class="skills-listing">
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>Javascript</li>
+                                <li>Bootstrap</li>
+                                <li>jQuery</li>
+                                <li>React</li>
+                            </ul>
+                        </div>
+                        </div>
+
+                            <!--Skills Section End-->
+                    </div> 
                                    
                          
                         </div>
                         <hr>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-12"></div>
-                                    <div class="col-md-3">
-                                        <h2 class="prosals-h">Invited Freelancers</h2> 
-                                        
-                                    </div>
-                                 
-                                    <div class="col-md-9 sorting-mbl">
-                                        <div class="row">
-                                            <!--Sorting Section Start-->
-                                                  <div class="col-md-4">
-                                                       <div id="custom-search-input">
-                                                            <div class="input-group">
-                                                                <input type="text" class="search-query form-control" placeholder="Search" />
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" disabled>
-                                                                        <span class="fa fa-search"></span>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-                                                           
-                                                        </div>
-                                                    </div>       
-                                                    <div class="col-md-4">
-                                                    
-                                                        <form>
-                                                            <select name="Best match" id="bestmatch">
-                                                                <option>Best match</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                            </select>
-                                                        </form>
-                                                    </div>
-                                               
-                                            
-                                         <!--Sorting Section End-->
-
-                                        <div class="col-md-4">
-                                        <form>
-                                            <select name="Filters" id="Filters">
-                                                <option>Filters</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                            </select>
-                                        </form>
-                                        </div>
-
-                                       </div>
-                                    </div>
-                                </div>
-
-                                 <!--Bio Profile Section Start-->
-                            
-                            
-            
-                                    
-                                    <div class="" > 
-
-                       
-                                        <div class="row biorow">
-                                           <div class="col-md-4">
-                                              <div class="row borderleftc"> 
-                                                <div class="col-md-3">
-                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
-                                                </div>
-                                                <div class="col-md-5">
-                                                   
-                                                    <h4 class="pname-c"> 
-                                                        Zack J.
-                                                     </h4>
-                                                   
-                                                   
-                                                       <p class="pdesination-c">  Full Stack Developer</p> 
-                                                    
-                                                    
-                                                 </div>
-                                                    <div class="col-md-4">
-                                                      
-                                                        <p class="plocation"> London, UK</p>
-                                                       
-
-                                                       
-                                                    </div>
-                                              </div>
-                                           </div>
-
-                                            <div class="col-md-5">
-                                                <div class="row btns-per">
-                                                    <div class="col-md-4">
-                                                        <p class="rateperh">Rate Per Hour</p>
-                                                        
-                                                        <p class="perhourprice">$55/per Hour</p>
-                                                        
-                                                        
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <p class="rateperh">Total Earnings</p>
-                                                        <p class="perhourprice">$120k + earned</p>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <p class="rateperh">Job Success Rate</p>
-                                                        <p class="perhourprice">90%</p>
-                                                    </div>
-                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="row btns-s">
-                                                    {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="#" class="btn-products-s">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">Invite a job</a>
-                                                    <a href="#" class="btn-products-s phire">View</a>
-                                                </div>
-                                            </div>
-                                     </div>
-                                            <!--===  Bio Profile Section End ===-->
-
-                         <!--Skills Section Start-->
-
-                            <div class="row skills-c">
-                                <div class="col-md-7">
-                                     
-                                    <h2>Has relevant skills to your job</h2>
-                                   
-                                    <ul class="skills-listing">
-                                     
-                                    
-                                        
-                                        <li>HTML</li>
-                                        <li>CSS</li>
-                                        <li>Javascript</li>
-                                        <li>HTml</li>
-                                        <li>Bootstrap</li>
-                                        
-                                    </ul>
-                                </div>
-                               
-
-                                </div>
-
-                                    <!--Skills Section End-->
-                            </div> 
-                       
-                                  
-
                         
-                                   
-                         
-                        </div>
                     </div>
                   </div>
                </div>
@@ -512,7 +416,23 @@ select#bestmatch, select#Filters{
     font-size: 12px !important;
 }
 }
+@media only screen and (max-width:767px) and (min-width:481px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 30px !important;
+    }
 
+}
+@media only screen and (max-width:480px){
+    .row.btns-s{
+        left: 7px !important;
+    }
+    a.btn-products-s{
+        padding: 7px 12px !important;
+    }
+}
 @media only screen and (max-width:414px){
     select#bestmatch{
         right: -15px !important;
@@ -611,6 +531,16 @@ p.plocation:before {
     top: 8px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
+}
+
+@media only screen and (max-width:320px){
+   
+    a.btn-products-s{
+        padding: 7px 7px !important;
+    }
+.container.single-jobc {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 }
 </style>
