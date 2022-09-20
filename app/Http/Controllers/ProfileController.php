@@ -28,8 +28,9 @@ class ProfileController extends Controller
     public function profile()
     {
         $categories=Category::select('id','name')->get();
-        $countries=ModelsCountry::select('id','name')->get();        
-        return view($this->activeTemplate.'profile.partials.profile_basic_design',compact('categories','countries'));
+        $countries=ModelsCountry::select('id','name')->get();   
+        $languages=WorldLanguage::select('id','iso_language_name')->get();
+        return view($this->activeTemplate.'profile.signup_basic',compact('categories','countries','languages'));
 
     }
 

@@ -167,8 +167,18 @@
         let startDateInsti = $('input[name="start_date_institute[]"]');
         let selectedLevels = [];
 
+        var _languages = [];
+        let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
+
 
         $('document').ready(function() {
+            
+            loadProfileBasicsData();
+
+            $('.select2').select2({
+                tags: true
+            });
+
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
                 imgInp.addClass('imgInp-after');
@@ -185,12 +195,19 @@
             }
         });
 
-        $(document).ready(function() {
-            $('.select2').select2({
-                tags: true
-            });
+       
 
-        })
+        function loadProfileBasicsData()
+        {
+                $.ajax({
+                    type:"GET",
+                    url:"{{route('profile.basics.data')}}",
+                    success:function(data){
+                       _languages=data.languages;
+                       console.log(_languages);
+                    }
+                });  
+        }
 
         function checkDate(parent, element) {
             if (parent.is(':checked')) {
@@ -373,7 +390,39 @@
         function formBasicSave() {
             $('#form-basic-save').submit();
         }
-
+function addMoreLanguages() {
+        languageRow.append(`
+                            <div id="moreLanguage-row">
+                                        <hr>
+                                <div class="row" style="align-items: center; justify-content: space-between!important">
+                                    <div class="col-md-6 col-sm-10">
+                                        <label class="mt-4">Language <span class="imp">*</span></label>
+                                        <select name="languages[]" class="form-control select-lang py-2" id="">
+                                            <option value="" disabled selected>
+                                            Spoken Language(s)
+                                            </option>
+                                        ${_languages?.map((language) => {
+                                            return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
+                                        })}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5 col-sm-10">
+                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                        <select name="language_level[]" class="form-control select-lang"
+                                            id="" required>
+                                            <option value="" disabled selected>
+                                                                    My Level is
+                                                                    </option>
+                                            ${_languages_levels?.map((level) => {
+                                            return ` <option value="${level.id}"> ${level.name}</option>`;
+                                            })}
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+`                       );
+}
         /**
          * Checks if value is empty. Deep-checks arrays and objects
          * Note: isEmpty([]) == true, isEmpty({}) == true, isEmpty([{0:false},"",0]) == true, isEmpty({0:1}) == false
