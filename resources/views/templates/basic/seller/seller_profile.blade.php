@@ -21,7 +21,6 @@
                                     <h4 class="my-3 text-center">Amna Kareem</h4>
                                     <h5 class="my-3 text-center">Freelance DevOps Engineer</h5>
                                     <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p>
-
                                     <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
 {{--                                  edit profile modal--}}
                                     <div class="d-flex mt-5">
@@ -299,7 +298,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="set">
-                            <div class="row">
+                            <div class="row portfolio">
                                  <div class="col-xl-4 col-lg-6 col-md-6">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
@@ -327,7 +326,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6  ">
+                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3  ">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                         <div class="card-body">
@@ -336,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6 ">
+                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3   ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -345,7 +344,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                  <div class="col-xl-4 col-lg-6  col-md-6 ">
+                                  <div class="col-xl-4 col-lg-6  col-md-6  mt-3  ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -376,6 +375,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="tes">
+                                <div class="row">
                                 <div class="quote">
                                         <blockquote class="blockquote">
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
@@ -384,13 +384,6 @@
                                 <p class="cite"><b>Simon King</b> <br>
                                     Director Marketing, Global Solutions Ltd</p>
                                 </div>
-                                <div class="quote">
-                                    <blockquote class="blockquote">
-                                        Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                    </blockquote>
-                                    <p class="cite"><b>Janet Hill
-                                          </b> <br>
-                                        Senior Marketing Manager, Global Solutions Ltd</p>
                                 </div>
                             </div>
                         </div>
