@@ -126,6 +126,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\UserRate');
     }
 
+    public function basicProfile()
+    {
+        return $this->hasOne('App\Models\UserBasic');
+    }
+
     public function milestone()
     {
         return $this->hasMany(Milestone::class);

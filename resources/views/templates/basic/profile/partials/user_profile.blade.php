@@ -12,7 +12,7 @@
          <div>
             <label class="mt-4">Profile Picture</label>
             <div class="profile-img col-md-12" action="">
-               <input type="file" name="image" id="img-upload" accept="image/png, image/gif, image/jpeg"
+               <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                   class="imgInp" onchange="previewFile(this)"
                   title="" />
                <image width="100" height="100" id="preview-img"
@@ -190,36 +190,17 @@
                      class="form-control selected-level select-lang"
                      id="langLevel"
                      >
-                     <option
-                        value=""
-                        selected=""
-                        >
+                     <option value="" selected="" >
                         Proficiency Level
                      </option>
-                     <option
-                        value="1"
-                        >
-                        B1
-                        (Pre-Intermediate)
-                     </option>
-                     <option
-                        value="2"
-                        >
-                        B2
-                        (Intermediate)
-                     </option>
-                     <option
-                        value="3"
-                        >
-                        C1
-                        (Upper-Intermediate)
-                     </option>
-                     <option
-                        value="4"
-                        >
-                        C2
-                        (Advanced)
-                     </option>
+
+                     @foreach ($language_levels as $level)
+                        <option value="{{$level->id}}">
+                           {{$level->name}}
+                        </option>
+                     @endforeach
+                     
+                     
                   </select>
 
                </div>
