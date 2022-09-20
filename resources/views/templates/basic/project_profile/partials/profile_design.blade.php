@@ -1191,7 +1191,7 @@
                                                 >
                                                 <div>
                                                     <label class="mt-4"
-                                                        >Profile Picture
+                                                        >Profile Picture 
                                                         <span class="imp"
                                                             >*</span
                                                         ></label

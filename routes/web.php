@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
-
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +40,10 @@ Route::view('/profile-payment-view-design', 'templates.basic.project_profile.par
 
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
-Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
+Route::get('/freelancer-profile-design', 'ProfileController@profile');
+Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
+
+
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {

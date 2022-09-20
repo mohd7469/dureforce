@@ -11,7 +11,7 @@
                 to growing network of businesses.</span>
             <div>
 
-                <label class="mt-4">Profile Picture <span class="imp">*</span></label>
+                <label class="mt-4">Profile Picture  <span class="imp">*</span></label>
                 <div class="profile-img col-md-12" action="">
                     <input type="file" name="image" id="img-upload" accept="image/png, image/gif, image/jpeg"
                         class="imgInp" onchange="previewFile(this)"

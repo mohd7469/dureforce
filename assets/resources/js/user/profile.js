@@ -3,24 +3,7 @@ $(document).ready(function () {
     e.preventDefault();
     var formData = new FormData(this);
 
-    $.ajax({
-      headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-      type: "POST",
-      url: "{{ route('user.profileSave') }}",
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        //
-        // console.log("success");
-        // console.log(data);
-      },
-      error: function (data) {
-        console.log("error");
-        console.log(data);
-      },
-    });
+    
   });
 
   $('#skills').change(function(e){
@@ -53,7 +36,7 @@ $(document).ready(function () {
   //     $('#btn-skill-research').prop('disabled', false);
   //   }
   // });
-});
+// });
 
 function changeProfileImage() {
   let a = document.getElementById("profile-picture").value;
@@ -73,7 +56,7 @@ function addMoreLanguages() {
                                    Spoken Language(s)
                                 </option>
                                ${_languages?.map((language) => {
-                                 return ` <option value="${language.id}"> ${language.name}</option>`;
+                                 return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
                                })}
     </select>
   </div>

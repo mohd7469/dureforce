@@ -610,7 +610,7 @@
                                                                 ></label
                                                             >
                                                             <select
-                                                                name="languages[]"
+                                                                name="category_id"
                                                                 class="form-control select-lang"
                                                                 id="languages"
                                                                 >
@@ -620,16 +620,13 @@
                                                                 >
                                                                     Select Category
                                                                 </option>
+                                                                @foreach ($categories as $category)
                                                                 <option
-                                                                    value="1"
+                                                                    value="{{$category->id}}"
                                                                 >
-                                                                    Web Developer
-                                                                </option>
-                                                                <option
-                                                                    value="2"
-                                                                >
-                                                                    Android Developer
-                                                                </option>
+                                                               {{$category->name}}
+                                                            </option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6 col-sm-12">
@@ -679,18 +676,18 @@
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                Karachi
+                                                                Select Country
                                                                 </option>
-                                                                <option
-                                                                    value="1"
-                                                                >
-                                                                lahore
-                                                                </option>
-                                                                <option
-                                                                    value="2"
-                                                                >
-                                                                Sialkot
-                                                                </option>
+                                                                @foreach ($countries as $country)
+
+                                                                    <option
+                                                                        value="{{$country->id}}"
+                                                                    
+                                                                    >
+                                                                        {{$country->name}}
+                                                                    </option>
+
+                                                                @endforeach
                                                             </select>
                                                     </div>
                                                     <div class="col-md-12">
@@ -1125,26 +1122,24 @@
                                                                     ></label
                                                                 >
                                                                 <select
-                                                                name="languages[]"
+                                                                name="country_id"
                                                                 class="form-control select-lang"
-                                                                id="languages"
+                                                                id="country_id"
                                                                 >
                                                                 <option
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                    Seect Country
+                                                                    Select Country
                                                                 </option>
+                                                                @foreach ($countries as $country)
                                                                 <option
-                                                                    value="1"
+                                                                    value="{{$country->id}}"
+                                                                   
                                                                 >
-                                                                    Pakistan
+                                                                    {{$country->name}}
                                                                 </option>
-                                                                <option
-                                                                    value="2"
-                                                                >
-                                                                    Turky
-                                                                </option>
+                                                                @endforeach
                                                             </select>
                                                             </div>
                                                             <div
@@ -1836,7 +1831,8 @@
             let startDate = $('input[name="start_date_job[]"]');
             let startDateInsti = $('input[name="start_date_institute[]"]');
             let selectedLevels = [];
-
+            var _languages = [];
+            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
 
             $('document').ready(function() {
                 if (previewImg.length > 0) {
@@ -1859,8 +1855,20 @@
                 $('.select2').select2({
                     tags: true
                 });
-
+                loadProfileBasicsData();
             })
+            
+            function loadProfileBasicsData()
+            {
+                $.ajax({
+                    type:"GET",
+                    url:"{{route('profile.basics.data')}}",
+                    success:function(data){
+                       _languages=data.languages;
+                       console.log(_languages);
+                    }
+                });  
+            }
 
             function checkDate(parent, element) {
                 if (parent.is(':checked')) {
@@ -2088,10 +2096,7 @@
             }
         </script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script>
-            let _languages = [{"id":1,"name":"English","code":"en","icon":"5f15968db08911595250317.png","text_align":0,"is_default":1,"created_at":"2020-07-06T03:47:55.000000Z","updated_at":"2021-08-01T21:21:29.000000Z"}];
-            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
-        </script>
+      
         <script src="https://azapp-dureforce-dev.azurewebsites.net/assets/resources/js/user/profile.js"></script>
         <script>
             'use strict';
