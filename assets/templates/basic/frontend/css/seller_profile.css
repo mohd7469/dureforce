@@ -72,6 +72,7 @@
 
 .wrapper .mt-3 {
     margin-top: -4rem!important;
+    width: 340px;
 }
 .card-text-tab {
     margin-bottom: 12px;
@@ -157,12 +158,15 @@
 }
 .profile .short-text{
     display: inline;
-    font-size: 16px;
+    font-size: 14px;
     font-weight:500;
     margin-left: 0rem;
 }
 .timeline{
     padding-left: 20px;
+}
+.article a{
+    color: #7F007F !important;
 }
 .timeline li > p{
     font-family:'Mulish';
@@ -207,7 +211,21 @@ blockquote {
     height: 252px;
     line-height: 1.45;
     color: #383838;
-    margin: 0 auto;
+    margin-bottom: 9rem!important;
+}
+@media only screen and (min-width: 600px) {
+    blockquote {
+        font-family: 'Mulish';
+        font-style: italic;
+        display: block;
+        max-width: 100%;
+        position: relative;
+        padding: 22px 42px;
+        height: 252px;
+        line-height: 1.45;
+        color: #383838;
+        margin-bottom: 9rem !important;
+    }
 }
 
 blockquote:before {
@@ -226,11 +244,9 @@ blockquote:after {
     content: "\201D";
     font-size: 80px;
     position: absolute;
-    left: 288px;
-    top: 113px;
+    left: 739px;
+    top: 86px;
     color: #80005f5e;
-
-
 }
 
 blockquote .cite {
@@ -281,7 +297,7 @@ button.standard-btn-sm-exp{
     font-size: 14px;
     background-color: #7f007f;
     color: #fff;
-    width: 10rem;
+    width: 9rem;
 }
 .profile .sep-solid {
     border-top: 1px solid #c5e0e0;
@@ -451,7 +467,7 @@ li.my-custom-css {
         font-weight: 400;
         background-color: #7f007f;
         color: #fff;
-        margin-left: 116px;
+        margin-left: 100px;
     }
 }
 
@@ -468,7 +484,7 @@ li.my-custom-css {
         font-weight: 400;
         background-color: #7f007f;
         color: #fff;
-        margin-left: 108px;
+        margin-left: 95px;
     }
 }
 

@@ -10,11 +10,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
             <div class="container">
                 <div class="row wrapper">
                     <div class="col-md-4 col-xl-4 col-lg-4 col-sm-4">
-                        <div class="ms-4 mt-3  mb-0 d-flex flex-column ">
+                        <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
                                     <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
@@ -32,8 +32,8 @@
 
                                     <div class="article">
                                     <p>Bacon ipsum dolor amet sirloin jowl turducken pork loin pig pork belly, chuck cupim tongue beef doner tri-tip pancetta spare ribs porchetta.
-                                    </p>
-                                    <a id="clickme">Read more</a>
+                                    </p> <a id="clickme">Read more</a>
+
                                     <p id="book" class="moretext">
                                         Brisket ball tip cow sirloin. Chuck porchetta kielbasa pork chop doner sirloin, bacon beef brisket ball tip short ribs.
                                     </p>
@@ -299,8 +299,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="set">
-                            <div class="row gx-5 gy-5">
-                                <div class="col-xl-4 col-lg-6 col-md-6">
+                            <div class="row">
+                                 <div class="col-xl-4 col-lg-6 col-md-6">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                         <div class="card-body">
@@ -309,7 +309,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-xl-4 col-lg-6  col-md-6">
+                                 <div class="col-xl-4 col-lg-6  col-md-6">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -318,7 +318,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-6  col-md-6">
+                                 <div class="col-xl-4 col-lg-6  col-md-6">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -327,7 +327,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                <div class="col-xl-4 col-lg-6  col-md-6  top-buffer">
+                                 <div class="col-xl-4 col-lg-6  col-md-6  ">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                         <div class="card-body">
@@ -336,7 +336,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-xl-4 col-lg-6  col-md-6 top-buffer">
+                                 <div class="col-xl-4 col-lg-6  col-md-6 ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -345,7 +345,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-6  col-md-6  top-buffer">
+                                  <div class="col-xl-4 col-lg-6  col-md-6 ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                             <div class="card-body">
