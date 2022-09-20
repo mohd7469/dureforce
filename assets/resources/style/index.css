@@ -1582,7 +1582,7 @@ select {
 .submit-btn {
   padding: 8px 30px;
   color: white;
-  background: gray !important;
+  background: #7f007f !important;
   background: -webkit-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
   background: -o-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
   background: linear-gradient(to right, #2cdd9b 0%, #1dc8cc 100%);

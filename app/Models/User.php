@@ -11,10 +11,11 @@ use Laravel\Sanctum\HasApiTokens;
 use Cache;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, HasFactory;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;

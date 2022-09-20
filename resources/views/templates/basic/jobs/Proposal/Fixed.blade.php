@@ -40,7 +40,7 @@
           <div class="row section-end-line text-dark pt-3 pb-1">
             
             <div class="form-check">
-               <input class="form-check-input" type="radio" name="payment_mode" id="milestone" checked onclick="byMilestone()">
+               <input class="form-check-input" type="radio" name="bid_type" id="milestone" checked onclick="byMilestone()" value="milestone">
                <label class="form-check-label" for="milestone">
                   By Milestone
                </label>
@@ -48,7 +48,7 @@
              </div>
 
              <div class="form-check">
-               <input class="form-check-input" type="radio" name="payment_mode" id="project" onclick="byProject()">
+               <input class="form-check-input" type="radio" name="bid_type" id="project" onclick="byProject()" value="by_project">
                <label class="form-check-label" for="project">
                   By Project
                </label>
@@ -85,14 +85,14 @@
                   <div class="row" id="milestone1">
                      <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                         <label>@lang('Description')*</label>
-                        <input type="text" name="description" maxlength="255" value="" class="form-control" >
+                        <input type="text" name="milestones[1][description]" maxlength="255" value="" class="form-control" id="milestones.1.description">
                      </div>
       
                      {{-- start date --}}
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Start Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="start_date" value="" >
+                        <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date">
                         </div>
                      </div>
       
@@ -100,14 +100,14 @@
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Due Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="due_date" value=""  >
+                        <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date">
                         </div>
                      </div>
       
                      {{-- amount --}}
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Amount')*</label>
-                        <input type="integer" name="title" maxlength="255" value="" class="form-control" >
+                        <input type="number" name="milestones[1][amount]" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount">
                      </div>
                   </div>
                   
@@ -126,10 +126,10 @@
                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                      <div class="form-group pt-3">
                      
-                        <label for=""><strong class="text-dark">Total Price of Project</strong></label>
+                        <label for=""><strong class="text-dark">Total Price of Project*</strong></label>
                         <small  class="form-text text-muted">This includes all milestones, and is the amount 
                         your client will see</small>
-                        <input type="integer" class="form-control" id="total_amount"  name="total_amount">
+                        <input type="number" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly>
                      </div>
                </div>
                
@@ -149,7 +149,7 @@
                   <div class="form-group pt-3">
                      <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                      <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
-                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                     <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" readonly id="milestones_amount_receive">
                   </div>
                </div>
 
@@ -163,7 +163,7 @@
                   <div class="form-group pt-3">
                      <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
                      <small  class="form-text text-dark">Mode of Devlivery *</small>
-                     <select name="mode_of_delivery" id="mode_of_delivery" class="form-control">
+                     <select name="delivery_mode_id" id="delivery_mode_id" class="form-control">
                         <option value="">Select Mode Of Delivery</option>
                         @foreach ($delivery_modes as $mode)
                            <option value="{{$mode->id}}">{{$mode->title}}</option>

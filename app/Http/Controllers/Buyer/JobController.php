@@ -82,7 +82,7 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod', 'status')->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod', 'status','proposal')->latest()->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
@@ -185,7 +185,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -287,7 +287,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => route('user.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -386,14 +386,15 @@ class JobController extends Controller
     public function singleJob($uuid){
         
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $job = Job::where('uuid', $uuid)->withAll()->first();
         
         
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
 
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+         $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
@@ -479,7 +480,11 @@ class JobController extends Controller
         return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
-
+       public function inviteFreelancer(){
+        
+        $pageTitle = "inviteProposal";
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle'));
+       }
 
 
 
