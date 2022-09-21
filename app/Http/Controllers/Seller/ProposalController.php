@@ -62,17 +62,16 @@ class ProposalController extends Controller
     public function store(Request $request, $job_uuid)
     {
         $user = Auth::user();
-        $job_id = Job::where('uuid',$job_uuid)->pluck('id')->first();
+        $job = Job::where('uuid',$job_uuid)->first();
         $request_data = [];
         parse_str($request->data, $request_data);
         
         try {
             DB::beginTransaction();
 
-            $proposal = Proposal::create([
+            $proposal =$job->proposal()->create([
                 "user_id" => $user->id,
                 "delivery_mode_id" => $request_data['delivery_mode_id'],
-                "job_id" => $job_id,
                 "hourly_bid_rate" => isset($request_data['hourly_bid_rate']) ? $request_data['hourly_bid_rate'] : null,
                 "fixed_bid_amount" => isset($request_data['total_project_price']) ? $request_data['total_project_price'] : null,
                 "bid_type" => isset($request_data['bid_type']) ? $request_data['bid_type'] : '' ,
@@ -81,7 +80,10 @@ class ProposalController extends Controller
                 "cover_letter" => $request_data['cover_letter'],
             ]);
 
-            if ( $request_data['bid_type'] == Proposal::$bid_type_milestone){
+
+
+
+            if ( isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone){
                 $milestones_data=array_values($request_data['milestones']);
                 if(count($milestones_data)>0){
                     
@@ -93,7 +95,7 @@ class ProposalController extends Controller
                 }
                 
             }
-            elseif($request_data['bid_type'] ==  Proposal::$by_project){
+            elseif( isset($request_data['bid_type']) && $request_data['bid_type'] ==  Proposal::$by_project){
                 
                 $proposal->amount_receive=$request_data['total_project_price']*0.80;
                 $proposal->project_start_date=$request_data['project_start_date'];
@@ -204,9 +206,9 @@ class ProposalController extends Controller
             $rules=[
                 'delivery_mode_id' => 'required|exists:delivery_modes,id',
                 'hourly_bid_rate' => 'required|integer|min:1',
-                'amount_receive' => 'integer',
-                'start_hour_limit' => 'integer|min:1',
-                'end_hour_limit' => 'integer|min:1',
+                'amount_receive' => 'required',
+                'start_hour_limit' => 'integer|min:1|max:40',
+                'end_hour_limit' => 'integer|min:1|max:40',
                 'cover_letter' => 'string'
             ];
             
@@ -219,7 +221,7 @@ class ProposalController extends Controller
                 $rules=[
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'milestones.*.description' => 'string|required',
-                    'milestones.*.start_date' => 'date|required',
+                    'milestones.*.start_date' => 'date|required|after_or_equal:now',
                     'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
                     'milestones.*.amount' => 'string|required',
                     'total_project_price' => 'required|integer',
@@ -232,7 +234,7 @@ class ProposalController extends Controller
 
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'project_end_date' => 'required|date|after_or_equal:project_start_date',
-                    'project_start_date' => 'required|date',
+                    'project_start_date' => 'required|date|after_or_equal:now',
                     'total_project_price' => 'required|integer',
                     'amount_receive' => 'integer|required',
                     'cover_letter' => 'string|min:20'

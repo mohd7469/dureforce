@@ -50,7 +50,7 @@ class Job extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents');
+        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
 
     }
 
@@ -152,7 +152,7 @@ class Job extends Model
 
     public function proposal()
     {
-        return $this->morphMany(Proposal::class, 'module');
+        return $this->morphMany(Proposal::class, 'module')->withAll();
     }
     public function proposal_document()
     {
