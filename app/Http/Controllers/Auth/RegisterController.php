@@ -129,8 +129,8 @@ class RegisterController extends Controller
             }
 
             Session::put('registerUsername', $request->get('username'));
-            // event(new Registered($user = $this->create($request->all())));
-            $user = $this->create($request->all());
+            event(new Registered($user = $this->create($request->all())));
+            // $user = $this->create($request->all());
 
             $this->guard()->login($user);
 
