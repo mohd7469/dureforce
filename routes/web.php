@@ -16,14 +16,12 @@ Route::get('/clear', function () {
 */
 
 Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
-Route::get('all-proposal', 'buyer\jobcontroller@product')->name('job.all.product');
 Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
 Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
 
-
 Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
 Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
-Route::get('proposal', 'ProposalController@index')->name('proposal.index');
+Route::get('proposal', 'seller\ProposalController@index')->name('proposal.index');
 
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
@@ -37,7 +35,10 @@ Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.p
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
-
+// route for offer pages design 
+Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
+Route::view('/offer-description', 'templates.basic.offer.offer_description');
+Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
@@ -700,6 +701,9 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
                 Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
                 Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
+                Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
+                Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
+
 
             });
 
@@ -788,6 +792,7 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
+Route::get('/skills', 'SkillCategoryController@skills')->name('skills');;
 
 //
 
