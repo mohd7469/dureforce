@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserEducation;
 use App\Models\UserPayment;
 use DB;
+use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
     /**
@@ -39,9 +40,29 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+        $request_data = [];
+           parse_str($request->all, $request_data);
+        $validator = Validator::make($request_data, [
+            'title' => 'required|string|max:150',
+            'country' => 'required|string|max:150',
+            'user_id' => 'required|exists:users,id',
+            'description' => 'required|string|max:1000',
+            'end' => 'date|required',
+            'start' => 'date|required',
+
+            'location' => 'required|string|max:150',
+           
+        ]);
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        } else{
+            return response()->json(["validated" => "payment Data Is Valid"]);
+        }
        
         $user = User::find(1);
-        // dd($request->all());
+        
 
         try {
             foreach($request->input('job_title')  as $key => $value  ) {
@@ -104,7 +125,31 @@ class ProfileController extends Controller
 
     }
     public function storePayment(Request $request){
-        $user = User::find(1);
+        $request_data = [];
+           parse_str($request->all, $request_data);
+        $validator = Validator::make($request_data, [
+            'card_number' => 'required|string|max:150',
+            'user_id' => 'required|exists:users,id',
+            'expiration_date' => 'date|required',
+            'cvv_code' => 'required',
+            'name_on_card' => 'required',
+            'country' => 'required|string|max:150',
+            'city' => 'required|string|max:150',
+            'street_address' => 'required|string|max:250',
+            'street_address_two' => 'required|string|max:250',
+        
+        ]);
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        } else{
+            return response()->json(["validated" => "payment Data Is Valid"]);
+        }
+
+         $user = User::find(1);
+     
+
      
     
         try {

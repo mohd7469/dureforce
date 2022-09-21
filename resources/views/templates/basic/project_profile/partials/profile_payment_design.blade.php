@@ -1131,20 +1131,26 @@
                         <div class="col-md-12">
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
                             <input type="text" name="card_number" value="" placeholder="" required="">
+                            <span class="text-danger pt-2" id=card_number></span>
+                           
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="mt-4">Expiration Date <span class="imp">*</span></label>
                                 <input type="date" name="expiration_date" value="" placeholder="" required="">
+                                <span class="text-danger pt-2" id=expiration_date></span>
+                              
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
                                 <input type="text" name="cvv_code" value="" placeholder="" required="">
+                                <span class="text-danger pt-2" id=cvv_code></span>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
                             <input type="text" name="name_on_card" value="" placeholder="" required="">
+                            <span class="text-danger pt-2" id=name_on_card></span>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Country <span class="imp">*</span></label>
@@ -1164,6 +1170,7 @@
                                     Pakistan
                                 </option>
                             </select>
+                            <span class="text-danger pt-2" id=country></span>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">City <span class="imp">*</span></label>
@@ -1183,13 +1190,16 @@
                                     Lahore
                                 </option>
                             </select>
+                            <span class="text-danger pt-2" id=city></span>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
                             <input name="street_address" placeholder="" value="" required="">
+                            <span class="text-danger pt-2" id=street_address></span>
                         </div>
                         <div class="col-md-12 mt-2">
                             <input name="street_address_two" placeholder="" value="">
+                            <span class="text-danger pt-2" id=street_address_two></span>
                         </div>
                     </div>
                 </div>
@@ -12152,17 +12162,32 @@
                 type:'json',
                 
                 success: function(response) {
-
-                    console.log(response);
-            
-             
-                    if (response.success) {
+                
+                 if (response.success) {
                     
-                    
-                        notify('success', response.success);
+                     notify('success', response.success);
                         $("#form-payment-save")[0].reset();
 
-                    } else {
+
+                    }
+                    if (response.error){
+                        response.error['card_number']
+                        $('#card_number').text(response.error.card_number);
+                        $('#expiration_date').text(response.error.expiration_date);
+                        $('#cvv_code').text(response.error.cvv_code);
+                        $('#name_on_card').text(response.error.name_on_card);
+                        $('#country').text(response.error.country);
+                        $('#city').text(response.error.city);
+                        $('#street_address').text(response.error.street_address);
+                        $('#street_address_two').text(response.error.street_address_two);
+                      
+                    $.each(response.error, function(key,value) {
+                            
+
+                            $('#validation-errors').append('<div class="alert alert-danger">'+value+'</div');
+                        }); 
+ }
+                     else {
                         $.each(response, function(i, val) {
                             notify('error', val);
                         });
