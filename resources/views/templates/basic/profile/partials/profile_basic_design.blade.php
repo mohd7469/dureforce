@@ -1124,7 +1124,7 @@
                                                                     ></label
                                                                 >
                                                                 <select
-                                                                name="location[]"
+                                                                name="job_location[]"
                                                                 class="form-control select-lang"
                                                                 id="ex_location"
                                                                 >
@@ -1935,7 +1935,7 @@
                                                 <div class="col-md-12">
                                                 <label class="mt-4">Location <span class="imp">*</span>
                                                 </label>
-                                                <select name="location[]" class="form-control select-lang" id="languages">
+                                                <select name="job_location[]" class="form-control select-lang" id="languages">
                                                     <option value="" selected=""> Seect Country </option>
                                                     <option value="1"> Pakistan </option>
                                                     <option value="2"> Turky </option>
@@ -2106,7 +2106,7 @@
             let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
         </script>
         <script src="https://azapp-dureforce-dev.azurewebsites.net/assets/resources/js/user/profile.js"></script>
-        <script>
+        {{-- <script>
             'use strict';
             $(document).on('click', '.subscribe-btn', function() {
             
@@ -2126,7 +2126,7 @@
                                 notify('success', response.success);
                             } else {
                                 $.each(response, function(i, val) {
-                                    notify('error', val);
+                                    // notify('error', val);
                                 });
                             }
                         }
@@ -2135,7 +2135,7 @@
                     notify('error', "Please Input Your Email");
                 }
             });
-        </script>
+        </script> --}}
 
 
 <script>
@@ -2157,8 +2157,11 @@
                         $("#form-experience-save")[0].reset();
 
                     } else {
-                        $.each(response, function(i, val) {
-                            notify('error', val);
+                    console.log(response)
+
+                        $.each(response.errors, function(i, val) {
+                        console.log(response.errors, 'response.errors');
+                             notify('error', val);
                         });
                     }
                 }
@@ -2184,13 +2187,15 @@
                 type:'json',
 
                 success: function(response) {
+                    console.log(response);
              
                     if (response.success) {
                         notify('success', response.success);
                         $("#form-education-save")[0].reset();
 
                     } else {
-                        $.each(response, function(i, val) {
+                        console.log(response);
+                        $.each(response.errors, function(i, val) {
                             notify('error', val);
                         });
                     }
@@ -2211,8 +2216,17 @@
             iziToast.error({message:"Please complete your profile first.", position: "topRight"});
         </script>
         <div class="iziToast-wrapper iziToast-wrapper-topRight"></div>
-
         <script>
+            "use strict";
+            function notify(status,message) {
+                iziToast[status]({
+                    message: message,
+                    position: "topRight"
+                });
+            }
+        </script>
+
+        {{-- <script>
             "use strict";
             function notify(status,message) {
                 iziToast[status]({
@@ -2269,7 +2283,7 @@
                     });
                 });
             })(jQuery);
-        </script>
+        </script> --}}
 
         <style>
             .keyword-container .badge {

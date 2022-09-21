@@ -40,46 +40,38 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        $request_data = [];
-           parse_str($request->all, $request_data);
-        $validator = Validator::make($request_data, [
-            'title' => 'required|string|max:150',
-            'country' => 'required|string|max:150',
-            'user_id' => 'required|exists:users,id',
-            'description' => 'required|string|max:1000',
-            'end' => 'date|required',
-            'start' => 'date|required',
+        //  dd($request->all());
+        $validator = \Validator::make($request->all(), [
+            'job_title' => 'required',
+            'job_description' => 'required',
+            'company' => 'required',
+            'job_location' => 'required',
 
-            'location' => 'required|string|max:150',
-           
         ]);
-        if ($validator->fails()) {
-
-            return response()->json(["error" => $validator->errors()]);
-
-        } else{
-            return response()->json(["validated" => "payment Data Is Valid"]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
         }
        
-        $user = User::find(1);
-        
+        $user = User::find(1);        
 
         try {
             foreach($request->input('job_title')  as $key => $value  ) {
+
+
                 $userExperiance = new UserExperiences;
                 
                 $userExperiance->title = $request->get("job_title")[$key];
                 $userExperiance->user_id = $user->id;
-                $userExperiance->isCurrent = json_decode($request->get("isCurrent")[$key]) ??  0;
+                $userExperiance->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
                 $userExperiance->company = $request->get("company")[$key];
                 $userExperiance->description = $request->get("job_description")[$key];
                 $userExperiance->end = $request->get("end_date_job")[$key] ??  null;
                 $userExperiance->start = $request->get("start_date_job")[$key] ?? null;
-                $userExperiance->location = $request->get("location")[$key];
+                $userExperiance->location = $request->get("job_location")[$key];
 
                 $userExperiance->save();    
-               
-                
                
             }
             return response()->json(["success" => "User Experience submitted"], 200);
@@ -95,6 +87,23 @@ class ProfileController extends Controller
     }
     public function storeEducation(Request $request){
 
+
+
+        // $validator = \Validator::make($request->all(), [
+        //     'institute_name' => 'required',
+        //     'degree' => 'required',
+        //     'company' => 'required',
+        //     'institute_description' => 'required'
+
+
+        // ]);
+        
+        // if ($validator->fails())
+        // {
+          
+        //     return response()->json(['errors'=>$validator->errors()]);
+        // }
+
         $user = User::find(1);
         
         
@@ -104,7 +113,8 @@ class ProfileController extends Controller
                 $userEducation = new UserEducation();
                 $userEducation->institute_name = $request->get("institute_name")[$key];
                 $userEducation->user_id = $user->id;
-                $userEducation->isCurrent = json_decode($request->get("isCurrent")[$key]) ??  0;
+                $userEducation->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
+
                 $userEducation->degree = $request->get("degree_id")[$key];
                 $userEducation->degree = $request->get("degree")[$key];
                 $userEducation->field = $request->get("field")[$key];
@@ -125,11 +135,10 @@ class ProfileController extends Controller
 
     }
     public function storePayment(Request $request){
-        $request_data = [];
-           parse_str($request->all, $request_data);
-        $validator = Validator::make($request_data, [
+
+
+        $validator = \Validator::make($request->all(), [
             'card_number' => 'required|string|max:150',
-            'user_id' => 'required|exists:users,id',
             'expiration_date' => 'date|required',
             'cvv_code' => 'required',
             'name_on_card' => 'required',
@@ -139,18 +148,13 @@ class ProfileController extends Controller
             'street_address_two' => 'required|string|max:250',
         
         ]);
-        if ($validator->fails()) {
-
-            return response()->json(["error" => $validator->errors()]);
-
-        } else{
-            return response()->json(["validated" => "payment Data Is Valid"]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
         }
 
          $user = User::find(1);
-     
-
-     
     
         try {
             
@@ -161,7 +165,6 @@ class ProfileController extends Controller
                 $userPayment->expiration_date = $request->expiration_date;
                 $userPayment->cvv_code = $request->cvv_code;
                 $userPayment->name_on_card = $request->name_on_card;
-                
                 $userPayment->country = $request->country;
                 $userPayment->city = $request->city;
                 $userPayment->street_address = $request->street_address;

@@ -12150,6 +12150,14 @@
 <script>
     'use strict';
     $(document).on('click', '.payment-submit', function(e) {
+            $('#card_number').text('');
+            $('#expiration_date').text('');
+            $('#cvv_code').text('');
+            $('#name_on_card').text('');
+            $('#country').text('');
+            $('#city').text('');
+            $('#street_address').text('');
+            $('#street_address_two').text('');
       
         e.preventDefault();
                    $.ajax({
@@ -12167,30 +12175,20 @@
                     
                      notify('success', response.success);
                         $("#form-payment-save")[0].reset();
-
-
                     }
-                    if (response.error){
-                        response.error['card_number']
-                        $('#card_number').text(response.error.card_number);
-                        $('#expiration_date').text(response.error.expiration_date);
-                        $('#cvv_code').text(response.error.cvv_code);
-                        $('#name_on_card').text(response.error.name_on_card);
-                        $('#country').text(response.error.country);
-                        $('#city').text(response.error.city);
-                        $('#street_address').text(response.error.street_address);
-                        $('#street_address_two').text(response.error.street_address_two);
-                      
-                    $.each(response.error, function(key,value) {
-                            
 
-                            $('#validation-errors').append('<div class="alert alert-danger">'+value+'</div');
-                        }); 
- }
                      else {
-                        $.each(response, function(i, val) {
-                            notify('error', val);
+                        $.each(response.errors, function(i, val) {
+                        $('#card_number').text(response.errors.card_number);
+                        $('#expiration_date').text(response.errors.expiration_date);
+                        $('#cvv_code').text(response.errors.cvv_code);
+                        $('#name_on_card').text(response.errors.name_on_card);
+                        $('#country').text(response.errors.country);
+                        $('#city').text(response.errors.city);
+                        $('#street_address').text(response.errors.street_address);
+                        $('#street_address_two').text(response.errors.street_address_two);
                         });
+                       
                     }
                 }
             });
