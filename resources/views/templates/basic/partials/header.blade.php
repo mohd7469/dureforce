@@ -152,7 +152,7 @@
                     autocomplete="nope"
                         class="account-form"
                         method="POST"
-                        action="{{ route('user.login')}}"
+                        {{-- action="{{ route('user.login')}}" --}}
                         onsubmit="return submitUserForm();"
                     >
                         @csrf
@@ -189,7 +189,7 @@
                                 <div class="forgot-item float-end">
                                     <label
                                         ><a
-                                            href="{{route('user.password.request')}}"
+                                            {{-- href="{{route('user.password.request')}}" --}}
                                             class="text--base "
                                             ><span class="span-color">@lang('Forgot Password')?</span></a
                                         ></label
@@ -206,7 +206,7 @@
                                     <label
                                         ><span class="span-color">@lang('Already Have An Account')?</span>
                                         <a
-                                            href="{{ route('user.register') }}"
+                                            {{-- href="{{ route('user.register') }}" --}}
                                             class="text--base"
                                             ><span class="label-color">@lang('Register Now')</span></a
                                         ></label

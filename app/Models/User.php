@@ -56,6 +56,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'data' => 1
     ];
 
+    public static function scopeWithAll($query){
+
+        return $query->with('categories')->with('languages')->with('basicProfile');
+
+    }
 
     public function login_logs()
     {
@@ -120,6 +125,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Models\UserLanguage');
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category','user_categories');
+    }
+
 
     public function rate()
     {
@@ -267,5 +278,10 @@ class User extends Authenticatable implements MustVerifyEmail
         } 
 
         return 0;
+    }
+
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module')->first();
     }
 }   

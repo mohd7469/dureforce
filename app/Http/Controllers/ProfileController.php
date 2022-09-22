@@ -8,8 +8,11 @@ use App\Models\LanguageLevel;
 use App\Models\User;
 use App\Models\UserBasic;
 use App\Models\WorldLanguage;
+use App\Rules\PhoneNumberValidate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Khsing\World\Models\City;
 use Khsing\World\Models\Country as ModelsCountry;
 
 class ProfileController extends Controller
@@ -31,12 +34,16 @@ class ProfileController extends Controller
      */
     public function profile()
     {
+        
+        $user=User::withAll()->find(2);
+
         $categories=Category::select('id','name')->get();
-        $countries=ModelsCountry::select('id','name')->get();   
+        $cities=City::select('id','name')->where('country_id',$user->country_id)->get();   
         $languages=WorldLanguage::select('id','iso_language_name')->get();
         $language_levels=LanguageLevel::select('id','name')->get();
-
-        return view($this->activeTemplate.'profile.signup_basic',compact('categories','countries','languages','language_levels'));
+        $basicProfile=$user->basicProfile ? $user->basicProfile : new UserBasic();
+        $user_languages=$user->languages ? $user->languages: [];
+        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages'));
 
     }
     
@@ -47,6 +54,7 @@ class ProfileController extends Controller
      */
     public function getProfileData()
     {
+
         $languages=WorldLanguage::select('id','iso_language_name')->get();
         $language_levels=LanguageLevel::select('id','name')->get();
 
@@ -64,22 +72,21 @@ class ProfileController extends Controller
      */
     public function saveUserBasics(Request $request)
     {
-        $request_data = [];
-        parse_str($request->data, $request_data);
+        
+        $request_data = $request->all();
 
         $rules=[
-            'file ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'category_id'  => 'required|array',
             'category_id.*' =>'exists:categories,id',
             'designation'  =>'required|string',
             'about'   =>  'required|string',
-            'phone_number'   =>  'required|integer',
-            'country_id'=>'required|exists:delivery_modes,id',
+            'phone_number'   =>  ['required',new PhoneNumberValidate],
+            'city_id'=>'required|exists:world_cities,id',
             'languages'=>'required|array',
             'languages.*.language_id'=>'required|exists:world_languages,id',
-            'languages.*.language_level'=>'required|exists:language_levels,id',
+            'languages.*.language_level_id'=>'required|exists:language_levels,id',
         ];
-
         $validator = Validator::make($request_data, $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
@@ -87,22 +94,44 @@ class ProfileController extends Controller
         else
         {
             try {
-
-                $user=User::find(1);
-                $user->basicProfile()->create([
-                    'city_id'=>$request_data['country_id'],
-                    'profile_picture'=>$request_data['profile_picture'],
+                
+                DB::beginTransaction();
+                
+                $user=User::find(2);
+                $user->basicProfile()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                    'city_id'=>$request_data['city_id'],
                     'designation'=>$request_data['designation'],
                     'about'=>$request_data['about'],
                     'phone_number'=>$request_data['phone_number'],
                 ]);
-               
+                $user->languages()->delete();
+                $user->languages()->createMany($request_data['languages']);
+                $user->categories()->sync($request_data['category_id']);
+
+                if ($request->has('profile_picture') && $request->profile_picture!='undefined') {
+
+                    $path = imagePath()['attachments']['path'];
+                    $file=$request->profile_picture;
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $user->basicProfile()->update(['profile_picture'=>$url]);
+
+                }
+                $user->save();
+
+                DB::commit();
                 return response()->json(["success_message" => "User Basics Updated Successfully"]);
                 
             } catch (\Throwable $exception) {
                 
+                DB::rollback();
+                // return response()->json(['error'=>$exception->getMessage()]);
                 $notify[] = ['error', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
+
                 
             }
         }

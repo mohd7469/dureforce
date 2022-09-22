@@ -1,7 +1,9 @@
 <div class="setProfile" id="basic-profile">
    <form action="{{ route('profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
       @csrf
+      
       <div class="container-fluid welcome-body px-5">
+         
          <h1 class="mb-4">Welcome Shahzaib</h1>
          <span class="cmnt pb-4">
          Complete your profile to join our global community of freelancers and start
@@ -33,17 +35,19 @@
                      name="category_id[]"
                      class=" form-control select-lang select2 select2-hidden-accessible"
                      multiple="" data-placeholder="Select Categories"  tabindex="-1" aria-hidden="true" style="width: 100% !important"
-                     id="languages"
+                     id="category_id"
                      >
                      <option
                         value=""
-                        selected=""
+                       
                         >
                         Select Category
                      </option>
                      @foreach ($categories as $category)
                      <option
                          value="{{$category->id}}"
+
+                         {{in_array($category->id,$user->categories->pluck('id')->toArray()) ? 'selected' :''}}
                      >
                     {{$category->name}}
                  </option>
@@ -62,7 +66,7 @@
                      name="designation"
                      id="title"
                      placeholder="E.g. Full Stack Developer"
-                     value=""
+                     value="{{$basicProfile->designation}}"
                      />
                </div>
             </div>
@@ -79,7 +83,7 @@
                   name="about"
                   placeholder="Describe yourself to clients"
                   id="about"
-                  ></textarea>
+                  >{{ $basicProfile->about }}</textarea>
             </div>
             {{-- location --}}
             <div class="col-md-12">
@@ -90,23 +94,24 @@
                   ></label
                   >
                <select
-                     name="country_id"
+                     name="city_id"
                      class="form-control select-lang"
                      id="languages"
                      >
                      <option
                         value=""
                      >
-                        Select Country
+                        Select City
 
                      </option>
-                     @foreach ($countries as $country)
+                     @foreach ($cities as $city)
 
                         <option
-                           value="{{$country->id}}"
-                        
+                           value="{{$city->id}}"
+
+                           {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
                         >
-                           {{$country->name}}
+                           {{$city->name}}
                         </option>
 
                      @endforeach
@@ -125,7 +130,7 @@
                   name="phone_number"
                   placeholder=""
                   id="phone"
-                  value=""
+                  value="{{$basicProfile->phone_number}}"
                   />
             </div>
             {{-- language row --}}
@@ -136,75 +141,164 @@
                justify-content: space-between !important;
                "
                >
-               {{-- language --}}
-               <div
-                  class="col-md-6 col-sm-12"
-                  >
-                  <label class="mt-4"
-                     >Language
-                  <span
-                     class="imp"
-                     >*</span
-                     ></label
-                     >
-                  <select
-                     name="languages[0][language_id]"
-                     class="form-control select-lang "
-                     id="languages.0.language_id"
-                     >
-                     <option
-                        value=""
-                        selected=""
-                        >
-                        Spoken
-                        Language(s)
-                     </option>
-                     <option
-                        value=""
-                        >
-                        Select Language
-                     </option>
-                     @foreach ($languages as $language)
-                     <option
-                        value="{{$language->id}}"
-                     >
-                        {{ $language->iso_language_name }}
-                     </option>
-                     @endforeach
-                  </select>
-               </div>
-               {{-- proficiency level --}}
-               <div
-                  class="col-md-6 col-sm-12"
-                  >
-                  <label class="mt-4"
-                     >Profeciency
-                     Level
-                  <span
-                     class="imp"
-                     >*</span
-                     ></label
-                     >
-                  
-                  <select
-                     name="languages[0][language_level]"
-                     class="form-control selected-level select-lang"
-                     id="languages.0.language_level"
-                     >
-                     <option value="" selected="" >
-                        Proficiency Level
-                     </option>
-
-                     @foreach ($language_levels as $level)
-                        <option value="{{$level->id}}">
-                           {{$level->name}}
-                        </option>
-                     @endforeach
+               @if ($user_languages->count()>0)
+                  @php
+                      $index=0;
+                  @endphp
+                  @foreach ($user_languages as $user_language)
+                      {{-- language --}}
                      
-                     
-                  </select>
+                        <div
+                        class="col-md-6 col-sm-12"
+                        >
+                        <label class="mt-4"
+                           >Language
+                        <span
+                           class="imp"
+                           >*</span
+                           ></label
+                           >
+                        <select
+                           name="languages[{{$index}}][language_id]"
+                           class="form-control select-lang "
+                           id="languages.{{$index}}.language_id"
+                           >
+                           <option
+                              value=""
+                              selected=""
+                              >
+                              Spoken
+                              Language(s)
+                           </option>
+                           
+                           @foreach ($languages as $language)
+                              <option
+                                 value="{{$language->id}}"
+                                 {{ $language->id== $user_language->language_id ? 'selected' :'' }}
+                              >
+                              {{ $language->iso_language_name }}
+                           </option>
+                           @endforeach
+                        </select>
+                     </div>
+                     {{-- proficiency level --}}
+                     <div
+                        class="{{ $index > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
+                        >
+                        <label class="mt-4"
+                           >Profeciency
+                           Level
+                        <span
+                           class="imp"
+                           >*</span
+                           ></label
+                           >
+                        
+                        <select
+                           name="languages[{{$index}}][language_level_id]"
+                           class="form-control selected-level select-lang"
+                           id="languages.{{$index}}.language_level_id"
+                           >
+                           <option value="" selected="" >
+                              Proficiency Level
+                           </option>
 
-               </div>
+                           @foreach ($language_levels as $level)
+                              <option 
+                                 value="{{$level->id}}"
+                                 {{ $level->id== $user_language->language_level_id ? 'selected' :'' }}
+                              >
+                                 {{$level->name}}
+                              </option>
+                             
+                           @endforeach
+                           
+                           
+                        </select>
+
+                     </div>
+                     {{-- delete btn --}}
+                     @if ($index>0)
+                        <div class="col-md-1" style="margin-top:20px; ">
+                           <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+
+                        </div>
+                     @endif
+                     @php
+                        $index++;
+                     @endphp
+                  {{-- --- --}}
+                      
+                  @endforeach
+                   
+               @else
+                    {{-- language --}}
+                        <div
+                        class="col-md-6 col-sm-12"
+                        >
+                        <label class="mt-4"
+                           >Language
+                        <span
+                           class="imp"
+                           >*</span
+                           ></label
+                           >
+                        <select
+                           name="languages[0][language_id]"
+                           class="form-control select-lang "
+                           id="languages.0.language_id"
+                           >
+                           <option
+                              value=""
+                              selected=""
+                              >
+                              Spoken
+                              Language(s)
+                           </option>
+                           
+                           @foreach ($languages as $language)
+                           <option
+                              value="{{$language->id}}"
+                           >
+                              {{ $language->iso_language_name }}
+                           </option>
+                           @endforeach
+                        </select>
+                     </div>
+                     {{-- proficiency level --}}
+                     <div
+                        class="col-md-6 col-sm-12"
+                        >
+                        <label class="mt-4"
+                           >Profeciency
+                           Level
+                        <span
+                           class="imp"
+                           >*</span
+                           ></label
+                           >
+                        
+                        <select
+                           name="languages[0][language_level_id]"
+                           class="form-control selected-level select-lang"
+                           id="languages.0.language_level_id"
+                           >
+                           <option value="" selected="" >
+                              Proficiency Level
+                           </option>
+
+                           @foreach ($language_levels as $level)
+                              <option value="{{$level->id}}">
+                                 {{$level->name}}
+                              </option>
+                           @endforeach
+                           
+                           
+                        </select>
+
+                     </div>
+                  {{-- --- --}}
+               @endif
               
             </div>
             {{-- add another language btn --}}

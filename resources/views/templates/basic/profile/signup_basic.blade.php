@@ -67,7 +67,7 @@
                             <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
                                     class="">2</span>
-                                <a data-toggle="tab" href="#profile2" class="">
+                                <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
                                     Experience
                                 </a>
                             </li>
@@ -153,6 +153,7 @@
         "use strict";
 
         var languageRow = $('#language-row');
+        var experienceTab=$('#experience_tab');
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
@@ -165,7 +166,7 @@
         let date = $('.checkedDate')
         let startDate = $('input[name="start_date_job[]"]');
         let startDateInsti = $('input[name="start_date_institute[]"]');
-
+        let row_index=0;
         var user_basic_form=$('#form-basic-save');
         var token= $('input[name=_token]').val();
         
@@ -405,7 +406,7 @@
                 var error_message=validation_errors[error];
 
                 $('[name="'+error+'"]').addClass('error-field');
-                $('#'+error).addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
                 $('#'+error).next().addClass('error-field');
 
                 displayAlertMessage(error_message);
@@ -414,17 +415,33 @@
             }
         }
 
-        function saveUserBasic() {
+        function scrollTop()
+        {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+        }
 
-            var form_data = user_basic_form.serialize();
+        function saveUserBasic() {
+            var profile_file=$('input[type=file]')[0].files[0];
+            let form_data = new FormData(user_basic_form[0]);
+            form_data.append('profile_picture', profile_file);
+            // var form_data = user_basic_form.serialize();
+            console.log(form_data);
             $.ajax({
                   type:"POST",
                   url:"{{route('profile.basics.save')}}",
-                  data: {data : form_data,_token:token},
+                  data: form_data,
+                  processData: false,
+                contentType: false,
                   success:function(data){
 
                       if(data.success_message){
                         displayAlertSuccessMessage(data.success_message);
+                        experienceTab.click();
+                        $('input,select,textarea').removeClass('error-field');
+                        $('.select2').next().removeClass("error-field");
+                        scrollTop();
                       }
                       else if(data.validation_errors){
                         displayErrorMessage(data.validation_errors);
@@ -457,14 +474,15 @@
        
         function addMoreLanguages() 
         {
+            row_index=row_index+1;
                 languageRow.append(`
                                     <div id="moreLanguage-row">
-                                                <hr>
+                                                
                                         <div class="row" style="align-items: center; justify-content: space-between!important">
                                             <div class="col-md-6 col-sm-10">
                                                 <label class="mt-4">Language <span class="imp">*</span></label>
-                                                <select name="languages[]" class="form-control select-lang py-2" id="">
-                                                    <option value="" disabled selected>
+                                                <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                                    <option value=""  selected="">
                                                     Spoken Language(s)
                                                     </option>
                                                 ${_languages?.map((language) => {
@@ -474,9 +492,8 @@
                                             </div>
                                             <div class="col-md-5 col-sm-10">
                                                 <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-                                                <select name="language_level[]" class="form-control select-lang"
-                                                    id="" required>
-                                                    <option value="" disabled selected>
+                                                <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                                    <option value=""   selected="">
                                                                             My Level is
                                                                             </option>
                                                     ${_languages_levels?.map((level) => {
