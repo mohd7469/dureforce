@@ -3,6 +3,8 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
 
         <title>DureForce - Welcome To Dureforce</title>
         <meta name="title" content="DureForce - Welcome To Dureforce" />
@@ -1048,11 +1050,8 @@
                                             id="form-experience-save"
                                             class="form-experience-save"
                                         >
-                                            <input
-                                                type="hidden"
-                                                name="_token"
-                                                value="VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL"
-                                            />
+                                             {{ csrf_field() }}
+
                                             <div
                                                 class="container-fluid welcome-body px-5"
                                                 id=""
@@ -1149,11 +1148,14 @@
                                                                     class="form-check"
                                                                 >
                                                                     <input
-                                                                        class="form-check-input check current-working-check"
+                                                                        class="form-check-input check current-working-check isCurrentmessageCheckbox"
                                                                         onclick="checkDate($(this), $('.end-date-job-0'))"
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
+                                                                        value='1'
+
+                                                                       
                                                                     />
                                                                     <label
                                                                         class="form-check-label"
@@ -1183,7 +1185,7 @@
                                                                     <input
                                                                         type="date"
                                                                         name="start_date_job[]"
-                                                                        id="start_date"
+                                                                        id="ex_start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
                                                                     />
                                                                 </div>
@@ -1202,7 +1204,7 @@
                                                                     >
                                                                     <input
                                                                         class="end-date-job-0"
-                                                                        id="end-date-job"
+                                                                        id="ex_end_date"
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
@@ -1243,7 +1245,7 @@
                                                 <div class="col-md-12">
                                                     <button
                                                         type="submit"
-                                                        class="btn btn-continue btn-secondary"
+                                                        class="btn btn-continue btn-secondary experiance-submit"
                                                     >
                                                         Continue
                                                     </button>
@@ -1258,16 +1260,9 @@
                                     class="tab-pane"
                                 >
                                     <div class="setProfile" id="user-education">
-                                        <form
-                                            action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-education"
-                                            method="POST"
-                                            class="user-education-form"
-                                        >
-                                            <input
-                                                type="hidden"
-                                                name="_token"
-                                                value="VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL"
-                                            />
+                                        <form id="form-education-save" class="form-education-save">
+                                        {{ csrf_field() }}
+                                         
                                             <div
                                                 class="container-fluid welcome-body px-5"
                                             >
@@ -1311,7 +1306,7 @@
                                                             >
                                                             <input
                                                                 type="text"
-                                                                name="institute_name[]"
+                                                                name="degree[]"
                                                                 id="institute_name"
                                                                 placeholder="E.g. University Of London"
                                                             />
@@ -1320,7 +1315,7 @@
                                                                 <div class="col-md-6">
                                                                     <label class="mt-4">Degree <span class="imp">*</span>
                                                                     </label>
-                                                                    <select name="" class="form-control select-lang">
+                                                                    <select name="degree_id[]" class="form-control select-lang">
                                                                     <option value="" selected=""> Select Degree </option>
                                                                     <option value="1"> BSCS </option>
                                                                     </select>
@@ -1342,6 +1337,7 @@
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
+                                                                        value='1'
                                                                     />
                                                                     <label
                                                                         class="form-check-label"
@@ -1434,7 +1430,7 @@
                                                 <div class="col-md-12">
                                                     <button
                                                         type="submit"
-                                                        class="btn btn-continue btn-secondary"
+                                                        class="btn btn-continue btn-secondary education-submit"
                                                     >
                                                         Continue
                                                     </button>
@@ -1946,7 +1942,7 @@
                                                 <div class="col-md-12">
                                                 <label class="mt-4">Location <span class="imp">*</span>
                                                 </label>
-                                                <select name="job_location[]" class="form-control select-lang" id="languages">
+                                                <select name="location[]" class="form-control select-lang" id="languages">
                                                     <option value="" selected=""> Seect Country </option>
                                                     <option value="1"> Pakistan </option>
                                                     <option value="2"> Turky </option>
@@ -1956,6 +1952,7 @@
                                                                     <div class="form-check">
                                                                         <input class="form-check-input check" type="checkbox"
                                                                             name="isCurrent[]" id="flexCheckDefault"
+                                                                            value='1'
                                                                             onclick="checkDate($(this), $('.end-date-job'))"
                                                                           />
                                                                         <label class="form-check-label px-2"
@@ -1997,6 +1994,10 @@
                                                     <label class="mt-4">Education <span class="imp">*</span></label>
                                                     <input type="text" name="degree[]" placeholder="E.g. BA Arts">
                                                 </div>
+                                                <div class="col-md-12">
+                                                    <label class="mt-4">Education <span class="imp">*</span></label>
+                                                    <input type="text" name="degree_id[]" placeholder="E.g. BA Arts">
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label class="mt-4">Degree <span class="imp">*</span>
@@ -2006,6 +2007,18 @@
                                                         <option value="1"> BSCS </option>
                                                         </select>
                                                     </div>
+                                                    <div class="col-md-12 mt-1">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input check" type="checkbox"
+                                                                            name="isCurrent[]" id="flexCheckDefault"
+                                                                            value='1'
+                                                                            onclick="checkDate($(this), $('.end-date-job'))"
+                                                                          />
+                                                                        <label class="form-check-label px-2"
+                                                                            for="flexCheckDefault">I am
+                                                                            Currently Working Here</label>
+                                                                    </div>
+                                                                </div>
                                                     <div class="col-md-6">
                                                         <label class="mt-4">Field Of Study <span class="imp">*</span>
                                                         </label>
@@ -2100,13 +2113,14 @@
         <script>
             'use strict';
             $(document).on('click', '.subscribe-btn', function() {
+            
                 var email = $("#emailSub").val();
                 if (email) {
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": "VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL",
                         },
-                        url: "https://azapp-dureforce-dev.azurewebsites.net/subscribe",
+                        url: "user/profile",
                         method: "POST",
                         data: {
                             email: email
@@ -2126,6 +2140,71 @@
                 }
             });
         </script>
+
+
+<script>
+    'use strict';
+    $(document).on('click', '.experiance-submit', function() {
+                   $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('profile.save') }}",
+                method: "POST",
+                data:$('#form-experience-save').serialize(),
+                type:'json',
+
+                success: function(response) {
+             
+                    if (response.success) {
+                        notify('success', response.success);
+                        $("#form-experience-save")[0].reset();
+
+                    } else {
+                        $.each(response, function(i, val) {
+                            notify('error', val);
+                        });
+                    }
+                }
+            });
+
+    });
+</script>
+<script>
+    'use strict';
+    $(document).on('click', '.education-submit', function(e) {
+      
+        e.preventDefault();
+    
+        
+            $.ajax({
+                headers: {
+                    
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('education.save') }}",
+                method: "POST",
+                data:$('#form-education-save').serialize(),
+                type:'json',
+
+                success: function(response) {
+             
+                    if (response.success) {
+                        notify('success', response.success);
+                        $("#form-education-save")[0].reset();
+
+                    } else {
+                        $.each(response, function(i, val) {
+                            notify('error', val);
+                        });
+                    }
+                }
+            });
+
+    });
+</script>
+
+
         <link
             rel="stylesheet"
             href="https://azapp-dureforce-dev.azurewebsites.net/assets/global/css/iziToast.min.css"

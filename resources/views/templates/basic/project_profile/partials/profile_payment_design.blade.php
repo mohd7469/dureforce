@@ -3,6 +3,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
 
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
@@ -1090,8 +1091,20 @@
                             <div id="profile3" role="tabpanel" class="tab-pane active">
                                                                     <div class="setProfile" id="">
 
-    <form action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-payment-methods" method="POST">
-        <input type="hidden" name="_token" value="bNpyRs3QyOnT5UorUY5izFnvouKTq47tM6AHF2tp">        <div class="container-fluid welcome-body">
+    {{-- <form action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-payment-methods" method="POST"> --}}
+        {{-- <form id="form-payment-save" class="form-payment-save">
+            {{ csrf_field() }} --}}
+            <form
+                                            action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-experience"
+                                            method="POST"
+                                            id="form-payment-save"
+                                            class="form-payment-save"
+                                        >
+                                             {{ csrf_field() }}
+  
+        
+
+               <div class="container-fluid welcome-body">
             <input type="hidden" name="payment_id" value="">
             <h1 class="mb-4">Payment Methods</h1>
             <span class="cmnt col-md-12 pb-4">
@@ -1136,7 +1149,7 @@
                         <div class="col-md-12">
                             <label class="mt-4">Country <span class="imp">*</span></label>
                             <select
-                                name="languages[]"
+                                name="country"
                                 class="form-control select-lang"
                                 id=""
                                 >
@@ -1146,7 +1159,7 @@
                                     >
                                 </option>
                                 <option
-                                    value="1"
+                                    value="Pakistan"
                                 >
                                     Pakistan
                                 </option>
@@ -1155,7 +1168,7 @@
                         <div class="col-md-12">
                             <label class="mt-4">City <span class="imp">*</span></label>
                             <select
-                                name="languages[]"
+                                name="city"
                                 class="form-control select-lang"
                                 id=""
                                 >
@@ -1165,7 +1178,7 @@
                                     >
                                 </option>
                                 <option
-                                    value="1"
+                                    value="Lahore"
                                 >
                                     Lahore
                                 </option>
@@ -1183,7 +1196,7 @@
             </div>
             <div class=" p-0">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-continue m-0 my-2 btn-secondary ">
+                    <button type="submit" class="btn btn-continue m-0 my-2 btn-secondary payment-submit">
                         Save
                     </button>
                 </div>
@@ -12123,3 +12136,39 @@
         ></div>
     </body>
 </html>
+
+<script>
+    'use strict';
+    $(document).on('click', '.payment-submit', function(e) {
+      
+        e.preventDefault();
+                   $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('payment.save') }}",
+                method: "POST",
+                data:$('#form-payment-save').serialize(),
+                type:'json',
+                
+                success: function(response) {
+
+                    console.log(response);
+            
+             
+                    if (response.success) {
+                    
+                    
+                        notify('success', response.success);
+                        $("#form-payment-save")[0].reset();
+
+                    } else {
+                        $.each(response, function(i, val) {
+                            notify('error', val);
+                        });
+                    }
+                }
+            });
+
+    });
+</script>

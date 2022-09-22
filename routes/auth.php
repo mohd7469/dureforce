@@ -13,7 +13,7 @@ Route::get('test', function () {
 //Auth::routes();
 
 // Route::name('user.')->group(function () {
-    Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     // Route::post('/login', 'Auth\LoginController@login');
     // Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
