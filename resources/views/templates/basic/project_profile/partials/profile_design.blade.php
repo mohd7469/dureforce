@@ -1177,7 +1177,7 @@
                                             />
                                             <div
                                                 class="container-fluid welcome-body"
-                                            >
+                                                >
                                                 <h1 class="mb-4">
                                                     Welcome Muhammad Shahzaib
                                                 </h1>
@@ -1191,7 +1191,7 @@
                                                 >
                                                 <div>
                                                     <label class="mt-4"
-                                                        >Profile Picture
+                                                        >Profile Picture 
                                                         <span class="imp"
                                                             >*</span
                                                         ></label

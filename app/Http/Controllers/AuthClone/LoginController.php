@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AuthClone;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\UserLogin;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 

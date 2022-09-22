@@ -59,53 +59,49 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='{{ auth()->user()->getLanguagesMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}'>1</span>
+                                    class='completed-span'>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getExperienceMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}">2</span>
-                                <a data-toggle="tab" href="#profile2" class="">
+                                    class="">2</span>
+                                <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
                                     Experience
                                 </a>
                             </li>
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getEduationMoreThanOneCount()? 'completed-span': '' }}">3</span>
+                                    class="">3</span>
                                 <a data-toggle="tab" href="#profile3" class="">
                                     Education
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getSkillsMoreThanOneCount()? 'completed-span': '' }}">4</span>
+                                    class="">4</span>
                                 <a data-toggle="tab" href="#profile4" class="">
-                                    Expertise & Skills
+                                    Skills & Rate
                                 </a>
                             </li>
-                            <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
+                            <!-- <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getRateMoreThanOneCount()? 'completed-span': '' }}">5</span>
+                                    class="">5</span>
                                 <a data-toggle="tab" href="#profile5" class="">
                                     Rates
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                     <!-- Content -->
 
                     <div class="col-12 col-md-8 p-0">
 
-                        <div class="tab-content ">
+                        <div class="tab-content " id="content-div">
                             @csrf
                             <div id="profile" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
+                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : 'active' }}">
                                 @include($activeTemplate . 'profile.partials.user_profile')
                             </div>
 
@@ -136,11 +132,12 @@
 @endsection
 @push('style')
     <style>
-        .select2Tag input {
-            background-color: transparent !important;
-            padding: 0 !important;
+        span.select2-selection.select2-selection--multiple {
+            width: 100% !important;
+            padding: 10px !important;
+            border: 1px solid #CBDFDF;
         }
-
+        
     </style>
 @endpush
 @push('style-lib')
@@ -152,8 +149,11 @@
 @endpush
 @push('script')
     <script>
+        
         "use strict";
+
         var languageRow = $('#language-row');
+        var experienceTab=$('#experience_tab');
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
@@ -166,10 +166,28 @@
         let date = $('.checkedDate')
         let startDate = $('input[name="start_date_job[]"]');
         let startDateInsti = $('input[name="start_date_institute[]"]');
+        let row_index=0;
+        var user_basic_form=$('#form-basic-save');
+        var token= $('input[name=_token]').val();
+        
         let selectedLevels = [];
+        var _languages = [];
+        let _languages_levels = [];
 
 
         $('document').ready(function() {
+            
+            loadProfileBasicsData();
+
+            $('.select2').select2({
+                tags: true
+            });
+            user_basic_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserBasic();
+            });
+
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
                 imgInp.addClass('imgInp-after');
@@ -186,12 +204,21 @@
             }
         });
 
-        $(document).ready(function() {
-            $('.select2').select2({
-                tags: true
-            });
+       
 
-        })
+        function loadProfileBasicsData()
+        {
+                $.ajax({
+                    type:"GET",
+                    url:"{{route('profile.basics.data')}}",
+                    success:function(data){
+                      
+                        _languages=data.languages;
+                        _languages_levels=data.language_levels;
+
+                    }
+                });  
+        }
 
         function checkDate(parent, element) {
             if (parent.is(':checked')) {
@@ -371,10 +398,117 @@
             }
         }
 
-        function formBasicSave() {
-            $('#form-basic-save').submit();
+        function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
         }
 
+        function scrollTop()
+        {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+        }
+
+        function saveUserBasic() {
+            var profile_file=$('input[type=file]')[0].files[0];
+            let form_data = new FormData(user_basic_form[0]);
+            form_data.append('profile_picture', profile_file);
+            // var form_data = user_basic_form.serialize();
+            console.log(form_data);
+            $.ajax({
+                  type:"POST",
+                  url:"{{route('profile.basics.save')}}",
+                  data: form_data,
+                  processData: false,
+                contentType: false,
+                  success:function(data){
+
+                      if(data.success_message){
+                        displayAlertSuccessMessage(data.success_message);
+                        experienceTab.click();
+                        $('input,select,textarea').removeClass('error-field');
+                        $('.select2').next().removeClass("error-field");
+                        scrollTop();
+                      }
+                      else if(data.validation_errors){
+                        displayErrorMessage(data.validation_errors);
+                      }
+                      else{
+                        
+
+                      }
+
+                  }
+              });
+             
+        }
+
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+            message: message,
+            position: "topRight",
+            });
+        }
+
+        function displayAlertSuccessMessage(message)
+        {
+            iziToast.success({
+            message: message,
+            position: "topRight",
+            });
+        }
+       
+        function addMoreLanguages() 
+        {
+            row_index=row_index+1;
+                languageRow.append(`
+                                    <div id="moreLanguage-row">
+                                                
+                                        <div class="row" >
+                                            <div class="col-md-6 col-sm-10">
+                                                <label class="mt-4">Language <span class="imp">*</span></label>
+                                                <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                                    <option value=""  selected="">
+                                                    Spoken Language(s)
+                                                    </option>
+                                                ${_languages?.map((language) => {
+                                                    return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
+                                                })}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 col-sm-10">
+                                                <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                                <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                                    <option value=""   selected="">
+                                                                            My Level is
+                                                                            </option>
+                                                    ${_languages_levels?.map((level) => {
+                                                    return ` <option value="${level.id}"> ${level.name}</option>`;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="margin-top:20px">
+                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>`                  
+                                 );
+        }
         /**
          * Checks if value is empty. Deep-checks arrays and objects
          * Note: isEmpty([]) == true, isEmpty({}) == true, isEmpty([{0:false},"",0]) == true, isEmpty({0:1}) == false
@@ -403,9 +537,6 @@
         }
     </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script>
-        let _languages = {!! json_encode($languages->toArray()) !!};
-        let _languages_levels = {!! json_encode($languageLevels->toArray()) !!};
-    </script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>
 @endpush
+

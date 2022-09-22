@@ -32,50 +32,69 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
             <div class="">
                 <div class="row mt-1" id="">
 
-                    <div class="col-xl-12 col-md-12 col-lg-12 form-group ">
+                <div class="col-xl-12 col-md-12 col-lg-12 form-group ">
                         <div class="col-md-12">
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
-                            <input type="text" name="card_number"
-                                value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
-                                required />
+                            <input type="text" name="card_number" value="" placeholder="" required="">
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label class="mt-4">Expiration Date <span
-                                        class="imp">*</span></label>
-                                <input type="date" name="expiration_date"
-                                    value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required />
+                                <label class="mt-4">Expiration Date <span class="imp">*</span></label>
+                                <input type="date" name="expiration_date" value="" placeholder="" required="">
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
-                                <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required />
+                                <input type="text" name="cvv_code" value="" placeholder="" required="">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
-                            <input type="text" name="name_on_card"
-                                value="{{ old('name_on_card', @$userPayment->name_on_card) }}" placeholder=""
-                                required />
+                            <input type="text" name="name_on_card" value="" placeholder="" required="">
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Country <span class="imp">*</span></label>
-                            <input type="text" name="country" value="{{ old('country', @$userPayment->country) }}"
-                                placeholder="" required />
+                            <select
+                                name="languages[]"
+                                class="form-control select-lang"
+                                id=""
+                                >
+                                <option
+                                    value=""
+                                    selected=""
+                                    >
+                                </option>
+                                <option
+                                    value="1"
+                                >
+                                    Pakistan
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">City <span class="imp">*</span></label>
-                            <input type="text" name="city" value="{{ old('city', @$userPayment->city) }}"
-                                placeholder="" required />
+                            <select
+                                name="languages[]"
+                                class="form-control select-lang"
+                                id=""
+                                >
+                                <option
+                                    value=""
+                                    selected=""
+                                    >
+                                </option>
+                                <option
+                                    value="1"
+                                >
+                                    Lahore
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
-                            <input name="street_address" placeholder="" value="{{ old('street_address', @$userPayment->street_address) }}"
-                                required/>
+                            <input name="street_address" placeholder="" value="" required="">
                         </div>
                         <div class="col-md-12 mt-2">
-                            <input name="street_address_two" placeholder="" value="{{ old('street_address_two', @$userPayment->street_address_two) }}"  />
+                            <input name="street_address_two" placeholder="" value="">
                         </div>
                     </div>
                 </div>
