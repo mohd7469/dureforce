@@ -478,7 +478,7 @@
                 languageRow.append(`
                                     <div id="moreLanguage-row">
                                                 
-                                        <div class="row" style="align-items: center; justify-content: space-between!important">
+                                        <div class="row" >
                                             <div class="col-md-6 col-sm-10">
                                                 <label class="mt-4">Language <span class="imp">*</span></label>
                                                 <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
@@ -501,7 +501,10 @@
                                                     })}
                                                 </select>
                                             </div>
-                                            <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+                                            <div class="col-md-1" style="margin-top:20px">
+                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+
+                                            </div>
                                         </div>
                                     </div>`                  
                                  );
