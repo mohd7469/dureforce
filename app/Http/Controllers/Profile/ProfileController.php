@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserEducation;
 use App\Models\UserPayment;
 use DB;
+use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
     /**
@@ -18,7 +19,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -37,28 +38,52 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+        public function getexperience(){
+            $userexperiences = User::with('experiences')->where('id', 1)->first();
+            
+            $usereducations = User::with('education')->where('id', 1)->first();
+            
+        
+            return view('templates.basic.profile.partials.profile_basic_design', compact('userexperiences','usereducations'));
+      }
     public function store(Request $request)
     {
+        //  dd($request->all());
+        $validator = \Validator::make($request->all(), [
+            'job_title' => 'required',
+            'job_description' => 'required',
+            'company' => 'required',
+            'job_location' => 'required',
+
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
+        }
        
-        $user = User::find(1);
-        // dd($request->all());
+        $user = User::find(1);        
 
         try {
             foreach($request->input('job_title')  as $key => $value  ) {
-                $userExperiance = new UserExperiences;
-                
-                $userExperiance->title = $request->get("job_title")[$key];
-                $userExperiance->user_id = $user->id;
-                $userExperiance->isCurrent = json_decode($request->get("isCurrent")[$key]) ??  0;
-                $userExperiance->company = $request->get("company")[$key];
-                $userExperiance->description = $request->get("job_description")[$key];
-                $userExperiance->end = $request->get("end_date_job")[$key] ??  null;
-                $userExperiance->start = $request->get("start_date_job")[$key] ?? null;
-                $userExperiance->location = $request->get("location")[$key];
 
-                $userExperiance->save();    
-               
-                
+
+                UserExperiences::updateOrCreate([
+                    'user_id' =>$user->id
+                   ],
+                    [
+                        'title'     => $request->get('job_title'),
+                  
+                        'isCurrent'    => isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0,
+                        'company'   => $request->get("company")[$key],
+                        'description'       => $request->get("job_description")[$key],
+                        'end'   =>  $request->get("end_date_job")[$key] ??  null,
+                        'start'    => $request->get("start_date_job")[$key] ?? null,
+                        'location'    => $request->get("job_location")[$key]
+                   ]);
+
+
+
                
             }
             return response()->json(["success" => "User Experience submitted"], 200);
@@ -74,6 +99,23 @@ class ProfileController extends Controller
     }
     public function storeEducation(Request $request){
 
+
+
+        // $validator = \Validator::make($request->all(), [
+        //     'institute_name' => 'required',
+        //     'degree' => 'required',
+        //     'company' => 'required',
+        //     'institute_description' => 'required'
+
+
+        // ]);
+        
+        // if ($validator->fails())
+        // {
+          
+        //     return response()->json(['errors'=>$validator->errors()]);
+        // }
+
         $user = User::find(1);
         
         
@@ -83,7 +125,8 @@ class ProfileController extends Controller
                 $userEducation = new UserEducation();
                 $userEducation->institute_name = $request->get("institute_name")[$key];
                 $userEducation->user_id = $user->id;
-                $userEducation->isCurrent = json_decode($request->get("isCurrent")[$key]) ??  0;
+                $userEducation->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
+
                 $userEducation->degree = $request->get("degree_id")[$key];
                 $userEducation->degree = $request->get("degree")[$key];
                 $userEducation->field = $request->get("field")[$key];
@@ -103,26 +146,47 @@ class ProfileController extends Controller
         }
 
     }
+    public function getpayment(){
+        $userpayments = User::with('payments')->where('id', 1)->first();
+        
+        return view('templates.basic.project_profile.partials.profile_payment_design', compact('userpayments'));
+    }
     public function storePayment(Request $request){
-        $user = User::find(1);
-     
+        
+        $validator = \Validator::make($request->all(), [
+            'card_number' => 'required|string|max:150',
+            'expiration_date' => 'date|required',
+            'cvv_code' => 'required',
+            'name_on_card' => 'required',
+            'country' => 'required|string|max:150',
+            'city' => 'required|string|max:150',
+            'street_address' => 'required|string|max:250',
+            'street_address_two' => 'required|string|max:250',
+        
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['errors'=>$validator->errors()]);
+        }
+
+         $user = User::find(1);
     
         try {
-            
+             UserPayment::updateOrCreate([
+                 'user_id' =>$user->id
+                ],
+                 [
+                    'card_number'     => $request->get('card_number'),
+                    'expiration_date' => $request->get('expiration_date'),
+                    'cvv_code'    => $request->get("cvv_code"),
+                    'name_on_card'   => $request->get('name_on_card'),
+                    'country'       => $request->get('country'),
+                    'city'   => $request->get('city'),
+                    'street_address'    => $request->get('street_address'),
+                    'street_address_two'    => $request->get('street_address_two')
+                ]);
                
-                $userPayment = new UserPayment();
-                $userPayment->card_number = $request->card_number;
-                $userPayment->user_id = $user->id;
-                $userPayment->expiration_date = $request->expiration_date;
-                $userPayment->cvv_code = $request->cvv_code;
-                $userPayment->name_on_card = $request->name_on_card;
-                
-                $userPayment->country = $request->country;
-                $userPayment->city = $request->city;
-                $userPayment->street_address = $request->street_address;
-                $userPayment->street_address_two = $request->street_address_two;
-
-                $userPayment->save();
                
             
             return response()->json(["success" => "User Payment submitted"], 200);
