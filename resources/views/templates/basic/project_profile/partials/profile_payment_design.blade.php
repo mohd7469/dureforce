@@ -1126,30 +1126,34 @@
 
             <div class="">
                 <div class="row mt-1" id="">
+                   
+                    @foreach ($userpayments->payments as $userpayment)
+                    
+    
 
                     <div class="col-xl-12 col-md-12 col-lg-12 form-group ">
                         <div class="col-md-12">
-                            <label class="mt-1">Card Number <span class="imp">*</span></label>
-                            <input type="text" name="card_number" value="" placeholder="" required="">
+                            <label class="mt-1">Card Number  <span class="imp">*</span></label>
+                            <input type="text" name="card_number" value="{{$userpayment['card_number']}}" placeholder="" required="">
                             <span class="text-danger pt-2" id=card_number></span>
                            
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="mt-4">Expiration Date <span class="imp">*</span></label>
-                                <input type="date" name="expiration_date" value="" placeholder="" required="">
+                                <input type="date" name="expiration_date" value="{{$userpayment['expiration_date']}}" placeholder="" required="">
                                 <span class="text-danger pt-2" id=expiration_date></span>
                               
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
-                                <input type="text" name="cvv_code" value="" placeholder="" required="">
+                                <input type="text" name="cvv_code" value="{{$userpayment['cvv_code']}}" placeholder="" required="">
                                 <span class="text-danger pt-2" id=cvv_code></span>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
-                            <input type="text" name="name_on_card" value="" placeholder="" required="">
+                            <input type="text" name="name_on_card" value="{{$userpayment['name_on_card']}}" placeholder="" required="">
                             <span class="text-danger pt-2" id=name_on_card></span>
                         </div>
                         <div class="col-md-12">
@@ -1159,11 +1163,11 @@
                                 class="form-control select-lang"
                                 id=""
                                 >
-                                <option
+                                {{-- <option
                                     value=""
                                     selected=""
                                     >
-                                </option>
+                                </option> --}}
                                 <option
                                     value="Pakistan"
                                 >
@@ -1179,11 +1183,11 @@
                                 class="form-control select-lang"
                                 id=""
                                 >
-                                <option
+                                {{-- <option
                                     value=""
                                     selected=""
                                     >
-                                </option>
+                                </option> --}}
                                 <option
                                     value="Lahore"
                                 >
@@ -1194,14 +1198,15 @@
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
-                            <input name="street_address" placeholder="" value="" required="">
+                            <input name="street_address" placeholder="" value="{{$userpayment['street_address_two']}}" required="">
                             <span class="text-danger pt-2" id=street_address></span>
                         </div>
                         <div class="col-md-12 mt-2">
-                            <input name="street_address_two" placeholder="" value="">
+                            <input name="street_address_two" placeholder="" value="{{$userpayment['card_number']}}">
                             <span class="text-danger pt-2" id=street_address_two></span>
                         </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
             <div class=" p-0">
@@ -1213,6 +1218,7 @@
             </div>
         </div>
     </form>
+    
 </div>
                                                             </div>
                             <div id="profile4" role="tabpanel" class="tab-pane ">

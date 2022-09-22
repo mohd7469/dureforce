@@ -19,7 +19,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -38,11 +38,12 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         //  dd($request->all());
         $validator = \Validator::make($request->all(), [
-            'job_title' => 'required',
+            'title' => 'required',
             'job_description' => 'required',
             'company' => 'required',
             'job_location' => 'required',
@@ -134,8 +135,13 @@ class ProfileController extends Controller
         }
 
     }
+    public function getpayment(){
+        $userpayments = User::with('payments')->where('id', 1)->first();
+        
+        return view('templates.basic.project_profile.partials.profile_payment_design', compact('userpayments'));
+    }
     public function storePayment(Request $request){
-
+        
 
         $validator = \Validator::make($request->all(), [
             'card_number' => 'required|string|max:150',
@@ -157,20 +163,20 @@ class ProfileController extends Controller
          $user = User::find(1);
     
         try {
-            
-               
-                $userPayment = new UserPayment();
-                $userPayment->card_number = $request->card_number;
-                $userPayment->user_id = $user->id;
-                $userPayment->expiration_date = $request->expiration_date;
-                $userPayment->cvv_code = $request->cvv_code;
-                $userPayment->name_on_card = $request->name_on_card;
-                $userPayment->country = $request->country;
-                $userPayment->city = $request->city;
-                $userPayment->street_address = $request->street_address;
-                $userPayment->street_address_two = $request->street_address_two;
-
-                $userPayment->save();
+             UserPayment::updateOrCreate(
+                 [
+                     'user_id' =>$user->id
+                 ],
+                ['card_number' => $request->card_number],
+                
+                ['expiration_date' => $request->expiration_date],
+                ['cvv_code' => $request->cvv_code ],
+                ['name_on_card' =>  $request->name_on_card ],
+                ['country' => $request->country ],
+                ['city' => $request->city ],
+                ['street_address' => $request->street_address ],
+                ['street_address_two' => $request->street_address_two ],
+            );
                
             
             return response()->json(["success" => "User Payment submitted"], 200);

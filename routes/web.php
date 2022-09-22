@@ -35,7 +35,7 @@ Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email
 Route::view('/verify-design', 'auth.verify_design');
 Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.profile_design');
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
-Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
+// Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
 
 // freelancer design
@@ -45,6 +45,8 @@ Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.prof
 Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.save');
 Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
 Route::post('/payment/save', 'Profile\ProfileController@storePayment')->name('payment.save');
+Route::get('/profile-payment-design', 'Profile\ProfileController@getpayment')->name('payment.get');
+
 
 
 
