@@ -26,6 +26,12 @@ class UserExperiences extends Model
      * @var string
      */
     protected $keyType = 'integer';
+    
+    protected $casts = [
+        'end ' => 'datetime:Y-m-d',
+        'start ' => 'datetime:Y-m-d',
+
+      ];
 
     /**
      * @var array

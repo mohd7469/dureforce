@@ -38,12 +38,19 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
+        public function getexperience(){
+            $userexperiences = User::with('experiences')->where('id', 1)->first();
+            
+            $usereducations = User::with('education')->where('id', 1)->first();
+            
+        
+            return view('templates.basic.profile.partials.profile_basic_design', compact('userexperiences','usereducations'));
+      }
     public function store(Request $request)
     {
         //  dd($request->all());
         $validator = \Validator::make($request->all(), [
-            'title' => 'required',
+            'job_title' => 'required',
             'job_description' => 'required',
             'company' => 'required',
             'job_location' => 'required',
@@ -61,18 +68,22 @@ class ProfileController extends Controller
             foreach($request->input('job_title')  as $key => $value  ) {
 
 
-                $userExperiance = new UserExperiences;
-                
-                $userExperiance->title = $request->get("job_title")[$key];
-                $userExperiance->user_id = $user->id;
-                $userExperiance->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
-                $userExperiance->company = $request->get("company")[$key];
-                $userExperiance->description = $request->get("job_description")[$key];
-                $userExperiance->end = $request->get("end_date_job")[$key] ??  null;
-                $userExperiance->start = $request->get("start_date_job")[$key] ?? null;
-                $userExperiance->location = $request->get("job_location")[$key];
+                UserExperiences::updateOrCreate([
+                    'user_id' =>$user->id
+                   ],
+                    [
+                        'title'     => $request->get('job_title'),
+                  
+                        'isCurrent'    => isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0,
+                        'company'   => $request->get("company")[$key],
+                        'description'       => $request->get("job_description")[$key],
+                        'end'   =>  $request->get("end_date_job")[$key] ??  null,
+                        'start'    => $request->get("start_date_job")[$key] ?? null,
+                        'location'    => $request->get("job_location")[$key]
+                   ]);
 
-                $userExperiance->save();    
+
+
                
             }
             return response()->json(["success" => "User Experience submitted"], 200);
@@ -142,7 +153,6 @@ class ProfileController extends Controller
     }
     public function storePayment(Request $request){
         
-
         $validator = \Validator::make($request->all(), [
             'card_number' => 'required|string|max:150',
             'expiration_date' => 'date|required',
@@ -163,20 +173,20 @@ class ProfileController extends Controller
          $user = User::find(1);
     
         try {
-             UserPayment::updateOrCreate(
+             UserPayment::updateOrCreate([
+                 'user_id' =>$user->id
+                ],
                  [
-                     'user_id' =>$user->id
-                 ],
-                ['card_number' => $request->card_number],
-                
-                ['expiration_date' => $request->expiration_date],
-                ['cvv_code' => $request->cvv_code ],
-                ['name_on_card' =>  $request->name_on_card ],
-                ['country' => $request->country ],
-                ['city' => $request->city ],
-                ['street_address' => $request->street_address ],
-                ['street_address_two' => $request->street_address_two ],
-            );
+                    'card_number'     => $request->get('card_number'),
+                    'expiration_date' => $request->get('expiration_date'),
+                    'cvv_code'    => $request->get("cvv_code"),
+                    'name_on_card'   => $request->get('name_on_card'),
+                    'country'       => $request->get('country'),
+                    'city'   => $request->get('city'),
+                    'street_address'    => $request->get('street_address'),
+                    'street_address_two'    => $request->get('street_address_two')
+                ]);
+               
                
             
             return response()->json(["success" => "User Payment submitted"], 200);

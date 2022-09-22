@@ -1069,6 +1069,9 @@
                                                     businesses.</span
                                                 >
                                                 <div>
+                                                    @foreach ($userexperiences->experiences as  $Userexperience)
+                                                        
+                                                
                                                     <div
                                                         id="experiance-container"
                                                     >
@@ -1092,6 +1095,7 @@
                                                                     name="job_title[]"
                                                                     id="ex_title"
                                                                     placeholder="E.g. Full Stack Developer"
+                                                                    value="{{$Userexperience['title']}}"
                                                                 />
                                                             </div>
                                                             <div
@@ -1110,6 +1114,7 @@
                                                                     name="company[]"
                                                                     id="ex_company"
                                                                     placeholder="E.g. Microsoft"
+                                                                    value="{{$Userexperience['company']}}"
                                                                 />
                                                             </div>
                                                             <div
@@ -1127,7 +1132,9 @@
                                                                 name="job_location[]"
                                                                 class="form-control select-lang"
                                                                 id="ex_location"
+                                                            
                                                                 >
+                                                                <option value="{{ $Userexperience['location'] }}" {{ ( $Userexperience['location'] ) ? 'selected' : '' }}></option>
                                                                 <option
                                                                     value=""
                                                                     selected=""
@@ -1158,8 +1165,8 @@
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
-                                                                        value='1'
-
+                                                                        value="" {{ ($Userexperience['isCurrent'] == 1 ? 'checked' : '0')}}
+                                                
                                                                        
                                                                     />
                                                                     <label
@@ -1192,6 +1199,10 @@
                                                                         name="start_date_job[]"
                                                                         id="ex_start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
+                                                                        value="{{\Carbon\Carbon::parse($Userexperience['start_date_job'])->format('d-m-Y') }}" 
+
+                    
+                                                                       
                                                                     />
                                                                 </div>
                                                                 <div
@@ -1213,6 +1224,7 @@
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
+                                                                        value="{{\Carbon\Carbon::parse($Userexperience['end'])->format('dd/mm/YY')}}"
                                                                     />
                                                                 </div>
                                                             </div>
@@ -1233,10 +1245,11 @@
                                                                     name="job_description[]"
                                                                     placeholder="Job Description"
                                                                     id="ex_description"
-                                                                ></textarea>
+                                                                >{{$Userexperience['description']}}</textarea>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    @endforeach
                                                     <button
                                                         type="button"
                                                         class="my-2"
@@ -1284,6 +1297,7 @@
                                                     <div
                                                         id="education-container"
                                                     >
+                                                    @foreach ($usereducations->education as  $usereducation)
                                                         <div class="col-md-12">
                                                             <label class="mt-4"
                                                                 >School /
@@ -1299,6 +1313,7 @@
                                                                 name="institute_name[]"
                                                                 id="institute_name"
                                                                 placeholder="E.g. University Of London"
+                                                                value="{{$usereducation['institute_name']}}"
                                                             />
                                                         </div>
                                                         <div class="col-md-12">
@@ -1314,6 +1329,7 @@
                                                                 name="degree[]"
                                                                 id="institute_name"
                                                                 placeholder="E.g. University Of London"
+                                                                value="{{$usereducation['institute_name']}}"
                                                             />
                                                         </div>
                                                             <div class="row">
@@ -1421,6 +1437,7 @@
                                                                 id="institute_description"
                                                             ></textarea>
                                                         </div>
+                                                        @endforeach
                                                     </div>
                                                     <button
                                                         type="button"
@@ -2136,11 +2153,13 @@
                 }
             });
         </script> --}}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
 <script>
     'use strict';
     $(document).on('click', '.experiance-submit', function() {
+        location.reload()
                    $.ajax({
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -2151,10 +2170,20 @@
                 type:'json',
 
                 success: function(response) {
+                    location.reload();
+                    history.go(0);
+                    window.location.href=window.location.href;
+                    $(this).html(response);
              
+               
+                    
                     if (response.success) {
+                        location.reload(true)
                         notify('success', response.success);
                         $("#form-experience-save")[0].reset();
+                      
+                        
+          
 
                     } else {
                     console.log(response)
@@ -2190,8 +2219,10 @@
                     console.log(response);
              
                     if (response.success) {
+                        
                         notify('success', response.success);
                         $("#form-education-save")[0].reset();
+                        location.reload(true);
 
                     } else {
                         console.log(response);

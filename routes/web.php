@@ -40,12 +40,13 @@ Route::view('/profile-payment-view-design', 'templates.basic.project_profile.par
 
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
-Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
+// Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 
 Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.save');
 Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
 Route::post('/payment/save', 'Profile\ProfileController@storePayment')->name('payment.save');
 Route::get('/profile-payment-design', 'Profile\ProfileController@getpayment')->name('payment.get');
+Route::get('/freelancer-profile-design', 'Profile\ProfileController@getexperience')->name('experience.get');
 
 
 
