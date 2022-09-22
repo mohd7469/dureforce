@@ -72,6 +72,10 @@
 
 .wrapper .mt-3 {
     margin-top: -4rem!important;
+
+}
+.portfolio .mt-3{
+    margin-top: 2rem!important;
 }
 .card-text-tab {
     margin-bottom: 12px;
@@ -157,12 +161,45 @@
 }
 .profile .short-text{
     display: inline;
-    font-size: 16px;
+    font-size: 12px;
     font-weight:500;
     margin-left: 0rem;
 }
+@media only screen and (max-width: 600px) {
+    .profile .short-text {
+        display: inline;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 3rem;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .profile button {
+        display: inline;
+        margin-left: 10rem;
+        margin-bottom: 2rem;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .profile button {
+        display: inline;
+        margin-left: 10rem;
+        margin-bottom: 2rem;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .profile .short-text {
+        display: inline;
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 1rem;
+    }
+}
 .timeline{
     padding-left: 20px;
+}
+.article a{
+    color: #7F007F !important;
 }
 .timeline li > p{
     font-family:'Mulish';
@@ -197,44 +234,68 @@
 .techno.on ~ .techno.on::before {
     content: ', ';
 }
-blockquote {
+
+.quote {
+    height: 48vh;
+    color: #383838;
+    background: #FAF5FD !important;
+}
+.quote  .blockquote{
     font-family: 'Mulish';
     font-style: italic;
     display: block;
     max-width: 100%;
     position: relative;
-    padding: 22px 42px;
-    height: 252px;
-    line-height: 1.45;
-    color: #383838;
-    margin: 0 auto;
+    padding: 21px 4px;
+}
+@media only screen and (max-width: 600px) {
+    .quote {
+        height: 86vh;
+        color: #383838;
+        background: #FAF5FD !important;
+        margin-bottom: 174px;
+    }
 }
 
-blockquote:before {
-    display: block;
-    padding-left: 10px;
-    content: "\201C";
-    font-size: 80px;
-    position: absolute;
-    left: -7px;
-    top: -6px;
-    color: #80005f5e;
-}
-blockquote:after {
-    display: block;
-    padding-left: 10px;
-    content: "\201D";
-    font-size: 80px;
-    position: absolute;
-    left: 288px;
-    top: 113px;
-    color: #80005f5e;
-
-
+.quote blockquote{
+    background: #FAF5FD !important;
 }
 
-blockquote .cite {
-    font-family: 'Inter';
+@media only screen and (max-width: 600px) {
+    .quote  .blockquote {
+        font-family: 'Mulish';
+        font-style: italic;
+        display: block;
+        max-width: 100%;
+        position: relative;
+        padding: 21px 4px;
+        color: #383838;
+    }
+}
+
+/*blockquote:before {*/
+/*    display: block;*/
+/*    padding-left: 10px;*/
+/*    content: "\201C";*/
+/*    font-size: 80px;*/
+/*    position: absolute;*/
+/*    left: -7px;*/
+/*    top: -6px;*/
+/*    color: #80005f5e;*/
+/*}*/
+/*blockquote:after {*/
+/*    display: block;*/
+/*    padding-left: 10px;*/
+/*    content: "\201D";*/
+/*    font-size: 80px;*/
+/*    position: absolute;*/
+/*    left: 739px;*/
+/*    top: 86px;*/
+/*    color: #80005f5e;*/
+/*}*/
+
+.quote .cite{
+
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -243,10 +304,10 @@ blockquote .cite {
     color: #515151;
 }
 
-blockquote cite:before {
+.quote.cite:before {
     content: "\2014 \2009";
 }
-.quote{
+.quote  .blockquote  .cite{
     background: #FAF5FD;
     border-radius: 3px;
 
@@ -281,7 +342,7 @@ button.standard-btn-sm-exp{
     font-size: 14px;
     background-color: #7f007f;
     color: #fff;
-    width: 10rem;
+    width: 9rem;
 }
 .profile .sep-solid {
     border-top: 1px solid #c5e0e0;
@@ -404,4 +465,123 @@ li.my-custom-css {
     vertical-align: baseline;
     border-radius: 2.25rem;
     margin: 8px;
+}
+.top-buffer { margin-top:20px; }
+
+
+@media only screen and (min-width: 768px) {
+    .profile .article {
+        justify-content: center;
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 26px;
+        word-wrap: break-word;
+        overflow: hidden;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    button.standard-btn-sm-edit {
+        padding: 5px 16px;
+        border: 0px solid #e1e7ec;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        font-size: 13px;
+        font-weight: 400;
+        background-color: #7f007f;
+        color: #fff;
+        margin-left: 43px;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    button.standard-btn-sm-edit {
+        padding: 5px 16px;
+        border: 0px solid #e1e7ec;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        font-size: 13px;
+        font-weight: 400;
+        background-color: #7f007f;
+        color: #fff;
+        margin-left: 100px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    button.standard-btn-sm-edit {
+        padding: 5px 16px;
+        border: 0px solid #e1e7ec;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        font-size: 13px;
+        font-weight: 400;
+        background-color: #7f007f;
+        color: #fff;
+        margin-left: 83px;
+    }
+}
+
+    .inner-tab .tab-button.active  {
+        padding: 9px 20px;
+        border: 0px solid #e1e7ec;
+        border-radius: 1px 0px 0px 1px;
+        font-size: 15px;
+        font-weight: 400;
+     background: #007F7F;
+        color: #fff;
+    }
+.inner-tab .tab-button  {
+    padding: 9px 20px;
+    border: 0px solid #e1e7ec;
+    border-radius: 1px 0px 0px 1px;
+    font-size: 15px;
+    font-weight: 400;
+    background: #DBEFEF;
+    color: #90BCBC;
+}
+.select2_element .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: #007F7F;
+    border: 1px solid #007F7F;
+    border-radius: 17px;
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 0;
+    color: #FFFFFF;
+}
+.select2_element .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    background-color: transparent;
+    border: none;
+    border-right: 1px solid #007F7F;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    color: #FFFFFF;;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 0 4px;
+}
+blockquote::before {
+    content: open-quote;
+    color:#80005f5e;
+    font-size: 28px;
+    font-weight: 700;
+}
+blockquote::after {
+    content: close-quote;
+    color: #80005f5e;
+    font-size: 28px;
+    font-weight: 700;
 }
