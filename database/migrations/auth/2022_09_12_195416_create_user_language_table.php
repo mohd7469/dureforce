@@ -17,13 +17,16 @@ class CreateUserLanguageTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedInteger('language_id')->index()->nullable();
-            $table->enum('proficiency_level', [ 'Basic', 'Conversational','Fluent','Native or Bilingual']);
+            $table->unsignedBigInteger('language_level_id')->index()->nullable();
+           
 
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('language_id')->references('id')->on('world_languages')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('language_level_id')->references('id')->on('language_levels')->onDelete('cascade');
+
 
         });
 

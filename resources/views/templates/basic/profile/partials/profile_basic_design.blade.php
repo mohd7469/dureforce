@@ -612,7 +612,7 @@
                                                                 ></label
                                                             >
                                                             <select
-                                                                name="languages[]"
+                                                                name="category_id"
                                                                 class="form-control select-lang"
                                                                 id="languages"
                                                                 >
@@ -622,16 +622,13 @@
                                                                 >
                                                                     Select Category
                                                                 </option>
+                                                                @foreach ($categories as $category)
                                                                 <option
-                                                                    value="1"
+                                                                    value="{{$category->id}}"
                                                                 >
-                                                                    Web Developer
-                                                                </option>
-                                                                <option
-                                                                    value="2"
-                                                                >
-                                                                    Android Developer
-                                                                </option>
+                                                               {{$category->name}}
+                                                            </option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6 col-sm-12">
@@ -681,18 +678,18 @@
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                Karachi
+                                                                Select Country
                                                                 </option>
-                                                                <option
-                                                                    value="1"
-                                                                >
-                                                                lahore
-                                                                </option>
-                                                                <option
-                                                                    value="2"
-                                                                >
-                                                                Sialkot
-                                                                </option>
+                                                                @foreach ($countries as $country)
+
+                                                                    <option
+                                                                        value="{{$country->id}}"
+                                                                    
+                                                                    >
+                                                                        {{$country->name}}
+                                                                    </option>
+
+                                                                @endforeach
                                                             </select>
                                                     </div>
                                                     <div class="col-md-12">
@@ -716,7 +713,7 @@
                                                         style="
                                                             justify-content: space-between !important;
                                                         "
-                                                    >
+                                                        >
                                                         <div
                                                             class="col-md-6 col-sm-12"
                                                             >
@@ -748,7 +745,7 @@
                                                         </div>
                                                         <div
                                                             class="col-md-6 col-sm-12"
-                                                        >
+                                                           >
                                                             <label class="mt-4"
                                                                 >Profeciency
                                                                 Level
@@ -797,7 +794,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                        >
+                                                            >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -907,7 +904,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                        >
+                                                            >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -1021,7 +1018,7 @@
                                                         class="my-2"
                                                         id="add-language"
                                                         onclick="addMoreLanguages()"
-                                                    >
+                                                        >
                                                         Add another
                                                     </button>
                                                 </div>
@@ -1124,26 +1121,24 @@
                                                                     ></label
                                                                 >
                                                                 <select
-                                                                name="location[]"
+                                                                name="country_id"
                                                                 class="form-control select-lang"
-                                                                id="ex_location"
+                                                                id="country_id"
                                                                 >
                                                                 <option
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                    Seect Country
+                                                                    Select Country
                                                                 </option>
+                                                                @foreach ($countries as $country)
                                                                 <option
-                                                                    value="Pakistan"
+                                                                    value="{{$country->id}}"
+                                                                   
                                                                 >
-                                                                    Pakistan
+                                                                    {{$country->name}}
                                                                 </option>
-                                                                <option
-                                                                    value="Turky"
-                                                                >
-                                                                    Turky
-                                                                </option>
+                                                                @endforeach
                                                             </select>
                                                             </div>
                                                             <div
@@ -1283,7 +1278,7 @@
                                                 <div>
                                                     <div
                                                         id="education-container"
-                                                    >
+                                                        >
                                                         <div class="col-md-12">
                                                             <label class="mt-4"
                                                                 >School /
@@ -1525,13 +1520,12 @@
                                                                     <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
                                                                     <span class="pt-2 text-dark">$12.00</span>
                                                                 </div>
-                                                            </div>
+                                                                Dureforce Service Fee                                   </div>
                                                     </div>
                                                 </div>
-                                                <hr>
                                                     <div class="row mt-3"
                                                         id="skill-row"
-                                                    >
+                                                        >
                                                         <div
                                                             class="col-xl-6 col-md-12 col-lg-6 form-group select2Tag mb-4"
                                                         >
@@ -1832,7 +1826,8 @@
             let startDate = $('input[name="start_date_job[]"]');
             let startDateInsti = $('input[name="start_date_institute[]"]');
             let selectedLevels = [];
-
+            var _languages = [];
+            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
 
             $('document').ready(function() {
                 if (previewImg.length > 0) {
@@ -1855,8 +1850,20 @@
                 $('.select2').select2({
                     tags: true
                 });
-
+                loadProfileBasicsData();
             })
+            
+            function loadProfileBasicsData()
+            {
+                $.ajax({
+                    type:"GET",
+                    url:"{{route('profile.basics.data')}}",
+                    success:function(data){
+                       _languages=data.languages;
+                       console.log(_languages);
+                    }
+                });  
+            }
 
             function checkDate(parent, element) {
                 if (parent.is(':checked')) {
@@ -2101,10 +2108,7 @@
             }
         </script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-        <script>
-            let _languages = [{"id":1,"name":"English","code":"en","icon":"5f15968db08911595250317.png","text_align":0,"is_default":1,"created_at":"2020-07-06T03:47:55.000000Z","updated_at":"2021-08-01T21:21:29.000000Z"}];
-            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
-        </script>
+      
         <script src="https://azapp-dureforce-dev.azurewebsites.net/assets/resources/js/user/profile.js"></script>
         <script>
             'use strict';

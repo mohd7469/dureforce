@@ -32,13 +32,7 @@
                                     onchange="previewCompanyFile(this)"/>
                                 <img width="100" height="100" id="preview-img-company"
                                     src="{{ getImage('assets/images/default.png') }}" />
-                                @if (!empty(@$user->company->logo))
-                                    <img class="img-box"
-                                        id="preview-img-company-edit"
-                                        src="{{ asset('assets/images/user/profile') . '/' . $user->company->logo }}"
-                                        alt="">
-                                @endif
-                            </div>
+                            </div> 
                             {{-- <label for="company-logo" class="company-logo-label">
                                  Drag or Drop to Upload<br />
                                 <span>Browse</span>
@@ -46,40 +40,30 @@
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Company Phone  </label>
-                            <input type="number" name="phone" value="{{ old('name', @$user->company->phone) }}" value=""
-                                placeholder=""  />
+                            <input type="number" name="phone" value="" placeholder="">
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Company Email Address </label>
-                            <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="{{ old('name', @$user->company->email) }}"
-                                placeholder="" />
+                            <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="" placeholder="">
                             <div class="col-md-12">
                                 <label class="mt-4">Location  </label>
-                                <input type="text" id="company-location" name="location"
-                                    value="{{ old('name', @$user->company->location) }}" placeholder="City, Country"
-                                     />
+                                <input type="text" id="company-location" name="location" value="" placeholder="City, Country">
                             </div>
                             <div class="col-md-12">
                                 <label class="mt-4">Company VAT  </label>
-                                <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
-                                    placeholder=""  />
+                                <input type="text" id="company-vat" value="" name="vat" placeholder="">
                             </div>
                             <div class="col-md-12">
                                 <label class="mt-4">Company Website </label>
-                                <input type="text" id="company-website" value="{{ old('name', @$user->company->url) }}" name="url"
-                                    placeholder="website"  />
+                                <input type="text" id="company-website" value="" name="url" placeholder="website">
                             </div>
                             <div class="col-md-12">
                                 <label class="mt-4">LinkdIn URL  </label>
-                                <input type="text" id="linkedin-website" name="linkedin_url"
-                                    value="{{ old('name', @$user->company->linkedin_url) }}" placeholder=""
-                                     />
+                                <input type="text" id="linkedin-website" name="linkedin_url" value="" placeholder="">
                             </div>
                             <div class="col-md-12">
                                 <label class="mt-4">Facebook URL  </label>
-                                <input type="text" id="facebook-website" name="facebook_url"
-                                    value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
-                                     />
+                                <input type="text" id="facebook-website" name="facebook_url" value="" placeholder="">
                             </div>
                         </div>
 

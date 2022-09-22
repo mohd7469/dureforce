@@ -3,24 +3,7 @@ $(document).ready(function () {
     e.preventDefault();
     var formData = new FormData(this);
 
-    $.ajax({
-      headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
-      type: "POST",
-      url: "{{ route('user.profileSave') }}",
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false,
-      success: function (data) {
-        //
-        // console.log("success");
-        // console.log(data);
-      },
-      error: function (data) {
-        console.log("error");
-        console.log(data);
-      },
-    });
+    
   });
 
   $('#skills').change(function(e){
@@ -53,7 +36,7 @@ $(document).ready(function () {
   //     $('#btn-skill-research').prop('disabled', false);
   //   }
   // });
-});
+// });
 
 function changeProfileImage() {
   let a = document.getElementById("profile-picture").value;
@@ -61,39 +44,7 @@ function changeProfileImage() {
 
 // =========================================== Language area  ==============================================
 
-function addMoreLanguages() {
-  languageRow.append(`
-                       <div id="moreLanguage-row">
-                            <hr>
-                       <div class="row" style="align-items: center; justify-content: space-between!important">
-                         <div class="col-md-6 col-sm-10">
-                            <label class="mt-4">Language <span class="imp">*</span></label>
-                            <select name="languages[]" class="form-control select-lang py-2" id="">
-                                <option value="" disabled selected>
-                                   Spoken Language(s)
-                                </option>
-                               ${_languages?.map((language) => {
-                                 return ` <option value="${language.id}"> ${language.name}</option>`;
-                               })}
-    </select>
-  </div>
- <div class="col-md-5 col-sm-10">
-    <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-    <select name="language_level[]" class="form-control select-lang"
-                                id="" required>
-                                <option value="" disabled selected>
-                                                           My Level is
-                                                        </option>
-                                ${_languages_levels?.map((level) => {
-                                  return ` <option value="${level.id}"> ${level.name}</option>`;
-                                })}
-    </select>
-</div>
-<button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
-</div>
-</div>
-`);
-}
+
 
 $(document).ready(function () {
   basicProfileForm();
