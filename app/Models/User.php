@@ -108,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function skills()
     {
-        return $this->hasMany('App\Models\UserSkill');
+        return $this->belongsToMany('App\Models\UserSkill','user_skills','user_id','skill_id');
     }
 
     public function education()

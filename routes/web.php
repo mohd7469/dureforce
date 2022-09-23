@@ -49,6 +49,7 @@ Route::view('/selection-design', 'auth.user_selection_design');
 Route::get('/freelancer-profile-design', 'ProfileController@profile')->name('profile.create');
 Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
 Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
+Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
 
 Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
 
@@ -57,6 +58,7 @@ Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.s
 Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
 Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
 Route::post('/payment/save', 'Profile\ProfileController@storePayment')->name('payment.save');
+
 
 // Route::get('/profile-payment-design', 'Profile\ProfileController@getpayment')->name('payment.get');
 // Route::get('/freelancer-profile-design', 'Profile\ProfileController@getexperience')->name('experience.get');
