@@ -32,7 +32,16 @@ class UserExperiences extends Model
         'start ' => 'datetime:Y-m-d',
 
       ];
-
+      protected static function boot()
+      {
+          
+          parent::boot();
+          static::saving(function ($model)  {
+              $model->is_working =   $model->is_working  == 'on' ? 1: 0;
+          });
+  
+  
+      }
     /**
      * @var array
      */

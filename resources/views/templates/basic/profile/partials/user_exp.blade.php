@@ -24,16 +24,29 @@
                   growing network of
                   businesses.</span
             >
-            <div>
+            <div >
+               <div id="experiance-container">
+
+              
                   @if (count($userexperiences->experiences) > 0)
-                     @foreach ($userexperiences->experiences as  $Userexperience)
+                     
+                     @foreach ($userexperiences->experiences as  $key => $Userexperience)
+                       
                         <div
-                           id="experiance-container"
+                        id="experiance-row-{{$key}}"
+                          
                         >
+                        @if ($key > 0)
+                        <hr/>
+                        @endif
                            <div
                               data-cycle="1"
                               class="experience-container"
                            >
+                              @if ($key>0)
+                                 <button type="button" class="btn btn-danger float-right" onclick="removerow('#experiance-row-{{$key}}')"><i class="fa fa-trash"></i></button>
+                                  
+                              @endif
                               <div
                                     class="col-md-12"
                               >
@@ -47,8 +60,8 @@
                                     >
                                     <input
                                        type="text"
-                                       name="job_title[]"
-                                       id="ex_title"
+                                       name="experiences[{{$key}}][job_title]"
+                                       id="experiences.{{$key}}.job_title"
                                        placeholder="E.g. Full Stack Developer"
                                        value="{{$Userexperience['job_title']}}"
                                     />
@@ -66,8 +79,8 @@
                                     >
                                     <input
                                        type="text"
-                                       name="company[]"
-                                       id="ex_company"
+                                       name="experiences[{{$key}}][company_name]"
+                                       id="experiences.{{$key}}.company_name"
                                        placeholder="E.g. Microsoft"
                                        value="{{$Userexperience['company_name']}}"
                                     />
@@ -84,9 +97,9 @@
                                        ></label
                                     >
                                     <select
-                                    name="job_location"
+                                    name="experiences[{{$key}}][country_id]"
                                     class="form-control select-lang"
-                                    id="job_location"
+                                    id="experiences.{{$key}}.country_id"
                                     >
                                     <option
                                        value=""
@@ -111,14 +124,13 @@
                                        class="form-check"
                                     >
                                        <input
-
+                                          
                                           class="form-check-input check current-working-check isCurrentmessageCheckbox"
-                                          onclick="checkDate($(this), $('.end-date-job-0'))"
+                                          onclick="checkDate($(this), $('.end-date-job-{{$key}}'))"
                                           type="checkbox"
-                                          name="isCurrent[]"
-                                          id="flexCheckDefault"
-
-                                          value="{{ $Userexperience['is_working']  ? 'check' : ''}}"
+                                          name="experiences[{{$key}}][is_working]"
+                                          id="experiences.{{$key}}.is_working"
+                                          {{ $Userexperience['is_working']==1  ? 'checked' : ''}}
                   
                                           
                                        />
@@ -149,10 +161,10 @@
                                        >
                                        <input
                                           type="date"
-                                          name="start_date_job[]"
-                                          id="ex_start_date"
-                                          onchange="setMinDateJob($(this), $('.end-date-job-0'))"
-                                          value="{{\Carbon\Carbon::parse($Userexperience['start_date_job'])->format('d-m-Y') }}" 
+                                          name="experiences[{{$key}}][start_date]"
+                                          id="experiences.{{$key}}.start_date"
+                                          onchange="setMinDateJob($(this), $('.end-date-job-{{$key}}'))"
+                                          value="{{\Carbon\Carbon::parse($Userexperience['start_date'])->format('d-m-Y') }}" 
 
 
                                           
@@ -172,12 +184,12 @@
                                           ></label
                                        >
                                        <input
-                                          class="end-date-job-0"
-                                          id="ex_end_date"
+                                          class="end-date-job-{{$key}}"
+                                          id="experiences.{{$key}}.end_date"
                                           onchange="checkIfDateGreaterJob($(this))"
                                           type="date"
-                                          name="end_date_job[]"
-                                          value="{{\Carbon\Carbon::parse($Userexperience['end'])->format('dd/mm/YY')}}"
+                                          name="experiences[{{$key}}][end_date]"
+                                          value="{{\Carbon\Carbon::parse($Userexperience['end_date'])->format('dd/mm/YY')}}"
                                        />
                                     </div>
                               </div>
@@ -195,13 +207,14 @@
                                     <textarea
                                        cols="10"
                                        rows="5"
-                                       name="job_description[]"
+                                       name="experiences[{{$key}}][description]"
                                        placeholder="Job Description"
-                                       id="ex_description"
+                                       id="experiences.{{$key}}.description"
                                     >{{$Userexperience['description']}}</textarea>
                               </div>
                            </div>
                         </div>
+                        <input type="hidden" name="experience_count" id="experience_count" value="{{count($userexperiences->experiences)}}">
                      @endforeach
                   @else
                         <div
@@ -224,10 +237,11 @@
                                  >
                                  <input
                                     type="text"
-                                    name="job_title[]"
-                                    id="ex_title"
+                                    name="experiences[0][job_title]"
+                                    id="experiences.0.job_title"
                                     placeholder="E.g. Full Stack Developer"
                                     value=""
+
                                  />
                            </div>
 
@@ -244,8 +258,8 @@
                               >
                               <input
                                  type="text"
-                                 name="company[]"
-                                 id="ex_company"
+                                 name="experiences[0][company_name]"
+                                 id="experiences.0.company_name"
                                  placeholder="E.g. Microsoft"
                                  value=""
                               />
@@ -263,9 +277,9 @@
                                     ></label
                                  >
                                  <select
-                                 name="job_location"
+                                 name="experiences[0][country_id]"
                                  class="form-control select-lang"
-                                 id="job_location"
+                                 id="experiences.0.country_id"
                                  >
                                  <option value="" ></option>
                                  <option
@@ -294,8 +308,8 @@
                                        class="form-check-input check current-working-check isCurrentmessageCheckbox"
                                        onclick="checkDate($(this), $('.end-date-job-0'))"
                                        type="checkbox"
-                                       name="isCurrent[]"
-                                       id="flexCheckDefault"
+                                       name="experiences[0][is_working]"
+                                       id="experiences.0.is_working"
                                        value="" 
                
                                        
@@ -327,8 +341,8 @@
                                     >
                                     <input
                                        type="date"
-                                       name="start_date_job[]"
-                                       id="ex_start_date"
+                                       name="experiences[0][start_date]"
+                                       id="experiences.0.start_date"
                                        onchange="setMinDateJob($(this), $('.end-date-job-0'))"
                                        value="" 
 
@@ -351,10 +365,10 @@
                                     >
                                     <input
                                        class="end-date-job-0"
-                                       id="ex_end_date"
+                                       id="experiences.0.end_date"
                                        onchange="checkIfDateGreaterJob($(this))"
                                        type="date"
-                                       name="end_date_job[]"
+                                       name="experiences[0][end_date]"
                                        value=""
                                     />
                                  </div>
@@ -373,22 +387,24 @@
                                  <textarea
                                     cols="10"
                                     rows="5"
-                                    name="job_description[]"
+                                    name="experiences[0][description]"
                                     placeholder="Job Description"
-                                    id="ex_description"
+                                    id="experiences.0.description"
                                  ></textarea>
                            </div>
                         </div>
                      </div>
+                     <input type="hidden" name="experience_count" id="experience_count" value="1">
+
                   @endif
-                
-                  <button
-                     type="button"
-                     class="my-2"
-                     onclick="addMoreExperiance()"
-                  >
-                     Add another
-                  </button>
+               </div>
+               <button
+                  type="button"
+                  class="my-2"
+                  onclick="addMoreExperiance()"
+               >
+                  Add another
+               </button>
             </div>
          </div>
          <div class="setProfile">
