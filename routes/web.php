@@ -44,17 +44,12 @@ Route::view('/offer-description', 'templates.basic.offer.offer_description');
 Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
-<<<<<<< HEAD
-// Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
-=======
 Route::get('/freelancer-profile-design', 'ProfileController@profile');
 Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
 Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
 
 
-Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
 
->>>>>>> 6fabeef083ebde35dcac98d001d8ea6989d84f06
 
 Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.save');
 Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
