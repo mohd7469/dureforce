@@ -56,7 +56,7 @@ class SiteController extends Controller
 
         $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
 
-        $sellers = User::with('followers')->active()->limit(20)->inRandomOrder()->get();
+        $sellers = User::with('followers')->limit(20)->inRandomOrder()->get();
 
         return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
     }
