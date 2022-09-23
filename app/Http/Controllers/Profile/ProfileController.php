@@ -48,6 +48,7 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
+        dd($request->experiences);
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -87,6 +88,42 @@ class ProfileController extends Controller
     
     }
     public function storeEducation(Request $request){
+        //  dd($request->educations);
+
+        $validator = \Validator::make($request->all(), 
+        [
+            'educations' => 'required|array',
+            // 'educations.*.school_name'   => 'required',
+            // 'educations.*.education' => 'required',
+            'educations.*.field_of_study'=> 'required',
+            'educations.*.description'  => 'required',
+            // 'educations.*.degree_id'  => 'required',
+            // 'educations.*.start_date'  => 'required|before:today',
+            // 'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = User::find(2);        
+
+        try {
+
+            $user->education()->delete();
+            $user->education()->createMany(
+                $request->educations
+            );
+           
+            return response()->json(["success" => "User Experience Added Successfully"], 200);
+
+        } catch (\Exception $exp) {
+
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
 
 
 

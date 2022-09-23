@@ -538,6 +538,7 @@
         }
         function saveUserEducation()
         {
+         
             $.ajax({
                 headers: {
                     
@@ -545,7 +546,7 @@
                 },
                 url: "{{ route('education.save') }}",
                 method: "POST",
-                data:form_education_save.serialize(),
+                data:user_education_form.serialize(),
                 type:'json',
 
                 success: function(response) {
@@ -556,9 +557,17 @@
                         notify('success', response.success);
                         formPostProcess(educationTab);
 
-                    } else {
+                    }
+                    
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
                         errorMessages(response.errors);
                     }
+                   
                 }
             });
 
