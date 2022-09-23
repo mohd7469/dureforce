@@ -74,14 +74,14 @@
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
                                     class="">3</span>
-                                <a data-toggle="tab" href="#profile3" class="">
+                                <a data-toggle="tab" href="#profile3" class="" id="education_tab">
                                     Education
                                 </a>
                             </li>
                             <li role="tab" class="underline {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                 <span
                                     class="">4</span>
-                                <a data-toggle="tab" href="#profile4" class="">
+                                <a data-toggle="tab" href="#profile4" class="" id="skills_tab">
                                     Skills & Rate
                                 </a>
                             </li>
@@ -154,6 +154,8 @@
 
         var languageRow = $('#language-row');
         var experienceTab=$('#experience_tab');
+        var educationTab=$('#education_tab');
+
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
@@ -168,6 +170,8 @@
         let startDateInsti = $('input[name="start_date_institute[]"]');
         let row_index=0;
         var user_basic_form=$('#form-basic-save');
+        var user_experience_form=$('#freelancer-experience-save');
+
         var token= $('input[name=_token]').val();
         
         let selectedLevels = [];
@@ -182,10 +186,17 @@
             $('.select2').select2({
                 tags: true
             });
+            
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserBasic();
+            });
+
+            user_experience_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserExperience();
             });
 
             if (previewImg.length > 0) {
@@ -414,12 +425,28 @@
             
             }
         }
+        
+        function formPostProcess(nextTab)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            nextTab.click();
+            scrollTop();
+        }
 
         function scrollTop()
         {
             $("html, body").animate({
                 scrollTop: 0
             }, 500);
+        }
+        
+        function errorMessages(errors)
+        {
+            $.each(errors, function(i, val) {
+                console.log(response.errors, 'response.errors');
+                notify('error', val);
+            });
         }
 
         function saveUserBasic() {
@@ -434,21 +461,17 @@
                   data: form_data,
                   processData: false,
                 contentType: false,
-                  success:function(data){
+                  success:function(response){
 
-                      if(data.success_message){
-                        displayAlertSuccessMessage(data.success_message);
-                        experienceTab.click();
-                        $('input,select,textarea').removeClass('error-field');
-                        $('.select2').next().removeClass("error-field");
-                        scrollTop();
+                      if(response.success){
+                        notify('success', response.success);
+                        formPostProcess(experienceTab);
                       }
-                      else if(data.validation_errors){
-                        displayErrorMessage(data.validation_errors);
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
                       }
                       else{
-                        
-
+                        errorMessages(response.errors);
                       }
 
                   }
@@ -456,6 +479,30 @@
              
         }
 
+        function saveUserExperience()
+        {
+            $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('profile.experience.save') }}",
+                method: "POST",
+                data:user_experience_form.serialize(),
+                type:'json',
+
+                success: function(response) {
+                
+                    if (response.success) {
+                        notify('success', response.success);
+                        formPostProcess(educationTab);
+
+                    } else {
+                        errorMessages(response.errors);
+                    }
+                }
+            });
+
+        }
         function displayAlertMessage(message)
         {
             iziToast.error({
@@ -509,12 +556,7 @@
                                     </div>`                  
                                  );
         }
-        /**
-         * Checks if value is empty. Deep-checks arrays and objects
-         * Note: isEmpty([]) == true, isEmpty({}) == true, isEmpty([{0:false},"",0]) == true, isEmpty({0:1}) == false
-         * @param value
-         * @returns {boolean}
-         */
+       
         function isEmpty(value) {
             var isEmptyObject = function(a) {
                 if (typeof a.length === 'undefined') { // it's an Object, not an Array

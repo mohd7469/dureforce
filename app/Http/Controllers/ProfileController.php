@@ -38,12 +38,17 @@ class ProfileController extends Controller
         $user=User::withAll()->find(2);
 
         $categories=Category::select('id','name')->get();
-        $cities=City::select('id','name')->where('country_id',$user->country_id)->get();   
+        $cities=City::select('id','name')->where('country_id',$user->country_id)->get();
+        $countries=Country::select('id','name')->get();
         $languages=WorldLanguage::select('id','iso_language_name')->get();
         $language_levels=LanguageLevel::select('id','name')->get();
         $basicProfile=$user->basicProfile ? $user->basicProfile : new UserBasic();
         $user_languages=$user->languages ? $user->languages: [];
-        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages'));
+
+        $userexperiences = User::with('experiences')->where('id', 2)->first();
+        $usereducations = User::with('education')->where('id', 2)->first();
+        
+        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations'));
 
     }
     
@@ -123,7 +128,7 @@ class ProfileController extends Controller
                 $user->save();
 
                 DB::commit();
-                return response()->json(["success_message" => "User Basics Updated Successfully"]);
+                return response()->json(["success" => "User Basics Updated Successfully"]);
                 
             } catch (\Throwable $exception) {
                 

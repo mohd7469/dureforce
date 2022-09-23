@@ -51,7 +51,7 @@
 </div>
 {{-- End Preloader --}}
 
-@if(!\Route::is('verification.notice') )
+@if(!\Route::is('user.verification.notice') )
     @include($activeTemplate.'partials.header')
 @endif
 @yield('content')

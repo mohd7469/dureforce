@@ -36,7 +36,7 @@ class UserExperiences extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'title', 'company', 'description', 'isCurrent', 'location','start', 'end'];
+    protected $fillable = ['user_id', 'job_title', 'company_name', 'description', 'is_working', 'country_id','start_date', 'end_date'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

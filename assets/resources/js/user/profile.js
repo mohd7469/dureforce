@@ -53,6 +53,7 @@ $(document).ready(function () {
   sillsProfileForm();
   rateProfileForm();
 });
+
 function basicProfileForm() {
   $(".form-basic-save").submit(function (e) {
     var title = $("#title").val();

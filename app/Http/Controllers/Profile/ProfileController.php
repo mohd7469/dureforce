@@ -48,7 +48,6 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
-        //  dd($request->all());
         $validator = \Validator::make($request->all(), [
             'job_title' => 'required',
             'job_description' => 'required',
@@ -62,35 +61,36 @@ class ProfileController extends Controller
             return response()->json(['errors'=>$validator->errors()]);
         }
        
-        $user = User::find(1);        
+        $user = User::find(2);        
 
         try {
+            
             foreach($request->input('job_title')  as $key => $value  ) {
-
 
                 UserExperiences::updateOrCreate([
                     'user_id' =>$user->id
-                   ],
-                    [
-                        'title'     => $request->get('job_title'),
-                  
-                        'isCurrent'    => isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0,
-                        'company'   => $request->get("company")[$key],
-                        'description'       => $request->get("job_description")[$key],
-                        'end'   =>  $request->get("end_date_job")[$key] ??  null,
-                        'start'    => $request->get("start_date_job")[$key] ?? null,
-                        'location'    => $request->get("job_location")[$key]
-                   ]);
+                ],
+                [
 
+                    'job_title'     => $request->get('job_title')[$key],
+                    'is_working'    => isset($request['isCurrent'][$key]) ? 1 : 0,
+                    'company_name'  => $request->get("company")[$key],
+                    'description'   => $request->get("job_description")[$key],
+                    'start_date'    => $request->get("start_date_job")[$key] ??  null,
+                    'end_date'      => $request->get("end_date_job")[$key] ?? null,
+                    'country_id'    => $request->get("job_location")[$key]
 
-
+                ]);
                
             }
-            return response()->json(["success" => "User Experience submitted"], 200);
+
+            return response()->json(["success" => "User Experience Added Successfully"], 200);
 
         } catch (\Exception $exp) {
-            $notify[] = ['error', 'Document could not be uploaded.'];
+
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
+
         }
        
             

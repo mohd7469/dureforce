@@ -2172,13 +2172,15 @@
 
 <script>
     'use strict';
-    $(document).on('click', '.experiance-submit', function() {
+    $(document).on('click', '.experiance-submit', function(e) {
+        e.preventDefault();
+        e.stopPropagation(); 
         location.reload()
                    $.ajax({
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('profile.save') }}",
+                url: "{{ route('profile.experience.save') }}",
                 method: "POST",
                 data:$('#form-experience-save').serialize(),
                 type:'json',
