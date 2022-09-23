@@ -142,12 +142,10 @@
                "
                >
                @if ($user_languages->count()>0)
-                  @php
-                      $index=0;
-                  @endphp
-                  @foreach ($user_languages as $user_language)
+                  
+                  @foreach ($user_languages as $key=>$user_language)
                       {{-- language --}}
-                     <div  id="moreLanguage-row">
+                     <div  id="moreLanguage-row-{{$key}}">
                         <div class="row">
                            <div
                            class="col-md-6 col-sm-12"
@@ -160,9 +158,9 @@
                               ></label
                               >
                            <select
-                              name="languages[{{$index}}][language_id]"
+                              name="languages[{{$key}}][language_id]"
                               class="form-control select-lang "
-                              id="languages.{{$index}}.language_id"
+                              id="languages.{{$key}}.language_id"
                               >
                               <option
                                  value=""
@@ -184,7 +182,7 @@
                         </div>
                         {{-- proficiency level --}}
                         <div
-                           class="{{ $index > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
+                           class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
                            >
                            <label class="mt-4"
                               >Profeciency
@@ -196,9 +194,9 @@
                               >
                            
                            <select
-                              name="languages[{{$index}}][language_level_id]"
+                              name="languages[{{$key}}][language_level_id]"
                               class="form-control selected-level select-lang"
-                              id="languages.{{$index}}.language_level_id"
+                              id="languages.{{$key}}.language_level_id"
                               >
                               <option value="" selected="" >
                                  Proficiency Level
@@ -219,9 +217,9 @@
    
                         </div>
                         {{-- delete btn --}}
-                        @if ($index > 0)
+                        @if ($key > 0)
                            <div class="col-md-1" style="margin-top:20px; ">
-                              <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+                              <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-{{$key}}')"><i class="fa fa-trash"></i></button>
    
                            </div>
                         @endif   
@@ -229,12 +227,11 @@
                         
                      </div>
                         
-                     @php
-                        $index++;
-                     @endphp
+                    
                   {{-- --- --}}
                       
                   @endforeach
+                  <input type="hidden" name="languages_basics" id="languages_basics" value="{{$user_languages->count()}}">
                    
                @else
                     {{-- language --}}
@@ -302,6 +299,8 @@
                         </select>
 
                      </div>
+                     <input type="hidden" name="languages_basics" id="languages_basics" value="1">
+
                   {{-- --- --}}
                @endif
               

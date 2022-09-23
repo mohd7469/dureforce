@@ -168,7 +168,8 @@
         let date = $('.checkedDate')
         let startDate = $('input[name="start_date_job[]"]');
         let startDateInsti = $('input[name="start_date_institute[]"]');
-        let row_index=0;
+        let row_index= $('#languages_basics').val();
+        let exp_row_index=$('#experience_count').val();
         var user_basic_form=$('#form-basic-save');
         var user_experience_form=$('#freelancer-experience-save');
 
@@ -177,6 +178,8 @@
         let selectedLevels = [];
         var _languages = [];
         let _languages_levels = [];
+        let _countries = [];
+
 
 
         $('document').ready(function() {
@@ -226,6 +229,7 @@
                       
                         _languages=data.languages;
                         _languages_levels=data.language_levels;
+                        _countries=data.countries;
 
                     }
                 });  
@@ -291,28 +295,40 @@
 
         }
 
+        function removerow(row_id)
+        {
+            var div_to_remove=row_id;
+            $(div_to_remove).remove();
+        }
 
         function addMoreExperiance() {
-            experienceRow.append(`
-             <div id="experiance-row">
+            experienceRow.append(`<hr/>
+             <div id="experiance-row-`+exp_row_index+`">
                
-                                            <button type="button" class="btn btn-danger float-right" onclick="removeExperianceRow($('#experiance-row'))"><i class="fa fa-trash"></i></button>
+                                            <button type="button" class="btn btn-danger float-right" onclick="removerow('#experiance-row-`+exp_row_index+`')"><i class="fa fa-trash"></i></button>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Job Title <span class="imp">*</span></label>
-                                                <input type="text" name="job_title[]" placeholder="E.g. Full Stack Developer">
+                                                <input type="text" name="experiences[`+exp_row_index+`][job_title]" placeholder="E.g. Full Stack Developer" id="experiences.`+exp_row_index+`.job_title">
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Company <span class="imp">*</span></label>
-                                                <input type="text" name="company[]" placeholder="E.g. Microsoft">
+                                                <input type="text" name="experiences[`+exp_row_index+`][company_name]" placeholder="E.g. Microsoft" id="experiences.`+exp_row_index+`.company_name">
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Location <span class="imp">*</span></label>
-                                                <input type="text" name="job_location[]" placeholder="City, Country" />
+                                                <select type="text" class="form-control" name="experiences[`+exp_row_index+`][country_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
+                                                 <option value=""  selected="">
+                                                   Select Location
+                                                    </option>
+                                                        ${_countries?.map((country) => {
+                                                            return ` <option value="${country.id}"> ${country.name}</option>`;
+                                                        })}
+                                                </select>
                                             </div>
                                             <div class="col-md-12 mt-1">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input check" type="checkbox"
-                                                                        name="isCurrent[]" id="flexCheckDefault"
+                                                                        name="experiences[`+exp_row_index+`][is_working]" id="experiences.`+exp_row_index+`.is_working"
                                                                         onclick="checkDate($(this), $('.end-date-job'))"
                                                                       />
                                                                     <label class="form-check-label px-2"
@@ -323,21 +339,25 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                    <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" >
+                                                    <input type="date" class="date" name="experiences[`+exp_row_index+`][start_date]" onchange="setMinDateJob($(this), $('.end-date-job'))" id="experiences.`+exp_row_index+`.start_date">
                                                 </div> 
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" >
+                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="experiences[`+exp_row_index+`][end_date]" id="experiences.`+exp_row_index+`.end_date">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Description <span class="imp">*</span></label>
-                                                <textarea cols="10" rows="5" name="job_description[]"
-                                                    placeholder="Job Description"></textarea>
+                                                <textarea cols="10" rows="5" name="experiences[`+exp_row_index+`][description]"
+                                                    placeholder="Job Description"
+                                                    id="experiences.`+exp_row_index+`.description"
+                                                    ></textarea>
                                             </div>
-                                            <hr/>
+                                            
                                         </div>
                                         `);
+                exp_row_index=exp_row_index+1;
+            
 
         }
 
@@ -428,6 +448,7 @@
         
         function formPostProcess(nextTab)
         {
+
             $('input,select,textarea').removeClass('error-field');
             $('.select2').next().removeClass("error-field");
             nextTab.click();
@@ -444,7 +465,6 @@
         function errorMessages(errors)
         {
             $.each(errors, function(i, val) {
-                console.log(response.errors, 'response.errors');
                 notify('error', val);
             });
         }
@@ -496,7 +516,13 @@
                         notify('success', response.success);
                         formPostProcess(educationTab);
 
-                    } else {
+                    }
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
                         errorMessages(response.errors);
                     }
                 }
@@ -521,9 +547,8 @@
        
         function addMoreLanguages() 
         {
-            row_index=row_index+1;
                 languageRow.append(`
-                                    <div id="moreLanguage-row">
+                                    <div id="moreLanguage-row-`+row_index+`">
                                                 
                                         <div class="row" >
                                             <div class="col-md-6 col-sm-10">
@@ -549,12 +574,14 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-1" style="margin-top:20px">
-                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removeLanguageRow($('#moreLanguage-row'))"><i class="fa fa-trash"></i></button>
+                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
 
                                             </div>
                                         </div>
                                     </div>`                  
                                  );
+            row_index=row_index+1;
+
         }
        
         function isEmpty(value) {

@@ -48,42 +48,31 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
-        $validator = \Validator::make($request->all(), [
-            'job_title' => 'required',
-            'job_description' => 'required',
-            'company' => 'required',
-            'job_location' => 'required',
-
+        $validator = \Validator::make($request->all(), 
+        [
+            'experiences' => 'required|array',
+            'experiences.*.job_title'   => 'required',
+            'experiences.*.description' => 'required',
+            'experiences.*.company_name'=> 'required',
+            'experiences.*.country_id'  => 'required',
+            'experiences.*.start_date'  => 'required|before:today',
+            'experiences.*.end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
         ]);
         
         if ($validator->fails())
         {
-            return response()->json(['errors'=>$validator->errors()]);
+            return response()->json(['validation_errors'=>$validator->errors()]);
         }
        
         $user = User::find(2);        
 
         try {
-            
-            foreach($request->input('job_title')  as $key => $value  ) {
 
-                UserExperiences::updateOrCreate([
-                    'user_id' =>$user->id
-                ],
-                [
-
-                    'job_title'     => $request->get('job_title')[$key],
-                    'is_working'    => isset($request['isCurrent'][$key]) ? 1 : 0,
-                    'company_name'  => $request->get("company")[$key],
-                    'description'   => $request->get("job_description")[$key],
-                    'start_date'    => $request->get("start_date_job")[$key] ??  null,
-                    'end_date'      => $request->get("end_date_job")[$key] ?? null,
-                    'country_id'    => $request->get("job_location")[$key]
-
-                ]);
-               
-            }
-
+            $user->experiences()->delete();
+            $user->experiences()->createMany(
+                $request->experiences
+            );
+           
             return response()->json(["success" => "User Experience Added Successfully"], 200);
 
         } catch (\Exception $exp) {
