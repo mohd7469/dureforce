@@ -5,32 +5,32 @@
                 <div class="header-menu-content">
                     <nav class="navbar navbar-expand-lg p-0">
                         <a class="site-logo site-title" href="{{ route('home') }}"><img
-                                    src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
-                                    alt="{{ __($general->sitename) }}"></a>
+                                src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
+                                alt="{{ __($general->sitename) }}"></a>
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fas fa-bars"></span>
                         </button>
                         <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button>
                         <div class="collapse navbar-collapse d-flex justify-content-between"
-                             id="navbarSupportedContent">
+                            id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li><a href="{{ route('home') }}"
-                                       @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
+                                        @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
                                 <li><a href="{{ route('service') }}"
-                                       @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
+                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
                                 </li>
                                 <li><a href="{{ route('software') }}"
-                                       @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
+                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
                                 <li><a href="{{ route('job') }}"
-                                       @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a></li>
+                                        @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a></li>
                                 <li><a href="{{ route('blog') }}"
-                                       @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
+                                        @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
                                 </li>
                                 <li><a href="{{ route('contact') }}"
-                                       @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
+                                        @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
                             </ul>
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
@@ -55,7 +55,7 @@
 
                                 @auth
                                     <a href="{{ route('user.home') }}" class="btn--base">@lang('Dashboard')</a>
-                                    <a href="{{ route('logout') }}" class="btn--base">@lang('Logout')</a>
+                                    <a href="" class="btn--base">@lang('Logout')</a>
                                 @endauth
                             </div>
 
@@ -101,27 +101,27 @@
                         <div class="row ml-b-20">
                             <div class="col-lg-6 form-group">
                                 {{-- <label for="firstname">@lang('First Name')*</label> --}}
-                                <input type="text" class="form-control form--control" id="firstname" name="firstname" value="{{old('firstname')}}" required="" placeholder="@lang('First name')">
+                                <input type="text" class="form-control form-control-lg form--control" id="firstname" name="firstname" value="{{old('firstname')}}" required="" placeholder="@lang('First name')">
                             </div>
 
                             <div class="col-lg-6 form-group">
                                 {{-- <label for="lastname">@lang('Last Name')*</label> --}}
-                                <input type="text" class="form-control form--control" name="lastname" value="{{old('lastname')}}" required="" placeholder="@lang('Last name')">
+                                <input type="text" class="form-control form-control-lg form--control" name="lastname" value="{{old('lastname')}}" required="" placeholder="@lang('Last name')">
                             </div>
 
                             <div class="col-lg-6 form-group">
                                 {{-- <label id="email">@lang('Email address')*</label> --}}
-                                <input type="email" class="form-control form--control checkUser" name="email" value="{{old('email')}}" required="" placeholder="@lang('Email address')">
+                                <input type="email" class="form-control form-control-lg form--control checkUser" name="email" value="{{old('email')}}" required="" placeholder="@lang('Email address')">
                             </div>
 
                             <div class="col-lg-6 form-group">
                                 {{-- <label id="username">@lang('Username')*</label> --}}
-                                <input type="text" class="form-control form--control checkUser" name="username" value="{{old('username')}}" required="" placeholder="@lang('Username')">
+                                <input type="text" class="form-control form-control-lg form--control checkUser" name="username" value="{{old('username')}}" required="" placeholder="@lang('Username')">
                                 <small class="text-danger usernameExist"></small>
                             </div>
 
                             {{-- <div class="col-lg-6 form-group">
-                                <select name="country" id="country" class="form-control form--control">
+                                <select name="country" id="country" class="form-control form-control-lg form--control">
                                     @foreach($countries as $key => $country)
                                         <option data-mobile_code="{{ $country->dial_code }}" value="{{ $country->country }}" data-code="{{ $key }}">{{ __($country->country) }}</option>
                                     @endforeach
@@ -131,7 +131,7 @@
 
                             <div class="col-lg-6 form-group hover-input-popup">
                                 {{-- <label for="password">@lang('Password')*</label> --}}
-                                <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter password")">
+                                <input type="password" class="form-control form-control-lg form--control" id="password" name="password" required="" placeholder="@lang("Enter password")">
                                 @if($general->secure_password)
                                     <div class="input-popup">
                                       <p class="error lower">@lang('1 small letter minimum')</p>
@@ -145,7 +145,7 @@
 
                             <div class="col-lg-6 form-group">
                                 {{-- <label>@lang('Confirm Password')*</label> --}}
-                                <input type="password" class="form-control form--control" name="password_confirmation" required="" placeholder="@lang("Enter confirm password")">
+                                <input type="password" class="form-control form-control-lg form--control" name="password_confirmation" required="" placeholder="@lang("Enter confirm password")">
                             </div>
                             <h5 class="text-center mb-4"><b>I want to</b></h5>
                             <div class="col-lg-12 form-group">
