@@ -14,7 +14,7 @@
         tabindex="-1"
         aria-labelledby="verifyModalLabel"
         aria-hidden="true"
-    >
+        >
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal body -->
@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-        <!-- end login with gmail modal -->
+    <!-- end login with gmail modal -->
 </div>
 <!-- </section> -->
 @endsection
