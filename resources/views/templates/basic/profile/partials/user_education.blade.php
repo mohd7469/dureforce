@@ -1,6 +1,12 @@
 <div class="setProfile" id="user-education">
-   <form action="{{ route('user.profile.save.education') }}" method="POST" class="user-education-form">
-      @csrf
+   <form action="{{ route('education.save') }}" id="freelancer-education-save" method="POST" class="user-education-form">
+      <div
+      id="profile2"
+      role="tabpanel"
+      class="tab-pane"
+   >
+
+   {{ csrf_field() }}
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Education</h1>
          <span class="cmnt pb-4">
@@ -49,7 +55,7 @@
                   <div class="col-md-6">
                      <label class="mt-4">Degree <span class="imp">*</span>
                      </label>
-                     <select name="" class="form-control select-lang">
+                     <select name="degree" class="form-control select-lang">
                         <option value="" selected=""> Select Degree </option>
                         <option value="1"> BSCS </option>
                      </select>

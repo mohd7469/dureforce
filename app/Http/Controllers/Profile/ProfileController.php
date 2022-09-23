@@ -48,6 +48,7 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
+        
         $validator = \Validator::make($request->all(), [
             'job_title' => 'required',
             'job_description' => 'required',
@@ -101,46 +102,35 @@ class ProfileController extends Controller
 
 
 
-        // $validator = \Validator::make($request->all(), [
-        //     'institute_name' => 'required',
-        //     'degree' => 'required',
-        //     'company' => 'required',
-        //     'institute_description' => 'required'
-
-
-        // ]);
-        
-        // if ($validator->fails())
-        // {
-          
-        //     return response()->json(['errors'=>$validator->errors()]);
-        // }
-
-        $user = User::find(1);
+        $user = User::find(2);
         
         
         try {
+            
             foreach($request->input('institute_name')  as $key => $value  ) {
-               
-                $userEducation = new UserEducation();
-                $userEducation->institute_name = $request->get("institute_name")[$key];
-                $userEducation->user_id = $user->id;
-                $userEducation->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
 
-                $userEducation->degree = $request->get("degree_id")[$key];
-                $userEducation->degree = $request->get("degree")[$key];
-                $userEducation->field = $request->get("field")[$key];
-                
-                $userEducation->end = $request->get("end_date_institute")[$key]??  null;
-                $userEducation->start = $request->get("start_date_institute")[$key]??  null;
-                $userEducation->description = $request->get("institute_description")[$key];
+                UserEducation::updateOrCreate([
+                    'user_id' =>$user->id
+                ],
+                [
 
-                $userEducation->save();
+                    'school_name'     => $request->get('institute_name')[$key],
+                    'education'     => $request->get('institute_name')[$key],
+                    // 'is_working'    => isset($request['isCurrent'][$key]) ? 1 : 0,
+                    'degree'  => $request->get("degree")[$key],
+                    'field_of'   => $request->get("field")[$key],
+                    'start_date'    => $request->get("start_date_institute")[$key] ??  null,
+                    'end_date'      => $request->get("start_date_job")[$key] ?? null,
+                    // 'country_id'    => $request->get("job_location")[$key]
+                    'description'     => $request->get('institute_description')[$key],
+
+                ]);
                
             }
-            return response()->json(["success" => "User Education submitted"], 200);
 
-        } catch (\Exception $exp) {
+            return response()->json(["success" => "User Experience Added Successfully"], 200);
+
+        }catch (\Exception $exp) {
             $notify[] = ['error', 'Document could not be uploaded.'];
             return back()->withNotify($notify);
         }

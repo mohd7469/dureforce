@@ -171,6 +171,7 @@
         let row_index=0;
         var user_basic_form=$('#form-basic-save');
         var user_experience_form=$('#freelancer-experience-save');
+        var user_education_form=$('#freelancer-education-save');
 
         var token= $('input[name=_token]').val();
         
@@ -197,6 +198,11 @@
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserExperience();
+            });
+            user_education_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserEducation();
             });
 
             if (previewImg.length > 0) {
@@ -481,6 +487,7 @@
 
         function saveUserExperience()
         {
+            
             $.ajax({
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -493,6 +500,33 @@
                 success: function(response) {
                 
                     if (response.success) {
+                        notify('success', response.success);
+                        formPostProcess(educationTab);
+
+                    } else {
+                        errorMessages(response.errors);
+                    }
+                }
+            });
+
+        }
+        function saveUserEducation()
+        {
+            $.ajax({
+                headers: {
+                    
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('education.save') }}",
+                method: "POST",
+                data:form_education_save.serialize(),
+                type:'json',
+
+                success: function(response) {
+                    
+             
+                    if (response.success) {
+                        
                         notify('success', response.success);
                         formPostProcess(educationTab);
 
