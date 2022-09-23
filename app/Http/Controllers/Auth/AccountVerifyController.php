@@ -25,6 +25,7 @@ class AccountVerifyController extends Controller
     }
     public function showVerifyForm()
     {
+        dd(123);
         $pageTitle = "Verify Account";
         return view($this->activeTemplate . 'profile.account_verify', compact('pageTitle'));
     }
