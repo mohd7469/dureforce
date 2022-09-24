@@ -23,22 +23,22 @@ class SystemMailConfiguration extends ServiceProvider
      */
     public function boot()
     {
-        $emailServices = getMailCredentials();
+        // $emailServices = getMailCredentials();
 
-        if ($emailServices) {
-            $config = array(
-                'transport' => 'smtp',
-                'host'       => $emailServices->mail_host,
-                'port'       => $emailServices->mail_port,
-                'username'   => $emailServices->mail_username,
-                'password'   => $emailServices->mail_password,
-                'encryption' => $emailServices->mail_encryption,
-                'from'       => array('address' => $emailServices->mail_from_address, 'name' => $emailServices->mail_from_name),
-                'sendmail'   => '/usr/sbin/sendmail -bs',
-                'pretend'    => false,
-            );
+        // if ($emailServices) {
+        //     $config = array(
+        //         'transport' => 'smtp',
+        //         'host'       => $emailServices->mail_host,
+        //         'port'       => $emailServices->mail_port,
+        //         'username'   => $emailServices->mail_username,
+        //         'password'   => $emailServices->mail_password,
+        //         'encryption' => $emailServices->mail_encryption,
+        //         'from'       => array('address' => $emailServices->mail_from_address, 'name' => $emailServices->mail_from_name),
+        //         'sendmail'   => '/usr/sbin/sendmail -bs',
+        //         'pretend'    => false,
+        //     );
 
-            Config::set('mail.mailers.smtp', $config);
-        }
+        //     Config::set('mail.mailers.smtp', $config);
+        // }
     }
 }

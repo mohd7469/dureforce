@@ -5,8 +5,10 @@
       role="tabpanel"
       class="tab-pane"
    >
+   
 
    {{ csrf_field() }}
+   
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Education</h1>
          <span class="cmnt pb-4">
@@ -19,6 +21,10 @@
             <div
                id="education-container"
                >
+               <div
+                           data-cycle="1"
+                           class="education-container"
+                        >
              
                @if (count($usereducations->education) > 0)
              
@@ -78,7 +84,14 @@
                      </label>
                      <select name="educations[{{$key}}][degree_id]" class="form-control select-lang">
                         <option value="" selected=""> Select Degree </option>
-                        <option value="1"> BSCS </option>
+                        @foreach ($degrees as $degree)
+                        <option value="{{$degree->id}}"> 
+                           
+                           {{ $degree->id == $Usereducation['education_id'] ? 'selected' : ''}}
+                        
+                           {{$degree->title}}   
+                        </option>
+                        @endforeach
                      </select>
                   </div>
                   <div class="col-md-6">
@@ -189,9 +202,13 @@
                      >{{$Usereducation['description']}}</textarea>
                </div>
                </div>
+               
+               {{-- <input type="hidden" name="education_count" id="education_count" value="{{count($Usereducation->educations)}}"> --}}
                @endforeach
                @else
-   
+               <div
+               id="education-container"
+               >
              
                <div class="col-md-12">
                   <label class="mt-4"
@@ -342,6 +359,7 @@
                      ></textarea>
                </div>
             </div>
+            <input type="hidden" name="education_count" id="educations_count" value="1">
             @endif
             <button
                type="button"
@@ -355,7 +373,7 @@
       </div>
       <div class="setProfile">
          <div class="col-md-12">
-            <button type="submit" class="btn btn-continue btn-secondary ">
+            <button type="submit" class="btn btn-continue btn-secondary education.save">
             Continue
             </button>
          </div>

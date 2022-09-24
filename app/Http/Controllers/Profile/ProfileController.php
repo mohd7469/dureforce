@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\UserEducation;
 use App\Models\UserPayment;
 use DB;
+use App\Models\Degree;
 use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
@@ -40,15 +41,14 @@ class ProfileController extends Controller
      */
         public function getexperience(){
             $userexperiences = User::with('experiences')->where('id', 1)->first();
-            
             $usereducations = User::with('education')->where('id', 1)->first();
             
-        
-            return view('templates.basic.profile.partials.profile_basic_design', compact('userexperiences','usereducations'));
+          
+             return view('templates.basic.profile.partials.profile_basic_design', compact('userexperiences','usereducations'));
       }
     public function store(Request $request)
     {
-        //dd($request->experiences);
+        
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -98,8 +98,8 @@ class ProfileController extends Controller
             'educations.*.field_of_study'=> 'required',
             'educations.*.description'  => 'required',
             'educations.*.degree_id'  => 'required',
-            'educations.*.start_date'  => 'required|before:today',
-            'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+            // 'educations.*.start_date'  => 'required|before:today',
+            // 'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
         ]);
         
         if ($validator->fails())
@@ -127,39 +127,7 @@ class ProfileController extends Controller
         }
 
 
-
-        $user = User::find(2);
-        
-        
-        try {
-            
-            foreach($request->input('institute_name')  as $key => $value  ) {
-
-                UserEducation::updateOrCreate([
-                    'user_id' =>$user->id
-                ],
-                [
-
-                    'school_name'     => $request->get('institute_name')[$key],
-                    'education'     => $request->get('institute_name')[$key],
-                    // 'is_working'    => isset($request['isCurrent'][$key]) ? 1 : 0,
-                    'degree'  => $request->get("degree")[$key],
-                    'field_of'   => $request->get("field")[$key],
-                    'start_date'    => $request->get("start_date_institute")[$key] ??  null,
-                    'end_date'      => $request->get("start_date_job")[$key] ?? null,
-                    // 'country_id'    => $request->get("job_location")[$key]
-                    'description'     => $request->get('institute_description')[$key],
-
-                ]);
-               
-            }
-
-            return response()->json(["success" => "User Experience Added Successfully"], 200);
-
-        }catch (\Exception $exp) {
-            $notify[] = ['error', 'Document could not be uploaded.'];
-            return back()->withNotify($notify);
-        }
+      
 
     }
     public function getpayment(){

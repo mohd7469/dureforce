@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\LanguageLevel;
 use App\Models\Skills;
+use App\Models\Degree;
 use App\Models\User;
 use App\Models\UserBasic;
 use App\Models\WorldLanguage;
@@ -35,7 +36,7 @@ class ProfileController extends Controller
      */
     public function profile()
     {
-        
+        $degrees=Degree::select('id','title')->get();
         $skills=Skills::select('id','name')->get();
         $user=User::withAll()->find(2);
         $categories=Category::select('id','name')->get();
@@ -49,7 +50,7 @@ class ProfileController extends Controller
         $userexperiences = User::with('experiences')->where('id', 2)->first();
         $usereducations = User::with('education')->where('id', 2)->first();
         
-        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations','skills'));
+        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations','skills','degrees'));
 
     }
     

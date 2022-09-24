@@ -1998,7 +1998,8 @@
 
             function addEducation() {
 
-                educationRow.append(` <div id="education-row">
+                educationRow.append(`
+                 <div id="education-row">
                                                  <hr>
                                                 <button type="button" class="btn btn-danger float-right" onclick="removeEducationRow($('#education-row'))"><i class="fa fa-trash"></i></button>
                                                 <div class="col-md-12">

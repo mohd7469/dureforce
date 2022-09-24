@@ -50,6 +50,7 @@
     $content = getContent('breadcrumbs.content', true);
 
     @endphp
+    
     <section class="account-section bg-overlay-white bg_img">
         <div class="container">
             <div id="viewport">
@@ -159,6 +160,7 @@
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
+        var educationRow = $('#education-container');
         var current_fs, next_fs, previous_fs; //fieldsets
         var opacity;
         var current = 1;
@@ -170,6 +172,7 @@
         let startDateInsti = $('input[name="start_date_institute[]"]');
         let row_index= $('#languages_basics').val();
         let exp_row_index=$('#experience_count').val();
+        let edu_row_index=$('#education_count').val();
         var user_basic_form=$('#form-basic-save');
         var user_experience_form=$('#freelancer-experience-save');
         var user_education_form=$('#freelancer-education-save');
@@ -377,40 +380,58 @@
         function addEducation() {
 
             educationRow.append(` <div id="education-row">
+                <div id="experiance-row-`+exp_row_index+`">
                                              <hr>
                                             <button type="button" class="btn btn-danger float-right" onclick="removeEducationRow($('#education-row'))"><i class="fa fa-trash"></i></button>
                                             <div class="col-md-12">
                                                 <label class="mt-4">School / College / University <span class="imp">*</span></label>
-                                                <input type="text" name="institute_name[]" placeholder="E.g. University Of London">
+                                                <input type="text" name="educations[`+edu_row_index+`][school_name]" placeholder="E.g. University Of London">
                                             </div>
                                             <div class="col-md-12">
+                                                <label class="mt-4">Education <span class="imp">*</span></label>
+                                                <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
+                                            </div>
+                                            <div class="col-md-12">
+                                                
                                                 <label class="mt-4">Degree <span class="imp">*</span></label>
-                                                <input type="text" name="degree[]" placeholder="E.g. BA Arts">
+                                                <input type="text" name="educations[`+edu_row_index+`][degree_id]" placeholder="E.g. BA Arts">
                                             </div>
                                             <div class="col-md-12">
+                                                
                                                 <label class="mt-4">Field Of Study <span class="imp">*</span></label>
-                                                <input type="text" name="field[]" placeholder="Visual Arts" />
+                                                <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Dates Attended <span class="imp">*</span></label>
+                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-0'))"
+                        type="checkbox"
+                        name="educations[`+edu_row_index+`][is_enrolled]"
+                        
+                       
+                     />
+                                                
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                    <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                    
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                    <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" >
                                                 </div>
+                                                
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Description <span class="imp">*</span></label>
-                                                <textarea cols="" rows="5" name="institute_description[]"
+                                                <textarea cols="" rows="5" name="educations[`+edu_row_index+`][description]"
                                                     placeholder="Describe your responsibilities"></textarea>
                                             </div>
+                                          
                                         </div>`)
+                                        edu_row_index=edu_row_index+1;
         }
 
 
