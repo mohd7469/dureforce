@@ -48,6 +48,7 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
+        //dd($request->experiences);
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -87,49 +88,75 @@ class ProfileController extends Controller
     
     }
     public function storeEducation(Request $request){
+      
 
-
-
-        // $validator = \Validator::make($request->all(), [
-        //     'institute_name' => 'required',
-        //     'degree' => 'required',
-        //     'company' => 'required',
-        //     'institute_description' => 'required'
-
-
-        // ]);
+        $validator = \Validator::make($request->all(), 
+        [
+            'educations' => 'required|array',
+            // 'educations.*.school_name'   => 'required',
+            // 'educations.*.education' => 'required',
+            'educations.*.field_of_study'=> 'required',
+            'educations.*.description'  => 'required',
+            // 'educations.*.degree_id'  => 'required',
+            // 'educations.*.start_date'  => 'required|before:today',
+            // 'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
         
-        // if ($validator->fails())
-        // {
-          
-        //     return response()->json(['errors'=>$validator->errors()]);
-        // }
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = User::find(2);        
 
-        $user = User::find(1);
+        try {
+
+            
+            $user->education()->delete();
+            $user->education()->createMany(
+                $request->educations
+            );
+           
+            return response()->json(["success" => "User Education Added Successfully"], 200);
+
+        } catch (\Exception $exp) {
+
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+
+
+
+        $user = User::find(2);
         
         
         try {
+            
             foreach($request->input('institute_name')  as $key => $value  ) {
-               
-                $userEducation = new UserEducation();
-                $userEducation->institute_name = $request->get("institute_name")[$key];
-                $userEducation->user_id = $user->id;
-                $userEducation->isCurrent = isset($request['isCurrent'][$key]) ? $request['isCurrent'][$key] : 0;
 
-                $userEducation->degree = $request->get("degree_id")[$key];
-                $userEducation->degree = $request->get("degree")[$key];
-                $userEducation->field = $request->get("field")[$key];
-                
-                $userEducation->end = $request->get("end_date_institute")[$key]??  null;
-                $userEducation->start = $request->get("start_date_institute")[$key]??  null;
-                $userEducation->description = $request->get("institute_description")[$key];
+                UserEducation::updateOrCreate([
+                    'user_id' =>$user->id
+                ],
+                [
 
-                $userEducation->save();
+                    'school_name'     => $request->get('institute_name')[$key],
+                    'education'     => $request->get('institute_name')[$key],
+                    // 'is_working'    => isset($request['isCurrent'][$key]) ? 1 : 0,
+                    'degree'  => $request->get("degree")[$key],
+                    'field_of'   => $request->get("field")[$key],
+                    'start_date'    => $request->get("start_date_institute")[$key] ??  null,
+                    'end_date'      => $request->get("start_date_job")[$key] ?? null,
+                    // 'country_id'    => $request->get("job_location")[$key]
+                    'description'     => $request->get('institute_description')[$key],
+
+                ]);
                
             }
-            return response()->json(["success" => "User Education submitted"], 200);
 
-        } catch (\Exception $exp) {
+            return response()->json(["success" => "User Experience Added Successfully"], 200);
+
+        }catch (\Exception $exp) {
             $notify[] = ['error', 'Document could not be uploaded.'];
             return back()->withNotify($notify);
         }

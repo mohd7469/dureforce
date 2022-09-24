@@ -4,7 +4,7 @@
 $(document).ready(function() {
     readmore();
 
-
+});
 function readmore() {
 
     $( "#clickme" ).click(function() {
@@ -36,5 +36,7 @@ function readmore() {
     //
     //
     // });
-});
+
+
+
 

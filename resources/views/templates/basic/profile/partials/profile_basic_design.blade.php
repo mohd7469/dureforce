@@ -1126,16 +1126,9 @@
                                                                     ></label
                                                                 >
                                                                 <select
-<<<<<<< HEAD
-                                                                name="job_location[]"
-                                                                class="form-control select-lang"
-                                                                id="ex_location"
-                                                            
-=======
                                                                 name="country_id"
                                                                 class="form-control select-lang"
                                                                 id="country_id"
->>>>>>> 6fabeef083ebde35dcac98d001d8ea6989d84f06
                                                                 >
                                                                 <option value="{{ $Userexperience['location'] }}" {{ ( $Userexperience['location'] ) ? 'selected' : '' }}></option>
                                                                 <option
@@ -1297,12 +1290,7 @@
                                                 <div>
                                                     <div
                                                         id="education-container"
-<<<<<<< HEAD
-                                                    >
-                                                    @foreach ($usereducations->education as  $usereducation)
-=======
                                                         >
->>>>>>> 6fabeef083ebde35dcac98d001d8ea6989d84f06
                                                         <div class="col-md-12">
                                                             <label class="mt-4"
                                                                 >School /
@@ -1315,10 +1303,10 @@
                                                             >
                                                             <input
                                                                 type="text"
-                                                                name="institute_name[]"
-                                                                id="institute_name"
+                                                                name="school_name[]"
+                                                                id="school_name"
                                                                 placeholder="E.g. University Of London"
-                                                                value="{{$usereducation['institute_name']}}"
+                                                                value="{{$usereducation['school_name']}}"
                                                             />
                                                         </div>
                                                         <div class="col-md-12">
@@ -1331,10 +1319,10 @@
                                                             >
                                                             <input
                                                                 type="text"
-                                                                name="degree[]"
-                                                                id="institute_name"
+                                                                name="education[]"
+                                                                id="education"
                                                                 placeholder="E.g. University Of London"
-                                                                value="{{$usereducation['institute_name']}}"
+                                                                value="{{$usereducation['education']}}"
                                                             />
                                                         </div>
                                                             <div class="row">

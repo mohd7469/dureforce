@@ -172,6 +172,7 @@
         let exp_row_index=$('#experience_count').val();
         var user_basic_form=$('#form-basic-save');
         var user_experience_form=$('#freelancer-experience-save');
+        var user_education_form=$('#freelancer-education-save');
         var user_skills_form=$('#skills_save_form');
 
         var token= $('input[name=_token]').val();
@@ -201,6 +202,11 @@
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserExperience();
+            });
+            user_education_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserEducation();
             });
 
             user_skills_form.submit(function (e) {
@@ -534,6 +540,7 @@
 
         function saveUserExperience()
         {
+            
             $.ajax({
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -558,6 +565,42 @@
                         console.log(response.errors);
                         errorMessages(response.errors);
                     }
+                }
+            });
+
+        }
+        function saveUserEducation()
+        {
+         
+            $.ajax({
+                headers: {
+                    
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('education.save') }}",
+                method: "POST",
+                data:user_education_form.serialize(),
+                type:'json',
+
+                success: function(response) {
+                    
+             
+                    if (response.success) {
+                        
+                        notify('success', response.success);
+                        formPostProcess(educationTab);
+
+                    }
+                    
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
+                        errorMessages(response.errors);
+                    }
+                   
                 }
             });
 
