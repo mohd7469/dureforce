@@ -549,7 +549,7 @@ Route::name('user.')->group(function () {
         $user->save();
         $user->sendEmailVerificationNotification();
         $notify[] = ['success', 'Verification link sent!'];
-        return back()->withNotify($notify);
+        return redirect('email/verify')->withNotify($notify);
     })->middleware(['auth', 'throttle:6,1'])->name('change.email.verification.send');
 
     // Route::post('change-email-address','Auth\AccountVerifyController@showEmailChangeForm')->name('change-email')->middleware(['auth', 'throttle:6,1']);
