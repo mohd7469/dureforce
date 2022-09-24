@@ -13,8 +13,7 @@
 
          <div
             class="container-fluid welcome-body px-5"
-            id=""
-         >
+            id="">
             <h1 class="mb-4">Experience</h1>
             <span class="cmnt pb-4">
                   Complete your profile to
@@ -22,9 +21,8 @@
                   freelancers and start
                   selling your service to
                   growing network of
-                  businesses.</span
-            >
-            <div >
+                  businesses.</span>
+            <div>
                <div id="experiance-container">
 
               
@@ -219,6 +217,7 @@
                               </div>
                            </div>
                         </div>
+      
                         <input type="hidden" name="experience_count" id="experience_count" value="{{count($userexperiences->experiences)}}">
                      @endforeach
                   @else
