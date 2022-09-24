@@ -48,7 +48,7 @@ class ProfileController extends Controller
       }
     public function store(Request $request)
     {
-        dd($request->experiences);
+        //dd($request->experiences);
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -88,7 +88,7 @@ class ProfileController extends Controller
     
     }
     public function storeEducation(Request $request){
-        //  dd($request->educations);
+      
 
         $validator = \Validator::make($request->all(), 
         [
@@ -111,12 +111,13 @@ class ProfileController extends Controller
 
         try {
 
+            
             $user->education()->delete();
             $user->education()->createMany(
                 $request->educations
             );
            
-            return response()->json(["success" => "User Experience Added Successfully"], 200);
+            return response()->json(["success" => "User Education Added Successfully"], 200);
 
         } catch (\Exception $exp) {
 

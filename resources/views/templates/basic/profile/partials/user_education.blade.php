@@ -49,6 +49,7 @@
                      >
                   <input
                      type="text"
+                     
                      name="educations[{{$key}}][school_name]"
                      id="educations.{{$key}}.school_name"
                      value="{{$Usereducation['school_name']}}"
@@ -142,6 +143,7 @@
                         name="start_date[]"
                         id="from_date"
                         onchange="setMinDateInsti($(this), $('.end-date-0'))"
+                        
                         />
                   </div>
                   <div
