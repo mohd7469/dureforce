@@ -53,7 +53,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 text-center">
-                                    <a href="{{ url('/register') }}" class="submit-btn w-70 text-decoration-none">Resend Verfication Email</a>
+                                    <form method="POST" class="my-3" action="{{route('user.verification.send')}}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-secondary">Resend Verification Email</button>
+                                    </form>
+{{--                                    <a href="{{ url('/register') }}" class="submit-btn w-70 text-decoration-none">Resend Verfication Email</a>--}}
                                 </div>
                             </div>
                         </div>
