@@ -17,7 +17,6 @@
                              id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li><a href="{{ route('home') }}"
-<<<<<<< HEAD
                                         @if (request()->routeIs('home')) class="active" @endif>@lang('How it works')</a></li>
                                 <li><a href="{{ route('service') }}"
                                         @if (request()->routeIs('service')) class="active" @endif>@lang('Services we offer')</a>
@@ -32,22 +31,6 @@
                                 </li> -->
                                 <li><a href="{{ route('contact') }}"
                                         @if (request()->routeIs('contact')) class="active" @endif>@lang('About us')</a>
-=======
-                                       @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
-                                <li><a href="{{ route('service') }}"
-                                       @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
-                                </li>
-                                <li><a href="{{ route('software') }}"
-                                       @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
-                                </li>
-                                <li><a href="{{ route('job') }}"
-                                       @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a></li>
-                                <li><a href="{{ route('blog') }}"
-                                       @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
-                                </li>
-                                <li><a href="{{ route('contact') }}"
-                                       @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
->>>>>>> aa91ab0242748cddd7b75dc6440587f9c519e90d
                                 </li>
                             </ul>
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
@@ -117,25 +100,18 @@
                                         </div>
                                     </div>
 
-                            <!-- <div class="header-right  header-action">
+                             <div class="header-right  header-action">
                                 @guest
-<<<<<<< HEAD
-                                    <a href="#" class="btn--base active">@lang('Login')</a>
-                                    <a href="#" class="btn--base">@lang('Sign Up')</a>
-=======
-                                    <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
                                     <a href="#loginModal" data-bs-toggle="modal" class="btn--base active">@lang('Login')</a>
                                     <a href="#signUpModal" data-bs-toggle="modal" class="btn--base active">@lang('Sign Up')</a>
 
-                                    <!-- <a href="{{ route('user.register') }}" class="btn--base">@lang('Sign Up')</a> -->
->>>>>>> aa91ab0242748cddd7b75dc6440587f9c519e90d
                                 @endguest
 
                                 @auth
                                     <a href="{{ route('user.home') }}" class="btn--base">@lang('Dashboard')</a>
                                     <a href="{{ route('logout') }}" class="btn--base">@lang('Logout')</a>
                                 @endauth
-                            </div> -->
+                            </div>
 
                         </div>
                     </nav>
