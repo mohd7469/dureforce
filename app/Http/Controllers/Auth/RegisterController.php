@@ -76,6 +76,7 @@ class RegisterController extends Controller
             $agree = 'required';
         }
 
+
         $validate = Validator::make($data, [
             'firstname' => 'sometimes|required|string|max:50',
             'lastname' => 'sometimes|required|string|max:50',
@@ -84,7 +85,7 @@ class RegisterController extends Controller
             'password' => ['required', 'confirmed', $password_validation],
             'username' => 'required|alpha_num|unique:users|min:6',
             'captcha' => 'sometimes|required',
-            'type' => "required",
+//            'role' => "required",
             'agree' => $agree
         ]);
         return $validate;
@@ -134,6 +135,9 @@ class RegisterController extends Controller
         $user->password = Hash::make($data['password']);
         $user->username = trim($data['username']);
         $user->save();
+
+        $user->assignRole($data['role']);
+
         //Login Log Create
         $ip = $_SERVER["REMOTE_ADDR"];
         $userLogin = new UserLogin();
