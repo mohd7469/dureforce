@@ -59,13 +59,13 @@
                                 <small class="text-danger usernameExist"></small>
                             </div>
 
-                            {{-- <div class="col-lg-6 form-group">
+                            <div class="col-lg-12 form-group">
                                 <select name="country" id="country" class="form-control form--control">
                                     @foreach($countries as $key => $country)
-                                        <option data-mobile_code="{{ $country->dial_code }}" value="{{ $country->country }}" data-code="{{ $key }}">{{ __($country->country) }}</option>
+                                        <option value="{{ $country->id }}">{{ __($country->name) }}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div> 
 
 
                             <div class="col-lg-6 form-group hover-input-popup">

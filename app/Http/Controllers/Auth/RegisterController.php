@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
 use App\Models\GeneralSetting;
 use App\Models\User;
+use App\Models\Country;
 use App\Models\UserLogin;
+use App\Models\ServiceFee;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -49,7 +51,8 @@ class RegisterController extends Controller
         $pageTitle = "Sign Up";
         $info = json_decode(json_encode(getIpInfo()), true);
         $mobile_code = @implode(',', $info['code']);
-        $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        // $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $countries = Country::all();
         return view($this->activeTemplate . 'user.auth.register', compact('pageTitle', 'mobile_code', 'countries'));
     }
 
@@ -76,6 +79,7 @@ class RegisterController extends Controller
         $validate = Validator::make($data, [
             'firstname' => 'sometimes|required|string|max:50',
             'lastname' => 'sometimes|required|string|max:50',
+            'country' => "required",
             'email' => 'required|string|email|max:90|unique:users',
             'password' => ['required', 'confirmed', $password_validation],
             'username' => 'required|alpha_num|unique:users|min:6',
@@ -121,56 +125,21 @@ class RegisterController extends Controller
         $general = GeneralSetting::first();
         //User Create
         $user = new User();
+        $serviceFee = ServiceFee::where('slug', 'new-user')->first();
+        $user->service_fee_id = $serviceFee->id;
         $user->first_name = isset($data['firstname']) ? $data['firstname'] : null;
         $user->last_name = isset($data['lastname']) ? $data['lastname'] : null;
         $user->email = strtolower(trim($data['email']));
+        $user->country_id = isset($data['country']) ? $data['country'] : null;
         $user->password = Hash::make($data['password']);
         $user->username = trim($data['username']);
-        // $user->country_code = '';
-        // $user->mobile = '';
-        // $user->address = [
-        //     'address' => '',
-        //     'state' => '',
-        //     'zip' => '',
-        //     'country' => isset($data['country']) ? $data['country'] : null,
-        //     'city' => ''
-        // ];
-        // $user->status = 1;
-        // $user->ev = $general->ev ? 0 : 1;
-        // $user->sv = $general->sv ? 0 : 1;
-        // $user->ts = 0;
-        // $user->tv = 1;
-        // $user->type = $data['type'];
         $user->save();
-
-
-        // $adminNotification = new AdminNotification();
-        // $adminNotification->user_id = $user->id;
-        // $adminNotification->title = 'New member registered';
-        // $adminNotification->click_url = urlPath('admin.users.detail', $user->id);
-        // $adminNotification->save();
-
-
         //Login Log Create
         $ip = $_SERVER["REMOTE_ADDR"];
-        // $exist = UserLogin::where('user_ip', $ip)->first();
         $userLogin = new UserLogin();
-
-        //Check exist or not
-        // if ($exist) {
-        //     $userLogin->longitude = $exist->longitude;
-        //     $userLogin->latitude = $exist->latitude;
-        //     $userLogin->city = $exist->city;
-        //     $userLogin->country_code = $exist->country_code;
-        //     $userLogin->country = $exist->country;
-        // } else {
-            $info = json_decode(json_encode(getIpInfo()), true);
-            $userLogin->longitude = @implode(',', $info['long']);
-            $userLogin->latitude = @implode(',', $info['lat']);
-            // $userLogin->city = @implode(',', $info['city']);
-            // $userLogin->country_code = @implode(',', $info['code']);
-            // $userLogin->country = @implode(',', $info['country']);
-        // }
+        $info = json_decode(json_encode(getIpInfo()), true);
+        $userLogin->longitude = @implode(',', $info['long']);
+        $userLogin->latitude = @implode(',', $info['lat']);
 
         $userAgent = osBrowser();
         $userLogin->user_id = $user->id;
@@ -179,8 +148,7 @@ class RegisterController extends Controller
         $userLogin->browser = @$userAgent['browser'];
         $userLogin->os = @$userAgent['os_platform'];
         $userLogin->save();
-
-
+        
         return $user;
 
     }

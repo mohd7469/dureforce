@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 use Cache;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -262,5 +263,16 @@ class User extends Authenticatable implements MustVerifyEmail
         } 
 
         return 0;
+    }
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+        });
+
+
     }
 }   
