@@ -192,7 +192,7 @@
                                           @if ($Userexperience['end_date'])
                                             value="{{ \Carbon\Carbon::parse($Userexperience['end_date'])->format('Y-m-d') }}"   
                                           @else 
-                                          {{-- {{'readonly'}} --}}
+                                          {{'disabled'}}
                                           @endif
                                           
                                           />
