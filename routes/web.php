@@ -579,7 +579,7 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::post('verify-sms', 'AuthorizationController@smsVerification')->name('verify.sms');
         Route::post('verify-g2fa', 'AuthorizationController@g2faVerification')->name('go2fa.verify');
 
-        Route::middleware(['checkStatus'])->group(function () {
+        // Route::middleware()->group(function () {
             Route::namespace('Seller')->prefix('seller')->group(function () {
 
                 Route::middleware('is-profile-completed')->group(function () {
@@ -752,7 +752,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
             //Review
             Route::post('review', 'ReviewController@store')->name('review.store');
-        });
+        // });
     });
 });
 
