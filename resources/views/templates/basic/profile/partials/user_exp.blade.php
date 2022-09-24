@@ -164,7 +164,7 @@
                                           name="experiences[{{$key}}][start_date]"
                                           id="experiences.{{$key}}.start_date"
                                           onchange="setMinDateJob($(this), $('.end-date-job-{{$key}}'))"
-                                          value="{{\Carbon\Carbon::parse($Userexperience['start_date'])->format('d-m-Y') }}" 
+                                          value="{{\Carbon\Carbon::parse($Userexperience['start_date'])->format('Y-m-d') }}" 
 
 
                                           
@@ -189,8 +189,13 @@
                                           onchange="checkIfDateGreaterJob($(this))"
                                           type="date"
                                           name="experiences[{{$key}}][end_date]"
-                                          value="{{\Carbon\Carbon::parse($Userexperience['end_date'])->format('dd/mm/YY')}}"
-                                       />
+                                          @if ($Userexperience['end_date'])
+                                            value="{{ \Carbon\Carbon::parse($Userexperience['end_date'])->format('Y-m-d') }}"   
+                                          @else 
+                                          {{-- {{'readonly'}} --}}
+                                          @endif
+                                          
+                                          />
                                     </div>
                               </div>
                               <div
