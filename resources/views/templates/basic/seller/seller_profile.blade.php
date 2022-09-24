@@ -1,5 +1,6 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
+
         <div class="container">
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
@@ -9,18 +10,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
+
             <div class="container">
                 <div class="row wrapper">
-                    <div class="col-md-4 col-xl-4 col-lg-4 col-sm-4">
-                        <div class="ms-4 mt-3  mb-0 d-flex flex-column ">
+                    <div class="col-md-4 col-xl-3 col-lg-4 col-sm-4">
+                        <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
                                     <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
                                     <h4 class="my-3 text-center">Amna Kareem</h4>
                                     <h5 class="my-3 text-center">Freelance DevOps Engineer</h5>
                                     <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p>
-
                                     <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
 {{--                                  edit profile modal--}}
                                     <div class="d-flex mt-5">
@@ -31,8 +31,8 @@
 
                                     <div class="article">
                                     <p>Bacon ipsum dolor amet sirloin jowl turducken pork loin pig pork belly, chuck cupim tongue beef doner tri-tip pancetta spare ribs porchetta.
-                                    </p>
-                                    <a id="clickme">Read more</a>
+                                    </p> <a id="clickme">Read more</a>
+
                                     <p id="book" class="moretext">
                                         Brisket ball tip cow sirloin. Chuck porchetta kielbasa pork chop doner sirloin, bacon beef brisket ball tip short ribs.
                                     </p>
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-xl-8 col-lg-8 col-sm-8 ">
+                    <div class="col-md-8 col-xl-9 col-lg-8 col-sm-8 ">
                         <div class="card mb-4">
                             <div class="card-body">
                                 <div class="container upper-tab">
@@ -119,17 +119,17 @@
                             <div class="tab-pane container active" id="msg">
                                     <div class="container col-sm ">
                                             <div class="inner-tab">
-                                                <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
-                                                    <li class="nav-item">
-                                                        <a class="active standard-btn" aria-current="true" data-bs-toggle="tab" href="#cmplt">Completed</a>
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="tab-button active" id="home-tab" data-bs-toggle="tab" data-bs-target="#cmplt" type="button" role="tab" aria-controls="home" aria-selected="true">Completed</button>
                                                     </li>
-                                                    <li class="nav-item">
-                                                        <a class="standard-btn " data-bs-toggle="tab" href="#inpro">In-progress</a>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="tab-button" id="profile-tab" data-bs-toggle="tab" data-bs-target="#inpro" type="button" role="tab" aria-controls="profile" aria-selected="false">Inprogress</button>
                                                     </li>
                                                 </ul>
                                             </div>
                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="cmplt">
+                                                <div class="tab-pane active show" id="cmplt">
                                                    <div class="row">
                                                        <div class="col-xl-10 card-text-tab">
                                                            <h4 >Elementor Custom Form Action (HTTP Get).</h4>
@@ -211,7 +211,7 @@
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
-                                        <div class="col-xl-8 card-text-tab1 border-left">
+                                        <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
                                             <h4>Senior DevOps Engineer</h4>
                                             <p class="short-text">Labelbox</p>
                                             <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p><br/>
@@ -237,7 +237,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="col-xl-2">
+                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
                                             <button type="button" class="standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
                                                 Add Experience
                                             </button>
@@ -298,8 +298,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="set">
-                                <div class="row">
-                                <div class="col-xl-4">
+                            <div class="row portfolio">
+                                 <div class="col-xl-4 col-lg-6 col-md-6">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                         <div class="card-body">
@@ -308,7 +308,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-xl-4">
+                                 <div class="col-xl-4 col-lg-6  col-md-6">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -317,7 +317,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4">
+                                 <div class="col-xl-4 col-lg-6  col-md-6">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -326,9 +326,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                <div class="col-xl-4">
+                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3  ">
                                     <div class="card" style="width: 18rem;">
                                         <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                         <div class="card-body">
@@ -337,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <div class="col-xl-4">
+                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3   ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -346,7 +344,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4">
+                                  <div class="col-xl-4 col-lg-6  col-md-6  mt-3  ">
                                         <div class="card" style="width: 18rem;">
                                             <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
                                             <div class="card-body">
@@ -377,11 +375,16 @@
                                 </div>
                             </div>
                             <div class="tab-pane container fade" id="tes">
-                                        <blockquote class="quote blockquote">
+                                <div class="row">
+                                <div class="quote">
+                                        <blockquote class="blockquote">
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                            <p class="cite"><b>Simon King</b> <br>
-                                                Director Marketing, Global Solutions Ltd</p>
+                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                         </blockquote>
+                                <p class="cite"><b>Simon King</b> <br>
+                                    Director Marketing, Global Solutions Ltd</p>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -390,7 +393,7 @@
         </div>
 {{--      profile modal--}}
     <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
                         <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
@@ -426,8 +429,8 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-xs-12 form-group editpro">
                                 <label>@lang('Core Skills & Expertise')</label>
-                                <div class="input-group mb-3">
-                                    <select class="skills form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Start typing to search for skills" style="width: 100%; overflow:hidden"  aria-hidden="true" name="skills[]" id="skills" >
+                                <div class="input-group mb-3 select2_element">
+                                    <select class="skills form-control  select2 select2-hidden-accessible" multiple="" data-placeholder="Start typing to search for skills" style="width: 100%; overflow:hidden"  aria-hidden="true" name="skills[]" id="skills" >
                                         @foreach($skills as $item)
                                             <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                         @endforeach
@@ -453,7 +456,7 @@
             </div>
         </div>
     <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header editprofileheader">
                     <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
@@ -478,6 +481,12 @@
                                 <div class="form-group">
                                     <label for="title">Location  *</label>
                                     <input type="text" class="form--control" name="Location" placeholder="Dublin, Ireland">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <label class="form-check-label" for="flexCheckChecked">
+                                        I’m currently working here
+                                    </label>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
@@ -516,8 +525,10 @@
 "use strict";
 $(document).ready(function() {
 
-
-$('.select2').select2({
+    $("#skills").select2({
+        closeOnSelect: false
+    });
+$('#skills').select2({
 tags: true
 });
     $('#skills').select2({

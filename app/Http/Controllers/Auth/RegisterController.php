@@ -8,7 +8,7 @@ use App\Providers\RouteServiceProvider;
 use App\Models\GeneralSetting;
 use App\Models\User;
 use App\Models\UserLogin;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Registered; //is ko open kreok
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -135,10 +135,11 @@ class RegisterController extends Controller
             $this->guard()->login($user);
 
             return $this->registered($request, $user)
-                ?: redirect($this->redirectPath());
+                ?: redirect($this->redirectPath()); 
         });
 
     }
+    
     protected function create(array $data)
     {
         $general = GeneralSetting::first();
