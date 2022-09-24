@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\LanguageLevel;
+use App\Models\Skills;
 use App\Models\User;
 use App\Models\UserBasic;
 use App\Models\WorldLanguage;
@@ -35,8 +36,8 @@ class ProfileController extends Controller
     public function profile()
     {
         
+        $skills=Skills::select('id','name')->get();
         $user=User::withAll()->find(2);
-
         $categories=Category::select('id','name')->get();
         $cities=City::select('id','name')->where('country_id',$user->country_id)->get();
         $countries=Country::select('id','name')->get();
@@ -48,7 +49,7 @@ class ProfileController extends Controller
         $userexperiences = User::with('experiences')->where('id', 2)->first();
         $usereducations = User::with('education')->where('id', 2)->first();
         
-        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations'));
+        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations','skills'));
 
     }
     
@@ -135,7 +136,45 @@ class ProfileController extends Controller
                 
                 DB::rollback();
                 // return response()->json(['error'=>$exception->getMessage()]);
-                $notify[] = ['error', 'Failled To Save User Profile .'];
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+
+                
+            }
+        }
+    }
+    
+    /**
+     * saveSkills
+     *
+     * @return void
+     */
+    public function saveSkills(Request $request)
+    {
+        $rules=[
+            'skills'  => 'required|array|max:15|min:5',
+            'skills.*' =>'exists:skills,id',
+
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } 
+        else
+        {
+            try {
+                
+                DB::beginTransaction();
+                $user=User::find(2);
+                $user->rate_per_hour=$request->hourly_rate;
+                $user->skills()->sync($request->skills);
+                $user->save();
+                DB::commit();
+                return response()->json(["success" => "User Basics Updated Successfully"]);
+            }
+            catch (\Throwable $exception) {
+                DB::rollback();
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
                 

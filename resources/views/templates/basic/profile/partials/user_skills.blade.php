@@ -1,5 +1,5 @@
 <div class="setProfile" id="user-skills">
-   <form action="{{ route('user.profile.save.skills') }}" method="POST" class="user-skills-form">
+   <form action="{{ route('skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
       @csrf
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Expertise & Skills</h1>
@@ -27,10 +27,9 @@
                   <div class="input-group">
                      <input
                         type="number"
-                        name="rates"
+                        name="hourly_rate"
                         class="field-rate col-md-10"
                         min="0"
-                        id="rate"
                         value=""
                         />
                      <span class="input-group-text float-end">$</span>
@@ -53,16 +52,19 @@
                <div class="row mt-3"
                   id="skill-row"
                   >
+
                   <div
-                     class="col-xl-6 col-md-12 col-lg-6 form-group select2Tag mb-4"
+                     class="col-xl-12 col-md-12 col-lg-6 form-group select2Tag mb-4"
                      >
+
                      <label
                         >Your Skills
-                     <span
-                        class="imp"
-                        >*</span
-                        ></label
-                        >
+                        <span
+                           class="imp"
+                           >*
+                        </span>
+                     </label>
+
                      <select
                         class="form-control select2 select2-hidden-accessible"
                         name="skills[]"
@@ -71,65 +73,14 @@
                         data-select2-id="select2-data-skills"
                         tabindex="-1"
                         aria-hidden="true"
-                        ></select
-                        >
-                     <span
-                        class="select2 select2-container select2-container--default"
-                        dir="ltr"
-                        data-select2-id="select2-data-14-wkwg"
-                        style="
-                        width: auto;
-                        "
-                        >
-                        <span
-                           class="selection"
-                           >
-                           <span
-                              class="select2-selection select2-selection--multiple"
-                              role="combobox"
-                              aria-haspopup="true"
-                              aria-expanded="false"
-                              tabindex="-1"
-                              aria-disabled="false"
-                              >
-                              <ul
-                                 class="select2-selection__rendered"
-                                 id="select2-skills-container"
-                                 ></ul>
-                              <span
-                                 class="select2-search select2-search--inline"
-                                 ><input
-                                 class="select2-search__field"
-                                 type="search"
-                                 tabindex="0"
-                                 autocorrect="off"
-                                 autocapitalize="none"
-                                 spellcheck="false"
-                                 role="searchbox"
-                                 aria-autocomplete="list"
-                                 autocomplete="off"
-                                 aria-describedby="select2-skills-container"
-                                 placeholder=""
-                                 style="
-                                 width: 0.75em;
-                                 " /></span>
-                           </span>
-                        </span
-                           >
-                        <span
-                           class="dropdown-wrapper"
-                           aria-hidden="true"
-                           ></span
-                           >
-                     </span>
-                     <small
-                        >Type Skills and
-                     Enter
-                     press</small
-                        >
-                     <p
-                        id="skills_error"
-                        ></p>
+                        style="width:100%">
+                        <option value="">Select Skills</option>
+                        @foreach ($skills as $skill)
+                           <option value="{{$skill->id}}">{{$skill->name}}</option>  
+                        @endforeach
+                     </select
+                        
+                    
                   </div>
                   <div
                      class="col-xl-12 col-md-12 col-lg-12 form-group add-skills"

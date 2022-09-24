@@ -173,6 +173,7 @@
         var user_basic_form=$('#form-basic-save');
         var user_experience_form=$('#freelancer-experience-save');
         var user_education_form=$('#freelancer-education-save');
+        var user_skills_form=$('#skills_save_form');
 
         var token= $('input[name=_token]').val();
         
@@ -206,6 +207,12 @@
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserEducation();
+            });
+
+            user_skills_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserSkills();
             });
 
             if (previewImg.length > 0) {
@@ -474,7 +481,33 @@
                 notify('error', val);
             });
         }
+        function saveUserSkills(){
+            $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('skills.save') }}",
+                method: "POST",
+                data:user_skills_form.serialize(),
+                type:'json',
 
+                success: function(response) {
+                
+                    if (response.success) {
+                        notify('success', response.success);
+
+                    }
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
+                        errorMessages(response.errors);
+                    }
+                }
+            });
+        }
         function saveUserBasic() {
             var profile_file=$('input[type=file]')[0].files[0];
             let form_data = new FormData(user_basic_form[0]);
