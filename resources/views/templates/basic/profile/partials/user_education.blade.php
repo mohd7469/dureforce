@@ -98,21 +98,25 @@
                   <div
                      class="form-check"
                      >
+
                      <input
                         class="form-check-input check current-working-check"
                         onclick="checkDate($(this), $('.end-date-job-0'))"
                         type="checkbox"
-                        name="educations[{{$key}}][isCurrent]"
-                        id="educations.{{$key}}.isCurrent"
-                        value="{{$Usereducation['isCurrent']==1   ? 'checked' : ''}}"
-                        />
+                        name="educations[{{$key}}][is_enrolled]"
+                        id="educations.{{$key}}.is_enrolled"
+                        value="{{$Usereducation['is_enrolled'] ==1   ? 'checked' : ''}}"
+                     />
+
                      <label
                         class="form-check-label"
                         for="flexCheckDefault"
-                        >I’m
-                     currently
-                     enroll
-                     here</label
+                        >
+                        I’m
+                        currently
+                        enroll
+                        here
+                     </label
                         >
                   </div>
                </div>
@@ -228,9 +232,9 @@
                   <div class="col-md-6">
                      <label class="mt-4">Degree <span class="imp">*</span>
                      </label>
-                     <select name="educations[0][degree_id" class="form-control select-lang">
+                     <select name="educations[0][degree_id]" class="form-control select-lang">
                         <option value="" selected=""> Select Degree </option>
-                        <option value="1"> BSCS </option>
+                        <option value="77"> BSCS </option>
                      </select>
                   </div>
                   <div class="col-md-6">

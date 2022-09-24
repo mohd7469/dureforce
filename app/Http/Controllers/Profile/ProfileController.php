@@ -93,13 +93,13 @@ class ProfileController extends Controller
         $validator = \Validator::make($request->all(), 
         [
             'educations' => 'required|array',
-            // 'educations.*.school_name'   => 'required',
-            // 'educations.*.education' => 'required',
+            'educations.*.school_name'   => 'required',
+            'educations.*.education' => 'required',
             'educations.*.field_of_study'=> 'required',
             'educations.*.description'  => 'required',
-            // 'educations.*.degree_id'  => 'required',
-            // 'educations.*.start_date'  => 'required|before:today',
-            // 'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+            'educations.*.degree_id'  => 'required',
+            'educations.*.start_date'  => 'required|before:today',
+            'educations.*.end_date'    => 'before:today|after_or_equal:educations.*.start_date',
         ]);
         
         if ($validator->fails())
@@ -120,7 +120,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Education Added Successfully"], 200);
 
         } catch (\Exception $exp) {
-
+            return response()->json(['error' => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
 
