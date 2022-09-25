@@ -11,8 +11,7 @@ class UserLanguage extends Model
 
     protected $fillable = [
         'language_id',
-        'level',
-        'level_id',
+        'language_level_id',
         'user_id'
     ];
 

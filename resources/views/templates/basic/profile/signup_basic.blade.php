@@ -50,6 +50,7 @@
     $content = getContent('breadcrumbs.content', true);
 
     @endphp
+    
     <section class="account-section bg-overlay-white bg_img">
         <div class="container">
             <div id="viewport">
@@ -59,50 +60,40 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='{{ auth()->user()->getLanguagesMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}'>1</span>
+                                    class='completed-span'>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
                             </li>
-                            <li role="tab" class="underline {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                            <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getExperienceMoreThanOneCount()
-                                        ? 'completed-span'
-                                        : '' }}">2</span>
-                                <a data-toggle="tab" href="#profile2" class="">
+                                    class="">2</span>
+                                <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
                                     Experience
                                 </a>
                             </li>
                             <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getEduationMoreThanOneCount()? 'completed-span': '' }}">3</span>
-                                <a data-toggle="tab" href="#profile3" class="">
+                                    class="">3</span>
+                                <a data-toggle="tab" href="#profile3" class="" id="education_tab">
                                     Education
                                 </a>
                             </li>
-                            <li role="tab" class="underline {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
+                            <li role="tab" class="{{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                 <span
-                                    class="{{ auth()->user()->getSkillsMoreThanOneCount()? 'completed-span': '' }}">4</span>
-                                <a data-toggle="tab" href="#profile4" class="">
-                                    Expertise & Skills
+                                    class="">4</span>
+                                <a data-toggle="tab" href="#profile4" class="" >
+                                    Skills & Rate
                                 </a>
                             </li>
-                            <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
-                                <span
-                                    class="{{ auth()->user()->getRateMoreThanOneCount()? 'completed-span': '' }}">5</span>
-                                <a data-toggle="tab" href="#profile5" class="">
-                                    Rates
-                                </a>
-                            </li>
+                           
                         </ul>
                     </div>
                     <!-- Content -->
 
                     <div class="col-12 col-md-8 p-0">
 
-                        <div class="tab-content ">
+                        <div class="tab-content " id="content-div">
                             @csrf
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
@@ -122,10 +113,7 @@
                                 class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                 @include($activeTemplate . 'profile.partials.user_skills')
                             </div>
-                            <div id="profile5" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-5' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_rates')
-                            </div>
+                           
                         </div>
                     </div>
 
@@ -136,11 +124,12 @@
 @endsection
 @push('style')
     <style>
-        .select2Tag input {
-            background-color: transparent !important;
-            padding: 0 !important;
+        span.select2-selection.select2-selection--multiple {
+            width: 100% !important;
+            padding: 10px !important;
+            border: 1px solid #CBDFDF;
         }
-
+        
     </style>
 @endpush
 @push('style-lib')
@@ -152,10 +141,17 @@
 @endpush
 @push('script')
     <script>
+        
         "use strict";
+
         var languageRow = $('#language-row');
+        var experienceTab=$('#experience_tab');
+        var educationTab=$('#education_tab');
+        var skillsTab=$('#skills_tab');
+
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
+        var educationRow = $('#education-container');
         var educationRow = $('#education-container');
         var current_fs, next_fs, previous_fs; //fieldsets
         var opacity;
@@ -166,10 +162,56 @@
         let date = $('.checkedDate')
         let startDate = $('input[name="start_date_job[]"]');
         let startDateInsti = $('input[name="start_date_institute[]"]');
+        let row_index= $('#languages_basics').val();
+        let exp_row_index=$('#experience_count').val();
+        let edu_row_index=$('#education_count').val();
+        var user_basic_form=$('#form-basic-save');
+        var user_experience_form=$('#freelancer-experience-save');
+        var user_education_form=$('#freelancer-education-save');
+        var user_skills_form=$('#skills_save_form');
+
+        var token= $('input[name=_token]').val();
+        
         let selectedLevels = [];
+        var _languages = [];
+        let _languages_levels = [];
+        let _countries = [];
+        let _degress = [];
+
+
 
 
         $('document').ready(function() {
+            
+            loadProfileBasicsData();
+
+            $('.select2').select2({
+                tags: true
+            });
+            
+            user_basic_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserBasic();
+            });
+
+            user_experience_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserExperience();
+            });
+            user_education_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserEducation();
+            });
+
+            user_skills_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserSkills();
+            });
+
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
                 imgInp.addClass('imgInp-after');
@@ -186,12 +228,23 @@
             }
         });
 
-        $(document).ready(function() {
-            $('.select2').select2({
-                tags: true
-            });
+       
 
-        })
+        function loadProfileBasicsData()
+        {
+                $.ajax({
+                    type:"GET",
+                    url:"{{route('profile.basics.data')}}",
+                    success:function(data){
+                      
+                        _languages=data.languages;
+                        _languages_levels=data.language_levels;
+                        _countries=data.countries;
+                        _degress=data.degrees;
+
+                    }
+                });  
+        }
 
         function checkDate(parent, element) {
             if (parent.is(':checked')) {
@@ -253,28 +306,40 @@
 
         }
 
+        function removerow(row_id)
+        {
+            var div_to_remove=row_id;
+            $(div_to_remove).remove();
+        }
 
         function addMoreExperiance() {
-            experienceRow.append(`
-             <div id="experiance-row">
+            experienceRow.append(`<hr/>
+             <div id="experiance-row-`+exp_row_index+`">
                
-                                            <button type="button" class="btn btn-danger float-right" onclick="removeExperianceRow($('#experiance-row'))"><i class="fa fa-trash"></i></button>
+                                            <button type="button" class="btn btn-danger float-right" onclick="removerow('#experiance-row-`+exp_row_index+`')"><i class="fa fa-trash"></i></button>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Job Title <span class="imp">*</span></label>
-                                                <input type="text" name="job_title[]" placeholder="E.g. Full Stack Developer">
+                                                <input type="text" name="experiences[`+exp_row_index+`][job_title]" placeholder="E.g. Full Stack Developer" id="experiences.`+exp_row_index+`.job_title">
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Company <span class="imp">*</span></label>
-                                                <input type="text" name="company[]" placeholder="E.g. Microsoft">
+                                                <input type="text" name="experiences[`+exp_row_index+`][company_name]" placeholder="E.g. Microsoft" id="experiences.`+exp_row_index+`.company_name">
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Location <span class="imp">*</span></label>
-                                                <input type="text" name="job_location[]" placeholder="City, Country" />
+                                                <select type="text" class="form-control" name="experiences[`+exp_row_index+`][country_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
+                                                 <option value=""  selected="">
+                                                   Select Location
+                                                    </option>
+                                                        ${_countries?.map((country) => {
+                                                            return ` <option value="${country.id}"> ${country.name}</option>`;
+                                                        })}
+                                                </select>
                                             </div>
                                             <div class="col-md-12 mt-1">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input check" type="checkbox"
-                                                                        name="isCurrent[]" id="flexCheckDefault"
+                                                                        name="experiences[`+exp_row_index+`][is_working]" id="experiences.`+exp_row_index+`.is_working"
                                                                         onclick="checkDate($(this), $('.end-date-job'))"
                                                                       />
                                                                     <label class="form-check-label px-2"
@@ -285,61 +350,83 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                    <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" >
+                                                    <input type="date" class="date" name="experiences[`+exp_row_index+`][start_date]" onchange="setMinDateJob($(this), $('.end-date-job'))" id="experiences.`+exp_row_index+`.start_date">
                                                 </div> 
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" >
+                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="experiences[`+exp_row_index+`][end_date]" id="experiences.`+exp_row_index+`.end_date">
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Description <span class="imp">*</span></label>
-                                                <textarea cols="10" rows="5" name="job_description[]"
-                                                    placeholder="Job Description"></textarea>
+                                                <textarea cols="10" rows="5" name="experiences[`+exp_row_index+`][description]"
+                                                    placeholder="Job Description"
+                                                    id="experiences.`+exp_row_index+`.description"
+                                                    ></textarea>
                                             </div>
-                                            <hr/>
+                                            
                                         </div>
                                         `);
+                exp_row_index=exp_row_index+1;
+            
 
         }
 
         function addEducation() {
 
             educationRow.append(` <div id="education-row">
+                <div id="experiance-row-`+edu_row_index+`">
                                              <hr>
                                             <button type="button" class="btn btn-danger float-right" onclick="removeEducationRow($('#education-row'))"><i class="fa fa-trash"></i></button>
                                             <div class="col-md-12">
                                                 <label class="mt-4">School / College / University <span class="imp">*</span></label>
-                                                <input type="text" name="institute_name[]" placeholder="E.g. University Of London">
+                                                <input type="text" name="educations[`+edu_row_index+`][school_name]" placeholder="E.g. University Of London">
                                             </div>
                                             <div class="col-md-12">
+                                                <label class="mt-4">Education <span class="imp">*</span></label>
+                                                <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
+                                            </div>
+                                            <div class="col-md-12">
+                                                
                                                 <label class="mt-4">Degree <span class="imp">*</span></label>
-                                                <input type="text" name="degree[]" placeholder="E.g. BA Arts">
+                                                <input type="text" name="educations[`+edu_row_index+`][degree_id]" placeholder="E.g. BA Arts">
                                             </div>
                                             <div class="col-md-12">
+                                                
                                                 <label class="mt-4">Field Of Study <span class="imp">*</span></label>
-                                                <input type="text" name="field[]" placeholder="Visual Arts" />
+                                                <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Dates Attended <span class="imp">*</span></label>
+                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-0'))"
+                        type="checkbox"
+                        name="educations[`+edu_row_index+`][is_enrolled]"
+                        
+                       
+                     />
+                                                
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                    <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                    
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                    <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" >
                                                 </div>
+                                                
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="mt-4">Description <span class="imp">*</span></label>
-                                                <textarea cols="" rows="5" name="institute_description[]"
+                                                <textarea cols="" rows="5" name="educations[`+edu_row_index+`][description]"
                                                     placeholder="Describe your responsibilities"></textarea>
                                             </div>
+                                          
                                         </div>`)
+            edu_row_index=edu_row_index+1;
         }
 
 
@@ -371,16 +458,227 @@
             }
         }
 
-        function formBasicSave() {
-            $('#form-basic-save').submit();
+        function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
+        }
+        
+        function formPostProcess(nextTab)
+        {
+
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            // $('#profile','profile2','#profile3','#profile4').removeClass('active');
+            nextTab.click();
+            scrollTop();
+
         }
 
-        /**
-         * Checks if value is empty. Deep-checks arrays and objects
-         * Note: isEmpty([]) == true, isEmpty({}) == true, isEmpty([{0:false},"",0]) == true, isEmpty({0:1}) == false
-         * @param value
-         * @returns {boolean}
-         */
+        function scrollTop()
+        {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+        }
+        
+        function errorMessages(errors)
+        {
+            $.each(errors, function(i, val) {
+                notify('error', val);
+            });
+        }
+        function saveUserSkills(){
+            $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('skills.save') }}",
+                method: "POST",
+                data:user_skills_form.serialize(),
+                type:'json',
+
+                success: function(response) {
+                
+                    if (response.success) {
+                        notify('success', response.success);
+
+                    }
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
+                        errorMessages(response.errors);
+                    }
+                }
+            });
+        }
+        function saveUserBasic() {
+            var profile_file=$('input[type=file]')[0].files[0];
+            let form_data = new FormData(user_basic_form[0]);
+            form_data.append('profile_picture', profile_file);
+            // var form_data = user_basic_form.serialize();
+            console.log(form_data);
+            $.ajax({
+                  type:"POST",
+                  url:"{{route('profile.basics.save')}}",
+                  data: form_data,
+                  processData: false,
+                contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                        formPostProcess(experienceTab);
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+             
+        }
+
+        function saveUserExperience()
+        {
+            
+            $.ajax({
+                headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('profile.experience.save') }}",
+                method: "POST",
+                data:user_experience_form.serialize(),
+                type:'json',
+
+                success: function(response) {
+                
+                    if (response.success) {
+                        notify('success', response.success);
+                        formPostProcess(educationTab);
+
+                    }
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
+                        errorMessages(response.errors);
+                    }
+                }
+            });
+
+        }
+        function saveUserEducation()
+        {
+         
+            $.ajax({
+                headers: {
+                    
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('education.save') }}",
+                method: "POST",
+                data:user_education_form.serialize(),
+                type:'json',
+
+                success: function(response) {
+                    
+             
+                    if (response.success) {
+                        
+                        notify('success', response.success);
+                        formPostProcess(skillsTab);
+
+                    }
+                    
+                    else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                     else {
+                        
+                        console.log(response.errors);
+                        errorMessages(response.errors);
+                    }
+                   
+                }
+            });
+
+        }
+
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+            message: message,
+            position: "topRight",
+            });
+        }
+
+        function displayAlertSuccessMessage(message)
+        {
+            iziToast.success({
+            message: message,
+            position: "topRight",
+            });
+        }
+       
+        function addMoreLanguages() 
+        {
+                languageRow.append(`
+                                    <div id="moreLanguage-row-`+row_index+`">
+                                                
+                                        <div class="row" >
+                                            <div class="col-md-6 col-sm-10">
+                                                <label class="mt-4">Language <span class="imp">*</span></label>
+                                                <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                                    <option value=""  selected="">
+                                                    Spoken Language(s)
+                                                    </option>
+                                                ${_languages?.map((language) => {
+                                                    return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
+                                                })}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 col-sm-10">
+                                                <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                                <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                                    <option value=""   selected="">
+                                                                            My Level is
+                                                                            </option>
+                                                    ${_languages_levels?.map((level) => {
+                                                    return ` <option value="${level.id}"> ${level.name}</option>`;
+                                                    })}
+                                                </select>
+                                            </div>
+                                            <div class="col-md-1" style="margin-top:20px">
+                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
+
+                                            </div>
+                                        </div>
+                                    </div>`                  
+                                 );
+            row_index=row_index+1;
+
+        }
+       
         function isEmpty(value) {
             var isEmptyObject = function(a) {
                 if (typeof a.length === 'undefined') { // it's an Object, not an Array
@@ -403,9 +701,6 @@
         }
     </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script>
-        let _languages = {!! json_encode($languages->toArray()) !!};
-        let _languages_levels = {!! json_encode($languageLevels->toArray()) !!};
-    </script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>
 @endpush
+

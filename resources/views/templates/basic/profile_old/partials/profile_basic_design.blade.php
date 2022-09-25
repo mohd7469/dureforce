@@ -3,8 +3,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
-
 
         <title>DureForce - Welcome To Dureforce</title>
         <meta name="title" content="DureForce - Welcome To Dureforce" />
@@ -612,7 +610,7 @@
                                                                 ></label
                                                             >
                                                             <select
-                                                                name="category_id"
+                                                                name="languages[]"
                                                                 class="form-control select-lang"
                                                                 id="languages"
                                                                 >
@@ -622,13 +620,16 @@
                                                                 >
                                                                     Select Category
                                                                 </option>
-                                                                @foreach ($categories as $category)
                                                                 <option
-                                                                    value="{{$category->id}}"
+                                                                    value="1"
                                                                 >
-                                                               {{$category->name}}
-                                                            </option>
-                                                                @endforeach
+                                                                    Web Developer
+                                                                </option>
+                                                                <option
+                                                                    value="2"
+                                                                >
+                                                                    Android Developer
+                                                                </option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6 col-sm-12">
@@ -678,18 +679,18 @@
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                Select Country
+                                                                Karachi
                                                                 </option>
-                                                                @foreach ($countries as $country)
-
-                                                                    <option
-                                                                        value="{{$country->id}}"
-                                                                    
-                                                                    >
-                                                                        {{$country->name}}
-                                                                    </option>
-
-                                                                @endforeach
+                                                                <option
+                                                                    value="1"
+                                                                >
+                                                                lahore
+                                                                </option>
+                                                                <option
+                                                                    value="2"
+                                                                >
+                                                                Sialkot
+                                                                </option>
                                                             </select>
                                                     </div>
                                                     <div class="col-md-12">
@@ -713,7 +714,7 @@
                                                         style="
                                                             justify-content: space-between !important;
                                                         "
-                                                        >
+                                                    >
                                                         <div
                                                             class="col-md-6 col-sm-12"
                                                             >
@@ -745,7 +746,7 @@
                                                         </div>
                                                         <div
                                                             class="col-md-6 col-sm-12"
-                                                           >
+                                                        >
                                                             <label class="mt-4"
                                                                 >Profeciency
                                                                 Level
@@ -794,7 +795,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                            >
+                                                        >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -904,7 +905,7 @@
 
                                                         <div
                                                             id="moreLanguage-row"
-                                                            >
+                                                        >
                                                             <hr />
                                                             <div
                                                                 class="row"
@@ -1018,7 +1019,7 @@
                                                         class="my-2"
                                                         id="add-language"
                                                         onclick="addMoreLanguages()"
-                                                        >
+                                                    >
                                                         Add another
                                                     </button>
                                                 </div>
@@ -1050,8 +1051,11 @@
                                             id="form-experience-save"
                                             class="form-experience-save"
                                         >
-                                             {{ csrf_field() }}
-
+                                            <input
+                                                type="hidden"
+                                                name="_token"
+                                                value="VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL"
+                                            />
                                             <div
                                                 class="container-fluid welcome-body px-5"
                                                 id=""
@@ -1066,9 +1070,6 @@
                                                     businesses.</span
                                                 >
                                                 <div>
-                                                    @foreach ($userexperiences->experiences as  $Userexperience)
-                                                        
-                                                
                                                     <div
                                                         id="experiance-container"
                                                     >
@@ -1092,7 +1093,6 @@
                                                                     name="job_title[]"
                                                                     id="ex_title"
                                                                     placeholder="E.g. Full Stack Developer"
-                                                                    value="{{$Userexperience['title']}}"
                                                                 />
                                                             </div>
                                                             <div
@@ -1111,7 +1111,6 @@
                                                                     name="company[]"
                                                                     id="ex_company"
                                                                     placeholder="E.g. Microsoft"
-                                                                    value="{{$Userexperience['company']}}"
                                                                 />
                                                             </div>
                                                             <div
@@ -1126,25 +1125,26 @@
                                                                     ></label
                                                                 >
                                                                 <select
-                                                                name="country_id"
+                                                                name="languages[]"
                                                                 class="form-control select-lang"
-                                                                id="country_id"
+                                                                id="languages"
                                                                 >
-                                                                <option value="{{ $Userexperience['location'] }}" {{ ( $Userexperience['location'] ) ? 'selected' : '' }}></option>
                                                                 <option
                                                                     value=""
                                                                     selected=""
                                                                 >
-                                                                    Select Country
+                                                                    Seect Country
                                                                 </option>
-                                                                @foreach ($countries as $country)
                                                                 <option
-                                                                    value="{{$country->id}}"
-                                                                   
+                                                                    value="1"
                                                                 >
-                                                                    {{$country->name}}
+                                                                    Pakistan
                                                                 </option>
-                                                                @endforeach
+                                                                <option
+                                                                    value="2"
+                                                                >
+                                                                    Turky
+                                                                </option>
                                                             </select>
                                                             </div>
                                                             <div
@@ -1154,14 +1154,11 @@
                                                                     class="form-check"
                                                                 >
                                                                     <input
-                                                                        class="form-check-input check current-working-check isCurrentmessageCheckbox"
+                                                                        class="form-check-input check current-working-check"
                                                                         onclick="checkDate($(this), $('.end-date-job-0'))"
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
-                                                                        value="" {{ ($Userexperience['isCurrent'] == 1 ? 'checked' : '0')}}
-                                                
-                                                                       
                                                                     />
                                                                     <label
                                                                         class="form-check-label"
@@ -1191,12 +1188,8 @@
                                                                     <input
                                                                         type="date"
                                                                         name="start_date_job[]"
-                                                                        id="ex_start_date"
+                                                                        id="start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
-                                                                        value="{{\Carbon\Carbon::parse($Userexperience['start_date_job'])->format('d-m-Y') }}" 
-
-                    
-                                                                       
                                                                     />
                                                                 </div>
                                                                 <div
@@ -1214,11 +1207,10 @@
                                                                     >
                                                                     <input
                                                                         class="end-date-job-0"
-                                                                        id="ex_end_date"
+                                                                        id="end-date-job"
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
-                                                                        value="{{\Carbon\Carbon::parse($Userexperience['end'])->format('dd/mm/YY')}}"
                                                                     />
                                                                 </div>
                                                             </div>
@@ -1239,11 +1231,10 @@
                                                                     name="job_description[]"
                                                                     placeholder="Job Description"
                                                                     id="ex_description"
-                                                                >{{$Userexperience['description']}}</textarea>
+                                                                ></textarea>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    @endforeach
                                                     <button
                                                         type="button"
                                                         class="my-2"
@@ -1257,7 +1248,7 @@
                                                 <div class="col-md-12">
                                                     <button
                                                         type="submit"
-                                                        class="btn btn-continue btn-secondary experiance-submit"
+                                                        class="btn btn-continue btn-secondary"
                                                     >
                                                         Continue
                                                     </button>
@@ -1272,9 +1263,16 @@
                                     class="tab-pane"
                                 >
                                     <div class="setProfile" id="user-education">
-                                        <form id="form-education-save" class="form-education-save">
-                                        {{ csrf_field() }}
-                                         
+                                        <form
+                                            action="https://azapp-dureforce-dev.azurewebsites.net/user/seller/profile/save-education"
+                                            method="POST"
+                                            class="user-education-form"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="_token"
+                                                value="VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL"
+                                            />
                                             <div
                                                 class="container-fluid welcome-body px-5"
                                             >
@@ -1290,7 +1288,7 @@
                                                 <div>
                                                     <div
                                                         id="education-container"
-                                                        >
+                                                    >
                                                         <div class="col-md-12">
                                                             <label class="mt-4"
                                                                 >School /
@@ -1303,10 +1301,9 @@
                                                             >
                                                             <input
                                                                 type="text"
-                                                                name="school_name[]"
-                                                                id="school_name"
+                                                                name="institute_name[]"
+                                                                id="institute_name"
                                                                 placeholder="E.g. University Of London"
-                                                                value="{{$usereducation['school_name']}}"
                                                             />
                                                         </div>
                                                         <div class="col-md-12">
@@ -1319,17 +1316,16 @@
                                                             >
                                                             <input
                                                                 type="text"
-                                                                name="education[]"
-                                                                id="education"
+                                                                name="institute_name[]"
+                                                                id="institute_name"
                                                                 placeholder="E.g. University Of London"
-                                                                value="{{$usereducation['education']}}"
                                                             />
                                                         </div>
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <label class="mt-4">Degree <span class="imp">*</span>
                                                                     </label>
-                                                                    <select name="degree_id[]" class="form-control select-lang">
+                                                                    <select name="" class="form-control select-lang">
                                                                     <option value="" selected=""> Select Degree </option>
                                                                     <option value="1"> BSCS </option>
                                                                     </select>
@@ -1351,7 +1347,6 @@
                                                                         type="checkbox"
                                                                         name="isCurrent[]"
                                                                         id="flexCheckDefault"
-                                                                        value='1'
                                                                     />
                                                                     <label
                                                                         class="form-check-label"
@@ -1430,7 +1425,6 @@
                                                                 id="institute_description"
                                                             ></textarea>
                                                         </div>
-                                                        @endforeach
                                                     </div>
                                                     <button
                                                         type="button"
@@ -1445,7 +1439,7 @@
                                                 <div class="col-md-12">
                                                     <button
                                                         type="submit"
-                                                        class="btn btn-continue btn-secondary education-submit"
+                                                        class="btn btn-continue btn-secondary"
                                                     >
                                                         Continue
                                                     </button>
@@ -1535,12 +1529,13 @@
                                                                     <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
                                                                     <span class="pt-2 text-dark">$12.00</span>
                                                                 </div>
-                                                                Dureforce Service Fee                                   </div>
+                                                            </div>
                                                     </div>
                                                 </div>
+                                                <hr>
                                                     <div class="row mt-3"
                                                         id="skill-row"
-                                                        >
+                                                    >
                                                         <div
                                                             class="col-xl-6 col-md-12 col-lg-6 form-group select2Tag mb-4"
                                                         >
@@ -1841,8 +1836,7 @@
             let startDate = $('input[name="start_date_job[]"]');
             let startDateInsti = $('input[name="start_date_institute[]"]');
             let selectedLevels = [];
-            var _languages = [];
-            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
+
 
             $('document').ready(function() {
                 if (previewImg.length > 0) {
@@ -1865,20 +1859,8 @@
                 $('.select2').select2({
                     tags: true
                 });
-                loadProfileBasicsData();
+
             })
-            
-            function loadProfileBasicsData()
-            {
-                $.ajax({
-                    type:"GET",
-                    url:"{{route('profile.basics.data')}}",
-                    success:function(data){
-                       _languages=data.languages;
-                       console.log(_languages);
-                    }
-                });  
-            }
 
             function checkDate(parent, element) {
                 if (parent.is(':checked')) {
@@ -1967,7 +1949,6 @@
                                                                     <div class="form-check">
                                                                         <input class="form-check-input check" type="checkbox"
                                                                             name="isCurrent[]" id="flexCheckDefault"
-                                                                            value='1'
                                                                             onclick="checkDate($(this), $('.end-date-job'))"
                                                                           />
                                                                         <label class="form-check-label px-2"
@@ -2009,10 +1990,6 @@
                                                     <label class="mt-4">Education <span class="imp">*</span></label>
                                                     <input type="text" name="degree[]" placeholder="E.g. BA Arts">
                                                 </div>
-                                                <div class="col-md-12">
-                                                    <label class="mt-4">Education <span class="imp">*</span></label>
-                                                    <input type="text" name="degree_id[]" placeholder="E.g. BA Arts">
-                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label class="mt-4">Degree <span class="imp">*</span>
@@ -2022,18 +1999,6 @@
                                                         <option value="1"> BSCS </option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-12 mt-1">
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input check" type="checkbox"
-                                                                            name="isCurrent[]" id="flexCheckDefault"
-                                                                            value='1'
-                                                                            onclick="checkDate($(this), $('.end-date-job'))"
-                                                                          />
-                                                                        <label class="form-check-label px-2"
-                                                                            for="flexCheckDefault">I am
-                                                                            Currently Working Here</label>
-                                                                    </div>
-                                                                </div>
                                                     <div class="col-md-6">
                                                         <label class="mt-4">Field Of Study <span class="imp">*</span>
                                                         </label>
@@ -2123,19 +2088,21 @@
             }
         </script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-      
+        <script>
+            let _languages = [{"id":1,"name":"English","code":"en","icon":"5f15968db08911595250317.png","text_align":0,"is_default":1,"created_at":"2020-07-06T03:47:55.000000Z","updated_at":"2021-08-01T21:21:29.000000Z"}];
+            let _languages_levels = [{"id":1,"name":"B1 (Pre-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":2,"name":"B2 (Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":3,"name":"C1 (Upper-Intermediate)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"},{"id":4,"name":"C2 (Advanced)","created_at":"2022-02-12T02:03:23.000000Z","updated_at":"2022-02-12T02:03:23.000000Z"}];
+        </script>
         <script src="https://azapp-dureforce-dev.azurewebsites.net/assets/resources/js/user/profile.js"></script>
-        {{-- <script>
+        <script>
             'use strict';
             $(document).on('click', '.subscribe-btn', function() {
-            
                 var email = $("#emailSub").val();
                 if (email) {
                     $.ajax({
                         headers: {
                             "X-CSRF-TOKEN": "VltdvbdrrVTqEZHZCvKVtA7ENn4N8iXc2O7tG1JL",
                         },
-                        url: "user/profile",
+                        url: "https://azapp-dureforce-dev.azurewebsites.net/subscribe",
                         method: "POST",
                         data: {
                             email: email
@@ -2145,7 +2112,7 @@
                                 notify('success', response.success);
                             } else {
                                 $.each(response, function(i, val) {
-                                    // notify('error', val);
+                                    notify('error', val);
                                 });
                             }
                         }
@@ -2154,93 +2121,7 @@
                     notify('error', "Please Input Your Email");
                 }
             });
-        </script> --}}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
-<script>
-    'use strict';
-    $(document).on('click', '.experiance-submit', function(e) {
-        e.preventDefault();
-        e.stopPropagation(); 
-        location.reload()
-                   $.ajax({
-                headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('profile.experience.save') }}",
-                method: "POST",
-                data:$('#form-experience-save').serialize(),
-                type:'json',
-
-                success: function(response) {
-                    location.reload();
-                    history.go(0);
-                    window.location.href=window.location.href;
-                    $(this).html(response);
-             
-               
-                    
-                    if (response.success) {
-                        location.reload(true)
-                        notify('success', response.success);
-                        $("#form-experience-save")[0].reset();
-                      
-                        
-          
-
-                    } else {
-                    console.log(response)
-
-                        $.each(response.errors, function(i, val) {
-                        console.log(response.errors, 'response.errors');
-                             notify('error', val);
-                        });
-                    }
-                }
-            });
-
-    });
-</script>
-<script>
-    'use strict';
-    $(document).on('click', '.education-submit', function(e) {
-      
-        e.preventDefault();
-    
-        
-            $.ajax({
-                headers: {
-                    
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('education.save') }}",
-                method: "POST",
-                data:$('#form-education-save').serialize(),
-                type:'json',
-
-                success: function(response) {
-                    console.log(response);
-             
-                    if (response.success) {
-                        
-                        notify('success', response.success);
-                        $("#form-education-save")[0].reset();
-                        location.reload(true);
-
-                    } else {
-                        console.log(response);
-                        $.each(response.errors, function(i, val) {
-                            notify('error', val);
-                        });
-                    }
-                }
-            });
-
-    });
-</script>
-
-
+        </script>
         <link
             rel="stylesheet"
             href="https://azapp-dureforce-dev.azurewebsites.net/assets/global/css/iziToast.min.css"
@@ -2251,17 +2132,8 @@
             iziToast.error({message:"Please complete your profile first.", position: "topRight"});
         </script>
         <div class="iziToast-wrapper iziToast-wrapper-topRight"></div>
-        <script>
-            "use strict";
-            function notify(status,message) {
-                iziToast[status]({
-                    message: message,
-                    position: "topRight"
-                });
-            }
-        </script>
 
-        {{-- <script>
+        <script>
             "use strict";
             function notify(status,message) {
                 iziToast[status]({
@@ -2318,7 +2190,7 @@
                     });
                 });
             })(jQuery);
-        </script> --}}
+        </script>
 
         <style>
             .keyword-container .badge {
