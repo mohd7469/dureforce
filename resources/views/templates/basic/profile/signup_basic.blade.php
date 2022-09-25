@@ -65,27 +65,30 @@
                                     Basic
                                 </a>
                             </li>
-                            <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                <span
-                                    class="">2</span>
-                                <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
-                                    Experience
-                                </a>
-                            </li>
-                            <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                <span
-                                    class="">3</span>
-                                <a data-toggle="tab" href="#profile3" class="" id="education_tab">
-                                    Education
-                                </a>
-                            </li>
-                            <li role="tab" class="{{ request()->get('view') === 'step-4' ? 'active' : '' }}">
-                                <span
-                                    class="">4</span>
-                                <a data-toggle="tab" href="#profile4" class="" >
-                                    Skills & Rate
-                                </a>
-                            </li>
+                            @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                                <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    <span
+                                        class="">2</span>
+                                    <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
+                                        Experience
+                                    </a>
+                                </li>
+                                <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    <span
+                                        class="">3</span>
+                                    <a data-toggle="tab" href="#profile3" class="" id="education_tab">
+                                        Education
+                                    </a>
+                                </li>
+                                <li role="tab" class="{{ request()->get('view') === 'step-4' ? 'active' : '' }}">
+                                    <span
+                                        class="">4</span>
+                                    <a data-toggle="tab" href="#profile4" class="" >
+                                        Skills & Rate
+                                    </a>
+                                </li>
+                            @endif
+                            
                            
                         </ul>
                     </div>
@@ -95,24 +98,26 @@
 
                         <div class="tab-content " id="content-div">
                             @csrf
+                            
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 @include($activeTemplate . 'profile.partials.user_profile')
                             </div>
+                            @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                                <div id="profile2" role="tabpanel"
+                                    class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'profile.partials.user_exp')
+                                </div>
+                                <div id="profile3" role="tabpanel"
+                                    class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'profile.partials.user_education')
+                                </div>
 
-                            <div id="profile2" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_exp')
-                            </div>
-                            <div id="profile3" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_education')
-                            </div>
-
-                            <div id="profile4" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_skills')
-                            </div>
+                                <div id="profile4" role="tabpanel"
+                                    class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'profile.partials.user_skills')
+                                </div>
+                            @endif
                            
                         </div>
                     </div>
