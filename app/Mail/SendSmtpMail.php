@@ -33,7 +33,7 @@ class SendSmtpMail extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->data['subject'])
+        return $this->subject('Reset Password')
             ->view('register_email_template');
     }
 }
