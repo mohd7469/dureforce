@@ -35,7 +35,7 @@ Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.p
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
-// route for offer pages design 
+// route for offer pages design
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
 Route::view('/offer-description', 'templates.basic.offer.offer_description');
 Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
@@ -535,7 +535,7 @@ Route::name('user.')->group(function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('verify', 'Auth\AccountVerifyController@showVerifyForm')->name('verification.notice');
-    Route::view('change-email', 'templates.basic.user.auth.passwords.change_email')->name('change.email'); 
+    Route::view('change-email', 'templates.basic.user.auth.passwords.change_email')->name('change.email');
 
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
@@ -549,7 +549,7 @@ Route::name('user.')->group(function () {
         $user->save();
         $user->sendEmailVerificationNotification();
         $notify[] = ['success', 'Verification link sent!'];
-        return redirect('email/verify')->withNotify($notify);
+        return back()->withNotify($notify);
     })->middleware(['auth', 'throttle:6,1'])->name('change.email.verification.send');
 
     // Route::post('change-email-address','Auth\AccountVerifyController@showEmailChangeForm')->name('change-email')->middleware(['auth', 'throttle:6,1']);
@@ -584,7 +584,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::middleware('is-profile-completed')->group(function () {
                     Route::get('dashboard', 'UserController@home')->name('home');
-                 
+
                     Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
                     Route::post('job/validate-job-proposal', 'ProposalController@validatePropsal')->name('job.submit.proposal.validate');
 

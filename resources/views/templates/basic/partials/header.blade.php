@@ -18,14 +18,17 @@
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li><a href="{{ route('home') }}"
                                        @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
+                                @if (in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
                                 <li><a href="{{ route('service') }}"
                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
                                 </li>
                                 <li><a href="{{ route('software') }}"
                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
-                                <li><a href="{{ route('job') }}"
-                                       @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a></li>
+                                @elseif (in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))
+                                <li><a href="{{ route('seller.jobs.listing') }}"
+                                       @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a></li>
+                                @endif
                                 <li><a href="{{ route('blog') }}"
                                        @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
                                 </li>
@@ -33,6 +36,7 @@
                                        @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
                             </ul>
+                            @if (in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
                                 <a class="btn--post btn active mr-1 d-inline-block "
                                     href="{{ route('user.job.create') }}" >Post a Job</a>
@@ -43,7 +47,7 @@
                                     <i class="fas fa-search"></i>
                                 </div>
                             </div>
-
+                            @endif
                             <div class="header-right  header-action">
                                 @guest
                                     <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
