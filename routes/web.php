@@ -31,26 +31,11 @@ Route::get('job/hire/cron', 'CronController@job')->name('job.cron');
 Route::view('/password/code-verif-design', 'templates.basic.user.auth.passwords.code_verify_design');
 Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email_design');
 Route::view('/verify-design', 'auth.verify_design');
-
 Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.profile_design');
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
-
-
-Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
-Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
-Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
-
-Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
-
-
-Route::post('/profile/save', 'Profile\ProfileController@store')->name('profile.save');
-Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
-Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
-Route::post('/payment/save', 'Profile\ProfileController@storePayment')->name('payment.save');
-
-// route for offer pages design 
+// route for offer pages design
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
 Route::view('/offer-description', 'templates.basic.offer.offer_description');
 Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
@@ -550,7 +535,7 @@ Route::name('user.')->group(function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('verify', 'Auth\AccountVerifyController@showVerifyForm')->name('verification.notice');
-    Route::view('change-email', 'templates.basic.user.auth.passwords.change_email')->name('change.email'); 
+    Route::view('change-email', 'templates.basic.user.auth.passwords.change_email')->name('change.email');
 
     Route::post('/email/verification-notification', function (Request $request) {
         $request->user()->sendEmailVerificationNotification();
@@ -564,7 +549,7 @@ Route::name('user.')->group(function () {
         $user->save();
         $user->sendEmailVerificationNotification();
         $notify[] = ['success', 'Verification link sent!'];
-        return redirect('email/verify')->withNotify($notify);
+        return back()->withNotify($notify);
     })->middleware(['auth', 'throttle:6,1'])->name('change.email.verification.send');
 
     // Route::post('change-email-address','Auth\AccountVerifyController@showEmailChangeForm')->name('change-email')->middleware(['auth', 'throttle:6,1']);
@@ -582,12 +567,7 @@ Route::name('user.')->group(function () {
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify.code');
 });
 
-
-
-
 Route::get('/seller_profile', 'seller\UserController@seller_profile')->name('seller_profile');
-
-
 
 
 Route::name('user.')->prefix('user')->group(function () {
@@ -604,7 +584,7 @@ Route::name('user.')->prefix('user')->group(function () {
 
                 Route::middleware('is-profile-completed')->group(function () {
                     Route::get('dashboard', 'UserController@home')->name('home');
-                 
+
                     Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
                     Route::post('job/validate-job-proposal', 'ProposalController@validatePropsal')->name('job.submit.proposal.validate');
 
@@ -680,8 +660,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 });
 
                 Route::prefix('profile')->group(function () {
-                    // Route::get('/freelancer-profile-design', 'ProfileController@profile')->name('profile.create');
-
+                    Route::get('/', 'UserController@showProfile')->name('basic.profile');
                     Route::post('/save-basic', 'UserController@saveProfile')->name('profile.save');
                     Route::post('/save-skills', 'UserController@saveSkills')->name('profile.save.skills');
                     Route::post('/save-education', 'UserController@saveEducation')->name('profile.save.education');
@@ -695,9 +674,6 @@ Route::name('user.')->prefix('user')->group(function () {
                     Route::get('/edit/{id}', 'UserController@editProfile')->name('edit.profile');
                 });
             });
-
-            Route::get('/', 'ProfileController@profile')->name('basic.profile');
-
 
             Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
             Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
