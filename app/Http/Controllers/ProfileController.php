@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\UserBasic;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
+use App\Models\UserSkill;
 use App\Models\WorldLanguage;
 use App\Rules\PhoneNumberValidate;
 use Illuminate\Http\Request;
@@ -20,7 +21,7 @@ use Khsing\World\Models\City;
 use Khsing\World\Models\Country as ModelsCountry;
 
 class ProfileController extends Controller
-{        
+{
     /**
      * __construct
      *
@@ -38,24 +39,25 @@ class ProfileController extends Controller
      */
     public function profile()
     {
-        
-        $skills=Skills::select('id','name')->get();
-        $user=auth()->user();
-        $user=User::withAll()->find($user->id);
-        $categories=Category::select('id','name')->get();
-        $cities=City::select('id','name')->where('country_id',$user->country_id)->get();
-        $countries=Country::select('id','name')->get();
-        $languages=WorldLanguage::select('id','iso_language_name')->get();
-        $language_levels=LanguageLevel::select('id','name')->get();
-        $degrees=Degree::select('id','title')->get();
-        $basicProfile=$user->basicProfile ? $user->basicProfile : new UserBasic();
-        $userexperiences=$user->experiences ? $user->experiences : new UserExperiences();
-        $usereducations=$user->education ? $user->education : new UserEducation();
-        $user_languages=$user->languages ? $user->languages: [];
-        return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations','skills','degrees'));
+
+        $skills = Skills::select('id', 'name')->get();
+        $user = auth()->user();
+        $user = User::withAll()->find($user->id);
+        $categories = Category::select('id', 'name')->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $countries = Country::select('id', 'name')->get();
+        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $degrees = Degree::select('id', 'title')->get();
+        $basicProfile = $user->basicProfile ? $user->basicProfile : new UserBasic();
+        $userexperiences = $user->experiences ? $user->experiences : new UserExperiences();
+        $usereducations = $user->education ? $user->education : new UserEducation();
+        $userskills = $user->skills ? $user->skills : new UserSkill();
+        $user_languages = $user->languages ? $user->languages : [];
+        return view($this->activeTemplate . 'profile.signup_basic', compact('categories', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees'));
 
     }
-    
+
     /**
      * getProfileData
      *
@@ -64,90 +66,92 @@ class ProfileController extends Controller
     public function getProfileData()
     {
 
-        $languages=WorldLanguage::select('id','iso_language_name')->get();
-        $language_levels=LanguageLevel::select('id','name')->get();
-        $countries=Country::select('id','name')->get();
-        $degrees=Degree::select('id','title')->get();
+        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->get();
+        $degrees = Degree::select('id', 'title')->get();
 
-        return response()->json(['languages' => $languages,'language_levels' => $language_levels,'countries' =>$countries,'degrees' =>$degrees ]);
+        return response()->json(['languages' => $languages, 'language_levels' => $language_levels, 'countries' => $countries, 'degrees' => $degrees]);
 
     }
 
-   
-    
+
     /**
      * saveUserBasics
      *
-     * @param  mixed $request
+     * @param mixed $request
      * @return void
      */
     public function saveUserBasics(Request $request)
     {
-        
+
         $request_data = $request->all();
 
-        $rules=[
+        $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'category_id'  => 'required|array',
-            'category_id.*' =>'exists:categories,id',
-            'designation'  =>'required|string',
-            'about'   =>  'required|string',
-            'phone_number'   =>  ['required',new PhoneNumberValidate],
-            'city_id'=>'required|exists:world_cities,id',
-            'languages'=>'required|array',
-            'languages.*.language_id'=>'required|exists:world_languages,id',
-            'languages.*.language_level_id'=>'required|exists:language_levels,id',
+            'designation' => 'required|string',
+            'about' => 'required|string',
+            'phone_number' => ['required', new PhoneNumberValidate],
+            'city_id' => 'required|exists:world_cities,id',
+            'languages' => 'required|array',
+            'languages.*.language_id' => 'required|exists:world_languages,id',
+            'languages.*.language_level_id' => 'required|exists:language_levels,id',
         ];
+        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+            $rules['category_id'] = 'required|array';
+            $rules['category_id.*'] = 'exists:categories,id';
+        }
+
         $validator = Validator::make($request_data, $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
-        } 
-        else
-        {
+        } else {
             try {
-                
+
                 DB::beginTransaction();
-                
-                $user=auth()->user();
+
+                $user = auth()->user();
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                    'city_id'=>$request_data['city_id'],
-                    'designation'=>$request_data['designation'],
-                    'about'=>$request_data['about'],
-                    'phone_number'=>$request_data['phone_number'],
-                ]);
+                        'city_id' => $request_data['city_id'],
+                        'designation' => $request_data['designation'],
+                        'about' => $request_data['about'],
+                        'phone_number' => $request_data['phone_number'],
+                    ]);
                 $user->languages()->delete();
                 $user->languages()->createMany($request_data['languages']);
-                $user->categories()->sync($request_data['category_id']);
+                if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+                    $user->categories()->sync($request_data['category_id']);
+                }
 
-                if ($request->has('profile_picture') && $request->profile_picture!='undefined') {
+                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
 
                     $path = imagePath()['attachments']['path'];
-                    $file=$request->profile_picture;
+                    $file = $request->profile_picture;
                     $filename = uploadAttachments($file, $path);
                     $file_extension = getFileExtension($file);
                     $url = $path . '/' . $filename;
-                    $user->basicProfile()->update(['profile_picture'=>$url]);
+                    $user->basicProfile()->update(['profile_picture' => $url]);
 
                 }
                 $user->save();
 
                 DB::commit();
                 return response()->json(["success" => "User Basics Updated Successfully"]);
-                
+
             } catch (\Throwable $exception) {
-                
+
                 DB::rollback();
-                return response()->json(['error'=>$exception->getMessage()]);
+                return response()->json(['error' => $exception->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
-                
+
             }
         }
     }
-    
+
     /**
      * saveSkills
      *
@@ -155,33 +159,31 @@ class ProfileController extends Controller
      */
     public function saveSkills(Request $request)
     {
-        $rules=[
-            'skills'  => 'required|array|max:15|min:5',
-            'skills.*' =>'exists:skills,id',
+        $rules = [
+            'skills' => 'required|array|max:15|min:5',
+            'skills.*' => 'exists:skills,id',
+            'hourly_rate' => 'required',
 
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
-        } 
-        else
-        {
+        } else {
             try {
-                
+
                 DB::beginTransaction();
-                $user=User::find(2);
-                $user->rate_per_hour=$request->hourly_rate;
+                $user = auth()->user();
+                $user->rate_per_hour = $request->hourly_rate;
                 $user->skills()->sync($request->skills);
                 $user->save();
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully"]);
-            }
-            catch (\Throwable $exception) {
+                return response()->json(["success" => "Skills and Rates Updated Successfully"]);
+            } catch (\Throwable $exception) {
                 DB::rollback();
-                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                $notify[] = ['errors', 'Failled To Save User Skills and Rate .'];
                 return back()->withNotify($notify);
 
-                
+
             }
         }
     }

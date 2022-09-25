@@ -83,7 +83,7 @@
                                 <li role="tab" class="{{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                     <span
                                         class="">4</span>
-                                    <a data-toggle="tab" href="#profile4" class="" >
+                                    <a data-toggle="tab" href="#profile4" class="" id="skills_tab" >
                                         Skills & Rate
                                     </a>
                                 </li>
@@ -101,7 +101,11 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_profile')
+                                @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                                   @include($activeTemplate . 'profile.partials.user_profile')
+                                @else
+                                    @include($activeTemplate . 'profile.partials.client_basic')
+                                @endif
                             </div>
                             @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
                                 <div id="profile2" role="tabpanel"
@@ -109,10 +113,11 @@
                                     @include($activeTemplate . 'profile.partials.user_exp')
                                 </div>
                                 <div id="profile3" role="tabpanel"
+
                                     class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_education')
-                                </div>
 
+                                </div>
                                 <div id="profile4" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_skills')
@@ -392,28 +397,34 @@
                                                 <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
                                             </div>
                                             <div class="col-md-12">
-                                                
+
                                                 <label class="mt-4">Degree <span class="imp">*</span></label>
-                                                <input type="text" name="educations[`+edu_row_index+`][degree_id]" placeholder="E.g. BA Arts">
+                                                <select type="text" class="form-control" name="educations[`+edu_row_index+`][degree_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
+                                                 <option value=""  selected="">
+                                                   Select Degree
+                                                    </option>
+                                                        ${_degress?.map((degree) => {
+                                                         return ` <option value="${degree.id}"> ${degree.title}</option>`
+                                                        })}
+                                                </select>
                                             </div>
                                             <div class="col-md-12">
-                                                
+
                                                 <label class="mt-4">Field Of Study <span class="imp">*</span></label>
                                                 <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
                                             </div>
                                             <div class="col-md-12">
-                                                <label class="mt-4">Dates Attended <span class="imp">*</span></label>
                                                 <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-0'))"
-                        type="checkbox"
-                        name="educations[`+edu_row_index+`][is_enrolled]"
-                        
-                       
-                     />
+                        type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
+
                                                 
                                             </div>
 
                                             <div class="row">
+                                                <label class="mt-4">Dates Attended <span class="imp">*</span></label>
+
                                                 <div class="col-md-6">
+
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
                                                     <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
                                                     

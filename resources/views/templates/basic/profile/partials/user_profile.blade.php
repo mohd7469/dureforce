@@ -56,7 +56,7 @@
                </div>
                <div class="col-md-6 col-sm-12">
                   <label class="mt-4"
-                     >Designation
+                     >Job Title
                   <span class="imp"
                      >*</span
                      ></label
@@ -88,7 +88,7 @@
             {{-- location --}}
             <div class="col-md-12">
                <label class="mt-4"
-                  >Location
+                  >City
                <span class="imp"
                   >*</span
                   ></label

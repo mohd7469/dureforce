@@ -30,7 +30,7 @@
                         name="hourly_rate"
                         class="field-rate col-md-10"
                         min="0"
-                        value=""
+                        value="{{$user->rate_per_hour}}"
                         />
                      <span class="input-group-text float-end">$</span>
                   </div>
@@ -43,7 +43,7 @@
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                         <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
                         <span class="pt-2 text-dark">$12.00</span>
-                     </div>                               
+                     </div>
                   </div>
                </div>
             </div>
@@ -76,11 +76,11 @@
                         style="width:100%">
                         <option value="">Select Skills</option>
                         @foreach ($skills as $skill)
-                           <option value="{{$skill->id}}">{{$skill->name}}</option>  
+                           <option value="{{$skill->id}}"  {{in_array($skill->id,$userskills->pluck('id')->toArray()) ? 'selected' :''}}>{{$skill->name}}</option>
                         @endforeach
                      </select
-                        
-                    
+
+
                   </div>
                   <div
                      class="col-xl-12 col-md-12 col-lg-12 form-group add-skills"
