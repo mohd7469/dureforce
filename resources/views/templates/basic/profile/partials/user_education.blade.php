@@ -31,19 +31,18 @@
                      
                @foreach ($usereducations->education as  $key => $Usereducation)
                {{-- {{dd($Usereducation)}} --}}
-               <div id="education-row-{{$key}}">
+               <div
+                        id="education-row-{{$key}}"
+                          
+                        >
                @if ($key > 0)
                         <hr/>
-                @endif
-                <div
-                              data-cycle="1"
-                              class="education-container"
-                           >
+                  @endif
              
                   @if ($key>0)
-                   <button type="button" class="btn btn-danger float-right" onclick="removerow('#education-row-{{$key}}')"><i class="fa fa-trash"></i></button>
+                                 <button type="button" class="btn btn-danger float-right" onclick="removerow('#education-row-{{$key}}')"><i class="fa fa-trash"></i></button>
                                   
-                  @endif
+                        @endif
                <div class="col-md-12">
                   <label class="mt-4"
                      >School /
@@ -93,6 +92,7 @@
                            {{$degree->title}}   
                         </option>
                         @endforeach
+
                      </select>
                   </div>
                   <div class="col-md-6">
@@ -203,13 +203,13 @@
                      >{{$Usereducation['description']}}</textarea>
                </div>
                </div>
-               </div>
- 
-               <input type="hidden" name="education_count" id="education_count" value="{{count($usereducations->education)}}">
+               
+               <input type="hidden" name="education_count" id="education_count" value="{{count($Usereducation->educations)}}">
                @endforeach
                @else
                <div
-                   id="education-container">
+               id="education-container"
+               >
              
                <div class="col-md-12">
                   <label class="mt-4"
@@ -252,7 +252,14 @@
                      </label>
                      <select name="educations[0][degree_id]" class="form-control select-lang">
                         <option value="" selected=""> Select Degree </option>
-                        <option value="77"> BSCS </option>
+                        @foreach ($degrees as $degree)
+                        <option value="{{$degree->id}}"> 
+                           
+                           {{-- {{ $degree->id == $Usereducation['education_id'] ? 'selected' : ''}} --}}
+                        
+                           {{$degree->title}}   
+                        </option>
+                        @endforeach
                      </select>
                   </div>
                   <div class="col-md-6">
@@ -362,18 +369,16 @@
             </div>
             <input type="hidden" name="education_count" id="educations_count" value="1">
             @endif
-           
+            <button
+               type="button"
+               class="my-2"
+               onclick="addEducation()"
+               >
+            Add another
+            </button>
             {{-- <button type="submit" class="my-3">Continue</button> --}}
          </div>
-         
       </div>
-      <button
-      type="button"
-      class="my-2"
-      onclick="addEducation()"
-      >
-   Add another
-   </button>
       <div class="setProfile">
          <div class="col-md-12">
             <button type="submit" class="btn btn-continue btn-secondary education.save">

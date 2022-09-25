@@ -49,7 +49,9 @@ class ProfileController extends Controller
 
         $userexperiences = User::with('experiences')->where('id', 2)->first();
         $usereducations = User::with('education')->where('id', 2)->first();
-      
+        $degrees=Degree::select('id','title')->get();
+
+             
         return view($this->activeTemplate.'profile.signup_basic',compact('categories','cities','languages','language_levels','user','basicProfile','user_languages','countries','userexperiences','usereducations','skills','degrees'));
 
     }
