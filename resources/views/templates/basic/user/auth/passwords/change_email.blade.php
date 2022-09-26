@@ -1,4 +1,4 @@
-@extends($activeTemplate.'layouts.frontend')
+@extends($activeTemplate.'layouts.frontend', ['pageTitle' => 'Change email' ])
 @section('content')
 @php
     $content = getContent('breadcrumbs.content', true);
@@ -10,16 +10,17 @@
     <!-- code verification modal form -->
     <div
         class="modal fade"
-        id="verifyModal"
+        id="loginWithGmail"
         tabindex="-1"
-        aria-labelledby="verifyModalLabel"
+        aria-labelledby="loginWithGmailLabel"
         aria-hidden="true"
-        >
+    >
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="verify-main text-center">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
                         <span class="mb-3">
                             <svg width="86" height="86" viewBox="0 0 86 86" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -33,48 +34,39 @@
                                 <path d="M38.8386 69.3549H36.0645V72.1291H38.8386V69.3549Z" fill="#007F7F" />
                             </svg>
                         </span>
-                        <div class="account-header col-md-12 col-sm-12 text-center">
-                            <h3 class="title">Verify your email to proceed</h3>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                                <div class="account-item ">
-                                    <label
-                                        >
-                                        We just send an email to address: jhon@gmail.com<br />Please check your email and
-                            click on the link provided to verify your address
-                                        </label
-                                    >
-                                </div>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <div class="account-item">
-                                <label><a
-                                        href="{{ route('user.password.code.resend', ['email' => session()->get('pass_res_mail') ?? '']) }}"
-                                        class="text--base">@lang('Change email address')</a></label>
-                            </div>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <a href="{{ url('/register') }}" class="submit-btn w-70 text-decoration-none">Resend Verfication Email</a>
                         </div>
                     </div>
+                    <div class="row"> 
+                        <div class="account-header col-md-12 col-sm-12 text-center">
+                            <h3 class="title">
+                              @lang('Verify your email to proceed')
+                            </h3>
+                        </div>
+                    </div>
+                    <form class="account-form" method="POST" action="{{route('user.change.email.verification.send')}}" onsubmit="return submitUserForm();">
+                            @csrf
+                            <div class="row ml-b-20">
+                                <div class="col-lg-12 form-group">
+                                    <input type="email" name="email" placeholder="@lang('Email Address')" class="form-control form--control" id="code">
+                                </div>
+
+                                <div class="col-lg-12 form-group text-center mt-10">
+                                    <button type="submit" class="submit-btn w-80">@lang('Send Verfication Email')</button>
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end login with gmail modal -->
+        <!-- end login with gmail modal -->
 </div>
 <!-- </section> -->
 @endsection
 @push('style')
 <style>
-    .verify-main {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        margin: auto;
-        height: 100%;
-        text-align: center;
+    .form-group {
+        margin-bottom: 10px;
     }
     .account-header {
         margin-bottom: 15px;
@@ -90,7 +82,8 @@
     <script>
         "use strict";
         $(document).ready(function(){
-            $("#verifyModal").modal('show');
+            $("#loginWithGmail").modal('show');
         });
     </script>
 @endpush
+

@@ -21,11 +21,10 @@ class UserPayment extends Model
         'expiration_date',
         'cvv_code',
         'name_on_card',
-        'country',
-        'city',
-        'street_address',
-        'street_address_two',
-        'status',
+        'country_id',
+        'city_id',
+        'address',
+        'is_active',
         'user_id'
     ];
 
@@ -34,22 +33,6 @@ class UserPayment extends Model
     ];
 
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function(){
-
-        });
-
-        static::updating(function($model){
-            if($model->isDirty('status')) {
-                self::where("status", true)->update([
-                    'status' => false
-                ]);
-            }
-        });
-    }
 
     public function user()
     {

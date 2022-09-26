@@ -689,17 +689,15 @@ class UserController extends Controller
     {
 
 
-        $user = User::findOrFail(auth()->id());
-        $filename = '';
-        // @todo create a seperate request validate class
+        try {
+            $user = User::findOrFail(auth()->id());
+            $filename = '';
 
-        if ($request->hasFile('company_logo')) {
-            $location = imagePath()['profile']['user']['path'];
-            $size = imagePath()['profile']['user']['size'];
-            $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
-        }
-
-        \DB::transaction(function () use($request, $filename, $user) {
+            if ($request->hasFile('company_logo')) {
+                $location = imagePath()['profile']['user']['path'];
+                $size = imagePath()['profile']['user']['size'];
+                $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+            }
 
             if(empty($filename)) {
                 $filename = $user->company->logo ?? '';
@@ -720,10 +718,16 @@ class UserController extends Controller
                 'linkedin_url' => $request->get('linkedin_url'),
                 'facebook_url' => $request->get('facebook_url')
             ]));
-        });
+        
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        } catch (\Throwable $th) {
 
-        $notify[] = ['success', 'Successfully Updated Profile.'];
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            
+        }
+        
     }
     public function seller_profile(){
         try {
