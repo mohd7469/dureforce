@@ -118,14 +118,16 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
+                                @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
+
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
+                                    @dd(\App\Models\Role::$FreelancerName);
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
                            
-                            @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
+                            @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
