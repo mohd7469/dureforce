@@ -467,7 +467,7 @@ class JobController extends Controller
         }
         $pageTitle = "Proposal";
 
-        return view('templates.basic.jobs.proposal.submit-proposal', compact('pageTitle','job','skills','delivery_modes'));
+        return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle','job','skills','delivery_modes'));
 
     }
     public function product()
