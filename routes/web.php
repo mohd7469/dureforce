@@ -740,7 +740,6 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
             Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
             Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
-            Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
             Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
             Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
 
@@ -837,3 +836,4 @@ Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
 
 
 Route::get('/jobs-listing',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
+Route::get('/user/buyer/submit-job-proposal/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'proposal'])->name('user.job.submit.proposal');
