@@ -69,7 +69,7 @@
                                 <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     <span
                                         class="">2</span>
-                                    <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
+                                    <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
                                         Experience
                                     </a>
                                 </li>
@@ -92,7 +92,7 @@
                                 <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     <span
                                         class="">2</span>
-                                    <a data-toggle="tab" href="#profile2" class="" id="company_tab">
+                                    <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
                                         Company
                                     </a>
                                 </li>
@@ -150,7 +150,7 @@
                                 <div id="profile3" role="tabpanel"
 
                                     class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index.blade')
+                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index')
 
                                 </div>
 
@@ -187,7 +187,7 @@
         "use strict";
 
         var languageRow = $('#language-row');
-        var experienceTab=$('#experience_tab');
+        var experienceTab=$('#basics_nex_tab');
         var educationTab=$('#education_tab');
         var skillsTab=$('#skills_tab');
 
