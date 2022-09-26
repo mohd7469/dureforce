@@ -87,6 +87,23 @@
                                         Skills & Rate
                                     </a>
                                 </li>
+                            @else
+
+                                <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    <span
+                                        class="">2</span>
+                                    <a data-toggle="tab" href="#profile2" class="" id="company_tab">
+                                        Company
+                                    </a>
+                                </li>
+                                <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    <span
+                                        class="">3</span>
+                                    <a data-toggle="tab" href="#profile3" class="" id="payment_method_tab">
+                                        Payment Methods
+                                    </a>
+                                </li>
+
                             @endif
                             
                            
@@ -101,13 +118,14 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                                @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
-                            @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                           
+                            @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -122,6 +140,20 @@
                                     class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_skills')
                                 </div>
+                            @else
+                            
+                                <div id="profile2" role="tabpanel"
+                                    class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'project_profile.partials.company')
+                                </div>
+
+                                <div id="profile3" role="tabpanel"
+
+                                    class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index.blade')
+
+                                </div>
+
                             @endif
                            
                         </div>
