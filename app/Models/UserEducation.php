@@ -37,8 +37,19 @@ class UserEducation extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'institute_name', 'degree', 'degree_id', 'description', 'field', 'field_id', 'isCurrent', 'start', 'end'];
+    protected $fillable = ['user_id', 'school_name', 'degree_id', 'description', 'education', 'field_of_Study', 'is_enrolled', 'start_date', 'end_date'];
 
+
+    protected static function boot()
+    {
+          
+        parent::boot();
+        static::saving(function ($model)  {
+            $model->is_enrolled =   $model->is_enrolled  == 'on' ? 1: 0;
+        });
+
+    }
+    
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -46,4 +57,5 @@ class UserEducation extends Model
     {
         return $this->belongsTo('App\User');
     }
+    
 }

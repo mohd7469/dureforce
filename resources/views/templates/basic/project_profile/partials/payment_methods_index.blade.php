@@ -78,9 +78,19 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class=" p-0">
 
+        @if (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0)
+            <div class=" p-0">
+                <div class="col-md-12">
+                    <a href="{{route('user.home')}}" class="btn btn-continue m-0 my-2 btn-secondary ">
+                        Go To Dashboard
+                    </a>
+                </div>
+            </div>
+        @endif
+
+       
     </div>
+    
 </div>
-</div>
+

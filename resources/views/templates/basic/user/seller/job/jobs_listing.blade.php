@@ -10,6 +10,7 @@
         <div class="row container">
             @foreach($jobs as $job)
                 <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-4 " style="width: 19rem;">
+                    <a href="{{route('job.jobview',$job->uuid)}}">
                     <div class="card-body">
                         <h5 class="card-title "><strong>{{$job->title}}</strong></h5>
                         <h6 class="card-subtitle mb-2 text-muted mt-3"><span><strong>10 Bids</strong></span> <span
@@ -37,6 +38,7 @@
                         </div>
 
                     </div>
+                    </a>
                 </div>
             @endforeach
         </div>

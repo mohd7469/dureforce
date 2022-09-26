@@ -136,7 +136,7 @@ class ProposalController extends Controller
 
             DB::commit();
 
-            return response()->json(["redirect" => route('user.job.index'), "message" => "Proposal submitted"]);
+            return response()->json(["redirect" => route('seller.jobs.listing'), "message" => "Proposal submitted"]);
 
         } catch (\Exception $exp) {
             DB::rollback();

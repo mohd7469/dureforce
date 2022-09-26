@@ -24,8 +24,8 @@
                                         @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('job') }}"
-                                        @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a>
+                                    <a href="{{ route('seller.jobs.listing') }}"
+                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('user.buyer.dashboard') }}"

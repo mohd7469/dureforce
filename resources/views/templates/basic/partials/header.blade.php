@@ -18,14 +18,17 @@
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li><a href="{{ route('home') }}"
                                        @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
+{{--                                @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))--}}
                                 <li><a href="{{ route('service') }}"
                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
                                 </li>
                                 <li><a href="{{ route('software') }}"
                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
-                                <li><a href="{{ route('job') }}"
-                                       @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a></li>
+{{--                                @elseif (auth()->user() AND in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))--}}
+                                <li><a href="{{ route('seller.jobs.listing') }}"
+                                       @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a></li>
+{{--                                @endif--}}
                                 <li><a href="{{ route('blog') }}"
                                        @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
                                 </li>
@@ -33,6 +36,7 @@
                                        @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
                             </ul>
+                            @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
                                 <a class="btn--post btn active mr-1 d-inline-block "
                                     href="{{ route('user.job.create') }}" >Post a Job</a>
@@ -43,11 +47,13 @@
                                     <i class="fas fa-search"></i>
                                 </div>
                             </div>
-
+                            @endif
                             <div class="header-right  header-action">
                                 @guest
                                     <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
                                     <a href="#loginModal" data-bs-toggle="modal" class="btn--base active">@lang('Login')</a>
+                                    <!-- <a href="#signUpModal" data-bs-toggle="modal" class="btn--base active">@lang('Sign Up')</a> -->
+
                                     <a href="{{ route('user.register') }}" class="btn--base">@lang('Sign Up')</a>
                                 @endguest
 
@@ -66,7 +72,7 @@
     </div>
 </header>
 <!-- log in form modal  -->
-<div
+    <div
         class="modal fade"
         id="loginModal"
         tabindex="1"
@@ -164,7 +170,9 @@
             </div>
         </div>
     </div>
-    <!-- end login form modal -->
+<!-- end login form modal -->
+
+
 <style>
     .header-bottom-area .navbar-expand-lg .select2-container--default .select2-selection--single {
     border: 1px solid #7f007f;
@@ -172,7 +180,7 @@
     display: flex;
     align-items: center;
     }
-.modal { position: fixed; top:15%; } 
+    .modal { position: fixed; top:15%; } 
     .google-button{
         width: 100%; border-radius: 50px;
     }
@@ -196,5 +204,20 @@
         position: relative;
         flex: 1 1 auto;
         padding: 3rem;
+    }
+    .btn-outline-secondary{
+        color: #007F7F;
+        background-color: #ccffff;
+        border-radius: 4px;
+    }
+    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.hover, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:hover {
+        color: #fff;
+        background-color: #007F7F;
+        border-color: #007F7F;
+    }
+    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:active {
+        color: #fff;
+        background-color: #007F7F;
+        border-color: #007F7F;
     }
 </style>
