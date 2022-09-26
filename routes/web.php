@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/clear', function () {
@@ -549,7 +550,7 @@ Route::name('user.')->group(function () {
         $user->save();
         $user->sendEmailVerificationNotification();
         $notify[] = ['success', 'Verification link sent!'];
-        return back()->withNotify($notify);
+        return redirect('email/verify')->withNotify($notify);
     })->middleware(['auth', 'throttle:6,1'])->name('change.email.verification.send');
 
     // Route::post('change-email-address','Auth\AccountVerifyController@showEmailChangeForm')->name('change-email')->middleware(['auth', 'throttle:6,1']);
@@ -580,178 +581,178 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::post('verify-g2fa', 'AuthorizationController@g2faVerification')->name('go2fa.verify');
 
         // Route::middleware()->group(function () {
-            Route::namespace('Seller')->prefix('seller')->group(function () {
+        Route::namespace('Seller')->prefix('seller')->group(function () {
 
-                Route::middleware('is-profile-completed')->group(function () {
-                    Route::get('dashboard', 'UserController@home')->name('home');
+            Route::middleware('is-profile-completed')->group(function () {
+                Route::get('dashboard', 'UserController@home')->name('home');
 
-                    Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
-                    Route::post('job/validate-job-proposal', 'ProposalController@validatePropsal')->name('job.submit.proposal.validate');
+                Route::post('proposal-store/{uuid}', 'ProposalController@store')->name('proposal.store');
+                Route::post('job/validate-job-proposal', 'ProposalController@validatePropsal')->name('job.submit.proposal.validate');
 
-                    Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
-                    Route::post('profile-setting', 'UserController@submitProfile');
-                    Route::get('change-password', 'UserController@changePassword')->name('change.password');
-                    Route::post('change-password', 'UserController@submitPassword');
+                Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
+                Route::post('profile-setting', 'UserController@submitProfile');
+                Route::get('change-password', 'UserController@changePassword')->name('change.password');
+                Route::post('change-password', 'UserController@submitPassword');
 
-                    //2FA
-                    Route::get('twofactor', 'UserController@show2faForm')->name('twofactor');
-                    Route::post('twofactor/enable', 'UserController@create2fa')->name('twofactor.enable');
-                    Route::post('twofactor/disable', 'UserController@disable2fa')->name('twofactor.disable');
+                //2FA
+                Route::get('twofactor', 'UserController@show2faForm')->name('twofactor');
+                Route::post('twofactor/enable', 'UserController@create2fa')->name('twofactor.enable');
+                Route::post('twofactor/disable', 'UserController@disable2fa')->name('twofactor.disable');
 
-                    // Withdraw
-                    Route::get('/withdraw', 'UserController@withdrawMoney')->name('withdraw');
-                    Route::post('/withdraw', 'UserController@withdrawStore')->name('withdraw.money');
-                    Route::get('/withdraw/preview', 'UserController@withdrawPreview')->name('withdraw.preview');
-                    Route::post('/withdraw/preview', 'UserController@withdrawSubmit')->name('withdraw.submit');
-                    Route::get('/withdraw/history', 'UserController@withdrawLog')->name('withdraw.history');
+                // Withdraw
+                Route::get('/withdraw', 'UserController@withdrawMoney')->name('withdraw');
+                Route::post('/withdraw', 'UserController@withdrawStore')->name('withdraw.money');
+                Route::get('/withdraw/preview', 'UserController@withdrawPreview')->name('withdraw.preview');
+                Route::post('/withdraw/preview', 'UserController@withdrawSubmit')->name('withdraw.submit');
+                Route::get('/withdraw/history', 'UserController@withdrawLog')->name('withdraw.history');
 
-                    //Home Controller
-                    Route::get('service/booking/', 'HomeController@serviceBookeds')->name('booking.service');
-                    Route::get('service/booking/details/{id}', 'HomeController@serviceBookingDetails')->name('booking.service.details');
-                    Route::post('booking/confirm', 'HomeController@bookingConfirm')->name('booking.confirm');
-                    Route::post('work/upload', 'HomeController@workUpload')->name('work.upload');
-                    Route::get('work/file/download/{id}', 'HomeController@workFileDownload')->name('work.file.download');
-                    Route::get('/software/sales', 'HomeController@salesSoftware')->name('software.sales');
-                    Route::get('/job/list', 'HomeController@jobVacancy')->name('job.vacancy');
-                    Route::get('/job/list/detail/{id}', 'HomeController@jobListDetails')->name('seller.job.list.details');
-                    Route::get('/follow/{id}', 'HomeController@follow')->name('follow');
-                    Route::get('transactions', 'HomeController@transactions')->name('seller.transactions');
+                //Home Controller
+                Route::get('service/booking/', 'HomeController@serviceBookeds')->name('booking.service');
+                Route::get('service/booking/details/{id}', 'HomeController@serviceBookingDetails')->name('booking.service.details');
+                Route::post('booking/confirm', 'HomeController@bookingConfirm')->name('booking.confirm');
+                Route::post('work/upload', 'HomeController@workUpload')->name('work.upload');
+                Route::get('work/file/download/{id}', 'HomeController@workFileDownload')->name('work.file.download');
+                Route::get('/software/sales', 'HomeController@salesSoftware')->name('software.sales');
+                Route::get('/job/list', 'HomeController@jobVacancy')->name('job.vacancy');
+                Route::get('/job/list/detail/{id}', 'HomeController@jobListDetails')->name('seller.job.list.details');
+                Route::get('/follow/{id}', 'HomeController@follow')->name('follow');
+                Route::get('transactions', 'HomeController@transactions')->name('seller.transactions');
 
-                    //Service
-                    Route::get('/service/index', 'ServiceController@index')->name('service.index');
-                    Route::get('/service/create/{id?}', 'ServiceController@create')->name('service.create');
-                    Route::post('/service/store', 'ServiceController@store')->name('service.store');
+                //Service
+                Route::get('/service/index', 'ServiceController@index')->name('service.index');
+                Route::get('/service/create/{id?}', 'ServiceController@create')->name('service.create');
+                Route::post('/service/store', 'ServiceController@store')->name('service.store');
 
-                    Route::post('/service/store-overview', 'ServiceController@storeOverview')->name('service.store.overview');
-                    Route::post('/service/store-banner', 'ServiceController@storeBanner')->name('service.store.banner');
-                    Route::post('/service/store-pricing', 'ServiceController@storePricing')->name('service.store.pricing');
-                    Route::post('/service/store-requirement', 'ServiceController@storeRequirements')->name('service.store.requirement');
-                    Route::post('/service/store-review', 'ServiceController@storeReview')->name('service.store.review');
-
-
-                    Route::post('/service/update/{id}', 'ServiceController@update')->name('service.update');
-                    Route::get('/service/edit/{slug}/{id}', 'ServiceController@edit')->name('service.edit');
-                    Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
-                    Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
-                    Route::get('/category', 'UserController@category')->name('category');
-                    // Route::get('/category', 'UserController@skillSubCategory')->name('category');
+                Route::post('/service/store-overview', 'ServiceController@storeOverview')->name('service.store.overview');
+                Route::post('/service/store-banner', 'ServiceController@storeBanner')->name('service.store.banner');
+                Route::post('/service/store-pricing', 'ServiceController@storePricing')->name('service.store.pricing');
+                Route::post('/service/store-requirement', 'ServiceController@storeRequirements')->name('service.store.requirement');
+                Route::post('/service/store-review', 'ServiceController@storeReview')->name('service.store.review');
 
 
-                    Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
-                    Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
+                Route::post('/service/update/{id}', 'ServiceController@update')->name('service.update');
+                Route::get('/service/edit/{slug}/{id}', 'ServiceController@edit')->name('service.edit');
+                Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
+                Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
+                Route::get('/category', 'UserController@category')->name('category');
+                // Route::get('/category', 'UserController@skillSubCategory')->name('category');
 
-                    //Software
-                    Route::get('/software', 'SoftwareController@index')->name('software.index');
-                    Route::get('/software/file/download/{id}', 'SoftwareController@softwareFileDownload')->name('software.file.download');
-                    Route::get('/software/document/download/{id}', 'SoftwareController@softwareDocumentFile')->name('software.document.download');
 
-                    Route::get('/software/create/{id?}', 'SoftwareController@create')->name('software.create');
+                Route::post('/favorite/service/', 'UserController@serviceFavorite')->name('favorite.service');
+                Route::post('/favorite/software', 'UserController@softwareFavorite')->name('favorite.software');
 
-                    Route::post('/software/store-overview', 'SoftwareController@storeOverview')->name('software.store.overview');
-                    Route::post('/software/store-banner', 'SoftwareController@storeBanner')->name('software.store.banner');
-                    Route::post('/software/store-pricing', 'SoftwareController@storePricing')->name('software.store.pricing');
-                    Route::post('/software/store-requirement', 'SoftwareController@storeRequirements')->name('software.store.requirement');
-                    Route::post('/software/store-review', 'SoftwareController@storeReview')->name('software.store.review');
+                //Software
+                Route::get('/software', 'SoftwareController@index')->name('software.index');
+                Route::get('/software/file/download/{id}', 'SoftwareController@softwareFileDownload')->name('software.file.download');
+                Route::get('/software/document/download/{id}', 'SoftwareController@softwareDocumentFile')->name('software.document.download');
 
-                    Route::post('/software/store', 'SoftwareController@store')->name('software.store');
-                    Route::get('/software/edit/{slug}/{id}', 'SoftwareController@edit')->name('software.edit');
-                    Route::post('/software/destroy/{id}', 'SoftwareController@destroy')->name('software.destroy');
-                    Route::post('/software/update/{id}', 'SoftwareController@update')->name('software.update');
-                });
+                Route::get('/software/create/{id?}', 'SoftwareController@create')->name('software.create');
 
-                Route::prefix('profile')->group(function () {
-                    Route::get('/', 'UserController@showProfile')->name('basic.profile');
-                    Route::post('/save-basic', 'UserController@saveProfile')->name('profile.save');
-                    Route::post('/save-skills', 'UserController@saveSkills')->name('profile.save.skills');
-                    Route::post('/save-education', 'UserController@saveEducation')->name('profile.save.education');
-                    Route::post('/save-experience', 'UserController@saveExperience')->name('profile.save.experience');
-                    Route::post('/save-rates', 'UserController@saveRates')->name('profile.save.rates');
-                    Route::post('/save-company', 'UserController@saveCompany')->name('profile.save.company');
+                Route::post('/software/store-overview', 'SoftwareController@storeOverview')->name('software.store.overview');
+                Route::post('/software/store-banner', 'SoftwareController@storeBanner')->name('software.store.banner');
+                Route::post('/software/store-pricing', 'SoftwareController@storePricing')->name('software.store.pricing');
+                Route::post('/software/store-requirement', 'SoftwareController@storeRequirements')->name('software.store.requirement');
+                Route::post('/software/store-review', 'SoftwareController@storeReview')->name('software.store.review');
 
-                    Route::post('/save-payment-methods', 'UserPaymentMethodController@store')->name('profile.save.payment-methods');
-                    Route::get('/change-payment-status/{id}', 'UserPaymentMethodController@changeStatus')->name('profile.change-payment-status');
-                    Route::delete('/destroy-payment/{id}', 'UserPaymentMethodController@destroy')->name('profile.destroy.payment');
-                    Route::get('/edit/{id}', 'UserController@editProfile')->name('edit.profile');
-                });
+                Route::post('/software/store', 'SoftwareController@store')->name('software.store');
+                Route::get('/software/edit/{slug}/{id}', 'SoftwareController@edit')->name('software.edit');
+                Route::post('/software/destroy/{id}', 'SoftwareController@destroy')->name('software.destroy');
+                Route::post('/software/update/{id}', 'SoftwareController@update')->name('software.update');
             });
 
-            Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
-            Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
-            Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
-            Route::get('deposit/confirm', 'Gateway\PaymentController@depositConfirm')->name('deposit.confirm');
-            Route::get('deposit/manual', 'Gateway\PaymentController@manualDepositConfirm')->name('deposit.manual.confirm');
-            Route::post('deposit/manual', 'Gateway\PaymentController@manualDepositUpdate')->name('deposit.manual.update');
+            Route::prefix('profile')->group(function () {
+                Route::get('/', 'UserController@showProfile')->name('basic.profile');
+                Route::post('/save-basic', 'UserController@saveProfile')->name('profile.save');
+                Route::post('/save-skills', 'UserController@saveSkills')->name('profile.save.skills');
+                Route::post('/save-education', 'UserController@saveEducation')->name('profile.save.education');
+                Route::post('/save-experience', 'UserController@saveExperience')->name('profile.save.experience');
+                Route::post('/save-rates', 'UserController@saveRates')->name('profile.save.rates');
+                Route::post('/save-company', 'UserController@saveCompany')->name('profile.save.company');
 
-            Route::namespace('Buyer')->prefix('buyer')->group(function () {
-                Route::get('dashboard', 'HomeController@index')->name('buyer.dashboard');
-                Route::get('deposit/history', 'HomeController@depositHistory')->name('deposit.history');
-                Route::get('transactions', 'HomeController@transactions')->name('buyer.transactions');
-                Route::get('work/delivered/download/{id}', 'HomeController@workDeliveryDownload')->name('work.delivery.download');
-                //service
-                Route::get('service/booked', 'HomeController@serviceBookingItem')->name('buyer.service.booked');
-                Route::get('service/booking/details/{id}', 'HomeController@serviceBookingDetails')->name('buyer.service.booked.details');
-                Route::get('favorite/service/item', 'HomeController@serviceFavoriteItem')->name('service.favorite');
-                Route::get('favorite/software/item', 'HomeController@softwareFavoriteItem')->name('software.favorite');
-                Route::post('work/delivery/approved', 'HomeController@workDeliveryApproved')->name('work.delivery.approved');
-                Route::post('work/dispute', 'HomeController@workDispute')->name('work.dispute');
-                //software
-                Route::get('software/purchases/list', 'HomeController@softwarePurchases')->name('software.purchases');
-                Route::get('software/file/download/{id}', 'HomeController@buyerSoftwareFileDownload')->name('buyer.software.file.download');
-                Route::get('software/document/download/{id}', 'HomeController@buyerSoftwareDocumentFile')->name('buyer.software.document.download');
-                Route::get('hire/employees', 'HomeController@hireEmploy')->name('buyer.hire.employ');
-                Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
-                //Job
-                Route::get('job/create', 'JobController@create')->name('job.create');
-
-                Route::post('job/job_data_validate', 'JobController@jobDataValidate')->name('job.validate');
-                Route::post('job/store', 'JobController@store')->name('job.store');
-                Route::get('job/index', 'JobController@index')->name('job.index');
-                Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
-                Route::post('job/update/{id}', 'JobController@update')->name('job.update');
-                Route::get('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
-
-                Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
-                Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
-                Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
-                Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
-                Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
-                Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
-
-
+                Route::post('/save-payment-methods', 'UserPaymentMethodController@store')->name('profile.save.payment-methods');
+                Route::get('/change-payment-status/{id}', 'UserPaymentMethodController@changeStatus')->name('profile.change-payment-status');
+                Route::delete('/destroy-payment/{id}', 'UserPaymentMethodController@destroy')->name('profile.destroy.payment');
+                Route::get('/edit/{id}', 'UserController@editProfile')->name('edit.profile');
             });
+        });
 
-           
+        Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
+        Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
+        Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
+        Route::get('deposit/confirm', 'Gateway\PaymentController@depositConfirm')->name('deposit.confirm');
+        Route::get('deposit/manual', 'Gateway\PaymentController@manualDepositConfirm')->name('deposit.manual.confirm');
+        Route::post('deposit/manual', 'Gateway\PaymentController@manualDepositUpdate')->name('deposit.manual.update');
 
-            //JobBiding
-            Route::post('job/biding', 'JobBidingController@store')->name('job.biding.store');
-            //Conversation
-            Route::post('conversation', 'ConversationController@store')->name('conversation.store');
-            Route::get('inbox', 'ConversationController@inbox')->name('conversation.inbox');
-            Route::get('chat/{id}', 'ConversationController@chat')->name('conversation.chat');
-            Route::post('message/store', 'ConversationController@messageStore')->name('message.store');
+        Route::namespace('Buyer')->prefix('buyer')->group(function () {
+            Route::get('dashboard', 'HomeController@index')->name('buyer.dashboard');
+            Route::get('deposit/history', 'HomeController@depositHistory')->name('deposit.history');
+            Route::get('transactions', 'HomeController@transactions')->name('buyer.transactions');
+            Route::get('work/delivered/download/{id}', 'HomeController@workDeliveryDownload')->name('work.delivery.download');
+            //service
+            Route::get('service/booked', 'HomeController@serviceBookingItem')->name('buyer.service.booked');
+            Route::get('service/booking/details/{id}', 'HomeController@serviceBookingDetails')->name('buyer.service.booked.details');
+            Route::get('favorite/service/item', 'HomeController@serviceFavoriteItem')->name('service.favorite');
+            Route::get('favorite/software/item', 'HomeController@softwareFavoriteItem')->name('software.favorite');
+            Route::post('work/delivery/approved', 'HomeController@workDeliveryApproved')->name('work.delivery.approved');
+            Route::post('work/dispute', 'HomeController@workDispute')->name('work.dispute');
+            //software
+            Route::get('software/purchases/list', 'HomeController@softwarePurchases')->name('software.purchases');
+            Route::get('software/file/download/{id}', 'HomeController@buyerSoftwareFileDownload')->name('buyer.software.file.download');
+            Route::get('software/document/download/{id}', 'HomeController@buyerSoftwareDocumentFile')->name('buyer.software.document.download');
+            Route::get('hire/employees', 'HomeController@hireEmploy')->name('buyer.hire.employ');
+            Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
+            //Job
+            Route::get('job/create', 'JobController@create')->name('job.create');
 
-            //Comment
-            Route::post('comment', 'CommentController@store')->name('comment.store');
-            Route::post('comment/reply', 'CommentController@commentReply')->name('comment.reply');
+            Route::post('job/job_data_validate', 'JobController@jobDataValidate')->name('job.validate');
+            Route::post('job/store', 'JobController@store')->name('job.store');
+            Route::get('job/index', 'JobController@index')->name('job.index');
+            Route::get('job/edit/{id}', 'JobController@edit')->name('job.edit');
+            Route::post('job/update/{id}', 'JobController@update')->name('job.update');
+            Route::get('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
 
-            //Service Booking
-            Route::get('service/booking/{slug}/{id}', 'BookingController@serviceBooking')->name('service.booking');
-            Route::get('service/coupon/apply', 'BookingController@applyCoupon')->name('service.coupon.apply');
-            Route::post('service/booked', 'BookingController@serviceBooked')->name('service.booked');
-            Route::get('payment/method', 'BookingController@payment')->name('payment.method');
-            Route::post('payment/insert', 'BookingController@paymentInsert')->name('payment.insert');
+            Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
+            Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
+            Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
+            Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
+            Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
+            Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
 
-            //Software Buy
-            Route::get('software/buy/{slug}/{id}', 'SoftwareBuyController@softwareBuy')->name('software.buy');
-            Route::get('software/coupon/apply', 'SoftwareBuyController@applyCouponSoftware')->name('software.coupon.apply');
-            Route::post('software/buy/store', 'SoftwareBuyController@softwareBuyStore')->name('software.buy.store');
 
-            // Job Biding
-            Route::get('job/biding/order/{slug}/{id}', 'BidingOrderController@jobBiding')->name('job.biding.order');
-            Route::post('hire/employ', 'BidingOrderController@hireEmploy')->name('hire.employ');
+        });
 
-            //Review
-            Route::post('review', 'ReviewController@store')->name('review.store');
+
+
+        //JobBiding
+        Route::post('job/biding', 'JobBidingController@store')->name('job.biding.store');
+        //Conversation
+        Route::post('conversation', 'ConversationController@store')->name('conversation.store');
+        Route::get('inbox', 'ConversationController@inbox')->name('conversation.inbox');
+        Route::get('chat/{id}', 'ConversationController@chat')->name('conversation.chat');
+        Route::post('message/store', 'ConversationController@messageStore')->name('message.store');
+
+        //Comment
+        Route::post('comment', 'CommentController@store')->name('comment.store');
+        Route::post('comment/reply', 'CommentController@commentReply')->name('comment.reply');
+
+        //Service Booking
+        Route::get('service/booking/{slug}/{id}', 'BookingController@serviceBooking')->name('service.booking');
+        Route::get('service/coupon/apply', 'BookingController@applyCoupon')->name('service.coupon.apply');
+        Route::post('service/booked', 'BookingController@serviceBooked')->name('service.booked');
+        Route::get('payment/method', 'BookingController@payment')->name('payment.method');
+        Route::post('payment/insert', 'BookingController@paymentInsert')->name('payment.insert');
+
+        //Software Buy
+        Route::get('software/buy/{slug}/{id}', 'SoftwareBuyController@softwareBuy')->name('software.buy');
+        Route::get('software/coupon/apply', 'SoftwareBuyController@applyCouponSoftware')->name('software.coupon.apply');
+        Route::post('software/buy/store', 'SoftwareBuyController@softwareBuyStore')->name('software.buy.store');
+
+        // Job Biding
+        Route::get('job/biding/order/{slug}/{id}', 'BidingOrderController@jobBiding')->name('job.biding.order');
+        Route::post('hire/employ', 'BidingOrderController@hireEmploy')->name('hire.employ');
+
+        //Review
+        Route::post('review', 'ReviewController@store')->name('review.store');
         // });
     });
 });
