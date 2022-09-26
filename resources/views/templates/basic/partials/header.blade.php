@@ -36,7 +36,7 @@
                                        @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
                             </ul>
-{{--                            @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))--}}
+                            @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
                                 <a class="btn--post btn active mr-1 d-inline-block "
                                     href="{{ route('user.job.create') }}" >Post a Job</a>
@@ -47,7 +47,7 @@
                                     <i class="fas fa-search"></i>
                                 </div>
                             </div>
-{{--                            @endif--}}
+                            @endif
                             <div class="header-right  header-action">
                                 @guest
                                     <!-- <a href="{{ route('user.login') }}" class="btn--base active">@lang('Login')</a> -->
