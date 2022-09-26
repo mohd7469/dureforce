@@ -679,7 +679,7 @@ function sendEmail($user, $type = null, $shortCodes = [])
     if ($config->name == 'php') {
         sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'smtp') {
-         \Mail::to($user->email)->send(new \App\Mail\sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
+         \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
         //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
         sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
