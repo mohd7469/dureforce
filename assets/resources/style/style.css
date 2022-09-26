@@ -2585,7 +2585,6 @@ font-size: 14px;
 
 .item-card-title a {
   font-size: 16px;
-  margin-top: 20px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2593,6 +2592,10 @@ font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.3s;
+}
+.item-area .footer {
+  padding: 15px 30px;
+  left: 0;
 }
 .item-card-title a:hover {
   color: #2cdd9b;
@@ -5464,4 +5467,100 @@ color: #000000;
 }
 .content  li:before {
    content: "*" 
+}
+
+
+.carousel-inner {
+  padding: 1em;
+}
+.card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  border-color: #7F007F !important;
+  background-color: white;
+  color: red;
+  width: 6vh;
+  height: 6vh;
+  border-radius: 6%;
+  top: -2%;
+  transform: translateY(-50%);
+}
+.carousel-control-next, .carousel-control-prev {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7F007F;
+  text-align: center;
+  opacity: .5;
+  transition: opacity .15s ease;
+  border-color:#7F007F;
+}
+@media (min-width: 768px) {
+  .carousel-item {
+    margin-right: 0;
+    flex: 0 0 33.333333%;
+    display: block;
+  }
+  .carousel-inner {
+    display: flex;
+  }
+}
+.card .img-wrapper {
+  max-width: 100%;
+  height: 13em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card img {
+  max-height: 100%;
+}
+@media (max-width: 767px) {
+  .card .img-wrapper {
+    height: 17em;
+  }
+}
+.carousel-control-prev {
+  left: 93%!important;
+}
+
+
+
+.carousel-control-prev-icon {
+  background-image:
+          url('data:image/svg+xml;utf8,<svg style="color: purple" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" fill="purple"></path> </svg>');
+
+  border: 1px solid #7F007F;
+
+}
+.carousel-control-next-icon {
+  background-image:
+          url('data:image/svg+xml;utf8,<svg style="color: purple" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill="purple"/> </svg>');
+
+  border: 1px solid #7F007F;
+}
+.carousel-control-next {
+  right: 20px;
+}
+.seeall{
+  position: absolute;
+  top: 0;
+  bottom: 157rem;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7F007F;
+  text-align: center;
+  opacity: 4.5;
+  transition: opacity .15s;
+  left: 72rem;
 }

@@ -497,6 +497,14 @@
             </div>
         </div>
     </section>
+    <section class="all-sections  bg-grey   section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Browse Expert Developers Directory</h2>
+            </article>
+            @include($activeTemplate . 'home.publications')
+        </div>
+    </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
@@ -527,6 +535,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script>
+
         'use strict';
         $('#defaultSearch').on('change', function () {
             this.form.submit();
