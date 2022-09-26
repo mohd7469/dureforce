@@ -465,7 +465,6 @@ class JobController extends Controller
             $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
         
         }
-        
         $pageTitle = "Proposal";
 
         return view('templates.basic.jobs.proposal.proposal', compact('pageTitle','job','skills','delivery_modes'));
