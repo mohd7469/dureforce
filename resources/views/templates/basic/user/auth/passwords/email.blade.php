@@ -46,23 +46,23 @@
                 </div>
             </div>
         </div> -->
-         <!-- login with gmail modal form -->
+    <!-- login with gmail modal form -->
     <div
         class="modal fade"
         id="emailVerify"
         tabindex="-1"
         aria-labelledby="emailVerifyLabel"
         aria-hidden="true"
-    >
+        >
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row"> 
                         <div class="account-header col-md-12 col-sm-12 text-center">
-                            <h3 class="title">
+                            <h2 class="title">
                                 @lang('Reset Password')
-                            </h3>
+                            </h2>
                         </div>
                     </div>
                     <form class="account-form" method="POST" action="{{ route('user.password.email') }}" onsubmit="return submitUserForm();">
@@ -94,7 +94,7 @@
             </div>
         </div>
     </div>
-        <!-- end login with gmail modal -->
+    <!-- end login with gmail modal -->
     </div>
 <!-- </section>                     -->
 @endsection
