@@ -37,10 +37,13 @@ Route::view('/profile-company-design', 'templates.basic.project_profile.partials
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
 
-
+Route::get('/get-cities', 'ProfileController@getCities')->name('get-cities');
 Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');
 Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
 Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+Route::post('/save-company', 'ProfileController@saveCompany')->name('profile.save.company');
+Route::post('/save-payment-methods', 'ProfileController@savePaymentMethod')->name('profile.save.payment.methods');
+
 
 Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
 

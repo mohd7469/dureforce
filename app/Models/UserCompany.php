@@ -14,13 +14,13 @@ class UserCompany extends Model
     protected $fillable = [
         'name',
         'logo',
-        'phone',
+        'number',
         'email',
-        'location',
+        'country_id',
         'vat',
-        'url',
+        'website',
         'facebook_url',
-        'linkedin_url',
+        'linked_url',
         'user_id'
     ];
 
