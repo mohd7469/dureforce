@@ -21,7 +21,7 @@ Route::get('invite-freelancer', 'Buyer\JobController@inviteFreelancer')->name('j
 
 Route::get('single-job/{uuid}', 'Buyer\JobController@singleJob')->name('job.index');
 Route::get('/job/attachment', 'Buyer\JobController@downnloadAttach')->name('job.download');
-Route::get('proposal', 'seller\ProposalController@index')->name('proposal.index');
+Route::get('proposal', 'Seller\ProposalController@index')->name('proposal.index');
 
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
@@ -588,7 +588,7 @@ Route::name('user.')->group(function () {
 
 
 
-Route::get('/seller_profile', 'seller\UserController@seller_profile')->name('seller_profile');
+Route::get('/seller_profile', 'Seller\UserController@seller_profile')->name('seller_profile');
 
 
 
