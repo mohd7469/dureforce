@@ -184,7 +184,7 @@
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">
                                             <div class="profile_title">
-                                                <strong class="card-title ">{{$job->user->username ? $job->user->username  : ''}}</strong><br>
+                                                <strong class="card-title ">{{$job->user->first_name ? $job->user->username  : ''}}</strong><br>
                                                     <small>Member since {{$job->user->created_at->format('Y-m-d') ? $job->user->created_at->format('Y-m-d') : '' }} </small>
                                             </div>
                                             </div>
@@ -192,7 +192,7 @@
                                             <div >
                                             <ul class="location">
                                                 <li>
-                                                    <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user->address->address ? $job->user->address->address  : ''}} </span>
+                                                    <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user->address ? $job->user->address  : ''}} </span>
                                                     <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> 12:37 pm local time</span>
                                                 </li>
                                                 
