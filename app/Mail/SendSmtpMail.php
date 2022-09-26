@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use App\Models\PasswordReset;
 use Illuminate\Queue\SerializesModels;
 
 class SendSmtpMail extends Mailable
@@ -33,7 +34,8 @@ class SendSmtpMail extends Mailable
      */
     public function build()
     {
+        $token_data = PasswordReset::where('email',$this->template)->first();
         return $this->subject('Reset Password')
-            ->view('register_email_template');
+            ->view('register_email_template',["token_data" => $token_data->token]);
     }
 }
