@@ -54,15 +54,15 @@
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content" >
                                                             {!!$job->description !!}
-                                                        
-                                                        <div class="service_subtitle2 mt-20 dod-text">
-                                                            <p> Deliverables</p>
+
+                                                            <div class="service_subtitle2 mt-20 dod-text">
+                                                                <p> Deliverables</p>
                                                                 @foreach ($job->deliverable as $deliverable)
-                                                                
-                                                                <span> {{$deliverable->name}},</span>
-                                                                
+
+                                                                    <span> {{$deliverable->name}},</span>
+
                                                                 @endforeach
-                                                        </div>
+                                                            </div>
                                                     
 
                                                         <div class="service_subtitle2 mt-20 dod-text">
