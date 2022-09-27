@@ -69,7 +69,7 @@
                                 <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     <span
                                         class="">2</span>
-                                    <a data-toggle="tab" href="#profile2" class="" id="experience_tab">
+                                    <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
                                         Experience
                                     </a>
                                 </li>
@@ -87,6 +87,23 @@
                                         Skills & Rate
                                     </a>
                                 </li>
+                            @else
+
+                                <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    <span
+                                        class="">2</span>
+                                    <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
+                                        Company
+                                    </a>
+                                </li>
+                                <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    <span
+                                        class="">3</span>
+                                    <a data-toggle="tab" href="#profile3" class="" id="payment_tab">
+                                        Payment Methods
+                                    </a>
+                                </li>
+
                             @endif
                             
                            
@@ -101,13 +118,14 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                                @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
-                            @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                           
+                            @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -122,6 +140,26 @@
                                     class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_skills')
                                 </div>
+                            @else
+                            
+                                <div id="profile2" role="tabpanel"
+                                    class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'project_profile.partials.company')
+                                </div>
+                                <div id="profile3" role="tabpanel"
+
+                                    class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index')
+
+                                </div>
+
+                                <div id="profile4" role="tabpanel"
+
+                                    class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'project_profile.partials.payment_methods_store')
+
+                                </div>
+
                             @endif
                            
                         </div>
@@ -155,9 +193,10 @@
         "use strict";
 
         var languageRow = $('#language-row');
-        var experienceTab=$('#experience_tab');
+        var experienceTab=$('#basics_nex_tab');
         var educationTab=$('#education_tab');
         var skillsTab=$('#skills_tab');
+        var paymentTab=$('#payment_tab');
 
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
@@ -179,7 +218,8 @@
         var user_experience_form=$('#freelancer-experience-save');
         var user_education_form=$('#freelancer-education-save');
         var user_skills_form=$('#skills_save_form');
-
+        var user_company_form=$('#company_profile');
+        var user_payment_methods_form=$('#payment_methods');
         var token= $('input[name=_token]').val();
         
         let selectedLevels = [];
@@ -210,6 +250,7 @@
                 e.stopPropagation(); 
                 saveUserExperience();
             });
+
             user_education_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -222,6 +263,22 @@
                 saveUserSkills();
             });
 
+            user_company_form.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserCompany();
+
+            });
+
+            user_payment_methods_form.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserPaymentMethod();
+
+            });
+
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
                 imgInp.addClass('imgInp-after');
@@ -230,15 +287,65 @@
                 })
 
             } else {
+
                 previewImg.siblings('p').show();
                 imgInp.removeClass('imgInp-after');
                 $('form .profile-img').css({
                     "background-color": "#fff"
                 })
+
             }
+
+            $('#payment_method_country_id').on('change', function(){
+                var country_id = $(this).val();
+                getCountryCities(country_id);
+            });
         });
 
-       
+        function getCountryCities(country_id)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('get-cities')}}",
+                data: {country_id : country_id},
+                success:function(data){
+                    if(data.cities)
+                    {    
+                       
+                        $('#payment_method_cities').empty();
+                        $('#payment_method_cities').append(
+                            `<option>Select City</option>
+                            ${data.cities?.map((city) => {
+                                return ` <option value="${city.id}"> ${city.name}</option>`;
+                        })}`);
+                    }
+                    else{
+                        alert("Wrong Country Id");            
+                    }
+                }
+            }); 
+
+        }
+        function previewCompanyFile(input) {
+
+            let file = input.files[0];
+            let idxDot = file.name.lastIndexOf(".") + 1;
+            let extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
+            if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function() {
+                        $("#preview-img-company").attr("src", reader.result);
+                        $("#preview-img-company-edit").attr("src", reader.result);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                alert("Only jpg/jpeg, png files are allowed!");
+                return false;
+            }
+
+        }
 
         function loadProfileBasicsData()
         {
@@ -515,6 +622,7 @@
                 notify('error', val);
             });
         }
+
         function saveUserSkills(){
             $.ajax({
                 headers: {
@@ -542,6 +650,7 @@
                 }
             });
         }
+
         function saveUserBasic() {
             var profile_file=$('input[type=file]')[0].files[0];
             let form_data = new FormData(user_basic_form[0]);
@@ -570,6 +679,62 @@
                   }
               });
              
+        }
+
+        function saveUserPaymentMethod()
+        {
+            let form_data = new FormData(user_payment_methods_form[0]);
+           
+            $.ajax({
+                  type:"POST",
+                  url:"{{route('profile.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                        formPostProcess(paymentTab);
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+
+        function saveUserCompany()
+        {
+            var profile_file=$('input[type=file]')[0].files[0];
+            let form_data = new FormData(user_company_form[0]);
+            form_data.append('company_logo', profile_file);
+           
+            $.ajax({
+                  type:"POST",
+                  url:"{{route('profile.save.company')}}",
+                  data: form_data,
+                  processData: false,
+                contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                        formPostProcess(paymentTab);
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
         }
 
         function saveUserExperience()
@@ -603,6 +768,7 @@
             });
 
         }
+
         function saveUserEducation()
         {
          
@@ -715,6 +881,9 @@
                 (typeof value === 'object' && isEmptyObject(value))
             );
         }
+
+       
+
     </script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="{{ asset('/assets/resources/js/user/profile.js') }}"></script>

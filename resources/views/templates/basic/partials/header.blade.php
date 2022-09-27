@@ -18,17 +18,17 @@
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li><a href="{{ route('home') }}"
                                        @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
-                                @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
+{{--                                @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))--}}
                                 <li><a href="{{ route('service') }}"
                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
                                 </li>
                                 <li><a href="{{ route('software') }}"
                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
-                                @elseif (auth()->user() AND in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))
+{{--                                @elseif (auth()->user() AND in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))--}}
                                 <li><a href="{{ route('seller.jobs.listing') }}"
                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a></li>
-                                @endif
+{{--                                @endif--}}
                                 <li><a href="{{ route('blog') }}"
                                        @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
                                 </li>
