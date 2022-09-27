@@ -7,7 +7,7 @@
 
     <section class="filters-container bg-grey p-15  ">
         <div class="container p2">
-            <div class="d-flex"> <h5 class=""><b>All Categories > </b> </h5> </div>
+            <div class="d-flex"> <h5 class=""><b>All Categoriesxxxx > </b> </h5> </div>
             <div class="row align-items-center">
                 {{-- <article class=" col-12 col-md-4 ">
                     <h1 class="heading m-0">Jobs</h1>

@@ -4,10 +4,66 @@
 @endpush
 @section('content')
 
+<div class="categories_type_container">
+    <div class="header-short-menu">
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center flex-start">
+        <div class="nav-prev arrow" style="display: none;"></div>
 
-    <section>
-
-        <div class="row container">
+        <div class="col-lg-12 px-5 sub-nav">
+            <ul class="text-center ul-margin">
+                @foreach($categories as $category)
+                    <li class="nav-item active">
+                      <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+ <section>
+ <div class="row container listing-jb-container">
+            <div>
+                <div class="categories_type_container">
+                    <div class="header-short-menu">
+                <div class="container-fluid">
+                    <div class="row justify-content-left align-items-left flex-start">
+                        <div class="nav-prev arrow" style="display: none;"></div>
+                        <div class="col-lg-1 t-sbh">Sub Categories:</div>
+                        <div class="col-lg-11 sub-nav">
+                            <ul class="text-center ul-margin listing-nav-in">
+                                @isset($subcategories)
+                                    @foreach($subcategories as $subcategorie)
+                                        <li class="nav-item active">
+                                           {{$subcategorie->name}}
+                                        </li>
+                                    @endforeach
+                                @endisset
+                           </ul>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+            <div class="isub-head-con">
+                <div class="isub-heading">Microservices Jobs</div>
+                <div class="right-con-isub">
+                    <span class="isub-filter">Filter</span>
+                   <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                            <input type="text" class="form-control input-lg" placeholder="Buscar" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-lg" type="button">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @foreach($jobs as $job)
                 <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-4 " style="width: 19rem;">
                     <a href="{{route('job.jobview',$job->uuid)}}">
@@ -79,5 +135,139 @@
         .btn-sm-job-list {
             color: white;
         }
+        .sub-nav ul{
+            display: inherit;
+        }
+        .listing-jb-container{
+            background: #F8FAFA;
+            border: 1px solid #CBDFDF;
+            margin-top: 9px;
+        }
+        .listing-nav-in li a {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #636060;
+        }
+        .listing-nav-in {
+            text-align: left;
+            display: inline-block;
+            float: left;
+        }
+        .sub-nav{
+            width: 82.5%;
+        }
+        .t-sbh {
+            width: 130px;
+            position: relative;
+            left: -14px;
+            top: 23epx;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #000000;
+            padding-top: 24px;
+        }
+        .isub-head-con{
+            width: 100%;
+            display: inline-block;
+            padding: 28px 0px 6px 0px;
+        }
+        .isub-heading{
+            float:left;
+            display: inline-block;
+            width: 30%;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 28px;
+            color: #000000;
+            padding-left: 11px;
+        }
+        .right-con-isub{
+            float: right;
+            display: inline-block;
+        }
+        span.isub-filter {
+            width: 98px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 5px;
+            float: right;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            color: #007F7F;
+            text-align: center;
+            padding-top: 13px;
+            padding-left: 30px;
+            background: #EFF8F8 url(/assets/images/job/lines.png) no-repeat;
+            background-position: 14px center;
+            cursor: pointer;
+
+        }
+        
+        #custom-search-input {
+            border: solid 1px #E4E4E4;
+            border-radius: 6px;
+            float: right;
+            width: 242px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 6px;
+            margin-right:14px;
+        }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        #custom-search-input button {
+            margin: 5px 0 0 0;
+            background: none;
+            box-shadow: none;
+            border: 0;
+            color: #666666;
+            padding: 0 8px 0 10px;
+            /* border-left: solid 1px #ccc; */
+            background: url(/assets/images/job/searchicon.png) no-repeat;
+            width: 26px;
+            height: 30px;
+            margin-right: 10px;
+            background-position: center;
+            margin-right: 15px;
+        }
+
+        #custom-search-input button:hover{
+            border: 0;
+            box-shadow: none;
+            border-left: solid 1px #ccc;
+        }
+
+        @media only screen and (max-width:767px){
+            .isub-heading{
+                font-size: 18px !important;
+            }
+            .t-sbh {
+                width: 100%;
+                position: relative;
+                left: 0px;
+                top: 6px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 18px;
+                color: #000000;
+                text-align: center;
+            }
+        }
+                @media (min-width: 768px){
+                .container {
+                    max-width: 1390px !important;
+                }
+        }
+        
     </style>
 @endpush

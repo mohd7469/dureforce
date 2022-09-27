@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Job;
+use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -13,12 +15,21 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($category = null)
     {
+    
         $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user'])->orderBy('created_at','DESC')->get();
+        $categories = Category::with('subCategory')->get();
+        $subcategories=SubCategory::where('category_id', $category)->get();
+        
 
-        return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs);
+        return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories);
     }
+    // public function subcategory($category){
+    //     $subcategories=SubCategory::where('category_id', $category)->get();
+    //     return view('templates.basic.user.seller.job.jobs_listing')->with('subcategories',$subcategories);
+
+    // }
 
     /**
      * Show the form for creating a new resource.

@@ -14,6 +14,7 @@ Route::get('/clear', function () {
 | Web Routes
 |--------------------------------------------------------------------------
 */
+Route::get('/jobs-listing/{category?}',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
 
 Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
 Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
@@ -809,4 +810,5 @@ Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
 //
 
 
-Route::get('/jobs-listing',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
+
+
