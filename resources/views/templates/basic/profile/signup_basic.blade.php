@@ -60,7 +60,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='completed-span'>1</span>
+                                    class=''>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
