@@ -123,6 +123,6 @@ class ProposalController extends Controller
         $job=Job::where('uuid',$job_uuid)->first();
         $proposals = $job->proposal;
         $pageTitle = "Job Propsals";
-        return view($this->activeTemplate .'jobs.Proposal.all-proposal',compact('pageTitle','proposals'));
+        return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals'));
     }
 }
