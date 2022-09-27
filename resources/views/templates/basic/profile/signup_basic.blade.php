@@ -701,6 +701,10 @@
                       if(response.success){
                         notify('success', response.success);
                         formPostProcess(paymentTab);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);
