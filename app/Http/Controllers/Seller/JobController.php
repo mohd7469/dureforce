@@ -22,7 +22,7 @@ class JobController extends Controller
         
         $categories = Category::with('subCategory')->get();
         if($category == null){
-            $Categorytitle = Category::where('id',$category)->first();
+            $Categorytitle = Category::where('id',$categories->pluck('id')->first())->first();
             $subcategories=SubCategory::where('category_id',$categories->pluck('id')->first())->get();
         }else{
             $Categorytitle = Category::where('id',$category)->first();
