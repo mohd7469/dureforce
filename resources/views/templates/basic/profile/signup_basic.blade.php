@@ -639,6 +639,10 @@
                 
                     if (response.success) {
                         notify('success', response.success);
+                        if(response.redirect_url)
+                        {
+                            window.location.replace(response.redirect_url);              
+                        }
 
                     }
                     else if(response.validation_errors){
