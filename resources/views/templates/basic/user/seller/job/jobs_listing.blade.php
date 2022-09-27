@@ -13,7 +13,7 @@
         <div class="col-lg-12 px-5 sub-nav">
             <ul class="text-center ul-margin">
                 @foreach($categories as $category)
-                    <li class="nav-item active">
+                    <li class="nav-item">
                       <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
                     </li>
                 @endforeach
@@ -36,11 +36,11 @@
                         <div class="col-lg-11 sub-nav">
                             <ul class="text-center ul-margin listing-nav-in">
                                 @isset($subcategories)
-                                <li class="nav-item active">
+                                <li class="nav-item active-c">
                                     All
                                  </li>
                                     @foreach($subcategories as $subcategorie)
-                                        <li class="nav-item active">
+                                        <li class="nav-item">
                                            {{$subcategorie->name}}
                                         </li>
                                     @endforeach
@@ -251,6 +251,14 @@
             box-shadow: none;
             border-left: solid 1px #ccc;
         }
+        li.nav-item.active-c {
+            border-bottom: 2px solid #007F7F;
+        }
+        .intro{border-bottom: 2px solid #007F7F;}
+        .ul-margin li:nth-child(1) a{border-bottom: 2px solid #007F7F;}
+        .intro2{
+            border-bottom: 2px solid #007F7F !important;
+        }
 
         @media only screen and (max-width:767px){
             .isub-heading{
@@ -275,4 +283,24 @@
         }
         
     </style>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+    <script>
+
+
+jQuery(function($) {
+     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+     $('ul a').each(function() {
+      if (this.href === path) {
+       $(this).addClass('intro');
+     // $(this).addClass('intro');
+    //  $('.ul-margin li:nth-child(1) a').addClass('intro2');
+    
+      }
+     });
+   
+    });
+
+  
+
+    </script>
 @endpush
