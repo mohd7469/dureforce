@@ -167,6 +167,7 @@
             line-height: 18px;
             color: #000000;
             padding-top: 24px;
+            margin-bottom: 10px;
         }
         .isub-head-con{
             width: 100%;
