@@ -42,7 +42,7 @@
 
                                                         <div class="col-md-5 col-lg-5 col-xl-5 col-sm-12 col-xs-12 float-right" >
                                                             <div class="float-right">
-                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status->name ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
+                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
                                                                 
                                                             </div>
                                                             
@@ -53,7 +53,7 @@
                                                         
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content" >
-                                                            {!!$job->description !!}
+                                                            {{$job->description }}
 
                                                             <div class="service_subtitle2 mt-20 dod-text">
                                                                 <p> Deliverables</p>
@@ -114,6 +114,7 @@
                                         <div class="sidebar">
                                             <div class="widget custom-widget mb-30 cstm-sidebar">
                                                 @if($job->budget_type_id == \App\Models\BudgetType::$hourly)
+
                                                     <ul class="sidebar-title2 sidebar-heading-border">
                                                         <li><span>Per Hour Rate:</span>
                                                             <span>{{ '$'.$job->hourly_start_range." - $".$job->hourly_end_range }}</span>
@@ -138,7 +139,7 @@
 
                                                 <ul class="sidebar-title2">
                                                     <li><span>Budget Type</span>
-                                                        <p>{{$job->budgetType->title ? $job->budgetType->title : ''}}</p>
+                                                        <p>{{$job->budgetType ? $job->budgetType->title : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
@@ -153,12 +154,12 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Stage</span>
-                                                        <p>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</p>
+                                                        <p>{{$job->projectStage ? $job->projectStage->title  : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Experience Level</span>
-                                                        <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                                                        <p>{{$job->rank ?  $job->rank->level : ''}}</p>
                                                     </li>
                                                 </ul>
 
@@ -184,15 +185,15 @@
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">
                                             <div class="profile_title">
-                                                <strong class="card-title ">{{$job->user->first_name ? $job->user->username  : ''}}</strong><br>
-                                                    <small>Member since {{$job->user->created_at->format('Y-m-d') ? $job->user->created_at->format('Y-m-d') : '' }} </small>
+                                                <strong class="card-title ">{{$job->user ? $job->user->username  : ''}}</strong><br>
+                                                    <small>Member since {{$job->user ? $job->user->created_at->format('Y-m-d') : '' }} </small>
                                             </div>
                                             </div>
                                             <div class="sep-solid"></div>
                                             <div >
                                             <ul class="location">
                                                 <li>
-                                                    <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user->address ? $job->user->address  : ''}} </span>
+                                                    <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user? $job->user->address: ''}} </span>
                                                     <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> 12:37 pm local time</span>
                                                 </li>
                                                 
@@ -215,7 +216,7 @@
                                                     <i class="fa fa-star "></i>
                                                     <i class="fa fa-star "></i>
                                                     <i class="fa fa-star"></i>
-                                                    <span>4.98 of 32 reviews</i>
+                                                    <i>4.98 of 32 reviews</i>
                                                 </li>
                                             </ul>
                                             </div>
