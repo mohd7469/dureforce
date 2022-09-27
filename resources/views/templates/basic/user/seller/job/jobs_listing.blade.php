@@ -31,10 +31,14 @@
                 <div class="container-fluid">
                     <div class="row justify-content-left align-items-left flex-start">
                         <div class="nav-prev arrow" style="display: none;"></div>
-                        <div class="col-lg-1 t-sbh">Sub Categories:</div>
+                        <div class="col-lg-1 t-sbh">Sub Categories: </div>
+                        
                         <div class="col-lg-11 sub-nav">
                             <ul class="text-center ul-margin listing-nav-in">
                                 @isset($subcategories)
+                                <li class="nav-item active">
+                                    All
+                                 </li>
                                     @foreach($subcategories as $subcategorie)
                                         <li class="nav-item active">
                                            {{$subcategorie->name}}

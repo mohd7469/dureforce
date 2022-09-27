@@ -18,9 +18,17 @@ class JobController extends Controller
     public function index($category = null)
     {
     
-        $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user'])->orderBy('created_at','DESC')->get();
+        $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->get();
+        
+        
         $categories = Category::with('subCategory')->get();
-        $subcategories=SubCategory::where('category_id', $category)->get();
+        if($category == null){
+            $subcategories=SubCategory::where('category_id',$categories->pluck('id')->first())->get();
+        }else{
+            $subcategories=SubCategory::where('category_id', $category)->get();
+        }
+        
+        
         
 
         return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories);
