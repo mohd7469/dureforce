@@ -68,7 +68,7 @@ function displayInfoAlertMessage(message)
 $(function() {
 
     var form_data='';
-    var action_url=$("#job_form_data").attr('action');
+    var action_url=$("#propsal_form").attr('action');
     var dropzone = new Dropzone('#demo-upload', {
         url:action_url,
         autoProcessQueue: false,

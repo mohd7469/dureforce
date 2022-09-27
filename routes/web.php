@@ -836,4 +836,4 @@ Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
 
 
 Route::get('/jobs-listing',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
-Route::get('/user/buyer/submit-job-proposal/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'proposal'])->name('user.job.submit.proposal');
+Route::get('/user/buyer/submit-job-proposal/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'proposal'])->name('job.submit.proposal');

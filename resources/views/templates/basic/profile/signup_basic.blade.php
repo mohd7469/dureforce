@@ -122,7 +122,6 @@
 
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
-                                    @dd(\App\Models\Role::$FreelancerName);
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
@@ -702,6 +701,10 @@
                       if(response.success){
                         notify('success', response.success);
                         formPostProcess(paymentTab);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);

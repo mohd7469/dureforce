@@ -34,7 +34,7 @@ class CreateProposalsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('delivery_mode_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('delivery_mode_id')->references('id')->on('proposals')->onDelete('cascade');
             $table->foreign('service_fees_id')->references('id')->on('service_fees')->onDelete('cascade');
 
         });
