@@ -9,10 +9,12 @@ use App\Models\Frontend;
 use App\Models\GeneralSetting;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
+use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -677,7 +679,8 @@ function sendEmail($user, $type = null, $shortCodes = [])
     if ($config->name == 'php') {
         sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'smtp') {
-        sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+         \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
+        //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
         sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'mailjet') {
@@ -1144,5 +1147,16 @@ function getFileExtension($file)
 
     $extension = strtolower($file->getClientOriginalExtension());
     return $extension;
+
+}
+
+
+function getMailCredentials(){
+    try {
+    $system_mail_config = SystemMailConfiguration::where('is_active',true)->first();
+    return $system_mail_config;
+    } catch (\Exception $exp) {
+        return response()->json(["error" => $exp->getMessage()]);
+    }
 
 }

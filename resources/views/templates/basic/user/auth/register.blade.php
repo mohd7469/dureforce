@@ -13,7 +13,7 @@
         tabindex="-1"
         aria-labelledby="signUpModalLabel"
         aria-hidden="true"
-    >
+        >
         <div class="modal-dialog">
             <div class="modal-content">
                 
@@ -59,13 +59,13 @@
                                 <small class="text-danger usernameExist"></small>
                             </div>
 
-                            {{-- <div class="col-lg-6 form-group">
+                            <div class="col-lg-12 form-group">
                                 <select name="country" id="country" class="form-control form--control">
                                     @foreach($countries as $key => $country)
-                                        <option data-mobile_code="{{ $country->dial_code }}" value="{{ $country->country }}" data-code="{{ $key }}">{{ __($country->country) }}</option>
+                                        <option value="{{ $country->id }}">{{ __($country->name) }}</option>
                                     @endforeach
                                 </select>
-                            </div> --}}
+                            </div> 
 
 
                             <div class="col-lg-6 form-group hover-input-popup">
@@ -90,12 +90,12 @@
                             <div class="col-lg-12 form-group">
                                 <div class="btn-group justify-content-center" role="group" style="width: 100%" aria-label="Basic radio toggle button group">
                                  <div>
-                                    <input type="radio" class="btn-check" name="type" value="1" id="btnradio1" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Freelancer}}" id="btnradio1" autocomplete="off" checked>
                                     <label class="btn btn-outline-secondary btn-freelance" for="btnradio1">@lang('Work As A Freelancer')</label>
                                 </div>
                                 <div>
 
-                                    <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Client}}" id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary btn-hire" for="btnradio2">@lang('Hire For A Project')</label>
                                 </div>
                                 {{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}

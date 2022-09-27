@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 use Cache;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,6 +57,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'data' => 1
     ];
 
+    public static function scopeWithAll($query){
+
+        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills');
+
+    }
+    
+    public function basicProfile()
+    {
+        return $this->hasOne('App\Models\UserBasic');
+    }
 
     public function login_logs()
     {
@@ -103,7 +114,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function skills()
     {
-        return $this->hasMany('App\Models\UserSkill');
+        return $this->belongsToMany(Skills::class,'user_skills','user_id','skill_id');
     }
 
     public function education()
@@ -135,7 +146,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne('App\Models\UserCompany');
     }
-
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category','user_categories');
+    }
     public function payments()
     {
         return $this->hasMany('App\Models\UserPayment');
@@ -262,5 +276,16 @@ class User extends Authenticatable implements MustVerifyEmail
         } 
 
         return 0;
+    }
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+        });
+
+
     }
 }   
