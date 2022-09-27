@@ -122,7 +122,6 @@
 
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
-                                    @dd(\App\Models\Role::$FreelancerName);
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
