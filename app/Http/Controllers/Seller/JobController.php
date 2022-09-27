@@ -20,24 +20,17 @@ class JobController extends Controller
     
         $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->get();
         
-        
         $categories = Category::with('subCategory')->get();
         if($category == null){
+            $Categorytitle = Category::where('id',$category)->first();
             $subcategories=SubCategory::where('category_id',$categories->pluck('id')->first())->get();
         }else{
+            $Categorytitle = Category::where('id',$category)->first();
             $subcategories=SubCategory::where('category_id', $category)->get();
         }
-        
-        
-        
 
-        return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories);
+        return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle );
     }
-    // public function subcategory($category){
-    //     $subcategories=SubCategory::where('category_id', $category)->get();
-    //     return view('templates.basic.user.seller.job.jobs_listing')->with('subcategories',$subcategories);
-
-    // }
 
     /**
      * Show the form for creating a new resource.

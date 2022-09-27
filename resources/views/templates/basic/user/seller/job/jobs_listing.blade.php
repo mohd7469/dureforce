@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="isub-head-con">
-                <div class="isub-heading">Microservices Jobs</div>
+                <div class="isub-heading"> {{$Categorytitle->name  ?? ''}} Jobs</div>
                 <div class="right-con-isub">
                     <span class="isub-filter">Filter</span>
                    <div id="custom-search-input">
