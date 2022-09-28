@@ -11,7 +11,7 @@
         <div class="nav-prev arrow" style="display: none;"></div>
 
         <div class="col-lg-12 px-5 sub-nav">
-            <ul class="text-center ">
+            <ul class="text-center main_nav">
                 @foreach($categories as $category)
                     <li class="nav-item">
                       <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
@@ -302,18 +302,24 @@
                 }
         }
         
+        .main_nav > :first-child {
+           border-bottom: 2px solid #007F7F;
+        }
+        
     </style>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
     <script>
 
 
 jQuery(function($) {
-     var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+   
+     var path = window.location.href;
+
      $('ul a').each(function() {
       if (this.href === path) {
-       $(this).addClass('intro');
-     // $(this).addClass('intro');
-    //  $('.ul-margin li:nth-child(1) a').addClass('intro2');
+        $("ul").removeClass("main_nav");
+        $(this).addClass('intro');
+
     
       }
      });
