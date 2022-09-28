@@ -10,17 +10,14 @@
             <div class="container-fluid welcome-body px-5">
                 <h1 class="mb-4">Education</h1>
                 <span class="cmnt pb-4">
-         Complete your profile to join our global community of freelancers and start
-         selling
-         your
-         service
-         to growing network of businesses.</span>
-                <div>
-
-
-
+                Complete your profile to join our global community of freelancers and start
+                selling
+                your
+                service
+                to growing network of businesses.</span>
+                <div >
+                    <div id="education-container">
                         @if (count($usereducations) > 0)
-
 
                             @foreach ($usereducations as  $key => $Usereducation)
                                 {{-- {{dd($Usereducation)}} --}}
@@ -201,7 +198,7 @@
                                     </div>
                                 </div>
                                 <input type="hidden" name="education_count" id="educations_count"
-                                       value="{{count($usereducations)}}">
+                                        value="{{count($usereducations)}}">
 
 
                             @endforeach
@@ -357,8 +354,11 @@
                                 ></textarea>
                             </div>
 
-                    <input type="hidden" name="education_count" id="educations_count" value="1">
-                    @endif
+                            <input type="hidden" name="education_count" id="educations_count" value="1">
+                        @endif
+                    </div>
+                   
+                    
                     <button
                             type="button"
                             class="my-2"
@@ -366,9 +366,10 @@
                     >
                         Add another
                     </button>
-                    {{-- <button type="submit" class="my-3">Continue</button> --}}
                 </div>
+
             </div>
+            
             <div class="setProfile">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-continue btn-secondary ">

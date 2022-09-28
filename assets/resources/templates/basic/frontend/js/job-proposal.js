@@ -30,7 +30,6 @@ function displayErrorMessage(validation_errors)
 
       
     }
-    $("#submit-all").attr("disabled", false);
 
 }
 function submitProposal(data)
@@ -46,7 +45,6 @@ function submitProposal(data)
           if(data.error){
               
             displayErrorMessage(data.error);
-            $("#submit-all").attr("disabled", false);
 
           }
           else{
@@ -98,7 +96,6 @@ $(function() {
                 if(response.error)
                 {
                   displayErrorMessage(response.error);
-                  $("#submit-all").attr("disabled", false);
                 }
                 if(response.redirect)
                   window.location.replace(response.redirect);
@@ -123,8 +120,6 @@ $(function() {
                             if(myDropzone.getQueuedFiles().length>0){
                               myDropzone.processQueue();
                               
-                              displayInfoAlertMessage("Processing Plz Wait");
-                              $("#submit-all").attr("disabled", true);
 
 
                             }

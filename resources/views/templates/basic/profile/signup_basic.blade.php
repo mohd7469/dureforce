@@ -60,7 +60,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='completed-span'>1</span>
+                                    class=''>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
@@ -202,7 +202,6 @@
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
-        var educationRow = $('#education-container');
         var current_fs, next_fs, previous_fs; //fieldsets
         var opacity;
         var current = 1;
@@ -271,6 +270,7 @@
                 saveUserCompany();
 
             });
+        
 
             user_payment_methods_form.submit(function (e) {
 
@@ -491,7 +491,6 @@
         }
 
         function addEducation() {
-
             educationRow.append(` <div id="education-row">
                 <div id="experiance-row-`+edu_row_index+`">
                                              <hr>

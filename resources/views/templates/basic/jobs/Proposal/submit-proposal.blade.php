@@ -194,7 +194,7 @@
                                   <button type="button" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</button>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Propsal')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Proposal')</button>
                               </div>
                           </div>
                         </form>
