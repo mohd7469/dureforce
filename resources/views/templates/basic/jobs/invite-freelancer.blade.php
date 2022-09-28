@@ -10,7 +10,7 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        
+                            @include('templates.basic.jobs.breadcrum',['job_uuid' => $job->uuid])
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
@@ -544,7 +544,10 @@ p.plocation:before {
 }
 }
 </style>
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+
 @push('script')
+
 <script>
    'use strict';
    $('#defaultSearch').on('change', function() {
