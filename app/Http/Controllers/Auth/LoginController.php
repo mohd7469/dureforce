@@ -75,6 +75,11 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+
+
+            $user = auth()->user();
+//            $user->last_role_activity = isset($data['role']) ? $data['role'] : null;
+
             return $this->sendLoginResponse($request);
         }
 
