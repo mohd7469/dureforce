@@ -2,7 +2,8 @@
 @section('content')
 
 
-<section class="all-sections pt-3">
+
+    <section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
       <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
          <article class="main-section">
@@ -10,15 +11,16 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        
+                            @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
+
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
                                     <div class="col-md-2">
-                                        <h2 class="prosals-h">All Proposals</h2> 
-                                        
+                                        <h2 class="prosals-h">All Proposals</h2>
+
                                     </div>
-                                 
+
                                     <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
@@ -32,11 +34,11 @@
                                                                     </button>
                                                                 </span>
                                                             </div>
-                                                           
+
                                                         </div>
-                                                    </div>       
+                                                    </div>
                                                     <div class="col-md-4">
-                                                    
+
                                                         <form>
                                                             <select name="Best match" id="bestmatch">
                                                                 <option>Best match</option>
@@ -47,8 +49,8 @@
                                                             </select>
                                                         </form>
                                                     </div>
-                                               
-                                            
+
+
                                          <!--Sorting Section End-->
 
                                         <div class="col-md-4">
@@ -68,34 +70,37 @@
                                 </div>
 
                                  <!--Bio Profile Section Start-->
-                            
                             @foreach ($proposals as $proposal)
-                                    <div class="" > 
+
+                                <div class="" >
                                         <div class="row biorow">
                                            <div class="col-md-3">
-                                              <div class="row borderleftc"> 
+                                              <div class="row borderleftc">
                                                 <div class="col-md-4">
-                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive">
                                                 </div>
-                                                <div class="col-md-8">
-                                                    @isset($proposal->user->username)
-                                                    <h4 class="pname-c"> 
-                                                               {{$proposal->user->username}}
+                                                  @isset($proposal->user)
+
+                                                  <div class="col-md-8">
+                                                    <h4 class="pname-c">
+
+                                                        {{$proposal->user->first_name}}
                                                      </h4>
-                                                     @endisset
-                                                     @isset($proposal->user->designation)
-                                                      <p class="pdesination-c"> {{$proposal->user->designation}} </p>
-                                                     @endisset
-
+                                                      @isset($proposal->user->user_basic)
+                                                          @foreach($proposal->user->user_basic as $basic)
+                                                      <p class="pdesination-c"> {{$basic->designation}} </p>
+                                                          @endforeach
+                                                      @endisset
                                                      <div class="col-md-4">
-                                                        @isset($proposal->user->address->address)
-                                                        <p class="plocation"> {{@$proposal->user->address->address }}</p>
-                                                        @endisset
 
-                                                       
+                                                        <p class="plocation">{{$proposal->user->country->name }}</p>
+
+
                                                     </div>
                                                  </div>
-                                                   
+                                                  @endisset
+
+
                                               </div>
                                            </div>
 
@@ -103,10 +108,12 @@
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
-                                                        @isset($proposal->module->hourly_start_range)
-                                                        <p class="perhourprice">${{ $proposal->module->hourly_start_range}}  / Per Hour</p>
+                                                        @isset($proposal->module)
+<!--                                                            --><?php //dd($proposal->toArray()); ?>
+
+                                                            <p class="perhourprice">${{ $proposal->hourly_bid_rate != null ? $proposal->hourly_bid_rate : $proposal->fixed_bid_amount}}  / Per Hour</p>
                                                         @endisset
-                                                        
+
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Total Earnings</p>
@@ -121,7 +128,7 @@
 
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
-                                                    
+
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
                                                     <a href="{{route('user.proposal.buyer.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
@@ -129,7 +136,9 @@
                                                 </div>
                                             </div>
                                      </div>
-                                            <!--===  Bio Profile Section End ===-->
+
+
+                                <!--===  Bio Profile Section End ===-->
 
                                         <!--Product Description Start-->
                                             <div class="row p_desription">
@@ -137,7 +146,7 @@
                                                     @isset($proposal->cover_letter)
                                                     <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
                                                     @endisset
-                                            
+
 
                                                 </div>
                                             </div>
@@ -147,58 +156,50 @@
                          <!--Skills Section Start-->
 
                             <div class="row skills-c">
-                                <div class="col-md-7">
+                                <div class="col-md-6 col-lg-6">
                                     {{-- <h2> Has 7 relevant skills to your job</h2> --}}
-                                     @isset($proposal->user->skills)
-                                    <h2>Has {{$proposal->user->skills->count()}} relevant skills to your job</h2>
-                                   
+                                     @isset($proposal->user)
+                                    <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
+
+                                    @foreach($proposal->user->skills as $skill)
                                     <ul class="skills-listing">
-                                     
-                                        @foreach ($proposal->user->skills as  $skills)
-                                         <li>{{$skills->skill->name}} </li>
-                                        @endforeach
-                                        
-                                        {{-- <li>HTML</li>
-                                        <li>CSS</li>
-                                        <li>Javascript</li>
-                                        <li>Bootstrap</li>
-                                        <li>jQuery</li>
-                                        <li>React</li> --}}
+
+                                         <li>{{$skill->name}} </li>
+
                                     </ul>
+                                        @endforeach
+                                    @endisset
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6 col-lg-6">
                                     <div class="attachment">
                                         <div class="service_subtitle2 mt-20 heading-text">
-                                      <h2> Attachments</h2>
-                                          </div>
-                            
+                                        <h2> Attachments</h2>
                                                 <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
                                                 <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
-                            
+
                                         </div>
                                   </div>
 
                                 </div>
 
                                     <!--Skills Section End-->
-                            </div> 
-                       
-                                    @endisset
+                            </div>
 
                           <hr>
-                                   
-                          @endforeach
+
+                             @endforeach
                         </div>
                     </div>
                   </div>
                </div>
             </div>
+            </div>
          </article>
-        
+      </div>
    </div>
 </section>
 
-</div>
+
 @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
@@ -208,8 +209,6 @@
     .attachment{
         display: inline-block;
     width: 100%;
-    
-    margin: top;
     margin-top: -50px;
     }
     .heading-text{
@@ -518,6 +517,7 @@ a.btn-products-s {
 }
 }
 </style>
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
 
 @push('script')
 <script>

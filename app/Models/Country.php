@@ -14,6 +14,10 @@ class Country extends Model
 
         return  $this->belongsTo(Job::class);
     }
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 
  
 }

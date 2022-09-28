@@ -16,13 +16,13 @@ Route::get('/clear', function () {
 */
 Route::get('/jobs-listing/{category?}',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
 
-Route::get('proposal/{uuid}', 'buyer\jobcontroller@proposal')->name('job.proposal');
-Route::get('/jobview/{uuid}', 'buyer\JobController@jobview')->name('job.jobview');
-Route::get('invite-freelancer', 'buyer\jobcontroller@inviteFreelancer')->name('job.invite.freelancer');
+Route::get('proposal/{uuid}', 'Buyer\JobController@proposal')->name('job.proposal');
+Route::get('/jobview/{uuid}', 'Buyer\JobController@jobview')->name('job.jobview');
+Route::get('invite-freelancer/{uuid}', 'Buyer\JobController@inviteFreelancer')->name('job.invite.freelancer');
 
-Route::get('single-job/{uuid}', 'buyer\jobcontroller@singleJob')->name('job.index');
-Route::get('/job/attachment', 'buyer\jobcontroller@downnloadAttach')->name('job.download');
-Route::get('proposal', 'seller\ProposalController@index')->name('proposal.index');
+Route::get('single-job/{uuid}', 'Buyer\JobController@singleJob')->name('job.index');
+Route::get('/job/attachment', 'Buyer\JobController@downnloadAttach')->name('job.download');
+Route::get('proposal', 'Seller\ProposalController@index')->name('proposal.index');
 
 
 Route::get('booking/service/cron', 'CronController@service')->name('service.cron');
@@ -589,7 +589,7 @@ Route::name('user.')->group(function () {
 
 
 
-Route::get('/seller_profile', 'seller\UserController@seller_profile')->name('seller_profile');
+Route::get('/seller_profile', 'Seller\UserController@seller_profile')->name('seller_profile');
 
 
 
@@ -741,7 +741,6 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('job/cancel', 'JobController@cancelBy')->name('job.cancel');
             Route::get('job/get-skills', 'JobController@getSkills')->name('job.let.skills');
             Route::get('job/single-job/{uuid}', 'JobController@singleJob')->name('job.single.view');
-            Route::get('submit-job-proposal/{uuid}', 'Jobcontroller@proposal')->name('job.submit.proposal');
             Route::get('view-proposal/{uuid}', 'ProposalController@show')->name('proposal.buyer.show');
             Route::get('all-proposal/{uuid}', 'ProposalController@jobPropsals')->name('job.all.proposals');
 
@@ -837,5 +836,6 @@ Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
 //
 
 
-
+Route::get('/jobs-listing',[\App\Http\Controllers\Seller\JobController::class,'index'])->name('seller.jobs.listing');
+Route::get('/user/buyer/submit-job-proposal/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'proposal'])->name('job.submit.proposal');
 

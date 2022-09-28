@@ -129,6 +129,7 @@ class RegisterController extends Controller
         $serviceFee = ServiceFee::where('slug', 'new-user')->first();
         $user->service_fee_id = $serviceFee->id;
         $user->first_name = isset($data['firstname']) ? $data['firstname'] : null;
+        $user->last_role_activity = isset($data['role']) ? $data['role'] : null;
         $user->last_name = isset($data['lastname']) ? $data['lastname'] : null;
         $user->email = strtolower(trim($data['email']));
         $user->country_id = isset($data['country']) ? $data['country'] : null;

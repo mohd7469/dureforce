@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Proposal extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id ','bid_type','service_fees_id','delivery_mode_id ','module_id','module_type','hourly_bid_rate','amount_receive','start_hour_limit','end_hour_limit','cover_letter','deleted_at','fixed_bid_amount','project_start_date','project_end_date'];
+    protected $fillable = ['user_id','bid_type','service_fees_id','delivery_mode_id','module_id','module_type','hourly_bid_rate','amount_receive','start_hour_limit','end_hour_limit','cover_letter','deleted_at','fixed_bid_amount','project_start_date','project_end_date'];
 
     public static $bid_type_milestone = 'milestone';
     public static $by_project = 'by_project';
@@ -40,7 +40,7 @@ class Proposal extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->with('user_basic');
     }
 
     public function milestone()

@@ -60,7 +60,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='completed-span'>1</span>
+                                    class=''>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
@@ -118,14 +118,15 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
+                                @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
+
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
                                     @include($activeTemplate . 'profile.partials.client_basic')
                                 @endif
                             </div>
                            
-                            @if (in_array(\App\Models\Role::$Freelancer,auth()->user()->getRoleNames()->toArray()))
+                            @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -201,7 +202,6 @@
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
         var educationRow = $('#education-container');
-        var educationRow = $('#education-container');
         var current_fs, next_fs, previous_fs; //fieldsets
         var opacity;
         var current = 1;
@@ -270,6 +270,7 @@
                 saveUserCompany();
 
             });
+        
 
             user_payment_methods_form.submit(function (e) {
 
@@ -490,7 +491,6 @@
         }
 
         function addEducation() {
-
             educationRow.append(` <div id="education-row">
                 <div id="experiance-row-`+edu_row_index+`">
                                              <hr>
@@ -637,6 +637,10 @@
                 
                     if (response.success) {
                         notify('success', response.success);
+                        if(response.redirect_url)
+                        {
+                            window.location.replace(response.redirect_url);              
+                        }
 
                     }
                     else if(response.validation_errors){
@@ -696,6 +700,10 @@
                       if(response.success){
                         notify('success', response.success);
                         formPostProcess(paymentTab);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);

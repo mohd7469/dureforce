@@ -46,7 +46,7 @@
                                              </p>
 
                                              <div>
-                                                <a href="#" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
+                                                <a href="{{route('job.jobview',$job->uuid)}}" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
                                              </div>
                                           </div>
 
@@ -194,7 +194,7 @@
                                   <button type="button" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</button>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Propsal')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Proposal')</button>
                               </div>
                           </div>
                         </form>

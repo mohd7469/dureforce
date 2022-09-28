@@ -12,6 +12,7 @@
                     <div class="section-inner">
                         <div class="item-section item-details-section">
                             <div class="container">
+                                @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
                                 <div class="item-details-content" style="padding-top: 0px;">
                                     <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
                                     
@@ -192,3 +193,4 @@
 
 @endpush
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">

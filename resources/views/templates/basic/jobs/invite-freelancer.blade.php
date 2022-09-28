@@ -10,7 +10,7 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-                        
+                            @include('templates.basic.jobs.breadcrum',['job_uuid' => $job->uuid])
                         <div class="container">
                             <div class="row">
                                 <div class="col-12"></div>
@@ -113,7 +113,7 @@
                                             <div class="col-md-3">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="#" class="btn-products-s">View Profile</a>
+                                                    <a href="{{route('seller_profile')}}" class="btn-products-s">View Profile</a>
                                                     <a href="#" class="btn-products-s">Hire</a>
                                                     <a href="#" class="btn-products-s phire">Invite a job</a>
                                                   
@@ -544,7 +544,10 @@ p.plocation:before {
 }
 }
 </style>
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+
 @push('script')
+
 <script>
    'use strict';
    $('#defaultSearch').on('change', function() {

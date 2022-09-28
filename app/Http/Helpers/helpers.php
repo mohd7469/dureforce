@@ -7,6 +7,7 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
 use App\Models\SystemMailConfiguration;
@@ -679,7 +680,7 @@ function sendEmail($user, $type = null, $shortCodes = [])
     if ($config->name == 'php') {
         sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'smtp') {
-         \Mail::to($user->email)->send(new \App\Mail\sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
+        \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
         //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
         sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
@@ -1151,12 +1152,32 @@ function getFileExtension($file)
 }
 
 
-function getMailCredentials(){
+function getMailCredentials()
+{
     try {
-    $system_mail_config = SystemMailConfiguration::where('is_active',true)->first();
-    return $system_mail_config;
+        $system_mail_config = SystemMailConfiguration::where('is_active', true)->first();
+        return $system_mail_config;
     } catch (\Exception $exp) {
         return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
+
+function getUserRoleId()
+{
+    if (auth()->user()) {
+        if (in_array(Role::$FreelancerName, auth()->user()->getRoleNames()->toArray())) {
+            return Role::$Freelancer;
+        } elseif (in_array(Role::$ClientName, auth()->user()->getRoleNames()->toArray())) {
+
+            return Role::$Client;
+        } else {
+            return null;
+        }
+
+    }
+    else {
+        return null;
     }
 
 }

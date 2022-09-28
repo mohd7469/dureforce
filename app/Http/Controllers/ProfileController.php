@@ -179,7 +179,7 @@ class ProfileController extends Controller
                 $user->skills()->sync($request->skills);
                 $user->save();
                 DB::commit();
-                return response()->json(["success" => "Skills and Rates Updated Successfully"]);
+                return response()->json(["success" => "Skills and Rates Updated Successfully",'redirect_url' => route('user.home')]);
             } catch (\Throwable $exception) {
                 DB::rollback();
                 $notify[] = ['errors', 'Failled To Save User Skills and Rate .'];
@@ -307,8 +307,8 @@ class ProfileController extends Controller
                     'is_active'  =>1
                 ]);
                 DB::commit();
-                $notify[] = ['success', 'Successfully Updated Profile.'];
-                return response()->json(['success'=> 'User Payment Method Updated Successfully']);
+
+                return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'view=step-3'])]);
 
             } catch (\Throwable $th) {
 
