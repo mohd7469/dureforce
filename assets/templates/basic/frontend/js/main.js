@@ -13,7 +13,7 @@
 
   $.ajaxSetup({
     beforeSend: function() {
-      $(".preloader").css("opacity", "0.3");
+      $(".preloader").css("opacity", "0.6");
       $(".preloader").show(); 
     },
     complete: function() {
