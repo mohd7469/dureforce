@@ -11,7 +11,7 @@
         <div class="nav-prev arrow" style="display: none;"></div>
 
         <div class="col-lg-12 px-5 sub-nav">
-            <ul class="text-center ul-margin">
+            <ul class="text-center ">
                 @foreach($categories as $category)
                     <li class="nav-item">
                       <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
@@ -24,17 +24,17 @@
 </div>
 </div>
  <section>
- <div class="row container listing-jb-container">
+ <div>
             <div>
                 <div class="categories_type_container">
-                    <div class="header-short-menu">
+                    <div class="header-short-menu mt-2">
                 <div class="container-fluid">
                     <div class="row justify-content-left align-items-left flex-start">
                         <div class="nav-prev arrow" style="display: none;"></div>
                         <div class="col-lg-1 t-sbh">Sub Categories: </div>
                         
                         <div class="col-lg-11 sub-nav">
-                            <ul class="text-center ul-margin listing-nav-in">
+                            <ul class="text-center  listing-nav-in">
                                 @isset($subcategories)
                                 <li class="nav-item active-c">
                                     All
@@ -52,6 +52,7 @@
                 </div>
                 </div>
             </div>
+        <div class="row container listing-jb-container">
             <div class="isub-head-con">
                 <div class="isub-heading"> {{$Categorytitle->name  ?? ''}} Jobs</div>
                 <div class="right-con-isub">
@@ -102,6 +103,7 @@
                 </div>
             @endforeach
         </div>
+        </div>
 
     </section>
 
@@ -113,6 +115,13 @@
 
 @push('style')
     <style>
+        @media (max-width: 1400px){
+         .header-short-menu {
+                padding: 0px 40px;
+        }
+        }
+    
+
         .button-review-color {
             color: #007F7F;
         }
@@ -142,10 +151,21 @@
         .sub-nav ul{
             display: inherit;
         }
+        .sub-nav {
+            padding: 12px 0px 20px;
+
+        }
+        .sub-nav li {
+            margin: -21px 30px;
+            display: inline-table;
+            /* margin: 0 13px; */
+            font-size: 13px;
+            font-weight: 600;
+        }
         .listing-jb-container{
             background: #F8FAFA;
             border: 1px solid #CBDFDF;
-            margin-top: 9px;
+            
         }
         .listing-nav-in li a {
             font-weight: 600;
@@ -170,7 +190,7 @@
             font-size: 14px;
             line-height: 18px;
             color: #000000;
-            padding-top: 24px;
+            padding-top: 18px;
             margin-bottom: 10px;
         }
         .isub-head-con{
