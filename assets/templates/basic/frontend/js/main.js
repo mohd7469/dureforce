@@ -1,11 +1,24 @@
 (function ($) {
+  
   "user strict";
 
+  
   // preloader
   $(".preloader").delay(800).animate({
     "opacity": "0"
   }, 800, function () {
       $(".preloader").css("display", "none");
+  });
+
+
+  $.ajaxSetup({
+    beforeSend: function() {
+      $(".preloader").css("opacity", "1");
+      $(".preloader").show(); 
+    },
+    complete: function() {
+      $(".preloader").css("display", "none");
+    }
   });
 
   // chosen-select

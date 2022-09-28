@@ -12,7 +12,6 @@ function submitCreateFormData(data)
           if(data.error){
               
             displayErrorMessage(data.error);
-            $("#submit-all").attr("disabled", false);
 
           }
           else{
@@ -44,7 +43,6 @@ function displayErrorMessage(validation_errors)
 
       
     }
-    $("#submit-all").attr("disabled", false);
 
 }
 
@@ -96,7 +94,6 @@ $(function() {
               if(response.error)
               {
                 displayErrorMessage(response.error);
-                $("#submit-all").attr("disabled", false);
               }
               if(response.redirect)
                 window.location.replace(response.redirect);
@@ -125,8 +122,6 @@ $(function() {
                           {
                             submitCreateFormData(form_data);
                           }
-                          $("#submit-all").attr("disabled", true);
-                          displayInfoAlertMessage("Processing Plz Wait");
 
                       }
                       else{
