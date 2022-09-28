@@ -479,10 +479,10 @@ class JobController extends Controller
         return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
-       public function inviteFreelancer(){
-        
+       public function inviteFreelancer($job_uuid){
+        $job=Job::where('uuid',$job_uuid)->first();
         $pageTitle = "inviteProposal";
-        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle'));
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job'));
        }
 
 

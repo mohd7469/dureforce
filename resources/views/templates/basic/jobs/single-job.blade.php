@@ -12,7 +12,7 @@
                     <div class="section-inner">
                         <div class="item-section item-details-section">
                             <div class="container">
-                                @include('templates.basic.jobs.breadcrum')
+                                @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
                                 <div class="item-details-content" style="padding-top: 0px;">
                                     <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
                                     

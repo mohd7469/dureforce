@@ -11,6 +11,7 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
+                            @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
 
                         <div class="container">
                             <div class="row">
@@ -516,6 +517,7 @@ a.btn-products-s {
 }
 }
 </style>
+<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
 
 @push('script')
 <script>
