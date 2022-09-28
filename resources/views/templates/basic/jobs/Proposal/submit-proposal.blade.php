@@ -46,7 +46,7 @@
                                              </p>
 
                                              <div>
-                                                <a href="#" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
+                                                <a href="{{route('job.jobview',$job->uuid)}}" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
                                              </div>
                                           </div>
 
