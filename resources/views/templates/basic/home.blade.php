@@ -418,7 +418,7 @@
             </article>
             <div class="row">
                 {{-- @for ($l = 0; $l < 4; $l++) --}}
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -436,7 +436,8 @@
                             giving you customized cloud service experience to cater your specific requirements. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -453,7 +454,7 @@
                             our marketplace is only focused on cloud services. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -475,7 +476,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -510,9 +512,23 @@
 @push('style')
 <style>
     .mt-h{
-
         margin-top: -158px;
-
+    }
+    .carousel-item{
+        margin-right: 0;
+        flex: 0 0 25.333333%;
+        display: block;
+    }
+    .card {
+        margin-left: 7px;
+        margin-right: 26px;
+    }
+    .item-area .footer {
+        padding: 10px 0px 0px 0px;
+        left: 0;
+    }
+    .start-from{
+        font-size: .775em;
     }
 </style>
 @endpush
