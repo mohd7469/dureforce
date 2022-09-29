@@ -1,9 +1,17 @@
 <div class="setProfile" id="basic-profile">
-    <form action="{{ route('profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save"
-          enctype="multipart/form-data">
-        @csrf
+ 
+      
+
+@include("templates.basic.profile.modals.client_basic_")
+
+
+
+
+
+
 
         <div class="container-fluid welcome-body px-5">
+           
 
             <h1 class="mb-4">Welcome Shahzaib</h1>
             <span class="cmnt pb-4">
@@ -12,289 +20,118 @@
          your
          service
          to growing network of businesses.</span>
-            <div>
-                <label class="mt-4">Profile Picture</label>
-                <div class="profile-img col-md-12" action="">
-                    <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
-                           class="imgInp" onchange="previewFile(this)"
-                           title=""/>
-                    <image width="100" height="100" id="preview-img"
-                           src="{{ getImage('assets/images/default.png') }}"/>
+
+         <div class="container">
+
+            <div class="client_profile_con">    
+                {{-- <!----== Sidebar Container Start ==----->
+                <div class="sidebar-custom">
+                    <ul class="sidebar-nav">
+                        <li><a href="#">Basic Details</a></li>
+                        <li><a href="#">Company Details</a></li>
+                        <li><a href="#">Billing & Payments</a></li>
+                        <li><a href="#">Password & Security</a></li>
+                    </ul>
                 </div>
-                <div class="row">
-
-                    <div class="col-md-12 col-sm-12">
-                        <label class="mt-4"
-                        >Designation
-                            <span class="imp"
-                            >*</span
-                            ></label
-                        >
-                        <input
-                                type="text"
-                                name="designation"
-                                id="title"
-                                placeholder="E.g. Full Stack Developer"
-                                value="{{$basicProfile->designation}}"
-                        />
-                    </div>
+        
+                <!----== Sidebar Container End ==-----> --}}
+        
+                <!----== Client Info Section Start ==----->
+                <div class="client-info-section">
+                       <p class="cp-basic">Basic Details</p>
+                       <div style="float:right">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Edit
+                        </button>
+                       </div>
+        
+                        <!----== Client Info Section Start ==----->
+        
+                       <div class="cp-profile_c_main">
+                           <img scr="/assets/images/profile.png" alt="Profile" class="cp-prfileimg">
+                           <span>Icon</span>
+                           <div class="cp-profile-h">{{$basicProfile->designation}}</div>
+                       </div>
+        
+                       <!----============End================--->
+        
+        
+                        <!----== Client Job Title Section Start ==----->
+        
+                       <div class="cp-row-con">
+                           <p class="cp--jbh">Job Title</p>
+                           <p class="cp-jt">Marketing Manager</p>
+                       </div>
+        
+                        <!----============End================--->
+        
+        
+                       <!----== Client About Job Descriprion Section Start ==----->
+        
+                       <div class="cp-row-con">
+                           <p class="cp--jbh">About</p>
+                           <p class="cp-jt">{{$basicProfile->about }}</p>
+                       </div>
+        
+                       <!----============End================--->
+        
+                      <!----== Client Job Information Section Start ==----->
+        
+                      <div class="cp-info-container">
+                         <div class="cp-info-box">
+                            <p class="cp--jbh">Location</p>
+                            <p class="cp-jt">{{$basicProfile->location }}</p>
+                         </div>
+        
+                         <div class="cp-info-box">
+                            <p class="cp--jbh">Phone</p>
+                            <p class="cp-jt">{{$basicProfile->phone}}</p>
+                         </div>
+        
+        
+                         <div class="cp-info-box">
+                            <p class="cp--jbh">Email</p>
+                            <p class="cp-jt">{{$basicProfile->email}}</p>
+                         </div>
+        
+                      </div>
+        
+                       <!----============End================--->
+        
+        
+                </div>    
+                <!----== Client Info Section End ==----->
+        
+        
                 </div>
-                <div class="col-md-12">
-                    <label class="mt-4"
-                    >About You
-                        <span class="imp"
-                        >*</span
-                        ></label
-                    >
-                    <textarea
-                            cols="20"
-                            rows="5"
-                            name="about"
-                            placeholder="Describe yourself to clients"
-                            id="about"
-                    >{{ $basicProfile->about }}</textarea>
-                </div>
-                {{-- location --}}
-                <div class="col-md-12">
-                    <label class="mt-4"
-                    >City
-                        <span class="imp"
-                        >*</span
-                        ></label
-                    >
-                    <select
-                            name="city_id"
-                            class="form-control select-lang"
-                            id="languages"
-                    >
-                        <option
-                                value=""
-                        >
-                            Select City
-
-                        </option>
-                        @foreach ($cities as $city)
-
-                            <option
-                                    value="{{$city->id}}"
-
-                                    {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
-                            >
-                                {{$city->name}}
-                            </option>
-
-                        @endforeach
-                    </select>
-                </div>
-                {{-- phone --}}
-                <div class="col-md-12">
-                    <label class="mt-4"
-                    >Phone
-                        <span class="imp"
-                        >*</span
-                        ></label
-                    >
-                    <input
-                            type="number"
-                            name="phone_number"
-                            placeholder=""
-                            id="phone"
-                            value="{{$basicProfile->phone_number}}"
-                    />
-                </div>
-                {{-- language row --}}
-                <div
-                        class="language-container row"
-                        id="language-row"
-                        style="
-               justify-content: space-between !important;
-               "
-                >
-                    @if ($user_languages->count()>0)
-
-                        @foreach ($user_languages as $key=>$user_language)
-                            {{-- language --}}
-                            <div id="moreLanguage-row-{{$key}}">
-                                <div class="row">
-                                    <div
-                                            class="col-md-6 col-sm-12"
-                                    >
-                                        <label class="mt-4"
-                                        >Language
-                                            <span
-                                                    class="imp"
-                                            >*</span
-                                            ></label
-                                        >
-                                        <select
-                                                name="languages[{{$key}}][language_id]"
-                                                class="form-control select-lang "
-                                                id="languages.{{$key}}.language_id"
-                                        >
-                                            <option
-                                                    value=""
-                                                    selected=""
-                                            >
-                                                Spoken
-                                                Language(s)
-                                            </option>
-
-                                            @foreach ($languages as $language)
-                                                <option
-                                                        value="{{$language->id}}"
-                                                        {{ $language->id== $user_language->language_id ? 'selected' :'' }}
-                                                >
-                                                    {{ $language->iso_language_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    {{-- proficiency level --}}
-                                    <div
-                                            class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
-                                    >
-                                        <label class="mt-4"
-                                        >Profeciency
-                                            Level
-                                            <span
-                                                    class="imp"
-                                            >*</span
-                                            ></label
-                                        >
-
-                                        <select
-                                                name="languages[{{$key}}][language_level_id]"
-                                                class="form-control selected-level select-lang"
-                                                id="languages.{{$key}}.language_level_id"
-                                        >
-                                            <option value="" selected="">
-                                                Proficiency Level
-                                            </option>
-
-                                            @foreach ($language_levels as $level)
-                                                <option
-                                                        value="{{$level->id}}"
-                                                        {{ $level->id== $user_language->language_level_id ? 'selected' :'' }}
-                                                >
-                                                    {{$level->name}}
-                                                </option>
-
-                                            @endforeach
-
-
-                                        </select>
-
-                                    </div>
-                                    {{-- delete btn --}}
-                                    @if ($key > 0)
-                                        <div class="col-md-1" style="margin-top:20px; ">
-                                            <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5"
-                                                    onclick="removerow('#moreLanguage-row-{{$key}}')"><i
-                                                        class="fa fa-trash"></i></button>
-
-                                        </div>
-                                    @endif
-                                </div>
-
-                            </div>
-
-
-                            {{-- --- --}}
-
-                        @endforeach
-                        <input type="hidden" name="languages_basics" id="languages_basics"
-                               value="{{$user_languages->count()}}">
-
-                    @else
-                        {{-- language --}}
-                        <div
-                                class="col-md-6 col-sm-12"
-                        >
-                            <label class="mt-4"
-                            >Language
-                                <span
-                                        class="imp"
-                                >*</span
-                                ></label
-                            >
-                            <select
-                                    name="languages[0][language_id]"
-                                    class="form-control select-lang "
-                                    id="languages.0.language_id"
-                            >
-                                <option
-                                        value=""
-                                        selected=""
-                                >
-                                    Spoken
-                                    Language(s)
-                                </option>
-
-                                @foreach ($languages as $language)
-                                    <option
-                                            value="{{$language->id}}"
-                                    >
-                                        {{ $language->iso_language_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        {{-- proficiency level --}}
-                        <div
-                                class="col-md-6 col-sm-12"
-                        >
-                            <label class="mt-4"
-                            >Profeciency
-                                Level
-                                <span
-                                        class="imp"
-                                >*</span
-                                ></label
-                            >
-
-                            <select
-                                    name="languages[0][language_level_id]"
-                                    class="form-control selected-level select-lang"
-                                    id="languages.0.language_level_id"
-                            >
-                                <option value="" selected="">
-                                    Proficiency Level
-                                </option>
-
-                                @foreach ($language_levels as $level)
-                                    <option value="{{$level->id}}">
-                                        {{$level->name}}
-                                    </option>
-                                @endforeach
-
-
-                            </select>
-
-                        </div>
-                        <input type="hidden" name="languages_basics" id="languages_basics" value="1">
-
-                        {{-- --- --}}
-                    @endif
-
-                </div>
-                {{-- add another language btn --}}
-                <button
-                        type="button"
-                        class="my-2"
-                        id="add-language"
-                        onclick="addMoreLanguages()"
-                >
-                    Add another
-                </button>
-
             </div>
+
+
         </div>
-        <div class="setProfile">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-continue btn-secondary ">
-                    Continue
-                </button>
-            </div>
-        </div>
-    </form>
+       
+
 </div>
+
+@push('script')
+    <script>
+        "use strict";
+        
+
+        </script>
+@endpush
+<style>
+    .modal-backdrop {
+    position: inherit;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+.modal-backdrop.show {
+    opacity: .0;
+}
+
+
+    </style>
