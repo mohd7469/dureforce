@@ -4,15 +4,24 @@
             <div class="container-fluid">
                 <div class="header-menu-content">
                     <nav class="navbar navbar-expand-lg p-0">
-                        <a class="site-logo site-title" href="{{ route('home') }}"><img
-                                    src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
-                                    alt="{{ __($general->sitename) }}"></a>
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fas fa-bars"></span>
                         </button>
-                        <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button>
+                        <a class="site-logo site-title" href="{{ route('home') }}"><img
+                                    src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
+                                    alt="{{ __($general->sitename) }}"></a>
+                        @guest
+                        <a href="#loginModal" data-bs-toggle="modal" class="navbar-toggler header-login">@lang('Login')</a>
+
+                        <a href="{{ route('user.register') }}" class="header-signup navbar-toggler">@lang('Sign Up')</a>
+                        @endguest
+                        @auth
+                            <a href="{{ route('user.home') }}" class="header-link">@lang('Dashboard')</a>
+                            <a href="{{ route('logout') }}" class="header-link">@lang('Logout')</a>
+                        @endauth
+                        <!-- <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button> -->
                         <div class="collapse navbar-collapse d-flex justify-content-between"
                              id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
@@ -219,5 +228,47 @@
         color: #fff;
         background-color: #007F7F;
         border-color: #007F7F;
+    }
+    @media (max-width: 480px) {
+        .navbar {
+            position: relative;
+            display: contents;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-right{
+            display:none;
+        }
+        .header-login{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 257px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-signup{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 307px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
     }
 </style>
