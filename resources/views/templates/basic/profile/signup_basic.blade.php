@@ -100,9 +100,20 @@
                                     <span
                                         class="">3</span>
                                     <a data-toggle="tab" href="#profile3" class="" id="payment_tab">
-                                        Payment Methods
+                                        Payment Methods 
                                     </a>
                                 </li>
+
+
+                                <li role="tab" class="{{ request()->get('view') === 'step-5' ? 'active' : '' }}">
+                                    <span
+                                        class="">3</span>
+                                    <a data-toggle="tab" href="#profile5" class="" id="payment_tab_1">
+                                        Payment test 
+                                    </a>
+                                </li>
+                               
+                                
 
                             @endif
                             
@@ -127,6 +138,7 @@
                             </div>
                            
                             @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
+                        
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -141,7 +153,10 @@
                                     class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_skills')
                                 </div>
+
+                               
                             @else
+                      
                             
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
@@ -160,6 +175,10 @@
                                     @include($activeTemplate . 'project_profile.partials.payment_methods_store')
 
                                 </div>
+                                <div id="profile5" role="tabpanel"
+                                class="tab-pane {{ request()->get('view') === 'step-5' ? 'active' : '' }}">
+                                @include($activeTemplate . 'profile.partials.user_test')
+                            </div>
 
                             @endif
                            
@@ -198,6 +217,7 @@
         var educationTab=$('#education_tab');
         var skillsTab=$('#skills_tab');
         var paymentTab=$('#payment_tab');
+        var paymentTab1=$('#payment_tab_1');
 
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');

@@ -36,6 +36,8 @@ Route::view('/profile-basic-design', 'templates.basic.project_profile.partials.p
 Route::view('/profile-company-design', 'templates.basic.project_profile.partials.profile_comapny_design');
 Route::view('/profile-payment-design', 'templates.basic.project_profile.partials.profile_payment_design');
 Route::view('/profile-payment-view-design', 'templates.basic.project_profile.partials.profile_payment_view_design');
+//route for client basic
+Route::view('/profile-basic-detail', 'templates.basic.client_profile.client_profile_detail');
 
 Route::get('/get-cities', 'ProfileController@getCities')->name('get-cities');
 Route::get('/profile-basics-data', 'ProfileController@getProfileData')->name('profile.basics.data');

@@ -10,16 +10,9 @@
 
 
 
-        <div class="container-fluid welcome-body px-5">
+        <div class="container-fluid welcome-body">
            
-
-            <h1 class="mb-4">Welcome Shahzaib</h1>
-            <span class="cmnt pb-4">
-         Complete your profile to join our global community of freelancers and start
-         selling
-         your
-         service
-         to growing network of businesses.</span>
+          
 
          <div class="container">
 
@@ -40,7 +33,7 @@
                 <div class="client-info-section">
                        <p class="cp-basic">Basic Details</p>
                        <div style="float:right">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Edit
                         </button>
                        </div>
@@ -48,8 +41,10 @@
                         <!----== Client Info Section Start ==----->
         
                        <div class="cp-profile_c_main">
-                           <img scr="/assets/images/profile.png" alt="Profile" class="cp-prfileimg">
-                           <span>Icon</span>
+                           <div class="h-img">
+                               <img src="/assets/images/job/profile.png" alt="Profile" class="cp-prfileimg">
+                               <span class="upload-c">Icon</span>
+                           </div>
                            <div class="cp-profile-h">{{$basicProfile->designation}}</div>
                        </div>
         
@@ -80,7 +75,7 @@
                       <div class="cp-info-container">
                          <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
-                            <p class="cp-jt">{{$basicProfile->location }}</p>
+                            <p class="cp-jt">Boston, Massachusetts{{$basicProfile->location }}</p>
                          </div>
         
                          <div class="cp-info-box">
@@ -120,6 +115,24 @@
         </script>
 @endpush
 <style>
+    .h-img{
+        position: relative;
+        width: 100px;
+        border-radius: 50%;
+    }
+    .upload-c {
+    position: absolute;
+    position: absolute;
+    right: 6px;
+    bottom: -85px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    background: url(/assets/images/job/uploads.png) no-repeat;
+    font-size: 0;
+    background-size: contain;
+    cursor: pointer;
+}
     .modal-backdrop {
     position: inherit;
     top: 0;
@@ -132,6 +145,164 @@
 .modal-backdrop.show {
     opacity: .0;
 }
+p.cp-basic {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 28px;
+    color: #007F7F;
+    font-family: 'Mulish';
+}
+.cp-profile-h {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+    text-transform: capitalize;
+    float: left;
+    display: inline-block;
+    margin-top: 25px;
+}
+.cp-profile_c_main {
+    width: 100%;
+    display: inline-block;
+}
+.cp-profile_c_main img {
+    float: left;
+    margin-right: 50px;
 
+}
+/* .cp-profile_c_main span{
+    display: none;
+} */
+.cp-profile_c_main {
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1px solid #CBDFDF;
+    padding-bottom: 20px;
+}
+p.cp--jbh {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.cp-row-con {
+    width: 100%;
+    display: inline-block;
+    padding: 18px 0px;
+    border-bottom: 1px solid #CBDFDF;
+}
 
+p.cp-jt {
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #444444;
+}
+button.btn.btn-primary.cstm-edit {
+    background: #7F007F;
+    border-radius: 5px;
+    width: 103px;
+    height: 40px;
+    position: relative;
+    top: 50px;
+    font-size: 14px;
+}
+.cp-info-box {
+    width: 33%;
+    float: left;
+    display: inline-block;
+}
+.cp-info-container {
+    width: 100%;
+    display: inline-block;
+    padding: 22px 0px;
+    border-bottom: 1px solid #CBDFDF;
+}
+/*====Model====*/
+.modal-dialog {
+    max-width: 676px;
+    margin: 1.75rem auto;
+}
+.setProfile form {
+    width: 100%;
+}
+
+.modal-header h5 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    color: #007F7F;
+}
+.modal-header {
+    background: #EDEDED;
+    padding: 13px 23px;
+}
+.profile-img.col-md-12, .hidepc {
+    display: none;
+}
+.modal-body input[type="text"] {
+    background: #FFFFFF;
+    border: 1px solid #CBDFDF;
+    border-radius: 4px;
+    height: 37px;
+    font-size: 14px;
+}
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 0px 23px;
+}
+.modal-body  textarea{
+    height: 114px;
+    font-size: 14px;
+}
+.modal {
+    position: fixed;
+    top: 2%;
+}
+button.btn-close {
+    background: url(/assets/images/job/x.png);
+    height: 40px !important;
+    width: 32px;
+    background-repeat: no-repeat;
+    background-size: 27px !important;
+    position: relative;
+}
+.modal-header .btn-close {
+    margin-bottom: 30px;
+    height: 11px !important;
+    position: relative;
+    top:20px;
+}
+.modal-footer .btn {
+
+    background: #7F007F;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 73px;
+    height: 40px;
+}
+button.btn.btn-secondary.c-canel {
+    background: transparent;
+    color: #7f007f;
+}
+.setProfile .btn-continue {
+    margin: 0px 0px 10px 0px;
+}
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #00000063;
+}
+.header-section{
+    z-index: 1;
+}
     </style>

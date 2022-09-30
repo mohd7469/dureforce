@@ -2,7 +2,7 @@
     <div class="modal-dialog">
        <div class="modal-content">
           <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+             <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -10,7 +10,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div>
-                   <label class="mt-4">Profile Picture</label>
+                   <label class="mt-4 hidepc">Profile Picture</label>
                    <div class="profile-img col-md-12" action="">
                       <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                          class="imgInp" onchange="previewFile(this)"
@@ -51,7 +51,8 @@
                          >{{ $basicProfile->about }}</textarea>
                    </div>
                    {{-- location --}}
-                   <div class="col-md-12">
+                   <div class="row">
+                   <div class="col-md-6">
                       <label class="mt-4"
                          >City
                       <span class="imp"
@@ -77,6 +78,35 @@
                          </option>
                          @endforeach
                       </select>
+                   </div>
+                   {{-- location --}}
+                   <div class="col-md-6">
+                     <label class="mt-4"
+                        >City
+                     <span class="imp"
+                        >*</span
+                        ></label
+                        >
+                     <select
+                        name="city_id"
+                        class="form-control select-lang"
+                        id="languages"
+                        >
+                        <option
+                           value=""
+                           >
+                           Select City
+                        </option>
+                        @foreach ($cities as $city)
+                        <option
+                        value="{{$city->id}}"
+                        {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                        >
+                        {{$city->name}}
+                        </option>
+                        @endforeach
+                     </select>
+                  </div>
                    </div>
                    {{-- phone --}}
                    <div class="col-md-12">
@@ -267,8 +297,8 @@
              </form>
           </div>
           <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-             <button type="button" class="btn btn-primary">Save changes</button>
+             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancle</button>
+             <button type="button" class="btn btn-primary">Save</button>
           </div>
        </div>
     </div>
