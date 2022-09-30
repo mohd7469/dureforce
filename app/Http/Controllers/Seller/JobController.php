@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\SkillCategory;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
+   
+    public function __construct()
+    {
+        $this->activeTemplate = activeTemplate();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +37,22 @@ class JobController extends Controller
 
         return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle );
     }
+    
+    /**
+     * jobview
+     *
+     * @param  mixed $uuid
+     * @return void
+     */
+    public function jobView($uuid){
+        $pageTitle = "View Jobs";
+        $job = Job::where('uuid', $uuid)->with(['category','user', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -42,59 +64,5 @@ class JobController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

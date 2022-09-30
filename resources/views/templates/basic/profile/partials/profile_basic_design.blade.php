@@ -2168,7 +2168,7 @@
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('profile.experience.save') }}",
+                url: "{{ route('seller.profile.experience.save') }}",
                 method: "POST",
                 data:$('#form-experience-save').serialize(),
                 type:'json',
@@ -2214,7 +2214,7 @@
                     
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('education.save') }}",
+                url: "{{ route('seller.profile.education.save') }}",
                 method: "POST",
                 data:$('#form-education-save').serialize(),
                 type:'json',

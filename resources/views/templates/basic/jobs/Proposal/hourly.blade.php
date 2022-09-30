@@ -87,13 +87,13 @@
                      <div class="row">
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small id="start_hour_limit" class="form-text text-dark">Min. Hours Per Week</small>
+                           <small  class="form-text text-dark">Min. Hours Per Week</small>
                            <input type="integer" class="form-control" id="start_hour_limit" name="start_hour_limit">
 
                         </div>
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small id="end_hour_limit" class="form-text text-dark">Max. Hours Per Week</small>
+                           <small  class="form-text text-dark">Max. Hours Per Week</small>
                            <input type="integer" class="form-control" id="end_hour_limit" name="end_hour_limit">
 
                         </div>

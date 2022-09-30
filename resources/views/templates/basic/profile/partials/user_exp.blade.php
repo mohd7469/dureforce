@@ -1,7 +1,7 @@
 
 <div class="setProfile" id="user-exp">
          
-   <form action="{{ route('profile.experience.save') }}" method="POST" id="freelancer-experience-save" class="form-experience-save">
+   <form action="{{ route('seller.profile.experience.save') }}" method="POST" id="freelancer-experience-save" class="form-experience-save">
          
       <div
             id="profile2"

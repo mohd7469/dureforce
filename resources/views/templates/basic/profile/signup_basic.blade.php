@@ -628,7 +628,7 @@
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('skills.save') }}",
+                url: "{{ route('seller.profile.skills.save') }}",
                 method: "POST",
                 data:user_skills_form.serialize(),
                 type:'json',
@@ -663,7 +663,7 @@
             console.log(form_data);
             $.ajax({
                   type:"POST",
-                  url:"{{route('profile.basics.save')}}",
+                  url:"{{route('user.profile.basics.save')}}",
                   data: form_data,
                   processData: false,
                 contentType: false,
@@ -691,7 +691,7 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('profile.save.payment.methods')}}",
+                  url:"{{route('buyer.profile.save.payment.methods')}}",
                   data: form_data,
                   processData: false,
                   contentType: false,
@@ -724,7 +724,7 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('profile.save.company')}}",
+                  url:"{{route('buyer.profile.save.company')}}",
                   data: form_data,
                   processData: false,
                 contentType: false,
@@ -752,7 +752,7 @@
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('profile.experience.save') }}",
+                url: "{{ route('seller.profile.experience.save') }}",
                 method: "POST",
                 data:user_experience_form.serialize(),
                 type:'json',
@@ -785,7 +785,7 @@
                     
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('education.save') }}",
+                url: "{{ route('seller.profile.education.save') }}",
                 method: "POST",
                 data:user_education_form.serialize(),
                 type:'json',

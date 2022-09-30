@@ -61,7 +61,7 @@ function fetchSkills() {
     var sub_catgory_id = $('#sub_category_id').val();
     $.ajax({
         type:"GET",
-        url:'/user/buyer/job/get-skills',
+        url:'/job-skills',
         data: {category_id : category_id,sub_category_id:sub_catgory_id},
         success:function(data){
             var html = '';

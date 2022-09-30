@@ -361,7 +361,7 @@
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
-                                               href="{{ route('user.job.create') }}">Post
+                                               href="{{ route('buyer.job.create') }}">Post
                                                 a Job</a>
                                             <a class="btn--search active" href="#">Search Job</a>
                                         </div>

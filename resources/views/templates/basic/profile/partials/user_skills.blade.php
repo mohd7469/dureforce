@@ -1,5 +1,5 @@
 <div class="setProfile" id="user-skills">
-   <form action="{{ route('skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
+   <form action="{{ route('seller.profile.skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
       @csrf
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Expertise & Skills</h1>

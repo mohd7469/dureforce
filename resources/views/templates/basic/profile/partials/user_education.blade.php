@@ -1,5 +1,5 @@
 <div class="setProfile" id="user-education">
-    <form action="{{ route('education.save') }}" id="freelancer-education-save" method="POST"
+    <form action="{{ route('seller.profile.education.save') }}" id="freelancer-education-save" method="POST"
           class="user-education-form">
         <div
                 role="tabpanel"

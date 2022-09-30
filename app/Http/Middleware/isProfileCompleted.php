@@ -23,8 +23,8 @@ class isProfileCompleted
         if (Auth::check()) {
             $user = auth()->user();
 
-
             if (in_array(Role::$ClientName, $user->getRoleNames()->toArray())) {
+
                 if ($user->getLanguagesMoreThanOneCount() > 0 && $user->getPaymentMethodsMoreThanOneCount() > 0 && $user->getCompaniesMoreThanOneCount() > 0) {
                     return $next($request);
                 } else {
@@ -39,6 +39,8 @@ class isProfileCompleted
                 } else {
                     $notify[] = ['error', 'Please complete your profile first.'];
                     return redirect()->route('user.basic.profile', ['view' => 'step-1'])->withNotify($notify);
+                    // dd("dad");
+
                 }
             }
         }

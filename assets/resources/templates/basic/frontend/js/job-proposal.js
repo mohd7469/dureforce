@@ -108,7 +108,7 @@ $(function() {
               form_data= $(this).serialize();
                 event.preventDefault();
                 event.stopPropagation(); 
-                var validate_url='/user/seller/job/validate-job-proposal';
+                var validate_url='/seller/validate-proposal';
                 $.ajax({
                     type:"POST",
                     url:validate_url,

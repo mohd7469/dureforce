@@ -4,7 +4,7 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
 
 <div class="setProfile" id="">
 
-    <form action="{{ route('profile.save.payment.methods') }}" method="POST" id="payment_methods">
+    <form action="{{ route('buyer.profile.save.payment.methods') }}" method="POST" id="payment_methods">
         @csrf
         <div class="container-fluid welcome-body">
             <input type="hidden" name="payment_id" value="{{ request()->get('id') }}">

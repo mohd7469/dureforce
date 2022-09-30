@@ -13,5 +13,7 @@ class Role extends Model
     public static $FreelancerName="Freelancer";
     public static $Client=2;
     public static $ClientName="Client";
+    public static $Admin=3;
+
 
 }

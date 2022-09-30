@@ -1,7 +1,7 @@
 <div class="setProfile" id="payment-index">
     <div class="container-fluid welcome-body">
         <div class="row">
-            <h1 class="mb-4 p-0">Payment Methods</h1>
+            <h1 class="mb-4 p-0">Payment Methods </h1>
             <div class="col-md-12 cmnt ">
                 <div class="row mb-3">
                     <div class="col-md-8 d-flex align-items-center">

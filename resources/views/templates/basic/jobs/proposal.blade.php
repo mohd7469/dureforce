@@ -169,7 +169,7 @@
                                  </div>
                               </div>
                               
-                              <form action="{{route('proposal.store',$job->uuid)}}" method="POST">
+                              <form action="{{route('seller.proposal.store',$job->uuid)}}" method="POST">
                                   {{-- Bidding Rate --}}
                                  <div class="row section-end-line">
                                     
