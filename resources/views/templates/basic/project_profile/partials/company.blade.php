@@ -172,17 +172,17 @@ z-index: 1;
                     
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Location</label>
-                        {{$user->company->name ?? ''}}
+                        {{$user_country_->name ?? ''}}
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>VAT ID</label>
-                        {{$user->company->number ?? ''}}
+                        {{$user->company->vat ?? ''}}
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Website</label>
-                        {{$user->company->email ?? ''}}
+                        {{$user->company->website ?? ''}}
                     </div>
                 </div>
 
@@ -191,17 +191,17 @@ z-index: 1;
                     
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>LinkedIn Profile</label>
-                        {{$user->company->name ?? ''}}
+                        {{$user->company->linked_url ?? ''}}
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Facebook Profile</label>
-                        {{$user->company->number ?? ''}}
+                        {{$user->company->facebook_url ?? ''}}
                     </div>
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Twitter Profile</label>
-                        {{$user->company->email ?? ''}}
+                        {{$user->company->facebook_url ?? ''}}
                     </div>
                 </div>
             

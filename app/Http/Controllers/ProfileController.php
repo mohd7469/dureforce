@@ -15,6 +15,8 @@ use App\Models\UserExperiences;
 use App\Models\UserPayment;
 use App\Models\UserSkill;
 use App\Models\WorldLanguage;
+use App\Models\UserLanguage;
+
 use App\Rules\PhoneNumberValidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +58,12 @@ class ProfileController extends Controller
         $usereducations = $user->education ? $user->education : new UserEducation();
         $userskills = $user->skills ? $user->skills : new UserSkill();
         $user_languages = $user->languages ? $user->languages : [];
-        return view($this->activeTemplate . 'profile.signup_basic', compact('categories', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees'));
+
+        $user_languages_ = WorldLanguage::whereIn('id',$user_languages->pluck('language_id')->toArray())->get();
+        $user_languages_level_ = LanguageLevel::whereIn('id',$user_languages->pluck('language_level_id')->toArray())->get();
+        $user_country_ = Country::where('id', $user->company->country_id)->first();
+
+        return view($this->activeTemplate . 'profile.signup_basic', compact('categories', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
 
     }
 

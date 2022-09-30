@@ -122,20 +122,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" mt-3 p-0" style="display:none;">
+                    {{-- <div class=" mt-3 p-0" style="display:none;">
                         <div class="col-md-6">
                             <button type="submit" class="m-0 my-2 btn btn-continue btn-secondary ">
                                 Continue
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-continue btn-secondary">Save</button>
+                     </div>
                 </div>
             </form>
         </div>
-        <div class="modal-footer">
-           <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-           <button type="button" class="btn btn-primary">Save</button>
-        </div>
+
      </div>
   </div>
 </div>

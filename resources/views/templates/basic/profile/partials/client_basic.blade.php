@@ -43,7 +43,7 @@
                        <div class="cp-profile_c_main">
                            <div class="h-img">
                                <img src="/assets/images/job/profile.png" alt="Profile" class="cp-prfileimg">
-                               <span class="upload-c">Icon</span>
+                               <span type="file" name="profile_picture" class="upload-c">Icon</span>
                            </div>
                            <div class="cp-profile-h">{{$basicProfile->designation}}</div>
                        </div>
@@ -80,13 +80,13 @@
         
                          <div class="cp-info-box">
                             <p class="cp--jbh">Phone</p>
-                            <p class="cp-jt">{{$basicProfile->phone}}</p>
+                            <p class="cp-jt">{{$basicProfile->phone_number}}</p>
                          </div>
         
         
                          <div class="cp-info-box">
                             <p class="cp--jbh">Email</p>
-                            <p class="cp-jt">{{$basicProfile->email}}</p>
+                            <p class="cp-jt">{{ auth()->user()->email }}</p>
                          </div>
         
                       </div>
@@ -95,13 +95,17 @@
                       <div class="cp-info-container">
                         <div class="cp-info-box">
                            <p class="cp--jbh">Language</p>
-                           <p class="cp-jt"></p>
+                           @foreach ($user_languages_ as $language )
+                              <p class="cp-jt">{{$language->iso_language_name }}</p>
+                           @endforeach
+                           
                         </div>
        
                         <div class="cp-info-box">
-                           <p class="cp--jbh">Profeciency
-                               Level</p>
-                           <p class="cp-jt"></p>
+                           <p class="cp--jbh">Proficiency Level</p>
+                           @foreach ($user_languages_level_ as $level )
+                           <p class="cp-jt">{{$level->name }}</p>
+                            @endforeach
                         </div>
        
        
