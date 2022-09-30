@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('seller.')->group(function () {
     
-    Route::middleware('verified')->group(function () {
+    Route::middleware(['verified','is-freelancer'])->group(function () {
         
         Route::namespace('Seller')->prefix('seller')->group(function () {
 

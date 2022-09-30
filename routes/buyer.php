@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('buyer.')->prefix('buyer')->group(function () {
     
-    Route::middleware('verified')->group(function () {
+    Route::middleware(['verified','is-client'])->group(function () {
         
         Route::namespace('Buyer')->group(function () {
 

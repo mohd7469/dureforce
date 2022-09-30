@@ -88,5 +88,9 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+        'is-freelancer' => \App\Http\Middleware\IsFreelancerMiddleware::class,
+        'is-client' => \App\Http\Middleware\IsClientMiddleware::class,
+
+
     ];
 }
