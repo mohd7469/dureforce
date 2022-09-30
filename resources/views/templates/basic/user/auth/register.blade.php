@@ -253,6 +253,7 @@
     .account-header {
         margin-bottom: 15px;
     }
+    .modal { position: fixed; top:0% !important; } 
     .modal-body {
         position: relative;
         flex: 1 1 auto;
