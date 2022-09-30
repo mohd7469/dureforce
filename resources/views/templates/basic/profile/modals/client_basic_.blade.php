@@ -21,7 +21,9 @@
                    <div class="row">
                       <div class="col-md-12 col-sm-12">
                          <label class="mt-4"
-                            >Designation
+                            >
+                            {{-- Designation --}}
+                            Title
                          <span class="imp"
                             >*</span
                             ></label
@@ -37,7 +39,7 @@
                    </div>
                    <div class="col-md-12">
                       <label class="mt-4"
-                         >About You
+                         >About 
                       <span class="imp"
                          >*</span
                          ></label
@@ -54,7 +56,7 @@
                    <div class="row">
                    <div class="col-md-6">
                       <label class="mt-4"
-                         >City
+                         >Location
                       <span class="imp"
                          >*</span
                          ></label
@@ -67,7 +69,7 @@
                          <option
                             value=""
                             >
-                            Select City
+                            Select Location
                          </option>
                          @foreach ($cities as $city)
                          <option
@@ -80,7 +82,7 @@
                       </select>
                    </div>
                    {{-- location --}}
-                   <div class="col-md-6">
+                   {{-- <div class="col-md-6">
                      <label class="mt-4"
                         >City
                      <span class="imp"
@@ -106,22 +108,37 @@
                         </option>
                         @endforeach
                      </select>
+                  </div> --}}
+                  <div class="col-md-6">
+                     <label class="mt-4"
+                        >Phone
+                     <span class="imp"
+                        >*</span
+                        ></label
+                        >
+                     <input
+                        type="number"
+                        name="phone_number"
+                        placeholder=""
+                        id="phone"
+                        value="{{$basicProfile->phone_number}}"
+                        />
                   </div>
                    </div>
                    {{-- phone --}}
                    <div class="col-md-12">
                       <label class="mt-4"
-                         >Phone
+                         >Email
                       <span class="imp"
                          >*</span
                          ></label
                          >
                       <input
                          type="number"
-                         name="phone_number"
+                         name="email"
                          placeholder=""
-                         id="phone"
-                         value="{{$basicProfile->phone_number}}"
+                         id="email"
+                         value="{{$basicProfile->email}}"
                          />
                    </div>
                    {{-- language row --}}
@@ -171,7 +188,7 @@
                             </div>
                             {{-- proficiency level --}}
                             <div
-                               class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
+                               class="{{ $key > 0 ? 'col-md-6' : 'col-md-6'  }} col-sm-12"
                                >
                                <label class="mt-4"
                                   >Profeciency
@@ -200,13 +217,13 @@
                                </select>
                             </div>
                             {{-- delete btn --}}
-                            @if ($key > 0)
+                            {{-- @if ($key > 0)
                             <div class="col-md-1" style="margin-top:20px; ">
                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5"
                                   onclick="removerow('#moreLanguage-row-{{$key}}')"><i
                                   class="fa fa-trash"></i></button>
                             </div>
-                            @endif
+                            @endif --}}
                          </div>
                       </div>
                       {{-- --- --}}
@@ -278,28 +295,30 @@
                       @endif
                    </div>
                    {{-- add another language btn --}}
-                   <button
+                   {{-- <button
                       type="button"
                       class="my-2"
                       id="add-language"
                       onclick="addMoreLanguages()"
                       >
                    Add another
-                   </button>
+                   </button> --}}
                 </div>
-                <div class="">
+                {{-- <div class="">
                    <div class="col-md-12">
                       <button type="submit" class="btn btn-continue btn-secondary ">
                       Continue
                       </button>
                    </div>
-                </div>
+                </div> --}}
+
+                <div class="modal-footer pb-4 pt-4">
+                  <button type="button" class="btn   btn-secondary c-canel" data-bs-dismiss="modal">Cancle</button>
+                  <button type="submit" class="btn btn-continue  btn-secondary">Save</button>
+               </div>
              </form>
           </div>
-          <div class="modal-footer">
-             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancle</button>
-             <button type="button" class="btn btn-primary">Save</button>
-          </div>
+          
        </div>
     </div>
  </div>

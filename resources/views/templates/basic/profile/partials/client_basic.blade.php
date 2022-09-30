@@ -90,6 +90,24 @@
                          </div>
         
                       </div>
+
+
+                      <div class="cp-info-container">
+                        <div class="cp-info-box">
+                           <p class="cp--jbh">Language</p>
+                           <p class="cp-jt"></p>
+                        </div>
+       
+                        <div class="cp-info-box">
+                           <p class="cp--jbh">Profeciency
+                               Level</p>
+                           <p class="cp-jt"></p>
+                        </div>
+       
+       
+
+       
+                     </div>
         
                        <!----============End================--->
         
