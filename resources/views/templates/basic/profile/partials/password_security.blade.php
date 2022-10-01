@@ -150,8 +150,5 @@ form.password-cs input {
         
         $("#info-password").show();
       });
-    //   $("#show").click(function(){
-    //     $("info-password").show();
-    //   });
     });
     </script>
