@@ -270,6 +270,7 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
     
+    
         $rules = [
             'card_number'     => 'required',
             'expiration_date' => 'required|date',
@@ -302,26 +303,48 @@ class ProfileController extends Controller
             try {
 
                 DB::beginTransaction();
+                if($request->update_payment_id){
+
+                    $userPayment = UserPayment::find($request->update_payment_id);
+
+                    $userPayment->card_number = $request->card_number;
+                    $userPayment->expiration_date = $request->expiration_date;
+                    $userPayment->cvv_code = $request->cvv_code;
+                    $userPayment->name_on_card = $request->name_on_card;
+                    $userPayment->user_id = auth()->id();
+                    $userPayment->is_primary = 1;
+                    $userPayment->is_active = 1;
+                    $userPayment->save();
+                    DB::commit();
+             
+                    $notify[] = ['success', 'User Payment Method Updated Profile.'];
+                    return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+
+
+                }
+                else {
+                    $userPayment=UserPayment::create([
+                        'card_number' => $request->card_number,
+                        'expiration_date'=>$request->expiration_date,
+                        'cvv_code'=>$request->cvv_code,
+                        'name_on_card'=>$request->name_on_card,
+                        // 'country_id'=>$request->country_id,
+                        // 'city_id'=>$request->city_id,
+                        // 'address'=>$request->address,
+                        'user_id'=>auth()->id(),
+                        'is_primary' => 1,
+                        'is_active'  =>1
+                    ]);
+                    DB::commit();
+    
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
+    
+                }
                 if(! empty($request->payment_id)) {
                     $userPayment = UserPayment::findOrFail($request->payment_id);
                     $userPayment->delete();
                 }
-                $userPayment=UserPayment::create([
-                    'card_number' => $request->card_number,
-                    'expiration_date'=>$request->expiration_date,
-                    'cvv_code'=>$request->cvv_code,
-                    'name_on_card'=>$request->name_on_card,
-                    // 'country_id'=>$request->country_id,
-                    // 'city_id'=>$request->city_id,
-                    // 'address'=>$request->address,
-                    'user_id'=>auth()->id(),
-                    'is_primary' => 1,
-                    'is_active'  =>1
-                ]);
-                DB::commit();
-
-                return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
-
+                
             } catch (\Throwable $th) {
 
                 DB::rollback();

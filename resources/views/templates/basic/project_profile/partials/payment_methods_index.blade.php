@@ -58,8 +58,10 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <a href="{{ route('user.basic.profile', ['view' => 'step-4', 'id' => $payments->id]) }}"
-                                            class="btn btn-secondary icons"><i class="far fa-edit"></i></a>
+                                        <a   data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}"     
+                                            data-username="{{ $user->username }}"
+                                        {{-- href="{{ route('user.basic.profile', ['view' => 'step-4', 'id' => $payments->id]) }}" --}}
+                                            class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
                                         <form method="POST"
                                             action="{{ route('user.profile.destroy.payment', $payments->id) }}"
                                             style="margin-left: 2px; width: fit-content">
@@ -96,3 +98,35 @@
     
 </div>
 
+@push('script')
+    <script>
+        "use strict";
+        $(document).ready(function() {
+         $('.registerBtn').click(function() {
+            $("#cod_equipamento").val($(this).attr('data_value'));
+        });
+    });
+  
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        $(".editPayment").click(function () {
+            var payment_id = $(this).data('id');
+            var card_number = $(this).data('card_number');
+            var name_on_card = $(this).data('name_on_card');
+            var cvv_code = $(this).data('cvv_code');
+            var expiration_date = $(this).data('expiration_date');
+
+            $(".modal-body #payment_id").val(payment_id);
+            $(".modal-body #card_number").val(card_number);
+            $(".modal-body #name_on_card").val(name_on_card);
+            $(".modal-body #cvv_code").val(cvv_code);
+            $(".modal-body #expiration_date").val(expiration_date);
+           
+        })
+    });
+</script>
+@endpush
+
+@include("templates.basic.project_profile.models.payment_method_edit_")

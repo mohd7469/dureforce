@@ -46,6 +46,7 @@ Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.sav
 Route::post('/save-company', 'ProfileController@saveCompany')->name('profile.save.company');
 Route::post('/save-payment-methods', 'ProfileController@savePaymentMethod')->name('profile.save.payment.methods');
 Route::post('/profle/password/change', 'ProfileController@profilePasswordChange')->name('profile.password.change');
+Route::post('/update-payment-methods', 'ProfileController@updatePaymentMethod')->name('profile.update.payment.methods');
 
 Route::view('/freelancer-profile', 'templates.basic.profile.signup_basic');
 
