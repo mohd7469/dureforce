@@ -148,7 +148,9 @@ class ProfileController extends Controller
                 $user->save();
 
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully"]);
+                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]); 
+
+
 
             } catch (\Throwable $exception) {
 
@@ -267,14 +269,15 @@ class ProfileController extends Controller
      */
     public function savePaymentMethod(Request $request)
     {
+    
         $rules = [
             'card_number'     => 'required',
             'expiration_date' => 'required|date',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
-            'country_id'         => 'required|exists:world_countries,id',
-            'city_id'            => 'required|exists:world_cities,id',
-            'address'  => 'required',
+            // 'country_id'         => 'required|exists:world_countries,id',
+            // 'city_id'            => 'required|exists:world_cities,id',
+            // 'address'  => 'required',
         ];
 
         $messages =[
@@ -282,15 +285,16 @@ class ProfileController extends Controller
             'expiration_date.required' => 'Expiration Date is required',
             'cvv_code.required'        => 'CVV Code is required',
             'name_on_card.required'    => 'Name on Card is required',
-            'street_address.required'  => 'Street Address is required',
-            'country_id'               => 'Country is required',
-            'city_id'                  => 'City is required',
+            // 'street_address.required'  => 'Street Address is required',
+            // 'country_id'               => 'Country is required',
+            // 'city_id'                  => 'City is required',
 
         ];
 
         $validator = Validator::make($request->all(), $rules,$messages);
 
         if ($validator->fails()) {
+            
             return response()->json(["validation_errors" => $validator->errors()]);
         } 
         else 
@@ -307,16 +311,16 @@ class ProfileController extends Controller
                     'expiration_date'=>$request->expiration_date,
                     'cvv_code'=>$request->cvv_code,
                     'name_on_card'=>$request->name_on_card,
-                    'country_id'=>$request->country_id,
-                    'city_id'=>$request->city_id,
-                    'address'=>$request->address,
+                    // 'country_id'=>$request->country_id,
+                    // 'city_id'=>$request->city_id,
+                    // 'address'=>$request->address,
                     'user_id'=>auth()->id(),
                     'is_primary' => 1,
                     'is_active'  =>1
                 ]);
                 DB::commit();
 
-                return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'view=step-3'])]);
+                return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
 
             } catch (\Throwable $th) {
 

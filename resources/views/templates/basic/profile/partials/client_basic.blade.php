@@ -33,7 +33,7 @@
                 <div class="client-info-section">
                        <p class="cp-basic">Basic Details</p>
                        <div style="float:right">
-                        <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#clientBasicModal">
                             Edit
                         </button>
                        </div>

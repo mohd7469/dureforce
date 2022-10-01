@@ -691,7 +691,9 @@
 
                       if(response.success){
                         notify('success', response.success);
+                        $('#clientBasicModal').modal('hide');
                         formPostProcess(experienceTab);
+                        location.reload();
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);
@@ -750,9 +752,13 @@
                 contentType: false,
                   success:function(response){
 
+
                       if(response.success){
                         notify('success', response.success);
                         formPostProcess(paymentTab);
+                        $('#companyModal').modal('hide');
+                        location.reload();
+                        
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);
