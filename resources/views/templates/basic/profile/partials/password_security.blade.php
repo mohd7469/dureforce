@@ -30,21 +30,22 @@
                 <p class="cp-detail">Choose a strong, unique password that’s at least 8 characters long.  </p>
                 
                 <div style="float:right">
-                    <button type="button" class="btn btn-primary cstm-edit" >
+                    <button  onclick="submiSecurityForm()" type="button" class="btn btn-primary cstm-edit" >
                         Save
                     </button>
                 </div>
             </div>
 
-            <form method="POST" class="password-cs">
+            <form method="POST" id="securityFrom" class="password-cs">
+                @csrf
                 <div class="form-label">Old Password</div>
-                <input type="password" placeholder="********" value="">
+                <input type="password" name="old_password" placeholder="********">
 
                 <div class="form-label">New Password</div>
-                <input type="password" placeholder="********" value="">
+                <input type="password" name="new_password" placeholder="********" >
 
                 <div class="form-label">Confirm New Password</div>
-                <input type="password" placeholder="********" value="">
+                <input type="password" name="password_confirmation" placeholder="********" >
             </form>
         </div>
                <!----============End================--->  
@@ -57,7 +58,49 @@
 
 </div>
 
+<script language="javascript" type="text/javascript">
+    function submiSecurityForm() {
+       $.ajax({
+        url: "{{ route('profile.password.change') }}",
+        type: 'post',
+        dataType: 'json',
+        data: $('#securityFrom').serialize(),
+        success: function(response) {
+            console.log(response)
+            if (response.success) {
+                notify('success', response.success);
+                location.reload();
+             }
+            else if(response.validation_errors){
+                 displayErrorMessage(response.validation_errors);
+            }
+            else {
 
+                console.log(response.errors);
+                errorMessages(response.errors);
+            }
+
+        }
+        
+    });
+    }
+    function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
+        }
+</script>
 
 
 

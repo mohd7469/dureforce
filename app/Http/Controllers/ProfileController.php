@@ -16,7 +16,8 @@ use App\Models\UserPayment;
 use App\Models\UserSkill;
 use App\Models\WorldLanguage;
 use App\Models\UserLanguage;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Rules\PhoneNumberValidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -347,5 +348,55 @@ class ProfileController extends Controller
             return back()->withNotify($notify);
 
         }
+    }
+    public function profilePasswordChange(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:8',
+            'old_password' => [
+                'required', function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail('Old Password didn\'t match');
+                    }
+                },
+            ],
+        ]);
+        
+        if($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        }
+        else {
+
+
+            try {
+                if (Hash::check($request->old_password, Auth::user()->password)) { 
+                    Auth::user()->fill([
+                     'password' => Hash::make($request->new_password)
+                     ])->save();
+                 
+                     Auth::logout();
+
+                     return response()->json(['success'=> 'User Password Updated Successfully','redirect_url' =>route('user.login')]);
+                     
+
+                 
+                 }
+
+                
+               
+
+            } catch (\Throwable $exception) {
+
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+
+
+            }
+        }
+        
+        
     }
 }
