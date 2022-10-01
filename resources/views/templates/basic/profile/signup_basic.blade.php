@@ -109,7 +109,7 @@
                                     <span
                                         class="">3</span>
                                     <a data-toggle="tab" href="#profile5" class="" id="payment_tab_1">
-                                        Payment test 
+                                        Password & Security
                                     </a>
                                 </li>
                                
@@ -177,7 +177,7 @@
                                 </div>
                                 <div id="profile5" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-5' ? 'active' : '' }}">
-                                @include($activeTemplate . 'profile.partials.user_test')
+                                @include($activeTemplate . 'profile.partials.password_security')
                             </div>
 
                             @endif

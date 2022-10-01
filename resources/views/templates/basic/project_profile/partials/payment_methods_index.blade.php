@@ -6,13 +6,14 @@
                 <div class="row mb-3">
                     <div class="col-md-8 d-flex align-items-center">
                         <span class="">
-                            Add or delete payment methods for your account.
+                            Add or delete payment methods for your account.sss
                         </span>
                     </div>
                     <div class="col-md-4">
                         <a href="{{ route('user.basic.profile', ['view' => 'step-4']) }}"
-                            class="btn btn-continue btn-secondary btn-add-method m-0">@lang('Add a Payment Method')</a>
+                            class="btn btn-continue btn-secondary btn-add-method m-0" data-bs-toggle="modal" data-bs-target="#paymentModal">@lang('Add a Payment Method')</a>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -78,6 +79,7 @@
                 </table>
             </div>
         </div>
+         
 
         @if (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0)
             <div class=" p-0">
@@ -89,7 +91,7 @@
             </div>
         @endif
 
-       
+        @include("templates.basic.project_profile.models.payment_method_")
     </div>
     
 </div>
