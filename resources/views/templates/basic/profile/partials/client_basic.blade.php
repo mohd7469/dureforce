@@ -1,5 +1,5 @@
 <div class="setProfile" id="basic-profile">
-    <form action="{{ route('profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save"
+    <form action="{{ route('user.profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save"
           enctype="multipart/form-data">
         @csrf
 

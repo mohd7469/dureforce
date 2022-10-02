@@ -28,8 +28,8 @@
                                         @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('user.buyer.dashboard') }}"
-                                        @if (request()->routeIs('user.buyer.dashboard')) class="active" @endif>@lang('Buyer')</a>
+                                    <a href="{{ route('user.home') }}"
+                                        @if (request()->routeIs('user.home')) class="active" @endif>@lang('Buyer')</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('user.home') }}"

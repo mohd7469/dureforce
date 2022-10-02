@@ -164,7 +164,7 @@
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="javascript:void(0)"   class="standard-btn mr-15">View Proposals</a>
-                                                    <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
+                                                    <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
 
 
 

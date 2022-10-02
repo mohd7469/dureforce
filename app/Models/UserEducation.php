@@ -37,7 +37,7 @@ class UserEducation extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'school_name', 'degree_id', 'description', 'education', 'field_of_Study', 'is_enrolled', 'start_date', 'end_date'];
+    protected $fillable = ['user_id', 'school_name', 'degree_id', 'description', 'education', 'is_enrolled', 'start_date', 'end_date','field_of_study'];
 
 
     protected static function boot()

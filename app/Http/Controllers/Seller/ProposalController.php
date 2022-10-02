@@ -5,11 +5,14 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropsalStoreRequest;
 use App\Models\BudgetType;
+use App\Models\DeliveryMode;
 use App\Models\Job;
 use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
+use App\Models\SkillCategory;
+use App\Models\Skills;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,15 +45,25 @@ class ProposalController extends Controller
         return view($this->activeTemplate .'proposal',compact('pageTitle'));
 
     }
-
+    
     /**
-     * Show the form for creating a new resource.
+     * proposal
      *
-     * @return \Illuminate\Http\Response
+     * @param  mixed $uuid
+     * @return void
      */
-    public function create()
+    public function createProposal($uuid)
     {
-        //
+
+        $job = Job::where('uuid',$uuid)->withAll()->first();
+        $skill_categories = SkillCategory::select('name', 'id')->get();
+        $delivery_modes = DeliveryMode::Active()->select(['id','title'])->get();
+        foreach($skill_categories as $skillCat){
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+        }
+        $pageTitle = "Proposal";
+        return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle','job','skills','delivery_modes'));
+
     }
 
     /**
@@ -59,7 +72,7 @@ class ProposalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $job_uuid)
+    public function savePropsal(Request $request, $job_uuid)
     {
         $user = Auth::user();
 
@@ -112,30 +125,30 @@ class ProposalController extends Controller
 
             $proposal->save();
 
-//            if ($request->hasFile('file')) {
-//
-//                foreach ($request->file as $file) {
-//                    $path = imagePath()['attachments']['path'];
-//                    try {
-//                        $filename = uploadAttachments($file, $path);
-//
-//                        $file_extension = getFileExtension($file);
-//                        $url = $path . '/' . $filename;
-//                        $proposal_attachment = new ProposalAttachment;
-//                        $proposal_attachment->name = $filename;
-//                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
-//                        $proposal_attachment->url = $url;
-//                        $proposal_attachment->type = $file_extension;
-//                        $proposal_attachment->is_published = "Active";
-//                        $proposal_attachment->proposal()->save($proposal);
-//
-//                    } catch (\Exception $exp) {
-//                        $notify[] = ['error', 'Document could not be uploaded.'];
-//                        return back()->withNotify($notify);
-//                    }
-//
-//                }
-//            }
+            //            if ($request->hasFile('file')) {
+            //
+            //                foreach ($request->file as $file) {
+            //                    $path = imagePath()['attachments']['path'];
+            //                    try {
+            //                        $filename = uploadAttachments($file, $path);
+            //
+            //                        $file_extension = getFileExtension($file);
+            //                        $url = $path . '/' . $filename;
+            //                        $proposal_attachment = new ProposalAttachment;
+            //                        $proposal_attachment->name = $filename;
+            //                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
+            //                        $proposal_attachment->url = $url;
+            //                        $proposal_attachment->type = $file_extension;
+            //                        $proposal_attachment->is_published = "Active";
+            //                        $proposal_attachment->proposal()->save($proposal);
+            //
+            //                    } catch (\Exception $exp) {
+            //                        $notify[] = ['error', 'Document could not be uploaded.'];
+            //                        return back()->withNotify($notify);
+            //                    }
+            //
+            //                }
+            //            }
 
             DB::commit();
 
@@ -147,57 +160,7 @@ class ProposalController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Proposal $proposal)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Proposal $proposal)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Proposal $proposal)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Proposal  $proposal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Proposal $proposal)
-    {
-        //
-    }
     
-    /**
-     * validatePropsal
-     *
-     * @param  mixed $request
-     * @return void
-     */
     public function validatePropsal(Request $request)
     {
         $request_data = [];
@@ -228,7 +191,7 @@ class ProposalController extends Controller
                     'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
                     'milestones.*.amount' => 'string|required',
                     'total_project_price' => 'required|integer',
-                    'amount_receive' => 'required|integer',
+                    'amount_receive' => 'required',
                     'cover_letter' => 'string|min:20'
                 ];
             }
@@ -239,7 +202,7 @@ class ProposalController extends Controller
                     'project_end_date' => 'required|date|after_or_equal:project_start_date',
                     'project_start_date' => 'required|date|after_or_equal:now',
                     'total_project_price' => 'required|integer',
-                    'amount_receive' => 'integer|required',
+                    'amount_receive' => 'required',
                     'cover_letter' => 'string|min:20'
 
                 ];

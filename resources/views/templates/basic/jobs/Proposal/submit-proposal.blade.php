@@ -13,7 +13,7 @@
                      <div>
                         <h2 class="title title-color" >Submit a Proposal</h2>
                      </div>
-                        <form action="{{route('user.proposal.store',$job->uuid)}}" method="post" id="propsal_form" enctype="multipart/form-data">
+                        <form action="{{route('seller.proposal.store',$job->uuid)}}" method="post" id="propsal_form" enctype="multipart/form-data">
                            @csrf
                            {{-- Job Details--}}
                            <div class="row">
@@ -46,7 +46,7 @@
                                              </p>
 
                                              <div>
-                                                <a href="{{route('job.jobview',$job->uuid)}}" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
+                                                <a href="{{route('seller.job.jobview',$job->uuid)}}" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
                                              </div>
                                           </div>
 
@@ -191,7 +191,7 @@
                            </div>
                            <div id="outer" class="text-right">
                               <div class="inner">
-                                  <button type="button" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</button>
+                                  <a role="button" href="{{route('seller.jobs.listing')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
                               </div>
                               <div class="inner">
                                   <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Proposal')</button>

@@ -18,8 +18,10 @@ use App\Models\FavoriteItem;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Booking;
+use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
+use App\Models\Role;
 use App\Models\Skills;
 use App\Models\SkillSubCategory;
 use App\Models\User;
@@ -43,23 +45,7 @@ class UserController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function home()
-    {
-        $user = Auth::user();
-        $pageTitle = 'Dashboard';
-        $emptyMessage = "No data found";
-        $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
-        $totalService = Service::where('user_id', $user->id)->count();
-        $totalSoftware = Software::where('user_id', $user->id)->count();
-        $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('service_id')->count();
-        $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('software_id')->count();
-        $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
-        return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
-    }
+   
 
     public function profile()
     {

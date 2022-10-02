@@ -22,7 +22,7 @@ $socialIcons = getContent('social_icon.element', false);
                     </select>
                     <i class="fas fa-search"></i>
                 </div>
-                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('user.job.create') }}">Post a
+                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('buyer.job.create') }}">Post a
                     Job</a>
             </div>
             <div class="footer-bottom-area">

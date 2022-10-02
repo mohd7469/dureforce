@@ -31,7 +31,7 @@
                                             <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                         </td>
                                         <td data-label="@lang('Proposals')">
-                                            <a href="{{route('user.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
+                                            <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                         </td>
                                         <td data-label="@lang('Messages')">
                                             {{ '3' }}
@@ -70,10 +70,10 @@
                                         </td>
                                         <td data-label="Action">
                                             {{--  @if($job->status->slug != 'approved')  --}}
-                                            {{-- {{route('user.job.edit', [slug($job->title), $job->id])}} --}}
+                                            {{-- {{route('buyer.job.edit', [slug($job->title), $job->id])}} --}}
 
-                                                <a href="{{route('user.job.single.view', [$job->uuid])}} " ><i class="fa fa-eye icon-color" style="margin-right:7px; "></i></a>
-                                                <a href="{{route('user.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" style="margin-right:7px; "></i></a>
+                                                <a href="{{route('buyer.job.single.view', [$job->uuid])}} " ><i class="fa fa-eye icon-color" style="margin-right:7px; "></i></a>
+                                                <a href="{{route('buyer.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" style="margin-right:7px; "></i></a>
                                             {{-- @else --}}
                                                 {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 

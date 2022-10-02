@@ -7,7 +7,7 @@
 
 </style>
 <div class="setProfile" id="">
-    <form action="{{ route('profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
+    <form action="{{ route('buyer.profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
         @csrf
         <div class="container-fluid welcome-body" id="">
             <h1 class="mb-4">Company</h1>

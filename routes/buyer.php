@@ -5,3 +5,46 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
+Route::name('buyer.')->prefix('buyer')->group(function () {
+    
+    Route::middleware(['verified','is-client'])->group(function () {
+        
+        Route::namespace('Buyer')->group(function () {
+
+            //profile
+            Route::name('profile.')->prefix('profile')->group(function () {
+
+                Route::post('/save-company', [\App\Http\Controllers\Seller\ProfileController::class,'saveCompany'])->name('save.company');
+                Route::post('/save-payment-methods', [\App\Http\Controllers\Seller\ProfileController::class,'savePaymentMethod'])->name('save.payment.methods');
+                Route::post('/payment/save', [\App\Http\Controllers\Seller\ProfileController::class,'storePayment'])->name('payment.save');
+
+            });
+            
+            Route::middleware('is-profile-completed')->group(function () {
+
+                Route::name('job.')->group(function(){
+
+                    Route::get('job/create',            [\App\Http\Controllers\Seller\JobController::class,'create'] )->name('create');
+                    Route::post('job/job_data_validate',[\App\Http\Controllers\Seller\JobController::class,'jobDataValidate'] )->name('validate');
+                    Route::post('job/store',            [\App\Http\Controllers\Seller\JobController::class,'store'] )->name('store');
+                    Route::get('job/index',             [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('index');
+                    Route::get('job/edit/{id}',         [\App\Http\Controllers\Seller\JobController::class,'edit'] )->name('edit');
+                    Route::post('job/update/{id}',      [\App\Http\Controllers\Seller\JobController::class,'update'] )->name('update');
+                    Route::get('job/destroy/{id}',      [\App\Http\Controllers\Seller\JobController::class,'destroy'] )->name('destroy');
+                    Route::post('job/cancel',           [\App\Http\Controllers\Seller\JobController::class,'cancelBy'] )->name('cancel');
+                    Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'singleJob'] )->name('single.view');
+
+                });
+
+                Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Seller\JobController::class,'show'] )->name('proposal.buyer.show');
+                Route::get('all-proposal/{uuid}',     [\App\Http\Controllers\Seller\JobController::class,'jobPropsals'] )->name('job.all.proposals');
+                Route::get('invite-freelancer/{uuid}',[\App\Http\Controllers\Seller\JobController::class,'inviteFreelancer'] )->name('job.invite.freelancer');
+                Route::get('/job/attachment',         [\App\Http\Controllers\Seller\JobController::class,'downnloadAttach'] )->name('job.download');
+
+            });
+
+
+        });
+    });
+
+});

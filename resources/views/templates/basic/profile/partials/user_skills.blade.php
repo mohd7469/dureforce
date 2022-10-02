@@ -1,5 +1,5 @@
 <div class="setProfile" id="user-skills">
-   <form action="{{ route('skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
+   <form action="{{ route('seller.profile.skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
       @csrf
       <div class="container-fluid welcome-body px-5">
          <h1 class="mb-4">Expertise & Skills</h1>
@@ -31,6 +31,8 @@
                         class="field-rate col-md-10"
                         min="0"
                         value="{{$user->rate_per_hour}}"
+                        id="freelancer_hourly_rate
+                        "
                         />
                      <span class="input-group-text float-end">$</span>
                   </div>
@@ -42,7 +44,7 @@
                      <div class="card-body form-group pt-3">
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                         <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
-                        <span class="pt-2 text-dark">$12.00</span>
+                        <span class="pt-2 text-dark" id="system_fee"></span>
                      </div>
                   </div>
                </div>
@@ -78,11 +80,11 @@
                         @foreach ($skills as $skill)
                            <option value="{{$skill->id}}"  {{in_array($skill->id,$userskills->pluck('id')->toArray()) ? 'selected' :''}}>{{$skill->name}}</option>
                         @endforeach
-                     </select
+                  </select>
 
 
                   </div>
-                  <div
+                  {{-- <div
                      class="col-xl-12 col-md-12 col-lg-12 form-group add-skills"
                      >
                      <br />
@@ -118,7 +120,7 @@
                         </li>
                      </ul>
                      <br />
-                  </div>
+                  </div> --}}
                </div>
             </div>
          </div>

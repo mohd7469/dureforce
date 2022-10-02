@@ -185,7 +185,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => route('user.job.index'), "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -287,7 +287,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => route('user.job.index'), "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -352,36 +352,7 @@ class JobController extends Controller
         }
     }
 
-    public function getSkills(Request $request)
-    {
-        try {
-            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use ($request) {
-                $q->when(isset($request->sub_category_id), function ($q) use ($request) {
-                    $q->where('sub_category_id', $request->sub_category_id);
-                });
-
-
-            }])->get();
-
-            $skill_categories = $category[0]->skill;
-            $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
-
-            $skills_with_categories = $skill_categories->map(function ($item, $key) {
-
-                $grouped_skills = ($item->groupby('skill_type'));
-
-                $result = $grouped_skills->map(function ($item, $key) {
-                    return $item->toArray();
-                });
-
-                return $result->toArray();
-
-            });
-            return response()->json($skills_with_categories);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
+   
 
     public function singleJob($uuid){
         
@@ -452,24 +423,7 @@ class JobController extends Controller
         }
 
     }
-    public function proposal($uuid)
-    {
-        
-        
-        $job = Job::where('uuid',$uuid)->withAll()->first();
-        $skillCats = SkillCategory::select('name', 'id')->get();
-
-        $delivery_modes = DeliveryMode::Active()->select(['id','title'])->get();
-
-        foreach($skillCats as $skillCat){
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-        
-        }
-        $pageTitle = "Proposal";
-
-        return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle','job','skills','delivery_modes'));
-
-    }
+    
     public function product()
     {
         
@@ -479,28 +433,12 @@ class JobController extends Controller
         return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
-       public function inviteFreelancer($job_uuid){
+
+    public function inviteFreelancer($job_uuid){
+
         $job=Job::where('uuid',$job_uuid)->first();
         $pageTitle = "inviteProposal";
         return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job'));
-       }
 
-
-
-    public function jobview($uuid){
-        $pageTitle = "View Jobs";
-        $job = Job::where('uuid', $uuid)->with(['category','user', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
-        $skillCats = SkillCategory::select('name', 'id')->get();
-
-//        foreach ($skillCats as $skillCat) {
-//
-//            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-//        }
-        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
-        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
     }
-
-
-
 }

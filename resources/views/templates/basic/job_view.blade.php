@@ -164,8 +164,8 @@
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20 cstm-btn" style="display: inline">
-                                                    <a href="{{route('job.submit.proposal',$job->uuid)}}"   class="standard-btn mr-15">Submit Proposal</a>
-                                                    <a href="{{route('user.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
+                                                    <a href="{{route('seller.proposal.create',$job->uuid)}}"   class="standard-btn mr-15">Submit Proposal</a>
+                                                    <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
 
                                                 </div>
                                             </div>

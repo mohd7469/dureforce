@@ -5,18 +5,18 @@
                 <div class="dashboard-sidebar-wrapper-inner">
                     <h5 class="menu-header-title">@lang('Buyer Account')</h5>
                     <ul id="sidebar-main-menu" class="sidebar-main-menu">
-                        <li class="sidebar-single-menu nav-item {{request()->routeIs('user.buyer.dashboard')?'open':''}} ">
-                            <a href="{{route('user.buyer.dashboard')}}">
+                        <li class="sidebar-single-menu nav-item {{request()->routeIs('user.home')?'open':''}} ">
+                            <a href="{{route('user.home')}}">
                                 <i class="lab la-buffer"></i> <span class="title">@lang('Buyer Dashboard')</span>
                             </a>
                         </li>
-                        <li class="sidebar-single-menu nav-item {{request()->routeIs('user.job.index') || request()->routeIs('user.job.edit') ?'open':''}}">
-                            <a href="{{route('user.job.index')}}">
+                        <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.index') || request()->routeIs('buyer.job.edit') ?'open':''}}">
+                            <a href="{{route('buyer.job.index')}}">
                                 <i class="las la-list"></i> <span class="title">@lang('Manage Job')</span>
                             </a>
                         </li>
-                        <li class="sidebar-single-menu nav-item {{request()->routeIs('user.job.create')?'open':''}}">
-                            <a href="{{route('user.job.create')}}">
+                        <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.create')?'open':''}}">
+                            <a href="{{route('buyer.job.create')}}">
                                 <i class="las la-plus"></i> <span class="title">@lang('Create Job')</span>
                             </a>
                         </li>

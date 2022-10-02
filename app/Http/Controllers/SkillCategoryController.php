@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\SkillCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SkillCategoryController extends Controller
 {
@@ -71,5 +73,35 @@ class SkillCategoryController extends Controller
         $skill_categories->delete();
 
         return true;
+    }
+
+    public function getSkills(Request $request)
+    {
+        try {
+            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use ($request) {
+                $q->when(isset($request->sub_category_id), function ($q) use ($request) {
+                    $q->where('sub_category_id', $request->sub_category_id);
+                });
+
+            }])->get();
+
+            $skill_categories = $category[0]->skill;
+            $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
+            $skills_with_categories = $skill_categories->map(function ($item, $key) {
+                $grouped_skills = ($item->groupby('skill_type'));
+                $result = $grouped_skills->map(function ($item, $key) {
+                    return $item->toArray();
+                });
+                return $result->toArray();
+            });
+
+            return response()->json($skills_with_categories);
+
+        } catch (\Exception $e) {
+
+            Log::error($e->getMessage());
+            return response()->json(['error' =>$e->getMessage()]);
+
+        }
     }
 }

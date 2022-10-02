@@ -59,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithAll($query){
 
-        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills')->with('user_basic');
+        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills');
 
     }
     

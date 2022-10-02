@@ -1181,3 +1181,9 @@ function getUserRoleId()
     }
 
 }
+function getLastLoginRoleId()
+{
+    $user=auth()->user();
+    return $user->last_role_activity;
+}
+

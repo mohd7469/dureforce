@@ -1,5 +1,5 @@
 <div class="setProfile" id="basic-profile">
-   <form action="{{ route('profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
+   <form action="{{ route('user.profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
       @csrf
       
       <div class="container-fluid welcome-body px-5">
@@ -261,6 +261,7 @@
                            @foreach ($languages as $language)
                            <option
                               value="{{$language->id}}"
+                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected' : '' }}
                            >
                               {{ $language->iso_language_name }}
                            </option>
@@ -284,13 +285,16 @@
                            name="languages[0][language_level_id]"
                            class="form-control selected-level select-lang"
                            id="languages.0.language_level_id"
+                           
                            >
                            <option value="" selected="" >
                               Proficiency Level
                            </option>
 
                            @foreach ($language_levels as $level)
-                              <option value="{{$level->id}}">
+                              <option value="{{$level->id}}"
+                                 
+                                 >
                                  {{$level->name}}
                               </option>
                            @endforeach

@@ -108,7 +108,7 @@ $(function() {
               form_data= $(this).serialize();
                 event.preventDefault();
                 event.stopPropagation(); 
-                var validate_url='/user/seller/job/validate-job-proposal';
+                var validate_url='/seller/validate-proposal';
                 $.ajax({
                     type:"POST",
                     url:validate_url,
@@ -190,6 +190,8 @@ $(function() {
       else{
 
         $('#milestones_amount_receive').val(total_cost*0.80);
+        $('#system_fee').html(total_cost*0.20);
+
 
       }
     });
@@ -198,9 +200,7 @@ $(function() {
     $(document).on('focusout', '.milestones_amount', function() {
       calculateMilestoneAmountSum();
     });
-
   
-    
 });
 
 function calculateMilestoneAmountSum()
@@ -212,6 +212,8 @@ function calculateMilestoneAmountSum()
     });
     $('#total_milestones_amount').val(total_amount);
     $('#milestones_amount_receive').val(total_amount*0.80);
+    $('#system_fee').html(total_amount*0.20);
+
 
 }
 
