@@ -27,14 +27,22 @@
                                     <a href="{{ route('seller.jobs.listing') }}"
                                         @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('user.home') }}"
-                                        @if (request()->routeIs('user.home')) class="active" @endif>@lang('Buyer')</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.home') }}"
-                                        @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
-                                </li>
+                                
+                                @if( getLastLoginRoleId() == APP\Models\Role::$Freelancer )
+
+                                    <li>
+                                        <a href="{{ route('user.home') }}"
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
+                                    </li>
+
+                                @elseif (getLastLoginRoleId() == APP\Models\Role::$Client)
+                                    
+                                    <li>
+                                        <a href="{{ route('user.home') }}"
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('BUYER')</a>
+                                    </li>
+
+                                @endif
                                 <li><a href="{{ route('user.conversation.inbox') }}"
                                         @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Inbox')</a></li>
                                 <li><a href="{{ route('ticket.open') }}"
