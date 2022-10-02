@@ -55,7 +55,7 @@
         
                        <div class="cp-row-con">
                            <p class="cp--jbh">Job Title</p>
-                           <p class="cp-jt">Marketing Manager</p>
+                           <p class="cp-jt">{{$basicProfile->designation}}</p>
                        </div>
         
                         <!----============End================--->
