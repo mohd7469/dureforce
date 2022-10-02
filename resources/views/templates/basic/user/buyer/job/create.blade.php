@@ -236,9 +236,9 @@
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
-                                            <small>(Atlease One Skill is required)</small>
+                                            <small>(Atlease one skill is required)</small>
                                         </div>
-                                        <div id="form_attributes">
+                                        <div id="form_attributes" class="pt-1" >
                                             
                                         </div>
 
@@ -349,13 +349,13 @@
             var all_sub_categories=data[main_category];
             var main_category_id=genRand(5);
         
-            $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            $('#form_attributes').append(' <div class="row pt-1"  id="'+main_category_id+'"><h5>'+main_category+'</h5>');
             for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                 var skills=all_sub_categories[sub_category_enum];
                 var sub_category_id=genRand(5);
 
-                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pb-3 ml-2"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
                 for (var skill_index in skills) {
                     
                     var skill_id=skills[skill_index].id;

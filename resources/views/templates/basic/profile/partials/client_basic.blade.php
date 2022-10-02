@@ -5,7 +5,7 @@
 
         <div class="container-fluid welcome-body px-5">
 
-            <h1 class="mb-4">Welcome Shahzaib</h1>
+            <h1 class="mb-4">{{auth()->user() ? auth()->user()->first_name.' '. auth()->user()->last_name : null}}</h1>
             <span class="cmnt pb-4">
          Complete your profile to join our global community of freelancers and start
          selling
