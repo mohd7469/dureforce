@@ -231,8 +231,7 @@
 
 
         
-
-       
+     
 
         $('document').ready(function() {
             
@@ -242,12 +241,10 @@
                 tags: true
             });
             
-            //milestones sum
-            rate_per_hour.focusout(function(){
-                var fee=rate_per_hour.val()*0.20;
-                system_fee.html(fee);
-       
-            });
+            
+            
+
+           
 
             user_basic_form.submit(function (e) {
                 e.preventDefault();
@@ -313,6 +310,14 @@
                 var country_id = $(this).val();
                 getCountryCities(country_id);
             });
+
+            rate_per_hour.on('focusout', function(){
+
+                var fee=rate_per_hour.val()*0.20;
+                system_fee.html(Math.round(fee,2)+'$');
+
+            });
+
         });
 
         function getCountryCities(country_id)

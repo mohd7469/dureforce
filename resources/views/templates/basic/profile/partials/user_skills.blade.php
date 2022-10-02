@@ -31,8 +31,7 @@
                         class="field-rate col-md-10"
                         min="0"
                         value="{{$user->rate_per_hour}}"
-                        id="freelancer_hourly_rate
-                        "
+                        id="freelancer_hourly_rate"
                         />
                      <span class="input-group-text float-end">$</span>
                   </div>
@@ -44,7 +43,7 @@
                      <div class="card-body form-group pt-3">
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                         <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
-                        <span class="pt-2 text-dark" id="system_fee"></span>
+                        <span class="pt-2 text-dark" id="system_fee">{{auth()->user()->rate_per_hour}}</span>
                      </div>
                   </div>
                </div>
