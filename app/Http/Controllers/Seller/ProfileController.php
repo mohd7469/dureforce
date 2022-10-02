@@ -52,6 +52,7 @@ class ProfileController extends Controller
    
 
         try {
+            
             $user = auth()->user();        
             $user->experiences()->delete();
             $user->experiences()->createMany(
