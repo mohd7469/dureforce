@@ -11,9 +11,9 @@
                     }
                 @endphp
                 <ul class="text-center ul-margin" >
-                    <li class="short-menu-close-btn-area">
+                    <!-- <li class="short-menu-close-btn-area">
                         <button type="button" class="short-menu-close-btn">@lang('Close')</button>
-                    </li>
+                    </li> -->
                     @foreach(\App\Models\Category::getByType($type_id) as $category)
                         <li class="nav-item active">
 

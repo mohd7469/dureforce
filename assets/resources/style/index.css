@@ -60,8 +60,11 @@
 
 .black, .user_profile_card .rating, .item-card .author_detail, .item-card .rates .value {
   color: #000000;
-}
 
+}
+.user_profile_card .rating{
+  text-align: center;
+ }
 .text-center {
   text-align: center;
 }
@@ -169,12 +172,12 @@
   font-weight: 600;
   font-size: 16px;
 }
-.item-card .footer {
-  bottom: 0px;
-  position: absolute;
-  padding: 15px 30px;
-  left: 0;
-}
+/*.item-card .footer {*/
+/*  bottom: 0px;*/
+/*  position: absolute;*/
+/*  padding: 15px 30px;*/
+/*  left: 0;*/
+/*}*/
 .item-card .author_detail {
   font-weight: 500;
   font-size: 12px;
@@ -194,8 +197,6 @@
   position: relative;
 }
 .user_profile_card .card-body {
-  position: absolute;
-  bottom: 0;
   max-height: 160px;
 }
 .user_profile_card .image-holder {
@@ -221,6 +222,7 @@
   max-width: 100%;
   overflow: hidden;
   max-height: 84px;
+  text-align: center;
 }
 .user_profile_card .rating i.fa-star {
   margin-right: 15px;
@@ -324,7 +326,7 @@
 @media only screen and (max-width: 991px) {
   .hero-banner {
     padding: 10px;
-    text-align: center;
+    /* text-align: center; */
   }
   .hero-banner figure svg {
     width: 100%;
