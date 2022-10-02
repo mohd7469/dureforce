@@ -271,4 +271,69 @@
             color: #7F007F;
         }
     }
+    @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .navbar {
+            position: relative;
+            display: contents;
+            flex-wrap: wrap;
+            align-items: left;
+            justify-content: space-between;
+        }
+        .header-right{
+            display:none;
+        }
+        .header-login{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 635px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-signup{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 700px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-bottom-area .navbar-collapse .main-menu li {
+            padding-right: 630px;
+        }
+        
+        .hero-banner .heading {
+            max-width: 90%;
+            font-size: 26px;
+        }
+        .mt-h {
+            margin-top: 0px;
+        }
+        .hero-banner .para {
+                font-size: 13px;
+                color: #a5a5a5;
+                font-weight: 500;
+            }
+        .hero-banner .inline-list li {
+            font-size: 11px;
+            display: list-item;
+            margin-right: 27px;
+            float: left;
+        }
+    }
 </style>

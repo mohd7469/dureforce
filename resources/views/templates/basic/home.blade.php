@@ -518,6 +518,7 @@
         margin-right: 0;
         flex: 0 0 25.333333%;
         display: block;
+        margin-bottom:20px;
     }
     .card {
         margin-left: 7px;
@@ -529,6 +530,15 @@
     }
     .start-from{
         font-size: .775em;
+    }
+    @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .carousel-item{
+            margin-right: 0;
+            flex: 0 0 35.333333%;
+            display: block;
+            margin-bottom:20px;
+        }
     }
 </style>
 @endpush

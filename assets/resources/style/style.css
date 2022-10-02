@@ -5551,7 +5551,7 @@ color: #000000;
   right: 20px;
 }
 .seeall{
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   bottom: 157rem;
   z-index: 1;
