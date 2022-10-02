@@ -102,7 +102,6 @@ class ProfileController extends Controller
 
         try {
 
-            
             $user->education()->delete();
             $user->education()->createMany(
                 $request->educations

@@ -261,6 +261,7 @@
                            @foreach ($languages as $language)
                            <option
                               value="{{$language->id}}"
+                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected' : '' }}
                            >
                               {{ $language->iso_language_name }}
                            </option>
@@ -284,13 +285,16 @@
                            name="languages[0][language_level_id]"
                            class="form-control selected-level select-lang"
                            id="languages.0.language_level_id"
+                           
                            >
                            <option value="" selected="" >
                               Proficiency Level
                            </option>
 
                            @foreach ($language_levels as $level)
-                              <option value="{{$level->id}}">
+                              <option value="{{$level->id}}"
+                                 
+                                 >
                                  {{$level->name}}
                               </option>
                            @endforeach

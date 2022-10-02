@@ -241,16 +241,20 @@
                                 />
                             </div>
                             <div class="row">
+                                
                                 <div class="col-md-6">
-                                    <label class="mt-4">Degree <span class="imp">*</span>
-                                    </label>
+
+                                    <label class="mt-4">Degree <span class="imp">*</span></label>
+
                                     <select name="educations[0][degree_id]" class="form-control select-lang">
                                         <option value="" selected=""> Select Degree</option>
                                         @foreach ($degrees as $degree)
                                             <option value="{{$degree->id}}" selected=""> {{ $degree->title }} </option>
                                         @endforeach
                                     </select>
+
                                 </div>
+
                                 <div class="col-md-6">
                                     <label class="mt-4">Field Of Study <span class="imp">*</span>
                                     </label>
@@ -260,6 +264,7 @@
                                             id="educations.0.field_of_study"
                                             placeholder="Visual Arts"/>
                                 </div>
+
                             </div>
                             <div class="col-md-12 mt-1"
                             >
@@ -320,7 +325,7 @@
                                 >
                                     <label
                                             for=""
-                                            class="mt-4"
+                                            class="mt-4 "
                                     >To Date
                                         <span
                                                 class="imp"
@@ -328,6 +333,7 @@
                                         ></label
                                     >
                                     <input
+                                           class="end-date-job-education-0"
                                             type="date"
                                             name="educations[0][end_date]"
                                             id="educations.0.end_date"

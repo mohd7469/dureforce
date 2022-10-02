@@ -221,15 +221,18 @@
         var user_company_form=$('#company_profile');
         var user_payment_methods_form=$('#payment_methods');
         var token= $('input[name=_token]').val();
-        
-        let selectedLevels = [];
+        var rate_per_hour=$('#freelancer_hourly_rate'); 
+        var  system_fee=$('#system_fee');
+        let  selectedLevels = [];
         var _languages = [];
         let _languages_levels = [];
         let _countries = [];
         let _degress = [];
 
 
+        
 
+       
 
         $('document').ready(function() {
             
@@ -239,6 +242,13 @@
                 tags: true
             });
             
+            //milestones sum
+            rate_per_hour.focusout(function(){
+                var fee=rate_per_hour.val()*0.20;
+                system_fee.html(fee);
+       
+            });
+
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -279,6 +289,8 @@
                 saveUserPaymentMethod();
 
             });
+
+          
 
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
@@ -503,25 +515,32 @@
                                                 <label class="mt-4">Education <span class="imp">*</span></label>
                                                 <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
                                             </div>
-                                            <div class="col-md-12">
 
-                                                <label class="mt-4">Degree <span class="imp">*</span></label>
-                                                <select type="text" class="form-control" name="educations[`+edu_row_index+`][degree_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
-                                                 <option value=""  selected="">
-                                                   Select Degree
-                                                    </option>
-                                                        ${_degress?.map((degree) => {
-                                                         return ` <option value="${degree.id}"> ${degree.title}</option>`
-                                                        })}
-                                                </select>
-                                            </div>
-                                            <div class="col-md-12">
+                                            <div class="row">
+                                                
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
 
-                                                <label class="mt-4">Field Of Study <span class="imp">*</span></label>
-                                                <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
+                                                    <label class="mt-4">Degree <span class="imp">*</span></label>
+                                                    <select type="text" class="form-control" name="educations[`+edu_row_index+`][degree_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
+                                                    <option value=""  selected="">
+                                                    Select Degree
+                                                        </option>
+                                                            ${_degress?.map((degree) => {
+                                                            return ` <option value="${degree.id}"> ${degree.title}</option>`
+                                                            })}
+                                                    </select>
+                                                </div>
+                                                
+                                                <div class="col-sm-12 col-md-6 col-lg-6">
+
+                                                    <label class="mt-4">Field Of Study <span class="imp">*</span></label>
+                                                    <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
+                                                </div>
+
                                             </div>
-                                            <div class="col-md-12">
-                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-0'))"
+
+                                            <div class="col-md-12 col-sm-12 ">
+                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-educatin-`+edu_row_index+`'))"
                         type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
 
                                                 
@@ -533,12 +552,12 @@
                                                 <div class="col-md-6">
 
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-job-educatin-`+edu_row_index+`'))" >
                                                     
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                    <input type="date" class="end-date-job-educatin-`+edu_row_index+`" name="educations[`+edu_row_index+`][end_date]" onchange="checkIfDateGreaterInsti($(this))" >
                                                 </div>
                                                 
                                             </div>
@@ -604,6 +623,7 @@
             $('input,select,textarea').removeClass('error-field');
             $('.select2').next().removeClass("error-field");
             // $('#profile','profile2','#profile3','#profile4').removeClass('active');
+            
             nextTab.click();
             scrollTop();
 

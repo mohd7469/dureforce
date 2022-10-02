@@ -190,6 +190,8 @@ $(function() {
       else{
 
         $('#milestones_amount_receive').val(total_cost*0.80);
+        $('#system_fee').html(total_cost*0.20);
+
 
       }
     });
@@ -198,9 +200,7 @@ $(function() {
     $(document).on('focusout', '.milestones_amount', function() {
       calculateMilestoneAmountSum();
     });
-
   
-    
 });
 
 function calculateMilestoneAmountSum()
@@ -212,6 +212,8 @@ function calculateMilestoneAmountSum()
     });
     $('#total_milestones_amount').val(total_amount);
     $('#milestones_amount_receive').val(total_amount*0.80);
+    $('#system_fee').html(total_amount*0.20);
+
 
 }
 

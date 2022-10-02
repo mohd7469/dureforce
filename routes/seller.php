@@ -13,9 +13,9 @@ Route::name('seller.')->group(function () {
             //profile without middleware of profile complte
             Route::name('profile.')->prefix('profile')->group(function () {
 
-                Route::post('/education/save', 'Profilecontroller@saveEducation')->name('education.save');
-                Route::post('/experience/save', 'Profilecontroller@saveExperience')->name('experience.save');
-                Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+                Route::post('/education/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveEducation'])->name('education.save');
+                Route::post('/experience/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveExperience'])->name('experience.save');
+                Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
 
             });
 

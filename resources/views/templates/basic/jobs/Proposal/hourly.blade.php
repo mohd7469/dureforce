@@ -62,7 +62,7 @@
                <div class="form-group pt-3">
                   <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                   <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
-                  <span class="pt-2 text-dark">$12.00</span>
+                  <span class="pt-2 text-dark" id="system_fee"></span>
                </div>
 
             </div>
