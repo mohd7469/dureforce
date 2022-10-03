@@ -21,15 +21,15 @@
                 @endforeach
             </div>
 
-            <div class="footer row">
+            <div class="footer row ">
                 <div class="author_detail col-12 col-md-8">
                     <span class="author text-capitalize">by
                         <a href="{{ route('profile', $service->user->username ?? '') }}">
                             {{ __($service->user->username ?? '-') }} </a></span>
                     <span class="delivery">Delivered in 4 days</span>
                 </div>
-                <div class=" col-12 col-md-4 ">
-                    <span class="rates">
+                <div class="col-12 col-md-4 ">
+                    <span class="rates">x`
                         <span
                             class="value">{{ __($general->cur_sym) }}{{ __(showAmount($service->price)) }}</span>
                         <small>per hour</small></span>

@@ -1,21 +1,367 @@
-<div class="item-bottom-area">
-    <div class="row justify-content-center mb-30-none">
-        <div class="col-xl-12 col-lg-12 mb-30">
+<div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active ">
+            <div class="card">
+                <div class="img-wrapper">
+                    <img src="{{asset('assets\images\service\image 3.png')}}" class="d-block w-100" alt="...">
+                </div>
 
-            <div class="item-card-wrapper grid-view  row">
-                <div class="slick-slider-container be-center ">
-                    @forelse($services as $service)
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                            <a href="#"
+                               class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
 
-                        @include($activeTemplate.'components.services.tile',['service'=>$service])
-                    @empty
-                        <div class="empty-message-box bg--gray">
-                            <div class="icon"><i class="las la-frown"></i></div>
-                            <p class="caption">{{__($emptyMessage)}}</p>
+                        <div class="footer row">
+                            <div class="author_detail col-12 col-md-8">
+                                    <span class="author text-capitalize pb-1">by
+                                        <a href="#">Ryan Kirk</a>
+                                    </span>
+                                    <div class="col-12 col-md-12 ">
+                                        <span class="rates">
+                                        <p>Schedule Meeting</p></span>
+                                    </div>
+                            </div>
+                            <div class="col-12 col-md-4 ">
+                                <span class="rates">
+                                <small class="start-from">Start from</small>
+                                <span class="value">$55</span>
+                                </span>
+                            </div>
                         </div>
-                    @endforelse
+                    </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="{{asset('assets\images\service\image 4.png')}}" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        {{--                                        @include($activeTemplate.'partials.home_filter',['type_id'=>\App\Models\Category::ServiceType])--}}
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="{{asset('assets\images\service\image 5.png')}}" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="..." class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="card">
+                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
+                <div class="card-body item-area item-card">
+                    <h3 class="item-card-title">
+                        <a
+                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                    </h3>
+                    <div class="tags-container">
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
+                        <a href="#"
+                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                    </div>
+
+                    <div class="footer row">
+                        <div class="author_detail col-12 col-md-8">
+                                <span class="author text-capitalize pb-1">by
+                                    <a href="#">Ryan Kirk</a>
+                                </span>
+                                <div class="col-12 col-md-12 ">
+                                    <span class="rates">
+                                    <p>Schedule Meeting</p></span>
+                                </div>
+                        </div>
+                        <div class="col-12 col-md-4 ">
+                            <span class="rates">
+                            <small class="start-from">Start from</small>
+                            <span class="value">$55</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <span class="seeall"><a href="">See All</a></span>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>

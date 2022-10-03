@@ -418,7 +418,7 @@
             </article>
             <div class="row">
                 {{-- @for ($l = 0; $l < 4; $l++) --}}
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -436,7 +436,8 @@
                             giving you customized cloud service experience to cater your specific requirements. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -453,7 +454,7 @@
                             our marketplace is only focused on cloud services. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -475,7 +476,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -497,14 +499,46 @@
             </div>
         </div>
     </section>
+    <section class="all-sections  bg-grey   section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Browse Expert Developers Directory</h2>
+            </article>
+            @include($activeTemplate . 'home.publications')
+        </div>
+    </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
 <style>
     .mt-h{
-
         margin-top: -158px;
-
+    }
+    .carousel-item{
+        margin-right: 0;
+        flex: 0 0 25.333333%;
+        display: block;
+        margin-bottom:20px;
+    }
+    .card {
+        margin-left: 7px;
+        margin-right: 26px;
+    }
+    .item-area .footer {
+        padding: 10px 0px 0px 0px;
+        left: 0;
+    }
+    .start-from{
+        font-size: .775em;
+    }
+    @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .carousel-item{
+            margin-right: 0;
+            flex: 0 0 35.333333%;
+            display: block;
+            margin-bottom:20px;
+        }
     }
 </style>
 @endpush
@@ -527,6 +561,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script>
+
         'use strict';
         $('#defaultSearch').on('change', function () {
             this.form.submit();

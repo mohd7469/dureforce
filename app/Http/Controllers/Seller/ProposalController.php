@@ -173,8 +173,8 @@ class ProposalController extends Controller
                 'delivery_mode_id' => 'required|exists:delivery_modes,id',
                 'hourly_bid_rate' => 'required|integer|min:1',
                 'amount_receive' => 'required',
-                'start_hour_limit' => 'integer|min:1|after_or_equal:now',
-                'end_hour_limit' => 'integer|after_or_equal:start_hour_limit',
+                'start_hour_limit' => 'required_with:end_hour_limit|integer|min:1',
+                'end_hour_limit' => 'required_with:start_hour_limit|integer|gt:start_hour_limit',
                 'cover_letter' => 'string'
             ];
             

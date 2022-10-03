@@ -51,8 +51,11 @@
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                   <div class="form-group pt-3">
                      <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
-                     <small id="hourly_bid_rate_small" class="form-text text-muted">Total amount the client will see on your proposal</small>
-                     <input type="number" name="hourly_bid_rate" class="form-control" id="hourly_bid_rate"  min="1">
+                     <small id="milestones_amount_receive" class="form-text text-muted">Total amount the client will see on your proposal</small>
+                     <div class="input-group">
+                        <input type="number" name="hourly_bid_rate" class="form-control" id="hourly_bid_rate"  min="1">
+                        <span class="input-group-text float-end">$</span>
+                     </div>
                   </div>
             </div>
             
@@ -69,10 +72,14 @@
             
             {{-- freelancer recieving amount --}}
             <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
-               <div class="form-group pt-3">
+               <div class="form-group pt-3 ">
                   <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                   <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
-                  <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" readonly>
+                  <div class="input-group">
+                     <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" readonly>
+                     <span class="input-group-text float-end">$</span>
+                  </div>
+                  
                </div>
             </div>
 
