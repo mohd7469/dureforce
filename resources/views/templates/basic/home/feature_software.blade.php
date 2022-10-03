@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -32,7 +32,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -71,7 +71,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -101,7 +101,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -110,7 +110,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -140,7 +140,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -149,7 +149,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -179,7 +179,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -188,7 +188,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -218,7 +218,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -227,7 +227,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -257,7 +257,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -266,7 +266,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -296,7 +296,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -305,7 +305,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
@@ -335,7 +335,7 @@
                     </div>
 
                     <div class="footer row">
-                        <div class="author_detail col-12 col-md-8">
+                        <div class="author_detail col-7 col-md-8">
                                 <span class="author text-capitalize pb-1">by
                                     <a href="#">Ryan Kirk</a>
                                 </span>
@@ -344,7 +344,7 @@
                                     <p>Schedule Meeting</p></span>
                                 </div>
                         </div>
-                        <div class="col-12 col-md-4 ">
+                        <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
                             <span class="value">$55</span>
