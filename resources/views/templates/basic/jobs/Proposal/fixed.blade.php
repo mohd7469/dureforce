@@ -107,7 +107,11 @@
                      {{-- amount --}}
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Amount')*</label>
-                        <input type="number" name="milestones[1][amount]" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount">
+                        
+                        <div class="input-group">
+                           <input type="number" name="milestones[1][amount]" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount">
+                           <span class="input-group-text float-end">$</span>
+                        </div>
                      </div>
                   </div>
                   
@@ -129,7 +133,12 @@
                         <label for=""><strong class="text-dark">Total Price of Project*</strong></label>
                         <small  class="form-text text-muted">This includes all milestones, and is the amount 
                         your client will see</small>
-                        <input type="number" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly>
+                        
+                        <div class="input-group">
+                           <input type="number" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly>
+                           <span class="input-group-text float-end">$</span>
+                        </div>
+
                      </div>
                </div>
                
@@ -149,7 +158,13 @@
                   <div class="form-group pt-3">
                      <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                      <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
-                     <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" readonly id="milestones_amount_receive">
+                        
+                        <div class="input-group">
+                           <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" readonly id="milestones_amount_receive">
+                           <span class="input-group-text float-end">$</span>
+                        </div>
+                        
+                     
                   </div>
                </div>
 
