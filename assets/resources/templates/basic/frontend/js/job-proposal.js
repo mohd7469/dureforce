@@ -175,7 +175,8 @@ $(function() {
       }
       else{
 
-        $('#amount_receive').val(rate_per_hour*0.80);
+        $('#amount_receive').val(Math.round(rate_per_hour*0.80,2));
+        $('#system_fee').html(Math.round(rate_per_hour*0.20,2)+'$');
 
       }
     });
@@ -189,8 +190,8 @@ $(function() {
       }
       else{
 
-        $('#milestones_amount_receive').val(total_cost*0.80);
-        $('#system_fee').html(total_cost*0.20);
+        $('#milestones_amount_receive').val(Math.round(total_cost*0.80,2));
+        $('#system_fee').html(Math.round(total_cost*0.20,2)+'$');
 
 
       }
@@ -211,8 +212,8 @@ function calculateMilestoneAmountSum()
       total_amount=total_amount+parseInt(milestone_amount);
     });
     $('#total_milestones_amount').val(total_amount);
-    $('#milestones_amount_receive').val(total_amount*0.80);
-    $('#system_fee').html(total_amount*0.20);
+    $('#milestones_amount_receive').val(Math.round(total_amount*0.80,2));
+    $('#system_fee').html(Math.round(total_amount*0.20,2)+'$');
 
 
 }
@@ -250,7 +251,7 @@ function addRow()
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Amount*</label>'+
-            '<input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  id="milestones.'+row_id+'.amount">'+
+            '<div class="input-group"><input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  id="milestones.'+row_id+'.amount"> <span class="input-group-text float-end">$</span></div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >'+
