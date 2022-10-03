@@ -177,13 +177,11 @@ class JobController extends Controller
                         $job->documents()->save($document);
 
                     } catch (\Exception $exp) {
-                        $notify[] = ['error', 'Image could not be uploaded.'];
-                        return back()->withNotify($notify);
+                        return response()->json(["error" => $exp->getMessage()]);;
                     }
 
                 }
             }
-
             DB::commit();
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
