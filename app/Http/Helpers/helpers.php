@@ -14,6 +14,7 @@ use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
+use App\Models\Job;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -1185,5 +1186,11 @@ function getLastLoginRoleId()
 {
     $user=auth()->user();
     return $user->last_role_activity;
+}
+
+function getNumberOfPropsals($uuid)
+{
+    $job=Job::where('uuid',$uuid)->first();
+    return $job->proposal()->count();
 }
 

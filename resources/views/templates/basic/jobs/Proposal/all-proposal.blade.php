@@ -131,7 +131,7 @@
 
                                                     <a href="#" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
-                                                    <a href="{{route('user.proposal.buyer.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
+                                                    <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
                                             </div>
