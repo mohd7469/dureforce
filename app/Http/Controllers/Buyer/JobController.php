@@ -18,6 +18,7 @@ use App\Models\SkillSubCategory;
 use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
@@ -436,9 +437,11 @@ class JobController extends Controller
 
     public function inviteFreelancer($job_uuid){
 
+        $freelancers = User::role('Freelancer')->with('skills','education','country')->get();
+      //dd($freelancers);
         $job=Job::where('uuid',$job_uuid)->first();
         $pageTitle = "inviteProposal";
-        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job'));
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job','freelancers'));
 
     }
 }

@@ -70,7 +70,9 @@
                                  <!--Bio Profile Section Start-->
                             
                             
-            
+                                   @foreach ($freelancers as $freelancer )
+                                       
+                                   
                                     
                                     <div class=""> 
                                         <div class="row biorow">
@@ -81,10 +83,10 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4 class="pname-c"> 
-                                                        Travis T.
+                                                      {{$freelancer->first_name}}
                                                      </h4>
                                                        <p class="pdesination-c">  Full Stack Developer</p> 
-                                                       <p class="plocation"> London, UK</p>
+                                                       <p class="plocation"> {{$freelancer->country->name}}</p>
                                                  </div>
                                                   
                                               </div>
@@ -93,9 +95,9 @@
                                             <div class="col-md-5">
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
-                                                        <p class="rateperh">Rate Per Hour</p>
+                                                        <p class="rateperh">${{$freelancer->rate_per_hour}}</p>
                                                         
-                                                        <p class="perhourprice">$55/per Hour</p>
+                                                        
                                                         
                                                         
                                                     </div>
@@ -113,7 +115,7 @@
                                             <div class="col-md-3">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
+                                                    {{-- <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a> --}}
                                                     <a href="#" class="btn-products-s">Hire</a>
                                                     <a href="#" class="btn-products-s phire">Invite a job</a>
                                                   
@@ -129,12 +131,11 @@
                                      
                                     <h2>Has relevant skills to your job</h2>
                                     <ul class="skills-listing">
-                                        <li>HTML</li>
-                                        <li>CSS</li>
-                                        <li>Javascript</li>
-                                        <li>Bootstrap</li>
-                                        <li>jQuery</li>
-                                        <li>React</li>
+                                        @foreach ($freelancer->skills as $skill )
+                                        <li>{{$skill->name}}</li>
+                                        @endforeach
+                                        
+                                        
                                     </ul>
                                 </div>
                                 </div>
@@ -143,82 +144,10 @@
                             </div> 
                        
                             <hr>
-
+                            @endforeach
                         
-                            <div class=""> 
-                                <div class="row biorow">
-                                   <div class="col-md-3">
-                                      <div class="row borderleftc"> 
-                                        <div class="col-md-4">
-                                            <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h4 class="pname-c"> 
-                                                Travis T.
-                                             </h4>
-                                               <p class="pdesination-c">  Full Stack Developer</p> 
-                                               <p class="plocation"> London, UK</p>
-                                         </div>
-                                          
-                                      </div>
-                                   </div>
-
-                                    <div class="col-md-5">
-                                        <div class="row btns-per">
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Rate Per Hour</p>
-                                                
-                                                <p class="perhourprice">$55/per Hour</p>
-                                                
-                                                
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Total Earnings</p>
-                                                <p class="perhourprice">$120k + earned</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Job Success Rate</p>
-                                                <p class="perhourprice">90%</p>
-                                            </div>
-                                         </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="row btns-s">
-                                            {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                            <a href="#" class="btn-products-s">View Profile</a>
-                                            <a href="#" class="btn-products-s">Hire</a>
-                                            <a href="#" class="btn-products-s phire">Invite a job</a>
-                                            
-                                        </div>
-                                    </div>
-                             </div>
-                                    <!--===  Bio Profile Section End ===-->
-
-                 <!--Skills Section Start-->
-
-                    <div class="row skills-c">
-                        <div class="col-md-7">
-                             
-                            <h2>Has relevant skills to your job</h2>
-                            <ul class="skills-listing">
-                                <li>HTML</li>
-                                <li>CSS</li>
-                                <li>Javascript</li>
-                                <li>Bootstrap</li>
-                                <li>jQuery</li>
-                                <li>React</li>
-                            </ul>
-                        </div>
-                        </div>
-
-                            <!--Skills Section End-->
-                    </div> 
-                                   
-                         
-                        </div>
-                        <hr>
-                        
+                           
+                       
                     </div>
                   </div>
                </div>
