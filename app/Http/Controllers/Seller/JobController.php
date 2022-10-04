@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\SkillCategory;
+use App\Models\Status;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -48,10 +49,13 @@ class JobController extends Controller
         $pageTitle = "View Jobs";
         $job = Job::where('uuid', $uuid)->with(['category','user', 'status', 'rank', 'budgetType', 'status','documents','deliverable'])->first();
         $skillCats = SkillCategory::select('name', 'id')->get();
+        $client_jobs = Job::where('user_id',$job['user_id'])->get();
+        $client_total_jobs = $client_jobs->count();
+        $client_open_jobs = $client_jobs->where('status_id',Status::$Approved)->count();
 
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data'));
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs'));
     }
 
     /**

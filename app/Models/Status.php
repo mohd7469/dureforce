@@ -11,6 +11,9 @@ class Status extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = ['name', 'slug', 'module_id'];
     protected $table = "statuses";
+    public static $Pending=1;
+    public static $Approved=2;
+
     public function jobs()
     {
         return $this->hasMany(Job::class,'status_id');
