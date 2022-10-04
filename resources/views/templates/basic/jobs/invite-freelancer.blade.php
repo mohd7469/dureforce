@@ -85,7 +85,10 @@
                                                     <h4 class="pname-c"> 
                                                       {{$freelancer->first_name}}
                                                      </h4>
-                                                       <p class="pdesination-c">  Full Stack Developer</p> 
+                                                     @foreach ($freelancer->experiences as $experience )
+                                                     <p class="pdesination-c">{{$experience->job_title}}</p>  
+                                                     @endforeach
+                                                       
                                                        <p class="plocation"> {{$freelancer->country->name}}</p>
                                                  </div>
                                                   
