@@ -4,15 +4,24 @@
             <div class="container-fluid">
                 <div class="header-menu-content">
                     <nav class="navbar navbar-expand-lg p-0">
-                        <a class="site-logo site-title" href="{{ route('home') }}"><img
-                                    src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
-                                    alt="{{ __($general->sitename) }}"></a>
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fas fa-bars"></span>
                         </button>
-                        <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button>
+                        <a class="site-logo site-title" href="{{ route('home') }}"><img
+                                    src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
+                                    alt="{{ __($general->sitename) }}"></a>
+                        @guest
+                        <a href="#loginModal" data-bs-toggle="modal" class="navbar-toggler header-login">@lang('Login')</a>
+
+                        <a href="{{ route('user.register') }}" class="header-signup navbar-toggler">@lang('Sign Up')</a>
+                        @endguest
+                        @auth
+                            <a href="{{ route('user.home') }}" class="header-link">@lang('Dashboard')</a>
+                            <a href="{{ route('logout') }}" class="header-link">@lang('Logout')</a>
+                        @endauth
+                        <!-- <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button> -->
                         <div class="collapse navbar-collapse d-flex justify-content-between"
                              id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
@@ -220,4 +229,187 @@
         background-color: #007F7F;
         border-color: #007F7F;
     }
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        .navbar {
+            position: relative;
+            display: contents;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-right{
+            display:none;
+        }
+        .header-login{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 240px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-signup{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 295px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+    }          
+    /* Media Query for low resolution  Tablets, Ipads */
+    @media (min-width: 481px) and (max-width: 767px) {
+        .navbar {
+            position: relative;
+            display: contents;
+            flex-wrap: wrap;
+            align-items: left;
+            justify-content: space-between;
+        }
+        .header-bottom-area .navbar-collapse .main-menu li a:hover::after, .header-bottom-area .navbar-collapse .main-menu li a.active::after {
+            width: 520px;
+        }
+        .item-card .rates {
+            background: #7f007f;
+            border-radius: 4px;
+            text-align: center;
+            padding: 7px;
+            width: 119px;
+            color: #fff;
+        }
+        .header-right{
+            display:none;
+        }
+        .header-login{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 350px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-signup{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 425px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-bottom-area .navbar-collapse .main-menu li {
+            padding-right: 630px;
+        }
+        
+        .hero-banner .heading {
+            max-width: 90%;
+            font-size: 26px;
+        }
+        .mt-h {
+            margin-top: 0px;
+        }
+        .hero-banner .para {
+                font-size: 13px;
+                color: #a5a5a5;
+                font-weight: 500;
+            }
+        .hero-banner .inline-list li {
+            font-size: 11px;
+            display: list-item;
+            margin-right: 27px;
+            float: left;
+        }
+    }
+        
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px){
+        .navbar {
+            position: relative;
+            display: contents;
+            flex-wrap: wrap;
+            align-items: left;
+            justify-content: space-between;
+        }
+        .header-right{
+            display:none;
+        }
+        .header-login{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 580px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }
+        .header-signup{
+            position: absolute;
+            width: 115px;
+            height: 18px;
+            left: 670px;
+            top: 17px;
+
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            /* identical to box height */
+            color: #7F007F;
+        }        
+        .hero-banner .heading {
+            max-width: 90%;
+            font-size: 26px;
+        }
+        .mt-h {
+            margin-top: 0px;
+        }
+        .hero-banner .para {
+                font-size: 13px;
+                color: #a5a5a5;
+                font-weight: 500;
+            }
+        .hero-banner .inline-list li {
+            font-size: 11px;
+            display: list-item;
+            margin-right: 27px;
+            float: left;
+        }
+    }
+          
+        
 </style>

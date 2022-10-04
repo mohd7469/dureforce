@@ -47,7 +47,7 @@
                             @csrf
                             <div class="row ml-b-20">
                                 <div class="col-lg-12 form-group">
-                                    <input type="email" name="email" placeholder="@lang('Email Address')" class="form-control form--control" id="code">
+                                    <input type="email" name="email" placeholder="@lang('Email Address')" class="form-control form--control" required="" id="code">
                                 </div>
 
                                 <div class="col-lg-12 form-group text-center mt-10">

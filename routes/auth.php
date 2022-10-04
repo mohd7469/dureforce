@@ -4,6 +4,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 
 Auth::routes(['verify' => true]);
@@ -23,12 +24,19 @@ Route::name('user.')->group(function () {
     })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
     Route::post('/email/change-email-verification-notification', function (Request $request) {
-        $user = User::find($request->user()->id)->first();
-        $user->email = trim($request->email);
-        $user->save();
-        $user->sendEmailVerificationNotification();
-        $notify[] = ['success', 'Verification link sent!'];
-        return redirect('email/verify')->withNotify($notify);
+        $validate = Validator::make($request->all(), [
+            'email' => 'required|string|email|max:90|unique:users'
+        ]);
+        if($validate->fails() == true){
+            return redirect('change-email')->withErrors($validate);
+        }else{
+            $user = User::where('id',$request->user()->id)->first();
+            $user->email = trim($request->email);
+            $user->save();
+            $user->sendEmailVerificationNotification();
+            $notify[] = ['success', 'Verification link sent!'];
+            return redirect('email/verify')->withNotify($notify);
+        }
     })->middleware(['auth', 'throttle:6,1'])->name('change.email.verification.send');
 
     // Route::post('change-email-address','Auth\AccountVerifyController@showEmailChangeForm')->name('change-email')->middleware(['auth', 'throttle:6,1']);
