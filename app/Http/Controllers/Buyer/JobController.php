@@ -101,6 +101,7 @@ class JobController extends Controller
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'project_stage_id' => 'exists:project_stages,id',
+            'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array',
