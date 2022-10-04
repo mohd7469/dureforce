@@ -35,9 +35,9 @@
                                     </div>
                                     {{-- profile info --}}
                                     <div class="col-sm-8 col-xs-8 col-md-3 col-lg-2 pt-2 profile-border-right">
-                                        <strong>Dumitru G</strong><br>
-                                        <span>Ux Designer</span><br>
-                                        <i class="fa fa-map-marker-alt"></i></i><span class="margin-left">London, UK</span>
+                                        <strong>{{$user->full_name}}</strong><br>
+                                        <span>{{$user->job_title}}</span><br>
+                                        <i class="fa fa-map-marker-alt"></i></i><span class="margin-left">{{$user->location}}</span>
                                     </div>
                                     {{-- rate --}}
                                     <div class="col-sm-12 col-xs-12 col-md-6  col-lg-5 profile-border-right">
