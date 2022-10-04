@@ -83,11 +83,11 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4 class="pname-c"> 
-                                                      {{$freelancer->first_name}}
+                                                      {{$freelancer->first_name}} {{ $freelancer->last_name }}
                                                      </h4>
-                                                     @foreach ($freelancer->experiences as $experience )
-                                                     <p class="pdesination-c">{{$experience->job_title}}</p>  
-                                                     @endforeach
+ done
+                                                     <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>  
+                                                    
                                                        
                                                        <p class="plocation"> {{$freelancer->country->name}}</p>
                                                  </div>
@@ -98,6 +98,7 @@
                                             <div class="col-md-5">
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
+                                                        <p class="rateperh">Rate Per Hour</p>
                                                         <p class="rateperh">${{$freelancer->rate_per_hour}}</p>
                                                         
                                                         
@@ -118,7 +119,7 @@
                                             <div class="col-md-3">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    {{-- <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a> --}}
+                                                    <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
                                                     <a href="#" class="btn-products-s">Hire</a>
                                                     <a href="#" class="btn-products-s phire">Invite a job</a>
                                                   
