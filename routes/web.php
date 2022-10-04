@@ -21,7 +21,7 @@ Route::middleware('verified')->group(function () {
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
-    Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('seller.profile');
+    Route::get('/job-profile-skills', 'SkillCategoryController@getSkills')->name('seller.profile');
 
 
 });

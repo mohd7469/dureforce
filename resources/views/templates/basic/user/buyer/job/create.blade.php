@@ -318,7 +318,7 @@
     function fetchSkills(category,sub_category=''){
         $.ajax({
             type:"GET",
-        url:"{{route('job.skills')}}",
+            url:"{{route('job.skills')}}",
             data: {category_id : category,sub_category_id:sub_category},
             success:function(data){
                 var html = '';
