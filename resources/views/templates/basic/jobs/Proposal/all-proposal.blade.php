@@ -84,7 +84,7 @@
                                                   <div class="col-md-8">
                                                     <h4 class="pname-c">
 
-                                                        {{$proposal->user->first_name}}
+                                                        {{$proposal->user->first_name}}  {{$proposal->user->last_name}}
                                                      </h4>
                                                       @isset($proposal->user->user_basic)
                                                           @foreach($proposal->user->user_basic as $basic)
