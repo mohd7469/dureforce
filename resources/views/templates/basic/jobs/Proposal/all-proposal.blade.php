@@ -173,9 +173,21 @@
                                 <div class="col-md-6 col-lg-6">
                                     <div class="attachment">
                                         <div class="service_subtitle2 mt-20 heading-text">
-                                        <h2> Attachments</h2>
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                                            @isset($proposal->attachment)
+                                                @foreach($proposal->attachment as $document)
+                                                <h2> Attachments</h2>
+                                            
+                                                <ul class="skills-listing">
+            
+                                                    <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->name}} </a>
+
+            
+                                                </ul>
+                                                    @endforeach
+                                            @endisset
+
+                                                {{-- <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
+                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a> --}}
 
                                         </div>
                                   </div>

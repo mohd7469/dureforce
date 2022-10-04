@@ -120,7 +120,10 @@ class ProposalController extends Controller
 
     public function jobPropsals($job_uuid)
     {
-        $job=Job::where('uuid',$job_uuid)->first();
+
+
+
+        $job=Job::withAll()->where('uuid',$job_uuid)->first();
         $proposals = $job->proposal;
         $pageTitle = "Job Proposals";
         return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job'));
