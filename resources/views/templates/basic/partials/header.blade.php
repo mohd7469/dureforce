@@ -18,8 +18,8 @@
                         <a href="{{ route('user.register') }}" class="header-signup navbar-toggler">@lang('Sign Up')</a>
                         @endguest
                         @auth
-                            <a href="{{ route('user.home') }}" class="header-link">@lang('Dashboard')</a>
-                            <a href="{{ route('logout') }}" class="header-link">@lang('Logout')</a>
+                            <a href="{{ route('user.home') }}" class="header-link navbar-toggler header-login">@lang('Dashboard')</a>
+                            <a href="{{ route('logout') }}" class="header-link navbar-toggler header-signup">@lang('Logout')</a>
                         @endauth
                         <!-- <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button> -->
                         <div class="collapse navbar-collapse d-flex justify-content-between"
@@ -164,7 +164,7 @@
                             <div class="col-lg-12 text-center">
                                 <div class="account-item mt-10">
                                     <label
-                                        ><span class="span-color">@lang('Already Have An Account')?</span>
+                                        ><span class="span-color">@lang("Don't have an account")?</span>
                                         <a
                                             href="{{ route('user.register') }}"
                                             class="text--base"
