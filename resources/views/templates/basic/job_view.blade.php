@@ -185,7 +185,7 @@
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">
                                             <div class="profile_title">
-                                                <strong class="card-title ">{{$job->user ? $job->user->username  : ''}}</strong><br>
+                                                <strong class="card-title ">{{$job->user ? $job->user->first_name.' '.$job->user->last_name[0].'.'  : ''}}</strong><br>
                                                     <small>Member since {{$job->user ? $job->user->created_at->format('Y-m-d') : '' }} </small>
                                             </div>
                                             </div>
@@ -194,7 +194,7 @@
                                             <ul class="location">
                                                 <li>
                                                     <i class="fa fa-map-marker" ></i><span class="job_count_label_padding">{{$job->user? $job->user->address: ''}} </span>
-                                                    <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> 12:37 pm local time</span>
+                                                    <i class="fa fa-clock job_count_label_padding" ></i> <span class="job_count_label_padding"> {{ date('h:i a', strtotime($job->created_at))}} local time</span>
                                                 </li>
                                                 
                                             </ul>
@@ -224,11 +224,11 @@
                                             
                                             <ul class="sidebar-title-custom">
                                                 <li>
-                                                        <span class="job-count-color">22</span>
+                                                        <span class="job-count-color">{{isset($client_total_jobs) ? $client_total_jobs : null}}</span>
                                                          <span class="job_count_label_padding"> Jobs posted</span>
                                                 </li>
                                                 <li>
-                                                    <span class="job-count-color">05</span>
+                                                    <span class="job-count-color">{{isset($client_open_jobs) ? $client_open_jobs : null}}</span>
                                                     <span class="job_count_label_padding"> Open jobs</span>
                                                 </li>
                                             </ul>
@@ -236,9 +236,9 @@
                                             <div class="sep-solid"></div>
                                             <div class="mb-3">
                                             <label for="exampleFormControlTextarea1" class="form-label" style="padding-top:3px">Job Link</label>
-                                            <input type="text" class="form-control" id="" placeholder="{{ Request::url()}}">
+                                            <input type="text" class="form-control" id="jobLink" disabled placeholder="{{ Request::url()}}" value="{{ Request::url()}}">
                                             </div>
-                                            <button type="button" class="copy-link-btn" >Copy Link</button>
+                                            <button type="button" class="copy-link-btn" onclick="copyJobLink()" >Copy Link</button>
                                         </div>
 
                                     </div>
@@ -260,7 +260,20 @@
 
 @push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+<script>
+    function copyJobLink() {
+        // Get the text field
+        var copyText = document.getElementById("jobLink");
 
+        // Select the text field
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(copyText.value);
+
+    }
+</script>
 @endpush
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
 
