@@ -15,6 +15,7 @@ const genRand = (len) => {
 function populateSkills(data)
 {
     var selected_skills=$('#job_skills').val();
+    console.log(selected_skills);
     selected_skills=(selected_skills.split(','));
     selected_skills=selected_skills.map(Number);
 
@@ -38,8 +39,9 @@ function populateSkills(data)
                     
                     var skill_id=skills[skill_index].id;
                     var skill_name=skills[skill_index].name;
-                    
-                    $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                    if( selected_skills.includes(skill_id)){
+                        $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                    }
                 }
             }
             
