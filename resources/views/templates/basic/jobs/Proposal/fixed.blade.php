@@ -52,7 +52,7 @@
                <label class="form-check-label" for="project">
                   By Project
                </label>
-               <small>Divide the project into smaller segments, called milestones. You'll be paid for milestones as they are completed and approved.</small>
+               <small>You'll be paid for complete amount as the project completed and approved.</small>
              </div>
 
           </div>
