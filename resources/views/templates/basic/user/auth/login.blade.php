@@ -172,7 +172,7 @@
                             <div class="col-lg-12 text-center">
                                 <div class="account-item mt-10">
                                     <label
-                                        >@lang('Already Have An Account')?
+                                        >@lang("Don't have an account")?
                                         <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#loginModal">
                                         @lang('Log in')
                                         </button>
