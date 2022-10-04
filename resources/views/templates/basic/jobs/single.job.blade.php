@@ -79,7 +79,7 @@
                                                             </div>
 
                                                             @foreach($job->documents as $decumentUrl)
-                                                                <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                                                <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta" download><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
                                                             @endforeach
 
                                                             @endif

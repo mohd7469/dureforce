@@ -27,7 +27,7 @@ class Proposal extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('module')->with('user')->with('user.skills')->with('attachment');
+        return $query->with('module')->with('user')->with('user.skills')->with('user.languages')->with('user.education')->with('attachment');
     }
 
     public function module()

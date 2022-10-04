@@ -48,7 +48,7 @@
                                                 <td>Job Success Rate</td>
                                             </thead>
                                             <tbody>
-                                                <td>$55 / Per Hour</td>
+                                                <td>${{$user->rate_per_hour}} / Per Hour</td>
                                                 <td>$120k + earned</td>
                                                 <td>90%</td>
                                             </tbody>
@@ -57,7 +57,8 @@
                                     {{-- bid rate --}}
                                     <div class="col-sm-12 col-xs-12 col-md-12 col-lg-4 d-flex justify-content-end vertical-center-div-without-color ">
                                         <span class="padding-right">Proposed Bid</span>
-                                        <strong >$19.00/hr</strong>
+                                        <strong >{{ getProposelBid($proposal,$job)}}</strong>
+                                          
                                         <button class="btn-sm ">Hire</button>
                                     </div>
 
@@ -72,7 +73,7 @@
                                             <b>Applicant</b><br>
 
                                             Applicant
-                                            Dumitru G has applied to or been 
+                                            {{$user->full_name}} has applied to or been 
                                             invited to your or your company's job
                                             Looking for an  experienced logo
                                             designer.<br>
@@ -100,7 +101,7 @@
 
                                         <div class="profile-border-bottom ">
                                             You or your team 
-                                            ended <b>Dumitru G</b> contract 
+                                            ended <b>{{$user->full_name}}</b> contract 
                                             <span class="job-title-color">Responsive Web Design Project</span> 
                                             on October 20, 2017
                                         </div>
@@ -109,14 +110,17 @@
                                             <b>Hours per week</b><br>
                                             <b>More than 30 hrs/week</b><br>
                                             <b>Languages</b><br>
-                                            English: Fluent<br>
-                                            Spanish: Basic<br>
+                                            @foreach ($user->languages as $item)
+                                            {{getLanaguageName($item->language_id)}}: {{getProficiencyLevelName($item->language_level_id)}}<br>
+                                            @endforeach
+                                            
                                             <b>Verifications</b><br>
                                             ID: Verified <br>
                                             <b>Education</b><br>
-                                            University of london
-                                            Master of Arts (MA), Msc in HM
-                                            2004-2006
+                                            @foreach ($user->education as $item)
+                                                {{getUserEducation($item)}}
+                                            @endforeach
+                                            
                                         </div>
                                     </div>
 
@@ -125,62 +129,22 @@
                                         <h3>Proposal Details</h3>
                                        <b>Cover letter</b>
                                         
-                                       <p>Hi , have a vision. I solve problems. Over the last 10 years I've delivered and supported Mediawiki based solutions for companies,
-                                        non-commercial bodies,</p>
-                                        
-                                        <p>
-                                            and enthusiasts. I also guarantee prompt and clear communication.
-                                            I can provide you a top-notch logo design that you can
-                                            without any problem show your main mission,
-                                            and that will look perfect and clean.
-                                        </p>
+                                       <p>
+                                        {{$proposal->cover_letter}}
+                                       </p>
 
-                                        <p>
-                                            I can provide you simple, attractive, professional, minimalist logo for the web agency. Although, I will provide
-                                            you a few concepts design based on your requirement and our research output will be creative, unique, and
-                                            every aspect will promote your business.
-                                        </p>
-
-                                        <p> 
-                                            I have great expertise in logo designing with rich expertise in Adobe Photoshop/Illustrator/InDesign/Figma and
-                                            Adobe creative suite and 14+ years of experience which provided me with the knowledge that could be helpful to you.
-                                        </p>
-                                        
-                                        <p>
-                                            Questions:
-                                            - Any tagline or slogan associated?
-                                            - Overall feel for the Logo? (Professional, Corporate, Unique, Modern, etc.)
-                                            - Any specific colors or fonts that you would like to be incorporated into the artwork?
-                                            - Any ideas that you like to use for the logo or you are open to ideas?
-                                        </p>
-                                        
-                                        <p>
-                                            Be sure to check out my breathtaking Logo work:
-                                            https://bit.ly/38htLGX
-                                        </p>
-
-                                        <p>
-                                            My quotes include:
-                                            - Responsive to you always
-                                            - Unlimited revision.
-                                            - Quick turnaround
-                                            - Masterpiece design
-                                            - High-resolution vector file and all source files. eg, PNG, Jpeg, Ai, EPS, SVG, Gif, etc.
-
-                                            Let's communicate over chat to discuss detail and exchange suggestions. Looking forward to working with you.
-                                        </p>
-                                        Regards,
-                                        Dumitru G
-
+                                       @if (count($propsal_attachments))
                                         <div class="pt-3 profile-border-bottom">
-                                            <b class="">Attachments </b>
-                                            <p>
-                                                <a href="#" class="btn btn-large pull-right "><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{'FlowChart.pdf'}} </a><br>
-                                                <a href="#" class="btn btn-large pull-right "><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{'Requirements.doc'}} </a><br>
-                                                <a href="#" class="btn btn-large pull-right "><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{'Diagram.jpg'}} </a><br>
-    
-                                            </p>
-                                        </div>
+                                               <b class="">Attachments </b>
+                                                <p>
+                                                    @foreach ($propsal_attachments as $item)
+                                                        <a href="{{$item->url}}" class="btn btn-large pull-right " download><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$item->uploaded_name}} </a><br>  
+                                                    @endforeach
+
+                                                </p>
+                                            </div>
+                                       @endif
+                                        
                                         
                                         <div  class="pt-3 profile-border-bottom">
                                             @include('templates.basic.buyer.propsal.completed-jobs')
@@ -192,7 +156,9 @@
 
                                         <div  class="pt-3 pb-3 profile-border-bottom">
                                             <h4 class="pb-2">Skills</h4>
-                                            <button class="btn-sm btn-skill">Skill</button>
+                                            @foreach ($user_skills as $skill)
+                                                <button class="btn-sm btn-skill">{{$skill->name}}</button>
+                                            @endforeach
                                         </div>
 
                                     </div>

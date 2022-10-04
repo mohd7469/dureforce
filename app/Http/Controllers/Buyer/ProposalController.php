@@ -74,11 +74,12 @@ class ProposalController extends Controller
         try {
 
             $proposal=Proposal::where('uuid',$proposal_uuid)->withAll()->first();
+            $job=$proposal->module;
             $user=$proposal->user;
-           
+            $user_skills=$user->skills;
             $propsal_attachments=$proposal->attachment;
             $pageTitle = "View a Proposal";
-            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments'));
+            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments','user_skills','job'));
             
 
         } catch (\Throwable $th) {
