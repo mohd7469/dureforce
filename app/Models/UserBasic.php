@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Khsing\World\Models\City;
 
 class UserBasic extends Model
 {
@@ -20,4 +21,9 @@ class UserBasic extends Model
     {
         return $this->belongsTo(User::class)->first();
     }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+}
 }

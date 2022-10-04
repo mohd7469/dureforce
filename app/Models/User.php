@@ -156,10 +156,35 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // SCOPES
-
+    
+    /**
+     * getFullnameAttribute
+     *
+     * @return void
+     */
     public function getFullnameAttribute()
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    
+    /**
+     * getJobTitleAttribute
+     *
+     * @return void
+     */
+    public function getJobTitleAttribute()
+    {
+        return $this->basicProfile->designation;
+    }
+    
+    /**
+     * getLocationAttribute
+     *
+     * @return void
+     */
+    public function getLocationAttribute()
+    {
+        return $this->country->name.', '.$this->basicProfile->city->name;
     }
 
     public function scopeActive()
@@ -226,8 +251,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $firstName = $user->firstname;
-            $lastname = $user->lastname;
+            $firstName = $user->first_name;
+            $lastname = $user->last_name;
             return "$firstName $lastname";
         }
     }

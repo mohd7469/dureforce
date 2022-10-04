@@ -14,10 +14,15 @@ use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
+use App\Models\Degree;
 use App\Models\Job;
+use App\Models\Language;
+use App\Models\LanguageLevel;
+use App\Models\Proposal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Khsing\World\Models\Language as ModelsLanguage;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -1192,5 +1197,32 @@ function getNumberOfPropsals($uuid)
 {
     $job=Job::where('uuid',$uuid)->first();
     return $job->proposal()->count();
+}
+
+function getLanaguageName($id)
+{
+    return ModelsLanguage::find($id)->first()->iso_language_name;
+}
+function getProficiencyLevelName($id)
+{
+    return LanguageLevel::find($id)->first()->name;
+
+} 
+function getUserEducation($obj)
+{
+    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    $education= $obj->school_name.'  '. $degree_title.', '. $obj->field_of_study.' '.Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_working)
+     $education.='-'.Carbon::parse($obj->end_date)->format('Y');
+    return $education;
+}
+
+function getProposelBid($proposal,$job)
+{
+    $propsal_amount='';
+    $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
+    return '$'.$propsal_amount;
+    
+
 }
 

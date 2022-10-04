@@ -69,14 +69,17 @@ class ProposalController extends Controller
      * @param  \App\Models\Proposal  $proposal
      * @return \Illuminate\Http\Response
      */
-    public function show($proposal)
+    public function show($proposal_uuid)
     {
         try {
 
-            $propsal=Proposal::where('uuid',$proposal)->first();
-            $proposals = Proposal::WithAll()->get();
+            $proposal=Proposal::where('uuid',$proposal_uuid)->withAll()->first();
+            $job=$proposal->module;
+            $user=$proposal->user;
+            $user_skills=$user->skills;
+            $propsal_attachments=$proposal->attachment;
             $pageTitle = "View a Proposal";
-            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','propsal','proposals'));
+            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments','user_skills','job'));
             
 
         } catch (\Throwable $th) {
