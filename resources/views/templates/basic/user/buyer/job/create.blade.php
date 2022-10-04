@@ -212,7 +212,7 @@
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
                                                         <select name="project_length_id" class="form-control budget" id="project_length_id">
-                                                            <option selected="" disabled="">@lang('Select Project Length')</option>
+                                                            <option selected="" >@lang('Select Project Length')</option>
                                                                 @foreach($data['project_length'] as $item)
                                                                     <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                                                 @endforeach
@@ -224,7 +224,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
                                                 <select name="project_stage_id" class="form-control budget" id="project_stage_id">
-                                                    <option selected="" disabled="">@lang('Select Project Stage')</option>
+                                                    <option selected="" >@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
@@ -318,7 +318,7 @@
     function fetchSkills(category,sub_category=''){
         $.ajax({
             type:"GET",
-        url:"{{route('job.skills')}}",
+            url:"{{route('job.skills')}}",
             data: {category_id : category,sub_category_id:sub_category},
             success:function(data){
                 var html = '';
