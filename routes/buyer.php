@@ -36,8 +36,8 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
-                Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\JobController::class,'show'] )->name('proposal.buyer.show');
-                Route::get('all-proposal/{uuid}',     [\App\Http\Controllers\Buyer\JobController::class,'jobPropsals'] )->name('job.all.proposals');
+                Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
+                Route::get('all-proposal/{uuid}',     [\App\Http\Controllers\Buyer\ProposalController::class,'jobPropsals'] )->name('job.all.proposals');
                 Route::get('invite-freelancer/{uuid}',[\App\Http\Controllers\Buyer\JobController::class,'inviteFreelancer'] )->name('job.invite.freelancer');
                 Route::get('/job/attachment',         [\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
 
