@@ -85,9 +85,9 @@
                                                     <h4 class="pname-c"> 
                                                       {{$freelancer->first_name}} {{ $freelancer->last_name }}
                                                      </h4>
-                                                     @foreach ($freelancer->user_basic as $designation )
-                                                     <p class="pdesination-c">{{$designation->designation}}</p>  
-                                                     @endforeach
+ done
+                                                     <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>  
+                                                    
                                                        
                                                        <p class="plocation"> {{$freelancer->country->name}}</p>
                                                  </div>
