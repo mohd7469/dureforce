@@ -83,10 +83,10 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4 class="pname-c"> 
-                                                      {{$freelancer->first_name}}
+                                                      {{$freelancer->first_name}} {{ $freelancer->last_name }}
                                                      </h4>
-                                                     @foreach ($freelancer->experiences as $experience )
-                                                     <p class="pdesination-c">{{$experience->job_title}}</p>  
+                                                     @foreach ($freelancer->user_basic as $designation )
+                                                     <p class="pdesination-c">{{$designation->designation}}</p>  
                                                      @endforeach
                                                        
                                                        <p class="plocation"> {{$freelancer->country->name}}</p>
@@ -98,6 +98,7 @@
                                             <div class="col-md-5">
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
+                                                        <p class="rateperh">Rate Per Hour</p>
                                                         <p class="rateperh">${{$freelancer->rate_per_hour}}</p>
                                                         
                                                         
