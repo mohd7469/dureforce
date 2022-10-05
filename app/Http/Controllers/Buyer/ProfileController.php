@@ -8,6 +8,8 @@ use App\Models\User;
 use DB;
 use App\Models\UserCompany;
 use App\Models\UserPayment;
+use App\Rules\PhoneNumberValidate;
+
 use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
@@ -22,6 +24,7 @@ class ProfileController extends Controller
     {
         $rules = [
             'email' => 'email',
+            'phone' => ['required', new PhoneNumberValidate],
           
 
         ];
