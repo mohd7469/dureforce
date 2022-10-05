@@ -3,7 +3,7 @@ $content = getContent('footer.content', true);
 $footer_menu = getContent('footer.element', false);
 $socialIcons = getContent('social_icon.element', false);
 @endphp
-<section class="footer-section section--bg pt-60">
+<section class="footer-section section--bg pt-60 mt-20">
     <div class="container-fluid">
         <div class="footer-wrapper open">
             {{-- <div class="footer-toggle"><span class="right-icon"></span><span class="title">@lang('Quick
