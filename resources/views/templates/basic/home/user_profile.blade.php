@@ -1,6 +1,7 @@
 <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active ">
+    @foreach($sellers as $seller)
+        <div class="carousel-item ">
             <div class="card user_profile_card  bg-gray">
                     <div class="image-holder">
                         <figure>
@@ -8,74 +9,18 @@
                                  src="{{asset('assets\images\user\profile\Ellipse 2.png')}}"
                                 alt="Card image cap">
                             <figcaption>
-                                <span class="name">Ryan Kirk</span>
-                                    <span>Pakistan</span>
+                                <span class="name">{{ !empty($seller->fullname)? $seller->fullname: '' }}</span>
+                                    <span>{{ !empty($seller->location)? $seller->location: '' }}</span>
                             </figcaption>
                         </figure>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">AWS Cloud Infrastructure Architect/Consultant</p>
+                        <p class="card-text">{{ !empty($seller->basicProfile->designation)? $seller->basicProfile->designation: '' }}</p>
                         <p class="rating"><i class="fas fa-star"></i>4.5 (2342)</p>
                     </div>
-                </div>
-            </div>
-        <div class="carousel-item">
-            <div class="card user_profile_card  bg-gray">
-                <div class="image-holder">
-                    <figure>
-                        <img class="card-img-top picture"
-                             src="{{asset('assets\images\user\profile\Ellipse 2.png')}}"
-                             alt="Card image cap">
-                        <figcaption>
-                            <span class="name">Ryan Kirk</span>
-                            <span>Pakistan</span>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">AWS Cloud Infrastructure Architect/Consultant</p>
-                    <p class="rating"><i class="fas fa-star"></i>4.5 (2342)</p>
-                </div>
             </div>
         </div>
-        <div class="carousel-item active ">
-            <div class="card user_profile_card  bg-gray">
-                <div class="image-holder">
-                    <figure>
-                        <img class="card-img-top picture"
-                             src="{{asset('assets\images\user\profile\Ellipse 2.png')}}"
-                             alt="Card image cap">
-                        <figcaption>
-                            <span class="name">Ryan Kirk</span>
-                            <span>Pakistan</span>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">AWS Cloud Infrastructure Architect/Consultant</p>
-                    <p class="rating"><i class="fas fa-star"></i>4.5 (2342)</p>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item active ">
-            <div class="card user_profile_card  bg-gray">
-                <div class="image-holder">
-                    <figure>
-                        <img class="card-img-top picture"
-                             src="{{asset('assets\images\user\profile\Ellipse 2.png')}}"
-                             alt="Card image cap">
-                        <figcaption>
-                            <span class="name">Ryan Kirk</span>
-                            <span>Pakistan</span>
-                        </figcaption>
-                    </figure>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">AWS Cloud Infrastructure Architect/Consultant</p>
-                    <p class="rating"><i class="fas fa-star"></i>4.5 (2342)</p>
-                </div>
-            </div>
-        </div>
+    @endforeach
     </div>
     <span class="seeall"><a href="">See All</a></span>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

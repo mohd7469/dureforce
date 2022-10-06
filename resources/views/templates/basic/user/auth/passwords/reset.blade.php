@@ -82,8 +82,8 @@
                                     <input type="hidden" name="token" value="{{ $token }}">
                                     <div class="row ml-b-20">
                                         <div class="col-lg-12 form-group hover-input-popup">
-                                            <label for="password">@lang('Password')*</label>
-                                            <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter password")">
+                                            <label for="password">@lang('Enter New Password')*</label>
+                                            <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter new password")">
                                             @if($general->secure_password)
                                                 <div class="input-popup">
                                                 <p class="error lower">@lang('1 small letter minimum')</p>
@@ -96,7 +96,7 @@
                                         </div>
 
                                         <div class="col-lg-12 form-group">
-                                            <label>@lang('Confirm Password')*</label>
+                                            <label>@lang('Confirm New Password')*</label>
                                             <input type="password" class="form-control form--control" name="password_confirmation" required="" placeholder="@lang("Enter confirm password")">
                                         </div>
 

@@ -1,15 +1,16 @@
 <div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
+        @foreach($services as $service)
         <div class="carousel-item active ">
             <div class="card">
                 <div class="img-wrapper">
-                    <img src="{{asset('assets\images\service\image 3.png')}}" class="d-block w-100" alt="...">
+                    <img src="{{ !empty($service->image) ? asset('assets/images/service/'.$service->image,'590x300') : asset('assets/images/default.png','590x300') }}" alt="@lang('image')">
                 </div>
 
                 <div class="card-body item-area item-card">
                     <h3 class="item-card-title">
                         <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
+                                href="#">{{__(str_limit($service->title, 40))}}</a>
                     </h3>
                     <div class="tags-container">
                             <a href="#"
@@ -25,7 +26,7 @@
                         <div class="footer row">
                             <div class="author_detail col-7 col-md-8">
                                     <span class="author text-capitalize pb-1">by
-                                        <a href="#">Ryan Kirk</a>
+                                        <a href="#">{{ !empty($service->user->fullname)? $service->user->fullname: '' }}</a>
                                     </span>
                                     <div class="col-12 col-md-12 ">
                                         <span class="rates">
@@ -35,325 +36,14 @@
                             <div class="col-5 col-md-4 ">
                                 <span class="rates">
                                 <small class="start-from">Start from</small>
-                                <span class="value">$55</span>
+                                <span class="value">${{ round($service->price, 2) }}</span>
                                 </span>
                             </div>
                         </div>
                     </div>
             </div>
         </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="{{asset('assets\images\service\image 4.png')}}" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="{{asset('assets\images\service\image 5.png')}}" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="..." class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <div class="card">
-                <div class="img-wrapper"><img src="" class="d-block w-100" alt="..."> </div>
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a
-                                href="#">Improve search capabilities using "Elasticsearch"</a>
-                    </h3>
-                    <div class="tags-container">
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
-                    </div>
-
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="#">Ryan Kirk</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
-                        </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">$55</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
     <span class="seeall"><a href="">See All</a></span>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
