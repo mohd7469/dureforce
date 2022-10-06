@@ -18,9 +18,9 @@
                             <div class="card mb-4">
                                 <div class="card-body  profile">
                                     <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
-                                    <h4 class="my-3 text-center">Amna Kareem</h4>
-                                    <h5 class="my-3 text-center">Freelance DevOps Engineer</h5>
-                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p>
+                                    <h4 class="my-3 text-center">{{$user->full_name}}</h4>
+                                    <h5 class="my-3 text-center">{{$user->job_title}}</h5>
+                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
                                     <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
 {{--                                  edit profile modal--}}
                                     <div class="d-flex mt-5">
@@ -41,7 +41,7 @@
                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
                                             <div class="col-6 col-xl-6">
                                                 <h5>Rate</h5>
-                                                <span>$40 / hr</span>
+                                                <span>${{$user->rate_per_hour}} / hr</span>
                                             </div>
                                             <div class="col-6 border-right col-xl-6"><h5>Experience
                                                 </h5>
@@ -71,18 +71,17 @@
                                         </div>
                                        <div class="col-xl-12 mb-4">
                                         <div class="tags-container">
-                                            <a href="tags/55" class=" grey_badge  custom_badge badge-secondary">Angular</a>
-                                            <a href="tags/56" class=" grey_badge  custom_badge badge-secondary">React</a>
-                                            <a href="tags/57" class=" grey_badge  custom_badge badge-secondary">PHP</a>
-                                            <a href="tags/349" class=" grey_badge  custom_badge badge-secondary">Flutter</a>
-                                            <a href="tags/350" class=" grey_badge  custom_badge badge-secondary">Python</a>
-                                            <a href="tags/351" class=" grey_badge  custom_badge badge-secondary">html</a>
+                                            @foreach ($user->skills as $item)
+                                                <a href="#" class=" grey_badge  custom_badge badge-secondary">{{$item->name}}</a>
+                                            @endforeach
+                                           
                                         </div>
                                        </div>
                                       <div class="col-xl-12 mt-8">
                                           <h5 class="title">Languages</h5>
-                                          <span><b>English:</b></span> <span>Fluent</span><br>
-                                          <span><b>Urdu:</b></span><span>Native or Bilingual</span>
+                                          @foreach ($user->languages as $item)
+                                            <span><b>{{getLanaguageName($item->language_id)}}:{{getProficiencyLevelName($item->language_level_id)}}</b></span> <span></span><br>
+                                         @endforeach
                                       </div>
 
                                 </div>

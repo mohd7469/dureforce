@@ -1226,3 +1226,7 @@ function getProposelBid($proposal,$job)
 
 }
 
+function getFormattedDate($date,$format)
+{
+    return Carbon::parse($date)->format($format);
+}

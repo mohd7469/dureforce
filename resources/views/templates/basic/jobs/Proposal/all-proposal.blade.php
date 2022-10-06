@@ -79,26 +79,22 @@
                                                 <div class="col-md-4">
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive">
                                                 </div>
-                                                  @isset($proposal->user)
 
                                                   <div class="col-md-8">
+                                                    
                                                     <h4 class="pname-c">
 
-                                                        {{$proposal->user->first_name}}  {{$proposal->user->last_name}}
+                                                        {{$proposal->user->full_name}}
+
                                                      </h4>
-                                                      @isset($proposal->user->user_basic)
-                                                          @foreach($proposal->user->user_basic as $basic)
-                                                      <p class="pdesination-c"> {{$basic->designation}} </p>
-                                                          @endforeach
-                                                      @endisset
+
+                                                      <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
+
                                                      <div class="col-md-4">
-
-                                                        <p class="plocation">{{$proposal->user->country->name }}</p>
-
-
+                                                        <p class="plocation">{{$proposal->user->location }}</p>
                                                     </div>
+
                                                  </div>
-                                                  @endisset
 
 
                                               </div>
@@ -108,11 +104,8 @@
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
-                                                        @isset($proposal->module)
-<!--                                                            --><?php //dd($proposal->toArray()); ?>
 
-                                                            <p class="perhourprice">${{ $proposal->hourly_bid_rate != null ? $proposal->hourly_bid_rate : $proposal->fixed_bid_amount}}  / Per Hour</p>
-                                                        @endisset
+                                                            <p class="perhourprice">${{$proposal->user->rate_per_hour}} / Per Hour</p>
 
                                                     </div>
                                                     <div class="col-md-4">
@@ -157,18 +150,18 @@
 
                             <div class="row skills-c">
                                 <div class="col-md-6 col-lg-6">
-                                    {{-- <h2> Has 7 relevant skills to your job</h2> --}}
-                                     @isset($proposal->user)
+
                                     <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
 
                                     @foreach($proposal->user->skills as $skill)
-                                    <ul class="skills-listing">
+                                        
+                                        <ul class="skills-listing">
 
-                                         <li>{{$skill->name}} </li>
+                                            <li>{{$skill->name}} </li>
 
-                                    </ul>
-                                        @endforeach
-                                    @endisset
+                                        </ul>
+
+                                    @endforeach
                                 </div>
                                 <div class="col-md-6 col-lg-6">
                                     <div class="attachment">
