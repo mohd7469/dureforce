@@ -128,7 +128,7 @@
                            @if ($job->budget_type_id==App\Models\BudgetType::$hourly)
                               @include('templates.basic.jobs.Proposal.hourly')
                            @else
-                              @include('templates.basic.jobs.Proposal.fixed')
+                              @include('templates.basic.jobs.Proposal.fixed',['job' => $job])
                               
                            @endif
                         
