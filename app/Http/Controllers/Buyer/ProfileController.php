@@ -9,6 +9,9 @@ use DB;
 use App\Models\UserCompany;
 use App\Models\UserPayment;
 use App\Rules\PhoneNumberValidate;
+use LVR\CreditCard\CardCvc;
+use LVR\CreditCard\CardNumber;
+
 
 use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
@@ -25,9 +28,13 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => ['required', new PhoneNumberValidate],
+             'vat' => 'required|numeric|digits_between:1,30'
+           
+
           
 
         ];
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
@@ -85,9 +92,10 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
         $rules = [
-            'card_number'     => 'required',
-            'expiration_date' => 'required|date',
-            'cvv_code'        => 'required',
+            'card_number' => ['required', new CardNumber],
+            'expiration_date' => 'required',
+            'cvv_code' => 'required',
+            // 'cvv_code' => ['required', new CardCvc($this->get('cvv_code'))],
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
             'city_id'            => 'required|exists:world_cities,id',
