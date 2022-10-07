@@ -27,10 +27,12 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => ['required', new PhoneNumberValidate],
+            'vat' => 'required|min:9'
           
 
         ];
-        $validator = Validator::make($request->all(), $rules);
+
+        $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
