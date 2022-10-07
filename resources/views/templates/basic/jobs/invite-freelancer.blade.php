@@ -1,6 +1,6 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
-
+@include('templates.basic.jobs.modal.invite_job')
 
 <section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
@@ -121,7 +121,7 @@
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
                                                     <a href="#" class="btn-products-s">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">Invite a job</a>
+                                                    <a class="btn-products-s phire" data-bs-toggle="modal" data-bs-target="#inviteJobModal">Invite a job</a>
                                                   
                                                 </div>
                                             </div>
