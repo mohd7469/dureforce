@@ -12,6 +12,7 @@ use App\Rules\PhoneNumberValidate;
 use LVR\CreditCard\CardCvc;
 use LVR\CreditCard\CardNumber;
 
+
 use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
@@ -27,12 +28,13 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => ['required', new PhoneNumberValidate],
-            'vat' => 'required|min:9'
+             'vat' => 'required|min:9'
+
           
 
         ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+        $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
