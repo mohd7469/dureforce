@@ -100,14 +100,13 @@
                                         <div
                                                 class="form-check"
                                         >
-
                                             <input
                                                     class="form-check-input check current-working-check"
                                                     onclick="checkDate($(this), $('.end-date-job-education-{{$key}}'))"
                                                     type="checkbox"
                                                     name="educations[{{$key}}][is_enrolled]"
                                                     id="educations.{{$key}}.is_enrolled"
-                                                    value="{{$Usereducation['is_enrolled'] ==1   ? 'checked' : ''}}"
+                                                    {{ $Usereducation['is_enrolled']  ? 'checked' : ''}}
                                             />
 
                                             <label
