@@ -55,4 +55,9 @@ class UserExperiences extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function country()
+    {
+        return $this->belongsTo('App\Models\Country');
+    }
+
 }
