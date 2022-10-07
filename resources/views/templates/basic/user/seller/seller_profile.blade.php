@@ -211,88 +211,30 @@
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
                                         <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
-                                            <h4>Senior DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
+                                            
+                                            @foreach ($user_experience as $experience)
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                                    <h4>{{ $experience->job_title }}</h4>
+                                                    <p class="short-text">{{ $experience->company_name }}</p>
+                                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
+                                                    <p class="short-text">{{getExperienceSession($experience)}}</p>
+                                                    <ul class="timeline">
+                                                        {{$experience->description}}
+                                                    </ul>
+                                                    <br>
+                                                </div>
+                                                    
+                                            @endforeach
+                                            
                                         </div>
+                                            
                                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
                                             <button type="button" class="standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
                                                 Add Experience
                                             </button>
                                         </div>
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Lead DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Lead DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -357,19 +299,18 @@
                             <div class="tab-pane container fade" id="edu">
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
+                                        {{-- Education --}}
+                                        @foreach ($user_education as $education_obj)
+                                            
+                                        @endforeach
                                         <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Microsoft Certified: DevOps Engineer Expert</h4>
-                                            <p class="short-text">Microsoft</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?></p><br/>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Online</p><br/>
+                                            <h4>{{getDegreeTitle($education_obj)}}</h4>
+                                            <p class="short-text">{{$education_obj->school_name}}</p><br/>
+                                            <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
+                                            <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>  {{'location'}} </p><br/>
                                         </div>
 
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>MS Software Engineering</h4>
-                                            <p class="short-text">Hamdard University</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?></p><br/>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Karachi, Pakistan</p><br/>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
