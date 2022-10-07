@@ -28,13 +28,13 @@
                                      <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                  </div>
                                  <div class="col-md-8">
-                                     <h4 class="pname-c"> 
-                                       dure force
-                                      </h4>done
-                                      <p class="pdesination-c">development</p>  
+                                     <h4 class="pname-c dev-name"> 
+                                       Travis.T
+                                     </h4>
+                                      <p class="pdesination-c">Full Stack Developer</p>  
                                      
                                         
-                                        <p class="plocation"> Tanzania</p>
+                                        <p class="plocation">Landon,Uk</p>
                                   </div>
                                    
                                </div>
@@ -82,6 +82,9 @@
 
 @push('style')
 <style>
+    .dev-name h4{
+        margin-bottom: 20px !important;
+    }
     .c-bannerh {
     padding: 18px 30px 0px 7px!important;
     }
