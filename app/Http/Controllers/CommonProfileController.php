@@ -182,11 +182,12 @@ class CommonProfileController extends Controller
     public function getUserProfile()
     {
         $pageTitle = 'Seller Profile';
-        $skills = Skills::select('id','name')
-            ->get();
         $user = auth()->user();
-
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user'));
+        $user = User::withAll()->find($user->id);
+        $skills=$user->skills;
+        $user_experience = $user->experiences;
+        $user_education  = $user->education;
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education'));
     }
 
 }

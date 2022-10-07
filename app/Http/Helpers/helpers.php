@@ -1212,11 +1212,38 @@ function getUserEducation($obj)
 {
     $degree_title=Degree::find($obj->degree_id)->first()->title;
     $education= $obj->school_name.'  '. $degree_title.', '. $obj->field_of_study.' '.Carbon::parse($obj->start_date)->format('Y') ;
-    if(!$obj->is_working)
+    if(!$obj->is_enrolled)
      $education.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+        $education.='-PRESENT';
     return $education;
 }
+function getDegreeSession($obj)
+{
+    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_enrolled)
+     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+    $session.='-PRESENT';
+    return $session;
+}
 
+function getExperienceSession($obj)
+{
+    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_working)
+     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+    $session.='-PRESENT';
+    return $session;
+}
+
+function getDegreetitle($obj)
+{
+    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    return $degree_title;
+
+}
 function getProposelBid($proposal,$job)
 {
     $propsal_amount='';
