@@ -65,7 +65,7 @@
                                     Basic
                                 </a>
                             </li>
-                            @if (in_array('Freelancer',auth()->user()->getRoleNames()->toArray()))
+                            @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
                                 <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     <span
                                         class="">2</span>
@@ -118,7 +118,7 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
+                                @if (App\Models\Role::$Freelancer=getLastLoginRoleId())
 
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
@@ -126,7 +126,7 @@
                                 @endif
                             </div>
                            
-                            @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
+                            @if (App\Models\Role::$Freelancer==getLastLoginRoleId())
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -314,7 +314,7 @@
             rate_per_hour.on('focusout', function(){
 
                 var fee=rate_per_hour.val()*0.20;
-                system_fee.html(Math.round(fee,2)+'$');
+                system_fee.html('$'+Math.round(fee,2));
 
             });
 
@@ -546,7 +546,7 @@
 
                                             <div class="col-md-12 col-sm-12 ">
                                                 <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-educatin-`+edu_row_index+`'))"
-                        type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
+                                                 type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
 
                                                 
                                             </div>
