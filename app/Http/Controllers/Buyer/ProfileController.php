@@ -28,7 +28,8 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|min:9'
+             'vat' => 'required|numeric|digits_between:1,30'
+           
 
           
 
