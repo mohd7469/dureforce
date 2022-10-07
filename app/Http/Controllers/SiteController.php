@@ -59,7 +59,6 @@ class SiteController extends Controller
                 $q->where('name', 'Freelancer');
             }
         )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
-        // dd($sellers);
         return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
     }
 

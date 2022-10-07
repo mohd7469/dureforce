@@ -9,24 +9,19 @@
 
                 <div class="card-body item-area item-card">
                     <h3 class="item-card-title">
-                        <a
-                                href="#">{{__(str_limit($service->title, 40))}}</a>
+                        <a href="javascript:void(0)">{{__(str_limit($service->title, 40))}}</a>
                     </h3>
                     <div class="tags-container">
-                            <a href="#"
-                               class=" grey_badge  custom_badge badge-secondary">elasticsearch</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">searchengine</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">MySQL Programming</a>
-                        <a href="#"
-                           class=" grey_badge  custom_badge badge-secondary">laravel</a>
+                        @foreach ($service->tag as $tags)
+                            <a href="javascript:void(0)"
+                               class=" grey_badge  custom_badge badge-secondary">{{ __($tags) }}</a>
+                        @endforeach
                     </div>
 
                         <div class="footer row">
                             <div class="author_detail col-7 col-md-8">
                                     <span class="author text-capitalize pb-1">by
-                                        <a href="#">{{ !empty($service->user->fullname)? $service->user->fullname: '' }}</a>
+                                        <a href="javascript:void(0)">{{ !empty($service->user->fullname)? $service->user->fullname: '' }}</a>
                                     </span>
                                     <div class="col-12 col-md-12 ">
                                         <span class="rates">
