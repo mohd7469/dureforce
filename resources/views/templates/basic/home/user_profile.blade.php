@@ -5,9 +5,14 @@
             <div class="card user_profile_card  bg-gray">
                     <div class="image-holder">
                         <figure>
-                            <img class="card-img-top picture"
-                                 src="{{asset('assets\images\user\profile\Ellipse 2.png')}}"
+                        @if (!empty($seller->basicProfile->profile_picture))
+                        <img class="card-img-top picture"
+                            src="{{ $seller->basicProfile->profile_picture }}" alt="Card image cap"/>
+                        @else
+                        <img class="card-img-top picture"
+                                 src="{{asset('assets\images\default.png')}}"
                                 alt="Card image cap">
+                        @endif
                             <figcaption>
                                 <span class="name">{{ !empty($seller->fullname)? $seller->fullname: '' }}</span>
                                     <span>{{ !empty($seller->location)? $seller->location: '' }}</span>
