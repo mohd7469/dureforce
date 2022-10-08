@@ -17,7 +17,16 @@ use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
     
-   /**
+    /**
+     * __construct
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->activeTemplate = activeTemplate();
+    }
+    /**
      * saveCompany
      *
      * @param  mixed $request
@@ -152,6 +161,24 @@ class ProfileController extends Controller
 
             }
         }
+    }
+
+    /**
+     * getUserProfile
+     *
+     * @return void
+     */
+    public function getUserProfile()
+    {
+        $pageTitle = 'Buyer Profile';
+        $user = User::WithBuyerAll()->find(auth()->user()->id);
+        $userCompanies=$user->company;
+        $user_payment_methods=$user->payments;
+        $user_basic_profile=$user->basicProfile;
+        $reviewCount=$reviewAvg=$conversion=$workCompleteCount=$workPendingCount=0;
+        $userServices = $userSoftwares = $userJobs=$userReviews=[];
+        return view($this->activeTemplate.'user.buyer.profile',compact('pageTitle','user','userCompanies','user_payment_methods','user_basic_profile','reviewAvg','reviewCount','conversion','workCompleteCount','workPendingCount','userServices','userSoftwares','userJobs','userReviews'));
+
     }
 
 

@@ -153,7 +153,20 @@ class ProfileController extends Controller
             }
         }
     }
-    
-    
+
+    /**
+     * getUserProfile
+     *
+     * @return void
+     */
+    public function getUserProfile()
+    {
+        $pageTitle = 'Seller Profile';
+        $user = User::withAll()->find(auth()->user()->id);
+        $skills=$user->skills;
+        $user_experience = $user->experiences;
+        $user_education  = $user->education;
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education'));
+    }
     
 }
