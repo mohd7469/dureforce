@@ -31,7 +31,7 @@
                         <div class="col-5 col-md-4 ">
                             <span class="rates">
                             <small class="start-from">Start from</small>
-                            <span class="value">${{ round($software->price, 2) }}</span>
+                            <span class="value">${{ mt_rand(5, 999) }}</span>
                             </span>
                         </div>
                     </div>
