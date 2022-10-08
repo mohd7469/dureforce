@@ -157,7 +157,6 @@ a.btn-products-s.phire{
 p.plocation:before{
     top: 3px !important;
 }
-
 </style>
 @endpush
 @push('script')
