@@ -182,6 +182,10 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return void
      */
+    // public function getLocationAttribute()
+    // {
+    //     return $this->country->name.', '.$this->basicProfile->city->name;
+    // }
     public function getLocationAttribute()
     {
         return $this->basicProfile->city->name.', '.$this->country->name;

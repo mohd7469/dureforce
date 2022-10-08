@@ -528,6 +528,13 @@
         padding: 10px 0px 0px 0px;
         left: 0;
     }
+    .item-card .rates {
+        background: #7f007f;
+        border-radius: 4px;
+        text-align: center;
+        padding: 5px;
+        color: #fff;
+    }
     .start-from{
         font-size: .775em;
     }

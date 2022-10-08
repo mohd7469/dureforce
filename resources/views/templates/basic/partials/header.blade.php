@@ -44,6 +44,18 @@
                                 <li><a href="{{ route('contact') }}"
                                        @if (request()->routeIs('contact')) class="active" @endif>@lang('Contact')</a>
                                 </li>
+                                <li class="nav-item dropdown nav-list-item">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Category <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    @foreach(\App\Models\Category::all() as $category)
+                                        <li class="nav-item active">
+                                            <a href="service/?category_id={{$category->id}}&category_name={{$category->name}}">{{__($category->name)}}</a>
+                                        </li>
+                                    @endforeach
+                                    </ul>
+                                </li>
                             </ul>
                             @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))
                             <div class="header-btn-container d-flex justify-content-between mx-2" style="width: 23%; justify-content: space-around !important;">
@@ -231,6 +243,9 @@
     }
     /* Media Query for Mobile Devices */
     @media (max-width: 480px) {
+        .header-short-menu{
+            display:none;
+        }
         .navbar {
             position: relative;
             display: contents;
@@ -271,9 +286,29 @@
             /* identical to box height */
             color: #7F007F;
         }
+        .dropdown-menu {
+            pointer-events: none;
+            -webkit-transform-origin: 50% 0;
+            -ms-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+            -webkit-transform: scale(0.75) translateY(-21px);
+            -ms-transform: scale(0.75) translateY(-21px);
+            transform: scale(0.75) translateY(-21px);
+            -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+            background-color: white;
+            box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
     }          
     /* Media Query for low resolution  Tablets, Ipads */
     @media (min-width: 481px) and (max-width: 767px) {
+        .header-short-menu{
+            display:none;
+        }
         .navbar {
             position: relative;
             display: contents;
@@ -347,10 +382,30 @@
             margin-right: 27px;
             float: left;
         }
+        .dropdown-menu {
+            pointer-events: none;
+            -webkit-transform-origin: 50% 0;
+            -ms-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+            -webkit-transform: scale(0.75) translateY(-21px);
+            -ms-transform: scale(0.75) translateY(-21px);
+            transform: scale(0.75) translateY(-21px);
+            -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+            background-color: white;
+            box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
     }
         
     /* Media Query for Tablets Ipads portrait mode */
     @media (min-width: 768px) and (max-width: 1024px){
+        .header-short-menu{
+            display:none;
+        }
         .navbar {
             position: relative;
             display: contents;
@@ -409,7 +464,28 @@
             margin-right: 27px;
             float: left;
         }
+        .dropdown-menu {
+            pointer-events: none;
+            -webkit-transform-origin: 50% 0;
+            -ms-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+            -webkit-transform: scale(0.75) translateY(-21px);
+            -ms-transform: scale(0.75) translateY(-21px);
+            transform: scale(0.75) translateY(-21px);
+            -webkit-transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            transition: all 0.2s cubic-bezier(0.5, 0, 0, 1.25), opacity 0.15s ease-out;
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            border: none;
+            background-color: white;
+            box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
     }
-          
+    @media (min-width: 1025px){
+        .nav-list-item{
+            display:none;
+        }
+    }      
         
 </style>
