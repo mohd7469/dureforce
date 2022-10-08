@@ -124,7 +124,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function experiences()
     {
-        return $this->hasMany('App\Models\UserExperiences');
+        return $this->hasMany('App\Models\UserExperiences')->with('country');
     }
 
     public function languages()
@@ -187,6 +187,16 @@ class User extends Authenticatable implements MustVerifyEmail
     //     return $this->country->name.', '.$this->basicProfile->city->name;
     // }
     public function getLocationAttribute()
+    {
+        return $this->basicProfile->city->name.', '.$this->country->name;
+    }
+    
+    /**
+     * getCountryAttribute
+     *
+     * @return void
+     */
+    public function getCountryNameAttribute()
     {
         return $this->country->name;
     }

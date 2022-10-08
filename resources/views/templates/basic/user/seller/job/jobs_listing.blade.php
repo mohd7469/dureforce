@@ -59,7 +59,7 @@
                     <span class="isub-filter">Filter</span>
                    <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                            <input type="text" class="form-control input-lg" placeholder="Buscar" />
+                            <input type="text" class="form-control input-lg"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-info btn-lg" type="button">
                                     <i class="glyphicon glyphicon-search"></i>
@@ -77,7 +77,7 @@
                         <h6 class="card-subtitle mb-2 text-muted mt-3"><span><strong>10 Bids</strong></span> <span
                                     style="padding-left: 20px;">USA</span></h6>
                         <p class="card-text mt-3" style="font-size: 12px;">{{\Illuminate\Support\Str::limit($job->description, 50, $end='...more')}}</p>
-                        <p>
+                        <p class="skills-cont">
                             @foreach($job->skill as $job_skill)
                             <button class=" btn-sm-job-list btn-skill-job-list mt-1" style="font-size: 12px;">{{$job_skill->name}}</button>
                             @endforeach
@@ -121,7 +121,9 @@
         }
         }
     
-
+.skills-cont{
+    min-height: 80px !important;
+}
         .button-review-color {
             color: #007F7F;
         }

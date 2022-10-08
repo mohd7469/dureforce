@@ -18,9 +18,9 @@
                             <div class="card mb-4">
                                 <div class="card-body  profile">
                                     <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
-                                    <h4 class="my-3 text-center">Amna Kareem</h4>
-                                    <h5 class="my-3 text-center">Freelance DevOps Engineer</h5>
-                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p>
+                                    <h4 class="my-3 text-center">{{$user->full_name}}</h4>
+                                    <h5 class="my-3 text-center">{{$user->job_title}}</h5>
+                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
                                     <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
 {{--                                  edit profile modal--}}
                                     <div class="d-flex mt-5">
@@ -41,7 +41,7 @@
                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
                                             <div class="col-6 col-xl-6">
                                                 <h5>Rate</h5>
-                                                <span>$40 / hr</span>
+                                                <span>${{$user->rate_per_hour}} / hr</span>
                                             </div>
                                             <div class="col-6 border-right col-xl-6"><h5>Experience
                                                 </h5>
@@ -71,18 +71,17 @@
                                         </div>
                                        <div class="col-xl-12 mb-4">
                                         <div class="tags-container">
-                                            <a href="tags/55" class=" grey_badge  custom_badge badge-secondary">Angular</a>
-                                            <a href="tags/56" class=" grey_badge  custom_badge badge-secondary">React</a>
-                                            <a href="tags/57" class=" grey_badge  custom_badge badge-secondary">PHP</a>
-                                            <a href="tags/349" class=" grey_badge  custom_badge badge-secondary">Flutter</a>
-                                            <a href="tags/350" class=" grey_badge  custom_badge badge-secondary">Python</a>
-                                            <a href="tags/351" class=" grey_badge  custom_badge badge-secondary">html</a>
+                                            @foreach ($user->skills as $item)
+                                                <a href="#" class=" grey_badge  custom_badge badge-secondary">{{$item->name}}</a>
+                                            @endforeach
+                                           
                                         </div>
                                        </div>
                                       <div class="col-xl-12 mt-8">
                                           <h5 class="title">Languages</h5>
-                                          <span><b>English:</b></span> <span>Fluent</span><br>
-                                          <span><b>Urdu:</b></span><span>Native or Bilingual</span>
+                                          @foreach ($user->languages as $item)
+                                            <span><b>{{getLanaguageName($item->language_id)}}:{{getProficiencyLevelName($item->language_level_id)}}</b></span> <span></span><br>
+                                         @endforeach
                                       </div>
 
                                 </div>
@@ -212,88 +211,30 @@
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
                                         <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
-                                            <h4>Senior DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
+                                            
+                                            @foreach ($user_experience as $experience)
+
+                                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                                                    <h4>{{ $experience->job_title }}</h4>
+                                                    <p class="short-text">{{ $experience->company_name }}</p>
+                                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
+                                                    <p class="short-text">{{getExperienceSession($experience)}}</p>
+                                                    <ul class="timeline">
+                                                        {{$experience->description}}
+                                                    </ul>
+                                                    <br>
+                                                </div>
+                                                    
+                                            @endforeach
+                                            
                                         </div>
+                                            
                                         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
                                             <button type="button" class="standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
                                                 Add Experience
                                             </button>
                                         </div>
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Lead DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Lead DevOps Engineer</h4>
-                                            <p class="short-text">Labelbox</p>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt"></i> Karachi, Pakistan</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?> - PRESENT</p>
-                                            <ul class="timeline">
-                                                <li>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque diam non nisi semper, et elementum lorem ornare. Maecenas placerat facilisis mollis. Duis sagittis ligula in sodales vehicula....</p>
-                                                </li>
-                                                <li>
-                                                    <p> Curabitur purus sem, malesuada eu luctus eget, suscipit sed turpis. Nam pellentesque felis vitae justo accumsan, sed semper nisi sollicitudin...</p>
-                                                </li>
-                                                <li>
-                                                    <p> Fusce ullamcorper ligula sit amet quam accumsan aliquet. Sed nulla odio, tincidunt vitae nunc vitae, mollis pharetra velit. Sed nec tempor nibh...</p>
-                                                </li>
-                                            </ul>
-                                            <ul class="technologies">
-                                                <l><b>Technologies:</b></l>
-                                                <li class="techno on">
-                                                    Ansible
-                                                </li>
-                                                <li class="techno on">
-                                                    Google Cloud Platform (GCP)
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -358,19 +299,18 @@
                             <div class="tab-pane container fade" id="edu">
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>Microsoft Certified: DevOps Engineer Expert</h4>
-                                            <p class="short-text">Microsoft</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?></p><br/>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Online</p><br/>
-                                        </div>
+                                        {{-- Education --}}
+                                        @foreach ($user_education as $education_obj)
+                                            <div class="col-xl-12 card-text-tab1 border-left">
+                                                <h4>{{getDegreeTitle($education_obj)}}</h4>
+                                                <p class="short-text">{{$education_obj->school_name}}</p><br/>
+                                                <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
+                                                <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>  {{'location'}} </p><br/>
+                                            </div>
+                                        @endforeach
+                                        
 
-                                        <div class="col-xl-12 card-text-tab1 border-left">
-                                            <h4>MS Software Engineering</h4>
-                                            <p class="short-text">Hamdard University</p><br/>
-                                            <p class="short-text"><?php echo date("Y");?></p><br/>
-                                            <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i> Karachi, Pakistan</p><br/>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>

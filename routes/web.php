@@ -21,7 +21,8 @@ Route::middleware('verified')->group(function () {
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
-    Route::get('/job-profile-skills', 'SkillCategoryController@getSkills')->name('seller.profile');
+    Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
+
 
 
 });
@@ -45,6 +46,7 @@ Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
+Route::view('/invited-freelancer', 'templates.basic.jobs.invited-freelancer');
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {

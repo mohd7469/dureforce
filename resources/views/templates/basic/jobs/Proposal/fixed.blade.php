@@ -21,14 +21,14 @@
                   {{-- fixed price --}}
                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       Fixed Price
-                     <span class="badge badge-primary badge-pill">$1200</span>
+                     <span class="badge badge-primary badge-pill">{{ '$'.$job->fixed_amount}}</span>
                    </li>
                    
                   
                    {{-- project start date --}}
                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       Estimated Project Start Date
-                     <span class="badge badge-primary badge-pill">7/22/2022 </span>
+                     <span class="badge badge-primary badge-pill">{{getFormattedDate($job->expected_start_date,'d-m-Y')}}</span>
                    </li>
 
                 </ul>
