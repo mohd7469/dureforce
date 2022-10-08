@@ -148,6 +148,16 @@ button.float-left {
     font-size: 0px;
     cursor: pointer;
 }
+a.btn-products-s.phire{
+    cursor: pointer;
+}
+.form-control:focus{
+    background-color:#fff !important;
+}
+p.plocation:before{
+    top: 3px !important;
+}
+
 </style>
 @endpush
 @push('script')
