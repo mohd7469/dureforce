@@ -45,7 +45,7 @@
                        
                     </div>
                 </div>
-                    <form class="account-form" method="POST">
+                    <form class="account-form" method="POST" action="{{route('buyer.job.save.invite.freelancer', 1)}}">
                         @csrf
                         <div class="row ml-b-20">
                             {{-- <div class="form-group col-lg-7">
