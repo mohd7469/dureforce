@@ -331,8 +331,10 @@
                 </div>
             </div>
         </div>
-{{--      profile modal--}}
-    <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        {{--      profile modal--}}
+        <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
             <div class="modal-dialog">
 
                 <div class="modal-content">
@@ -533,70 +535,71 @@
 
             </div>
         </div>
-    <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header editprofileheader">
-                    <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
-                    <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+        {{-- Add Experience Model --}}
+        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" id="form-basic-save">
+            
+
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Title *</label>
+                                        <input type="text" class="form-control" name="title" placeholder="Freelance DevOps Engineer">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Company *</label>
+                                        <input type="text" class="form-control" name="company" placeholder="E.g. Microsoft">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Location  *</label>
+                                        <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            I’m currently working here
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label for="startdate">Start Date *</label>
+                                    <input type="date" class="form-control" name="startdate" placeholder="Month, Year">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label for="Language">End Date  *</label>
+                                    <input type="date" class="form-control experience-end-date" name="enddate" placeholder="Month, Year">
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="Description ">Description </label>
+                                        <textarea type="text" class="form-control" name="Description" style="min-height: 90px !important">Describe your responsibilities</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row d-flex flex-row-reverse">
+
+                                <button type="button" class="btn-save">Save</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                
                 </div>
-                <div class="modal-body">
-                    <form action="#" id="form-basic-save">
-        
-
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Title *</label>
-                                    <input type="text" class="form-control" name="title" placeholder="Freelance DevOps Engineer">
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Company *</label>
-                                    <input type="text" class="form-control" name="company" placeholder="E.g. Microsoft">
-                                </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Location  *</label>
-                                    <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        I’m currently working here
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="startdate">Start Date *</label>
-                                <input type="date" class="form-control" name="startdate" placeholder="Month, Year">
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="Language">End Date  *</label>
-                                <input type="date" class="form-control experience-end-date" name="enddate" placeholder="Month, Year">
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="Description ">Description </label>
-                                    <textarea type="text" class="form-control" name="Description" style="min-height: 90px !important">Describe your responsibilities</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-row-reverse">
-
-                            <button type="button" class="btn-save">Save</button>
-                            <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-
-                        </div>
-
-                    </form>
-                </div>
-               
             </div>
         </div>
-    </div>
 
 @endsection
 @push('script-lib')
