@@ -70,10 +70,7 @@ class ProfileController extends Controller
             return back()->withNotify($notify);
 
         }
-       
-            
-
-    
+           
     }  
 
     /**
@@ -177,6 +174,42 @@ class ProfileController extends Controller
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
         return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories'));
+    }
+
+    public function addExperience(Request $request)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'job_title'   => 'required',
+            'description' => 'required',
+            'company_name'=> 'required',
+            'country_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+   
+
+        try {
+            
+            $user = auth()->user();        
+            $user->experiences()->create(
+                $request->experiences
+            );
+           
+            return response()->json(["success" => "User Experience Added Successfully"], 200);
+
+        } catch (\Exception $exp) {
+
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
     }
     
 }
