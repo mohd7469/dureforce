@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Category;
+use App\Models\LanguageLevel;
+use App\Models\Skills;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Khsing\World\Models\City;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
+use App\Models\WorldLanguage;
 
 class ProfileController extends Controller
 {
@@ -153,7 +156,27 @@ class ProfileController extends Controller
             }
         }
     }
-    
-    
+
+    /**
+     * getUserProfile
+     *
+     * @return void
+     */
+    public function getUserProfile()
+    {
+        $pageTitle = 'Seller Profile';
+        $user = User::withAll()->find(auth()->user()->id);
+        $skills=Skills::select('id','name')->get();
+        $userskills=$user->skills;
+        $user_experience = $user->experiences;
+        $user_education  = $user->education;
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $basicProfile=$user->basicProfile;
+        $user_languages=$user->languages;
+        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $categories = Category::select('id', 'name')->get();
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories'));
+    }
     
 }
