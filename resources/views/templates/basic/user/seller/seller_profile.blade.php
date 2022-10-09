@@ -605,212 +605,211 @@
 
 <script>
 
-"use strict";
-var languageRow = $('#language-row');
-var _languages = [];
-let _languages_levels = [];
-let _countries = [];
-let _degress = [];
-let user_basic_form=$('#form-basic-save');
-let row_index= $('#languages_basics').val();
+    "use strict";
+    var languageRow = $('#language-row');
+    var _languages = [];
+    let _languages_levels = [];
+    let _countries = [];
+    let _degress = [];
+    let user_basic_form=$('#form-basic-save');
+    let row_index= $('#languages_basics').val();
 
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    loadProfileBasicsData();
-    user_basic_form.submit(function (e) {
-        e.preventDefault();
-        e.stopPropagation(); 
-        saveUserBasic();
+        loadProfileBasicsData();
+        user_basic_form.submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            saveUserBasic();
+        });
+        $("#skills").select2({
+            closeOnSelect: false
+        });
+        $("#user_category_id").select2({
+            closeOnSelect: false
+        });
+
+        $('#user_category_id').select2({
+            tags: true
+        });
+
+        $('#user_category_id').select2({
+            dropdownParent: $('#editprofile')
+        });
+
+        $('#skills').select2({
+            tags: true
+        });
+
+        $('#skills').select2({
+            dropdownParent: $('#editprofile')
+        });
+
     });
-    $("#skills").select2({
-        closeOnSelect: false
-    });
-    $("#user_category_id").select2({
-        closeOnSelect: false
-    });
 
-    $('#user_category_id').select2({
-        tags: true
-    });
+    function checkDate(parent, element) {
 
-    $('#user_category_id').select2({
-        dropdownParent: $('#editprofile')
-    });
+        if (parent.is(':checked')) {
+            element.val("DD/MM/YYYY");
+            element.attr("disabled", true);
+        }
+        if (!parent.is(':checked')) {
+            element.removeAttr("disabled");
+        }
 
-    $('#skills').select2({
-        tags: true
-    });
-
-    $('#skills').select2({
-        dropdownParent: $('#editprofile')
-    });
-
-});
-
-function checkDate(parent, element) {
-    
-    if (parent.is(':checked')) {
-        element.val("DD/MM/YYYY");
-        element.attr("disabled", true);
     }
-    if (!parent.is(':checked')) {
-        element.removeAttr("disabled");
+
+    function displayErrorMessage(validation_errors)
+    {
+        $('input,select,textarea').removeClass('error-field');
+        $('.select2').next().removeClass("error-field");
+        for (var error in validation_errors) { 
+            var error_message=validation_errors[error];
+
+            $('[name="'+error+'"]').addClass('error-field');
+            $('[id="'+error+'"]').addClass('error-field');
+            $('#'+error).next().addClass('error-field');
+
+            displayAlertMessage(error_message);
+
+        
+        }
+    }
+    function displayAlertMessage(message)
+    {
+        iziToast.error({
+        message: message,
+        position: "topRight",
+        });
+    }
+    function loadProfileBasicsData()
+    {
+            $.ajax({
+                type:"GET",
+                url:"{{route('profile.basics.data')}}",
+                success:function(data){
+                    
+                    _languages=data.languages;
+                    _languages_levels=data.language_levels;
+                    _countries=data.countries;
+                    _degress=data.degrees;
+
+                }
+            });  
     }
 
-}
-
-function displayErrorMessage(validation_errors)
-{
-    $('input,select,textarea').removeClass('error-field');
-    $('.select2').next().removeClass("error-field");
-    for (var error in validation_errors) { 
-        var error_message=validation_errors[error];
-
-        $('[name="'+error+'"]').addClass('error-field');
-        $('[id="'+error+'"]').addClass('error-field');
-        $('#'+error).next().addClass('error-field');
-
-        displayAlertMessage(error_message);
-
-    
+    function removerow(row_id)
+    {
+        var div_to_remove=row_id;
+        let is_confirm = confirm('Are you sure you want to remove this record ?');
+        if (is_confirm) {
+            $(div_to_remove).remove();
+        }
     }
-}
-function displayAlertMessage(message)
-{
-    iziToast.error({
-    message: message,
-    position: "topRight",
-    });
-}
-function loadProfileBasicsData()
-{
+
+    function saveUserBasic() {
+        // var profile_file=$('input[type=file]')[0].files[0];
+        let form_data = new FormData(user_basic_form[0]);
+        // form_data.append('profile_picture', profile_file);
+        // var form_data = user_basic_form.serialize();
+        console.log(form_data);
         $.ajax({
-            type:"GET",
-            url:"{{route('profile.basics.data')}}",
-            success:function(data){
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:"{{route('user.profile.basics.edit')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
+
+                if(response.success){
+                    notify('success', response.success);
+                    $('#editprofile').modal('hide');
+                    location.reload();
                 
-                _languages=data.languages;
-                _languages_levels=data.language_levels;
-                _countries=data.countries;
-                _degress=data.degrees;
+                }
+                else if(response.validation_errors){
+                    displayErrorMessage(response.validation_errors);
+                }
+                else{
+                    errorMessages(response.errors);
+                }
 
             }
-        });  
-}
-
-
-function removerow(row_id)
-{
-    var div_to_remove=row_id;
-    let is_confirm = confirm('Are you sure you want to remove this record ?');
-    if (is_confirm) {
-        $(div_to_remove).remove();
+        });
+        
     }
-}
 
-function saveUserBasic() {
-    // var profile_file=$('input[type=file]')[0].files[0];
-    let form_data = new FormData(user_basic_form[0]);
-    // form_data.append('profile_picture', profile_file);
-    // var form_data = user_basic_form.serialize();
-    console.log(form_data);
-    $.ajax({
-          type:"POST",
-          headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-          url:"{{route('user.profile.basics.edit')}}",
-          data: form_data,
-          processData: false,
-        contentType: false,
-          success:function(response){
-
-              if(response.success){
-                notify('success', response.success);
-                $('#editprofile').modal('hide');
-                location.reload();
-               
-              }
-              else if(response.validation_errors){
-                displayErrorMessage(response.validation_errors);
-              }
-              else{
-                errorMessages(response.errors);
-              }
-
-          }
-      });
-     
-}
-
-function addMoreLanguages() 
-{
-    languageRow.append(`
-                        <div id="moreLanguage-row-`+row_index+`">
-                                    
-                            <div class="row" >
-                                <div class="col-md-6 col-sm-10">
-                                    <label class="mt-4">Language <span class="imp">*</span></label>
-                                    <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
-                                        <option value=""  selected="">
-                                        Spoken Language(s)
-                                        </option>
-                                    ${_languages?.map((language) => {
-                                        return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
-                                    })}
-                                    </select>
-                                </div>
-                                <div class="col-md-5 col-sm-10">
-                                    <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-                                    <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
-                                        <option value=""   selected="">
-                                                                My Level is
-                                                                </option>
-                                        ${_languages_levels?.map((level) => {
-                                        return ` <option value="${level.id}"> ${level.name}</option>`;
+    function addMoreLanguages() 
+    {
+        languageRow.append(`
+                            <div id="moreLanguage-row-`+row_index+`">
+                                        
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-10">
+                                        <label class="mt-4">Language <span class="imp">*</span></label>
+                                        <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                            <option value=""  selected="">
+                                            Spoken Language(s)
+                                            </option>
+                                        ${_languages?.map((language) => {
+                                            return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
                                         })}
-                                    </select>
-                                </div>
-                                <div class="col-md-1" style="margin-top:15px">
-                                    <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5 col-sm-10">
+                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                        <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                            <option value=""   selected="">
+                                                                    My Level is
+                                                                    </option>
+                                            ${_languages_levels?.map((level) => {
+                                            return ` <option value="${level.id}"> ${level.name}</option>`;
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1" style="margin-top:15px">
+                                        <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
 
+                                    </div>
                                 </div>
-                            </div>
-                        </div>`                  
-                        );
-    row_index=row_index+1;
+                            </div>`                  
+                            );
+        row_index=row_index+1;
 
-}
+    }
 
 </script>
 
 @endpush
 @push('style')
-<style>
-    @media (min-width: 576px){
-    .modal-dialog {
-        max-width: 600px;
-        margin: 1.75rem auto;
-    }
-    .modal-body{
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
-    .fa, .fas {
-        font-weight: 900;
-        margin-left: -6px !important;
-    }
-    .btn{
-        border-radius: 6px !important;
-    }
-    .add-more-lng-btn {
-        color: #7f007f !important;
+    <style>
+        @media (min-width: 576px){
+            .modal-dialog {
+                max-width: 600px;
+                margin: 1.75rem auto;
+            }
+        }
+        .modal-body{
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+        .fa, .fas {
+            font-weight: 900;
+            margin-left: -6px !important;
+        }
+        .btn{
+            border-radius: 6px !important;
+        }
+        .add-more-lng-btn {
+            color: #7f007f !important;
+            
+        }   
+        .btn-save{
+            margin-left: 5px !important;
+        }
         
-    }   
-    .btn-save{
-        margin-left: 5px !important;
-    }
-    
-}
-</style>
+    </style>
 @endpush
