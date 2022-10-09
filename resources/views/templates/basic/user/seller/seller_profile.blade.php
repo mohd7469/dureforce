@@ -563,7 +563,7 @@
                                     <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
                                     <label class="form-check-label" for="flexCheckChecked">
                                         I’m currently working here
                                     </label>
@@ -575,21 +575,25 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label for="Language">End Date  *</label>
-                                <input type="date" class="form-control" name="enddate" placeholder="Month, Year">
+                                <input type="date" class="form-control experience-end-date" name="enddate" placeholder="Month, Year">
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="Description ">Description </label>
-                                    <textarea type="text" class="form-control" name="Description" >Describe your responsibilities</textarea>
+                                    <textarea type="text" class="form-control" name="Description" style="min-height: 90px !important">Describe your responsibilities</textarea>
                                 </div>
                             </div>
                         </div>
+                        <div class="row d-flex flex-row-reverse">
+
+                            <button type="button" class="btn-save">Save</button>
+                            <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                        </div>
+
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-save">Save</button>
-                </div>
+               
             </div>
         </div>
     </div>
@@ -642,6 +646,18 @@ $(document).ready(function() {
     });
 
 });
+
+function checkDate(parent, element) {
+    
+    if (parent.is(':checked')) {
+        element.val("DD/MM/YYYY");
+        element.attr("disabled", true);
+    }
+    if (!parent.is(':checked')) {
+        element.removeAttr("disabled");
+    }
+
+}
 
 function displayErrorMessage(validation_errors)
 {
