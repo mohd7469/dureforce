@@ -52,12 +52,13 @@ class SiteController extends Controller
             }]);
         }])->get();
 
-        
-
         $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
 
-        $sellers = User::with('followers')->limit(20)->inRandomOrder()->get();
-
+        $sellers = User::whereHas(
+            'roles', function($q){
+                $q->where('name', 'Freelancer');
+            }
+        )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
         return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
     }
 
