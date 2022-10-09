@@ -11,11 +11,16 @@
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
                             {{-- @include('templates.basic.jobs.breadcrum',['job_uuid' => $job->uuid]) --}}
-                        <div class="container">
+                        <div class="">
                             <div class="row">
+                                <ul class="offerlisting">
+                                    <li><a href="#">Search</a></li>
+                                    <li><a href="#">Invited Freelancer <span>(2)</span></a></li>
+                                    <li><a href="#">My Hires<span>(2)</span></a></li>
+                                </ul>
                                 <div class="col-12"></div>
                                     <div class="col-md-3">
-                                        <h2 class="prosals-h">Invited Freelancers</h2> 
+                                         
                                         
                                     </div>
                                  
@@ -72,7 +77,8 @@
                             
                                    {{-- @foreach ($freelancers as $freelancer ) --}}
                                        
-                                   
+                                   @for($i = 0; $i<=5; $i++)
+                                 
                                     
                                     <div class=""> 
                                         <div class="row biorow">
@@ -117,12 +123,12 @@
                                                  </div>
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
-                                                    <a href="#" class="btn-products-s">Hire</a>
-                                                    <a href="#" class="btn-products-s phire">Invite a job</a>
+                                                    <a href="{{route('seller.profile')}}" class="btn-products-s3">Decline</a>
+                                                    <a href="#" class="btn-products-s3 phire">Hire</a>
+                                                    
                                                   
                                                 </div>
                                             </div>
@@ -153,85 +159,12 @@
                             </div> 
                        
                             <hr>
-                            <div class=""> 
-                                <div class="row biorow">
-                                   <div class="col-md-3">
-                                      <div class="row borderleftc"> 
-                                        <div class="col-md-4">
-                                            <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
-                                        </div>
-                                        <div class="col-md-8">
-                                            <h4 class="pname-c"> 
-                                                freelabcer
-                                              {{-- {{$freelancer->first_name}} {{ $freelancer->last_name }} --}}
-                                             </h4>
-                                               <p class="pdesination-c"> Full Stack Developer</p>
-                                             {{-- <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>   --}}
-                                             <p class="plocation">London Uk</p>
-                                               
-                                               {{-- <p class="plocation"> {{$freelancer->country->name}}</p> --}}
-                                         </div>
-                                          
-                                      </div>
-                                   </div>
-
-                                    <div class="col-md-5">
-                                        <div class="row btns-per">
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Rate Per Hour</p>
-                                                {{-- <p class="rateperh">${{$freelancer->rate_per_hour}}</p> --}}
-                                                <p class="perhourprice">$55 / Per Hour</p>
-                                                
-                                                
-                                                
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Total Earnings</p>
-                                                <p class="perhourprice">$120k + earned</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="rateperh">Job Success Rate</p>
-                                                <p class="perhourprice">90%</p>
-                                            </div>
-                                         </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="row btns-s">
-                                            {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                            <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
-                                            <a href="#" class="btn-products-s">Hire</a>
-                                            <a href="#" class="btn-products-s phire">Invite a job</a>
-                                          
-                                        </div>
-                                    </div>
-                             </div>
-                                    <!--===  Bio Profile Section End ===-->
+                            @endfor
+                            
 
                  <!--Skills Section Start-->
 
-                    <div class="row skills-c">
-                        <div class="col-md-7">
-                             
-                            <h2>Has relevant skills to your job</h2>
-                            <ul class="skills-listing">
-                                <li>Html</li>
-                                <li>Css </li>
-                                <li>JavaScript</li>
-                                <li>Bootstrap</li>
-                                {{-- @foreach ($freelancer->skills as $skill )
-                                <li>{{$skill->name}}</li>
-                                @endforeach --}}
-                                
-                                
-                            </ul>
-                        </div>
-                        </div>
-                            {{-- @endforeach --}}
-                        
-                           
-                       
-                    </div>
+  
                   </div>
                </div>
             </div>
@@ -247,6 +180,50 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+      /*******/
+      .cv-container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .container-c{
+        padding-left:24px !important;
+        padding-right:24px !important;
+    }
+    ul.offerlisting {
+      padding: 0px 0px 15px 24px;
+      border-bottom: 1px solid #CBDFDF;
+      margin-bottom: 28px;
+    }
+    .biorow {
+    margin-top: 30px !important;
+} 
+h4.pname-c{
+    margin-top:3px !important;
+}
+.container.single-jobc {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+    
+    .skills-c{
+       padding-bottom: 40px !important;
+    }
+    ul.offerlisting li {
+        float: left;
+        display: inline-block;
+    }
+    ul.offerlisting li a {
+        margin-right: 60px;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        color: #808285;
+    }
+    ul.skills-listing li {
+
+    padding: 4px 17px;
+    }
     .attachment{
         display: inline-block;
     width: 100%;
@@ -257,21 +234,28 @@
     .heading-text{
         text-align: left;
     }
-    a.btn-products-s {
+    a.btn-products-s3 {
     border: 1px solid #7F007F;
     border-radius: 4px;
-    padding: 8px 18px;
+    padding: 11px 24px !important;
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
     color: #7F007F;
     width: auto !important;
-    margin:0px 1%;
+    margin:0px 2%;
 
 }
+a.btn-products-s3.phire {
+    background: #7F007F;
+    color: #fff;
+}
+
+
 .row.btns-s{
-    width: 330px;
-    left: 68px !important;
+    width: 230px;
+    left: 35px !important;
+    float: right;
 }
 
  @media only screen and (min-width:768px){
@@ -313,10 +297,10 @@ div#custom-search-input {
         width: 100%;
         text-align: center;
     }
-    a.btn-products-s {
+    a.btn-products-s3 {
         width: auto !important;
         text-align: CENTER;
-        margin: 8px auto;
+        margin: 8px 2%;
         display: block;
         padding: 7px 20%;
         display: inline-block;
@@ -324,6 +308,8 @@ div#custom-search-input {
     }
     .row.btns-s{
     width: 100%;
+    text-align: center;
+    display: inline-block;
 }
     ul.skills-listing li {
     margin-right: 1% !important;
@@ -432,7 +418,7 @@ select#bestmatch, select#Filters{
     .row.btns-s{
         left: 7px !important;
     }
-    a.btn-products-s{
+    a.btn-products-s3{
         padding: 7px 30px !important;
     }
 
@@ -441,7 +427,7 @@ select#bestmatch, select#Filters{
     .row.btns-s{
         left: 7px !important;
     }
-    a.btn-products-s{
+    a.btn-products-s3{
         padding: 7px 12px !important;
     }
 }
@@ -469,13 +455,13 @@ ul.skills-listing li {
 
 }
 @media only screen and (min-width:767px) and (max-width:992px){
-    a.btn-products-s {
+    /* a.btn-products-s3 {
     border: 1px solid #7F007F;
     border-radius: 4px;
     padding: 6px 5px !important;
     font-weight: 600;
     font-size: 10px !important;
-}
+} */
 p.rateperh {
     font-size: 12px !important;
     line-height: 18px;
@@ -547,7 +533,7 @@ p.plocation:before {
 
 @media only screen and (max-width:320px){
    
-    a.btn-products-s{
+    a.btn-products-s3{
         padding: 7px 7px !important;
     }
 .container.single-jobc {

@@ -47,6 +47,11 @@ Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 Route::view('/invited-freelancer', 'templates.basic.jobs.invited-freelancer');
+// Offer page design design
+Route::view('/offers', 'templates.basic.offers.view-offer');
+Route::view('/current-hires', 'templates.basic.offers.current-offer');
+Route::view('/post-hire', 'templates.basic.offers.post-hire');
+
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
