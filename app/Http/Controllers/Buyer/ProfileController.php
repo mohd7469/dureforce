@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Models\LanguageLevel;
 use Illuminate\Http\Request;
 use App\Models\User;
 use DB;
 use App\Models\UserCompany;
 use App\Models\UserPayment;
+use App\Models\WorldLanguage;
 use App\Rules\PhoneNumberValidate;
 use LVR\CreditCard\CardCvc;
 use LVR\CreditCard\CardNumber;
 
 
 use Illuminate\Support\Facades\Validator;
+use Khsing\World\Models\City;
+
 class ProfileController extends Controller
 {
     
@@ -174,10 +178,13 @@ class ProfileController extends Controller
         $user = User::WithBuyerAll()->find(auth()->user()->id);
         $userCompanies=$user->company;
         $user_payment_methods=$user->payments;
-        $user_basic_profile=$user->basicProfile;
-        $reviewCount=$reviewAvg=$conversion=$workCompleteCount=$workPendingCount=0;
-        $userServices = $userSoftwares = $userJobs=$userReviews=[];
-        return view($this->activeTemplate.'user.buyer.profile',compact('pageTitle','user','userCompanies','user_payment_methods','user_basic_profile','reviewAvg','reviewCount','conversion','workCompleteCount','workPendingCount','userServices','userSoftwares','userJobs','userReviews'));
+        $basicProfile=$user->basicProfile;
+        $user_languages=$user->languages;
+        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+
+        return view($this->activeTemplate.'profile.partials.client_basic',compact('pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
 
     }
 

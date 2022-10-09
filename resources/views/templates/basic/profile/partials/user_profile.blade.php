@@ -22,7 +22,7 @@
             </div>
             <div class="row">
                <div
-                  class="col-md-6 col-sm-12"
+                  class="col-md-6 col-sm-12 input-group mb-3 select2_element"
                   >
                   <label class="mt-4"
                      >Category
@@ -44,13 +44,13 @@
                         Select Category
                      </option>
                      @foreach ($categories as $category)
-                     <option
-                         value="{{$category->id}}"
+                        <option
+                           value="{{$category->id}}"
 
-                         {{in_array($category->id,$user->categories->pluck('id')->toArray()) ? 'selected' :''}}
-                     >
-                    {{$category->name}}
-                 </option>
+                           {{in_array($category->id,$user->categories->pluck('id')->toArray()) ? 'selected' :''}}
+                        >
+                        {{$category->name}}
+                        </option>
                      @endforeach
                   </select>
                </div>
@@ -125,12 +125,12 @@
                   >*</span
                   ></label
                   >
-               <input
+              <input
                   type="number"
                   name="phone_number"
                   placeholder=""
                   id="phone"
-                  value="{{$basicProfile->phone_number}}"
+                  value ="{{$basicProfile->phone_number}}"
                   />
             </div>
             {{-- language row --}}

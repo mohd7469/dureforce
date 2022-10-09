@@ -87,7 +87,6 @@ class CommonProfileController extends Controller
     {
 
         $request_data = $request->all();
-
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
@@ -188,6 +187,83 @@ class CommonProfileController extends Controller
         $user_experience = $user->experiences;
         $user_education  = $user->education;
         return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education'));
+    }
+    
+    /**
+     * editUserBasics
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function editUserBasics(Request $request)
+    {
+
+        $request_data = $request->all();
+        $rules = [
+            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'designation' => 'required|string',
+            'about' => 'required|string',
+            'phone_number' => ['required', new PhoneNumberValidate],
+            'city_id' => 'required|exists:world_cities,id',
+            'languages' => 'required|array',
+            'languages.*.language_id' => 'required|exists:world_languages,id',
+            'languages.*.language_level_id' => 'required|exists:language_levels,id',
+            'skills'   => 'required|array',
+            'skills.*' => 'exists:skills,id',
+        ];
+        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+            $rules['category_id'] = 'required|array';
+            $rules['category_id.*'] = 'exists:categories,id';
+        }
+
+        $validator = Validator::make($request_data, $rules);
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+            try {
+
+                DB::beginTransaction();
+
+                $user = auth()->user();
+                $user->basicProfile()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'city_id' => $request_data['city_id'],
+                        'designation' => $request_data['designation'],
+                        'about' => $request_data['about'],
+                        'phone_number' => $request_data['phone_number'],
+                    ]);
+                $user->languages()->delete();
+                $user->languages()->createMany($request_data['languages']);
+                if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+                    $user->categories()->sync($request_data['category_id']);
+                }
+                $user->skills()->sync($request_data['skills']);
+                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
+
+                    $path = imagePath()['attachments']['path'];
+                    $file = $request->profile_picture;
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $user->basicProfile()->update(['profile_picture' => $url]);
+
+                }
+                $user->save();
+
+                DB::commit();
+                return response()->json(["success" => "User Basics Updated Successfully"]);
+
+            } catch (\Throwable $exception) {
+
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+
+
+            }
+        }
     }
 
 }

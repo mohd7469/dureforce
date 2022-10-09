@@ -1201,11 +1201,11 @@ function getNumberOfPropsals($uuid)
 
 function getLanaguageName($id)
 {
-    return ModelsLanguage::find($id)->first()->iso_language_name;
+    return ModelsLanguage::where('id',$id)->first()->iso_language_name;
 }
 function getProficiencyLevelName($id)
 {
-    return LanguageLevel::find($id)->first()->name;
+    return LanguageLevel::where('id',$id)->first()->name;
 
 } 
 function getUserEducation($obj)

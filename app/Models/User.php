@@ -65,7 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithBuyerAll($query){
 
-        return $query->with('company')->with('basicProfile')->with('payments');
+        return $query->with('company')->with('basicProfile')->with('payments')->with('languages');
 
     }
 
@@ -190,7 +190,11 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getLocationAttribute()
     {
-        return $this->basicProfile->city->name.', '.$this->country->name;
+        $location=null;
+        if($this->basicProfile)
+            $location .=$this->basicProfile->city->name.', ';
+        $location.=$this->country->name;
+        return $location;
     }
     
     /**

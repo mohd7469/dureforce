@@ -334,65 +334,203 @@
 {{--      profile modal--}}
     <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
+
                 <div class="modal-content">
+
                     <div class="modal-header editprofileheader">
                         <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="">
+                        <form action="" id="form-basic-save">
+                            @csrf
                             <div class="row">
-                            <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="title">Title *</label>
-                                <input type="text" class="form--control" name="title" placeholder="Freelance DevOps Engineer">
-                            </div>
-                            </div>
-                            <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="title">Location *</label>
-                                <input type="text" class="form--control" name="Location" placeholder="Karachi, Pakistan">
-                            </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">About  *</label>
-                                    <textarea type="text" class="form--control" name="about" >Amna is an experienced technical leader with over ten years of experience overseeing and managing fully remote teams. Amna is an experienced technical leader with over ten yearsof experience overseeing and managing fully remote teams.
-                                    </textarea>
+                                
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Job Title *</label>
+                                        <input type="text" class="form-control" name="designation" placeholder="Freelance DevOps Engineer" value="{{$user->job_title}}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Rate Per Hour  *</label>
-                                    <input type="text" class="form--control" name="rate" placeholder="$40">
+                                <div class="col-xl-12">
+                                    <div class="input-group mb-3 select2_element">
+                                        <label for="title">Category *</label>
+                                        <select
+                                            name="category_id[]"
+                                            class=" form-control  select2 select2-hidden-accessible"
+                                            multiple="" data-placeholder="Select Categories"  tabindex="-1" aria-hidden="true" style="width: 100% !important"
+                                            id="user_category_id"
+                                            >
+                                            <option value="">Select Category</option>
+                                            @foreach ($categories as $category)
+                                                <option
+                                                    value="{{$category->id}}"
+                                                    {{in_array($category->id,$user->categories->pluck('id')->toArray()) ? 'selected' :''}}
+                                                >
+                                                    {{$category->name}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-xs-12 form-group editpro">
-                                <label>@lang('Core Skills & Expertise')</label>
-                                <div class="input-group mb-3 select2_element">
-                                    <select class="skills form-control  select2 select2-hidden-accessible" multiple="" data-placeholder="Start typing to search for skills" style="width: 100%; overflow:hidden"  aria-hidden="true" name="skills[]" id="skills" >
-                                        @foreach($skills as $item)
-                                            <option value="{{__($item->id)}}">{{__($item->name)}}</option>
-                                        @endforeach
-                                    </select>
+
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Phone *</label>
+                                        <input
+                                                type="number"
+                                                name="phone_number"
+                                                placeholder=""
+                                                id="phone"
+                                                value ="{{$basicProfile->phone_number}}"
+                                            />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                    <label for="Language">Language *</label>
-                                    <input type="text" class="form--control" name="language" placeholder="Spoken Language(s)">
+
+                                <div class="col-xl-12">
+
+                                    <div class="form-group">
+                                        <label for="title">Location *</label>
+                                        <select class="form-control" name="city_id" id="">
+                                            <option value="">Select City</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{$city->id}}" {{$basicProfile->city_id==$city->id ? 'selected' : ''}}>{{$city->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label for="title">About  *</label>
+                                            <textarea type="text" class="form-control" name="about" cols="4"  style="min-height: 90px !important">{{$basicProfile->about}}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label for="title">Rate Per Hour  *</label>
+                                            <input type="text" class="form-control" name="rate" placeholder="$40" value="{{$user->rate_per_hour}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-xs-12 form-group editpro">
+                                        <label>@lang('Core Skills & Expertise')</label>
+                                        <div class="input-group mb-3 select2_element">
+                                            <select
+                                                class="form-control select2 select2-hidden-accessible"
+                                                name="skills[]"
+                                                id="skills"
+                                                multiple=""
+                                                data-select2-id="select2-data-skills"
+                                                tabindex="-1"
+                                                aria-hidden="true"
+                                                style="width:100%">
+                                                <option value="">Select Skills</option>
+                                                @foreach ($skills as $skill)
+                                                    <option value="{{$skill->id}}"  {{in_array($skill->id,$userskills->pluck('id')->toArray()) ? 'selected' :''}}>{{$skill->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        
+                                        <div class="language-container row" id="language-row" style="justify-content: space-between !important;">
+                                            @foreach ($user_languages as $key=>$user_language)
+                                                {{-- language --}}
+                                                <div  id="moreLanguage-row-{{$key}}">
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-12">
+                                                            <label class="mt-4">Language
+                                                            <span class="imp">*</span></label>
+                                                            <select
+                                                                name="languages[{{$key}}][language_id]"
+                                                                class="form-control select-lang "
+                                                                id="languages.{{$key}}.language_id"
+                                                                >
+                                                                <option
+                                                                    value=""
+                                                                    selected=""
+                                                                    >
+                                                                    Spoken
+                                                                    Language(s)
+                                                                </option>
+                                                                
+                                                                @foreach ($languages as $language)
+                                                                    <option
+                                                                        value="{{$language->id}}"
+                                                                        {{ $language->id== $user_language->language_id ? 'selected' :'' }}
+                                                                    >
+                                                                    {{ $language->iso_language_name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        {{-- proficiency level --}}
+                                                        <div class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12">
+                                                            <label class="mt-4"> Profeciency Level<span class="imp">*</span></label>
+                                                        
+                                                            <select
+                                                                name="languages[{{$key}}][language_level_id]"
+                                                                class="form-control selected-level select-lang"
+                                                                id="languages.{{$key}}.language_level_id"
+                                                                >
+                                                                <option value="" selected="" >
+                                                                    Proficiency Level
+                                                                </option>
+                                    
+                                                                @foreach ($language_levels as $level)
+                                                                    <option 
+                                                                        value="{{$level->id}}"
+                                                                        {{ $level->id== $user_language->language_level_id ? 'selected' :'' }}
+                                                                    >
+                                                                        {{$level->name}}
+                                                                    </option>
+                                                                    
+                                                                @endforeach
+                                                                
+                                                                
+                                                            </select>
+                                
+                                                        </div>
+
+                                                        {{-- delete btn --}}
+                                                        @if ($key > 0)
+                                                            <div class="col-md-1" style="margin-top:20px; ">
+                                                                <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-{{$key}}')"><i class="fa fa-trash"></i></button>
+                                                            </div>
+                                                        @endif
+                                                    </div>   
+                                                </div>  
+                                                            
+                                            @endforeach
+
+                                    
+                                        </div>
+                                        <input type="hidden" name="languages_basics" id="languages_basics" value="{{$user_languages->count()}}">
+
+                                        {{-- add another language btn --}}
+                                        <a type="button" class="my-2 add-more-lng-btn" id="add-language" onclick="addMoreLanguages()">Add another</a>
+                                    </div>
+                                    
                                 </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                    <label for="Language">Proficiency Level *</label>
-                                    <input type="text" class="form--control" name="profeciencylevel" placeholder="My Level is">
+
                             </div>
+                            <div class="row d-flex flex-row-reverse" >
+                                <hr>
+                                <button type="submit" class="btn-save">Save</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn-save">Save</button>
-                    </div>
+                    
+
                 </div>
+
             </div>
         </div>
     <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -403,24 +541,26 @@
                     <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="#" id="form-basic-save">
+        
+
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="title">Title *</label>
-                                    <input type="text" class="form--control" name="title" placeholder="Freelance DevOps Engineer">
+                                    <input type="text" class="form-control" name="title" placeholder="Freelance DevOps Engineer">
                                 </div>
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="title">Company *</label>
-                                    <input type="text" class="form--control" name="company" placeholder="E.g. Microsoft">
+                                    <input type="text" class="form-control" name="company" placeholder="E.g. Microsoft">
                                 </div>
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="title">Location  *</label>
-                                    <input type="text" class="form--control" name="Location" placeholder="Dublin, Ireland">
+                                    <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
@@ -431,16 +571,16 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label for="startdate">Start Date *</label>
-                                <input type="date" class="form--control" name="startdate" placeholder="Month, Year">
+                                <input type="date" class="form-control" name="startdate" placeholder="Month, Year">
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label for="Language">End Date  *</label>
-                                <input type="date" class="form--control" name="enddate" placeholder="Month, Year">
+                                <input type="date" class="form-control" name="enddate" placeholder="Month, Year">
                             </div>
                             <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="Description ">Description </label>
-                                    <textarea type="text" class="form--control" name="Description" >Describe your responsibilities</textarea>
+                                    <textarea type="text" class="form-control" name="Description" >Describe your responsibilities</textarea>
                                 </div>
                             </div>
                         </div>
@@ -459,24 +599,202 @@
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/seller_profile.js')}}"></script>
 
-
-    <script>
+<script>
 
 "use strict";
+var languageRow = $('#language-row');
+var _languages = [];
+let _languages_levels = [];
+let _countries = [];
+let _degress = [];
+let user_basic_form=$('#form-basic-save');
+let row_index= $('#languages_basics').val();
+
 $(document).ready(function() {
 
+    loadProfileBasicsData();
+    user_basic_form.submit(function (e) {
+        e.preventDefault();
+        e.stopPropagation(); 
+        saveUserBasic();
+    });
     $("#skills").select2({
         closeOnSelect: false
     });
-$('#skills').select2({
-tags: true
-});
+    $("#user_category_id").select2({
+        closeOnSelect: false
+    });
+
+    $('#user_category_id').select2({
+        tags: true
+    });
+
+    $('#user_category_id').select2({
+        dropdownParent: $('#editprofile')
+    });
+
+    $('#skills').select2({
+        tags: true
+    });
+
     $('#skills').select2({
         dropdownParent: $('#editprofile')
     });
+
 });
 
+function displayErrorMessage(validation_errors)
+{
+    $('input,select,textarea').removeClass('error-field');
+    $('.select2').next().removeClass("error-field");
+    for (var error in validation_errors) { 
+        var error_message=validation_errors[error];
+
+        $('[name="'+error+'"]').addClass('error-field');
+        $('[id="'+error+'"]').addClass('error-field');
+        $('#'+error).next().addClass('error-field');
+
+        displayAlertMessage(error_message);
+
+    
+    }
+}
+function displayAlertMessage(message)
+{
+    iziToast.error({
+    message: message,
+    position: "topRight",
+    });
+}
+function loadProfileBasicsData()
+{
+        $.ajax({
+            type:"GET",
+            url:"{{route('profile.basics.data')}}",
+            success:function(data){
+                
+                _languages=data.languages;
+                _languages_levels=data.language_levels;
+                _countries=data.countries;
+                _degress=data.degrees;
+
+            }
+        });  
+}
+
+
+function removerow(row_id)
+{
+    var div_to_remove=row_id;
+    let is_confirm = confirm('Are you sure you want to remove this record ?');
+    if (is_confirm) {
+        $(div_to_remove).remove();
+    }
+}
+
+function saveUserBasic() {
+    // var profile_file=$('input[type=file]')[0].files[0];
+    let form_data = new FormData(user_basic_form[0]);
+    // form_data.append('profile_picture', profile_file);
+    // var form_data = user_basic_form.serialize();
+    console.log(form_data);
+    $.ajax({
+          type:"POST",
+          headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+          url:"{{route('user.profile.basics.edit')}}",
+          data: form_data,
+          processData: false,
+        contentType: false,
+          success:function(response){
+
+              if(response.success){
+                notify('success', response.success);
+                $('#editprofile').modal('hide');
+                location.reload();
+               
+              }
+              else if(response.validation_errors){
+                displayErrorMessage(response.validation_errors);
+              }
+              else{
+                errorMessages(response.errors);
+              }
+
+          }
+      });
+     
+}
+
+function addMoreLanguages() 
+{
+    languageRow.append(`
+                        <div id="moreLanguage-row-`+row_index+`">
+                                    
+                            <div class="row" >
+                                <div class="col-md-6 col-sm-10">
+                                    <label class="mt-4">Language <span class="imp">*</span></label>
+                                    <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                        <option value=""  selected="">
+                                        Spoken Language(s)
+                                        </option>
+                                    ${_languages?.map((language) => {
+                                        return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
+                                    })}
+                                    </select>
+                                </div>
+                                <div class="col-md-5 col-sm-10">
+                                    <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                    <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                        <option value=""   selected="">
+                                                                My Level is
+                                                                </option>
+                                        ${_languages_levels?.map((level) => {
+                                        return ` <option value="${level.id}"> ${level.name}</option>`;
+                                        })}
+                                    </select>
+                                </div>
+                                <div class="col-md-1" style="margin-top:15px">
+                                    <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
+
+                                </div>
+                            </div>
+                        </div>`                  
+                        );
+    row_index=row_index+1;
+
+}
 
 </script>
 
+@endpush
+@push('style')
+<style>
+    @media (min-width: 576px){
+    .modal-dialog {
+        max-width: 600px;
+        margin: 1.75rem auto;
+    }
+    .modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+    .fa, .fas {
+        font-weight: 900;
+        margin-left: -6px !important;
+    }
+    .btn{
+        border-radius: 6px !important;
+    }
+    .add-more-lng-btn {
+        color: #7f007f !important;
+        
+    }   
+    .btn-save{
+        margin-left: 5px !important;
+    }
+    
+}
+</style>
 @endpush
