@@ -209,32 +209,37 @@
                                 </div>
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
-                                    <div class="row">
-                                        <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
-                                            
-                                            @foreach ($user_experience as $experience)
-
-                                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
-                                                    <h4>{{ $experience->job_title }}</h4>
-                                                    <p class="short-text">{{ $experience->company_name }}</p>
-                                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
-                                                    <p class="short-text">{{getExperienceSession($experience)}}</p>
-                                                    <ul class="timeline">
-                                                        {{$experience->description}}
-                                                    </ul>
-                                                    <br>
-                                                </div>
-                                                    
-                                            @endforeach
-                                            
-                                        </div>
-                                            
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
-                                            <button type="button" class="standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
+                                    <div class="row section-heading-border">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
                                                 Add Experience
                                             </button>
                                         </div>
-                                        
+                                    </div>
+                                    <div class="row">
+
+                                        @foreach ($user_experience as $experience)
+
+                                            <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
+                                                
+                                                <h4>{{ $experience->job_title }}</h4>
+                                                <p class="short-text">{{ $experience->company_name }}</p>
+                                                <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
+                                                <p class="short-text">{{getExperienceSession($experience)}}</p>
+                                                <ul class="timeline">
+                                                    {{$experience->description}}
+                                                </ul>
+                                                <br>
+                                                
+                                            </div>
+                                                
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
+                                                <i class="fa fa-edit"></i>
+                                            </div>
+                                               
+                                        @endforeach
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -296,6 +301,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
@@ -544,29 +550,49 @@
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" id="form-basic-save">
+                        <form action="#" id="experience_form">
             
-
+                            @csrf
                             <div class="row">
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="title">Title *</label>
-                                        <input type="text" class="form-control" name="title" placeholder="Freelance DevOps Engineer">
+                                        <input type="text" class="form-control" name="job_title" placeholder="Freelance DevOps Engineer">
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="title">Company *</label>
-                                        <input type="text" class="form-control" name="company" placeholder="E.g. Microsoft">
+                                        <input type="text" class="form-control" name="company_name" placeholder="E.g. Microsoft">
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="title">Location  *</label>
-                                        <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
+                                        <select
+                                                name="country_id"
+                                                class="form-control"
+                                                id="country_id"
+                                                >
+                                                
+                                                <option
+                                                    value=""
+                                                    selected=""
+                                                >
+                                                    Select Country
+                                                </option>
+                                                @foreach ($countries as $country)
+                                                <option
+                                                    value="{{$country->id}}"
+                                                    
+                                                >
+                                                    {{$country->name}}
+                                                </option>
+                                                @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
+                                        <input class="form-check-input" type="checkbox" value="" name="is_working" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
                                         <label class="form-check-label" for="flexCheckChecked">
                                             I’m currently working here
                                         </label>
@@ -574,22 +600,22 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="startdate" placeholder="Month, Year">
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="enddate" placeholder="Month, Year">
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year">
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="Description ">Description </label>
-                                        <textarea type="text" class="form-control" name="Description" style="min-height: 90px !important">Describe your responsibilities</textarea>
+                                        <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row d-flex flex-row-reverse">
 
-                                <button type="button" class="btn-save">Save</button>
+                                <button type="submit" class="btn-save">Save</button>
                                 <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
 
                             </div>
@@ -615,6 +641,7 @@
     let _countries = [];
     let _degress = [];
     let user_basic_form=$('#form-basic-save');
+    let experience_form=$('#experience_form');
     let row_index= $('#languages_basics').val();
 
     $(document).ready(function() {
@@ -624,6 +651,11 @@
             e.preventDefault();
             e.stopPropagation(); 
             saveUserBasic();
+        });
+        experience_form.submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            addExperience();
         });
         $("#skills").select2({
             closeOnSelect: false
@@ -744,7 +776,38 @@
         });
         
     }
+    function addExperience()
+    {
+        
+        let form_data = new FormData(experience_form[0]);
+        
+        $.ajax({
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:"{{route('seller.profile.experience.add')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
 
+                if(response.success){
+                    notify('success', response.success);
+                    $('#addexperience').modal('hide');
+                    location.reload();
+                
+                }
+                else if(response.validation_errors){
+                    displayErrorMessage(response.validation_errors);
+                }
+                else{
+                    errorMessages(response.errors);
+                }
+
+            }
+        });
+    }
     function addMoreLanguages() 
     {
         languageRow.append(`
@@ -798,6 +861,12 @@
         .modal-body{
             max-height: calc(100vh - 200px);
             overflow-y: auto;
+        }
+        .section-heading-border{
+            border-bottom: 1px solid #C4C4C4;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+
         }
         .fa, .fas {
             font-weight: 900;

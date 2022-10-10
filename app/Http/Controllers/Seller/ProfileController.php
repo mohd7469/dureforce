@@ -14,6 +14,7 @@ use Khsing\World\Models\City;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
 use App\Models\WorldLanguage;
+use Khsing\World\Models\Country;
 
 class ProfileController extends Controller
 {
@@ -167,15 +168,22 @@ class ProfileController extends Controller
         $userskills=$user->skills;
         $user_experience = $user->experiences;
         $user_education  = $user->education;
+        $countries = Country::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories'));
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries'));
     }
-
+    
+    /**
+     * addExperience
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function addExperience(Request $request)
     {
         $validator = \Validator::make($request->all(), 
@@ -199,7 +207,7 @@ class ProfileController extends Controller
             
             $user = auth()->user();        
             $user->experiences()->create(
-                $request->experiences
+                $request->only(['job_title','description','company_name','country_id','start_date','end_date'])
             );
            
             return response()->json(["success" => "User Experience Added Successfully"], 200);
