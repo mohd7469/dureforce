@@ -62,7 +62,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills');
 
     }
-    
+
+    public static function scopeWithBuyerAll($query){
+
+        return $query->with('company')->with('basicProfile')->with('payments')->with('languages');
+
+    }
+
     public function basicProfile()
     {
         return $this->hasOne('App\Models\UserBasic');
@@ -188,7 +194,11 @@ class User extends Authenticatable implements MustVerifyEmail
     // }
     public function getLocationAttribute()
     {
-        return $this->basicProfile->city->name.', '.$this->country->name;
+        $location=null;
+        if($this->basicProfile)
+            $location .=$this->basicProfile->city->name.', ';
+        $location.=$this->country->name;
+        return $location;
     }
     
     /**

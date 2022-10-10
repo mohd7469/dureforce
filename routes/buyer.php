@@ -17,6 +17,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::post('/save-company', [\App\Http\Controllers\Buyer\ProfileController::class,'saveCompany'])->name('save.company');
                 Route::post('/save-payment-methods', [\App\Http\Controllers\Buyer\ProfileController::class,'savePaymentMethod'])->name('save.payment.methods');
                 Route::post('/payment/save', [\App\Http\Controllers\Buyer\ProfileController::class,'storePayment'])->name('payment.save');
+                Route::get('/view', [\App\Http\Controllers\Buyer\ProfileController::class,'getUserProfile'])->name('view');
 
             });
             

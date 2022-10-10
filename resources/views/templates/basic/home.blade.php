@@ -21,7 +21,7 @@
                                 <section class="hero-banner row section-padding flex-md-row-reverse  be-center">
 
                                     <figure class="col-md-6 text-center ">
-                                        <svg width="650" height="390" viewBox="0 0 696 390" fill="none"
+                                        <svg width="500" height="390" viewBox="0 0 696 390" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M100.929 36.1462C196 0.913927 292.628 32.0792 358.136 99.9391C423.668 167.799 561.184 53.0998 634.129 120.845C683.896 167.091 661.106 285.948 592.852 337.449C500.091 407.433 217.966 371.927 156.942 360.023C86.6282 346.291 35.237 304.661 14.3465 254.143C-35.9692 132.384 58.9191 51.7289 100.929 36.1462Z"
