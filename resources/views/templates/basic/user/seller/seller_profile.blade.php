@@ -212,7 +212,7 @@
                                     <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
-                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience" id="add-exp-btn">
                                                 Add Experience
                                             </button>
                                         </div>
@@ -557,22 +557,23 @@
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="title">Title *</label>
-                                        <input type="text" class="form-control" name="job_title" placeholder="Freelance DevOps Engineer">
+                                        <input type="text" class="form-control" name="job_title" placeholder="Freelance DevOps Engineer" id="exp_job_title">
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="title">Company *</label>
-                                        <input type="text" class="form-control" name="company_name" placeholder="E.g. Microsoft">
+                                        <input type="text" class="form-control" name="company_name" placeholder="E.g. Microsoft" id="exp_company_name">
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
+                                    
                                     <div class="form-group">
                                         <label for="title">Location  *</label>
                                         <select
                                                 name="country_id"
                                                 class="form-control"
-                                                id="country_id"
+                                                id="exp_country_id"
                                                 >
                                                 
                                                 <option
@@ -591,31 +592,33 @@
                                                 @endforeach
                                         </select>
                                     </div>
+
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="is_working" id="flexCheckChecked"  onclick="checkDate($(this), $('.experience-end-date'))">
+                                        <input class="form-check-input" type="checkbox" value="" name="is_working" id="exp_is_working"  onclick="checkDate($(this), $('.experience-end-date'))">
                                         <label class="form-check-label" for="flexCheckChecked">
                                             I’m currently working here
                                         </label>
                                     </div>
+
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year">
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year">
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date">
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="Description ">Description </label>
-                                        <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities"></textarea>
+                                        <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities" id="exp_description"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div class="row d-flex flex-row-reverse">
 
-                                <button type="submit" class="btn-save">Save</button>
+                                <button type="submit" class="btn-save" id="exp-btn">Save</button>
                                 <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
 
                             </div>
@@ -643,23 +646,35 @@
     let user_basic_form=$('#form-basic-save');
     let experience_form=$('#experience_form');
     let row_index= $('#languages_basics').val();
-
+    let exp_btn=$('#exp-btn');
+    let add_exp_btn=$('#add-exp-btn');
     $(document).ready(function() {
-
+        
+        readmore();
         loadProfileBasicsData();
+
+        add_exp_btn.click(function(e){
+            experience_form.attr('action', "{{route('seller.profile.experience.add')}}");
+            experience_form[0].reset();
+
+        });
+
         user_basic_form.submit(function (e) {
             e.preventDefault();
             e.stopPropagation(); 
             saveUserBasic();
         });
+       
         experience_form.submit(function (e) {
             e.preventDefault();
             e.stopPropagation(); 
             addExperience();
         });
+
         $("#skills").select2({
             closeOnSelect: false
         });
+
         $("#user_category_id").select2({
             closeOnSelect: false
         });
@@ -851,9 +866,29 @@
 
     function editExperience(experience_obj)
     {
-        let route={{route('seller.profile.experience.edit',1)}}
+        experience_form[0].reset();
+        var route="{{route('seller.profile.experience.edit',':id')}}";
+        route=route.replace(':id',experience_obj.id);
         experience_form.attr('action', route);
         $('#addexperience').modal('show');
+        $("#exp_job_title").val( experience_obj.job_title );
+        $('#exp_company_name').val(experience_obj.company_name);
+        $('#exp_start_date').val(experience_obj.start_date);
+
+        if(experience_obj.is_working ){
+
+            $('#exp_is_working').prop('checked',true);
+            $('#exp_end_date').prop('disabled',true);
+        }
+        else
+        {
+
+            $('#exp_end_date').val(experience_obj.end_date);
+            
+        }
+
+        $('#exp_description').html(experience_obj.description);
+        $('#exp_country_id option[value='+experience_obj.country_id+']').attr('selected','selected');
     }
 
 </script>
