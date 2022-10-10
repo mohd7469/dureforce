@@ -5,9 +5,8 @@ storage/*.key
 storage/
 vendor
 .env
-.env-staging
-.env-dev
-.env-qa
+.env.example
+
 .env.backup
 .phpunit.result.cache
 docker-compose.override.yml
@@ -16,11 +15,4 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .idea/*
-assets/workFile/*
-assets/templates/*
-assets/software/*
-assets/images/*
-assets/errors/*
-assets/admin/*
-assets/font/*
 .env

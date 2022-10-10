@@ -7,7 +7,7 @@
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 page_div">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
-                    <form class="user-profile-form" action="{{route('user.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
+                    <form class="user-profile-form" action="{{route('buyer.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
                             <div class="d-flex flex-wrap align-items-center justify-content-between bottom_border_light" >
@@ -26,7 +26,7 @@
                                             {{-- Job Title --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Title')*</label>
-                                                <input type="text" name="title" maxlength="255" value="" class="form-control" placeholder="@lang("Enter Title")" ="">
+                                                <input type="text" name="title" maxlength="255" value="" class="form-control" placeholder="@lang('Enter Title')" >
                                             </div>
 
                                             {{-- Job Type --}}
@@ -212,7 +212,7 @@
                                                 <label>@lang('Project Length')*</label>
                                                     <div class="input-group mb-3">
                                                         <select name="project_length_id" class="form-control budget" id="project_length_id">
-                                                            <option selected="" disabled="">@lang('Select Project Length')</option>
+                                                            <option selected="" >@lang('Select Project Length')</option>
                                                                 @foreach($data['project_length'] as $item)
                                                                     <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                                                 @endforeach
@@ -224,7 +224,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Stage')*</label>
                                                 <select name="project_stage_id" class="form-control budget" id="project_stage_id">
-                                                    <option selected="" disabled="">@lang('Select Project Stage')</option>
+                                                    <option selected="" >@lang('Select Project Stage')</option>
                                                         @foreach($data['project_stages'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
@@ -232,13 +232,13 @@
                                             </div>
                                         </div>
                                         
-                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
+                                        <input type="hidden" value="{{route('buyer.job.validate')}}" id="job_validate_url">
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
-                                            <small>(Atlease One Skill is required)</small>
+                                            <small>(Atlease one skill is required)</small>
                                         </div>
-                                        <div id="form_attributes">
+                                        <div id="form_attributes" class="pt-1" >
                                             
                                         </div>
 
@@ -318,7 +318,7 @@
     function fetchSkills(category,sub_category=''){
         $.ajax({
             type:"GET",
-        url:"{{route('user.job.let.skills')}}",
+            url:"{{route('job.skills')}}",
             data: {category_id : category,sub_category_id:sub_category},
             success:function(data){
                 var html = '';
@@ -349,13 +349,13 @@
             var all_sub_categories=data[main_category];
             var main_category_id=genRand(5);
         
-            $('#form_attributes').append(' <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+            $('#form_attributes').append(' <div class="row pt-1"  id="'+main_category_id+'"><h5>'+main_category+'</h5>');
             for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                 var skills=all_sub_categories[sub_category_enum];
                 var sub_category_id=genRand(5);
 
-                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pb-3 ml-2"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
                 for (var skill_index in skills) {
                     
                     var skill_id=skills[skill_index].id;

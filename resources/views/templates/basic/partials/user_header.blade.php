@@ -24,17 +24,25 @@
                                         @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('job') }}"
-                                        @if (request()->routeIs('job')) class="active" @endif>@lang('Job')</a>
+                                    <a href="{{ route('seller.jobs.listing') }}"
+                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('user.buyer.dashboard') }}"
-                                        @if (request()->routeIs('user.buyer.dashboard')) class="active" @endif>@lang('Buyer')</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('user.home') }}"
-                                        @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
-                                </li>
+                                
+                                @if( getLastLoginRoleId() == APP\Models\Role::$Freelancer )
+
+                                    <li>
+                                        <a href="{{ route('user.home') }}"
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
+                                    </li>
+
+                                @elseif (getLastLoginRoleId() == APP\Models\Role::$Client)
+                                    
+                                    <li>
+                                        <a href="{{ route('user.home') }}"
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('BUYER')</a>
+                                    </li>
+
+                                @endif
                                 <li><a href="{{ route('user.conversation.inbox') }}"
                                         @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Inbox')</a></li>
                                 <li><a href="{{ route('ticket.open') }}"
@@ -86,18 +94,19 @@
                                         @endif
                                     @else
                                         @if (auth()->user()->getLanguagesMoreThanOneCount() &&
-    auth()->user()->getExperienceMoreThanOneCount() &&
-    auth()->user()->getSkillsMoreThanOneCount() &&
-    auth()->user()->getEduationMoreThanOneCount())
+                                                auth()->user()->getExperienceMoreThanOneCount() &&
+                                                auth()->user()->getSkillsMoreThanOneCount() &&
+                                                auth()->user()->getEduationMoreThanOneCount())
                                             <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                             </a>
-                                            <a href="{{ route('profile', auth()->user()->username) }}"
+                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.profile.view')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('View Profile')</span>
+                                                {{-- seller profile  --}}
                                             </a>
                                         @endif
                                     @endif

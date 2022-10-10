@@ -4,9 +4,9 @@
     $content = getContent('breadcrumbs.content', true);
 @endphp
 {{--  data-background="{{getImage('assets/images/frontend/breadcrumbs/'.$content->data_values->background_image,'1920x1200') }}" --}}
-<section class="account-section ptb-80 bg-overlay-white bg_img">
+<!-- <section class="account-section ptb-80 bg-overlay-white bg_img"> -->
     <div class="container">
-        <div class="row justify-content-center">
+        <!-- <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6">
                 <div class="account-form-area">
                     <div class="account-logo-area text-center">
@@ -54,9 +54,74 @@
                     </form>
                 </div>
             </div>
+        </div> -->
+        <!-- reset password modal form -->
+        <div
+            class="modal fade"
+            id="passwordReset"
+            tabindex="-1"
+            aria-labelledby="passwordResetLabel"
+            aria-hidden="true"
+            >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="account-logo-area text-center">
+                                    {{-- <div class="account-logo">
+                                        <a href="{{route('home')}}"><img src="{{getImage(imagePath()['logoIcon']['path'] .'/logo.png')}}" alt="{{__($general->sitename)}}"></a>
+                                    </div> --}}
+                                </div>
+                                <div class="account-header text-center">
+                                    <h2 class="title">@lang('Reset Password')</h2>
+                                </div>
+                                <form class="account-form" method="POST" action="{{ route('user.password.update') }}">
+                                    @csrf
+                                    <input type="hidden" name="email" value="{{ $email }}">
+                                    <input type="hidden" name="token" value="{{ $token }}">
+                                    <div class="row ml-b-20">
+                                        <div class="col-lg-12 form-group hover-input-popup">
+                                            <label for="password">@lang('Enter New Password')*</label>
+                                            <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter new password")">
+                                            @if($general->secure_password)
+                                                <div class="input-popup">
+                                                <p class="error lower">@lang('1 small letter minimum')</p>
+                                                <p class="error capital">@lang('1 capital letter minimum')</p>
+                                                <p class="error number">@lang('1 number minimum')</p>
+                                                <p class="error special">@lang('1 special character minimum')</p>
+                                                <p class="error minimum">@lang('6 character password')</p>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-lg-12 form-group">
+                                            <label>@lang('Confirm New Password')*</label>
+                                            <input type="password" class="form-control form--control" name="password_confirmation" required="" placeholder="@lang("Enter confirm password")">
+                                        </div>
+
+                                        <div class="col-lg-12 form-group text-center">
+                                            <button type="submit" class="submit-btn w-100">@lang('Submit')</button>
+                                        </div>
+
+                                        <div class="col-lg-12 text-center">
+                                            <div class="account-item mt-10">
+                                                <a href="{{ route('user.login') }}" class="text--base">@lang('Login Here')</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    <!-- reset password verify modal -->
     </div>
-</section>
+<!-- </section> -->
+
+    
 @endsection
 @push('style')
 <style>
@@ -136,6 +201,9 @@
 <script>
     (function ($) {
         "use strict";
+        $(document).ready(function(){
+            $("#passwordReset").modal('show');
+        });
         @if($general->secure_password)
             $('input[name=password]').on('input',function(){
                 secure_password($(this));

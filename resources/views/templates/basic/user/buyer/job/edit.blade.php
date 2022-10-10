@@ -7,7 +7,7 @@
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 page_div">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
-                    <form class="user-profile-form" action="{{route('user.job.update',$job->uuid)}}" method="POST" enctype="multipart/form-data" id="job_form_data">
+                    <form class="user-profile-form" action="{{route('buyer.job.update',$job->uuid)}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
                         <div class="card custom--card" style="background-color: #F8FAFA;">
                             <div class="d-flex flex-wrap align-items-center justify-content-between bottom_border_light" >
@@ -234,7 +234,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="hidden" value="{{route('user.job.validate')}}" id="job_validate_url">
+                                        <input type="hidden" value="{{route('buyer.job.validate')}}" id="job_validate_url">
                                         <input type="hidden" value="{{$data['documents']}}" name="job_documents" id="job_documents" >
                                         <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
                                         
@@ -242,7 +242,7 @@
                                         
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
-                                            <small>(Atlease One Skill is required)</small>
+                                            <small>(Atlease one skill is required)</small>
                                         </div>
                                         
                                         <div id="form_attributes">
@@ -372,7 +372,7 @@
     function fetchSkills(category,sub_category=''){
         $.ajax({
             type:"GET",
-        url:"{{route('user.job.let.skills')}}",
+            url:"{{route('job.skills')}}",
             data: {category_id : category,sub_category_id:sub_category},
             success:function(data){
                 var html = '';

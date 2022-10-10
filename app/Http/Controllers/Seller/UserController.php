@@ -18,8 +18,10 @@ use App\Models\FavoriteItem;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Booking;
+use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
+use App\Models\Role;
 use App\Models\Skills;
 use App\Models\SkillSubCategory;
 use App\Models\User;
@@ -43,23 +45,7 @@ class UserController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function home()
-    {
-        $user = Auth::user();
-        $pageTitle = 'Dashboard';
-        $emptyMessage = "No data found";
-        $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
-        $totalService = Service::where('user_id', $user->id)->count();
-        $totalSoftware = Software::where('user_id', $user->id)->count();
-        $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('service_id')->count();
-        $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('software_id')->count();
-        $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
-        return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
-    }
+   
 
     public function profile()
     {
@@ -689,17 +675,15 @@ class UserController extends Controller
     {
 
 
-        $user = User::findOrFail(auth()->id());
-        $filename = '';
-        // @todo create a seperate request validate class
+        try {
+            $user = User::findOrFail(auth()->id());
+            $filename = '';
 
-        if ($request->hasFile('company_logo')) {
-            $location = imagePath()['profile']['user']['path'];
-            $size = imagePath()['profile']['user']['size'];
-            $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
-        }
-
-        \DB::transaction(function () use($request, $filename, $user) {
+            if ($request->hasFile('company_logo')) {
+                $location = imagePath()['profile']['user']['path'];
+                $size = imagePath()['profile']['user']['size'];
+                $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+            }
 
             if(empty($filename)) {
                 $filename = $user->company->logo ?? '';
@@ -720,9 +704,27 @@ class UserController extends Controller
                 'linkedin_url' => $request->get('linkedin_url'),
                 'facebook_url' => $request->get('facebook_url')
             ]));
-        });
+        
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        } catch (\Throwable $th) {
 
-        $notify[] = ['success', 'Successfully Updated Profile.'];
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            
+        }
+        
+    }
+    public function seller_profile(){
+        try {
+            $pageTitle = 'Seller Profile';
+            $skills = Skills::select('id','name')
+                ->get();
+            return   view($this->activeTemplate.'seller.seller_profile',compact('pageTitle','skills'));
+        }
+        catch (\Exception $e){
+            return $e->getMessage();
+        }
+
     }
 }

@@ -19,5 +19,13 @@ class DatabaseSeeder extends Seeder
         $this->call(ModuleSeeder::class);
         $this->call(ModuleSeeder::class);
         $this->call(SkillCategorySeeder::class);
+        $this->call(ProposalSeeder::class);
+        $this->call(ProposalAttachmentSeeder::class);
+        $this->call(ServiceFeeSeeder::class);
+        $this->call(DeliveryModesSeeder::class);
+        $this->call(milestoneSeeder::class);
+        $this->call(DegreeSeeder::class);
+        
+
     }
 }

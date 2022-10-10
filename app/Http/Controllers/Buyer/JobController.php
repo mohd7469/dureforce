@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\DOD;
 use App\Models\JobType;
 use App\Models\Module;
@@ -17,6 +18,8 @@ use App\Models\SkillSubCategory;
 use App\Models\TaskDocument;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\User;
+use App\Models\Proposal;
 use Carbon\Carbon;
 use App\Models\GeneralSetting;
 use App\Models\ProjectLength;
@@ -80,7 +83,7 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod', 'status')->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod', 'status','proposal')->latest()->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
@@ -98,6 +101,7 @@ class JobController extends Controller
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'project_stage_id' => 'exists:project_stages,id',
+            'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
             'deliverables' => 'required|array',
@@ -175,15 +179,13 @@ class JobController extends Controller
                         $job->documents()->save($document);
 
                     } catch (\Exception $exp) {
-                        $notify[] = ['error', 'Image could not be uploaded.'];
-                        return back()->withNotify($notify);
+                        return response()->json(["error" => $exp->getMessage()]);;
                     }
 
                 }
             }
-
             DB::commit();
-            return response()->json(["redirect" => 'index', "message" => "Successfully Saved"]);
+            return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -285,7 +287,7 @@ class JobController extends Controller
             }
 
             DB::commit();
-            return response()->json(["redirect" => '/user/buyer/job/index', "message" => "Job Successfully Updated"]);
+            return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
@@ -350,49 +352,20 @@ class JobController extends Controller
         }
     }
 
-    public function getSkills(Request $request)
-    {
-        try {
-            $category = Category::where('id', $request->category_id)->with(['skill' => function ($q) use ($request) {
-                $q->when(isset($request->sub_category_id), function ($q) use ($request) {
-                    $q->where('sub_category_id', $request->sub_category_id);
-                });
-
-
-            }])->get();
-
-            $skill_categories = $category[0]->skill;
-            $skill_categories = collect($skill_categories)->groupBy('skill_categories.name');
-
-            $skills_with_categories = $skill_categories->map(function ($item, $key) {
-
-                $grouped_skills = ($item->groupby('skill_type'));
-
-                $result = $grouped_skills->map(function ($item, $key) {
-                    return $item->toArray();
-                });
-
-                return $result->toArray();
-
-            });
-            return response()->json($skills_with_categories);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-    }
+   
 
     public function singleJob($uuid){
         
 
-        $job = Job::where('uuid', $uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
+        $job = Job::where('uuid', $uuid)->withAll()->first();
         
         
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
-            // dd($skillCat);
 
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+         $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
@@ -450,31 +423,24 @@ class JobController extends Controller
         }
 
     }
-    public function proposal($uuid)
-    {
-        
-        
-        $proposal = Job::where('uuid',$uuid)->with(['category', 'status', 'rank', 'budgetType', 'deliverable', 'status', 'country','dod','documents','deliverable'])->first();
-        $skillCats = SkillCategory::select('name', 'id')->get();
-
-        foreach($skillCats as $skillCat){
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-        
-        }
-        
-        $pageTitle = "Proposal";
-
-        return view('templates.basic.jobs.proposal', compact('pageTitle','proposal','skills'));
-
-    }
+    
     public function product()
     {
         
-        
+        $proposals = Proposal::WithAll()->get();
         $pageTitle = "Product";
 
-        return view('templates.basic.jobs.product', compact('pageTitle'));
+        return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
 
     }
 
+    public function inviteFreelancer($job_uuid){
+
+        $freelancers = User::role('Freelancer')->with('skills','education','country','user_basic')->get();
+        //dd($freelancers);
+        $job=Job::where('uuid',$job_uuid)->first();
+        $pageTitle = "inviteProposal";
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job','freelancers'));
+
+    }
 }

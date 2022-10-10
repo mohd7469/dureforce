@@ -50,8 +50,13 @@ class Job extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents');
+        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
 
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active',1);
     }
 
     public function user()
@@ -112,6 +117,10 @@ class Job extends Model
     {
         return $this->hasMany(JobBiding::class, 'job_id');
     }
+    public function invite_freelaner()
+    {
+        return $this->hasMany(InviteFreelancer::class, 'job_id');
+    }
 
 
     public function commentCount()
@@ -145,5 +154,22 @@ class Job extends Model
         return  $this->hasOne(Country::class, 'id', 'country_id');
     }
 
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module')->withAll();
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
 
 }

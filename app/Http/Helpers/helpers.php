@@ -7,13 +7,22 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
+use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
+use App\Models\Degree;
+use App\Models\Job;
+use App\Models\Language;
+use App\Models\LanguageLevel;
+use App\Models\Proposal;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Khsing\World\Models\Language as ModelsLanguage;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -677,7 +686,8 @@ function sendEmail($user, $type = null, $shortCodes = [])
     if ($config->name == 'php') {
         sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'smtp') {
-        sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+        \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
+        //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
         sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'mailjet') {
@@ -1145,4 +1155,105 @@ function getFileExtension($file)
     $extension = strtolower($file->getClientOriginalExtension());
     return $extension;
 
+}
+
+
+function getMailCredentials()
+{
+    try {
+        $system_mail_config = SystemMailConfiguration::where('is_active', true)->first();
+        return $system_mail_config;
+    } catch (\Exception $exp) {
+        return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
+
+function getUserRoleId()
+{
+    if (auth()->user()) {
+        if (in_array(Role::$FreelancerName, auth()->user()->getRoleNames()->toArray())) {
+            return Role::$Freelancer;
+        } elseif (in_array(Role::$ClientName, auth()->user()->getRoleNames()->toArray())) {
+
+            return Role::$Client;
+        } else {
+            return null;
+        }
+
+    }
+    else {
+        return null;
+    }
+
+}
+function getLastLoginRoleId()
+{
+    $user=auth()->user();
+    return $user->last_role_activity;
+}
+
+function getNumberOfPropsals($uuid)
+{
+    $job=Job::where('uuid',$uuid)->first();
+    return $job->proposal()->count();
+}
+
+function getLanaguageName($id)
+{
+    return ModelsLanguage::where('id',$id)->first()->iso_language_name;
+}
+function getProficiencyLevelName($id)
+{
+    return LanguageLevel::where('id',$id)->first()->name;
+
+} 
+function getUserEducation($obj)
+{
+    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    $education= $obj->school_name.'  '. $degree_title.', '. $obj->field_of_study.' '.Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_enrolled)
+     $education.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+        $education.='-PRESENT';
+    return $education;
+}
+function getDegreeSession($obj)
+{
+    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_enrolled)
+     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+    $session.='-PRESENT';
+    return $session;
+}
+
+function getExperienceSession($obj)
+{
+    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    if(!$obj->is_working)
+     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+    else
+    $session.='-PRESENT';
+    return $session;
+}
+
+function getDegreetitle($obj)
+{
+    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    return $degree_title;
+
+}
+function getProposelBid($proposal,$job)
+{
+    $propsal_amount='';
+    $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
+    return '$'.$propsal_amount;
+    
+
+}
+
+function getFormattedDate($date,$format)
+{
+    return Carbon::parse($date)->format($format);
 }
