@@ -30,6 +30,7 @@
                                  </div>
                                  <input type="hidden" class="" id="freelancer_id" value="">
                                  <input type="hidden" class="" id="job_title" value="">
+                                 <input type="hidden" class="" id="id" value="">
                                  <div class="col-md-8">
                                      <div style="display: inline-flex;">
                                         
