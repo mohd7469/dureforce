@@ -331,7 +331,7 @@ button.standard-btn-sm-edit {
     color: #fff;
 }
 button.standard-btn-sm-exp{
-    padding: 11px 10px;
+    padding: 7px 10px;
     border: 0px solid #e1e7ec;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -584,4 +584,34 @@ blockquote::after {
     color: #80005f5e;
     font-size: 28px;
     font-weight: 700;
+}
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 600px;
+        margin: 1.75rem auto;
+    }
+}
+.modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+.section-heading-border{
+    border-bottom: 1px solid #C4C4C4;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+
+}
+.fa, .fas {
+    font-weight: 900;
+    margin-left: -6px !important;
+}
+.btn{
+    border-radius: 6px !important;
+}
+.add-more-lng-btn {
+    color: #7f007f !important;
+    
+}   
+.btn-save{
+    margin-left: 5px !important;
 }

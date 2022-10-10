@@ -1,10 +1,5 @@
 
-'use strict';
 
-$(document).ready(function() {
-    readmore();
-
-});
 function readmore() {
 
     $( "#clickme" ).click(function() {
@@ -16,26 +11,6 @@ function readmore() {
 
 
 
-
-
-
-
-    // var path = "/skills";
-    //
-    // $('#skills').typeahead({
-    //     name: 'skills',
-    //     limit: 10,
-    //     source: function(query, process){
-    //
-    //         return $.get(path, {query:query}, function(data){
-    //             return process(data);
-    //
-    //         });
-    //
-    //     },
-    //
-    //
-    // });
 
 
 

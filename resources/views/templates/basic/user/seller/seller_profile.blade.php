@@ -209,32 +209,37 @@
                                 </div>
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
-                                    <div class="row">
-                                        <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
-                                            
-                                            @foreach ($user_experience as $experience)
-
-                                                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
-                                                    <h4>{{ $experience->job_title }}</h4>
-                                                    <p class="short-text">{{ $experience->company_name }}</p>
-                                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
-                                                    <p class="short-text">{{getExperienceSession($experience)}}</p>
-                                                    <ul class="timeline">
-                                                        {{$experience->description}}
-                                                    </ul>
-                                                    <br>
-                                                </div>
-                                                    
-                                            @endforeach
-                                            
-                                        </div>
-                                            
-                                        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
-                                            <button type="button" class="standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
+                                    <div class="row section-heading-border justify-content-center align-items-center">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience" id="add-exp-btn">
                                                 Add Experience
                                             </button>
                                         </div>
-                                        
+                                    </div>
+                                    <div class="row mt-4">
+
+                                        @foreach ($user_experience as $experience)
+
+                                            <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
+                                                
+                                                <h4>{{ $experience->job_title }}</h4>
+                                                <p class="short-text">{{ $experience->company_name }}</p>
+                                                <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$experience->country->name}}</p><br/>
+                                                <p class="short-text">{{getExperienceSession($experience)}}</p>
+                                                <ul class="timeline">
+                                                    {{$experience->description}}
+                                                </ul>
+                                                <br>
+                                                
+                                            </div>
+                                                
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
+                                                <i class="fa fa-edit" onclick="editExperience({{$experience}})"></i>
+                                            </div>
+                                            
+                                        @endforeach
+                                      
                                     </div>
                                 </div>
                             </div>
@@ -296,6 +301,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
                                 <div class="container mt-5 mb-5">
                                     <div class="row">
@@ -331,8 +337,10 @@
                 </div>
             </div>
         </div>
-{{--      profile modal--}}
-    <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        {{--      profile modal--}}
+        <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            
             <div class="modal-dialog">
 
                 <div class="modal-content">
@@ -533,66 +541,94 @@
 
             </div>
         </div>
-    <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header editprofileheader">
-                    <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
-                    <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" id="form-basic-save">
-        
+        {{-- Add Experience Model --}}
+        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{route('seller.profile.experience.add')}}" id="experience_form" method="post">
+            
+                            @csrf
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Title *</label>
+                                        <input type="text" class="form-control" name="job_title" placeholder="Freelance DevOps Engineer" id="exp_job_title">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Company *</label>
+                                        <input type="text" class="form-control" name="company_name" placeholder="E.g. Microsoft" id="exp_company_name">
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    
+                                    <div class="form-group">
+                                        <label for="title">Location  *</label>
+                                        <select
+                                                name="country_id"
+                                                class="form-control"
+                                                id="exp_country_id"
+                                                >
+                                                
+                                                <option
+                                                    value=""
+                                                    selected=""
+                                                >
+                                                    Select Country
+                                                </option>
+                                                @foreach ($countries as $country)
+                                                <option
+                                                    value="{{$country->id}}"
+                                                    
+                                                >
+                                                    {{$country->name}}
+                                                </option>
+                                                @endforeach
+                                        </select>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Title *</label>
-                                    <input type="text" class="form-control" name="title" placeholder="Freelance DevOps Engineer">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" name="is_working" id="exp_is_working"  onclick="checkDate($(this), $('.experience-end-date'))">
+                                        <label class="form-check-label" for="flexCheckChecked">
+                                            I’m currently working here
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label for="startdate">Start Date *</label>
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date">
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label for="Language">End Date  *</label>
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date">
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="Description ">Description </label>
+                                        <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities" id="exp_description"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Company *</label>
-                                    <input type="text" class="form-control" name="company" placeholder="E.g. Microsoft">
-                                </div>
+                            <div class="row d-flex flex-row-reverse">
+
+                                <button type="submit" class="btn-save" id="exp-btn">Save</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
                             </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="title">Location  *</label>
-                                    <input type="text" class="form-control" name="Location" placeholder="Dublin, Ireland">
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                                    <label class="form-check-label" for="flexCheckChecked">
-                                        I’m currently working here
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="startdate">Start Date *</label>
-                                <input type="date" class="form-control" name="startdate" placeholder="Month, Year">
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="Language">End Date  *</label>
-                                <input type="date" class="form-control" name="enddate" placeholder="Month, Year">
-                            </div>
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label for="Description ">Description </label>
-                                    <textarea type="text" class="form-control" name="Description" >Describe your responsibilities</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-save">Save</button>
+
+                        </form>
+                    </div>
+                
                 </div>
             </div>
         </div>
-    </div>
 
 @endsection
 @push('script-lib')
@@ -601,200 +637,260 @@
 
 <script>
 
-"use strict";
-var languageRow = $('#language-row');
-var _languages = [];
-let _languages_levels = [];
-let _countries = [];
-let _degress = [];
-let user_basic_form=$('#form-basic-save');
-let row_index= $('#languages_basics').val();
+    "use strict";
+    var languageRow = $('#language-row');
+    var _languages = [];
+    let _languages_levels = [];
+    let _countries = [];
+    let _degress = [];
+    let user_basic_form=$('#form-basic-save');
+    let experience_form=$('#experience_form');
+    let row_index= $('#languages_basics').val();
+    let exp_btn=$('#exp-btn');
+    let add_exp_btn=$('#add-exp-btn');
+    $(document).ready(function() {
+        
+        readmore();
+        loadProfileBasicsData();
 
-$(document).ready(function() {
+        add_exp_btn.click(function(e){
+            experience_form.attr('action', "{{route('seller.profile.experience.add')}}");
+            experience_form[0].reset();
 
-    loadProfileBasicsData();
-    user_basic_form.submit(function (e) {
-        e.preventDefault();
-        e.stopPropagation(); 
-        saveUserBasic();
+        });
+
+        user_basic_form.submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            saveUserBasic();
+        });
+       
+        experience_form.submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            addExperience();
+        });
+
+        $("#skills").select2({
+            closeOnSelect: false
+        });
+
+        $("#user_category_id").select2({
+            closeOnSelect: false
+        });
+
+        $('#user_category_id').select2({
+            tags: true
+        });
+
+        $('#user_category_id').select2({
+            dropdownParent: $('#editprofile')
+        });
+
+        $('#skills').select2({
+            tags: true
+        });
+
+        $('#skills').select2({
+            dropdownParent: $('#editprofile')
+        });
+
     });
-    $("#skills").select2({
-        closeOnSelect: false
-    });
-    $("#user_category_id").select2({
-        closeOnSelect: false
-    });
 
-    $('#user_category_id').select2({
-        tags: true
-    });
+    function checkDate(parent, element) {
 
-    $('#user_category_id').select2({
-        dropdownParent: $('#editprofile')
-    });
+        if (parent.is(':checked')) {
+            element.val("DD/MM/YYYY");
+            element.attr("disabled", true);
+        }
+        if (!parent.is(':checked')) {
+            element.removeAttr("disabled");
+        }
 
-    $('#skills').select2({
-        tags: true
-    });
-
-    $('#skills').select2({
-        dropdownParent: $('#editprofile')
-    });
-
-});
-
-function displayErrorMessage(validation_errors)
-{
-    $('input,select,textarea').removeClass('error-field');
-    $('.select2').next().removeClass("error-field");
-    for (var error in validation_errors) { 
-        var error_message=validation_errors[error];
-
-        $('[name="'+error+'"]').addClass('error-field');
-        $('[id="'+error+'"]').addClass('error-field');
-        $('#'+error).next().addClass('error-field');
-
-        displayAlertMessage(error_message);
-
-    
     }
-}
-function displayAlertMessage(message)
-{
-    iziToast.error({
-    message: message,
-    position: "topRight",
-    });
-}
-function loadProfileBasicsData()
-{
+
+    function displayErrorMessage(validation_errors)
+    {
+        $('input,select,textarea').removeClass('error-field');
+        $('.select2').next().removeClass("error-field");
+        for (var error in validation_errors) { 
+            var error_message=validation_errors[error];
+
+            $('[name="'+error+'"]').addClass('error-field');
+            $('[id="'+error+'"]').addClass('error-field');
+            $('#'+error).next().addClass('error-field');
+
+            displayAlertMessage(error_message);
+
+        
+        }
+    }
+    function displayAlertMessage(message)
+    {
+        iziToast.error({
+        message: message,
+        position: "topRight",
+        });
+    }
+    function loadProfileBasicsData()
+    {
+            $.ajax({
+                type:"GET",
+                url:"{{route('profile.basics.data')}}",
+                success:function(data){
+                    
+                    _languages=data.languages;
+                    _languages_levels=data.language_levels;
+                    _countries=data.countries;
+                    _degress=data.degrees;
+
+                }
+            });  
+    }
+
+    function removerow(row_id)
+    {
+        var div_to_remove=row_id;
+        let is_confirm = confirm('Are you sure you want to remove this record ?');
+        if (is_confirm) {
+            $(div_to_remove).remove();
+        }
+    }
+
+    function saveUserBasic() {
+        // var profile_file=$('input[type=file]')[0].files[0];
+        let form_data = new FormData(user_basic_form[0]);
+        // form_data.append('profile_picture', profile_file);
+        // var form_data = user_basic_form.serialize();
+        console.log(form_data);
         $.ajax({
-            type:"GET",
-            url:"{{route('profile.basics.data')}}",
-            success:function(data){
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:"{{route('user.profile.basics.edit')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
+
+                if(response.success){
+                    notify('success', response.success);
+                    $('#editprofile').modal('hide');
+                    location.reload();
                 
-                _languages=data.languages;
-                _languages_levels=data.language_levels;
-                _countries=data.countries;
-                _degress=data.degrees;
+                }
+                else if(response.validation_errors){
+                    displayErrorMessage(response.validation_errors);
+                }
+                else{
+                    errorMessages(response.errors);
+                }
 
             }
-        });  
-}
-
-
-function removerow(row_id)
-{
-    var div_to_remove=row_id;
-    let is_confirm = confirm('Are you sure you want to remove this record ?');
-    if (is_confirm) {
-        $(div_to_remove).remove();
+        });
+        
     }
-}
 
-function saveUserBasic() {
-    // var profile_file=$('input[type=file]')[0].files[0];
-    let form_data = new FormData(user_basic_form[0]);
-    // form_data.append('profile_picture', profile_file);
-    // var form_data = user_basic_form.serialize();
-    console.log(form_data);
-    $.ajax({
-          type:"POST",
-          headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-          url:"{{route('user.profile.basics.edit')}}",
-          data: form_data,
-          processData: false,
-        contentType: false,
-          success:function(response){
+    function addExperience()
+    {
+        
+        let form_data = new FormData(experience_form[0]);
+        let route=experience_form.attr('action');
+        $.ajax({
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:route,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
 
-              if(response.success){
-                notify('success', response.success);
-                $('#editprofile').modal('hide');
-                location.reload();
-               
-              }
-              else if(response.validation_errors){
-                displayErrorMessage(response.validation_errors);
-              }
-              else{
-                errorMessages(response.errors);
-              }
+                if(response.success){
+                    notify('success', response.success);
+                    $('#addexperience').modal('hide');
+                    location.reload();
+                
+                }
+                else if(response.validation_errors){
+                    displayErrorMessage(response.validation_errors);
+                }
+                else{
+                    errorMessages(response.errors);
+                }
 
-          }
-      });
-     
-}
+            }
+        });
+    }
 
-function addMoreLanguages() 
-{
-    languageRow.append(`
-                        <div id="moreLanguage-row-`+row_index+`">
-                                    
-                            <div class="row" >
-                                <div class="col-md-6 col-sm-10">
-                                    <label class="mt-4">Language <span class="imp">*</span></label>
-                                    <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
-                                        <option value=""  selected="">
-                                        Spoken Language(s)
-                                        </option>
-                                    ${_languages?.map((language) => {
-                                        return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
-                                    })}
-                                    </select>
-                                </div>
-                                <div class="col-md-5 col-sm-10">
-                                    <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
-                                    <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
-                                        <option value=""   selected="">
-                                                                My Level is
-                                                                </option>
-                                        ${_languages_levels?.map((level) => {
-                                        return ` <option value="${level.id}"> ${level.name}</option>`;
+    function addMoreLanguages() 
+    {
+        languageRow.append(`
+                            <div id="moreLanguage-row-`+row_index+`">
+                                        
+                                <div class="row" >
+                                    <div class="col-md-6 col-sm-10">
+                                        <label class="mt-4">Language <span class="imp">*</span></label>
+                                        <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
+                                            <option value=""  selected="">
+                                            Spoken Language(s)
+                                            </option>
+                                        ${_languages?.map((language) => {
+                                            return ` <option value="${language.id}"> ${language.iso_language_name}</option>`;
                                         })}
-                                    </select>
-                                </div>
-                                <div class="col-md-1" style="margin-top:15px">
-                                    <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5 col-sm-10">
+                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                        <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
+                                            <option value=""   selected="">
+                                                                    My Level is
+                                                                    </option>
+                                            ${_languages_levels?.map((level) => {
+                                            return ` <option value="${level.id}"> ${level.name}</option>`;
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1" style="margin-top:15px">
+                                        <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
 
+                                    </div>
                                 </div>
-                            </div>
-                        </div>`                  
-                        );
-    row_index=row_index+1;
+                            </div>`                  
+                            );
+        row_index=row_index+1;
 
-}
+    }
+
+    function editExperience(experience_obj)
+    {
+        experience_form[0].reset();
+        var route="{{route('seller.profile.experience.edit',':id')}}";
+        route=route.replace(':id',experience_obj.id);
+        experience_form.attr('action', route);
+        $('#addexperience').modal('show');
+        $("#exp_job_title").val( experience_obj.job_title );
+        $('#exp_company_name').val(experience_obj.company_name);
+        $('#exp_start_date').val(experience_obj.start_date);
+
+        if(experience_obj.is_working ){
+
+            $('#exp_is_working').prop('checked',true);
+            $('#exp_end_date').prop('disabled',true);
+        }
+        else
+        {
+
+            $('#exp_end_date').val(experience_obj.end_date);
+            
+        }
+
+        $('#exp_description').html(experience_obj.description);
+        $('#exp_country_id option[value='+experience_obj.country_id+']').attr('selected','selected');
+    }
 
 </script>
 
-@endpush
-@push('style')
-<style>
-    @media (min-width: 576px){
-    .modal-dialog {
-        max-width: 600px;
-        margin: 1.75rem auto;
-    }
-    .modal-body{
-    max-height: calc(100vh - 200px);
-    overflow-y: auto;
-}
-    .fa, .fas {
-        font-weight: 900;
-        margin-left: -6px !important;
-    }
-    .btn{
-        border-radius: 6px !important;
-    }
-    .add-more-lng-btn {
-        color: #7f007f !important;
-        
-    }   
-    .btn-save{
-        margin-left: 5px !important;
-    }
-    
-}
-</style>
 @endpush
