@@ -16,6 +16,8 @@ Route::name('seller.')->group(function () {
                 Route::post('/education/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveEducation'])->name('education.save');
                 Route::post('/experience/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveExperience'])->name('experience.save');
                 Route::post('/experience/add', [\App\Http\Controllers\Seller\ProfileController::class,'addExperience'])->name('experience.add');
+                Route::post('/experience/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editExperience'])->name('experience.edit');
+                
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
                 Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view');
 

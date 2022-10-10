@@ -220,4 +220,48 @@ class ProfileController extends Controller
         }
     }
     
+    
+    /**
+     * editExperience
+     *
+     * @param  mixed $request
+     * @param  mixed $seller_experience_id
+     * @return void
+     */
+    public function editExperience(Request $request,$seller_experience_id)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'job_title'   => 'required',
+            'description' => 'required',
+            'company_name'=> 'required',
+            'country_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+   
+
+        try {
+            
+            $user = auth()->user();        
+            UserExperiences::find($seller_experience_id)->update(
+                $request->only(['job_title','description','company_name','country_id','start_date','end_date'])
+            );
+           
+            return response()->json(["success" => "User Experience Updated Successfully"], 200);
+
+        } catch (\Exception $exp) {
+
+            $notify[] = ['errors', 'Failled To Update Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
+    
 }

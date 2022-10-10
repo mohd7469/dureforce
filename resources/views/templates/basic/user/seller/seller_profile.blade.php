@@ -209,7 +209,7 @@
                                 </div>
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
-                                    <div class="row section-heading-border">
+                                    <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                                             <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience">
@@ -217,7 +217,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row mt-4">
 
                                         @foreach ($user_experience as $experience)
 
@@ -235,9 +235,9 @@
                                             </div>
                                                 
                                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
-                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-edit" onclick="editExperience({{$experience}})"></i>
                                             </div>
-                                               
+                                            
                                         @endforeach
                                       
                                     </div>
@@ -550,7 +550,7 @@
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="#" id="experience_form">
+                        <form action="{{route('seller.profile.experience.add')}}" id="experience_form" method="post">
             
                             @csrf
                             <div class="row">
@@ -776,17 +776,18 @@
         });
         
     }
+
     function addExperience()
     {
         
         let form_data = new FormData(experience_form[0]);
-        
+        let route=experience_form.attr('action');
         $.ajax({
             type:"POST",
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-            url:"{{route('seller.profile.experience.add')}}",
+            url:route,
             data: form_data,
             processData: false,
             contentType: false,
@@ -808,6 +809,7 @@
             }
         });
     }
+
     function addMoreLanguages() 
     {
         languageRow.append(`
@@ -847,41 +849,13 @@
 
     }
 
+    function editExperience(experience_obj)
+    {
+        let route={{route('seller.profile.experience.edit',1)}}
+        experience_form.attr('action', route);
+        $('#addexperience').modal('show');
+    }
+
 </script>
 
-@endpush
-@push('style')
-    <style>
-        @media (min-width: 576px){
-            .modal-dialog {
-                max-width: 600px;
-                margin: 1.75rem auto;
-            }
-        }
-        .modal-body{
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-        }
-        .section-heading-border{
-            border-bottom: 1px solid #C4C4C4;
-            margin-bottom: 5px;
-            padding-bottom: 5px;
-
-        }
-        .fa, .fas {
-            font-weight: 900;
-            margin-left: -6px !important;
-        }
-        .btn{
-            border-radius: 6px !important;
-        }
-        .add-more-lng-btn {
-            color: #7f007f !important;
-            
-        }   
-        .btn-save{
-            margin-left: 5px !important;
-        }
-        
-    </style>
 @endpush
