@@ -118,7 +118,7 @@
                             
                             <div id="profile" role="tabpanel"
                                 class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (App\Models\Role::$Freelancer=getLastLoginRoleId())
+                                @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
 
                                    @include($activeTemplate . 'profile.partials.user_profile')
                                 @else
@@ -126,7 +126,8 @@
                                 @endif
                             </div>
                            
-                            @if (App\Models\Role::$Freelancer==getLastLoginRoleId())
+                            @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
+
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'profile.partials.user_exp')
@@ -142,7 +143,7 @@
                                     @include($activeTemplate . 'profile.partials.user_skills')
                                 </div>
                             @else
-                            
+
                                 <div id="profile2" role="tabpanel"
                                     class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
                                     @include($activeTemplate . 'project_profile.partials.company')

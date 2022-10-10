@@ -20,7 +20,7 @@ class CreateUserPaymentsTable extends Migration
             $table->unsignedBigInteger('city_id')->index()->nullable();
             $table->string('card_number')->nullable();
             $table->date('expiration_date')->nullable();
-            $table->string('cvv_code')->unique()->nullable();
+            $table->string('cvv_code')->nullable();
             $table->string('name_on_card')->nullable();
             $table->longText('address')->nullable();
             $table->boolean('is_primary')->default(true)->nullable();
