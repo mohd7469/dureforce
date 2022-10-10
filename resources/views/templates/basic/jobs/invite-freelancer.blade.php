@@ -121,7 +121,7 @@
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
                                                     <a href="#" class="btn-products-s">Hire</a>
-                                                    <a class="btn-products-s phire inviteJobModal" data-bs-toggle="modal" data-bs-target="#inviteJobModal" data-id="{{ $freelancer->id }}" data-first_name="{{ $freelancer->first_name }}" data-last_name="{{ $freelancer->last_name }}" data-designation="{{ $freelancer->user_basic->designation  ?? ''}}" data-location="{{ $freelancer->country->name}}"  data-job="{{$job->title}}"  >Invite to job</a>
+                                                    <a class="btn-products-s phire inviteJobModal" data-bs-toggle="modal" data-bs-target="#inviteJobModal" data-id="{{ $freelancer->id }}" data-first_name="{{ $freelancer->first_name }}" data-last_name="{{ $freelancer->last_name }}" data-designation="{{ $freelancer->user_basic->designation  ?? ''}}" data-location="{{ $freelancer->country->name}}"  data-job="{{$job->title}}" data-id="{{$job->id}}">Invite to job</a>
                                                   
                                                 </div>
                                             </div>
@@ -499,6 +499,7 @@ p.plocation:before {
             var designation = $(this).data('designation');
             var location = $(this).data('location');
             var job = $(this).data('job');
+            var id = $(this).data('id');
             
 
             $(".modal-body #freelancer_id").val(freelancer_id);
@@ -507,6 +508,7 @@ p.plocation:before {
             $(".modal-body #designation").html(designation);
             $(".modal-body #location").html(location);
             $(".modal-body #job_title").val(job);
+            $(".modal-body #id").val(id);
             $(".modal-body #space").append(' ');
 
             

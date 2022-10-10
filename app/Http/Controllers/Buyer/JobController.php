@@ -439,7 +439,6 @@ class JobController extends Controller
         $freelancers = User::role('Freelancer')->with('skills','education','country','user_basic')->get();
         //dd($freelancers);
         $job=Job::where('uuid',$job_uuid)->first();
-    
         $pageTitle = "inviteProposal";
         return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job','freelancers'));
 
