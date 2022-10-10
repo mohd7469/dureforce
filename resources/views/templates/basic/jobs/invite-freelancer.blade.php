@@ -121,7 +121,7 @@
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
                                                     <a href="#" class="btn-products-s">Hire</a>
-                                                    <a class="btn-products-s phire inviteJobModal" data-bs-toggle="modal" data-bs-target="#inviteJobModal" data-id="{{ $freelancer->id }}" data-first_name="{{ $freelancer->first_name }}" data-last_name="{{ $freelancer->last_name }}" data-designation="{{ $freelancer->user_basic->designation  ?? ''}}" data-location="{{ $freelancer->country->name}}"  data-job="{{$job->title}}" data-id="{{$job->id}}">Invite to job</a>
+                                                    <a class="btn-products-s phire inviteJobModal" data-bs-toggle="modal" data-bs-target="#inviteJobModal" data-freelancerid="{{ $freelancer->id }}" data-first_name="{{ $freelancer->first_name }}" data-last_name="{{ $freelancer->last_name }}" data-designation="{{ $freelancer->user_basic->designation  ?? ''}}" data-location="{{ $freelancer->country->name}}"  data-job="{{$job->title}}" data-jobid="{{$job->id}}">Invite to job</a>
                                                   
                                                 </div>
                                             </div>
