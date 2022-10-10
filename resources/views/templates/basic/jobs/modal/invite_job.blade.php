@@ -11,6 +11,7 @@
             <div class="modal-content">
                 <!-- Modal body -->
                 <div class="modal-body">
+
                     <div class="container">
                         
                    
@@ -27,14 +28,28 @@
                                  <div class="col-md-4">
                                      <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                  </div>
+                                 <input type="hidden" class="" id="freelancer_id" value="">
+                                 <input type="hidden" class="" id="job_title" value="">
                                  <div class="col-md-8">
-                                     <h4 class="pname-c dev-name"> 
-                                       Travis.T
-                                     </h4>
-                                      <p class="pdesination-c">Full Stack Developer</p>  
+                                     <div style="display: inline-flex;">
+                                        
+                                        <h4 class="pname-c dev-name "id="first_name"> 
+                                            
+                
+                                        </h4>
+                                          <p id="space"></p>
+
+                                        <h4 class="pname-c dev-name"id="last_name" style="margin-left: 7px;"> 
+                                            
+                
+                                        </h4>
+                                     </div>
+                                     
+                                     
+                                      <p class="pdesination-c" id="designation">Full Stack Developer</p>  
                                      
                                         
-                                        <p class="plocation">Landon,Uk</p>
+                                        <p class="plocation" id="location">Landon,Uk</p>
                                   </div>
                                    
                                </div>
