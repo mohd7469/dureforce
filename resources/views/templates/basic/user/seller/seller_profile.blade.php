@@ -207,6 +207,7 @@
                                            </div>
                                     </div>
                                 </div>
+                            {{-- experience tab --}}
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
                                     <div class="row section-heading-border justify-content-center align-items-center">
@@ -217,7 +218,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row mt-4">
+                                    <div class="row mt-2">
 
                                         @foreach ($user_experience as $experience)
 
@@ -303,22 +304,36 @@
                             </div>
                             {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
+                                
                                 <div class="container mt-5 mb-5">
-                                    <div class="row">
+                                    
+                                    <div class="row section-heading-border justify-content-center align-items-center">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Education & Certificates</b></div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addeducation" id="add-edu-btn">
+                                                Add Education & Certificates
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                   
                                         {{-- Education --}}
                                         @foreach ($user_education as $education_obj)
-                                            <div class="col-xl-12 card-text-tab1 border-left">
+                                            <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
                                                 <h4>{{getDegreeTitle($education_obj)}}</h4>
                                                 <p class="short-text">{{$education_obj->school_name}}</p><br/>
                                                 <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
                                                 <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>  {{'location'}} </p><br/>
                                             </div>
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
+                                                <i class="fa fa-edit" onclick="editExperience({{$education_obj}})"></i>
+                                            </div>
                                         @endforeach
-                                        
-
-                                       
+                                                                               
                                     </div>
                                 </div>
+
                             </div>
                             <div class="tab-pane container fade" id="tes">
                                 <div class="row">
@@ -452,7 +467,7 @@
                                                     
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-12">
-                                                            <label class="mt-4">Language
+                                                            <label class="mt-2">Language
                                                             <span class="imp">*</span></label>
                                                             <select
                                                                 name="languages[{{$key}}][language_id]"
@@ -480,7 +495,7 @@
 
                                                         {{-- proficiency level --}}
                                                         <div class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12">
-                                                            <label class="mt-4"> Profeciency Level<span class="imp">*</span></label>
+                                                            <label class="mt-2"> Profeciency Level<span class="imp">*</span></label>
                                                         
                                                             <select
                                                                 name="languages[{{$key}}][language_level_id]"
@@ -629,6 +644,195 @@
                 </div>
             </div>
         </div>
+
+        {{-- Education Model --}}
+        {{-- <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Education</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{route('seller.profile.education.add')}}" id="education_form" method="post">
+            
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label 
+                                    >School /
+                                        College /
+                                        University
+                                        <span
+                                                class="imp"
+                                        >*</span
+                                        ></label
+                                    >
+    
+                                    <input
+                                            type="text"
+                                            name="school_name"
+                                            id="school_name"
+                                            placeholder="E.g. University Of Lo sdssdndon"
+                                    />
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label class="mt-2"
+                                    >Education
+                                        <span
+                                                class="imp"
+                                        >*</span
+                                        ></label
+                                    >
+                                    <input
+    
+                                            name="education"
+                                            id="education"
+                                            value=""
+                                            type="text"
+                                            placeholder="E.g. University Of London"
+                                    />
+                                </div>
+
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+    
+                                        <label class="mt-2">Degree <span class="imp">*</span></label>
+    
+                                        <select name="degree_id" class="form-control select-lang">
+                                            <option value="" selected=""> Select Degree</option>
+                                            @foreach ($degrees as $degree)
+                                                <option value="{{$degree->id}}" selected=""> {{ $degree->title }} </option>
+                                            @endforeach
+                                        </select>
+    
+                                    </div>
+    
+                                    <div class="col-md-6">
+                                        <label class="mt-2">Field Of Study <span class="imp">*</span>
+                                        </label>
+                                        <input
+                                                type="text"
+                                                name="field_of_study"
+                                                id="field_of_study"
+                                                placeholder="Visual Arts"/>
+                                    </div>
+    
+                                </div>
+
+                                <div class="col-md-12 mt-1">
+                                    <div
+                                            class="form-check"
+                                    >
+                                        <input
+                                                class="form-check-input check current-working-check"
+                                                onclick="checkDate($(this), $('.end-date-job-education'))"
+                                                type="checkbox"
+                                                name="isCurrent"
+                                                id="isCurrent"
+    
+                                        />
+                                        <label
+                                                class="form-check-label"
+                                                for="flexCheckDefault"
+                                        >I’m
+                                            currently
+                                            enroll
+                                            here</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <label class="mt-2"
+                                    >Dates Attended
+                                        <span
+                                                class="imp"
+                                        >*</span
+                                        ></label
+                                    >
+                                </div>
+
+                                <div class="row">
+                                    <div
+                                            class="col-md-6"
+                                    >
+                                        <label
+                                                for=""
+                                                class="mt-2"
+                                        >From Date
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+                                        <input
+                                                type="date"
+    
+                                                name="start_date"
+                                                id="start_date"
+                                                onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
+    
+                                        />
+                                    </div>
+                                    <div
+                                            class="col-md-6"
+                                    >
+                                        <label
+                                                for=""
+                                                class="mt-2 "
+                                        >To Date
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+                                        <input
+                                               class="end-date-job-education"
+                                                type="date"
+                                                name="end_date"
+                                                id="end_date"
+                                                onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
+                                                onchange="checkIfDateGreaterInsti($(this))"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <label class="mt-2"
+                                    >Description
+                                        <span
+                                                class="imp"
+                                        >*</span
+                                        ></label
+                                    >
+                                    <textarea
+                                            cols=""
+                                            rows="5"
+                                            name="description"
+                                            id="description"
+                                            placeholder="Add Description  "
+    
+                                    ></textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="row d-flex flex-row-reverse">
+
+                                <button type="submit" class="btn-save" id="exp-btn">Save</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                
+                </div>
+            </div>
+        </div> --}}
 
 @endsection
 @push('script-lib')
@@ -832,7 +1036,7 @@
                                         
                                 <div class="row" >
                                     <div class="col-md-6 col-sm-10">
-                                        <label class="mt-4">Language <span class="imp">*</span></label>
+                                        <label class="mt-2">Language <span class="imp">*</span></label>
                                         <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
                                             <option value=""  selected="">
                                             Spoken Language(s)
@@ -843,7 +1047,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5 col-sm-10">
-                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                        <label class="mt-2">Profeciency Level <span class="imp">*</span></label>
                                         <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
                                             <option value=""   selected="">
                                                                     My Level is

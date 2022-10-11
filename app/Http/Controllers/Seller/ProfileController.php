@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Degree;
 use App\Models\LanguageLevel;
 use App\Models\Skills;
 use App\Models\User;
@@ -175,7 +176,8 @@ class ProfileController extends Controller
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries'));
+        $degrees = Degree::select('id', 'title')->get();
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees'));
     }
     
     /**
@@ -220,7 +222,6 @@ class ProfileController extends Controller
         }
     }
     
-    
     /**
      * editExperience
      *
@@ -263,5 +264,81 @@ class ProfileController extends Controller
 
         }
     }
+        
+    /**
+     * addEducation
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function addEducation(Request $request)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'school_name'   => 'required',
+            'education' => 'required',
+            'field_of_study'=> 'required',
+            'description'  => 'required',
+            'degree_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            $user->education()->create($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date'));
+            return response()->json(["success" => "User Education Added Successfully"], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
     
+    /**
+     * editEducation
+     *
+     * @param  mixed $request
+     * @param  mixed $seller_education_id
+     * @return void
+     */
+    public function editEducation(Request $request,$seller_education_id)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'school_name'   => 'required',
+            'education' => 'required',
+            'field_of_study'=> 'required',
+            'description'  => 'required',
+            'degree_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            UserEducation::find($seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date'));
+            return response()->json(["success" => "User Education Updated Successfully"], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
 }
