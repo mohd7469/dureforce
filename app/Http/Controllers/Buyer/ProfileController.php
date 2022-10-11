@@ -40,7 +40,8 @@ class ProfileController extends Controller
     {
         $rules = [
             'email' => 'email',
-            'phone' => ['required', new PhoneNumberValidate],
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:8|max:13',
+            // 'phone' => ['required', new PhoneNumberValidate],
              'vat' => 'required|numeric|digits_between:1,30'
            
 
