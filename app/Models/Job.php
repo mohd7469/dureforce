@@ -117,6 +117,10 @@ class Job extends Model
     {
         return $this->hasMany(JobBiding::class, 'job_id');
     }
+    public function invite_freelaner()
+    {
+        return $this->hasMany(InviteFreelancer::class, 'job_id');
+    }
 
 
     public function commentCount()

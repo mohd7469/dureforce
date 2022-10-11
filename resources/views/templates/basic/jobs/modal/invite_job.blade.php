@@ -28,9 +28,9 @@
                                  <div class="col-md-4">
                                      <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                  </div>
-                                 <input type="hidden" class="" id="freelancer_id" value="">
-                                 <input type="hidden" class="" id="job_title" value="">
-                                 <input type="hidden" class="" id="id" value="">
+                                 <input type="hidden" class="" id="freelancerid" value="">
+                                 <input type="hidden" class="" id="job" value="">
+                                 <input type="hidden" class="" id="jobid" value="">
                                  <div class="col-md-8">
                                      <div style="display: inline-flex;">
                                         
@@ -40,7 +40,7 @@
                                         </h4>
                                           <p id="space"></p>
 
-                                        <h4 class="pname-c dev-name"id="last_name" style="margin-left: 7px;"> 
+                                        <h4 class="pname-c dev-name"id="last_name" style="margin-left: 7px;">
                                             
                 
                                         </h4>
@@ -61,7 +61,7 @@
                        
                     </div>
                 </div>
-                    <form class="account-form" method="POST">
+                    <form class="account-form" method="POST" action="{{route('buyer.job.save.invite.freelancer')}}">
                         @csrf
                         <div class="row ml-b-20">
                             {{-- <div class="form-group col-lg-7">
@@ -80,6 +80,8 @@
                                 <label for="exampleFormControlTextarea1">Message </label>
                                 <textarea class="form-control" id="textAreaExample1" rows="4"></textarea>
                             </div>
+{{--                            <input type="hidden" class="" id="id" value="">--}}
+
                             <div class="col-lg-6 form-group text-center">
                                 
                             </div>
