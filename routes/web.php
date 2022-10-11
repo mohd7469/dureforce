@@ -53,9 +53,9 @@ Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
-// Route::view('/add-project', 'templates.basic.portfolio.add_project');
-// Route::view('/add-details', 'templates.basic.portfolio.add_details');
-// Route::view('/add-preview', 'templates.basic.portfolio.add_preview');
+Route::view('/add-project', 'templates.basic.portfolio.add_project');
+Route::view('/add-details', 'templates.basic.portfolio.add_details');
+Route::view('/add-preview', 'templates.basic.portfolio.add_preview');
 
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
