@@ -14,11 +14,40 @@
 
         <!----== Sidebar Container End ==----->
 
+        <div class="row">
+          
+            <div class="col-md-6">
+                <h3>Add portfolio project</h3>
+                <label for="exampleInputEmail1">Project Title</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a brief  but description">
+            </div>
+            <div class="col-md-6">2</div>
+          </div>
+          <div class="row">
+          
+            <div class="col-md-6">
+                <p>Related DF Job (optional)
+                    Once you've completed contracts on DF, you'll be able to link your work.</p>
+            </div>
+            <div class="col-md-6"></div>
+          </div>
+          <div class="row">
+          
+            <div class="col-md-6">
+             
+                <label for="exampleInputEmail1">Completion Date (optional)</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mm/dd/yy">
+            </div>
+            
+          </div>
 
-
-
+          <div class="col-lg-6 form-group text-center">
+            <button type="submit" class="float-left" data-bs-dismiss="modal">Cancle</button>
+            <button type="submit" class="submit-btn w-80 float-right">Withdraw Offer</button>
+        </div>
         </div>    
         <!----== Client Info Section End ==----->
+       
 
 
     </div>
