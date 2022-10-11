@@ -586,15 +586,15 @@ blockquote::after {
     font-weight: 700;
 }
 @media (min-width: 576px){
-    .modal-dialog {
+    /* .modal-dialog {
         max-width: 600px;
         margin: 1.75rem auto;
-    }
+    } */
 }
-.modal-body{
+/* .modal-body{
     max-height: calc(100vh - 200px);
     overflow-y: auto;
-}
+} */
 .section-heading-border{
     border-bottom: 1px solid #C4C4C4;
     margin-bottom: 5px;
