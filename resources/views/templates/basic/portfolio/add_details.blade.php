@@ -13,9 +13,6 @@
         </div>
 
         <!----== Sidebar Container End ==----->
-<<<<<<< HEAD
-        
-=======
 
         
         <form class="user-profile-form" action="http://127.0.0.1:8000/buyer/job/store" method="POST" enctype="multipart/form-data" id="job_form_data">
@@ -196,7 +193,6 @@
                 </div>
             </div>
         </form>
->>>>>>> fed91b68092dfe2e5d7d5c71bc73692cd3e140eb
 
 
 
