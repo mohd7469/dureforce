@@ -91,7 +91,7 @@ class CommonProfileController extends Controller
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
             'about' => 'required|string',
-             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:8|max:13',
+             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             
             // 'phone_number' => ['required', new PhoneNumberValidate],
             'city_id' => 'required|exists:world_cities,id',
@@ -205,7 +205,7 @@ class CommonProfileController extends Controller
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
             'about' => 'required|string',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:8|max:13',
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             // 'phone_number' => ['required', new PhoneNumberValidate],
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
