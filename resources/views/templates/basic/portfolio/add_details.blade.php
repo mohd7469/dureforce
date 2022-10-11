@@ -13,7 +13,190 @@
         </div>
 
         <!----== Sidebar Container End ==----->
+<<<<<<< HEAD
         
+=======
+
+        
+        <form class="user-profile-form" action="http://127.0.0.1:8000/buyer/job/store" method="POST" enctype="multipart/form-data" id="job_form_data">
+              <div class="card custom--card"  style="background: #F8FAFA">
+                <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <h3 class="card-title mt-2 ml-2">
+                        Add Details
+                    </h3>
+                    
+                </div>
+
+                <div class="card-body pt-0">
+                    <div class="card-form-wrapper">
+                        <div class="justify-content-center">
+                            <div class="row">
+                                
+                                <div class="col-xl-6 col-lg-6 form-group mt-4">
+                                    <label></label>
+                                
+                                        <div id="dropzone">
+                                            <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
+                                                
+                                                <div>
+                                                    <div class="upload_icon">
+                                                        <img src="http://127.0.0.1:8000/assets/images/frontend/job/upload.svg" alt="">
+                                                        <img src="http://127.0.0.1:8000/assets/images/frontend/job/arrow_up.svg" alt="" class="upload_inner_arrow">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="dz-message "> 
+                                                    Drag or Drop to Upload   
+                                                    <span class="text text-primary ">
+                                                        Browse  
+                                                        
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                            
+                                </div>
+
+                                <div class="col-xl-6 col-lg-6 form-group">
+                                    <label>Or embed a video from Youtube or Vimeo</label>
+                                
+                                        <div id="dropzone">
+                                            <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
+                                                
+                                                <div>
+                                                    <div class="upload_icon">
+                                                        <img src="http://127.0.0.1:8000/assets/images/frontend/job/upload.svg" alt="">
+                                                        <img src="http://127.0.0.1:8000/assets/images/frontend/job/arrow_up.svg" alt="" class="upload_inner_arrow">
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="dz-message "> 
+                                                    Drag or Drop to Upload   
+                                                    <span class="text text-primary ">
+                                                        Browse  
+                                                        
+                                                    </span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                            
+                                </div>
+
+                            </div>
+                            
+                            <div class="row">
+                                
+
+                                
+                                <div class="col-md-6 pb-5">
+                                    <ul class="list-style">
+                                        <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</li>
+                                        <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</li>
+                                        <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</li>
+                                        <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</li>
+                                    </ul>
+                                </div>
+    
+                            </div>
+
+
+                            <div class="row">
+
+                                
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label>Skills and Deliverables (Optional)</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="kills and Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables" data-select2-id="select2-data-deliverables">
+                                                                                                        <option value="1">code</option>
+                                                                                                        <option value="2">figma</option>
+                                                                                                        <option value="3">ui/ux</option>
+                                                                                                        <option value="6">dev credentials</option>
+                                                                                                        <option value="7">qa credentials</option>
+                                                                                                    
+                                        </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="select2-data-7-ptg5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false"><ul class="select2-selection__rendered" id="select2-deliverables-container"></ul><span class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="-1" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" autocomplete="off" aria-describedby="select2-deliverables-container" placeholder="Select Deliverables" style="width: 100%;"></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row pb-5">
+                                
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                                   
+                                    <div class="col-md-7">
+                                        <label>Suggested Skills</label>
+                                        <ul class="skills-listing">
+                                        <li>ui design +</li>
+                                        <li>research +</li>
+                                        <li>data analytics +</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+
+
+                            <div class="row pb-3">
+
+                                
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                    <label>Project URL (Optional)</label>
+                                    <div class="input-group mb-3">
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables" data-select2-id="select2-data-deliverables">
+                                                                                                        <option value="1">code</option>
+                                                                                                        <option value="2">figma</option>
+                                                                                                        <option value="3">ui/ux</option>
+                                                                                                        <option value="6">dev credentials</option>
+                                                                                                        <option value="7">qa credentials</option>
+                                                                                                    
+                                        </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="select2-data-7-ptg5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false"><ul class="select2-selection__rendered" id="select2-deliverables-container"></ul><span class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="-1" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" autocomplete="off" aria-describedby="select2-deliverables-container" placeholder="Select Deliverables" style="width: 100%;"></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                
+                                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control bg--gray" name="description" aria-rowspan="3" spellcheck="false"></textarea>
+                                </div>
+
+                            </div>
+
+
+                            <input type="hidden" value="http://127.0.0.1:8000/buyer/job/job_data_validate" id="job_validate_url">
+                            <input type="checkbox" name="skills[]" style="display: none">
+                            <div style="display:inline;display:none" id="skills_heading">
+                                <h4 class="" style="display:inline">Job Attributes* </h4>
+                                <small>(Atlease one skill is required)</small>
+                            </div>
+                            <div id="form_attributes" class="pt-1">
+                                
+                            </div>
+
+                           
+                            
+                            
+                            <div id="outer" class="text-right">
+                                <div class="inner">
+                                    <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
+                                </div>
+                                <div class="inner">
+                                    <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Go to preview</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+>>>>>>> fed91b68092dfe2e5d7d5c71bc73692cd3e140eb
 
 
 
@@ -30,6 +213,35 @@
 @endsection
 @push('style')
 <style>
+    .list-style {
+        line-height: 40px;
+        list-style-type: disc;
+        font-size: 14px;
+        color: #808285;
+        margin-left: 20px
+    }
+    ul.skills-listing {
+        display: -webkit-inline-box;
+     
+    }
+    .list-style li::marker {
+        color: #58A7A7;
+        font-size: 1.7em;
+    }
+   
+    ul.skills-listing li {
+    float: left;
+    display: inline-block;
+    background: #58A7A7;
+    border-radius: 20px;
+    padding: 6px 22px;
+    margin-left: 10px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+    margin-right: 1%;
+    }
     .container{
         max-width:1390px;
         margin:0px auto;
@@ -92,6 +304,183 @@ ul.sidebar-nav li:nth-child(3) a {
 ul.sidebar-nav li:nth-child(4) a {
     background: url(/assets/images/job/password-icon.png) no-repeat;  
 }
+.dashboard-sidebar-inner {
+    background-color: #1e2746;
+    padding: 20px 0px;
+    border-radius: 2px !important;
+    height: 100%;
+}
+.cretae-job-btn{
+    
+    background: #7F007F !important;
+    border-radius: 5px;
+}
+#outer
+{
+    width:100%;
+    text-align: right;
+    padding-right: 7px;
+}
+.inner
+{
+    display: inline-block;
+}
+.cancel-job-btn{
+    color: #7F007F;
+    background-color: transparent
+}
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 2em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 150%;
+}
+.dropzone .dz-preview .dz-image {
+    border-radius: -51px;
+    overflow: hidden;
+    width: 64px;
+    height: 63px;
+    position: relative;
+    display: list-item;
+    z-index: 10;
+    margin-left: 5px;
+}
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 1em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 135%;
+}
+.dropzone .dz-preview {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    min-height: 100px;
+}
+.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
+    pointer-events: none;
+    opacity: 0;
+    z-index: 391;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -27px;
+    margin-top: -41px;
+}
+.select2Tag input{
+    background-color: transparent !important;
+    padding: 0 !important;
+}
+.inline{
+    display: inline-flex;
+    float:left;
+}
+
+.card-title{
+
+    color:#007f7f !important;
+    padding:10px;
+
+}
+.card {
+    
+    border: 0px !important;
+    border-radius: 0;
+}
+.card-body .custom-padding {
+    padding: 0rem 0rem !important;
+}
+
+.upload_icon{
+    position: absolute;
+    left: 13%;
+    right: 0%;
+    top: 50.78%;
+    bottom: 22%;
+
+}
+.upload_inner_arrow{
+    
+    position: absolute;
+    left: 3.15%;
+    right: 32.52%;
+    top: 38.12%;
+    bottom: 3.78%;
+}
+.dropzone {
+    
+    background: white;
+    border-radius: 5px;
+    height: 121px;
+    border: 2px dashed #CBDFDF;
+    border-image: none;
+    max-width: 500px;
+    min-height: 126px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.custom--card .card-body .card-form-wrapper input {
+    
+    background-color: white !important;
+    border-radius: 3px;
+    padding: 10px 15px;
+    
+}
+
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 1px solid #e1e7ec !important;
+    
+}
+.select2-container--default .select2-selection--multiple {
+    
+    background-color: white;
+    border: 1px solid #e1e7ec;
+   
+
+}
+
+.form-control {
+    border: 1px solid #e1e7ec;
+    font-size: 14px;
+    font-weight: 500;
+    height: 45px;
+    appearance: auto;
+    background-color: white !important;
+    
+}
+
+
+.hide{
+    display: none;
+}
+.dropzone .dz-preview .dz-details .dz-size {
+    margin-bottom: 1em;
+    font-size: 11px;
+}
+
+.dropzone .dz-preview .dz-progress {
+    opacity: 0;
+}
+
 </style>
 @endpush
 @push('script')
