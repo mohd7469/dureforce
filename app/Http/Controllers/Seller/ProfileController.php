@@ -331,7 +331,7 @@ class ProfileController extends Controller
         $user = auth()->user();        
 
         try {
-            UserEducation::find($seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date'));
+            UserEducation::where('id',$seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date','is_enrolled'));
             return response()->json(["success" => "User Education Updated Successfully"], 200);
 
         } catch (\Exception $exp) {
