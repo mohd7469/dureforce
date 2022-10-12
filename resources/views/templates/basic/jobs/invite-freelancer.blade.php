@@ -3,169 +3,150 @@
     @include('templates.basic.jobs.modal.invite_job')
 
     <section class="all-sections pt-3">
-        <div class="container-fluid p-max-sm-0">
-            <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
-                <article class="main-section">
-                    <div class="section-inner">
-                        <div class="item-section item-details-section">
-                            <div class="container single-jobc">
-                                <div class="allpropsel_container">
-                                    @include('templates.basic.jobs.breadcrum',['job_uuid' => $job->uuid])
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-12"></div>
-                                            <div class="col-md-3">
-                                                <h2 class="prosals-h">Invite Freelancers</h2>
-
-                                            </div>
-
-                                            <div class="col-md-9 sorting-mbl">
-                                                <div class="row">
-                                                    <!--Sorting Section Start-->
-                                                    <div class="col-md-4">
-                                                        <div id="custom-search-input">
-                                                            <div class="input-group">
-                                                                <input type="text" class="search-query form-control"
-                                                                       placeholder="Search"/>
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" disabled>
-                                                                        <span class="fa fa-search"></span>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-
+    <div class="container-fluid p-max-sm-0">
+            @include('templates.basic.jobs.breadcrum',['job_uuid' => $job->uuid])
+        <div class="sections-wrapper d-flex flex-wrap justify-content-center invite-container">
+                <div class="container network_wrapper col-sm ">
+                    <!-- Tabs navs -->
+                    <div class="card">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Search_tab">Search</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#Invited_Freelancers_tab">Invited Freelancers (2)</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#My_Hires_tab">My Hires (2)</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="card-body tab-content">
+                            <div class="tab-pane active" id="Search_tab">
+                                <div class="row card-text">
+                                    <div class="col-12"></div>
+                                        <div class="col-md-3">
+                                        <h2 class="prosals-h">Invited Freelancers</h2> 
+                                        </div>
+                                        <div class="col-md-9 sorting-mbl">
+                                            <div class="row">
+                                                <!--Sorting Section Start-->
+                                                <div class="col-md-4">
+                                                    <div id="custom-search-input">
+                                                        <div class="input-group">
+                                                            <input type="text" class="search-query form-control" placeholder="Search" />
+                                                            <span class="input-group-btn">
+                                                                <button type="button" disabled>
+                                                                    <span class="fa fa-search"></span>
+                                                                </button>
+                                                            </span>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-
-                                                        <form>
-                                                            <select name="Best match" id="bestmatch">
-                                                                <option>Best match</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                            </select>
-                                                        </form>
-                                                    </div>
-
-
-                                                    <!--Sorting Section End-->
-
-                                                    <div class="col-md-4">
-                                                        <form>
-                                                            <select name="Filters" id="Filters">
-                                                                <option>Filters</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                            </select>
-                                                        </form>
-                                                    </div>
-
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                        <select name="Best match" id="bestmatch">
+                                                            <option>Best match</option>
+                                                            <option>1</option>
+                                                            <option>1</option>
+                                                            <option>1</option>
+                                                            <option>1</option>
+                                                        </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select name="Filters" id="Filters">
+                                                        <option>Filters</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <!--Bio Profile Section Start-->
-
-
-                                        @foreach ($freelancers as $freelancer )
-
-
-
-                                            <div class="">
-                                                <div class="row biorow">
-                                                    <div class="col-md-3">
-                                                        <div class="row borderleftc">
-                                                            <div class="col-md-4">
-                                                                <img alt="User Pic"
-                                                                     src="/assets/images/job/profile-img.png"
-                                                                     id="profile-image1"
-                                                                     class="img-circle img-responsive">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <h4 class="pname-c">
-                                                                    {{$freelancer->first_name}} {{ $freelancer->last_name }}
-                                                                </h4>
-
-                                                                <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>
-
-
-                                                                <p class="plocation"> {{$freelancer->country->name}}</p>
-                                                            </div>
-
-                                                        </div>
+                                            </div>
+                                    </div>
+                                    @foreach ($freelancers as $freelancer )
+                                    <div class=""> 
+                                        <div class="row biorow">
+                                            <div class="col-md-3">
+                                                <div class="row borderleftc"> 
+                                                    <div class="col-md-4">
+                                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                     </div>
-
-                                                    <div class="col-md-5">
-                                                        <div class="row btns-per">
-                                                            <div class="col-md-4">
-                                                                <p class="rateperh">Rate Per Hour</p>
-                                                                <p class="rateperh">${{$freelancer->rate_per_hour}}</p>
-
-
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <p class="rateperh">Total Earnings</p>
-                                                                <p class="perhourprice">$120k + earned</p>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <p class="rateperh">Job Success Rate</p>
-                                                                <p class="perhourprice">90%</p>
-                                                            </div>
-                                                        </div>
+                                                    <div class="col-md-8">
+                                                        <h4 class="pname-c"> 
+                                                        {{$freelancer->first_name}} {{ $freelancer->last_name }}
+                                                            </h4>
+                                                            <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>  <p class="plocation"> {{$freelancer->country->name}}</p>
+                                                    </div> 
+                                                </div>
+                                                </div>
+                                            <div class="col-md-5">
+                                                <div class="row btns-per">
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Rate Per Hour</p>
+                                                        <p class="rateperh">${{$freelancer->rate_per_hour}}</p>
                                                     </div>
-
-                                                    <div class="col-md-3">
-                                                        <div class="row btns-s">
-                                                            {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                            <a href="{{route('seller.profile')}}"
-                                                               class="btn-products-s">View Profile</a>
-                                                            <a href="#" class="btn-products-s">Hire</a>
-                                                            <a class="btn-products-s phire inviteJobModal"
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Total Earnings</p>
+                                                        <p class="perhourprice">$120k + earned</p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <p class="rateperh">Job Success Rate</p>
+                                                        <p class="perhourprice">90%</p>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            <div class="col-md-3">
+                                                <div class="row btns-s">
+                                                    {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
+                                                    <a href="{{route('seller.profile')}}" class="btn-products-s">View Profile</a>
+                                                    <a href="#" class="btn-products-s">Hire</a>
+                                                    <a class="btn-products-s phire inviteJobModal"
                                                                data-bs-toggle="modal"
                                                                onclick="inviteJobModal({{$freelancer}},{{$job}},{{$freelancer->user_basic}},{{$freelancer->country}})">Invite to
                                                                 job</a>
-
-                                                        </div>
-                                                    </div>
                                                 </div>
-                                                <!--===  Bio Profile Section End ===-->
-
-                                                <!--Skills Section Start-->
-
-                                                <div class="row skills-c">
-                                                    <div class="col-md-7">
-
-                                                        <h2>Has relevant skills to your job</h2>
-                                                        <ul class="skills-listing">
-                                                            @foreach ($freelancer->skills as $skill )
-                                                                <li>{{$skill->name}}</li>
-                                                            @endforeach
-
-
-                                                        </ul>
-                                                    </div>
-                                                </div>
-
-                                                <!--Skills Section End-->
                                             </div>
-
-                                            <hr>
-                                        @endforeach
-
-
-                                    </div>
+                                        </div>
+                                        <!--===  Bio Profile Section End ===-->
+                                        <!--Skills Section Start-->
+                                        <div class="row skills-c">
+                                            <div class="col-md-7"> 
+                                                <h2>Has relevant skills to your job</h2>
+                                                <ul class="skills-listing">
+                                                    @foreach ($freelancer->skills as $skill )
+                                                    <li>{{$skill->name}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!--Skills Section End-->
+                                        </div> 
+                                    <hr>
+                                    @endforeach
                                 </div>
+                            <div class="tab-pane" id="Invited_Freelancers_tab">
+                                <p class="card-text text-center">
+                                <div class="d-flex align-items-center justify-content-center ">
+                                    <h3 class="display-1 fw-bold">Invited Freelancers Data Not Found</h3>
+                                </div>
+                                </p>
                             </div>
-                        </div>
-                </article>
-
-            </div>
+                            <div class="tab-pane" id="My_Hires_tab">
+                                <p class="card-text text-center">
+                                <div class="d-flex align-items-center justify-content-center ">
+                                    <h3 class="display-1 fw-bold">My Hires Data Not Found</h3>
+                                </div>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Tabs content -->
+                </div>
+                </div>
+    </div>
     </section>
-
     </div>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
@@ -173,6 +154,38 @@
     <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    .img-card{
+        margin-left: 22px;
+        margin-top: 12px;
+    }
+    .nav-link.active {
+        background: -o-linear-gradient(left, #1c6a6a 0%, #1c6a6a 100%) !important;
+        background: linear-gradient(to right, #1c6a6a 0%, #1c6a6a 100%) !important;
+    }
+    .nav-tabs {
+        margin: 0px !important;
+        border-bottom: 1px solid #e1e7ec;
+    }
+    .card-header {
+        padding: 0.8rem 1rem !important;
+        margin-bottom: 0 !important;
+        background-color: rgba(0,0,0,0) !important;
+        border-bottom: 0px solid rgba(0,0,0,.125) !important;
+    }
+    .invite-container {
+        border: 1px solid #CBDFDF;
+        padding: 0px 0px 0px 0px;
+    }
+    .container {
+        width: 100%;
+        padding: 0px !important;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .card {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
     .attachment {
         display: inline-block;
         width: 100%;
@@ -557,34 +570,24 @@
                             </div>
                             <hr>
 
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1"
-                                             class="img-circle img-responsive">
+                                             class="img-circle img-responsive img-card">
                                     </div>
                                     <input type="hidden" class="" id="freelancerid" value="">
                                     <input type="hidden" class="" id="job" value="">
                                     <input type="hidden" class="" id="jobid" value="">
-                                    <div class="col-md-8">
+                                    <div class="col-md-10">
                                         <div style="display: inline-flex;">
-
                                             <h4 class="pname-c dev-name " id="freelancer_first_name">
-
-
                                             </h4>
                                             <p id="space"></p>
-
                                             <h4 class="pname-c dev-name" id="freelancer_last_name" style="margin-left: 7px;">
-
-
                                             </h4>
                                         </div>
-
-
                                         <p class="pdesination-c" id="freelancer_designation"></p>
-
-
                                         <p class="plocation" id="freelancer_location"></p>
                                     </div>
 
