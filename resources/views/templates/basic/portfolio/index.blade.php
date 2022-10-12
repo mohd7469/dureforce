@@ -225,6 +225,9 @@
             top: 21px;
             background-size: 20px;
         }
+        .nav-tabs{
+            border-bottom: none;
+        }
         
             .sidebar-nav li a {
                 font-weight: 600;
