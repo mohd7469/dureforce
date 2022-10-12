@@ -731,92 +731,92 @@
     </script>
 @endpush
 @push('script')
-<script>
-    function inviteJobModal(freelancer,job,user_basic,country) {
+    <script>
+        function inviteJobModal(freelancer,job,user_basic,country) {
 
-        inviteJobForm[0].reset();
-        var route="{{route('buyer.job.save.invite.freelancer',':id')}}";
-        route=route.replace(':id',job.id);
-        inviteJobForm.attr('action', route);
-        user_id = freelancer.id;
-        document.getElementById('user_id').value = user_id;
-
-
-        $("#freelancer_first_name").html(freelancer.first_name);
-        $('#freelancer_last_name').html(freelancer.last_name);
-        $('#freelancer_designation').html(user_basic.designation);
-        $('#freelancer_location').html(country.name);
-        $('#inviteJobModal').modal('show');
+            inviteJobForm[0].reset();
+            var route="{{route('buyer.job.save.invite.freelancer',':id')}}";
+            route=route.replace(':id',job.id);
+            inviteJobForm.attr('action', route);
+            user_id = freelancer.id;
+            document.getElementById('user_id').value = user_id;
 
 
-    }
+            $("#freelancer_first_name").html(freelancer.first_name);
+            $('#freelancer_last_name').html(freelancer.last_name);
+            $('#freelancer_designation').html(user_basic.designation);
+            $('#freelancer_location').html(country.name);
+            $('#inviteJobModal').modal('show');
+
+
+        }
 
 
 
 
-</script>
+    </script>
 @endpush
 @push('script')
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
 
-        inviteJobForm.submit(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            addJobInvitation();
+            inviteJobForm.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                addJobInvitation();
+            });
+
+
+
         });
 
 
+        function addJobInvitation()
+        {
 
-    });
+            let form_data = new FormData(inviteJobForm[0]);
+            let route=inviteJobForm.attr('action');
+            $.ajax({
+                type:"POST",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:route,
+                data: form_data,
+                processData: false,
+                contentType: false,
+                success:function(response){
 
+                    if(response.success){
+                        notify('success', response.success);
+                        $('#inviteJobForm').modal('hide');
+                        location.reload();
 
-    function addJobInvitation()
-    {
-
-        let form_data = new FormData(inviteJobForm[0]);
-        let route=inviteJobForm.attr('action');
-        $.ajax({
-            type:"POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            url:route,
-            data: form_data,
-            processData: false,
-            contentType: false,
-            success:function(response){
-
-                if(response.success){
-                    notify('success', response.success);
-                    $('#inviteJobForm').modal('hide');
-                    location.reload();
+                    }
+                    else if(response.error){
+                        displayAlertMessage(response.error);
+                    }
+                    else{
+                        errorMessages(response.errors);
+                    }
 
                 }
-                else if(response.error){
-                    displayAlertMessage(response.error);
-                }
-                else{
-                    errorMessages(response.errors);
-                }
+            });
+        }
 
-            }
-        });
-    }
-
-    function displayAlertMessage(message)
-    {
-        iziToast.error({
-            message: message,
-            position: "topRight",
-        });
-    }
-    function errorMessages(errors)
-    {
-        $.each(errors, function(i, val) {
-            notify('error', val);
-        });
-    }
-</script>
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+                message: message,
+                position: "topRight",
+            });
+        }
+        function errorMessages(errors)
+        {
+            $.each(errors, function(i, val) {
+                notify('error', val);
+            });
+        }
+    </script>
 @endpush

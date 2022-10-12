@@ -1240,7 +1240,7 @@ function getExperienceSession($obj)
 
 function getDegreetitle($obj)
 {
-    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    $degree_title=Degree::find($obj->degree_id)->title;
     return $degree_title;
 
 }
