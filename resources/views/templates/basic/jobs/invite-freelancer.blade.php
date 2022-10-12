@@ -15,7 +15,7 @@
                                         <div class="row">
                                             <div class="col-12"></div>
                                             <div class="col-md-3">
-                                                <h2 class="prosals-h">Invited Freelancers</h2>
+                                                <h2 class="prosals-h">Invite Freelancers</h2>
 
                                             </div>
 
