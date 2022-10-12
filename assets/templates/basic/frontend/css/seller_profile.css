@@ -342,7 +342,7 @@ button.standard-btn-sm-exp{
     font-size: 14px;
     background-color: #7f007f;
     color: #fff;
-    width: 9rem;
+    
 }
 .profile .sep-solid {
     border-top: 1px solid #c5e0e0;
@@ -416,7 +416,7 @@ button.standard-btn-sm-exp{
     border-radius:11.25rem;
 
 }
-#addexperience .btn-save {
+#addexperience .btn-save,#addeducation .btn-save {
     background-color: #7f007f;
     border-radius: 5px;
     border: 1px solid #7f007f;
@@ -425,14 +425,14 @@ button.standard-btn-sm-exp{
     font-size: 13px;
     width: 5rem !important;
 }
-#addexperience .btn-cancel {
-    color:  #7F007F ;
+#addexperience .btn-cancel,#addeducation .btn-cancel {
+    color:   #7F007F ;
     padding: 6px 2px;
     font-size: 13px;
     width: 5rem !important;
 }
 
-#addexperience .btnclose
+#addexperience .btnclose ,#addeducation .btnclose
 {
     box-sizing: content-box;
     width: 1em;
@@ -586,15 +586,16 @@ blockquote::after {
     font-weight: 700;
 }
 @media (min-width: 576px){
-    /* .modal-dialog {
+    .modal-dialog {
         max-width: 600px;
         margin: 1.75rem auto;
-    } */
+    }
 }
-/* .modal-body{
+.modal-body{
     max-height: calc(100vh - 200px);
     overflow-y: auto;
-} */
+    padding-top: 16px !important;
+}
 .section-heading-border{
     border-bottom: 1px solid #C4C4C4;
     margin-bottom: 5px;
