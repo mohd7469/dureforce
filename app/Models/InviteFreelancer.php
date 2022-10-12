@@ -38,4 +38,9 @@ class InviteFreelancer extends Model
     {
         return $this->belongsTo(Job::class, 'job_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class)->with(['user_basic','country','skills']);
+    }
 }
