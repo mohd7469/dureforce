@@ -105,8 +105,8 @@
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
-                                                         <p class="rateperh">${{$invited_freelancers->user->rate_per_hour}}</p>
-                                                        <p class="perhourprice">$55 / Per Hour</p>
+
+                                                        <p class="perhourprice">${{$invited_freelancers->user->rate_per_hour}}</p>
                                                         
                                                         
                                                         
