@@ -15,7 +15,7 @@
                 <p class="rl-d">Related DF Job (optional) <br />
                     Once you've completed contracts on DF, you'll be able to link your work.</p>
             </div>
-            <div class="col-md-6"></div>
+            
           </div>
           <div class="row">
           
@@ -24,13 +24,18 @@
                 <label for="exampleInputEmail1">Completion Date (optional)</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mm/dd/yy">
             </div>
+            <div class="col-md-6">
+                <div class="btns-addp">
+                    <button type="submit" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
+                    <button type="submit" class="submit-btn w-80 float-right">Go to Add Details</button>
+                </div>
+
+            </div>
+            
             
           </div>
 
-          <div class="btns-addp">
-            <button type="submit" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
-            <button type="submit" class="submit-btn w-80 float-right">Go to Add Details</button>
-        </div>
+          
         </div> 
 
 
@@ -73,9 +78,9 @@ p.rl-d {
     .btns-addp {
         width: 276px;
         float: right;
-        position: absolute;
-        bottom: 48px;
-        right: 48px;
+        margin-top: 150px;
+        bottom: -15px;
+        right:15px;
     }
     button.float-left.cncl-btn {
     font-weight: 600;

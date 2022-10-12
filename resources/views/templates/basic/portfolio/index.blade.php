@@ -12,7 +12,7 @@
                         @include('templates.basic.portfolio.side_nav')
                         <!-- Content -->
 
-                        <div class="col-12 col-md-9 p-0">
+                        <div class="col-12 col-md-10 p-0">
                             <div class="tab-content">
                                 <div id="addProject" role="tabpanel" class="tab-pane active">
                                     @include('templates.basic.portfolio.add_project')
@@ -188,7 +188,7 @@
             }
             /*******Sidebar start********/
             .sidebar-custom{
-                height: 100%;
+                height: 100% !important;
                 float: left;
                 display: inline-block;
                 height: 1132px;
@@ -233,7 +233,7 @@
                 color: #808285;
                 width: 100%;
                 display: inline-block;
-                padding: 23px 10px 23px 50px;
+                padding: 23px 10px 23px 40px;
                 text-decoration: none;
                 
                 background-size: 31px;
@@ -245,12 +245,14 @@
             background-size: 26px;
         }
         ul.sidebar-nav li:nth-child(2) a {
-            background: url(/assets/images/job/edit-1.png) no-repeat;  
-            background-size: 26px;  
+            background: url(/assets/images/job/details.png) no-repeat !important;
+            background-size: 25px !important;
+            background-position: left center !important;  
         }
         ul.sidebar-nav li:nth-child(3) a {
-            background: url(/assets/images/job/edit-1.png) no-repeat;  
-            background-size: 26px;
+            background: url(/assets/images/job/tick.png) no-repeat;  
+            background-size: 24px !important;
+            background-position: left center !important;  
         }
         ul.sidebar-nav li:nth-child(4) a {
             background: url(/assets/images/job/password-icon.png) no-repeat;  
@@ -272,6 +274,17 @@
             text-align: right;
             padding-right: 7px;
         }
+        #viewport{
+            padding: 0px;
+        }
+        .col-md-2.nopadding {
+    padding-right: 0px;
+}
+        .account-section {
+            background: #F8FAFA;
+        }
+
+
         .inner
         {
             display: inline-block;
@@ -430,6 +443,13 @@
         
         .dropzone .dz-preview .dz-progress {
             opacity: 0;
+        }
+
+        /************/
+        @media only screen and (max-width:767px){
+            .sidebar-custom{
+                width: 100% !important;
+            }
         }
         
         </style>
