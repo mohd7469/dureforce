@@ -125,7 +125,7 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="#" class="btn-products-s3">Decline</a>
+
                                                     <a href="#" class="btn-products-s3 phire">Hire</a>
                                                     
                                                   
