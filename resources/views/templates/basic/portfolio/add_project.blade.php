@@ -13,20 +13,20 @@
         </div>
 
         <!----== Sidebar Container End ==----->
-
+        <div class="right-container-c">
         <div class="row">
           
             <div class="col-md-6">
-                <h3>Add portfolio project</h3>
+                <p class="title-c">Add portfolio project</p>
                 <label for="exampleInputEmail1">Project Title</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a brief  but description">
             </div>
-            <div class="col-md-6">2</div>
+            
           </div>
           <div class="row">
           
             <div class="col-md-6">
-                <p>Related DF Job (optional)
+                <p class="rl-d">Related DF Job (optional) <br />
                     Once you've completed contracts on DF, you'll be able to link your work.</p>
             </div>
             <div class="col-md-6"></div>
@@ -41,11 +41,12 @@
             
           </div>
 
-          <div class="col-lg-6 form-group text-center">
-            <button type="submit" class="float-left" data-bs-dismiss="modal">Cancle</button>
-            <button type="submit" class="submit-btn w-80 float-right">Withdraw Offer</button>
+          <div class="btns-addp">
+            <button type="submit" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
+            <button type="submit" class="submit-btn w-80 float-right">Go to Add Details</button>
         </div>
-        </div>    
+        </div> 
+    </div>   
         <!----== Client Info Section End ==----->
        
 
@@ -59,6 +60,65 @@
 @endsection
 @push('style')
 <style>
+
+    /*********/
+    .form-control {
+    border: 1px solid #e1e7ec;
+    font-size: 14px;
+    font-weight: 500;
+    height: 45px;
+    appearance: auto;
+    background-color: #f9f9f9;
+    width: 351px;
+    height: 37px;
+    left: 219px;
+    top: 219px;
+    background: #FFFFFF;
+    border: 1px solid #CBDFDF;
+    border-radius: 4px;
+}
+p.rl-d {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    padding: 21px 0px 40px 0px;
+}
+.right-container-c {
+        background: #F8FAFA;
+        padding: 27px 21px;
+        display: inline-block;
+        width: 80%;
+        height: 551px;
+        position: relative;
+    }
+    .btns-addp {
+        width: 276px;
+        float: right;
+        position: absolute;
+        bottom: 48px;
+        right: 48px;
+    }
+    button.float-left.cncl-btn {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7F007F;
+    background: transparent;
+    margin-top: 10px;
+    margin-right: 21px;
+}
+.title-c {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+    margin-bottom: 40px;
+}
+
+
+
+    /********/
     .container{
         max-width:1390px;
         margin:0px auto;
@@ -68,13 +128,17 @@
         width: 100%;
         display: inline-block;
     }
+    
+
+
     .sidebar-custom{
-        max-width: 230px; 
+        max-width: 20%; 
         width:20%;
         float: left;
         display: inline-block;
-        height: 1059px;
-        background: #E6EEEE;
+        height: 551px;
+        background: #FFFFFF;
+        box-shadow: 1px 1px 10px 4px rgba(0, 0, 0, 0.05);
         border-radius: 3px 0px 0px 3px;
         padding: 28px 21px;
     }
