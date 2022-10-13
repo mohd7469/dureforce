@@ -22,9 +22,9 @@
                                     @include('templates.basic.portfolio.add_detail')
                                 </div>
 
-                                <div id="addPreview" role="tabpanel" class="tab-pane">
+                                {{-- <div id="addPreview" role="tabpanel" class="tab-pane">
                                     @include('templates.basic.portfolio.add_preview')
-                                </div>
+                                </div> --}}
 
                             </div>
                         </div>

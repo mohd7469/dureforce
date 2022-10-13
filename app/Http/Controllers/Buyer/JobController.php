@@ -69,7 +69,7 @@ class JobController extends Controller
 
     public function create(Request $request)
     {
-
+    
         $pageTitle = "Create Job";
         $data = $this->getJobData();
 

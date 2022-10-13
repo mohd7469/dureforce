@@ -17,7 +17,8 @@
                             <div id="dropzone">
                                 <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
                                     <div class="dz-message "> 
-                                        Drag or Drop to Upload <a href="#">Browse</a>  
+                                        Drag or Drop to Upload <a href="#">
+                                            <span class="text text-primary ">Browse</span></a>  
                                         </span>
                                     </div>
                                 </div>
@@ -25,11 +26,17 @@
                 
                     </div>
 
-                    <div class="col-xl-6 col-lg-6 form-group">
+                    <div onclick="toggle_div_fun('sectiontohide');" class="col-xl-6 col-lg-6 form-group"> 
+                       
                         <p class="h-cs">Or embed a video from Youtube or Vimeo</p>
-                            <a  href="#" class="upload-video "> 
+                      
+                            <a href="#" class="upload-video"> 
                                 Add Video Link  
                             </a>
+                            
+                            <input class="video-url" id="sectiontohide" type="text" placeholder="Add Video Link" style="display: none">
+                        
+                       
                     </div>
 
                 </div>
@@ -132,3 +139,25 @@
     </div>
   </div>
 </form>
+<style>
+    .video-url{
+        margin-top: 10px;
+    }
+</style>
+<script>
+  function toggle_div_fun(id) {
+  var divelement = document.getElementById(id);
+  if(divelement.style.display == 'none')
+    divelement.style.display = 'block';
+  else
+    divelement.style.display = 'none';
+}
+
+</script>
+@push('script-lib')
+
+    
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
+
+
+@endpush
