@@ -153,11 +153,19 @@
                                           Your Profile Rate
                                          <span class="badge badge-primary badge-pill">$30.00/hr</span>
                                        </li>
-                                       
-                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        @if($proposal->budget_type_id == \App\Models\BudgetType::$hourly)
+
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
                                           Client’s Weekly Hourly Range
-                                         <span class="badge badge-primary badge-pill">$15.00 - $25.00/hr</span>
+                                         <span class="badge badge-primary badge-pill"> {{ '$'.$proposal->hourly_start_range." - $".$proposal->hourly_end_range }} </span>
                                        </li>
+                                        @else
+
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Client’s Budget for Job
+                                                <span class="badge badge-primary badge-pill"> {{ '$'.$proposal->fixed_amount}} </span>
+                                            </li>
+                                        @endif
       
                                        <li class="list-group-item d-flex justify-content-between align-items-center">
                                           Estimated Project Start Date
