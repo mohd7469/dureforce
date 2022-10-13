@@ -351,6 +351,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(UserBasic::class);
 
     }
+    public function invitations()
+    {
+        return $this->hasMany(InviteFreelancer::class);
+    }
 
 }   
 //

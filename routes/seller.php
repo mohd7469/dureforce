@@ -39,6 +39,7 @@ Route::name('seller.')->group(function () {
                     Route::get('proposal-lists',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');
                 });
 
+
             });
 
         });

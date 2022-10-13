@@ -117,7 +117,7 @@ class Job extends Model
     {
         return $this->hasMany(JobBiding::class, 'job_id');
     }
-    public function invite_freelaner()
+    public function invited_freelancer()
     {
         return $this->hasMany(InviteFreelancer::class, 'job_id');
     }

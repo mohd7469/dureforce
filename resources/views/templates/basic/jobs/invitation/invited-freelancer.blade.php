@@ -77,10 +77,10 @@
                             
                                    {{-- @foreach ($freelancers as $freelancer ) --}}
                                        
-                                   @for($i = 0; $i<=5; $i++)
-                                 
+                                  @foreach($invited_freelancers as $invited_freelancers)
+                                    @isset($invited_freelancers->user)
                                     
-                                    <div class=""> 
+                                    <div class="">
                                         <div class="row biorow">
                                            <div class="col-md-3">
                                               <div class="row borderleftc"> 
@@ -88,15 +88,14 @@
                                                     <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
                                                 </div>
                                                 <div class="col-md-8">
-                                                    <h4 class="pname-c"> 
-                                                        freelabcer
-                                                      {{-- {{$freelancer->first_name}} {{ $freelancer->last_name }} --}}
+                                                    <h4 class="pname-c">
+
+                                                       {{$invited_freelancers->user->first_name}} {{ $invited_freelancers->user->last_name }}
                                                      </h4>
                                                        <p class="pdesination-c"> Full Stack Developer</p>
-                                                     {{-- <p class="pdesination-c">{{isset($freelancer->user_basic) ?$freelancer->user_basic->designation:null}}</p>   --}}
-                                                     <p class="plocation">London Uk</p>
+                                                      <p class="pdesination-c">{{isset($invited_freelancers->user->user_basic) ?$invited_freelancers->user->user_basic->designation:null}}</p>
                                                        
-                                                       {{-- <p class="plocation"> {{$freelancer->country->name}}</p> --}}
+                                                        <p class="plocation"> {{$invited_freelancers->user->country->name}}</p>
                                                  </div>
                                                   
                                               </div>
@@ -106,8 +105,8 @@
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
-                                                        {{-- <p class="rateperh">${{$freelancer->rate_per_hour}}</p> --}}
-                                                        <p class="perhourprice">$55 / Per Hour</p>
+
+                                                        <p class="perhourprice">${{$invited_freelancers->user->rate_per_hour}}</p>
                                                         
                                                         
                                                         
@@ -126,29 +125,32 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="{{route('seller.profile')}}" class="btn-products-s3">Decline</a>
+
                                                     <a href="#" class="btn-products-s3 phire">Hire</a>
                                                     
                                                   
                                                 </div>
                                             </div>
                                      </div>
-                                            <!--===  Bio Profile Section End ===-->
+                                        <div class="row p_desription">
+                                            <div class="col-md-12">
+                                                @isset($invited_freelancers->message)
+                                                    <p> <strong>Message -  </strong> {{$invited_freelancers->message}}</p>
+                                                @endisset
 
-                         <!--Skills Section Start-->
 
-                            <div class="row skills-c">
+                                            </div>
+                                        </div>
+
+                                    <div class="row skills-c">
                                 <div class="col-md-7">
                                      
                                     <h2>Has relevant skills to your job</h2>
                                     <ul class="skills-listing">
-                                        <li>Html</li>
-                                        <li>Css </li>
-                                        <li>JavaScript</li>
-                                        <li>Bootstrap</li>
-                                        {{-- @foreach ($freelancer->skills as $skill )
+
+                                       @foreach ($invited_freelancers->user->skills as $skill )
                                         <li>{{$skill->name}}</li>
-                                        @endforeach --}}
+                                        @endforeach
                                         
                                         
                                     </ul>
@@ -159,7 +161,8 @@
                             </div> 
                        
                             <hr>
-                            @endfor
+                            @endisset
+                        @endforeach
                             
 
                  <!--Skills Section Start-->
@@ -168,8 +171,11 @@
                   </div>
                </div>
             </div>
+               </div>
+            </div>
          </article>
         
+   </div>
    </div>
 </section>
 
