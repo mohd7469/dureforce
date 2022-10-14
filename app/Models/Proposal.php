@@ -42,6 +42,11 @@ class Proposal extends Model
     {
         return $this->belongsTo(User::class, 'user_id')->with('user_basic');
     }
+    public function job()
+    {
+        return $this->belongsTo(Job::class, 'module_id');
+    }
+
 
     public function milestone()
     {
