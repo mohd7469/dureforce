@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Country;
 use App\Models\LanguageLevel;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -107,8 +108,8 @@ class ProfileController extends Controller
     {
         $rules = [
             'card_number' => 'required',
-            'expiration_date' => 'required',
-            'cvv_code' => 'required',
+            'expiration_date' => 'required|after_or_equal:now',
+            'cvv_code' => 'required|min:3|max:5',
             // 'cvv_code' => ['required', new CardCvc($this->get('cvv_code'))],
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
@@ -182,10 +183,10 @@ class ProfileController extends Controller
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $languageLevels  = LanguageLevel::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-
-        return view($this->activeTemplate.'profile.partials.client_basic',compact('pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
+        $countries = Country::select('id', 'name')->get();
+        return view($this->activeTemplate.'profile.view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','languageLevels'));
 
     }
 

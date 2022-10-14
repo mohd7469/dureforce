@@ -341,4 +341,14 @@ class ProfileController extends Controller
 
         }
     }
+    
+    /**
+     * getUserPortfolio
+     *
+     * @return void
+     */
+    public function getUserPortfolio()
+    {
+        return view($this->activeTemplate.'portfolio.index');
+    }
 }
