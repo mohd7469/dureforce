@@ -209,6 +209,9 @@
     margin-top: 13px;
 
 }
+.video-url{
+    
+}
 p.h-cs {
     font-weight: 400;
     font-size: 14px;
