@@ -31,6 +31,7 @@ Route::name('seller.')->group(function () {
 
                 Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing');
                 Route::get('/job-detail/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'jobView'] )->name('job.jobview');
+                Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
                
                 Route::name('proposal.')->group(function () {
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
