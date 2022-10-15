@@ -457,14 +457,101 @@
         
         </style>
         @endpush
-        @push('script')
-            <script>
-                "use strict";
-                $(document).ready(function(){
-                    $("#loginWithGmail").modal('show');
+    @push('script')
+        <script>
+           
+            let portfolio_basic_form=$('#portfolio_basics_information');
+            var detail_tab=$('#portfolio_detail');
+            var preview_tab=$('#portfolio_preview');
+
+            $(document).ready(function() {
+                portfolio_basic_form.submit(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation(); 
+                    savePortfolioBasic();
                 });
-            </script>
-        @endpush
+            });
+
+            function savePortfolioBasic()
+            {
+                let form_data = new FormData(portfolio_basic_form[0]);
+
+                $.ajax({
+                    type:"POST",
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    url:"{{route('seller.profile.portfolio.basics')}}",
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        
+                        if(response.success){
+
+                            notify('success', response.success);
+                            formPostProcess(detail_tab);
+                        
+                        }
+                        else if(response.validation_errors){
+                            displayErrorMessage(response.validation_errors);
+                        }
+                        else{
+                            errorMessages(response.errors);
+                        }
+
+                    }
+                });
+            }
+
+            function displayAlertMessage(message)
+            {
+                iziToast.error({
+                message: message,
+                position: "topRight",
+                });
+            }
+
+            function displayErrorMessage(validation_errors)
+            {
+                $('input,select,textarea').removeClass('error-field');
+                $('.select2').next().removeClass("error-field");
+                for (var error in validation_errors) { 
+                    var error_message=validation_errors[error];
+
+                    $('[name="'+error+'"]').addClass('error-field');
+                    $('[id="'+error+'"]').addClass('error-field');
+                    $('#'+error).next().addClass('error-field');
+
+                    displayAlertMessage(error_message);
+
+                
+                }
+            }
+            function formPostProcess(nextTab)
+            {
+
+                $('input,select,textarea').removeClass('error-field');
+                $('.select2').next().removeClass("error-field");   
+                nextTab.click();
+                scrollTop();
+
+            }
+            function scrollTop()
+            {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 500);
+            }
+        </script>
+    @endpush
+    @push('script-lib')
+
+<script>
+   
+</script>
+
+@endpush
 
 
 
