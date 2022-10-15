@@ -107,7 +107,7 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
         $rules = [
-            'card_number' => 'required',
+            'card_number' => 'required|max:19|min:13',
             'expiration_date' => 'required|after_or_equal:now',
             'cvv_code' => 'required|min:3|max:5',
             // 'cvv_code' => ['required', new CardCvc($this->get('cvv_code'))],
