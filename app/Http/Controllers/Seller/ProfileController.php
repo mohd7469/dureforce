@@ -351,4 +351,38 @@ class ProfileController extends Controller
     {
         return view($this->activeTemplate.'portfolio.index');
     }
+
+        
+    /**
+     * saveUserPortfolio
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function saveUserPortfolio(Request $request)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'completion_date'   => 'required',
+            'name' => 'required',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            
+            return response()->json(["success" => "User Education Updated Successfully"], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
 }
