@@ -183,10 +183,10 @@ class ProfileController extends Controller
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $languageLevels  = LanguageLevel::select('id', 'name')->get();
+        $language_levels   = LanguageLevel::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $countries = Country::select('id', 'name')->get();
-        return view($this->activeTemplate.'profile.view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','languageLevels'));
+        return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
 
     }
 

@@ -22,6 +22,7 @@ Route::name('seller.')->group(function () {
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
                 Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view');
                 Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
+                Route::post('/portfolio/basic/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.basics');
 
 
             });
