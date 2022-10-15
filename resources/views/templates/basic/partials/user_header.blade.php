@@ -28,14 +28,14 @@
                                         @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
                                 
-                                @if( getLastLoginRoleId() == APP\Models\Role::$Freelancer )
+                                @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
 
                                     <li>
                                         <a href="{{ route('user.home') }}"
                                             @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
                                     </li>
 
-                                @elseif (getLastLoginRoleId() == APP\Models\Role::$Client)
+                                @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
                                     
                                     <li>
                                         <a href="{{ route('user.home') }}"
