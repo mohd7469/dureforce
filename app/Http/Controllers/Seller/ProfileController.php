@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Khsing\World\Models\City;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
+use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
 use Khsing\World\Models\Country;
 
@@ -363,7 +364,7 @@ class ProfileController extends Controller
     {
         $validator = \Validator::make($request->all(), 
         [
-            'completion_date'   => 'required',
+            'completion_date'   => 'nullable',
             'name' => 'required',
         ]);
         
@@ -375,12 +376,17 @@ class ProfileController extends Controller
         $user = auth()->user();        
 
         try {
-            
-            return response()->json(["success" => "User Education Updated Successfully"], 200);
+            UserPortFolio::create(
+                [
+                    'completion_date' => $request->completion_date,
+                     'name' => $request->name
+                ]
+            );
+            return response()->json(["success" => "User Portfolio Added Successfully "], 200);
 
         } catch (\Exception $exp) {
             return response()->json(['error' => $exp->getMessage()]);
-            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            $notify[] = ['errors', 'Failled To Add Portfolio.'];
             return back()->withNotify($notify);
 
         }

@@ -1,6 +1,7 @@
 
         <div class="right-container-c">
             <form action="" id="portfolio_basics_information">
+                @csrf
                 <div class="row">
           
             
@@ -121,46 +122,5 @@ p.rl-d {
 </style>
 @endpush
 
-@push('script-lib')
 
-<script>
-    let portfolio_basic_form=$('#portfolio_basics_information');
-    $(document).ready(function() {
-        portfolio_basic_form.submit(function (e) {
-            e.preventDefault();
-            e.stopPropagation(); 
-            savePortfolioBasic();
-        });
-    });
-
-    function savePortfolioBasic()
-    {
-        $.ajax({
-            type:"POST",
-            headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            url:"{{route('seller.profile.portfolio.basics')}}",
-            data: form_data,
-            processData: false,
-            contentType: false,
-            success:function(response){
-
-                if(response.success){
-                    notify('success', response.success);
-                
-                }
-                else if(response.validation_errors){
-                    displayErrorMessage(response.validation_errors);
-                }
-                else{
-                    errorMessages(response.errors);
-                }
-
-            }
-        });
-    }
-</script>
-
-@endpush
 
