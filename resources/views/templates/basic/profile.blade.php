@@ -505,7 +505,7 @@
                                                                     <div class="item-card">
                                                                         <div class="item-card-thumb">
                                                                             <img
-                                                                                src="{{ !empty($service->image)? getImage('assets/images/service/' . $service->image, imagePath()['service']['size']): getImage('assets/images/default.png') }}"
+                                                                                src="{{ !empty($service->image)? getAzureImage('service/' . $service->image, imagePath()['service']['size']): getImage('assets/images/default.png') }}"
                                                                                 alt="@lang('Service Image')" style="height: 200px;">
                                                                             @if ($service->featured == 1)
                                                                                 <div

@@ -75,6 +75,11 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
+
+
+            $user = auth()->user();
+//            $user->last_role_activity = isset($data['role']) ? $data['role'] : null;
+
             return $this->sendLoginResponse($request);
         }
 
@@ -124,7 +129,7 @@ class LoginController extends Controller
         request()->session()->invalidate();
 
         $notify[] = ['success', 'You have been logged out.'];
-        return redirect()->route('user.login')->withNotify($notify);
+        return redirect()->route('home')->withNotify($notify);
     }
 
 
@@ -133,41 +138,41 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        if ($user->status == 0) {
-            $this->guard()->logout();
-            $notify[] = ['error','Your account has been deactivated.'];
-            return redirect()->route('user.login')->withNotify($notify);
-        }
+        // if ($user->status == 0) {
+        //     $this->guard()->logout();
+        //     $notify[] = ['error','Your account has been deactivated.'];
+        //     return redirect()->route('user.login')->withNotify($notify);
+        // }
 
 
-        $user = auth()->user();
-        $user->tv = $user->ts == 1 ? 0 : 1;
-        $user->save();
-        $ip = $_SERVER["REMOTE_ADDR"];
-        $exist = UserLogin::where('user_ip',$ip)->first();
-        $userLogin = new UserLogin();
-        if ($exist) {
-            $userLogin->longitude =  $exist->longitude;
-            $userLogin->latitude =  $exist->latitude;
-            $userLogin->city =  $exist->city;
-            $userLogin->country_code = $exist->country_code;
-            $userLogin->country =  $exist->country;
-        }else{
-            $info = json_decode(json_encode(getIpInfo()), true);
-            $userLogin->longitude =  @implode(',',$info['long']);
-            $userLogin->latitude =  @implode(',',$info['lat']);
-            $userLogin->city =  @implode(',',$info['city']);
-            $userLogin->country_code = @implode(',',$info['code']);
-            $userLogin->country =  @implode(',', $info['country']);
-        }
+        // $user = auth()->user();
+        // $user->tv = $user->ts == 1 ? 0 : 1;
+        // $user->save();
+        // $ip = $_SERVER["REMOTE_ADDR"];
+        // $exist = UserLogin::where('user_ip',$ip)->first();
+        // $userLogin = new UserLogin();
+        // if ($exist) {
+        //     $userLogin->longitude =  $exist->longitude;
+        //     $userLogin->latitude =  $exist->latitude;
+        //     $userLogin->city =  $exist->city;
+        //     $userLogin->country_code = $exist->country_code;
+        //     $userLogin->country =  $exist->country;
+        // }else{
+        //     $info = json_decode(json_encode(getIpInfo()), true);
+        //     $userLogin->longitude =  @implode(',',$info['long']);
+        //     $userLogin->latitude =  @implode(',',$info['lat']);
+        //     $userLogin->city =  @implode(',',$info['city']);
+        //     $userLogin->country_code = @implode(',',$info['code']);
+        //     $userLogin->country =  @implode(',', $info['country']);
+        // }
 
-        $userAgent = osBrowser();
-        $userLogin->user_id = $user->id;
-        $userLogin->user_ip =  $ip;
+        // $userAgent = osBrowser();
+        // $userLogin->user_id = $user->id;
+        // $userLogin->user_ip =  $ip;
         
-        $userLogin->browser = @$userAgent['browser'];
-        $userLogin->os = @$userAgent['os_platform'];
-        $userLogin->save();
+        // $userLogin->browser = @$userAgent['browser'];
+        // $userLogin->os = @$userAgent['os_platform'];
+        // $userLogin->save();
 
         return redirect()->route('user.home');
     }

@@ -3,7 +3,7 @@ $content = getContent('footer.content', true);
 $footer_menu = getContent('footer.element', false);
 $socialIcons = getContent('social_icon.element', false);
 @endphp
-<section class="footer-section section--bg pt-60">
+<section class="footer-section section--bg pt-60 mt-20">
     <div class="container-fluid">
         <div class="footer-wrapper open">
             {{-- <div class="footer-toggle"><span class="right-icon"></span><span class="title">@lang('Quick
@@ -22,7 +22,7 @@ $socialIcons = getContent('social_icon.element', false);
                     </select>
                     <i class="fas fa-search"></i>
                 </div>
-                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('user.job.create') }}">Post a
+                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('buyer.job.create') }}">Post a
                     Job</a>
             </div>
             <div class="footer-bottom-area">
@@ -62,7 +62,7 @@ $socialIcons = getContent('social_icon.element', false);
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30">
                         <div class="footer-widget">
-                            <h3 class="title">@lang('LEGEL')</h3>
+                            <h3 class="title">@lang('LEGAL')</h3>
                             <ul class="footer-links">
                                 <li><a href="{{ route('blog') }}">@lang('Blog')</a></li>
                                 @foreach ($footer_menu as $value)

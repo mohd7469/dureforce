@@ -178,4 +178,34 @@ class Service extends Model
 //                $belongsTo->select(['id', 'name']);
 //            }]
 //    }
+
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module');
+    }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'module_id');
+    }
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module');
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
 }

@@ -21,7 +21,7 @@
                                 <section class="hero-banner row section-padding flex-md-row-reverse  be-center">
 
                                     <figure class="col-md-6 text-center ">
-                                        <svg width="650" height="390" viewBox="0 0 696 390" fill="none"
+                                        <svg width="500" height="390" viewBox="0 0 696 390" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M100.929 36.1462C196 0.913927 292.628 32.0792 358.136 99.9391C423.668 167.799 561.184 53.0998 634.129 120.845C683.896 167.091 661.106 285.948 592.852 337.449C500.091 407.433 217.966 371.927 156.942 360.023C86.6282 346.291 35.237 304.661 14.3465 254.143C-35.9692 132.384 58.9191 51.7289 100.929 36.1462Z"
@@ -353,7 +353,7 @@
                                             <path d="M647.286 353.191H616.991V354.448H647.286V353.191Z" fill="white"/>
                                         </svg>
                                     </figure>
-                                    <article class="col-md-6 ">
+                                    <article class="col-md-6 mt-h" >
                                         <h1 class="heading"><strong>Cloud Products Freelancing Platform</strong></h1>
                                         <p class="para ">Hire the best solution architects to upscale your
                                             business.
@@ -361,15 +361,18 @@
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
-                                               href="{{ route('user.job.create') }}">Post
+                                               href="{{ route('buyer.job.create') }}">Post
                                                 a Job</a>
                                             <a class="btn--search active" href="#">Search Job</a>
                                         </div>
                                         <div class="pt-3">
+                                            
                                             <ul class="inline-list">
+                                                
                                                 <li>Free estimate</li>
                                                 <li>No obligation to hire</li>
                                                 <li>100% risk-free</li>
+
                                             </ul>
                                         </div>
                                     </article>
@@ -415,7 +418,7 @@
             </article>
             <div class="row">
                 {{-- @for ($l = 0; $l < 4; $l++) --}}
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -433,7 +436,8 @@
                             giving you customized cloud service experience to cater your specific requirements. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -450,7 +454,7 @@
                             our marketplace is only focused on cloud services. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -472,7 +476,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -494,13 +499,76 @@
             </div>
         </div>
     </section>
+    <section class="all-sections  bg-grey   section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Browse Expert Developers Directory</h2>
+            </article>
+            @include($activeTemplate . 'home.publications')
+        </div>
+    </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
+@push('style')
+<style>
+    .mt-h{
+        margin-top: -158px;
+    }
+    .carousel-item{
+        margin-right: 0;
+        flex: 0 0 25.333333%;
+        display: block;
+        margin-bottom:20px;
+    }
+    .card {
+        margin-left: 7px;
+        margin-right: 26px;
+    }
+    .item-area .footer {
+        padding: 10px 0px 0px 0px;
+        left: 0;
+    }
+    .item-card .rates {
+        background: #7f007f;
+        border-radius: 4px;
+        text-align: center;
+        padding: 5px;
+        color: #fff;
+    }
+    .start-from{
+        font-size: .775em;
+    }
+    @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .carousel-item{
+            margin-right: 0;
+            flex: 0 0 35.333333%;
+            display: block;
+            margin-bottom:20px;
+        }
+    }
+</style>
+@endpush
+@push('script')
+    <script>
+        "use strict";
+        function submitUserForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                document.getElementById('g-recaptcha-error').innerHTML = '<span class="text-danger">@lang("Captcha field is required.")</span>';
+                return false;
+            }
+            return true;
+        }
+</style>
+@endpush
+
 @push('script')
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script>
+
         'use strict';
         $('#defaultSearch').on('change', function () {
             this.form.submit();

@@ -4,13 +4,14 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
 
 <div class="setProfile" id="">
 
-    <form action="{{ route('user.profile.save.payment-methods') }}" method="POST">
+    <form action="{{ route('buyer.profile.save.payment.methods') }}" method="POST" id="payment_methods">
         @csrf
         <div class="container-fluid welcome-body">
             <input type="hidden" name="payment_id" value="{{ request()->get('id') }}">
             <h1 class="mb-4">Payment Methods</h1>
             <span class="cmnt col-md-12 pb-4">
                 Add or delete payment methods for your account.</span>
+
             <h5 class="mt-3 d-flex">Credit / Debit Cards (Stripe)
                 <figure class="mx-2">
                     <svg width="147" height="23" viewBox="0 0 147 23" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -33,12 +34,14 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                 <div class="row mt-1" id="">
 
                     <div class="col-xl-12 col-md-12 col-lg-12 form-group ">
+                        
                         <div class="col-md-12">
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
                             <input type="text" name="card_number"
                                 value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
                                 required />
                         </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="mt-4">Expiration Date <span
@@ -53,30 +56,61 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                                     value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required />
                             </div>
                         </div>
+                        
                         <div class="col-md-12">
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
                             <input type="text" name="name_on_card"
                                 value="{{ old('name_on_card', @$userPayment->name_on_card) }}" placeholder=""
                                 required />
                         </div>
+
                         <div class="col-md-12">
                             <label class="mt-4">Country <span class="imp">*</span></label>
-                            <input type="text" name="country" value="{{ old('country', @$userPayment->country) }}"
-                                placeholder="" required />
+                            <select
+                                    name="country_id"
+                                    class="form-control select-lang"
+                                    id="payment_method_country_id"
+                                    >
+                                    <option
+                                        value=""
+                                    >
+                                        Select Country
+
+                                    </option>
+
+                                    @foreach ($countries as $country)
+                                        <option
+                                        value="{{$country->id}}"
+                                        {{ $country->id == @$userPayment->country_id ? 'selected' : '' }}
+                                        >
+                                        {{$country->name}}
+                                        </option>
+                                    @endforeach
+
+                                </select>
                         </div>
+
                         <div class="col-md-12">
+
                             <label class="mt-4">City <span class="imp">*</span></label>
-                            <input type="text" name="city" value="{{ old('city', @$userPayment->city) }}"
-                                placeholder="" required />
+                            <select
+                                name="city_id"
+                                class="form-control select-lang"
+                                id="payment_method_cities"
+                                    >
+                                    <option value="">Select City</option>
+                            </select>
+                            
                         </div>
+
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
-                            <input name="street_address" placeholder="" value="{{ old('street_address', @$userPayment->street_address) }}"
+                            <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
                                 required/>
                         </div>
-                        <div class="col-md-12 mt-2">
-                            <input name="street_address_two" placeholder="" value="{{ old('street_address_two', @$userPayment->street_address_two) }}"  />
-                        </div>
+
+                        
+
                     </div>
                 </div>
             </div>

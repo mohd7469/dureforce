@@ -18,9 +18,12 @@ use App\Models\FavoriteItem;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Booking;
+use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
+use App\Models\Role;
 use App\Models\Skills;
+use App\Models\SkillSubCategory;
 use App\Models\User;
 use App\Models\UserCompany;
 use App\Models\UserEducation;
@@ -42,23 +45,7 @@ class UserController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function home()
-    {
-        $user = Auth::user();
-        $pageTitle = 'Dashboard';
-        $emptyMessage = "No data found";
-        $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
-        $totalService = Service::where('user_id', $user->id)->count();
-        $totalSoftware = Software::where('user_id', $user->id)->count();
-        $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('service_id')->count();
-        $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('software_id')->count();
-        $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
-        return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
-    }
+   
 
     public function profile()
     {
@@ -440,6 +427,16 @@ class UserController extends Controller
         }
     }
 
+    public function skillSubCategory(Request $request)
+    {
+        $sub_category = SkillSubCategory::where('skill_category_id', $request->category)->get();
+        if ($sub_category->isEmpty()) {
+            return response()->json(['error' => "Sub category not available under this category"]);
+        } else {
+            return response()->json($sub_category);
+        }
+    }
+
 
     public function serviceFavorite(Request $request)
     {
@@ -508,9 +505,11 @@ class UserController extends Controller
 
         $view = "{$this->activeTemplate}profile.signup_basic";
 
+
         if(auth()->user()->type === User::PROJECT_MANAGER) {
             $view = "{$this->activeTemplate}project_profile.signup_basic";
         }
+
 
         return view($view, compact('pageTitle', 'languages', 'languageLevels', 'user', 'skills'));
     }
@@ -674,30 +673,17 @@ class UserController extends Controller
 
     public function saveCompany(Request $request)
     {
-        $user = User::findOrFail(auth()->id());
-        $filename = '';
-        // @todo create a seperate request validate class
-        $request->validate([
-            'name'         => 'required|string|unique:user_companies',
-            'phone'        => 'required|string|unique:user_companies',
-            'email'        => 'required|string|email|max:90|unique:user_companies',
-            'location'     => 'required|string',
-            'vat'          => 'required|string|unique:user_companies',
-            'linkedin_url' => 'required|string|unique:user_companies',
-            'facebook_url' => 'required|string|unique:user_companies'
-        ], [
-            'linkedin_url.required' => 'Linked In profile url is required',
-            'facebook_url'          => 'Facebook profile url is required'
-        ]);
 
 
-        if ($request->hasFile('company_logo')) {
-            $location = imagePath()['profile']['user']['path'];
-            $size = imagePath()['profile']['user']['size'];
-            $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
-        }
+        try {
+            $user = User::findOrFail(auth()->id());
+            $filename = '';
 
-        \DB::transaction(function () use($request, $filename, $user) {
+            if ($request->hasFile('company_logo')) {
+                $location = imagePath()['profile']['user']['path'];
+                $size = imagePath()['profile']['user']['size'];
+                $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+            }
 
             if(empty($filename)) {
                 $filename = $user->company->logo ?? '';
@@ -718,9 +704,27 @@ class UserController extends Controller
                 'linkedin_url' => $request->get('linkedin_url'),
                 'facebook_url' => $request->get('facebook_url')
             ]));
-        });
+        
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        } catch (\Throwable $th) {
 
-        $notify[] = ['success', 'Successfully Updated Profile.'];
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            
+        }
+        
+    }
+    public function seller_profile(){
+        try {
+            $pageTitle = 'Seller Profile';
+            $skills = Skills::select('id','name')
+                ->get();
+            return   view($this->activeTemplate.'seller.seller_profile',compact('pageTitle','skills'));
+        }
+        catch (\Exception $e){
+            return $e->getMessage();
+        }
+
     }
 }

@@ -142,4 +142,33 @@ class Software extends Model
     {
         return json_decode($this->deliverables);
     }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+    public function task_document()
+    {
+        return $this->morphMany(TaskDocument::class, 'module_id');
+    }
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module');
+    }
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module');
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
 }

@@ -9,16 +9,18 @@ class UserCompany extends Model
 {
     use HasFactory;
 
+     protected $table =  "user_companies";
+
     protected $fillable = [
         'name',
         'logo',
-        'phone',
+        'number',
         'email',
-        'location',
+        'country_id',
         'vat',
-        'url',
+        'website',
         'facebook_url',
-        'linkedin_url',
+        'linked_url',
         'user_id'
     ];
 

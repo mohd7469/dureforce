@@ -8,12 +8,15 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 use Cache;
 use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;
@@ -54,6 +57,22 @@ class User extends Authenticatable implements MustVerifyEmail
         'data' => 1
     ];
 
+    public static function scopeWithAll($query){
+
+        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills');
+
+    }
+
+    public static function scopeWithBuyerAll($query){
+
+        return $query->with('company')->with('basicProfile')->with('payments')->with('languages');
+
+    }
+
+    public function basicProfile()
+    {
+        return $this->hasOne('App\Models\UserBasic');
+    }
 
     public function login_logs()
     {
@@ -87,12 +106,21 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function jobs()
     {
-        return $this->hasMany(Job::class)->where('status', 1);
+        // return $this->hasMany(Job::class)->where('status', 1);
+        return $this->hasMany(Job::class);
+    }
+    public function proposal_attachment()
+    {
+        return $this->hasMany(ProposalAttachment::class)->where('status', 1);
+    }
+    public function proposal()
+    {
+        return $this->hasMany(Proposal::class);
     }
 
     public function skills()
     {
-        return $this->hasMany('App\Models\UserSkill');
+        return $this->belongsToMany(Skills::class,'user_skills','user_id','skill_id');
     }
 
     public function education()
@@ -102,7 +130,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function experiences()
     {
-        return $this->hasMany('App\Models\UserExperiences');
+        return $this->hasMany('App\Models\UserExperiences')->with('country');
     }
 
     public function languages()
@@ -115,21 +143,76 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne('App\Models\UserRate');
     }
 
+    public function milestone()
+    {
+        return $this->hasMany(Milestone::class);
+    }
+
     public function company()
     {
         return $this->hasOne('App\Models\UserCompany');
     }
-
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category','user_categories');
+    }
     public function payments()
     {
         return $this->hasMany('App\Models\UserPayment');
     }
 
     // SCOPES
-
+    
+    /**
+     * getFullnameAttribute
+     *
+     * @return void
+     */
     public function getFullnameAttribute()
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    
+    /**
+     * getJobTitleAttribute
+     *
+     * @return void
+     */
+    public function getJobTitleAttribute()
+    {
+        return $this->basicProfile->designation;
+    }
+    
+    /**
+     * getLocationAttribute
+     *
+     * @return void
+     */
+    // public function getLocationAttribute()
+    // {
+    //     return $this->country->name.', '.$this->basicProfile->city->name;
+    // }
+    public function getLocationAttribute()
+    {
+        $location=null;
+        if(!empty($this->basicProfile->city->name))
+        {
+            $location .=$this->basicProfile->city->name.', ';
+        }
+        if(!empty($this->country->name)){
+            $location.=$this->country->name;
+        }
+        return $location;
+    }
+    
+    /**
+     * getCountryAttribute
+     *
+     * @return void
+     */
+    public function getCountryNameAttribute()
+    {
+        return $this->country->name;
     }
 
     public function scopeActive()
@@ -196,8 +279,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $firstName = $user->firstname;
-            $lastname = $user->lastname;
+            $firstName = $user->first_name;
+            $lastname = $user->last_name;
             return "$firstName $lastname";
         }
     }
@@ -247,4 +330,31 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return 0;
     }
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+        });
+
+
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+    public function user_basic()
+    {
+        return $this->hasOne(UserBasic::class);
+
+    }
+    public function invitations()
+    {
+        return $this->hasMany(InviteFreelancer::class);
+    }
+
 }   
+//

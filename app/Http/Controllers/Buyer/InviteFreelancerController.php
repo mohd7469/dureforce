@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Controllers\Buyer;
+
+use App\Http\Controllers\Controller;
+use App\Models\InviteFreelancer;
+use App\Models\Job;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
+class InviteFreelancerController extends Controller
+{
+    public function saveInvitation(Request $request,$job_id){
+        $rules = [
+            'message' => 'required|min:4|max:1000',
+
+        ];
+
+        $messages =[
+            'message.required'     => 'Message is required',
+
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules,$messages);
+
+        if ($validator->fails()) {
+            return response()->json(["errors" => $validator->errors()]);
+        }
+        try {
+            DB::beginTransaction();
+
+            InviteFreelancer::create([
+                "user_id"=>$request['user_id'],
+                "job_id"=>$job_id,
+                "message"=>$request['message'],
+            ]);
+            DB::commit();
+            return response()->json(["success" => "Successfully Saved"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+    }
+    public function invitedFreelancer($job_uuid){
+
+        try {
+             $job = Job::where('uuid',$job_uuid)->first();
+             $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
+
+            return view('templates.basic.jobs.invitation.invited-freelancer')->with('invited_freelancers',$invited_freelancers);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+    }
+}

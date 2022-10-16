@@ -59,7 +59,7 @@
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
                                 <span
-                                    class='{{ auth()->user()->getLanguagesMoreThanOneCount()? 'completed-span': '' }}'>1</span>
+                                    class="{{ auth()->user()->getLanguagesMoreThanOneCount()? 'completed-span': '' }}">1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
@@ -237,6 +237,7 @@
 
 
         function previewCompanyFile(input) {
+
             let file = input.files[0];
             let idxDot = file.name.lastIndexOf(".") + 1;
             let extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
@@ -253,6 +254,7 @@
                 alert("Only jpg/jpeg, png files are allowed!");
                 return false;
             }
+            
 
         }
 

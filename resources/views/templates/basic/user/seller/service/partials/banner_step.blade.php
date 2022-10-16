@@ -36,8 +36,8 @@
                                     <img
                                       class="profilePicPreview bg_img"
                                       style="height: 250px";
-                                      data-background="{{ getImage('assets/images/service/' . $service->image, '590x300') }}"
-                                      value="{{ getImage('assets/images/service/' . $service->image, '590x300') }}"
+                                      data-background="{{ getAzureImage('service/' . $service->image, '590x300') }}"
+                                      value="{{ getAzureImage('service/' . $service->image, '590x300') }}"
                                       id="blah"
                                     />
                                     @else
@@ -162,7 +162,7 @@
                                 <div class="avatar-edit">
                                 <div id="galeria">
                                     @if(! empty($service->lead_image))
-                                        <img src="{{ getImage('assets/images/service/'. $service->lead_image, '590x300') }}" class="profilePicPreview bg_img" style="height: 250px" ;="">  
+                                        <img src="{{ getAzureImage('service/'. $service->lead_image, '590x300') }}" class="profilePicPreview bg_img" style="height: 250px" ;="">  
                                     @endif
                                 </div>
                                     <label class="mb-0" id="image">
@@ -170,7 +170,7 @@
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                         <input type="file" name="lead_image" onchange="previewMultiple(event)" id="lead_image">
+                                         <input type="file" name="lead_image" onchange="previewMultiple(event);readURL(this)" id="lead_image">
                                     </label>
                                 <br />
                             </div>
@@ -179,8 +179,7 @@
                             <div class="px-4">
                                 <label class="logo-div">@lang('Technology Logos (Select only 3)') *</label>
                                     <ul class="logo-ul">
-                                        {{-- Will Change this when icons arrive --}}
-                                        @include($activeTemplate.'user.seller.shared.logos', ['model' => $service])
+                                                           
                                     </ul>
                                 <br />
                             </div>
