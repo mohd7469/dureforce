@@ -58,7 +58,7 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 //shortlisted
 Route::view('/shortlist', 'templates.basic.offers.shortlist');
-Route::view('/my-job', 'templates.basic.offers.myjob');
+Route::view('/job-listing', 'templates.basic.offers.myjob');
 
 
 
