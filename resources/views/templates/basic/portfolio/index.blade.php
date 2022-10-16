@@ -55,13 +55,9 @@
         <style>
             /*************/
         
-        .nopadding {
-           
-        
-        }
         .dropzone .dz-message {
-    text-align: center;
-}
+            text-align: center;
+        }
         .dz-message:before {
             width: 50px;
             height: 50px;
@@ -467,9 +463,9 @@
         <script>
             Dropzone.autoDiscover = false;
             let portfolio_basic_form=$('#portfolio_basics_information');
-            var detail_tab=$('#portfolio_detail');
+            var basic_info=$('#addProject');
+            var detail_tab=$('#addDetail');
             var preview_tab=$('#portfolio_preview');
-            
             $(document).ready(function(){
                 var form_data='';
                 var action_url="{{route('seller.profile.portfolio.basics')}}";
@@ -562,6 +558,10 @@
                     }
                     
                 });
+                portfolio_basic_form.submit(function(e){
+                    e.preventDefault();
+                    savePortfolioBasic();
+                });
             });
            
             function savePortfolioBasic()
@@ -582,7 +582,7 @@
                         if(response.success){
 
                             notify('success', response.success);
-                            formPostProcess(detail_tab);
+                            formPostProcess(detail_tab,basic_info);
                         
                         }
                         else if(response.validation_errors){
@@ -621,12 +621,13 @@
                 }
             }
 
-            function formPostProcess(nextTab)
+            function formPostProcess(nextTab,preTab)
             {
 
                 $('input,select,textarea').removeClass('error-field');
-                $('.select2').next().removeClass("error-field");   
-                nextTab.click();
+                $('.select2').next().removeClass("error-field"); 
+                preTab.removeClass('active');
+                nextTab.addClass('active');
                 scrollTop();
             }
 
