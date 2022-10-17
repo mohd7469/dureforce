@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
 use App\Models\User;
@@ -10,27 +9,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
-// test route
-// Route::get('/test', function () {
-//     dd("123456");
-// });
+
 
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {
-   
 
     Route::get('/user', 'CommonProfileController@profile')->name('user.basic.profile');
-    Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
     Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
-    
- 
+    Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
- 
-
 
 
 });
@@ -59,17 +50,11 @@ Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
+
+
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 
-Route::post('/profle/password/change', 'ProfileController@profilePasswordChange')->name('profile.password.change');
-Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
-
-//shortlisted
 Route::view('/job-listing', 'templates.basic.offers.myjob');
-
-
-
-
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'Paypal\ProcessController@ipn')->name('Paypal');
@@ -557,7 +542,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('verified')->group(function () {
 
-        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'home'])->name('home')->middleware(['is-profile-completed']);
+        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'home'])->name('home')->middleware(['is-profile-completed']);
 
         Route::get('authorization', 'AuthorizationController@authorizeForm')->name('authorization');
         Route::get('resend-verify', 'AuthorizationController@sendVerifyCode')->name('send.verify.code');
@@ -570,7 +555,6 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware('is-profile-completed')->group(function () {
 
-              
 
                 Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
                 Route::post('profile-setting', 'UserController@submitProfile');
@@ -663,7 +647,6 @@ Route::name('user.')->prefix('user')->group(function () {
         });
 
 
-
         Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
         Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
         Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
@@ -689,11 +672,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('software/document/download/{id}', 'HomeController@buyerSoftwareDocumentFile')->name('buyer.software.document.download');
             Route::get('hire/employees', 'HomeController@hireEmploy')->name('buyer.hire.employ');
             Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
- 
 
 
         });
-
 
 
         //JobBiding
@@ -781,5 +762,3 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
-
-Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
