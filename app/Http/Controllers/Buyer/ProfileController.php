@@ -43,7 +43,7 @@ class ProfileController extends Controller
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             // 'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|string|digits_between:4,15'
+             'vat' => 'required|string|min:4|max:15'
            
 
           
