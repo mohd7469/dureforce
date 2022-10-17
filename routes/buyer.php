@@ -9,6 +9,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
     
     Route::middleware(['verified','is-client'])->group(function () {
         
+        
         Route::namespace('Buyer')->group(function () {
 
             //profile
@@ -52,5 +53,6 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
         });
     });
+    
 
 });

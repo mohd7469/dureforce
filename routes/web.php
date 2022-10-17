@@ -18,14 +18,18 @@ Route::get('/clear', function () {
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {
+   
 
     Route::get('/user', 'CommonProfileController@profile')->name('user.basic.profile');
-    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
     Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
+    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
+    
+ 
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
+ 
 
 
 
@@ -56,9 +60,14 @@ Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
 Route::view('/portfolio', 'templates.basic.portfolio.index');
+<<<<<<< HEAD
+Route::post('/profle/password/change', 'ProfileController@profilePasswordChange')->name('profile.password.change');
+Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+=======
 //shortlisted
 Route::view('/job-listing', 'templates.basic.offers.myjob');
 
+>>>>>>> 5bccea5485f80fdd9b1ecaed80e36f3a77157d6a
 
 
 
@@ -772,3 +781,5 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
+
+Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
