@@ -1,41 +1,45 @@
 
         <div class="right-container-c">
-        <div class="row">
+            <form action="" id="portfolio_basics_information">
+                @csrf
+                <div class="row">
           
-            <div class="col-md-6">
-                <p class="title-c">Add portfolio project</p>
-                <label for="exampleInputEmail1">Project Title</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a brief  but description">
-            </div>
             
-          </div>
-          <div class="row">
-          
-            <div class="col-md-6">
-                <p class="rl-d">Related DF Job (optional) <br />
-                    Once you've completed contracts on DF, you'll be able to link your work.</p>
-            </div>
-            
-          </div>
-          <div class="row">
-          
-            <div class="col-md-6">
-             
-                <label for="exampleInputEmail1">Completion Date (optional)</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mm/dd/yy">
-            </div>
-            <div class="col-md-6">
-                <div class="btns-addp">
-                    <button type="submit" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
-                    <button type="submit" class="submit-btn w-80 float-right">Go to Add Details</button>
+                    <div class="col-md-6">
+                        <p class="title-c">Add portfolio project</p>
+                        <label for="exampleInputEmail1">Project Title</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter a brief title of portfolio" name="name">
+                    </div>
+                
                 </div>
-
-            </div>
-            
-            
-          </div>
-
-          
+    
+                <div class="row">
+                
+                    <div class="col-md-6">
+                        <p class="rl-d">Related DF Job (optional) <br />
+                            Once you've completed contracts on DF, you'll be able to link your work.</p>
+                    </div>
+                    
+                </div>
+    
+                <div class="row">
+                
+                    <div class="col-md-6">
+                    
+                        <label for="exampleInputEmail1">Completion Date (optional)</label>
+                        <input type="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="btns-addp">
+                            <button type="button" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
+                            <button type="submit" class="submit-btn w-80 float-right" >Go to Add Details</button>
+                        </div>
+    
+                    </div>
+                    
+                    
+                </div>
+            </form>
         </div> 
 
 
@@ -117,4 +121,6 @@ p.rl-d {
     
 </style>
 @endpush
+
+
 

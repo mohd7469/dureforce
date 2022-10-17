@@ -9,7 +9,15 @@
                     <div class="row justify-content-center">
                         <!-- Sidebar -->
                        
-                        @include('templates.basic.portfolio.side_nav')
+                        <div class="col-md-2 nopadding"> 
+                            <div class="sidebar-custom" id="tab">
+                                <ul class="sidebar-nav nav nav-tabs" role="tablist">
+                                    <li role="tab" class="active"><a  data-toggle="tab" href="#addProject">Add Project <i class="fa-thin fa-octagon-check"></i></a></li>
+                                    <li role="tab" ><a data-toggle="tab" href="#addDetail" id="portfolio_detail">Add Details</a></li>
+                                    <li role="tab" ><a   data-toggle="tab" href="#addPreview" id="portfolio_preview">Preview</a></li>
+                                </ul>
+                            </div>
+                        </div>
                         <!-- Content -->
 
                         <div class="col-12 col-md-10 p-0">
@@ -42,22 +50,18 @@
       
 
         @push('style')
+        <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
+
         <style>
             /*************/
+        
         .nopadding {
            
         
         }
-        .dz-message {
-            text-align: CENTER;
-            width: 100%;
-            padding-top: 45px;
-            padding-left: 30px;
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 18px;
-            color: #808285;
-        }
+        .dropzone .dz-message {
+    text-align: center;
+}
         .dz-message:before {
             width: 50px;
             height: 50px;
@@ -334,24 +338,8 @@
             color: rgba(0,0,0,.9);
             line-height: 135%;
         }
-        .dropzone .dz-preview {
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-            margin: 5px;
-            min-height: 100px;
-        }
-        .dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
-            pointer-events: none;
-            opacity: 0;
-            z-index: 391;
-            position: absolute;
-            display: block;
-            top: 50%;
-            left: 50%;
-            margin-left: -27px;
-            margin-top: -41px;
-        }
+     
+   
         .select2Tag input{
             background-color: transparent !important;
             padding: 0 !important;
@@ -435,19 +423,34 @@
             
         }
         
+      
         
         .hide{
             display: none;
         }
-        .dropzone .dz-preview .dz-details .dz-size {
-            margin-bottom: 1em;
-            font-size: 11px;
+    
+        .dropzone .dz-preview .dz-success-mark svg, .dropzone .dz-preview .dz-error-mark svg {
+            display: contents;
+            width: 54px;
+            height: 54px;
         }
-        
-        .dropzone .dz-preview .dz-progress {
-            opacity: 0;
+        .dropzone .dz-preview {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            margin: 0px !important;
+            margin-left: 5px !important;
+            margin-bottom: 5px !important   ;
+            min-height: 85px;
         }
-
+        .dropzone .dz-preview .dz-remove {
+            font-size: 14px;
+            text-align: center;
+            display: block;
+            cursor: pointer;
+            border: none;
+            margin-top: 10px !important;
+        }
         /************/
         @media only screen and (max-width:767px){
             .sidebar-custom{
@@ -457,14 +460,187 @@
         
         </style>
         @endpush
-        @push('script')
-            <script>
-                "use strict";
-                $(document).ready(function(){
-                    $("#loginWithGmail").modal('show');
+    @push('script-lib')
+   
+    {{-- <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script> --}}
+        
+        <script>
+            Dropzone.autoDiscover = false;
+            let portfolio_basic_form=$('#portfolio_basics_information');
+            var detail_tab=$('#portfolio_detail');
+            var preview_tab=$('#portfolio_preview');
+            
+            $(document).ready(function(){
+                var form_data='';
+                var action_url="{{route('seller.profile.portfolio.basics')}}";
+                var dropzone = new Dropzone('#demo-upload', {
+                    url:action_url,
+                    autoProcessQueue: false,
+                    parallelUploads: 4,
+                    dictDefaultMessage: "your custom message",
+                    thumbnailHeight: 60,
+                    thumbnailWidth: 60,
+                    maxFiles: 4,
+                    uploadMultiple:true,
+                    maxFilesize: 3,
+                    acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+                    filesizeBase: 1000,
+                    addRemoveLinks: true,
+                    init: function() {
+                        
+                        this.on("sendingmultiple", function(file, xhr, formData) {
+                        formData.append("_token",token);
+                        formData.append("data", form_data);
+                        });
+                        
+                        this.on("complete", function(file, xhr, formData) {
+                        
+                        });
+
+                        this.on("successmultiple", function(files, response) {
+
+                            if(response.error)
+                            {
+                            displayErrorMessage(response.error);
+                            }
+                            if(response.redirect)
+                            window.location.replace(response.redirect);
+                            
+                        });
+
+                        myDropzone = this;
+
+                        $("#propsal_form").submit(function (event) {
+                        form_data= $(this).serialize();
+                            event.preventDefault();
+                            event.stopPropagation(); 
+                            var validate_url='/seller/validate-proposal';
+                            $.ajax({
+                                type:"POST",
+                                url:validate_url,
+                                data: {data : form_data,_token:token},
+                                success:function(data){
+
+                                    if(data.validated){
+
+                                        if(myDropzone.getQueuedFiles().length>0){
+                                        myDropzone.processQueue();
+                                        
+
+
+                                        }
+                                        else
+                                        {
+                                        submitProposal(form_data);
+                                        }
+
+                                    }
+                                    else{
+
+                                    displayErrorMessage(data.error);
+
+                                    }
+                                }
+                            });
+                        }); 
+                    },
+                    thumbnail: function(file, dataUrl) {
+                    
+
+                        if (file.previewElement) {
+                    
+
+                        file.previewElement.classList.remove("dz-file-preview");
+                        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+                        for (var i = 0; i < images.length; i++) {
+                            var thumbnailElement = images[i];
+                            thumbnailElement.alt = file.name;
+                            thumbnailElement.src = dataUrl;
+                        }
+                        setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+                        }
+                    }
+                    
                 });
-            </script>
-        @endpush
+            });
+           
+            function savePortfolioBasic()
+            {
+                let form_data = new FormData(portfolio_basic_form[0]);
+
+                $.ajax({
+                    type:"POST",
+                    headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                    url:"{{route('seller.profile.portfolio.basics')}}",
+                    data: form_data,
+                    processData: false,
+                    contentType: false,
+                    success:function(response){
+                        
+                        if(response.success){
+
+                            notify('success', response.success);
+                            formPostProcess(detail_tab);
+                        
+                        }
+                        else if(response.validation_errors){
+                            displayErrorMessage(response.validation_errors);
+                        }
+                        else{
+                            errorMessages(response.errors);
+                        }
+
+                    }
+                });
+            }
+
+            function displayAlertMessage(message)
+            {
+                iziToast.error({
+                message: message,
+                position: "topRight",
+                });
+            }
+
+            function displayErrorMessage(validation_errors)
+            {
+                $('input,select,textarea').removeClass('error-field');
+                $('.select2').next().removeClass("error-field");
+                for (var error in validation_errors) { 
+                    var error_message=validation_errors[error];
+
+                    $('[name="'+error+'"]').addClass('error-field');
+                    $('[id="'+error+'"]').addClass('error-field');
+                    $('#'+error).next().addClass('error-field');
+
+                    displayAlertMessage(error_message);
+
+                
+                }
+            }
+
+            function formPostProcess(nextTab)
+            {
+
+                $('input,select,textarea').removeClass('error-field');
+                $('.select2').next().removeClass("error-field");   
+                nextTab.click();
+                scrollTop();
+            }
+
+            function scrollTop()
+            {
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 500);
+            }
+
+        </script>
+        
+    @endpush
+ 
 
 
 

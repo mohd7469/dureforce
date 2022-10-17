@@ -32,7 +32,7 @@
                                 <div class="col-xl-6 col-lg-6 form-group mt-4">
                                 
                                         <div id="dropzone">
-                                            <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
+                                            <div class="dropzone needsclick dz-clickable" id="demo-upload" >
                                                 <div class="dz-message "> 
                                                     Drag or Drop to Upload <a href="#">Browse</a>  
                                                     </span>
@@ -498,18 +498,7 @@ ul.sidebar-nav li:nth-child(4) a {
     top: 38.12%;
     bottom: 3.78%;
 }
-.dropzone {
-    
-    background: white;
-    border-radius: 5px;
-    height: 121px;
-    border: 2px dashed #CBDFDF;
-    border-image: none;
-    max-width: 500px;
-    min-height: 126px;
-    margin-left: auto;
-    margin-right: auto;
-}
+
 .custom--card .card-body .card-form-wrapper input {
     
     background-color: white !important;
@@ -556,11 +545,4 @@ ul.sidebar-nav li:nth-child(4) a {
 
 </style>
 @endpush
-@push('script')
-    <script>
-        "use strict";
-        $(document).ready(function(){
-            $("#loginWithGmail").modal('show');
-        });
-    </script>
-@endpush
+

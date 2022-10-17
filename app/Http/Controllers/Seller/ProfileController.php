@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Khsing\World\Models\City;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
+use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
 use Khsing\World\Models\Country;
 
@@ -350,5 +351,44 @@ class ProfileController extends Controller
     public function getUserPortfolio()
     {
         return view($this->activeTemplate.'portfolio.index');
+    }
+
+        
+    /**
+     * saveUserPortfolio
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function saveUserPortfolio(Request $request)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'completion_date'   => 'nullable',
+            'name' => 'required',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            UserPortFolio::create(
+                [
+                    'completion_date' => $request->completion_date,
+                     'name' => $request->name
+                ]
+            );
+            return response()->json(["success" => "User Portfolio Added Successfully "], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Add Portfolio.'];
+            return back()->withNotify($notify);
+
+        }
     }
 }
