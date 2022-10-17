@@ -15,14 +15,18 @@ Route::get('/clear', function () {
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {
+   
 
     Route::get('/user', 'CommonProfileController@profile')->name('user.basic.profile');
-    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
     Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
+    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
+    
+ 
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
+ 
 
 
 
@@ -56,6 +60,8 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 
 
 Route::view('/portfolio', 'templates.basic.portfolio.index');
+Route::post('/profle/password/change', 'ProfileController@profilePasswordChange')->name('profile.password.change');
+Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
 
 
 
@@ -769,3 +775,5 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
+
+Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.basics.save');
