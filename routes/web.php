@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
-
+// test route
+// Route::get('/test', function () {
+//     dd("123456");
+// });
 
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
@@ -52,10 +55,11 @@ Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
-
-
-
 Route::view('/portfolio', 'templates.basic.portfolio.index');
+//shortlisted
+Route::view('/shortlist', 'templates.basic.offers.shortlist');
+Route::view('/job-listing', 'templates.basic.offers.myjob');
+
 
 
 
