@@ -25,17 +25,17 @@
                    
                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       Your Profile Rate
-                     <span class="badge badge-primary badge-pill">$30.00/hr</span>
+                     <span class="badge badge-primary badge-pill">${{auth()->user()->rate_per_hour}}/hr</span>
                    </li>
                    
                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       Client’s Weekly Hourly Range
-                     <span class="badge badge-primary badge-pill">$15.00 - $25.00/hr</span>
+                     <span class="badge badge-primary badge-pill">${{$job->hourly_start_range}} - ${{$job->hourly_end_range}}/hr</span>
                    </li>
 
                    <li class="list-group-item d-flex justify-content-between align-items-center">
                       Estimated Project Start Date
-                     <span class="badge badge-primary badge-pill">7/22/2022 </span>
+                     <span class="badge badge-primary badge-pill">{{$job->expected_start_date}} </span>
                    </li>
 
                 </ul>

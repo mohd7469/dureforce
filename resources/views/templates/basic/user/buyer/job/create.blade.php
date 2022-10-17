@@ -131,7 +131,7 @@
                                                 <select name="budget_type_id" class="form-control budget" id="budget_type_id" >
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                            <option value="{{__($item->id)}}" {{App\Models\BudgetType::$hourly==$item->id ? 'selected' :''}}>{{__($item->title)}}</option>
                                                         @endforeach
                                                 </select>
                                             </div>
