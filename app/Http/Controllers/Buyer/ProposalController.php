@@ -10,6 +10,7 @@ use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +88,32 @@ class ProposalController extends Controller
         }
         
     }
+    public function shortlist($proposal_id)
+    {
+
+        try {
+            $proposal = Proposal::with('job')->find($proposal_id);
+            $proposal->is_shortlisted=true;
+            $proposal->save();
+            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+        } catch (\Throwable $th) {
+            return "Some technical error occur";
+        }
+
+    }
+    public function shortlistedProposals($proposal_id)
+    {
+
+        try {
+            $proposal = Proposal::with('job')->find($proposal_id);
+            $proposal->is_shortlisted=true;
+            $proposal->save();
+            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+        } catch (\Throwable $th) {
+            return "Some technical error occur";
+        }
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -124,10 +151,9 @@ class ProposalController extends Controller
     public function jobPropsals($job_uuid)
     {
 
-
-
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $proposals = $job->proposal;
+        $proposals = $job->proposal->where('is_shortlisted',false);
+
         $pageTitle = "Job Proposals";
         return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job'));
     }

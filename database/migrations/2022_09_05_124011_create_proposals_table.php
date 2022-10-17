@@ -29,6 +29,7 @@ class CreateProposalsTable extends Migration
             $table->integer('end_hour_limit')->nullable();
             $table->longText('cover_letter')->nullable();
             $table->boolean('is_active')->default(true)->nullable();
+            $table->boolean('is_shortlisted')->default(false)->nullable();
             $table->date('project_start_date')->nullable();
             $table->date('project_end_date')->nullable();
             $table->softDeletes();
