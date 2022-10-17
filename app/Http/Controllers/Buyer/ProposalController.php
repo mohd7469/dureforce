@@ -107,9 +107,10 @@ class ProposalController extends Controller
         try {
             $job=Job::withAll()->where('uuid',$job_uuid)->first();
             $proposals = $job->proposal->where('is_shortlisted',true);
+            $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
 
             $pageTitle = "Job Proposals";
-            return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job'));
+            return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job','short_listed_proposals'));
 
         } catch (\Throwable $th) {
             return $th;
@@ -156,8 +157,9 @@ class ProposalController extends Controller
 
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
         $proposals = $job->proposal->where('is_shortlisted',false);
+        $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
 
         $pageTitle = "Job Proposals";
-        return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job'));
+        return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job','short_listed_proposals'));
     }
 }
