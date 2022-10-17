@@ -57,7 +57,6 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 //shortlisted
-Route::view('/shortlist', 'templates.basic.offers.shortlist');
 Route::view('/job-listing', 'templates.basic.offers.myjob');
 
 

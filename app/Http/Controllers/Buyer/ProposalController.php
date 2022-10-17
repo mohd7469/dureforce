@@ -101,16 +101,19 @@ class ProposalController extends Controller
         }
 
     }
-    public function shortlistedProposals($proposal_id)
+    public function shortlistedProposals($job_uuid)
     {
 
         try {
-            $proposal = Proposal::with('job')->find($proposal_id);
-            $proposal->is_shortlisted=true;
-            $proposal->save();
-            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+            $job=Job::withAll()->where('uuid',$job_uuid)->first();
+            $proposals = $job->proposal->where('is_shortlisted',true);
+
+            $pageTitle = "Job Proposals";
+            return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job'));
+
         } catch (\Throwable $th) {
-            return "Some technical error occur";
+            return $th;
+//            return "Some technical error occur";
         }
 
     }
