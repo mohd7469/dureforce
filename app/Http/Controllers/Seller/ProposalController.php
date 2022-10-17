@@ -134,30 +134,31 @@ class ProposalController extends Controller
 
             $proposal->save();
 
-            //            if ($request->hasFile('file')) {
-            //
-            //                foreach ($request->file as $file) {
-            //                    $path = imagePath()['attachments']['path'];
-            //                    try {
-            //                        $filename = uploadAttachments($file, $path);
-            //
-            //                        $file_extension = getFileExtension($file);
-            //                        $url = $path . '/' . $filename;
-            //                        $proposal_attachment = new ProposalAttachment;
-            //                        $proposal_attachment->name = $filename;
-            //                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
-            //                        $proposal_attachment->url = $url;
-            //                        $proposal_attachment->type = $file_extension;
-            //                        $proposal_attachment->is_published = "Active";
-            //                        $proposal_attachment->proposal()->save($proposal);
-            //
-            //                    } catch (\Exception $exp) {
-            //                        $notify[] = ['error', 'Document could not be uploaded.'];
-            //                        return back()->withNotify($notify);
-            //                    }
-            //
-            //                }
-            //            }
+                        if ($request->hasFile('file')) {
+
+                            foreach ($request->file as $file) {
+                                $path = imagePath()['attachments']['path'];
+                                try {
+                                    $filename = uploadAttachments($file, $path);
+
+                                    $file_extension = getFileExtension($file);
+                                    $url = $path . '/' . $filename;
+                                    $proposal_attachment = new ProposalAttachment;
+                                    $proposal_attachment->name = $filename;
+                                    $proposal_attachment->uploaded_name = $file->getClientOriginalName();
+                                    $proposal_attachment->url = $url;
+                                    $proposal_attachment->type = $file_extension;
+                                    $proposal_attachment->is_published = "Active";
+                                    $proposal_attachment->proposal_id = $proposal->id;
+                                    $proposal_attachment->save();
+
+                                } catch (\Exception $exp) {
+                                    $notify[] = ['error', 'Document could not be uploaded.'];
+                                    return back()->withNotify($notify);
+                                }
+
+                            }
+                        }
 
             DB::commit();
 

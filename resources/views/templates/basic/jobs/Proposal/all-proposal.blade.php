@@ -124,7 +124,7 @@
                                         </div>
                                         <!--===  Bio Profile Section End ===-->
                                         <!--Product Description Start-->
-                                        <div class="row p_desription">
+                                        <div class="row p_desription" style="text-align: left;">
                                             <div class="col-md-12">
                                                 @isset($proposal->cover_letter)
                                                 <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
@@ -134,7 +134,7 @@
                                         <!--Product Description End-->
                                         <!--Skills Section Start-->
                                         <div class="row skills-c">
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-6" style="text-align: left;">
 
                                                 <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
 
@@ -147,7 +147,7 @@
                                                     </ul>
 
                                                 @endforeach
-                                            </div>
+                                            </div >
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
