@@ -85,9 +85,8 @@
 
                                                         <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
 
-                                                        <div class="col-md-4">
-                                                            <p class="plocation">{{$proposal->user->location }}</p>
-                                                        </div>
+                                                        <p class="plocation"><span style="margin-right: 60px;">{{$proposal->user->location }}</span></p>
+
 
                                                     </div>
 
@@ -341,19 +340,19 @@ p.perhourprice {
 .borderleftc:after{
     display: none;
 }
-.plocation {
-    font-weight: 600;
-    font-size: 14px;
-    position: relative;
-    padding-left: 0px;
-    margin-top: 2px;
-    margin-bottom: 40px !important;
-    margin-top: 16px;
-    display: inline-block;
-}
-p.plocation:before{
-    left: -24px;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 14px;*/
+/*    position: relative;*/
+/*    padding-left: 0px;*/
+/*    margin-top: 2px;*/
+/*    margin-bottom: 40px !important;*/
+/*    margin-top: 16px;*/
+/*    display: inline-block;*/
+/*}*/
+/*p.plocation:before{*/
+/*    left: -24px;*/
+/*}*/
 .row.btns-s {
     position: relative;
     left: 0px;
@@ -520,25 +519,25 @@ select#bestmatch {
     top: 0px;
 }
 
-.plocation {
-    font-weight: 600;
-    font-size: 12px !important;
-    line-height: 18px;
-    color: #000000;
-    position: relative;
-    padding-left: 20px !important;
-    margin-top: 12px !important;
-}
-p.plocation:before {
-    width: 20px;
-    height: 20px;
-    background: red;
-    position: absolute;
-    left: 0px !important;
-    top: 4px !important; 
-    content: '';
-    background: url(/assets/images/job/location-icon.png) no-repeat;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 12px !important;*/
+/*    line-height: 18px;*/
+/*    color: #000000;*/
+/*    position: relative;*/
+/*    padding-left: 20px !important;*/
+/*    margin-top: 12px !important;*/
+/*}*/
+/*p.plocation:before {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background: red;*/
+/*    position: absolute;*/
+/*    left: 0px !important;*/
+/*    top: 4px !important; */
+/*    content: '';*/
+/*    background: url(/assets/images/job/location-icon.png) no-repeat;*/
+/*}*/
 }
 @media only screen and (max-width:320px){
 a.btn-products-s {
