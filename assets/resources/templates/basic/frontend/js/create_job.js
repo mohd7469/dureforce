@@ -15,7 +15,7 @@ function submitCreateFormData(data)
 
           }
           else{
-            window.location.replace(data.redirect);              
+              window.location.replace('/buyer/job/index');
           }
       }
   });  
@@ -95,8 +95,10 @@ $(function() {
               {
                 displayErrorMessage(response.error);
               }
-              if(response.redirect)
-                window.location.replace(response.redirect);
+              else{
+                  window.location.replace('/buyer/job/index');
+              }
+
                 
           });
 

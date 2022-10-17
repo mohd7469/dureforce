@@ -15,7 +15,7 @@
                                     <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Search_tab">Search</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#Invited_Freelancers_tab">Invited Freelancers (2)</a>
+                                    <a class="nav-link" data-bs-toggle="tab" href="#Invited_Freelancers_tab">Invited Freelancers ({{count($invited_freelancers)}})</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#My_Hires_tab">My Hires (2)</a>
@@ -27,7 +27,7 @@
                                 <div class="row card-text">
                                     <div class="col-12"></div>
                                         <div class="col-md-3">
-                                        <h2 class="prosals-h">Invited Freelancers</h2> 
+                                        <h2 class="prosals-h">Invite Freelancers</h2>
                                         </div>
                                         <div class="col-md-9 sorting-mbl">
                                             <div class="row">

@@ -85,9 +85,8 @@
 
                                                         <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
 
-                                                        <div class="col-md-4">
-                                                            <p class="plocation">{{$proposal->user->location }}</p>
-                                                        </div>
+                                                        <p class="plocation"><span style="margin-right: 60px;">{{$proposal->user->location }}</span></p>
+
 
                                                     </div>
 
@@ -115,7 +114,7 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
 
-                                                    <a href="#" class="btn-products-s">Shortlist</a>
+                                                    <a href="{{route('buyer.proposal.shortlist',$proposal->id)}}" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
@@ -124,7 +123,7 @@
                                         </div>
                                         <!--===  Bio Profile Section End ===-->
                                         <!--Product Description Start-->
-                                        <div class="row p_desription">
+                                        <div class="row p_desription" style="text-align: left;">
                                             <div class="col-md-12">
                                                 @isset($proposal->cover_letter)
                                                 <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
@@ -134,7 +133,7 @@
                                         <!--Product Description End-->
                                         <!--Skills Section Start-->
                                         <div class="row skills-c">
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-6" style="text-align: left;">
 
                                                 <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
 
@@ -147,7 +146,7 @@
                                                     </ul>
 
                                                 @endforeach
-                                            </div>
+                                            </div >
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
@@ -341,19 +340,19 @@ p.perhourprice {
 .borderleftc:after{
     display: none;
 }
-.plocation {
-    font-weight: 600;
-    font-size: 14px;
-    position: relative;
-    padding-left: 0px;
-    margin-top: 2px;
-    margin-bottom: 40px !important;
-    margin-top: 16px;
-    display: inline-block;
-}
-p.plocation:before{
-    left: -24px;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 14px;*/
+/*    position: relative;*/
+/*    padding-left: 0px;*/
+/*    margin-top: 2px;*/
+/*    margin-bottom: 40px !important;*/
+/*    margin-top: 16px;*/
+/*    display: inline-block;*/
+/*}*/
+/*p.plocation:before{*/
+/*    left: -24px;*/
+/*}*/
 .row.btns-s {
     position: relative;
     left: 0px;
@@ -520,25 +519,25 @@ select#bestmatch {
     top: 0px;
 }
 
-.plocation {
-    font-weight: 600;
-    font-size: 12px !important;
-    line-height: 18px;
-    color: #000000;
-    position: relative;
-    padding-left: 20px !important;
-    margin-top: 12px !important;
-}
-p.plocation:before {
-    width: 20px;
-    height: 20px;
-    background: red;
-    position: absolute;
-    left: 0px !important;
-    top: 4px !important; 
-    content: '';
-    background: url(/assets/images/job/location-icon.png) no-repeat;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 12px !important;*/
+/*    line-height: 18px;*/
+/*    color: #000000;*/
+/*    position: relative;*/
+/*    padding-left: 20px !important;*/
+/*    margin-top: 12px !important;*/
+/*}*/
+/*p.plocation:before {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background: red;*/
+/*    position: absolute;*/
+/*    left: 0px !important;*/
+/*    top: 4px !important; */
+/*    content: '';*/
+/*    background: url(/assets/images/job/location-icon.png) no-repeat;*/
+/*}*/
 }
 @media only screen and (max-width:320px){
 a.btn-products-s {
