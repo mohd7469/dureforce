@@ -75,7 +75,7 @@
                     <div class="card-body">
                         <h5 class="card-title "><strong>{{$job->title}}</strong></h5>
                         <h6 class="card-subtitle mb-2 text-muted mt-3"><span><strong>10 Bids</strong></span> <span
-                                    style="padding-left: 20px;">USA</span></h6>
+                                    style="padding-left: 20px;">{{isset($job->country) ? $job->country->name: 'World Wide'}}</span></h6>
                         <p class="card-text mt-3" style="font-size: 12px;">{{\Illuminate\Support\Str::limit($job->description, 50, $end='...more')}}</p>
                         <p class="skills-cont">
                             @foreach($job->skill as $job_skill)
