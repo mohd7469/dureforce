@@ -30,7 +30,8 @@ Route::name('seller.')->group(function () {
             // profile completed  routes
             Route::middleware('is-profile-completed')->group(function () {
 
-                Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing');
+                Route::get('/jobs-listing-old/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
+                Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'indexNew'] )->name('jobs.listing');
                 Route::get('/job-detail/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'jobView'] )->name('job.jobview');
                 Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
                

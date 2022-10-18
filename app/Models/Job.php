@@ -50,7 +50,7 @@ class Job extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
+        return $query->with('projectStage')->with('project_length')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
 
     }
 

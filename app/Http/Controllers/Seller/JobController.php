@@ -37,6 +37,26 @@ class JobController extends Controller
         }
 
         return view('templates.basic.user.seller.job.jobs_listing')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle );
+    }    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexNew($category = null)
+    {
+
+        $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+
+        $categories = Category::with('subCategory')->get();
+        if($category == null){
+            $Categorytitle = Category::where('id',$categories->pluck('id')->first())->first();
+            $subcategories=SubCategory::where('category_id',$categories->pluck('id')->first())->get();
+        }else{
+            $Categorytitle = Category::where('id',$category)->first();
+            $subcategories=SubCategory::where('category_id', $category)->get();
+        }
+
+        return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle );
     }
     
     /**
