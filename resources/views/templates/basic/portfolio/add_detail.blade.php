@@ -58,24 +58,37 @@
                 <div class="row">
 
                     
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                         <p class="skills-s">Skills and Deliverables (Optional)</p>
-                        <div class="input-group mb-3">
-                            <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="kills and Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables" data-select2-id="select2-data-deliverables">
-                                                                                            <option value="1">code</option>
-                                                                                            <option value="2">figma</option>
-                                                                                            <option value="3">ui/ux</option>
-                                                                                            <option value="6">dev credentials</option>
-                                                                                            <option value="7">qa credentials</option>
-                                                                                        
-                            </select><span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="select2-data-7-ptg5" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-disabled="false"><ul class="select2-selection__rendered" id="select2-deliverables-container"></ul><span class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="-1" autocorrect="off" autocapitalize="none" spellcheck="false" role="searchbox" aria-autocomplete="list" autocomplete="off" aria-describedby="select2-deliverables-container" placeholder="Select Deliverables" style="width: 100%;"></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                        
+                        <div class="input-group mb-1 select2_element">
+
+                            <select
+                                class="form-control select2 select2-hidden-accessible"
+                                name="skills[]"
+                                id="skills"
+                                multiple=""
+                                data-select2-id="select2-data-skills"
+                                tabindex="-1"
+                                aria-hidden="true"
+                                style="width:100%">
+                                <option value="">Select Skills</option>
+                                @foreach ($skills as $skill)
+                                <option value="{{$skill->id}}"  >{{$skill->name}}</option>
+                                @endforeach
+                            </select>
+
                         </div>
-                        <p class="maxi-skills">Max 15 skills</p>
+                        <div>
+                            <p class="maxi-skills">Max 15 skills</p>
+    
+                        </div>
                     </div>
+                    
 
                 </div>
 
-                <div class="row pb-5">
+                {{-- <div class="row pb-5">
                     
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         
@@ -89,7 +102,7 @@
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
                 
 
 
@@ -143,6 +156,21 @@
     .video-url{
         margin-top: 10px;
     }
+    p.maxi-skills {
+    text-align: left;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 14px;
+    color: #808285;
+    width: 100%;
+    padding-top: 9px;
+}
+    .input-group>.form-control, .input-group>.form-select {
+    position: initial !important;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+}
 </style>
 <script>
   function toggle_div_fun(id) {

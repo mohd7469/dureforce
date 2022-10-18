@@ -350,7 +350,9 @@ class ProfileController extends Controller
      */
     public function getUserPortfolio()
     {
-        return view($this->activeTemplate.'portfolio.index');
+        $skills=Skills::select('id','name')->get();
+
+        return view($this->activeTemplate.'portfolio.index',compact('skills'));
     }
 
         
