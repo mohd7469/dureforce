@@ -13,7 +13,7 @@
                                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">All_Proposals</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Shortlisted">Shortlisted (3)</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#Shortlisted">Shortlisted ({{count($short_listed_proposals)}})</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Messaged (2)</a>
@@ -272,7 +272,7 @@
                                                 <div class="col-md-4">
                                                     <div class="row btns-s">
 
-                                                        <a href="{{route('buyer.proposal.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Shortlist</a>
+                                                        <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
                                                         <a href="#" class="btn-products-s">Message</a>
                                                         <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                         <a href="#" class="btn-products-s phire">Hire</a>

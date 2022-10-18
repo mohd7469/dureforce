@@ -101,6 +101,19 @@ class ProposalController extends Controller
         }
 
     }
+    public function removeShortlist($proposal_id)
+    {
+
+        try {
+            $proposal = Proposal::with('job')->find($proposal_id);
+            $proposal->is_shortlisted=false;
+            $proposal->save();
+            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+        } catch (\Throwable $th) {
+            return "Some technical error occur";
+        }
+
+    }
     public function shortlistedProposals($job_uuid)
     {
 
