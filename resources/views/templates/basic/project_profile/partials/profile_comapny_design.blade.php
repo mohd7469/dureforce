@@ -899,7 +899,7 @@
                                     >
                                         <a
                                             class="btn--post btn active mr-1 d-inline-block"
-                                            href="http://127.0.0.1:8000/user/buyer/job/create"
+                                            href="{{ route('buyer.job.create') }}"
                                             >Post a Job</a
                                         >
                                         <div class="search-main">

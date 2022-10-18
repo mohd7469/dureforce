@@ -166,7 +166,7 @@ class JobController extends Controller
                 foreach ($request->file as $file) {
 
                     $this->fileValidate($file);
-                    try {
+
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
@@ -179,9 +179,7 @@ class JobController extends Controller
                         $document->is_published = "Active";
                         $job->documents()->save($document);
 
-                    } catch (\Exception $exp) {
-                        return response()->json(["error" => $exp->getMessage()]);;
-                    }
+
 
                 }
             }
@@ -266,7 +264,6 @@ class JobController extends Controller
                 foreach ($request->file as $file) {
 
                     $this->fileValidate($file);
-                    try {
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
@@ -279,10 +276,7 @@ class JobController extends Controller
                         $document->is_published = "Active";
                         $job->documents()->save($document);
 
-                    } catch (\Exception $exp) {
-                        $notify[] = ['error', 'Image could not be uploaded.'];
-                        return back()->withNotify($notify);
-                    }
+
 
                 }
             }

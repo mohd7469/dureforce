@@ -462,15 +462,19 @@
         @endpush
     @push('script-lib')
    
-    {{-- <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script> --}}
+    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
         
         <script>
             Dropzone.autoDiscover = false;
             let portfolio_basic_form=$('#portfolio_basics_information');
-            var detail_tab=$('#portfolio_detail');
-            var preview_tab=$('#portfolio_preview');
+            var add_project=$('#addProject');
+            var detail_tab=$('#addDetail');
+            var preview_tab=$('#addPreview');
             
             $(document).ready(function(){
+                $('.select2').select2({
+                    tags: true
+                });
                 var form_data='';
                 var action_url="{{route('seller.profile.portfolio.basics')}}";
                 var dropzone = new Dropzone('#demo-upload', {
@@ -562,6 +566,10 @@
                     }
                     
                 });
+                portfolio_basic_form.submit(function(e){
+                    e.preventDefault();
+                    savePortfolioBasic();
+                });
             });
            
             function savePortfolioBasic()
@@ -582,7 +590,7 @@
                         if(response.success){
 
                             notify('success', response.success);
-                            formPostProcess(detail_tab);
+                            formPostProcess(detail_tab,add_project);
                         
                         }
                         else if(response.validation_errors){
@@ -621,12 +629,14 @@
                 }
             }
 
-            function formPostProcess(nextTab)
+            function formPostProcess(nextTab,preTab)
             {
 
                 $('input,select,textarea').removeClass('error-field');
                 $('.select2').next().removeClass("error-field");   
-                nextTab.click();
+                preTab.removeClass('active');
+                nextTab.addClass('active');
+
                 scrollTop();
             }
 

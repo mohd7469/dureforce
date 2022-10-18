@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
 use App\Models\User;
@@ -23,7 +22,6 @@ Route::middleware('verified')->group(function () {
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
     Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
-
 
 
 });
@@ -54,10 +52,9 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //Seller Add Portfolio pages
 
 
-
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 
-
+Route::view('/job-listing', 'templates.basic.offers.myjob');
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'Paypal\ProcessController@ipn')->name('Paypal');
@@ -545,7 +542,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('verified')->group(function () {
 
-        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'home'])->name('home')->middleware(['is-profile-completed']);
+        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'home'])->name('home')->middleware(['is-profile-completed']);
 
         Route::get('authorization', 'AuthorizationController@authorizeForm')->name('authorization');
         Route::get('resend-verify', 'AuthorizationController@sendVerifyCode')->name('send.verify.code');
@@ -558,7 +555,6 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware('is-profile-completed')->group(function () {
 
-              
 
                 Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
                 Route::post('profile-setting', 'UserController@submitProfile');
@@ -651,7 +647,6 @@ Route::name('user.')->prefix('user')->group(function () {
         });
 
 
-
         Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
         Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
         Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
@@ -677,11 +672,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('software/document/download/{id}', 'HomeController@buyerSoftwareDocumentFile')->name('buyer.software.document.download');
             Route::get('hire/employees', 'HomeController@hireEmploy')->name('buyer.hire.employ');
             Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
- 
 
 
         });
-
 
 
         //JobBiding
