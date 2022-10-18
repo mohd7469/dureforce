@@ -25,7 +25,7 @@ Route::middleware('verified')->group(function () {
 
 
 });
-
+Route::post('/profle/password/change', 'ProfileController@profilePasswordChange')->name('profile.password.change');
 // --------------------------------------------------------------------------------------------------------------
 
 
