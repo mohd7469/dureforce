@@ -53,6 +53,7 @@
                         <p class="jb-found">{{count($jobs)}} jobs found</p>
                             @foreach($jobs as $job)
                             <div class="details-scs">
+                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
                                 <div class="row">
 
                                 <p class="jb-heading">{{$job->title}}</p>
@@ -65,7 +66,7 @@
                                     <li>Posted {{getDaysHoursMinutesSeconds($job->created_at)}}</li>
                                 </ul>
                                 <p class="offer-d"> {{\Illuminate\Support\Str::limit($job->description, 300, $end='.')}}
-                                    <a href="{{route('seller.job.jobview',$job->uuid)}}">More.....</a></p>
+                                    <a href="{{route('seller.job.jobview',$job->uuid)}}"><strong> More.....</strong></a></p>
                             </div>
                             <!--Skills Section Start-->
                                 <div class="row skills-c">
@@ -83,7 +84,8 @@
                                     <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
                                     <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
                                     <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
-                                </ul>    
+                                </ul>
+                                </a>
                             </div> 
 
                             <hr>
