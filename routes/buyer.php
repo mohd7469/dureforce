@@ -45,7 +45,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::post('save-invitation/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'saveInvitation'] )->name('job.save.invite.freelancer');
                 Route::get('invited-freelancer/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'invitedFreelancer'] )->name('job.invited.freelancer');
 //
-                Route::get('/job/attachment',         [\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
+                Route::get('/job/attachment',[\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
 
             });
 
