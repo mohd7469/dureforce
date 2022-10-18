@@ -50,7 +50,7 @@
                             
                             <div class="col-md-12">
                                 <label class="mt-4">Company Email Address </label>
-                                <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="{{ old('name', @$user->company->email) }}"placeholder="" />
+                                <input type="text" name="email"  value="{{ old('name', @$user->company->email) }}"placeholder="" />
                             </div>
                             <div class="col-md-12">
                                 
