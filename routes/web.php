@@ -765,18 +765,20 @@ Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
 
 Route::get('/profile/view', 'ProfileController@buyerProfile');
 
-Route::get('/greeting','Buyer\ProfileController@buyerProfile');
+Route::get('/greeting','Buyer\ProfileController@buyerProfile')->name('greeting.profile');
 
 
 
 
 Route::name('buyer.basic.')->prefix('buyer')->group(function () {
     
-    Route::post('/profle/password/change', 'ProfileController@BuyerprofilePasswordChange')->name('profile.password.change');
+    
+    Route::post('/profle/password/change', 'Buyer\ProfileController@BuyerprofilePasswordChange')->name('profile.password.change');
     Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
-    Route::post('/user-profile', 'ProfileController@saveUserBasics')->name('profile.save');
-    Route::post('/save-payment-methods', 'ProfileController@savePaymentMethod')->name('profile.save.payment.methods');
-    Route::post('/save-company', 'ProfileController@saveCompany')->name('profile.save.company');
+    Route::post('/user-profile', 'Buyer\ProfileController@saveUserBasics')->name('profile.save');
+    Route::post('/save-payment-methods', 'Buyer\ProfileController@savePaymentMethod')->name('profile.save.payment.methods');
+    // Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
     Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
     Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
+    Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
 });

@@ -110,12 +110,12 @@
                             </div>
                            
                             <div id="profile2" role="tabpanel" class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                    {{-- @include($activeTemplate . 'profile.project_profile.partials.company') --}}
+                                    @include($activeTemplate . 'profile.partials.company')
                                 </div>
                                 <div id="profile3" role="tabpanel"
 
                                     class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index')
+                                    @include($activeTemplate . 'profile.partials.payment_methods_index')
 
                                 </div>
 
