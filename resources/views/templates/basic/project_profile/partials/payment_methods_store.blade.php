@@ -1,5 +1,7 @@
 @php
 $userPayment = App\Models\UserPayment::find(request()->get('id'));
+$cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id)->get();
+
 @endphp
 
 <div class="setProfile" id="">
@@ -99,6 +101,12 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                                 id="payment_method_cities"
                                     >
                                     <option value="">Select City</option>
+
+                                    @foreach ($cities as $city)
+                                        <option value="{{$city->id}}"
+                                        {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
+                                        >{{$city->name}}</option>
+                                    @endforeach
                             </select>
                             
                         </div>
