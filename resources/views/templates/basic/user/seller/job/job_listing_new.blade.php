@@ -9,7 +9,20 @@
                <div class="item-section item-details-section">
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
-
+                            <!-- Tabs navs -->
+                            <div class="card">
+                                <div class="top-card-header ">
+                                    <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" aria-current="true" data-bs-toggle="tab"
+                                            href="#Search_tab">Search</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab"
+                                            href="#Saved_jobs_tab">Saved Jobs ({{count($jobs)}})</a>
+                                        </li>
+                                    </ul>
+                                </div>
                                 <div class="row inner-cs">
                                         <div id="custom-search-input">
                                             <div class="input-group">
@@ -41,63 +54,101 @@
                                                 <option>1</option>
                                                 <option>1</option>
                                             </select>
-                         <!--Sorting Section End-->
+                                            <!--Sorting Section End-->
                                        
                                     </div>
                                 </div>
                         
-
-                         <!---Search Filter Container End--->
-
-                        <!----------- ===== Job Experties Container Start ==== ------------->
-                        <p class="jb-found">{{count($jobs)}} jobs found</p>
-                            @foreach($jobs as $job)
-                            <div class="details-scs">
-                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
-                                <div class="row">
-
-                                <p class="jb-heading">{{$job->title}}</p>
-                                <a href="#" class="likeit"><img src="/assets/images/job/like.png" alt="like"></a>
-                                <ul class="jb-detail-l">
-                                    <li><?php if ($job->budget_type_id == \App\Models\BudgetType::$hourly){ echo "Hourly: $".$job->hourly_start_range. " - $". $job->hourly_end_range; }  else{ echo "FixedPrice"; } ?> </li>
-                                    <li>{{isset($job->rank) ? $job->rank->level : null}}</li>
-                                    <li>{{$job->budget_type_id == \App\Models\BudgetType::$fixed ? "Est . Budget : ".$job->fixed_amount: null}}</li>
-                                    <li>Est. Time:  {{isset($job->project_length)? $job->project_length->name: ''}}</li>
-                                    <li>Posted {{getDaysHoursMinutesSeconds($job->created_at)}}</li>
-                                </ul>
-                                <p class="offer-d"> {{\Illuminate\Support\Str::limit($job->description, 300, $end='.')}}
-                                    <a href="{{route('seller.job.jobview',$job->uuid)}}"><strong> More.....</strong></a></p>
-                            </div>
-                            <!--Skills Section Start-->
-                                <div class="row skills-c">
-                                    <div class="col-md-12">
-                                            <ul class="skills-listing">
-                                                @foreach($job->skill as $job_skill)
-                                                <li>{{$job_skill->name}}</li>
-                                                @endforeach
-                                            </ul>
+                                <!---Search Filter Container End--->
+                                    <!----------- ===== Job Experties Container Start ==== ------------->
+                                <form class="card-body tab-content">
+                                    <div class="tab-pane active" id="Search_tab">
+                                        <p class="jb-found">{{count($jobs)}} jobs found</p>
+                                            @foreach($jobs as $job)
+                                            <div class="details-scs">
+                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
+                                                <div class="row">
+                                                    <p class="jb-heading">{{$job->title}}</p>
+                                                    <a href="#" class="likeit"><img src="/assets/images/job/like.png" alt="like"></a>
+                                                    <ul class="jb-detail-l">
+                                                        <li><?php if ($job->budget_type_id == \App\Models\BudgetType::$hourly){ echo "Hourly: $".$job->hourly_start_range. " - $". $job->hourly_end_range; }  else{ echo "FixedPrice"; } ?> </li>
+                                                        <li>{{isset($job->rank) ? $job->rank->level : null}}</li>
+                                                        <li>{{$job->budget_type_id == \App\Models\BudgetType::$fixed ? "Est . Budget : ".$job->fixed_amount: null}}</li>
+                                                        <li>Est. Time:  {{isset($job->project_length)? $job->project_length->name: ''}}</li>
+                                                        <li>Posted {{getDaysHoursMinutesSeconds($job->created_at)}}</li>
+                                                    </ul>
+                                                    <p class="offer-d"> {{\Illuminate\Support\Str::limit($job->description, 300, $end='.')}}
+                                                    </p>
+                                                    <a href="{{route('seller.job.jobview',$job->uuid)}}"><strong> More.....</strong></a>
+                                                </div>
+                                                <!--Skills Section Start-->
+                                                <div class="row skills-c">
+                                                    <div class="col-md-12">
+                                                            <ul class="skills-listing">
+                                                                @foreach($job->skill as $job_skill)
+                                                                <li>{{$job_skill->name}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                    </div>
+                                                </div>
+                                                    <!--Skills Section End-->
+                                                <p class="proposals-s">Proposals: <strong>{{count($job->proposal)}}+</strong></p>
+                                                <ul class="methods-s">
+                                                    <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
+                                                    <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                    <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
+                                                </ul>
+                                                </a>
+                                            </div> 
+                                            <hr>
+                                            <!----------- ===== Job Experties Container  ==== ------------->   
+                                            @endforeach
                                     </div>
-                                </div>
-                                    <!--Skills Section End-->
-                                <p class="proposals-s">Proposals: <strong>{{count($job->proposal)}}+</strong></p>
-                                <ul class="methods-s">
-                                    <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
-                                    <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
-                                    <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
-                                </ul>
-                                </a>
-                            </div> 
-
-                            <hr>
-
-                        <!----------- ===== Job Experties Container  ==== ------------->   
-                        
-                        
-
-                            @endforeach
-                          
-                                    <!--===  Bio Profile Section End ===-->
-
+                                    <div class="tab-pane" id="Saved_jobs_tab">
+                                            @foreach($jobs as $job)
+                                            <div class="details-scs">
+                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
+                                                <div class="row">
+                                                    <p class="jb-heading">{{$job->title}}</p>
+                                                    <a href="#" class="likeit"><img src="/assets/images/job/like.png" alt="like"></a>
+                                                    <ul class="jb-detail-l">
+                                                        <li><?php if ($job->budget_type_id == \App\Models\BudgetType::$hourly){ echo "Hourly: $".$job->hourly_start_range. " - $". $job->hourly_end_range; }  else{ echo "FixedPrice"; } ?> </li>
+                                                        <li>{{isset($job->rank) ? $job->rank->level : null}}</li>
+                                                        <li>{{$job->budget_type_id == \App\Models\BudgetType::$fixed ? "Est . Budget : ".$job->fixed_amount: null}}</li>
+                                                        <li>Est. Time:  {{isset($job->project_length)? $job->project_length->name: ''}}</li>
+                                                        <li>Posted {{getDaysHoursMinutesSeconds($job->created_at)}}</li>
+                                                    </ul>
+                                                    <p class="offer-d"> {{\Illuminate\Support\Str::limit($job->description, 300, $end='.')}}
+                                                    </p>
+                                                    <br>
+                                                    <a href="{{route('seller.job.jobview',$job->uuid)}}"><strong> More.....</strong></a>
+                                                </div>
+                                                <!--Skills Section Start-->
+                                                <div class="row skills-c">
+                                                    <div class="col-md-12">
+                                                            <ul class="skills-listing">
+                                                                @foreach($job->skill as $job_skill)
+                                                                <li>{{$job_skill->name}}</li>
+                                                                @endforeach
+                                                            </ul>
+                                                    </div>
+                                                </div>
+                                                    <!--Skills Section End-->
+                                                <p class="proposals-s">Proposals: <strong>{{count($job->proposal)}}+</strong></p>
+                                                <ul class="methods-s">
+                                                    <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
+                                                    <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                    <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
+                                                </ul>
+                                                </a>
+                                            </div> 
+                                            <hr>
+                                            <!----------- ===== Job Experties Container  ==== ------------->   
+                                            @endforeach
+                                    </div>
+                                </form>
+                                <!--===  Bio Profile Section End ===-->
+                            </div>
                  <!--Skills Section Start-->
 
                </div>
@@ -116,6 +167,15 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal1.css') }}" rel="stylesheet">
 @endpush
 <style>
+.card {
+    margin: 0 0.5em;
+    box-shadow: 0px 0px 0px 0 rgb(22 22 26 / 18%) !important;
+    border: none;
+}
+.nav-link.active {
+    background: -o-linear-gradient(left, #1c6a6a 0%, #1c6a6a 100%) !important;
+    background: linear-gradient(to right, #1c6a6a 0%, #1c6a6a 100%) !important;
+}
 .sorting-mbl1 {
     width: 37% !important;
 }    
