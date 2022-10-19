@@ -35,7 +35,6 @@ Route::name('seller.')->group(function () {
                 Route::get('/save-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveJob'] )->name('jobs.save.listing');
                 Route::get('/job-detail/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'jobView'] )->name('job.jobview');
                 Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
-                Route::view('/send-offer','templates.basic.buyer.propsal.send-offer');
                
                 Route::name('proposal.')->group(function () {
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
