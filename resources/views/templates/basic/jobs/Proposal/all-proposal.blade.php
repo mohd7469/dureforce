@@ -271,9 +271,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row btns-s">
-
                                                         <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
-                                                        <a href="#" class="btn-products-s">Message</a>
+                                                        <a href="{{route('buyer.send.offer',$short_listed_proposal->uuid)}}" class="btn-products-s">Send Offer</a>
                                                         <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                         <a href="#" class="btn-products-s phire">Hire</a>
                                                     </div>
