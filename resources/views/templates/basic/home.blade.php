@@ -502,7 +502,7 @@
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
-                <h2 class="heading">Browse Expert Developers Directory</h2>
+                <h2 class="heading">Explore Trending Dure Force Publications</h2>
             </article>
             @include($activeTemplate . 'home.publications')
         </div>
