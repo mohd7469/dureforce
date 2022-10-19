@@ -147,30 +147,30 @@
 
                                                 @endforeach
                                             </div >
+                                            @isset($proposal->attachment)
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
-                                                        @isset($proposal->attachment)
-                                                            @foreach($proposal->attachment as $document)
+
+
                                                             <h2> Attachments</h2>
+                                                        <div class="row">
+                                                            @foreach($proposal->attachment as $document)
+                                                            <ul class="skills-listing col-lg-4 col-md-4">
 
-                                                            <ul class="skills-listing">
-
-                                                                <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->name}} </a>
+                                                                <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
 
 
                                                             </ul>
-                                                                @endforeach
-                                                        @endisset
 
-                                                             <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                            <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a>
+                                                        @endforeach
+                                                        </div>
 
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            <!--Skills Section End-->
+                                            @endisset
                                         </div>
                                         <hr>
                                     </div>
@@ -271,9 +271,8 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="row btns-s">
-
                                                         <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
-                                                        <a href="#" class="btn-products-s">Message</a>
+                                                        <a href="{{route('buyer.send.offer',$short_listed_proposal->uuid)}}" class="btn-products-s">Send Offer</a>
                                                         <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                         <a href="#" class="btn-products-s phire">Hire</a>
                                                     </div>
@@ -305,29 +304,30 @@
 
                                                     @endforeach
                                                 </div >
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="attachment">
-                                                        <div class="service_subtitle2 mt-20 heading-text">
-                                                            @isset($short_listed_proposal->attachment)
-                                                                @foreach($short_listed_proposal->attachment as $document)
-                                                                    <h2> Attachments</h2>
-
-                                                                    <ul class="skills-listing">
-
-                                                                        <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->name}} </a>
+                                                @isset($short_listed_proposal->attachment)
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <div class="attachment">
+                                                            <div class="service_subtitle2 mt-20 heading-text">
 
 
-                                                                    </ul>
-                                                                @endforeach
-                                                            @endisset
+                                                                <h2> Attachments</h2>
+                                                                <div class="row">
+                                                                    @foreach($short_listed_proposal->attachment as $document)
+                                                                        <ul class="skills-listing col-lg-4 col-md-4">
 
-                                                            {{-- <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                            <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a> --}}
+                                                                            <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
 
+
+                                                                        </ul>
+
+                                                                    @endforeach
+                                                                </div>
+
+                                                            </div>
                                                         </div>
-                                                    </div>
 
-                                                </div>
+                                                    </div>
+                                            @endisset
                                                 <!--Skills Section End-->
                                             </div>
                                             <hr>

@@ -355,6 +355,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(InviteFreelancer::class);
     }
+    public function save_job()
+    {
+        return $this->belongsToMany(Job::class, 'user_saved_jobs');
+    }
 
 }   
 //

@@ -9,6 +9,7 @@ use App\Models\SkillCategory;
 use App\Models\Status;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use WpOrg\Requests\Auth;
 
 class JobController extends Controller
 {
@@ -45,6 +46,10 @@ class JobController extends Controller
     public function indexNew($category = null)
     {
 
+        $user = auth()->user();
+        $user_saved_jobs = $user->save_job;
+        $user_saved_jobs_ids = $user_saved_jobs->pluck('id')->toArray();
+
         $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
 
         $categories = Category::with('subCategory')->get();
@@ -56,7 +61,20 @@ class JobController extends Controller
             $subcategories=SubCategory::where('category_id', $category)->get();
         }
 
-        return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle );
+        return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle )->with('user_saved_jobs_ids',$user_saved_jobs_ids)->with('user_saved_jobs',$user_saved_jobs);
+    }
+    public function saveJob($job_id)
+    {
+        try {
+            $user = auth()->user();
+            $user->save_job()->attach($job_id);
+            return redirect('seller/jobs-listing');
+
+        }
+        catch (\Exception $e){
+            return "Some Techinical Error Please contact Support Team";
+        }
+
     }
     
     /**

@@ -171,5 +171,9 @@ class Job extends Model
     {
         return $this->morphMany(DeliveryMode::class, 'module');
     }
+    public function save_job()
+    {
+        return $this->belongsToMany(User::class, 'user_saved_jobs');
+    }
 
 }
