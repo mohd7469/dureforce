@@ -238,7 +238,7 @@
                                             <label for="exampleFormControlTextarea1" class="form-label" style="padding-top:3px">Job Link</label>
                                             <input type="text" class="form-control" id="jobLink" disabled placeholder="{{ Request::url()}}" value="{{ Request::url()}}">
                                             </div>
-                                            <button type="button" class="copy-link-btn" onclick="copyJobLink()" >Copy Link</button>
+                                            <button type="button" id="CopyButton" class="copy-link-btn" onclick="copyJobLink()" >Copy Link</button>
                                         </div>
 
                                     </div>
@@ -264,8 +264,12 @@
     function copyJobLink() {
         // Get the text field
         var copyText = document.getElementById("jobLink");
+        var copyButton = document.getElementById("CopyButton");
+
 
         // Select the text field
+        copyButton.style.backgroundColor = '#6c757d';
+        copyButton.style.color = 'white';
         copyText.select();
         copyText.setSelectionRange(0, 99999); // For mobile devices
 
