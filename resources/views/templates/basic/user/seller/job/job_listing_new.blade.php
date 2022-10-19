@@ -19,7 +19,7 @@
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab"
-                                            href="#Saved_jobs_tab">Saved Jobs ({{count($jobs)}})</a>
+                                            href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -66,10 +66,26 @@
                                         <p class="jb-found">{{count($jobs)}} jobs found</p>
                                             @foreach($jobs as $job)
                                             <div class="details-scs">
-                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
+{{--                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
                                                 <div class="row">
-                                                    <p class="jb-heading">{{$job->title}}</p>
-                                                    <a href="#" class="likeit"><img src="/assets/images/job/like.png" alt="like"></a>
+                                                    <div class="row">
+                                                        <div class="col-md-11 col-lg-11">
+{{--                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
+                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}" class="col-md-10 col-lg-10"><strong>{{$job->title}}</strong></a>
+{{--                                                            </a>--}}
+                                                        </div>
+                                                        <div class="col-md-1 col-lg-1" >
+                                                            <?php
+                                                            if(in_array($job->id, $user_saved_jobs_ids)){ ?>
+                                                                <a href="#" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+
+                                                                <?php } else { ?>
+                                                                    <a href="{{route('seller.jobs.save.listing',$job->id)}}" ><i class="far fa-heart" style="color: #7F007F; "></i></a>
+                                                            <?php }?>
+                                                        </div>
+
+
+                                                    </div>
                                                     <ul class="jb-detail-l">
                                                         <li><?php if ($job->budget_type_id == \App\Models\BudgetType::$hourly){ echo "Hourly: $".$job->hourly_start_range. " - $". $job->hourly_end_range; }  else{ echo "FixedPrice"; } ?> </li>
                                                         <li>{{isset($job->rank) ? $job->rank->level : null}}</li>
@@ -98,19 +114,33 @@
                                                     <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
                                                     <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
                                                 </ul>
-                                                </a>
+{{--                                                </a>--}}
                                             </div> 
                                             <hr>
                                             <!----------- ===== Job Experties Container  ==== ------------->   
                                             @endforeach
                                     </div>
                                     <div class="tab-pane" id="Saved_jobs_tab">
-                                            @foreach($jobs as $job)
+                                            @foreach($user_saved_jobs as $job)
+                                                <br>
+                                                <br>
+
                                             <div class="details-scs">
-                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">
+
                                                 <div class="row">
-                                                    <p class="jb-heading">{{$job->title}}</p>
-                                                    <a href="#" class="likeit"><img src="/assets/images/job/like.png" alt="like"></a>
+                                                    <div class="row">
+                                                        <div class="col-md-11 col-lg-11">
+                                                            {{--                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
+                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}" class="col-md-10 col-lg-10"><strong>{{$job->title}}</strong></a>
+                                                            {{--                                                            </a>--}}
+                                                        </div>
+                                                        <div class="col-md-1 col-lg-1" >
+                                                            <a href="#" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
                                                     <ul class="jb-detail-l">
                                                         <li><?php if ($job->budget_type_id == \App\Models\BudgetType::$hourly){ echo "Hourly: $".$job->hourly_start_range. " - $". $job->hourly_end_range; }  else{ echo "FixedPrice"; } ?> </li>
                                                         <li>{{isset($job->rank) ? $job->rank->level : null}}</li>
@@ -140,7 +170,7 @@
                                                     <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
                                                     <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
                                                 </ul>
-                                                </a>
+
                                             </div> 
                                             <hr>
                                             <!----------- ===== Job Experties Container  ==== ------------->   
