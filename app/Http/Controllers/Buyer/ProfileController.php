@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserBasic;
 use DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\UserCompany;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
@@ -240,7 +242,8 @@ class ProfileController extends Controller
                     DB::commit();
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
-                    return redirect()->route('greeting.profile', ['greeting' => 'step-3'])->withNotify($notify);
+                    
+                    return redirect()->route('buyer.basic.profile')->withNotify($notify);
 
 
                 }
@@ -323,7 +326,7 @@ class ProfileController extends Controller
 
         return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
     }
-    public function BuyerprofilePasswordChange(Request $request){
+    public function buyerprofilePasswordChange(Request $request){
 
         $validator = Validator::make($request->all(), [
             'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
@@ -349,9 +352,9 @@ class ProfileController extends Controller
                      'password' => Hash::make($request->new_password)
                      ])->save();
                  
-                     Auth::logout();
+                   
 
-                     return response()->json(['success'=> 'User Password Updated Successfully','redirect_url' =>route('user.login')]);
+                     return response()->json(['success'=> 'User Password Updated Successfully','redirect_url' =>route('buyer.basic.profile')]);
                      
 
                  
@@ -373,6 +376,95 @@ class ProfileController extends Controller
         
         
     }
+ 
+    public function buyersavePaymentMethod(Request $request)
+    {
+    
+    
+        $rules = [
+            'card_number'     => 'required',
+            'expiration_date' => 'required|date',
+            'cvv_code'        => 'required',
+            'name_on_card'    => 'required',
+            // 'country_id'         => 'required|exists:world_countries,id',
+            // 'city_id'            => 'required|exists:world_cities,id',
+            // 'address'  => 'required',
+        ];
 
+        $messages =[
+            'card_number.required'     => 'Card Number is required',
+            'expiration_date.required' => 'Expiration Date is required',
+            'cvv_code.required'        => 'CVV Code is required',
+            'name_on_card.required'    => 'Name on Card is required',
+            // 'street_address.required'  => 'Street Address is required',
+            // 'country_id'               => 'Country is required',
+            // 'city_id'                  => 'City is required',
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules,$messages);
+
+        if ($validator->fails()) {
+            
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } 
+        else 
+        {
+            try {
+
+                DB::beginTransaction();
+                if($request->update_payment_id){
+
+                    $userPayment = UserPayment::find($request->update_payment_id);
+
+                    $userPayment->card_number = $request->card_number;
+                    $userPayment->expiration_date = $request->expiration_date;
+                    $userPayment->cvv_code = $request->cvv_code;
+                    $userPayment->name_on_card = $request->name_on_card;
+                    $userPayment->user_id = auth()->id();
+                    $userPayment->is_primary = 1;
+                    $userPayment->is_active = 1;
+                    $userPayment->save();
+                    DB::commit();
+             
+                    $notify[] = ['success', 'User Payment Method Updated Profile.'];
+                    
+                    return redirect()->route('buyer.basic.profile')->withNotify($notify);
+
+
+                }
+                else {
+                    $userPayment=UserPayment::create([
+                        'card_number' => $request->card_number,
+                        'expiration_date'=>$request->expiration_date,
+                        'cvv_code'=>$request->cvv_code,
+                        'name_on_card'=>$request->name_on_card,
+                        // 'country_id'=>$request->country_id,
+                        // 'city_id'=>$request->city_id,
+                        // 'address'=>$request->address,
+                        'user_id'=>auth()->id(),
+                        'is_primary' => 1,
+                        'is_active'  =>1
+                    ]);
+                    DB::commit();
+    
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'view' => 'step-1'])]);
+    
+                }
+                if(! empty($request->payment_id)) {
+                    $userPayment = UserPayment::findOrFail($request->payment_id);
+                    $userPayment->delete();
+                }
+                
+            } catch (\Throwable $th) {
+
+                DB::rollback();
+                return response()->json(['error' => $th->getMessage()]);
+                $notify[] = ['errors', 'Failled To Update User Payment Method .'];
+                return back()->withNotify($notify);
+
+            }
+        }
+    }
 
 }

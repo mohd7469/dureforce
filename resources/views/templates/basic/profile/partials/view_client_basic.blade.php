@@ -135,6 +135,15 @@
         width: 100px;
         border-radius: 50%;
     }
+    .modal-header button.btn-close {
+    background: url(/assets/images/job/x.png) !important;
+    height: 40px !important;
+    width: 32px !important;
+    background-repeat: no-repeat !important;
+    background-size: 27px !important;
+    position: relative;
+    background: red;
+    }
     .upload-c {
     position: absolute;
     position: absolute;
