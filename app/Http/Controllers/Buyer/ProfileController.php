@@ -48,6 +48,7 @@ class ProfileController extends Controller
      */
     public function saveCompany(Request $request)
     {
+        
     
         $rules = [
             'email' => 'email',
@@ -380,7 +381,6 @@ class ProfileController extends Controller
     public function buyersavePaymentMethod(Request $request)
     {
     
-    
         $rules = [
             'card_number'     => 'required',
             'expiration_date' => 'required|date',
@@ -463,6 +463,137 @@ class ProfileController extends Controller
                 $notify[] = ['errors', 'Failled To Update User Payment Method .'];
                 return back()->withNotify($notify);
 
+            }
+        }
+    }
+    public function buyersaveUserBasics(Request $request)
+    {
+
+        $request_data = $request->all();
+
+        $rules = [
+            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'designation' => 'required|string',
+            'about' => 'required|string',
+            'phone_number' => ['required', new PhoneNumberValidate],
+            'city_id' => 'required|exists:world_cities,id',
+            'languages' => 'required|array',
+            'languages.*.language_id' => 'required|exists:world_languages,id',
+            'languages.*.language_level_id' => 'required|exists:language_levels,id',
+        ];
+        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+            $rules['category_id'] = 'required|array';
+            $rules['category_id.*'] = 'exists:categories,id';
+        }
+
+        $validator = Validator::make($request_data, $rules);
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+            try {
+
+                DB::beginTransaction();
+
+                $user = auth()->user();
+                $user->basicProfile()->updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'city_id' => $request_data['city_id'],
+                        'designation' => $request_data['designation'],
+                        'about' => $request_data['about'],
+                        'phone_number' => $request_data['phone_number'],
+                    ]);
+                $user->languages()->delete();
+                $user->languages()->createMany($request_data['languages']);
+                if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+                    $user->categories()->sync($request_data['category_id']);
+                }
+
+                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
+
+                    $path = imagePath()['attachments']['path'];
+                    $file = $request->profile_picture;
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $user->basicProfile()->update(['profile_picture' => $url]);
+
+                }
+                $user->save();
+
+                DB::commit();
+                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]); 
+
+
+
+            } catch (\Throwable $exception) {
+
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+
+
+            }
+        }
+    }
+    public function buyersaveCompany(Request $request)
+    {
+        $rules = [
+            'email' => 'email',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
+            // 'phone' => ['required', new PhoneNumberValidate],
+             'vat' => 'required|string|min:4|max:15'
+           
+
+          
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+            try {
+
+                DB::beginTransaction();
+                $user = User::findOrFail(auth()->id());
+                $filename = '';
+
+                if ($request->hasFile('company_logo')) {
+
+                    $location = imagePath()['profile']['user']['path'];
+                    $size = imagePath()['profile']['user']['size'];
+                    $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+                }
+
+                if(empty($filename)) {
+                    $filename = $user->company->logo ?? '';
+                }
+
+                $user->company()->delete();
+
+                $user->company()->save(new UserCompany([
+                    'name'         => $request->get('name'),
+                    'number'        => $request->get('phone'),
+                    'logo'         => $filename,
+                    'email'        => $request->get('email'),
+                    'country_id'     => $request->get('country_id'),
+                    'vat'          => $request->get('vat'),
+                    'website'          => $request->get('url'),
+                    'linked_url' => $request->get('linkedin_url'),
+                    'facebook_url' => $request->get('facebook_url')
+                ]));
+                
+                DB::commit();
+                return response()->json(['success'=> 'User Company Updated Successfully']);
+
+            } catch (\Throwable $th) {
+                DB::rollback();
+                return response()->json(['error' => $th->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Company .'];
+                return back()->withNotify($notify);
+                
             }
         }
     }

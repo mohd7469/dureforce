@@ -117,6 +117,7 @@ z-index: 1;
 </style>
 
 <div class="setProfile cp1-style " id="">
+    
     <!----== Client Info Section Start ==----->
     <div class="client-info-section">
         <p class="cp-basic">Company Details</p>
@@ -199,10 +200,10 @@ z-index: 1;
                         {{$user->company->facebook_url ?? ''}}
                     </div>
 
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                    {{-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Twitter Profile</label>
                         {{$user->company->facebook_url ?? ''}}
-                    </div>
+                    </div> --}}
                 </div>
             
             </div>

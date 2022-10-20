@@ -111,12 +111,7 @@
                                             value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
                                             />
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="mt-4">Facebook URL  </label>
-                                        <input type="text" id="facebook-website" name="facebook_url"
-                                            value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
-                                            />
-                                    </div>
+                                   
                                 </div>
 
                             </div>
