@@ -183,7 +183,7 @@
 
                                                        {{$invited_freelancers->user->first_name}} {{ $invited_freelancers->user->last_name }}
                                                      </h4>
-                                                       <p class="pdesination-c"> Full Stack Developer</p>
+                                                      
                                                       <p class="pdesination-c">{{isset($invited_freelancers->user->user_basic) ?$invited_freelancers->user->user_basic->designation:null}}</p>
                                                        
                                                         <p class="plocation"> {{$invited_freelancers->user->country->name}}</p>
