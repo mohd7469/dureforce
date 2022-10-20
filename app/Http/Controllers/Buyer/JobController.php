@@ -50,7 +50,7 @@ class JobController extends Controller
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
-        $data['experience_levels'] = Rank::select(['id', 'level'])->get();
+        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
         $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
 
