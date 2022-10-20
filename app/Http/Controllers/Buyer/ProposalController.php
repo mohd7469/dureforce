@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PropsalStoreRequest;
 use App\Models\BudgetType;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
@@ -127,7 +128,23 @@ class ProposalController extends Controller
 
         } catch (\Throwable $th) {
             return $th;
-//            return "Some technical error occur";
+            //  return "Some technical error occur";
+        }
+
+    }
+
+    // send offer
+    public function offerSend($job_uuid)
+    {
+
+        try {
+            $offer_letter = Proposal::withAll()->where('uuid',$job_uuid)->first();
+            $pageTitle = "Send Offer";
+            return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','offer_letter'));
+
+        } catch (\Throwable $th) {
+            return $th;
+            //  return "Some technical error occur";
         }
 
     }
