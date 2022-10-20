@@ -114,12 +114,25 @@ class UserPaymentMethodController extends Controller
      */
     public function destroy($id)
     {
+        
         //
         $userPayment = UserPayment::findOrFail($id);
         $userPayment->delete();
         $notify[] = ['success', 'Your Payment Method is Deleted.'];
         return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
+
+    public function destroy1($id)
+    {
+        
+        //
+        $userPayment = UserPayment::findOrFail($id);
+        $userPayment->delete();
+        $notify[] = ['success', 'Your Payment Method is Deleted.'];
+        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+    }
+    
+    
 
     public function changeStatus($id)
     {

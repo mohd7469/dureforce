@@ -781,4 +781,6 @@ Route::name('buyer.basic.')->prefix('buyer')->group(function () {
     Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
     Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
     Route::post('/save-company', 'Buyer\ProfileController@buyersaveCompany')->name('profile.save.company');
+    
+    
 });

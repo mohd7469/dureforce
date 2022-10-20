@@ -60,7 +60,7 @@
                                         <a href="{{ route('user.basic.profile', ['view' => 'step-4', 'id' => $payments->id]) }}"
                                             class="btn btn-secondary icons"><i class="far fa-edit"></i></a>
                                         <form method="POST"
-                                            action="{{ route('user.profile.destroy.payment', $payments->id) }}"
+                                            action="{{ route('profile.destroy.payment', $payments->id) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('DELETE')

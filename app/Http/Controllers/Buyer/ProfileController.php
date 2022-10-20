@@ -468,7 +468,7 @@ class ProfileController extends Controller
     }
     public function buyersaveUserBasics(Request $request)
     {
-
+    
         $request_data = $request->all();
 
         $rules = [
@@ -495,13 +495,19 @@ class ProfileController extends Controller
                 DB::beginTransaction();
 
                 $user = auth()->user();
+                $email =auth()->user()->email;
+                
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
+                    
                     [
                         'city_id' => $request_data['city_id'],
                         'designation' => $request_data['designation'],
                         'about' => $request_data['about'],
                         'phone_number' => $request_data['phone_number'],
+                        
+                        
+                    
                     ]);
                 $user->languages()->delete();
                 $user->languages()->createMany($request_data['languages']);
@@ -597,5 +603,6 @@ class ProfileController extends Controller
             }
         }
     }
+   
 
 }

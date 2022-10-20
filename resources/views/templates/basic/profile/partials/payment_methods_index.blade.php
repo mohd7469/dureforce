@@ -6,7 +6,7 @@
                 <div class="row mb-3">
                     <div class="col-md-8 d-flex align-items-center">
                         <span class="">
-                            Add or delete payment methods for your account.sss
+                            Add or delete payment methods for your account.
                         </span>
                     </div>
                     <div class="col-md-4">
