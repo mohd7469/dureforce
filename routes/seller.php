@@ -33,6 +33,7 @@ Route::name('seller.')->group(function () {
                 Route::get('/jobs-listing-old/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
                 Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'indexNew'] )->name('jobs.listing');
                 Route::get('/save-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveJob'] )->name('jobs.save.listing');
+                Route::get('/remove-saved-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'removeSavedJob'] )->name('jobs.remove.saved.listing');
                 Route::get('/job-detail/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'jobView'] )->name('job.jobview');
                 Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
                 Route::view('/send-offer','templates.basic.buyer.propsal.send-offer');

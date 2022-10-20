@@ -76,6 +76,19 @@ class JobController extends Controller
         }
 
     }
+    public function removeSavedJob($job_id)
+    {
+        try {
+            $user = auth()->user();
+            $user->save_job()->detach($job_id);
+            return redirect('seller/jobs-listing');
+
+        }
+        catch (\Exception $e){
+            return "Some Techinical Error Please contact Support Team";
+        }
+
+    }
     
     /**
      * jobview
