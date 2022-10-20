@@ -32,6 +32,9 @@ function displayErrorMessage(validation_errors)
     }
 
 }
+function financial(x) {
+    return Number.parseFloat(x).toFixed(2);
+}
 function submitProposal(data)
 {
   var action_url=$("#propsal_form").attr('action');
@@ -175,11 +178,12 @@ $(function() {
       }
       else{
 
-        $('#amount_receive').val(Math.round(rate_per_hour*0.80,2));
-        $('#system_fee').html(Math.round(rate_per_hour*0.20,2)+'$');
+        $('#amount_receive').val(financial(rate_per_hour*0.80));
+        $('#system_fee').html('$'+financial(rate_per_hour*0.20));
 
       }
     });
+
     
     $("#total_milestones_amount").focusout(function(){
        
@@ -190,8 +194,8 @@ $(function() {
       }
       else{
 
-        $('#milestones_amount_receive').val(Math.round(total_cost*0.80,2));
-        $('#system_fee').html(Math.round(total_cost*0.20,2)+'$');
+        $('#milestones_amount_receive').val(financial(total_cost*0.80));
+        $('#system_fee').html('$'+financial(total_cost*0.20));
 
 
       }
@@ -212,8 +216,8 @@ function calculateMilestoneAmountSum()
       total_amount=total_amount+parseInt(milestone_amount);
     });
     $('#total_milestones_amount').val(total_amount);
-    $('#milestones_amount_receive').val(Math.round(total_amount*0.80,2));
-    $('#system_fee').html(Math.round(total_amount*0.20,2)+'$');
+    $('#milestones_amount_receive').val(financial(total_amount*0.80));
+    $('#system_fee').html('$'+financial(total_amount*0.20));
 
 
 }
