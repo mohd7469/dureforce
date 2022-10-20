@@ -42,14 +42,14 @@
                           
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone  </label>
+                            <label class="mt-4">Company Phone*  </label>
                             <input type="number" name="phone" value="{{ old('name', @$user->company->number) }}" value=""
                                 placeholder=""  />
                         </div>
                         <div class="col-md-12">
                             
                             <div class="col-md-12">
-                                <label class="mt-4">Company Email Address </label>
+                                <label class="mt-4">Company Email Address* </label>
                                 <input type="text" name="email"  value="{{ old('name', @$user->company->email) }}"placeholder="" />
                             </div>
                             <div class="col-md-12">
@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT  </label>
+                                <label class="mt-4">Company VAT*  </label>
                                 <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
                                     placeholder=""  />
                             </div>
