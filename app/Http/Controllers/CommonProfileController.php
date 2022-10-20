@@ -85,7 +85,6 @@ class CommonProfileController extends Controller
      */
     public function saveUserBasics(Request $request)
     {
-
         $request_data = $request->all();
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
@@ -96,9 +95,9 @@ class CommonProfileController extends Controller
             // 'phone_number' => ['required', new PhoneNumberValidate],
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
-            'language_level' => 'required',
+            'languages.*.language_level_id' => 'required',
             'languages.*.language_id' => 'required|exists:world_languages,id',
-            'languages.*.language_level_id' => 'required|exists:language_levels,id',
+
         ];
         $messages =[
             'designation.required'     => 'Designation is required',
@@ -106,9 +105,9 @@ class CommonProfileController extends Controller
             'phone_number.required'        => 'Phone No is required',
             'city_id.required'    => 'City is required',
             'languages.required'    => 'Please Select Language',
-            'language_level.required'    => 'Please Select Proficiency Level',
+            'languages.*.language_level_id.required'    => 'Please Select Proficiency Level',
             'languages.*.language_id.required'    => 'Please Select at least one Language',
-            'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
+
         ];
         if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
             $rules['category_id'] = 'required|array';
