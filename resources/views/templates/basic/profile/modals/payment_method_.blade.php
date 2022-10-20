@@ -42,7 +42,7 @@
                                     <input ype="text" name="cvv_code"
                                     value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required  />
                                 </div>
-                                {{-- <div class="col-md-6">
+                                <div class="col-md-6">
                                     <label class="mt-4">Country <span class="imp">*</span></label>
                                     <select
                                             name="country_id"
@@ -66,9 +66,9 @@
                                             @endforeach
         
                                         </select>
-                                </div> --}}
+                                </div>
          
-                                {{-- <div class="col-md-6">
+                                <div class="col-md-6">
         
                                     <label class="mt-4">City <span class="imp">*</span></label>
                                     <select
@@ -85,7 +85,7 @@
                                             @endforeach
                                     </select>
                                     
-                                </div> --}}
+                                </div>
         
                                 <div class="col-md-12">
                                     <label class="mt-4">Street Address <span class="imp">*</span></label>

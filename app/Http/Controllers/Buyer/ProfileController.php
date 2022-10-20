@@ -386,9 +386,9 @@ class ProfileController extends Controller
             'expiration_date' => 'required|date',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
-            // 'country_id'         => 'required|exists:world_countries,id',
-            // 'city_id'            => 'required|exists:world_cities,id',
-            // 'address'  => 'required',
+            'country_id'         => 'required|exists:world_countries,id',
+            'city_id'            => 'required|exists:world_cities,id',
+            'address'  => 'required',
         ];
 
         $messages =[
@@ -396,9 +396,9 @@ class ProfileController extends Controller
             'expiration_date.required' => 'Expiration Date is required',
             'cvv_code.required'        => 'CVV Code is required',
             'name_on_card.required'    => 'Name on Card is required',
-            // 'street_address.required'  => 'Street Address is required',
-            // 'country_id'               => 'Country is required',
-            // 'city_id'                  => 'City is required',
+            'street_address.required'  => 'Street Address is required',
+            'country_id'               => 'Country is required',
+            'city_id'                  => 'City is required',
 
         ];
 
@@ -421,11 +421,15 @@ class ProfileController extends Controller
                     $userPayment->expiration_date = $request->expiration_date;
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
+                     $userPayment->country_id = $request->country_id;
+                     $userPayment->city_id = $request->city_id;
+                     $userPayment->address = $request->address;
                     $userPayment->user_id = auth()->id();
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
                     $userPayment->save();
                     DB::commit();
+                    
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
                     
@@ -439,9 +443,9 @@ class ProfileController extends Controller
                         'expiration_date'=>$request->expiration_date,
                         'cvv_code'=>$request->cvv_code,
                         'name_on_card'=>$request->name_on_card,
-                        // 'country_id'=>$request->country_id,
-                        // 'city_id'=>$request->city_id,
-                        // 'address'=>$request->address,
+                        'country_id'=>$request->country_id,
+                        'city_id'=>$request->city_id,
+                        'address'=>$request->address,
                         'user_id'=>auth()->id(),
                         'is_primary' => 1,
                         'is_active'  =>1
@@ -495,7 +499,14 @@ class ProfileController extends Controller
                 DB::beginTransaction();
 
                 $user = auth()->user();
-                $email =auth()->user()->email;
+                if($request->email){
+                    
+                    $user1 = User::find( auth()->user()->id);
+                   
+                    $user1->email = $request->email;
+                    $user1->save();
+                    
+                }
                 
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
@@ -602,6 +613,15 @@ class ProfileController extends Controller
                 
             }
         }
+    }
+    public function buyerdestroy($id)
+    {
+       
+        //
+        $userPayment = UserPayment::findOrFail($id);
+        $userPayment->delete();
+        $notify[] = ['success', 'Your Payment Method is Deleted.'];
+        return redirect()->route('buyer.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
    
 

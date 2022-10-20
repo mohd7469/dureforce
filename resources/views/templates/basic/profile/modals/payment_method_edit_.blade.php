@@ -9,6 +9,7 @@
           <div class="modal-body">
             <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods" enctype="multipart/form-data">
                 @csrf
+                
                 <div class="container-fluid welcome-body" id="">
                    
                     <span class="cmnt pb-4" style="display:none">Complete your profile to search from thousands of skilled freelancers and
@@ -89,7 +90,8 @@
         
                                 <div class="col-md-12">
                                     <label class="mt-4">Street Address <span class="imp">*</span></label>
-                                    <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
+                                    <input type="text" name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
+                                    
                                         required/>
                                 </div>
                                 </div> 
