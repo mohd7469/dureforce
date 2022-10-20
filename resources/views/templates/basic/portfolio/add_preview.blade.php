@@ -13,47 +13,17 @@
                     <p class="p-title">
                         Title
                    </p>
-                   <span>UX Design <a href="#" class="editbtn"><img src="/assets/images/job/edit-icon.png"></a></span>
+                   <span id="portfolio_title" class="portfolio_title">Name<a href="#" class="editbtn"><img src="/assets/images/job/edit-icon.png"></a></span>
                     
-                    <div class="col-xl-4 col-lg-4 col-md-4 form-group mt-4">
                     
-                        <div class="card">
-                            <div class="img-wrapper-previw">
-                                <a href="#" class="hover-video"><img src="/assets/images/job/video-player.png"></a>
-                            <img src="http://127.0.0.1:8000/assets/images/job/card.png" alt="image">
-                            <a href="#" class="editbtn-img-p"><img src="/assets/images/job/edit-icon.png"></a>
-                            </div>
-            
-                            <div class="card-body item-area item-card">
-                                <h4 class="ptitle">Project Name</h4>
-                                <span class="short-d">This is short project description</span>
-
-                            </div>
+                    <div class="row card" style="background-color: transparent !important;box-shadow:none;border:none">
+                        
+                        <div class="row" id="image_viewer" >
+                            
                         </div>
-                
+        
                     </div>
-
-                    <div class="col-xl-4 col-lg-4 col-md-4 form-group mt-4">
-                    
-                        <div class="card">
-                            <div class="img-wrapper-previw">
-                             <a href="#" class="hover-video"><img src="/assets/images/job/video-player.png"></a>  
-                            <img src="http://127.0.0.1:8000/assets/images/job/card.png" alt="image">
-                            <a href="#" class="editbtn-img-p"><img src="/assets/images/job/edit-icon.png"></a>
-                            </div>
-            
-                            <div class="card-body item-area item-card">
-                                <h4 class="ptitle">Project Name</h4>
-                                <span class="short-d">This is short project description</span>
-                     
-
-            
-
-                            </div>
-                        </div>
-                
-                    </div>
-
+                       
                 </div>
                 
 
@@ -63,10 +33,9 @@
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         
                         <div class="col-md-7">
-                            <label>Suggested Skills</label>
-                            <ul class="skills-listing">
-                            <li>ui design</li>
-                            <li>research</li>
+                            <label>Skills</label>
+                            <ul class="skills-listing" id="portfolio_skills">
+                           
                             </ul>
                         </div>
                     </div>
@@ -76,10 +45,9 @@
 
                 <div class="row">
 
-                    
                     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
                         <label>Description <a href="#" class="editbtn-d"><img src="/assets/images/job/edit-icon.png"></a></label>
-                        <p>Make sure you have approval from your clients to display the work you've done for them publicly. </p>
+                        <p class="portfolio_description"> </p>
                     </div>
 
                 </div>
@@ -91,8 +59,8 @@
 
     <div class="container pt-5 pb-5 pl=">
         <div class="row">
-            <p class="pb-4">
-                September - 09
+            <p class="pb-4" id="portfolio_completion_date">
+               
             </p>
         </div>
         <div class="row">
@@ -100,7 +68,7 @@
                     
             <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
                 <label>Project URL <a href="#" class="editbtn-d editbtn-d-p"><img src="/assets/images/job/edit-icon.png"></a></label>
-                <p>Http/sdsdsds/dsdsa/dsads/sddss/sd/sads.com</p>
+                <p id="portfolio_url"></p>
             </div>
 
         </div>

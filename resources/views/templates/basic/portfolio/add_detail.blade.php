@@ -1,4 +1,3 @@
-<form class="user-profile-form" action="http://127.0.0.1:8000/buyer/job/store" method="POST" enctype="multipart/form-data" id="job_form_data">
     <div class=""  style="background: #F8FAFA">
         <div class="d-flex flex-wrap align-items-center justify-content-between">
             <h3 class="card-title mt-2 ml-2">
@@ -26,15 +25,15 @@
                 
                     </div>
 
-                    <div onclick="toggle_div_fun('sectiontohide');" class="col-xl-6 col-lg-6 form-group"> 
+                    <div class="col-xl-6 col-lg-6 form-group"> 
                        
                         <p class="h-cs">Or embed a video from Youtube or Vimeo</p>
                       
-                            <a href="#" class="upload-video"> 
+                            <a href="#" class="upload-video"  onclick="toggle_div_fun('video_url_id');"> 
                                 Add Video Link  
                             </a>
                             
-                            <input class="video-url" id="sectiontohide" type="text" placeholder="Add Video Link" style="display: none">
+                            <input class="video-url" id="video_url_id" type="text" placeholder="Add Video Link" style="display: none" name="video_url">
                         
                        
                     </div>
@@ -109,7 +108,7 @@
                 <div class="row pb-3">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Project URL (Optional)</label>
-                        <input type="text">
+                        <input type="text" name="detail_project_url" id="detail_project_url">
                     </div>
                 </div>
 
@@ -118,32 +117,19 @@
                     
                     <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
                         <label>Description</label>
-                        <textarea class="form-control bg--gray" name="description" aria-rowspan="3" spellcheck="false"></textarea>
+                        <textarea class="form-control bg--gray" name="description" id="detail_description" aria-rowspan="3" spellcheck="false"></textarea>
                         <p class="d-s">Make sure you have approval from your clients to display the work you've done for them publicly.</p>
                     </div>
 
                 </div>
 
 
-                <input type="hidden" value="http://127.0.0.1:8000/buyer/job/job_data_validate" id="job_validate_url">
-                <input type="checkbox" name="skills[]" style="display: none">
-                <div style="display:inline;display:none" id="skills_heading">
-                    <h4 class="" style="display:inline">Job Attributes* </h4>
-                    <small>(Atlease one skill is required)</small>
-                </div>
-                <div id="form_attributes" class="pt-1">
-                    
-                </div>
-
-                
-                
-                
                 <div id="outer" class="text-right">
                     <div class="inner">
                         <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
                     </div>
                     <div class="inner">
-                        <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Go to preview</button>
+                        <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="preview_btn">Go to preview</button>
                     </div>
                 </div>
             </div>
@@ -151,7 +137,6 @@
         </div>
     </div>
   </div>
-</form>
 <style>
     .video-url{
         margin-top: 10px;
@@ -182,10 +167,3 @@
 }
 
 </script>
-@push('script-lib')
-
-    
-    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-
-
-@endpush

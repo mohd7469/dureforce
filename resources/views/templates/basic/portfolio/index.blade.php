@@ -118,6 +118,12 @@
         .pb-5 {
             padding-bottom: 34px!important;
         }
+        .card img {
+    max-height: 100%;
+    height: 200px;
+    width: 664px;
+    margin-right: 10px
+}
         p.skills-s {
             width: 100%;
             font-weight: 500;
@@ -233,19 +239,19 @@
             border-bottom: none;
         }
         
-            .sidebar-nav li a {
-                font-weight: 600;
-                font-size: 14px;
-                line-height: 18px;
-                color: #808285;
-                width: 100%;
-                display: inline-block;
-                padding: 23px 10px 23px 40px;
-                text-decoration: none;
-                
-                background-size: 31px;
-                display: inline-block;
-                background-position: center left !important;
+        .sidebar-nav li a {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #808285;
+            width: 100%;
+            display: inline-block;
+            padding: 23px 10px 23px 40px;
+            text-decoration: none;
+            
+            background-size: 31px;
+            display: inline-block;
+            background-position: center left !important;
         }
         ul.sidebar-nav li:nth-child(1) a {
             background: url(/assets/images/job/edit-1.png) no-repeat;  
@@ -285,8 +291,8 @@
             padding: 0px;
         }
         .col-md-2.nopadding {
-    padding-right: 0px;
-}
+            padding-right: 0px;
+        }
         .account-section {
             background: #F8FAFA;
         }
@@ -400,7 +406,6 @@
             
         }
         
-        
         .select2-container--default.select2-container--focus .select2-selection--multiple {
             border: 1px solid #e1e7ec !important;
             
@@ -410,7 +415,6 @@
             background-color: white;
             border: 1px solid #e1e7ec;
            
-        
         }
         
         .form-control {
@@ -424,6 +428,12 @@
         }
         
       
+        .img_div{
+            border: 1px solid #dee2e6!important;
+            padding-left: 0px;
+            padding-right: 0px;
+            margin-right: 10px;
+        }
         
         .hide{
             display: none;
@@ -470,7 +480,7 @@
             var add_project=$('#addProject');
             var detail_tab=$('#addDetail');
             var preview_tab=$('#addPreview');
-            
+            var preview_btn=$('#preview_btn');
             $(document).ready(function(){
                 $('.select2').select2({
                     tags: true
@@ -487,14 +497,38 @@
                     maxFiles: 4,
                     uploadMultiple:true,
                     maxFilesize: 3,
-                    acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+                    acceptedFiles: ".jpg,.png,.jpeg",
                     filesizeBase: 1000,
                     addRemoveLinks: true,
                     init: function() {
-                        
+
+                        this.on("removedfile", function (file) {
+                            var file_id=('#'+file.upload.uuid+'img_div');
+                            $(file_id).remove();
+                        });
+
+                        this.on("addedfile", function (file) {
+                           
+                            var temp = file.previewTemplate;
+                            var img_div_id=file.upload.uuid+'img_div';
+                            var FR= new FileReader();
+                            var image_div='<div class="col-md-4 col-lg-4 col-sm-4 img_div" id="'+img_div_id+'"></div>';
+                            $('#image_viewer').append(image_div); 
+                            FR.onload = function(e) {
+                               
+                               var img=$("<img />", {
+                                    "src": e.target.result,
+                                    "class" : 'img_file',
+                                    "id"  :file.upload.uuid
+                                }).appendTo('#'+img_div_id);
+                                
+                            };
+                            FR.readAsDataURL( file );
+                        });
+
                         this.on("sendingmultiple", function(file, xhr, formData) {
-                        formData.append("_token",token);
-                        formData.append("data", form_data);
+                            formData.append("_token",token);
+                            formData.append("data", form_data);
                         });
                         
                         this.on("complete", function(file, xhr, formData) {
@@ -569,6 +603,18 @@
                 portfolio_basic_form.submit(function(e){
                     e.preventDefault();
                     savePortfolioBasic();
+                });
+                preview_btn.click(function(){
+                    $('.portfolio_title').html($('#project_name').val());
+                    $('#portfolio_completion_date').html($('#project_completion_date').val());
+                    $('#video_url_id').val();
+                    $('#portfolio_skills').html(
+                        $('#skills :selected').text()
+                    );
+                    $('#portfolio_url').html($('#detail_project_url').val());
+                    $('.portfolio_description').html($('#detail_description').val());
+
+                    formPostProcess(preview_tab,detail_tab);
                 });
             });
            

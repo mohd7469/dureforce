@@ -15,7 +15,7 @@
         <!----== Sidebar Container End ==----->
 
         
-        <form class="user-profile-form" action="http://127.0.0.1:8000/buyer/job/store" method="POST" enctype="multipart/form-data" id="job_form_data">
+        <form class="user-profile-form" action="#" method="POST" enctype="multipart/form-data" id="job_form_data">
               <div class="card custom--card"  style="background: #F8FAFA">
                 <div class="d-flex flex-wrap align-items-center justify-content-between">
                     <h3 class="card-title mt-2 ml-2">
@@ -44,9 +44,7 @@
 
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     <p class="h-cs">Or embed a video from Youtube or Vimeo</p>
-                                        <a  href="#" class="upload-video "> 
                                             Add Video Link  
-                                        </a>
                                 </div>
 
                             </div>
