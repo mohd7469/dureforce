@@ -96,15 +96,26 @@ class CommonProfileController extends Controller
             // 'phone_number' => ['required', new PhoneNumberValidate],
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
+            'language_level' => 'required',
             'languages.*.language_id' => 'required|exists:world_languages,id',
             'languages.*.language_level_id' => 'required|exists:language_levels,id',
+        ];
+        $messages =[
+            'designation.required'     => 'Designation is required',
+            'about.required' => 'About is required',
+            'phone_number.required'        => 'Phone No is required',
+            'city_id.required'    => 'City is required',
+            'languages.required'    => 'Please Select Language',
+            'language_level.required'    => 'Please Select Proficiency Level',
+            'languages.*.language_id.required'    => 'Please Select at least one Language',
+            'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
         ];
         if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
 
-        $validator = Validator::make($request_data, $rules);
+        $validator = Validator::make($request_data, $rules,$messages);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
@@ -206,20 +217,30 @@ class CommonProfileController extends Controller
             'designation' => 'required|string',
             'about' => 'required|string',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
+
             // 'phone_number' => ['required', new PhoneNumberValidate],
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
+            'language_level' => 'required',
             'languages.*.language_id' => 'required|exists:world_languages,id',
             'languages.*.language_level_id' => 'required|exists:language_levels,id',
-            'skills'   => 'required|array',
-            'skills.*' => 'exists:skills,id',
+        ];
+        $messages =[
+            'designation.required'     => 'Designation is required',
+            'about.required' => 'About is required',
+            'phone_number.required'        => 'Phone No is required',
+            'city_id.required'    => 'City is required',
+            'languages.required'    => 'Please Select Language',
+            'language_level.required'    => 'Please Select Proficiency Level',
+            'languages.*.language_id.required'    => 'Please Select at least one Language',
+            'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
         ];
         if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
 
-        $validator = Validator::make($request_data, $rules);
+        $validator = Validator::make($request_data, $rules,$messages);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
