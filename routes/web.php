@@ -762,3 +762,23 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
+
+Route::get('/profile/view', 'ProfileController@buyerProfile');
+
+
+
+
+
+
+Route::name('buyer.basic.')->prefix('buyer')->group(function () {
+    
+    Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile');
+    Route::post('/profle/password/change', 'Buyer\ProfileController@buyerprofilePasswordChange')->name('profile.password.change');
+    Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+    Route::post('/user-profile', 'Buyer\ProfileController@saveUserBasics')->name('profile.save');
+    Route::post('/save-payment-methods', 'Buyer\ProfileController@buyersavePaymentMethod')->name('profile.save.payment.methods');
+    // Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
+    Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
+    Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
+    Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
+});

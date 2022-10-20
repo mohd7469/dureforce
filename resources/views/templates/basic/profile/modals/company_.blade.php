@@ -6,7 +6,7 @@
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{ route('profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
+            <form action="{{ route('buyer.basic.profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
                 @csrf
                 <div class="container-fluid welcome-body" id="">
                    
