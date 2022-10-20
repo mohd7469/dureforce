@@ -39,7 +39,7 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
                             <input type="text" name="card_number"
                                 value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
-                                required />
+                                 />
                         </div>
 
                         <div class="row">

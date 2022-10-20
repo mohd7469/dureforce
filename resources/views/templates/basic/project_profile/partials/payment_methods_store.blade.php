@@ -41,7 +41,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
                             <input type="text" name="card_number"
                                 value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
-                                required />
+                                 />
                         </div>
 
                         <div class="row">
@@ -50,12 +50,12 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                                         class="imp">*</span></label>
                                 <input type="date" name="expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required />
+                                    placeholder=""  />
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
                                 <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required />
+                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder=""  />
                             </div>
                         </div>
                         
@@ -63,7 +63,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
                             <input type="text" name="name_on_card"
                                 value="{{ old('name_on_card', @$userPayment->name_on_card) }}" placeholder=""
-                                required />
+                                 />
                         </div>
 
                         <div class="col-md-12">
@@ -114,7 +114,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
                             <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
-                                required/>
+                                />
                         </div>
 
                         

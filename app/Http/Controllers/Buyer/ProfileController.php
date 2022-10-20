@@ -197,7 +197,7 @@ class ProfileController extends Controller
     
         $rules = [
             'card_number'     => 'required',
-            'expiration_date' => 'required|date',
+            'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
             // 'country_id'         => 'required|exists:world_countries,id',

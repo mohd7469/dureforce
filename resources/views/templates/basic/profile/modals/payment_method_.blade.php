@@ -26,7 +26,7 @@
                                     <label class="mt-4">Card Number *  </label>
                                     <input type="text" name="card_number" id="company-name"
                                         placeholder="Tidal Wave Inc."  value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
-                                        required>
+                                        >
                                 </div>
                                 <div class="row">
                                     

@@ -34,7 +34,7 @@
                                             <div class="col-md-6">
                                                 <label for="cardNumber">@lang('Card Number')</label>
                                                 <div class="input-group">
-                                                    <input type="tel" class="form-control form-control-lg custom-input" name="cardNumber" placeholder="@lang('Valid Card Number')" autocomplete="off" required autofocus/>
+                                                    <input type="tel" class="form-control form-control-lg custom-input" name="cardNumber" placeholder="@lang('Valid Card Number')" autocomplete="off" autofocus/>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
                                                     </div>
