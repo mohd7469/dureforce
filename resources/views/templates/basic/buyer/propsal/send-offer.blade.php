@@ -6,7 +6,7 @@
             <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
                 <div class="container">
                 <div class="main container mt-4">
-    <h6 class="my-2">Send Offer</h5>
+    <h6 class="fw-bold my-2 offer-letter-alignment-top">Send Offer</h5>
   <div class="card card-border p-3">
     <div class="">
         <div class="card-body p-0 d-flex align-items-center">
@@ -27,10 +27,10 @@
       </div>
 <!-- contract -->
 
-<h4 class="mt-4">Contract Terms</h5>
+<h4 class="fw-bold mt-4">Contract Terms</h5>
 <!-- contract -->
 <!-- Payment cards -->
-<h5 class="mt-4  color-green">Payment Option</h6>
+<h6 class="color-green mt-3">Payment Option</h6>
 <div class="d-flex responsive-cards">
    <!-- card 1 -->
    <!-- <div class="card  mt-2 border-round bg-green text-white">
@@ -59,11 +59,11 @@
     <form>
         <div class="form-row">
           <div class="col-lg-3 col-md-6 col-sm-12">
-            <h6 class="color-green mt-3">Pay By the hour</h6>
+            <h6 class="color-green mt-3">Pay by Fixed Price</h6>
            <div class="d-flex">
-            <input type="text" class="form-control text-end" placeholder="20.00"><span class="ml-2 per-hour">/ hr</span>
+            <input type="number" class="form-control text-end" placeholder="20.00"><span class="ml-2 per-hour"></span>
            </div>
-           <p class="text-muted fs-15px mt-1">Domitri G profile rate is 20/hr</p>
+           <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
           </div>
           
         </div>
@@ -79,23 +79,20 @@
 </div>
 <!-- Weekly Limit  -->
 <div class="mt-3">
-    <h6 class="color-green">Weekly Limit</h6>
-    <p class="text-wrap">Setting weekly limint is a great way to help ensure to daty on budget</p>
-    
-    
+    <h6 class="color-green">Deposit funds into Escrow</h6>
+    <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
       <form>
           <div class="form-row">
             <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-group">
-                  <select class="form-control" id="exampleFormControlSelect1">
-                  <option>40 hrs / Week</option>
-                  <option>40 hrs / Week</option>
-                  <option>40 hrs / Week</option>
-                  <option>40 hrs / Week</option>
-                  <option>40 hrs / Week</option>
-                </select>
-             <p class="text-muted fs-15px mt-1">$800.0 max/week</p>
-
+              <div class="form-check">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund">
+                  <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="form-check">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund">
+                  <label class="form-check-label fs-14px" for="exampleCheck1">Deposit a lesser amount to cover the first milestone</label>
               </div>
             </div>
             
@@ -106,43 +103,46 @@
 
     <!-- start date  -->
     <form>
-    <div class="form-row">
-        <div class="col-lg-3 col-md-6 col-sm-12">
+    <div class="form-row" id="dynamicTable">
         
-        <label><h6>Start Date (Optional)</h6></label>
-        <input type="text" class="form-control" placeholder="">
-        
+        <h6 class="color-green">Project Milestones</h6>
+        <p class="text-muted fs-15px mt-1">Add project milestones and pay in installments as each milestone is completed to your satisfaction. Due dates will be set in Coordinated Universal Time (UTC).</p>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label><h6>Milestone Description</h6></label>
+            <input type="text" name="addmore[0][descr]" class="form-control" placeholder="">
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label><h6>Due Date (Optional)</h6></label>
+            <input type="text" name="addmore[0][due_date]" class="form-control" placeholder="">
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <label><h6>Deposit Amount</h6></label>
+            <input type="number" name="addmore[0][desposit_amout]" class="form-control text-end" placeholder="20.00">
+          </div>
         </div>
-        
     </div>
+      <button type="button" name="add" id="add" class="addMoreButton my-2">
+          Add another
+      </button>
     </form>
 
     <!-- start date  -->
     <hr>
     <!-- description  -->
-    <div>
-    <h6 class="color-green">Description</h5>
-    <h6 class="mt-3">Related Job Listing</h5>
-    <h6 class="mt-3 color-green">Full Stack Developer<span class="color-black ml-2">(#100183394)</span></h5>
-
-    <div class="mt-5">
-        <form>
-        <div class="form-row">
-            <div class="col-6">
-            
-            <label><h6>Contract Title</h6></label>
-            <input type="text" class="form-control" placeholder="Full Stack Developer">
-            
-            </div>
-            
-        </div>
-        </form>
-        
+    <div class="form-row">
+      <div class="col-md-12">
+        <h6 class="fw-bold mt-3">How do fixed-price contracts work?</h5>
+        <br>
+        <p class="">Before work begins, agree on milestones with your freelancer. Milestones help to break up larger projects into manageable chunks. Pre-fund milestones by<br> 
+        depositing money into escrow. Once the work has been delivered, you can release your payment to the freelancer.<br>
+        Over the course of the contract, your freelancer will submit milestones for review and the funds in escrow will be released upon your approval. Failing to respond to<br>
+        a milestone submission within 14 days is deemed approval and the escrowed funds will be automatically released to your freelancer.</p>
+      </div>
     </div>
-
-
-
+    <hr>
     <!-- description of work -->
+    <h6 class="color-green">Description</h6>
     <div>
         <h6 class="mt-4">Description of Work</h6>
         
@@ -153,6 +153,7 @@
 
     </form>
     <div>
+    <br>
     <button class="btn-outline-green"><i class="fa fa-paperclip" aria-hidden="true"></i>
         Upload File</button>
     </div>
@@ -198,16 +199,16 @@
     </div>
     <!-- description  -->
     <!-- policy section -->
-    <div class="d-flex justify-content-between align-items-center responsive-check my-3">
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span>and <span>Privacy Policy</span></label>
-    </div>
-    <div class="d-flex align-items-center">
-        <button class="btn-purple-outline">Cancel</button>
-        <button class="btn-purple ml-2">Continue</button>
+    <div class="d-flex justify-content-between align-items-center responsive-check my-3 offer-letter-alignment ">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span>and <span>Privacy Policy</span></label>
+        </div>
+        <div class="d-flex align-items-center">
+            <button class="btn-purple-outline">Cancel</button>
+            <button class="btn-purple ml-2">Continue</button>
 
-    </div>
+        </div>
     </div>
 
     <!-- policy section -->
@@ -225,4 +226,18 @@
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
+@endpush
+@push('script')
+<script type="text/javascript">
+    var i = 0;
+    $("#add").click(function(){
+        ++i;
+        // $("#dynamicTable").append('<tr><td><input type="text" name="addmore['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="addmore['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="addmore['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+
+    });
+    $(document).on('click', '.remove-tr', function(){  
+         $(this).parents('.row-line').remove();
+    });  
+</script>
 @endpush
