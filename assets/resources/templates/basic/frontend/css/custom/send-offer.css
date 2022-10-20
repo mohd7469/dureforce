@@ -193,9 +193,27 @@ font-size: 13px !important;
 .margin-left-responsive-media{
     margin-left:1rem;
 }
+.addMoreButton {
+    color: #7f007f;
+    background: none !important;
+    font-weight: 500;
+  }
+.deleteButton {
+    color: #7f007f;
+    background: none !important;
+    font-weight: 500;
+  }
 
 
 hr,input,textarea {
     border:1px solid #CBDFDF !important;
-    font-weight: 600;
+    /* font-weight: 600; */
+}
+.offer-letter-alignment-top{
+    padding-left: 10px;
+    padding-right: 22px;
+}
+.offer-letter-alignment{
+    padding-left: 22px;
+    padding-right: 22px;
 }
