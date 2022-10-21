@@ -69,11 +69,6 @@
                          <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
                             <p class="cp-jt">
-                                @foreach ($cities as $city)
-                                @if($city->id == $basicProfile->city_id)
-                                    {{$city->name}},
-                                @endif
-                                @endforeach
 
                                 @foreach ($countries as $country)
                                 @if($country->id == auth()->user()->country_id)
@@ -85,6 +80,16 @@
                               
                             </p>
                          </div>
+                         <div class="cp-info-box">
+                            <p class="cp--jbh">City</p>
+                            <p class="cp-jt">
+                                @foreach ($cities as $city)
+                                @if($city->id == $basicProfile->city_id)
+                                    {{$city->name}}
+                                @endif
+                                @endforeach
+                            </p>
+                         </div>
         
                          <div class="cp-info-box">
                             <p class="cp--jbh">Phone</p>
@@ -92,15 +97,17 @@
                          </div>
         
         
-                         <div class="cp-info-box">
-                            <p class="cp--jbh">Email</p>
-                            <p class="cp-jt">{{ auth()->user()->email }}</p>
-                         </div>
+                        
         
                       </div>
 
 
                       <div class="cp-info-container">
+                        <div class="cp-info-box">
+                            <p class="cp--jbh">Email</p>
+                            <p class="cp-jt">{{ auth()->user()->email }}</p>
+                         </div>
+
                         <div class="cp-info-box">
                            <p class="cp--jbh">Language</p>
                            @foreach ($user_languages_ as $language )
