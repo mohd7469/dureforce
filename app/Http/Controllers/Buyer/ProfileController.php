@@ -121,7 +121,7 @@ class ProfileController extends Controller
         $request_data = $request->all();
 
         $rules = [
-            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:5000',
             'designation' => 'required|string',
             'about' => 'required|string',
             'phone_number' => ['required', new PhoneNumberValidate],
