@@ -113,7 +113,7 @@
                                         <!--Skills Section Start-->
                                         <div class="row skills-c">
                                             <div class="col-md-7"> 
-                                                <h2>Has relevant skills to your job</h2>
+                                                <h2>Has {{count($freelancer->skills)}} relevant skills to your job</h2>
                                                 <ul class="skills-listing">
                                                     @foreach ($freelancer->skills as $skill )
                                                     <li>{{$skill->name}}</li>
@@ -224,7 +224,7 @@
                                         <div class="row skills-c">
                                             <div class="col-md-7">
                                                 
-                                                <h2>Has relevant skills to your job</h2>
+                                                <h2>Has {{count($invited_freelancers->user->skills)}} relevant skills to your job</h2>
                                                 <ul class="skills-listing">
 
                                                 @foreach ($invited_freelancers->user->skills as $skill )

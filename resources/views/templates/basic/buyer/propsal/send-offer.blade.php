@@ -1,6 +1,5 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
-
     <section class="all-sections pt-3">
         <div class="container-fluid p-max-sm-0">
             <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
@@ -16,12 +15,12 @@
 
               </div>
                <div>
-                <h4 class="card-title color-purple">Domitru G</h4>
-              <h6>Full Stack Developer</h6>
-             <div class="d-flex justify-content-between responsive-card-section mt-2">
-      <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>London,UK</p>
-                <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>1:20PM Local time</p>
-             </div>
+                <h4 class="card-title color-purple">{{$offer_letter->user->full_name}}</h4>
+              <h6>{{$offer_letter->user->job_title}}</h6>
+                <div class="d-flex justify-content-between responsive-card-section mt-2">
+                  <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$offer_letter->user->location }}</p>
+                  <!-- <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>1:20PM Local time</p> -->
+                </div>
                </div>
         </div>
       </div>

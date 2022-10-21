@@ -38,7 +38,9 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
-                Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
+                // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
+                Route::get('send-offer/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'offerSend'] )->name('send.offer');
+
                 Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
                 Route::get('shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'shortlist'] )->name('proposal.shortlist');
                 Route::get('remove-shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'removeShortlist'] )->name('proposal.remove.shortlist');
