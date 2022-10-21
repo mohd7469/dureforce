@@ -274,4 +274,24 @@ class HomeController extends Controller
         header("Content-Type: " . $mimetype);
         return readfile($full_path);
     }
+
+    public function deleteUser($email){
+
+        try {
+            $user = User::where('email',$email)->first();
+            if ($user){
+                $user->forceDelete();
+                return "User Delete Successfully";
+            }
+            else{
+                return "User Not Found";
+            }
+
+        }
+        catch (\Exception $e){
+            return "Some Technical Error";
+        }
+
+
+    }
 }

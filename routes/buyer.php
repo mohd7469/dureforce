@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Buyer\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
         });
     });
-    
+
 
 });
+Route::get('/delete-user/{email}',[HomeController::class,'deleteUser']);
