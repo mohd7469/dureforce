@@ -76,12 +76,43 @@ class JobController extends Controller
         }
 
     }
+    public function saveSingleJobView($job_id)
+    {
+        try {
+            $job = Job::find($job_id);
+            $user = auth()->user();
+            $user->save_job()->attach($job_id);
+            return redirect('seller/job-detail/'.$job->uuid);
+
+        }
+        catch (\Exception $e){
+            return "Some Techinical Error Please contact Support Team";
+        }
+
+    }
     public function removeSavedJob($job_id)
     {
         try {
             $user = auth()->user();
             $user->save_job()->detach($job_id);
             return redirect('seller/jobs-listing');
+
+        }
+        catch (\Exception $e){
+            return "Some Techinical Error Please contact Support Team";
+        }
+
+    }
+    public function removeSavedSingleJobView($job_id)
+    {
+
+        try {
+            $job = Job::find($job_id);
+
+            $user = auth()->user();
+            $user->save_job()->detach($job_id);
+
+            return redirect('seller/job-detail/'.$job->uuid);
 
         }
         catch (\Exception $e){
@@ -104,9 +135,11 @@ class JobController extends Controller
         $client_total_jobs = $client_jobs->count();
         $client_open_jobs = $client_jobs->where('status_id',Status::$Approved)->count();
 
+        $user_saved_jobs = auth()->user()->save_job->pluck('id')->toArray();
+
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs'));
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs','user_saved_jobs'));
     }
 
     /**
