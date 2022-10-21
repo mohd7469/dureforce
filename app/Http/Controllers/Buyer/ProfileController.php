@@ -53,9 +53,11 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            // 'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|string|min:4|max:15'
-           
+             'vat' => 'required|string|min:4|max:15',
+             'url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+
 
           
 
@@ -65,6 +67,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
+
             try {
 
                 DB::beginTransaction();
@@ -198,7 +201,7 @@ class ProfileController extends Controller
     
         $rules = [
             'card_number'     => 'required',
-            'expiration_date' => 'required|date',
+            'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
             // 'country_id'         => 'required|exists:world_countries,id',
@@ -299,7 +302,7 @@ class ProfileController extends Controller
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels   = LanguageLevel::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-        $countries = Country::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
 
     }
@@ -311,7 +314,7 @@ class ProfileController extends Controller
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-        $countries = Country::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $degrees = Degree::select('id', 'title')->get();

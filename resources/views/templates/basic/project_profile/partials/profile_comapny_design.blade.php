@@ -1189,18 +1189,18 @@
                     
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone  </label>
+                            <label class="mt-4">Company Phone*  </label>
                             <input type="number" name="phone" value="" placeholder="">
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Email Address </label>
+                            <label class="mt-4">Company Email Address* </label>
                             <input type="text" name="email" value="" placeholder="">
                             <div class="col-md-12">
                                 <label class="mt-4">Location  </label>
                                 <input type="text" id="company-location" name="location" value="" placeholder="City, Country">
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT  </label>
+                                <label class="mt-4">Company VAT*  </label>
                                 <input type="text" id="company-vat" value="" name="vat" placeholder="">
                             </div>
                             <div class="col-md-12">

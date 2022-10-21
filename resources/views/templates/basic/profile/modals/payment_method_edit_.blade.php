@@ -29,7 +29,7 @@
                                     <label class="mt-4">Card Number *  </label>
                                     <input type="text" name="card_number" id="card_number"
                                         placeholder="Tidal Wave Inc."  value="" placeholder=""
-                                        required>
+                                        >
                                 </div>
                                 <div class="row">
                                     

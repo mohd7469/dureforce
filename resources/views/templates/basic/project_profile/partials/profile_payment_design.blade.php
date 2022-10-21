@@ -1117,7 +1117,7 @@
                     <div class="col-xl-12 col-md-12 col-lg-12 form-group ">
                         <div class="col-md-12">
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
-                            <input type="text" name="card_number" value="" placeholder="" required="">
+                            <input type="text" name="card_number" value="" placeholder="" >
                         </div>
                         <div class="row">
                             <div class="col-md-6">

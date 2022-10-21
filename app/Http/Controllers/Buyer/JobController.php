@@ -50,7 +50,7 @@ class JobController extends Controller
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
-        $data['experience_levels'] = Rank::select(['id', 'level'])->get();
+        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
         $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
 
@@ -180,10 +180,10 @@ class JobController extends Controller
                         $job->documents()->save($document);
 
 
-
                 }
             }
             DB::commit();
+            session()->put('notify', ["Job Created Successfully"]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
