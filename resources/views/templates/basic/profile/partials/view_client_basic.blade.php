@@ -71,9 +71,17 @@
                             <p class="cp-jt">
                                 @foreach ($cities as $city)
                                 @if($city->id == $basicProfile->city_id)
-                                    {{$city->name}}
+                                    {{$city->name}},
                                 @endif
                                 @endforeach
+
+                                @foreach ($countries as $country)
+                                @if($country->id == auth()->user()->country_id)
+                                    {{$country->name}}
+                                @endif
+                                @endforeach
+
+                                
                               
                             </p>
                          </div>
