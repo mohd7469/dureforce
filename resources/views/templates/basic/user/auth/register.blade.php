@@ -62,6 +62,7 @@
                             <div class="col-lg-12 form-group">
                                 <select name="country" id="country" class="form-control form--control">
                                     @foreach($countries as $key => $country)
+                                        <option value="">Select country</option>
                                         <option value="{{ $country->id }}">{{ __($country->name) }}</option>
                                     @endforeach
                                 </select>

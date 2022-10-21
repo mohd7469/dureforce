@@ -315,12 +315,14 @@
             rate_per_hour.on('focusout', function(){
 
                 var fee=rate_per_hour.val()*0.20;
-                system_fee.html('$'+Math.round(fee,2));
+                system_fee.html('$'+financial(fee));
 
             });
 
         });
-
+        function financial(x) {
+            return Number.parseFloat(x).toFixed(2);
+        }
         function getCountryCities(country_id)
         {
             $.ajax({

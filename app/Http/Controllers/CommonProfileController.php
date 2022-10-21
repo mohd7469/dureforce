@@ -46,7 +46,7 @@ class CommonProfileController extends Controller
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-        $countries = Country::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $degrees = Degree::select('id', 'title')->get();
@@ -69,7 +69,7 @@ class CommonProfileController extends Controller
 
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
-        $countries = Country::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $degrees = Degree::select('id', 'title')->get();
 
         return response()->json(['languages' => $languages, 'language_levels' => $language_levels, 'countries' => $countries, 'degrees' => $degrees]);
