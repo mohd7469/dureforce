@@ -433,7 +433,9 @@ class ProfileController extends Controller
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
                     
-                    return redirect()->route('buyer.basic.profile')->withNotify($notify);
+                    // return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-3'])]);
+
+                    return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-3'])->withNotify($notify);
 
 
                 }
