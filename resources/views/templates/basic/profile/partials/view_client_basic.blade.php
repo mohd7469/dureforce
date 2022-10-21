@@ -68,7 +68,14 @@
                       <div class="cp-info-container">
                          <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
-                            <p class="cp-jt">{{$basicProfile->location }}</p>
+                            <p class="cp-jt">
+                                @foreach ($cities as $city)
+                                @if($city->id == $basicProfile->city_id)
+                                    {{$city->name}}
+                                @endif
+                                @endforeach
+                              
+                            </p>
                          </div>
         
                          <div class="cp-info-box">
