@@ -181,11 +181,10 @@
                                                    <h5 class="hheading-c">About the client</h5>
                                                
                                                 <div class="col-12">
-                         
                                         <div class="card-block">
                                         <ul class="row">
                                         <div class="col-md-3 col-sm-3 profile-img">
-                                        <img class="btn-md " src="{{ !empty($user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $user->image, 'profile_image'): getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
+                                        <img class="btn-md " src="{{ !empty($job->user->basicProfile->profile_picture)? $job->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
                                         
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">

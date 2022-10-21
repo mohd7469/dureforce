@@ -49,7 +49,6 @@ class ProfileController extends Controller
     public function saveCompany(Request $request)
     {
         
-    
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
@@ -75,7 +74,6 @@ class ProfileController extends Controller
                 $filename = '';
 
                 if ($request->hasFile('company_logo')) {
-
                     $location = imagePath()['profile']['user']['path'];
                     $size = imagePath()['profile']['user']['size'];
                     $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
@@ -123,7 +121,7 @@ class ProfileController extends Controller
         $request_data = $request->all();
 
         $rules = [
-            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:5000',
             'designation' => 'required|string',
             'about' => 'required|string',
             'phone_number' => ['required', new PhoneNumberValidate],
@@ -301,7 +299,7 @@ class ProfileController extends Controller
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels   = LanguageLevel::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
 
@@ -313,7 +311,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();

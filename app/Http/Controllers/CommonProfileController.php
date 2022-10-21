@@ -45,7 +45,7 @@ class CommonProfileController extends Controller
         $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
@@ -173,8 +173,8 @@ class CommonProfileController extends Controller
     public function getCities(Request $request)
     {
         try {
-            
-            $cities=City::select('id', 'name')->where('country_id', $request->country_id)->get();
+
+            $cities=City::select('id', 'name')->where('country_id', $request->country_id)->orderBy('name', 'ASC')->get();
             return response()->json(['cities' => $cities]);
         }
         catch (\Throwable $th) {
