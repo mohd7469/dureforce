@@ -35,7 +35,7 @@
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
                                 <div class="dashboard-item bg--info">
-                                    <a href="{{route('buyer.job.index')}}" class="dash-btn">@lang('View all')</a>
+                                    <a href="{{route('user.job.index')}}" class="dash-btn">@lang('View all')</a>
                                     <div class="dashboard-icon">
                                         <i class="las la-compass"></i>
                                     </div>

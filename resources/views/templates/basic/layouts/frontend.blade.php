@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+    @if(\App\Models\GeneralSetting::$showSEOTags)
+        <title>{{$general->sitename(__($pageTitle))}}</title>
+        @include('partials.seo')
+    @endif
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
           rel="stylesheet">
-
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/fontawesome-all.min.css')}}">
-
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/fontawesome-all.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap.min.css')}}">
     <link rel="shortcut icon" href="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}" type="image/x-icon">
@@ -22,11 +24,7 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/line-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/style/style.css')}}">
-    <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/custom/custom.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/seller_profile.css')}}">
-
-
     {{-- <link rel="stylesheet" href="{{asset('/assets/resources/style/index.scss')}}"> --}}
 
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
@@ -35,6 +33,7 @@
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
           rel="stylesheet"/>
+
 </head>
 <body>
 @stack('fbComment')
@@ -101,7 +100,6 @@
 @include('partials.plugins')
 @include('partials.notify')
 <script>
-
     (function ($) {
         "use strict";
         $(".langSel").on("change", function () {
@@ -149,64 +147,6 @@
             });
         });
     })(jQuery);
-
-    var multipleCardCarousel = document.querySelector(
-        "#carouselExampleControls"
-    );
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarousel, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselExampleControls .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 3) {
-                scrollPosition += cardWidth;
-                $("#carouselExampleControls .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselExampleControls .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselExampleControls .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }
-    if (window.matchMedia("(min-width: 1280px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarousel, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselExampleControls .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 4) {
-                scrollPosition += cardWidth;
-                $("#carouselExampleControls .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselExampleControls .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselExampleControls .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }else {
-        $(multipleCardCarousel).addClass("slide");
-    }
 </script>
 
 <style>

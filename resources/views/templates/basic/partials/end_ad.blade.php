@@ -1,4 +1,4 @@
-<div class="add-section">
+<div class="add-section ptb-60">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12 text-center">

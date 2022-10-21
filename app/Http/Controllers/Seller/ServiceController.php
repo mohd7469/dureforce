@@ -23,10 +23,6 @@ use App\Models\ServiceStep;
 use App\Traits\CreateOrUpdateEntity;
 use App\Traits\DeleteEntity;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\serviceaddonMail;
-
 
 class ServiceController extends Controller
 {
@@ -185,10 +181,9 @@ class ServiceController extends Controller
         }
 
         $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
-        $this->ServiceAddConfirmationMail($service);
+
         $notify[] = ['success', 'Service Review Saved Successfully.'];
         return redirect()->route('user.service.index')->withNotify($notify);
-      
     }
 
 
@@ -237,9 +232,5 @@ class ServiceController extends Controller
         $this->deleteEntity(Service::class, 'service', $id);
         $notify[] = ['success', 'Service has been Deleted Successfully.'];
         return back()->withNotify($notify);
-    }
-    public function ServiceAddConfirmationMail($service){
-
-        Mail::to($service->user->email)->send(new serviceaddonMail($service));
     }
 }

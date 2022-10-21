@@ -104,7 +104,7 @@
                             </select>
                         </div>
                         <div class="col-md-6 col-sm-12">
-                            <label class="mt-4">Profeciency Level<span
+                            <label class="mt-4">Profeciency Level <span
                                     class="imp">*</span></label>
                             <select name="language_level[]" class="form-control selected-level select-lang" id=""
                                 >

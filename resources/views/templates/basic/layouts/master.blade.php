@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
 
     @stack('style-lib')
@@ -83,7 +82,6 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/wow.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
-
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 @stack('script-lib')
 @stack('script')
@@ -92,7 +90,6 @@
 <script>
     (function ($) {
         "use strict";
-
         $(".langSel").on("change", function () {
             window.location.href = "{{route('home')}}/change/" + $(this).val();
         });

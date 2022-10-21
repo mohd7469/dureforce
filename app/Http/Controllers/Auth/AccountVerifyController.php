@@ -28,16 +28,6 @@ class AccountVerifyController extends Controller
         $pageTitle = "Verify Account";
         return view($this->activeTemplate . 'profile.account_verify', compact('pageTitle'));
     }
-    public function showEmailChangeForm(Request $request)
-    {
-        dd($request);
-        $user = User::where('email', $data['email'])->first();
-        $user->email = trim($request['email']);
-        $user->save();
-        $user->sendEmailVerificationNotification();
-        $notify[] = ['success', 'Verification link sent!'];
-        return back()->withNotify($notify);
-    }
     /**
      * Get a validator for an incoming registration request.
      *

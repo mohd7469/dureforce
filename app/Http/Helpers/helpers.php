@@ -1,36 +1,25 @@
 <?php
 require_once 'vendor/autoload.php';
-
 use App\Lib\GoogleAuthenticator;
 use App\Lib\SendSms;
 use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
-use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
-use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
-use App\Models\Degree;
-use App\Models\Job;
-use App\Models\Language;
-use App\Models\LanguageLevel;
-use App\Models\Proposal;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Khsing\World\Models\Language as ModelsLanguage;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\SMTP; 
 use MicrosoftAzure\Storage\Blob\Models\CreateContainerOptions;
 use MicrosoftAzure\Storage\Blob\Models\PublicAccessType;
 use MicrosoftAzure\Storage\Common\Exceptions\ServiceException;
 use MicrosoftAzure\Storage\Blob\BlobRestProxy;
-
 function sidebarVariation()
 {
 
@@ -112,54 +101,53 @@ function getNumber($length = 8)
 
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
-{
-    $filename = '';
-    try {
+{   
+    
+    $connectionString = "DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
+    $blobClient = BlobRestProxy::createBlobService($connectionString);
+    $path = makeDirectory($location);
 
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-        $blobClient = BlobRestProxy::createBlobService($connectionString);
+    if (!$path) throw new Exception('File could not been created.');
 
-        if ($old) {
-            removeFile($location . '/' . $old);
-            removeFile($location . '/thumb_' . $old);
-        }
-        $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
-        $image = Image::make($file);
-        if ($size) {
-            $size = explode('x', strtolower($size));
-            $image->resize($size[0], $size[1]);
-        }
+    if ($old) {
+        removeFile($location . '/' . $old);
+        removeFile($location . '/thumb_' . $old);
+    }
+    $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
+    $image = Image::make($file);
+    if ($size) {
+        $size = explode('x', strtolower($size));
+        $image->resize($size[0], $size[1]);
+    }
+    $image->save($location . '/' . $filename);
+    
+$locations= explode('/', $location);
+$container=end($locations) ;
+$createContainerOptions = new CreateContainerOptions();  
+$createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);  
+try {
 
-        $locations = explode('/', $location);
-        $container = end($locations);
-        $createContainerOptions = new CreateContainerOptions();
-        $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
-        try {
+    $properties=  $blobClient->GetContainerProperties($container);
+} 
+catch (ServiceException $e)
+{  
+    $blobClient->createContainer($container, $createContainerOptions); 
+}
 
-            $properties = $blobClient->GetContainerProperties($container);
-        } catch (ServiceException $e) {
-            error($e);
-            $blobClient->createContainer($container, $createContainerOptions);
-        }
+ $content = fopen($file, "r");
+ $blobClient->createBlockBlob($container, $filename, $content);
+ 
 
-        $content = fopen($file, "r");
-        $blobClient->createBlockBlob($container, $filename, $content);
-
-
-        if ($thumb) {
-            $thumb = explode('x', $thumb);
-            $thumbImage = Image::make($file)->resize($thumb[0], $thumb[1]);
-            $thumbImage->save($location . '/thumb_' . $filename);
-            $thumbcontent = fopen($thumbImage, "r");
-            $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
-        }
-    } catch (ServiceException $e) {
-        error($e);
+    if ($thumb) {
+        $thumb = explode('x', $thumb);
+        $thumbImage= Image::make($file)->resize($thumb[0], $thumb[1]);
+        $thumbImage->save($location . '/thumb_' . $filename);
+        $thumbcontent = fopen($thumbImage, "r");
+        $blobClient->createBlockBlob($container, '/thumb_' .$filename, $thumbcontent);
     }
     return $filename;
 
 }
-
 function uploadFile($file, $location, $size = null, $old = null)
 {
     $path = makeDirectory($location);
@@ -174,53 +162,6 @@ function uploadFile($file, $location, $size = null, $old = null)
     return $filename;
 }
 
-
-function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
-{
-    $filename = '';
-    try {
-
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-        //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
-        $blobClient = BlobRestProxy::createBlobService($connectionString);
-
-        if ($old) {
-            removeFile($location . '/' . $old);
-            removeFile($location . '/thumb_' . $old);
-        }
-        $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
-
-
-        $locations = explode('/', $location);
-        $container = end($locations);
-        $createContainerOptions = new CreateContainerOptions();
-        $createContainerOptions->setPublicAccess(PublicAccessType::CONTAINER_AND_BLOBS);
-        try {
-            $properties = $blobClient->GetContainerProperties($container);
-        } catch (ServiceException $e) {
-
-            $blobClient->createContainer($container, $createContainerOptions);
-        }
-
-        $content = fopen($file, "r");
-        $blobClient->createBlockBlob($container, $filename, $content);
-
-
-        if ($thumb) {
-            $thumb = explode('x', $thumb);
-            $thumbImage = Image::make($file)->resize($thumb[0], $thumb[1]);
-            $thumbImage->save($location . '/thumb_' . $filename);
-            $thumbcontent = fopen($thumbImage, "r");
-            $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
-        }
-    } catch (ServiceException $e) {
-        error($e);
-    }
-    return $filename;
-
-}
-
-
 function makeDirectory($path)
 {
     if (file_exists($path)) return true;
@@ -230,29 +171,7 @@ function makeDirectory($path)
 
 function removeFile($path)
 {
-    try {
-
-        $imagePath = explode('/', $path);
-        $container = $imagePath[0];
-        $filename = end($imagePath);
-
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-        $blobClient = BlobRestProxy::createBlobService($connectionString);
-
-        $blob = $blobClient->getBlob($container, $filename);
-
-        if ($blob) {
-
-            $blobClient->deleteBlob($container, $filename);
-            return true;
-        } else {
-            return false;
-        }
-    } catch (\Exception $e) {
-
-        return false;
-
-    }
+    return file_exists($path) && is_file($path) ? @unlink($path) : false;
 }
 
 
@@ -588,34 +507,6 @@ function getImage($image, $size = null)
     return asset('assets/images/default.png');
 }
 
-function getAzureImage($image, $size = null)
-{
-    $imagePath = explode('/', $image);
-    $container = $imagePath[0];
-    $filename = end($imagePath);
-    $url = getenv('AZURE_STORAGE_URL');
-    $imageUrl = $url . '/' . $container . '/' . $filename;
-    info("Image path:" . $image);
-    if ($filename != "" && $container != "") {
-        return $imageUrl;
-    }
-    if ($size) {
-        return route('placeholder.image', $size);
-    }
-    return asset('assets/images/default.png');
-}
-
-function azure_file_exists($image, $container)
-{
-    $connectionString = "DefaultEndpointsProtocol=https;AccountName=" . getenv('AZURE_STORAGE_NAME') . ";AccountKey=" . getenv('AZURE_STORAGE_KEY');
-    $blobClient = BlobRestProxy::createBlobService($connectionString);
-    $blob = $blobClient->getBlob($container, $image);
-    if ($blob) {
-        return true;
-    } else
-        return false;
-}
-
 function notify($user, $type, $shortCodes = null)
 {
 
@@ -686,8 +577,7 @@ function sendEmail($user, $type = null, $shortCodes = [])
     if ($config->name == 'php') {
         sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'smtp') {
-        \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
-        //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+        sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
         sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
     } else if ($config->name == 'mailjet') {
@@ -712,9 +602,9 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
 
     try {
         //Server settings
-
+       
         $mail->isSMTP();
-        $mail->Host = $config->host;
+        $mail->Host =  $config->host;
         $mail->SMTPAuth = true;
         $mail->Username = $config->username;
         $mail->Password = $config->password;
@@ -722,7 +612,7 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } else if ($config->enc == 'tls') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        }
+        } 
         $mail->Port = $config->port;
         $mail->CharSet = 'UTF-8';
         //Recipients
@@ -816,7 +706,6 @@ function menuActive($routeName, $type = null)
 
 function imagePath()
 {
-    $url = getenv('AZURE_STORAGE_URL');
 
     $data['message'] = [
         'path' => 'assets/images/job',
@@ -828,9 +717,6 @@ function imagePath()
     ];
     $data['advertisement'] = [
         'path' => 'assets/images/advertisement',
-    ];
-    $data['attachments'] = [
-        'path' => $url . '/attachments',
     ];
     $data['optionalService'] = [
         'path' => 'assets/images/optionalService',
@@ -854,7 +740,7 @@ function imagePath()
         'size' => '920x468',
     ];
     $data['service'] = [
-        'path' => $url . '/service',
+        'path' => 'assets/images/service',
         'size' => '920x468',
     ];
     $data['subcategory'] = [
@@ -905,11 +791,11 @@ function imagePath()
     ];
     $data['profile'] = [
         'user' => [
-            'path' => 'assets/images/user_profile',
+            'path' => 'assets/images/user/profile',
             'size' => '590x300'
         ],
         'user_bg' => [
-            'path' => 'assets/images/user_profile',
+            'path' => 'assets/images/user/profile',
             'size' => '590x300'
         ],
         'admin' => [
@@ -1148,145 +1034,3 @@ function authorizeAdmin($user)
     }
 }
 
-
-function getFileExtension($file)
-{
-
-    $extension = strtolower($file->getClientOriginalExtension());
-    return $extension;
-
-}
-
-
-function getMailCredentials()
-{
-    try {
-        $system_mail_config = SystemMailConfiguration::where('is_active', true)->first();
-        return $system_mail_config;
-    } catch (\Exception $exp) {
-        return response()->json(["error" => $exp->getMessage()]);
-    }
-
-}
-
-function getUserRoleId()
-{
-    if (auth()->user()) {
-        if (in_array(Role::$FreelancerName, auth()->user()->getRoleNames()->toArray())) {
-            return Role::$Freelancer;
-        } elseif (in_array(Role::$ClientName, auth()->user()->getRoleNames()->toArray())) {
-
-            return Role::$Client;
-        } else {
-            return null;
-        }
-
-    }
-    else {
-        return null;
-    }
-
-}
-function getLastLoginRoleId()
-{
-    $user=auth()->user();
-    return $user->last_role_activity;
-}
-
-function getNumberOfPropsals($uuid)
-{
-    $job=Job::where('uuid',$uuid)->first();
-    return $job->proposal()->count();
-}
-
-function getLanaguageName($id)
-{
-    return ModelsLanguage::where('id',$id)->first()->iso_language_name;
-}
-function getProficiencyLevelName($id)
-{
-    return LanguageLevel::where('id',$id)->first()->name;
-
-} 
-function getUserEducation($obj)
-{
-    $degree_title=Degree::find($obj->degree_id)->first()->title;
-    $education= $obj->school_name.'  '. $degree_title.', '. $obj->field_of_study.' '.Carbon::parse($obj->start_date)->format('Y') ;
-    if(!$obj->is_enrolled)
-     $education.='-'.Carbon::parse($obj->end_date)->format('Y');
-    else
-        $education.='-PRESENT';
-    return $education;
-}
-function getDegreeSession($obj)
-{
-    $session= Carbon::parse($obj->start_date)->format('Y') ;
-    if(!$obj->is_enrolled)
-     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
-    else
-    $session.='-PRESENT';
-    return $session;
-}
-
-function getExperienceSession($obj)
-{
-    $session= Carbon::parse($obj->start_date)->format('Y') ;
-    if(!$obj->is_working)
-     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
-    else
-    $session.='-PRESENT';
-    return $session;
-}
-
-function getDegreetitle($obj)
-{
-    $degree_title=Degree::find($obj->degree_id)->title;
-    return $degree_title;
-
-}
-function getProposelBid($proposal,$job)
-{
-    $propsal_amount='';
-    $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
-    return '$'.$propsal_amount;
-    
-
-}
-
-function getFormattedDate($date,$format)
-{
-    return Carbon::parse($date)->format($format);
-}
-
-function getDaysHoursMinutesSeconds($timestamp){
-
-    $end = Carbon::parse($timestamp);
-    $current = Carbon::now();
-    $days = $end->diffInDays($current);
-    $hours = $end->diffInHours($current);
-    $minutes = $end->diffInMinutes($current);
-    $seconds = $end->diffInSeconds($current);
-    if ($days>0){
-        return $days." days ago";
-    }
-    elseif ($hours>0){
-        return $hours." hours ago";
-    }
-    elseif ($minutes>0){
-        return $minutes." minutes ago";
-    }
-    elseif ($seconds>0){
-        return $seconds." seconds ago";
-    }
-
-}
-function getYearMonthDays($timestamp){
-
-    $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp);
-    $month_name = $date->format('M');
-    $year = $date->year;
-    $day = $date->day;
-
-    return $month_name.' '. $day.', '. $year;
-
-}
