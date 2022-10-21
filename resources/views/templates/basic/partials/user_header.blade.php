@@ -88,7 +88,7 @@
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                             </a>
-                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile')}}"
+                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('View Profile')</span>
