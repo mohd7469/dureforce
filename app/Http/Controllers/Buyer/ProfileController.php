@@ -301,7 +301,7 @@ class ProfileController extends Controller
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels   = LanguageLevel::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
 
@@ -313,7 +313,7 @@ class ProfileController extends Controller
         $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
