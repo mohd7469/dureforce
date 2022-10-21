@@ -57,7 +57,7 @@
                    <div class="row">
                    <div class="col-md-6">
                       <label class="mt-4"
-                         >Location
+                         >City
                       <span class="imp"
                          >*</span
                          ></label
@@ -84,32 +84,32 @@
                    </div>
                    {{-- location --}}
                    <div class="col-md-6">
-                     <label class="mt-4"
-                        >City
-                     <span class="imp"
-                        >*</span
-                        ></label
-                        >
+                                        
+                     <label class="mt-4">Location *  </label>
                      <select
-                        name="city_id"
-                        class="form-control select-lang"
-                        id="languages"
-                        >
-                        <option
-                           value=""
-                           >
-                           Select City
-                        </option>
-                        @foreach ($cities as $city)
-                        <option
-                        value="{{$city->id}}"
-                        {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
-                        >
-                        {{$city->name}}
-                        </option>
-                        @endforeach
+                         name="country_id"
+                         class="form-control select-lang"
+                         id="country_id"
+                         >
+                         <option
+                             value=""
+                         >
+                             Select Country
+
+                         </option>
+
+                         @foreach ($countries as $country)
+                             <option
+                             value="{{$country->id}}"
+                             {{ $country->id == @$user->company->country_id ? 'selected' : '' }}
+                             >
+                             {{$country->name}}
+                             </option>
+                         @endforeach
+
                      </select>
-                  </div>
+                     
+                 </div>
                   <div class="col-md-12">
                      <label class="mt-4"
                         >Phone

@@ -70,7 +70,6 @@
                             <p class="cp--jbh">Location</p>
                             <p class="cp-jt">{{$basicProfile->location }}</p>
                          </div>
-                         
         
                          <div class="cp-info-box">
                             <p class="cp--jbh">Phone</p>
