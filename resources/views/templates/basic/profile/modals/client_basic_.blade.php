@@ -83,7 +83,7 @@
                       </select>
                    </div>
                    {{-- location --}}
-                   {{-- <div class="col-md-6">
+                   <div class="col-md-6">
                      <label class="mt-4"
                         >City
                      <span class="imp"
@@ -109,8 +109,8 @@
                         </option>
                         @endforeach
                      </select>
-                  </div> --}}
-                  <div class="col-md-6">
+                  </div>
+                  <div class="col-md-12">
                      <label class="mt-4"
                         >Phone
                      <span class="imp"
