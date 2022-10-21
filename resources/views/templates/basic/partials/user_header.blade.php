@@ -57,9 +57,17 @@
                                     <div
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <div class="header-user-thumb">
-                                            <a href="JavaScript:Void(0);"><img
+                                            <a href="JavaScript:Void(0);">
+                                                @if(isset(auth()->user()->basicProfile->profile_picture))
+                                                <img
+                                                    src="{{ auth()->user()->basicProfile->profile_picture}}" height="400" width="400"
+                                                    alt="client">
+                                                @else
+                                                <img
                                                     src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, '400x400') }}"
-                                                    alt="client"></a>
+                                                    alt="client">
+                                                @endif    
+                                            </a>
                                         </div>
                                         <div class="header-user-content">
                                             <span>{{ auth()->user()->username }}</span>
