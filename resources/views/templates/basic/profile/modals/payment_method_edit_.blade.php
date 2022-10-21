@@ -49,7 +49,7 @@
                                     <select
                                             name="country_id"
                                             class="form-control select-lang"
-                                            id="payment_method_country_id"
+                                            id="country_id"
                                             >
                                             <option
                                                 value=""
@@ -77,7 +77,7 @@
                                     <select
                                         name="city_id"
                                         class="form-control select-lang"
-                                        id="payment_method_cities"
+                                        id="city_id"
                                             >
                                             <option value="">Select City</option>
         
@@ -92,7 +92,7 @@
         
                                 <div class="col-md-12">
                                     <label class="mt-4">Street Address <span class="imp">*</span></label>
-                                    <input type="text" name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
+                                    <input type="text" name="address" placeholder="" id="address"  value="{{ old('address', @$userPayment->address) }}"
                                    
                                     
                                         required/>

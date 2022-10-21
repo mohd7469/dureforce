@@ -58,7 +58,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-center">
-                                        <a   data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}"     
+                                        <a   data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}" data-country_id="{{ $payments->country_id }}" data-city_id="{{ $payments->city_id }}" data-address="{{ $payments->address }}"     
                                             data-username="{{ $user->username }}"
                                         {{-- href="{{ route('user.basic.profile', ['view' => 'step-4', 'id' => $payments->id]) }}" --}}
                                             class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
@@ -117,12 +117,22 @@
             var name_on_card = $(this).data('name_on_card');
             var cvv_code = $(this).data('cvv_code');
             var expiration_date = $(this).data('expiration_date');
+            var country_id = $(this).data('country_id');
+            var city_id = $(this).data('city_id');
+            var address = $(this).data('address');
 
             $(".modal-body #payment_id").val(payment_id);
             $(".modal-body #card_number").val(card_number);
             $(".modal-body #name_on_card").val(name_on_card);
             $(".modal-body #cvv_code").val(cvv_code);
             $(".modal-body #expiration_date").val(expiration_date);
+
+            $(".modal-body #country_id").val(country_id);
+            $(".modal-body #city_id").val(city_id);
+            $(".modal-body #address").val(address);
+
+
+            
            
         })
     });
