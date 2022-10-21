@@ -120,7 +120,7 @@ $socialIcons = getContent('social_icon.element', false);
                 </div>
                 <div class="copyright text-center">
                     <span class="powered-by-area text-white">@lang('Powered by getradgjof.is')</span>
-                    <p>@lang('Copyright') © {{ Carbon\Carbon::now()->format('Y') }} @lang('All Rights reserved')</p>
+                    <p> © {{ Carbon\Carbon::now()->format('Y') }} Dure Force All Rights Reserved</p>
                 </div>
 
                 {{-- <div class="powered-by-area text-white">
