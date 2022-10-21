@@ -508,13 +508,12 @@ class ProfileController extends Controller
 
                 $user = auth()->user();
                 if($request->email){
-                    
                     $user1 = User::find( auth()->user()->id);
-                   
                     $user1->email = $request->email;
+                    $user1->country_id = $request->country_id;
                     $user1->save();
-                    
                 }
+
                 
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],

@@ -101,7 +101,7 @@
                          @foreach ($countries as $country)
                              <option
                              value="{{$country->id}}"
-                             {{ $country->id == @$user->company->country_id ? 'selected' : '' }}
+                             {{ $country->id == auth()->user()->country_id ? 'selected' : '' }}
                              >
                              {{$country->name}}
                              </option>
