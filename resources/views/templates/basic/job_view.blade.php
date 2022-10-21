@@ -164,9 +164,14 @@
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20 cstm-btn" style="display: inline">
-                                                    <a href="{{route('seller.proposal.create',$job->uuid)}}"   class="standard-btn mr-15">Submit Proposal</a>
-                                                    <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
-
+                                                    <a href="{{route('seller.proposal.create',$job->uuid)}}" style="font-size: 12px;"  class="standard-btn mr-15">Submit Proposal</a>
+                                                    <?php
+                                                    if (in_array($job->id,$user_saved_jobs)){
+                                                    ?>
+                                                    <a href="{{route('seller.jobs.remove.saved.single.view.listing',$job->id)}}" style="font-size: 15px;" class="standard-btn-1">@lang('Remove Job')</a>
+                                                    <?php } else{ ?>
+                                                    <a href="{{route('seller.jobs.save.single.view.listing',$job->id)}}"  class="standard-btn-1">@lang('Save Job')</a>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
