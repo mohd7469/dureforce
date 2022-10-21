@@ -450,6 +450,7 @@ class ProfileController extends Controller
                         'is_primary' => 1,
                         'is_active'  =>1
                     ]);
+                    
                     DB::commit();
     
                     return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'view' => 'step-1'])]);

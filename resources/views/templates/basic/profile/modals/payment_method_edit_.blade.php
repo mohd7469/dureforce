@@ -1,5 +1,6 @@
 <div class="modal fade" id="editPaymentModel" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+      
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Card</h5>
@@ -61,6 +62,7 @@
                                                 <option
                                                 value="{{$country->id}}"
                                                 {{ $country->id == @$userPayment->country_id ? 'selected' : '' }}
+                                                
                                                 >
                                                 {{$country->name}}
                                                 </option>
@@ -91,6 +93,7 @@
                                 <div class="col-md-12">
                                     <label class="mt-4">Street Address <span class="imp">*</span></label>
                                     <input type="text" name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
+                                   
                                     
                                         required/>
                                 </div>
