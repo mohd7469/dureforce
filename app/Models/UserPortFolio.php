@@ -14,6 +14,12 @@ class UserPortFolio extends Model
         'completion_date'
        
     ];
-
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class,'portfolio_skills','user_portfolio_id','skill_id');
+    }
+    public function attachments(){
+        return $this->morphMany(Attachment::class,'section');
+    }
     use HasFactory;
 }

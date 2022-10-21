@@ -21,20 +21,23 @@
                         <!-- Content -->
 
                         <div class="col-12 col-md-10 p-0">
-                            <div class="tab-content">
-                                <div id="addProject" role="tabpanel" class="tab-pane active">
-                                    @include('templates.basic.portfolio.add_project')
-                                </div>
+                            <form action="#" id="portfolio_information_form">
+                                @csrf
+                                <div class="tab-content">
+                                    <div id="addProject" role="tabpanel" class="tab-pane active">
+                                        @include('templates.basic.portfolio.add_project')
+                                    </div>
 
-                                <div id="addDetail" role="tabpanel"class="tab-pane">
-                                    @include('templates.basic.portfolio.add_detail')
-                                </div>
+                                    <div id="addDetail" role="tabpanel"class="tab-pane">
+                                        @include('templates.basic.portfolio.add_detail')
+                                    </div>
 
-                                <div id="addPreview" role="tabpanel" class="tab-pane ">
-                                    @include('templates.basic.portfolio.add_preview')
-                                </div>
+                                    <div id="addPreview" role="tabpanel" class="tab-pane ">
+                                        @include('templates.basic.portfolio.add_preview')
+                                    </div>
 
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -54,7 +57,7 @@
 
         <style>
             /*************/
-                
+      
                 .dropzone .dz-message {
                     text-align: center;
                 }
@@ -470,20 +473,20 @@
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
         
         <script>
-            
+            var token= $('input[name=_token]').val();
             Dropzone.autoDiscover = false;
-            let portfolio_basic_form=$('#portfolio_basics_information');
+            let portfolio_basic_form=$('#portfolio_information_form');
             var add_project=$('#addProject');
             var detail_tab=$('#addDetail');
             var preview_tab=$('#addPreview');
-            
+            var go_to_detail=$('#go_to_detail_btn');
 
             $(document).ready(function(){
                 $('.select2').select2({
                     tags: true
                 });
                 var form_data='';
-                var action_url="{{route('seller.profile.portfolio.basics')}}";
+                var action_url="{{route('seller.profile.portfolio.store')}}";
                 var dropzone = new Dropzone('#demo-upload', {
                     url:action_url,
                     autoProcessQueue: false,
@@ -509,7 +512,7 @@
                             var temp = file.previewTemplate;
                             var img_div_id=file.upload.uuid+'img_div';
                             var FR= new FileReader();
-                            var image_div='<div class="col-md-4 col-lg-4 col-sm-4 img_div" id="'+img_div_id+'"></div>';
+                            var image_div='<div class="col-md-4 col-lg-4 col-sm-4 img_div " id="'+img_div_id+'"></div>';
                             $('#image_viewer').append(image_div); 
                             FR.onload = function(e) {
                                
@@ -529,10 +532,6 @@
                             formData.append("data", form_data);
                         });
                         
-                        this.on("complete", function(file, xhr, formData) {
-                        
-                        });
-
                         this.on("successmultiple", function(files, response) {
 
                             if(response.error)
@@ -546,11 +545,11 @@
 
                         myDropzone = this;
 
-                        $("#propsal_form").submit(function (event) {
+                        portfolio_basic_form.submit(function (event) {
                         form_data= $(this).serialize();
                             event.preventDefault();
                             event.stopPropagation(); 
-                            var validate_url='/seller/validate-proposal';
+                            var validate_url="{{route('seller.profile.portfolio.validate')}}";
                             $.ajax({
                                 type:"POST",
                                 url:validate_url,
@@ -560,21 +559,17 @@
                                     if(data.validated){
 
                                         if(myDropzone.getQueuedFiles().length>0){
-                                        myDropzone.processQueue();
-                                        
-
-
+                                            myDropzone.processQueue();
                                         }
                                         else
                                         {
-                                        submitProposal(form_data);
+                                            submitProposal(form_data);
                                         }
 
                                     }
                                     else{
-
-                                    displayErrorMessage(data.error);
-
+                                        formPostProcess(add_project,preview_tab);
+                                        displayErrorMessage(data.error);
                                     }
                                 }
                             });
@@ -598,10 +593,7 @@
                     }
                     
                 });
-                portfolio_basic_form.submit(function(e){
-                    e.preventDefault();
-                    savePortfolioBasic();
-                });
+             
                 $('.preview_portfolio').click(function(){
                     $('.portfolio_title').html($('#project_name').val());
                     $('#portfolio_completion_date').html($('#project_completion_date').val());
@@ -619,49 +611,47 @@
                     formPostProcess(preview_tab,detail_tab);
                 });
 
+                go_to_detail.click(function(){
+
+                    formPostProcess(detail_tab,add_project);
+
+                });
+               
                 $('.add_project').click(function(){
                     formPostProcess(add_project,preview_tab);
 
                 });
 
-                $('.add_details').click(function(){
+
+                $(document).on('click', '.add_details', function() {
                     formPostProcess(detail_tab,preview_tab);
 
                 });
+                
             });
            
-            function savePortfolioBasic()
+            
+            function submitProposal(data)
             {
-                let form_data = new FormData(portfolio_basic_form[0]);
-
+                var action_url="{{route('seller.profile.portfolio.store')}}";
                 $.ajax({
                     type:"POST",
-                    headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                    url:"{{route('seller.profile.portfolio.basics')}}",
-                    data: form_data,
-                    processData: false,
-                    contentType: false,
-                    success:function(response){
-                        
-                        if(response.success){
+                    url:action_url,
+                    data: {data : data,_token:token},
+                    success:function(data){
+                        var html = '';
+                        console.log(data);
+                        if(data.error){
+                            
+                            displayErrorMessage(data.error);
 
-                            notify('success', response.success);
-                            formPostProcess(detail_tab,add_project);
-                        
-                        }
-                        else if(response.validation_errors){
-                            displayErrorMessage(response.validation_errors);
                         }
                         else{
-                            errorMessages(response.errors);
+                            window.location.replace(data.redirect);              
                         }
-
                     }
-                });
+                });  
             }
-
             function displayAlertMessage(message)
             {
                 iziToast.error({

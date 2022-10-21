@@ -1,106 +1,110 @@
-    <div class="right-p-con">
-        <div class="d-flex flex-wrap align-items-center justify-content-between">
-            <p class="card-title1">
-                 Preview
-            </p>
-            
-        </div>
-<section class="">
-    <div class="card-body pt-0 border-bottom" >
-        <div class="card-form-wrapper">
-            <div class="justify-content-center">
-                
-                <div class="row">
-                    
-                    <p class="p-title">
-                        Title
-                   </p>
+<div class="right-p-con">
 
-                   {{-- title --}}
-                   <span>
-                        <span id="portfolio_title" class="portfolio_title"></span>
-                        <a href="#" class="editbtn-d add_project">
-                            <img src="/assets/images/job/edit-icon.png">
-                        </a>
-                    </span>
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <p class="card-title1">
+                Preview
+        </p>
+    </div>
+    
+    <section class="">
+
+        <div class="card-body pt-0 border-bottom" >
+            <div class="card-form-wrapper">
+                <div class="justify-content-center">
                     
-                    {{-- images --}}
-                    <div class="row card" style="background-color: transparent !important;box-shadow:none;border:none;margin-top: 9px;">
+                    <div class="row">
                         
-                        <div class="row" id="image_viewer" >
-                            
-                        </div>
-        
-                    </div>
-                       
-                </div>
-                
+                        <p class="p-title">
+                            Title
+                    </p>
 
-                {{-- skills --}}
-                <div class="row pt-5 pb-5">
-                    
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
-                        
-                        <div class="col-md-7">
-                            <label>Skills</label>
-                            <ul class="skills-listing" id="portfolio_skills">
-                               
-
-                            </ul>
-                            <a href="#" class="editbtn-d add_details">
+                    {{-- title --}}
+                    <span>
+                            <span id="portfolio_title" class="portfolio_title"></span>
+                            <a href="#" class="editbtn-d add_project">
                                 <img src="/assets/images/job/edit-icon.png">
                             </a>
-    
+                        </span>
+                        
+                        {{-- images --}}
+                        <div class="row card" style="background-color: transparent !important;box-shadow:none;border:none;margin-top: 9px;">
+                            
+                            <div class="row" id="image_viewer" >
+                                
+                            </div>
+            
                         </div>
+                        
                     </div>
-
-                </div>
-                
-                {{-- description --}}
-                <div class="row">
-
-                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
-                        <label>Description <a href="#" class="editbtn-d add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
-                        <p class="portfolio_description"> </p>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="container pt-5 pb-5 pl=">
-        {{-- completion date --}}
-        <div class="row">
-            <label><p class="pb-4" id="portfolio_completion_date">
-               
-            </p>
-        </div>
-        {{-- Project URL --}}
-        <div class="row">
-
                     
-            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
-                <label>Project URL <a href="#" class="editbtn-d editbtn-d-p add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
-                <p id="portfolio_url"></p>
-            </div>
 
-        </div>
-        {{-- btns --}}
-        <div id="outer" class="text-right">
-            <div class="inner">
-                <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
+                    {{-- skills --}}
+                    <div class="row pt-5 pb-5">
+                        
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                            
+                            <div class="col-md-7">
+                                <label>Skills</label>
+                                <ul class="skills-listing" id="portfolio_skills">
+                                
+
+                                </ul>
+                                <a href="#" class="editbtn-d add_details">
+                                    <img src="/assets/images/job/edit-icon.png">
+                                </a>
+        
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    {{-- description --}}
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
+                            <label>Description <a href="#" class="editbtn-d add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
+                            <p class="portfolio_description"> </p>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-            <div class="inner">
-                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Publish</button>
+        </div>
+
+
+        <div class="container pt-5 pb-5 pl=">
+            {{-- completion date --}}
+            <div class="row">
+                <label><p class="pb-4" id="portfolio_completion_date">
+                
+                </p>
+            </div>
+            {{-- Project URL --}}
+            <div class="row">
+
+                        
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
+                    <label>Project URL <a href="#" class="editbtn-d editbtn-d-p add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
+                    <p id="portfolio_url"></p>
+                </div>
+
+            </div>
+            {{-- btns --}}
+            <div id="outer" class="text-right">
+                <div class="inner">
+                    <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
+                </div>
+                <div class="inner">
+                    <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Publish</button>
+                </div>
             </div>
         </div>
-    </div>
-  
-  </section>
-  </div>
+
+    </section>
+
+</div>
+
 <style>
 
 .card .img-wrapper-previw {

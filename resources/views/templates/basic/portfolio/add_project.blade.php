@@ -1,14 +1,13 @@
 
         <div class="right-container-c">
-            <form action="#" id="portfolio_basics_information">
-                @csrf
+          
                 <div class="row">
           
             
                     <div class="col-md-6">
                         <p class="title-c">Add portfolio project</p>
                         <label for="exampleInputEmail1">Project Title</label>
-                        <input type="text" class="form-control" id="project_name" aria-describedby="emailHelp" placeholder="Enter a brief title of portfolio" name="name">
+                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter a brief title of portfolio" name="name">
                     </div>
                 
                 </div>
@@ -27,19 +26,20 @@
                     <div class="col-md-6">
                     
                         <label for="exampleInputEmail1">Completion Date (optional)</label>
-                        <input type="date" class="form-control" id="project_completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date">
+                        <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date">
                     </div>
+
                     <div class="col-md-6">
                         <div class="btns-addp">
                             <button type="button" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
-                            <button type="submit" class="submit-btn w-80 float-right" >Go to Add Details</button>
+                            <button type="button" class="submit-btn w-80 float-right" id="go_to_detail_btn">Go to Add Details</button>
                         </div>
     
                     </div>
                     
                     
                 </div>
-            </form>
+           
         </div> 
 
 

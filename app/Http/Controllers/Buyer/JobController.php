@@ -126,9 +126,9 @@ class JobController extends Controller
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
-
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
+           
 
             $job = Job::create([
                 "user_id" => $user->id,

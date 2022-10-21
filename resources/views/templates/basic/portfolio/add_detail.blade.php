@@ -108,7 +108,7 @@
                 <div class="row pb-3">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                         <label>Project URL (Optional)</label>
-                        <input type="text" name="detail_project_url" id="detail_project_url">
+                        <input type="text" name="project_url" id="detail_project_url">
                     </div>
                 </div>
 
@@ -129,7 +129,7 @@
                         <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
                     </div>
                     <div class="inner">
-                        <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn preview_portfolio" id="preview_btn">Go to preview</button>
+                        <button type="button" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn preview_portfolio" id="preview_btn">Go to preview</button>
                     </div>
                 </div>
             </div>

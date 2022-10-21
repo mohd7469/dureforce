@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Degree;
 use App\Models\LanguageLevel;
@@ -364,27 +365,38 @@ class ProfileController extends Controller
      */
     public function saveUserPortfolio(Request $request)
     {
-        $validator = \Validator::make($request->all(), 
-        [
-            'completion_date'   => 'nullable',
-            'name' => 'required',
-        ]);
-        
-        if ($validator->fails())
-        {
-            return response()->json(['validation_errors'=>$validator->errors()]);
-        }
-       
-        $user = auth()->user();        
-
+        DB::beginTransaction();
         try {
-            UserPortFolio::create(
-                [
-                    'completion_date' => $request->completion_date,
-                     'name' => $request->name
-                ]
+            
+            $portfolio=UserPortFolio::create(
+                $request->all()
             );
-            return response()->json(["success" => "User Portfolio Added Successfully "], 200);
+
+            $portfolio->skills()->attach($request->skills);
+
+            if ($request->hasFile('file')) {
+                $path = imagePath()['attachments']['path'];
+                foreach ($request->file as $file) {
+
+
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        
+                        $portfolio->attachments()->create([
+
+                            'name' => $filename,
+                            'uploaded_name' => $file->getClientOriginalName(),
+                            'url'           => $url,
+                            'type' =>$file_extension,
+                            'is_published' =>1
+
+                        ]);
+                }
+            }
+            DB::commit();
+            return response()->json(["success" => "User Portfolio Added Successfully ",'redirect' =>route('seller.profile.view')], 200);
 
         } catch (\Exception $exp) {
             return response()->json(['error' => $exp->getMessage()]);
@@ -392,5 +404,27 @@ class ProfileController extends Controller
             return back()->withNotify($notify);
 
         }
+    }
+
+    public function validateUserPortfolio(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        
+        $rules = [
+            'name' => 'required',
+            'completion_date' => 'required|date|before:today',
+            'skills' => 'nullable|array',
+            'skills.*' =>'exists:skills,id',
+            'project_url' => 'nullable',
+            'description' => 'nullable',
+        ];
+
+        $validator = Validator::make($request_data, $rules);
+        if ($validator->fails()) {
+            return response()->json(["error" => $validator->errors()]);
+        } 
+        else
+            return response()->json(["validated" => "Portfolio Data Is Valid"]);
     }
 }
