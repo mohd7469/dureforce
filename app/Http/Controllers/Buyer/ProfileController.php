@@ -325,8 +325,10 @@ class ProfileController extends Controller
         $user_languages_ = WorldLanguage::whereIn('id',$user_languages->pluck('language_id')->toArray())->get();
         $user_languages_level_ = LanguageLevel::whereIn('id',$user_languages->pluck('language_level_id')->toArray())->get();
         $user_country_ = Country::where('id', $user->company->country_id)->first();
+        $user_loc_ = Country::where('id', $user->company->country_id)->first();
+        
 
-        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
+        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories','user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
     }
     public function buyerprofilePasswordChange(Request $request){
 
@@ -504,13 +506,12 @@ class ProfileController extends Controller
 
                 $user = auth()->user();
                 if($request->email){
-                    
                     $user1 = User::find( auth()->user()->id);
-                   
                     $user1->email = $request->email;
+                    $user1->country_id = $request->country_id;
                     $user1->save();
-                    
                 }
+
                 
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
@@ -560,6 +561,7 @@ class ProfileController extends Controller
     }
     public function buyersaveCompany(Request $request)
     {
+       
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
