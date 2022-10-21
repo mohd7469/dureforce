@@ -14,7 +14,7 @@
                                 <ul class="sidebar-nav nav nav-tabs" role="tablist">
                                     <li role="tab" class="active"><a  data-toggle="tab" href="#addProject">Add Project <i class="fa-thin fa-octagon-check"></i></a></li>
                                     <li role="tab" ><a data-toggle="tab" href="#addDetail" id="portfolio_detail">Add Details</a></li>
-                                    <li role="tab" ><a   data-toggle="tab" href="#addPreview" id="portfolio_preview">Preview</a></li>
+                                    <li role="tab" class="preview_portfolio"><a   data-toggle="tab" href="#addPreview" id="portfolio_preview">Preview</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                     @include('templates.basic.portfolio.add_detail')
                                 </div>
 
-                                <div id="addPreview" role="tabpanel" class="tab-pane">
+                                <div id="addPreview" role="tabpanel" class="tab-pane ">
                                     @include('templates.basic.portfolio.add_preview')
                                 </div>
 
@@ -428,7 +428,6 @@
                     border: 1px solid #dee2e6!important;
                     padding-left: 0px;
                     padding-right: 0px;
-                    margin-right: 10px;
                 }
                 
                 .hide{
@@ -477,7 +476,7 @@
             var add_project=$('#addProject');
             var detail_tab=$('#addDetail');
             var preview_tab=$('#addPreview');
-            var preview_btn=$('#preview_btn');
+            
 
             $(document).ready(function(){
                 $('.select2').select2({
@@ -516,12 +515,13 @@
                                
                                var img=$("<img />", {
                                     "src": e.target.result,
-                                    "class" : 'img_file',
+                                    "class" : 'img_file ',
                                     "id"  :file.upload.uuid
                                 }).appendTo('#'+img_div_id);
                                 
                             };
                             FR.readAsDataURL( file );
+                            $('#'+img_div_id).html('<a href="#" class="editbtn-img-p add_details"><img src="/assets/images/job/edit-icon.png"></a>');
                         });
 
                         this.on("sendingmultiple", function(file, xhr, formData) {
@@ -537,10 +537,10 @@
 
                             if(response.error)
                             {
-                            displayErrorMessage(response.error);
+                                displayErrorMessage(response.error);
                             }
                             if(response.redirect)
-                            window.location.replace(response.redirect);
+                                window.location.replace(response.redirect);
                             
                         });
 
@@ -602,17 +602,31 @@
                     e.preventDefault();
                     savePortfolioBasic();
                 });
-                preview_btn.click(function(){
+                $('.preview_portfolio').click(function(){
                     $('.portfolio_title').html($('#project_name').val());
                     $('#portfolio_completion_date').html($('#project_completion_date').val());
                     $('#video_url_id').val();
-                    $('#portfolio_skills').html(
-                        $('#skills :selected').text()
-                    );
+                    var skills=$('#skills').select2('data');
+                   
+                    var skills_list='';
+                    skills.forEach((item, index)=>{
+                        skills_list+="<li>"+item.text+"</li>";
+                    });
+                    $('#portfolio_skills').html(skills_list);
                     $('#portfolio_url').html($('#detail_project_url').val());
                     $('.portfolio_description').html($('#detail_description').val());
 
                     formPostProcess(preview_tab,detail_tab);
+                });
+
+                $('.add_project').click(function(){
+                    formPostProcess(add_project,preview_tab);
+
+                });
+
+                $('.add_details').click(function(){
+                    formPostProcess(detail_tab,preview_tab);
+
                 });
             });
            
