@@ -180,10 +180,10 @@ class JobController extends Controller
                         $job->documents()->save($document);
 
 
-
                 }
             }
             DB::commit();
+            session()->put('notify', ["Job Created Successfully"]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
