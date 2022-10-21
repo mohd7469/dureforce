@@ -48,13 +48,15 @@ class ProfileController extends Controller
      */
     public function saveCompany(Request $request)
     {
-    
+        
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            // 'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|string|min:4|max:15'
-           
+             'vat' => 'required|string|min:4|max:15',
+             'url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+
 
           
 
@@ -64,6 +66,7 @@ class ProfileController extends Controller
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
+
             try {
 
                 DB::beginTransaction();
