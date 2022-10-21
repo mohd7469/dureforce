@@ -213,7 +213,7 @@ function calculateMilestoneAmountSum()
     var total_amount=0;
     $(".milestones_amount").each(function() {
       var milestone_amount=$(this).val();
-      total_amount=total_amount+parseInt(milestone_amount);
+      total_amount=total_amount+parseFloat(milestone_amount);
     });
     $('#total_milestones_amount').val(total_amount);
     $('#milestones_amount_receive').val(financial(total_amount*0.80));

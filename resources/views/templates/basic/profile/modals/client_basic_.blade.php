@@ -135,11 +135,11 @@
                          ></label
                          >
                       <input
-                         type="number"
+                         type="email"
                          name="email"
                          placeholder=""
                          id="email"
-                         value="{{$basicProfile->email}}"
+                         value="{{auth()->user()->email}}"
                          />
                    </div>
                    {{-- language row --}}
