@@ -49,7 +49,6 @@ class ProfileController extends Controller
     public function saveCompany(Request $request)
     {
         
-    
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
@@ -75,7 +74,6 @@ class ProfileController extends Controller
                 $filename = '';
 
                 if ($request->hasFile('company_logo')) {
-
                     $location = imagePath()['profile']['user']['path'];
                     $size = imagePath()['profile']['user']['size'];
                     $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);

@@ -71,7 +71,7 @@
                                             <div class="col-md-3">
                                                 <div class="row borderleftc"> 
                                                     <div class="col-md-4">
-                                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                    <img alt="User Pic" src="{{ !empty($freelancer->user_basic->profile_picture)? $freelancer->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
                                                     <div class="col-md-8">
                                                         <h4 class="pname-c"> 
@@ -170,13 +170,12 @@
                                     </div>
                                     @foreach($invited_freelancers as $invited_freelancers)
                                     @isset($invited_freelancers->user)
-                                    
                                     <div class="">
                                         <div class="row biorow">
                                            <div class="col-md-3">
                                               <div class="row borderleftc"> 
                                                 <div class="col-md-4">
-                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                    <img alt="User Pic" src="{{ !empty($invited_freelancers->user->user_basic->profile_picture)? $invited_freelancers->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4 class="pname-c">
