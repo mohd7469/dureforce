@@ -453,7 +453,7 @@ class ProfileController extends Controller
                     
                     DB::commit();
     
-                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'view' => 'step-1'])]);
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-1'])]);
     
                 }
                 if(! empty($request->payment_id)) {
@@ -540,7 +540,7 @@ class ProfileController extends Controller
                 $user->save();
 
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]); 
+                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'profile' => 'step-1'])]); 
 
 
 
@@ -622,7 +622,7 @@ class ProfileController extends Controller
         $userPayment = UserPayment::findOrFail($id);
         $userPayment->delete();
         $notify[] = ['success', 'Your Payment Method is Deleted.'];
-        return redirect()->route('buyer.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        return redirect()->route('buyer.basic.profile', ['profile' => 'step-3'])->withNotify($notify);
     }
    
 
