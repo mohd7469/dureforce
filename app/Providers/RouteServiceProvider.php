@@ -47,21 +47,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
-
-            
         });
-
-        Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/auth.php'));
-
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/buyer.php'));
-            
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/seller.php'));
     }
 
     /**
@@ -75,7 +61,4 @@ class RouteServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
         });
     }
-
-   
-
 }

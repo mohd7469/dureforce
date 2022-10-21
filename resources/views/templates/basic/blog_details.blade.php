@@ -51,7 +51,7 @@
                                                                 </div>
                                                                 {{-- <div class=" col- 12 col-sm-6"> --}}
                                                                 {{-- <img alt="{{$blog->data_values->banner_heading}}" --}}
-                                                                {{-- src="{{getAzureImage('service/'.$blog->data_values->blog_image_1, imagePath()['service']['size'])}}"> --}}
+                                                                {{-- src="{{getImage('assets/images/service/'.$blog->data_values->blog_image_1, imagePath()['service']['size'])}}"> --}}
                                                                 {{-- </div> --}}
                                                             </div>
 
@@ -125,7 +125,7 @@
                                                     @foreach ($fservices as $ser)
                                                         <li class="small-single-item">
                                                             <div class="thumb">
-                                                                <img src="{{ getAzureImage('service/' . $ser->image, imagePath()['service']['size']) }}"
+                                                                <img src="{{ getImage('assets/images/service/' . $ser->image, imagePath()['service']['size']) }}"
                                                                     alt="@lang('service image')">
                                                             </div>
                                                             <div class="content">

@@ -26,7 +26,7 @@
                                                     <td data-label="@lang('Title')" class="text-start">
                                                         <div class="author-info">
                                                             <div class="thumb">
-                                                                <img src="{{getAzureImage('service/'.$favoriteService->service->image,'590x300') }}" alt="@lang('Service Image')">
+                                                                <img src="{{getImage('assets/images/service/'.$favoriteService->service->image,'590x300') }}" alt="@lang('Service Image')">
                                                             </div>
                                                             <div class="content">{{__(str_limit($favoriteService->service->title, 40))}}</div>
                                                         </div>

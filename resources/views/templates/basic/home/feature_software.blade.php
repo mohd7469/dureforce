@@ -1,52 +1,21 @@
-<div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
-    <div class="carousel-inner">
-    @foreach($softwares as $software)
-        <div class="carousel-item active ">
-            <div class="card">
-                <div class="img-wrapper">
-                <img src="{{ !empty($software->image) ? asset('assets/images/software/'.$software->image,'590x300') : asset('assets/images/default.png','590x300') }}" alt="@lang('image')">
-                </div>
+<div class="item-bottom-area">
+    <div class="row justify-content-center mb-30-none">
+        <div class="col-xl-12 col-lg-12 mb-30">
 
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a href="javascript:void(0)">{{__(str_limit($software->title, 40))}}</a>
-                    </h3>
-                    <div class="tags-container">
-                        @foreach ($software->tag as $tags)
-                            <a href="javascript:void(0)"
-                               class=" grey_badge  custom_badge badge-secondary">{{ __($tags) }}</a>
-                        @endforeach
-                    </div>
+            <div class="item-card-wrapper grid-view  row">
+                <div class="slick-slider-container be-center ">
+                    @forelse($softwares as $software)
 
-                    <div class="footer row">
-                        <div class="author_detail col-7 col-md-8">
-                                <span class="author text-capitalize pb-1">by
-                                    <a href="javascript:void(0)">{{ !empty($software->user->fullname)? $software->user->fullname: '' }}</a>
-                                </span>
-                                <div class="col-12 col-md-12 ">
-                                    <span class="rates">
-                                    <p>Schedule Meeting</p></span>
-                                </div>
+                        @include($activeTemplate.'components.software.tile',['software'=>$software])
+                    @empty
+                        <div class="empty-message-box bg--gray">
+                            <div class="icon"><i class="las la-frown"></i></div>
+                            <p class="caption">{{__($emptyMessage)}}</p>
                         </div>
-                        <div class="col-5 col-md-4 ">
-                            <span class="rates">
-                            <small class="start-from">Start from</small>
-                            <span class="value">${{ mt_rand(5, 999) }}</span>
-                            </span>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
             </div>
         </div>
-    @endforeach
+        {{--                                        @include($activeTemplate.'partials.home_filter',['type_id'=>\App\Models\Category::ServiceType])--}}
     </div>
-    <span class="seeall"><a href="">See All</a></span>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
 </div>

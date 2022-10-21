@@ -1,5 +1,3 @@
-
-@if(empty($model->image))
 <div class="detail-banner"
      style='background-image: url({{getImage(imagePath()['logoIcon']['path'] .'/service-banner-bg.png')}})'>
 
@@ -18,7 +16,7 @@
       
             <div class=" col- 12 col-sm-6">
                 <img alt="{{$model->banner_heading}}"
-                     src="{{getAzureImage($folder.'/'.$model->lead_image, imagePath()["$folder"]['size'])}}">
+                     src="{{getImage('assets/images/'.$folder.'/'.$model->image, imagePath()["$folder"]['size'])}}">
             </div>
         </div>
 
@@ -33,12 +31,3 @@
         @endforeach
     </div>
 </div>
-@else
- 
-<div class="detail-banner">
-<a >
-        <img alt="{{$model->title }}"
-            src='{{ getAzureImage("service/" . $model->image, imagePath()["optionalService"]["size"]) }}'>
-    </a>
-</div>
-@endif

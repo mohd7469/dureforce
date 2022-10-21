@@ -4,38 +4,20 @@
     $content = getContent('breadcrumbs.content', true);
 @endphp
 {{--  data-background="{{getImage('assets/images/frontend/breadcrumbs/'.$content->data_values->background_image,'1920x1200') }}" --}}
-<!-- <section class="account-section"> -->
+<section class="account-section ptb-80 bg-overlay-white bg_img">
     <div class="container">
-
-    <div
-        class="modal fade"
-        id="signUpModal"
-        tabindex="-1"
-        aria-labelledby="signUpModalLabel"
-        aria-hidden="true"
-        >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                        <button
-                                type="button"
-                                class="btn-close float-end"
-                                data-bs-dismiss="modal"
-                            ></button>
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-12">
+                <div class="account-form-area m-auto pb-4">
+                    {{-- <div class="account-logo-area col-md-6 m-auto pb-4 pt-2 text-center">
+                        <div class="account-logo">
+                            <a href="{{route('home')}}"><img src="{{getImage(imagePath()['logoIcon']['path'] .'/logo.png')}}" alt="{{__($general->sitename)}}"></a>
                         </div>
-                    </div> -->
-                <div class="row"> 
-                        <div class="account-header col-md-12 col-sm-12 text-center">
-                            <h3 class="title">
-                                @lang('Complete Your Free Account Setup')
-                            </h3>
-                        </div>
+                    </div> --}}
+                    <div class="account-header col-md-6 m-auto pb-4 text-center">
+                        <h3 class="title">@lang('Complete Your Free Account Setup')</h3>
                     </div>
-                    <form class="account-form col-md-12 m-auto" action="{{ route('user.register') }}" method="POST" onsubmit="return submitUserForm();">
+                    <form class="account-form col-md-6 m-auto" action="{{ route('user.register') }}" method="POST" onsubmit="return submitUserForm();">
                         @csrf
                         <div class="row ml-b-20">
                             <div class="col-lg-6 form-group">
@@ -59,13 +41,13 @@
                                 <small class="text-danger usernameExist"></small>
                             </div>
 
-                            <div class="col-lg-12 form-group">
+                            {{-- <div class="col-lg-6 form-group">
                                 <select name="country" id="country" class="form-control form--control">
                                     @foreach($countries as $key => $country)
-                                        <option value="{{ $country->id }}">{{ __($country->name) }}</option>
+                                        <option data-mobile_code="{{ $country->dial_code }}" value="{{ $country->country }}" data-code="{{ $key }}">{{ __($country->country) }}</option>
                                     @endforeach
                                 </select>
-                            </div> 
+                            </div> --}}
 
 
                             <div class="col-lg-6 form-group hover-input-popup">
@@ -90,16 +72,16 @@
                             <div class="col-lg-12 form-group">
                                 <div class="btn-group justify-content-center" role="group" style="width: 100%" aria-label="Basic radio toggle button group">
                                  <div>
-                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Freelancer}}" id="btnradio1" autocomplete="off" checked>
+                                    <input type="radio" class="btn-check" name="type" value="1" id="btnradio1" autocomplete="off" checked>
                                     <label class="btn btn-outline-secondary btn-freelance" for="btnradio1">@lang('Work As A Freelancer')</label>
                                 </div>
                                 <div>
 
-                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Client}}" id="btnradio2" autocomplete="off">
+                                    <input type="radio" class="btn-check" name="type" value="2" id="btnradio2" autocomplete="off">
                                     <label class="btn btn-outline-secondary btn-hire" for="btnradio2">@lang('Hire For A Project')</label>
                                 </div>
-                                {{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}
-                                {{--                                    <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label>--}}
+{{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}
+{{--                                    <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label>--}}
                                   </div>
                             </div>
 
@@ -135,33 +117,24 @@
             </div>
         </div>
     </div>
-
-    </div>
-<!-- </section> -->
+</section>
 
 
 <div class="modal fade" id="existModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog " role="document">
         <div class="modal-content">
-            <!-- <div class="modal-header">
+            <div class="modal-header">
                 <h5 class="modal-title" id="ModalLabel">@lang('You are with us')</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
-            </div> -->
+            </div>
             <div class="modal-body">
-                <div class="row"> 
-                    <div class="account-header col-md-12 col-sm-12 text-center">
-                        <h3 class="title">
-                            @lang('You are with us')
-                        </h3>
-                    </div>
-                </div>
-                <h6 class="text-center">@lang('You already have an account please Sign in ')</h6>
+                <h6>@lang('You already have an account please Sign in ')</h6>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn--danger btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
-                <a href="{{route('user.login')}}" class="btn btn--primary btn-rounded text-white">@lang('Login')</a>
+                <a href="" class="btn btn--primary btn-rounded text-white">@lang('Login')</a>
             </div>
         </div>
     </div>
@@ -246,34 +219,6 @@
         content: "\f058";
         color: #28c76f;
     }
-    .modal-header .btn-close {
-        margin-bottom: 30px;
-        height: 1px !important;
-    }
-    .account-header {
-        margin-bottom: 15px;
-    }
-    .modal { position: fixed; top:0% !important; } 
-    .modal-body {
-        position: relative;
-        flex: 1 1 auto;
-        padding: 2rem;
-    }
-    .btn-outline-secondary{
-        color: #007F7F;
-        background-color: #ccffff;
-        border-radius: 4px;
-    }
-    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.hover, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:hover {
-        color: #fff;
-        background-color: #007F7F;
-        border-color: #007F7F;
-    }
-    .btn-check:checked+.btn-outline-secondary, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show, .btn-outline-secondary:active {
-        color: #fff;
-        background-color: #007F7F;
-        border-color: #007F7F;
-    }
 </style>
 @endpush
 @push('script-lib')
@@ -282,9 +227,6 @@
 @push('script')
     <script>
       "use strict";
-      $(document).ready(function(){
-            $("#signUpModal").modal('show');
-        });
         function submitUserForm() {
             var response = grecaptcha.getResponse();
             if (response.length == 0) {

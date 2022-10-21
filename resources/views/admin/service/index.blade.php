@@ -24,7 +24,7 @@
                             <tr @if($loop->odd) class="table-light" @endif>
                                 <td data-label="@lang('Title')">
                                     <div class="user">
-                                        <div class="thumb"><img src="{{ getAzureImage('service/'.$service->image,'590x300')}}" alt="@lang('image')"></div>
+                                        <div class="thumb"><img src="{{ getImage('assets/images/service/'.$service->image,'590x300')}}" alt="@lang('image')"></div>
                                         <span class="name">{{__(str_limit($service->title, 10))}}</span>
                                     </div>
                                 </td>

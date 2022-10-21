@@ -1,7 +1,7 @@
 <div class="setProfile" id="payment-index">
     <div class="container-fluid welcome-body">
         <div class="row">
-            <h1 class="mb-4 p-0">Payment Methods </h1>
+            <h1 class="mb-4 p-0">Payment Methods</h1>
             <div class="col-md-12 cmnt ">
                 <div class="row mb-3">
                     <div class="col-md-8 d-flex align-items-center">
@@ -78,19 +78,9 @@
                 </table>
             </div>
         </div>
-
-        @if (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0)
-            <div class=" p-0">
-                <div class="col-md-12">
-                    <a href="{{route('user.home')}}" class="btn btn-continue m-0 my-2 btn-secondary ">
-                        Go To Dashboard
-                    </a>
-                </div>
-            </div>
-        @endif
-
-       
     </div>
-    
-</div>
+    <div class=" p-0">
 
+    </div>
+</div>
+</div>
