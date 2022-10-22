@@ -133,7 +133,7 @@ z-index: 1;
         
       <div class="cp-profile_c_main">
         <div class="h-img">
-            <img class="cp-prfileimg" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+            <img class="cp-prfileimg rounded-circle" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
             
             <span class="upload-c">Icon</span>
         </div>

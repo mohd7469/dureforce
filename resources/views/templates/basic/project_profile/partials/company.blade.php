@@ -30,14 +30,7 @@
                                 <input type="file" name="company_logo" id="img-upload"
                                     accept="image/png, image/gif, image/jpeg" class="imgInp"
                                     onchange="previewCompanyFile(this)"/>
-                                <img width="100" height="100" id="preview-img-company"
-                                    src="{{ getImage('assets/images/default.png') }}" />
-                                @if (!empty(@$user->company->logo))
-                                    <img class="img-box"
-                                        id="preview-img-company-edit"
-                                        src="{{ asset('assets/images/user/profile') . '/' . $user->company->logo }}"
-                                        alt="">
-                                @endif
+                                    <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
                             </div>
                           
                         </div>
