@@ -19,9 +19,8 @@ class CreateAttachmentsTable extends Migration
             $table->string('uploaded_name')->index()->nullable();
             $table->string('url')->nullable();
             $table->string('type')->nullable();
-            $table->enum('is_published', [ 'Deactivated', 'Active']);
-            $table->integer('model_id')->index();
-            $table->string('model_type')->nullable();
+            $table->boolean('is_published')->default(true);
+            $table->morphs('section');
             $table->timestamps();
             $table->softDeletes();
         });

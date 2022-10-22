@@ -15,6 +15,7 @@ class CreateUserPortFoliosTable extends Migration
     {
         Schema::create('user_portfolios', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->string('name');
             $table->text('description');
             $table->string('project_url');
@@ -22,6 +23,7 @@ class CreateUserPortFoliosTable extends Migration
             $table->date('completion_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

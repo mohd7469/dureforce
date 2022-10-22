@@ -261,65 +261,22 @@
                                 </div>
 
                                 <div class="row portfolio">
-                                    <div class="col-xl-4 col-lg-6 col-md-6">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-4 col-lg-6  col-md-6">
-                                            <div class="card" style="width: 18rem;">
-                                                <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                                <div class="card-body">
-                                                    <h3 class="card-title">Project Name</h3>
-                                                    <p class="card-text">This is a short project description..</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <div class="col-xl-4 col-lg-6  col-md-6">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-4 col-lg-6  col-md-6 mt-3  ">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-4 col-lg-6  col-md-6 mt-3   ">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
                                     
-                                    <div class="col-xl-4 col-lg-6  col-md-6  mt-3  ">
-                                            <div class="card" style="width: 18rem;">
-                                                <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
+                                    @foreach ($user_portfolios as $portfolio)
+
+                                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:85px;">
+
+                                            <div class="card" style="width: 18rem;height:220px;">
+                                                <img class="card-img-top" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
                                                 <div class="card-body">
-                                                    <h3 class="card-title">Project Name</h3>
-                                                    <p class="card-text">This is a short project description..</p>
+                                                    <h3 class="card-title">{{$portfolio->name}}</h3>
+                                                    <p class="card-text">{{$portfolio->description}}</p>
                                                 </div>
                                             </div>
+
                                         </div>
-                                    </div>
+
+                                    @endforeach
                                     
                                 </div>
 
@@ -877,6 +834,7 @@
 
 @endsection
 @push('script-lib')
+
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/seller_profile.js')}}"></script>
 
@@ -895,6 +853,7 @@
     let exp_btn=$('#exp-btn');
     let add_exp_btn=$('#add-exp-btn');
     let add_edu_btn=$('#add-edu-btn');
+
     $(document).ready(function() {
         
         readmore();
