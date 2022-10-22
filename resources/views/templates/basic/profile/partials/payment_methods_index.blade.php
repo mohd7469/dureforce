@@ -44,7 +44,7 @@
                                     </figure>
                                     {{ $payments->card_number }}
                                 </td>
-                                <td>Expiry: {{ Carbon\Carbon::parse($payments->expiration_date)->format('m/Y') }}
+                                <td>Expiry: {{ Carbon\Carbon::parse($payments->expiration_date)->format('d/m/Y') }}
                                 </td>
 
                                 <td>
