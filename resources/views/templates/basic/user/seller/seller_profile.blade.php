@@ -279,6 +279,7 @@
                                     @endforeach
                                     
                                 </div>
+                            </div>
 
                             {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
