@@ -715,11 +715,12 @@
 
         function saveUserPaymentMethod()
         {
+            
             let form_data = new FormData(user_payment_methods_form[0]);
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('buyer.profile.save.payment.methods')}}",
+                  url:"{{route('save.payment.methods')}}",
                   data: form_data,
                   processData: false,
                   contentType: false,
