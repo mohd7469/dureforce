@@ -17,7 +17,7 @@
                         <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
-                                    <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
+                                    <img class="thumbnail" src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                                     <h4 class="my-3 text-center">{{$user->full_name}}</h4>
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>

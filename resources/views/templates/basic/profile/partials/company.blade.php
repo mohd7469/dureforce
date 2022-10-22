@@ -133,7 +133,8 @@ z-index: 1;
         
       <div class="cp-profile_c_main">
         <div class="h-img">
-            <img src="/assets/images/job/profile.png" alt="Profile" class="cp-prfileimg">
+            <img class="cp-prfileimg" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+            
             <span class="upload-c">Icon</span>
         </div>
         <div class="cp-profile-h">{{$basicProfile->designation}}</div>
