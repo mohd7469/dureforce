@@ -71,7 +71,7 @@
                                             <div class="col-md-3">
                                                 <div class="row borderleftc"> 
                                                     <div class="col-md-4">
-                                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                    <img alt="User Pic" src="{{ !empty($freelancer->user_basic->profile_picture)? $freelancer->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
                                                     <div class="col-md-8">
                                                         <h4 class="pname-c"> 
@@ -113,7 +113,7 @@
                                         <!--Skills Section Start-->
                                         <div class="row skills-c">
                                             <div class="col-md-7"> 
-                                                <h2>Has relevant skills to your job</h2>
+                                                <h2>Has {{count($freelancer->skills)}} relevant skills to your job</h2>
                                                 <ul class="skills-listing">
                                                     @foreach ($freelancer->skills as $skill )
                                                     <li>{{$skill->name}}</li>
@@ -170,20 +170,19 @@
                                     </div>
                                     @foreach($invited_freelancers as $invited_freelancers)
                                     @isset($invited_freelancers->user)
-                                    
                                     <div class="">
                                         <div class="row biorow">
                                            <div class="col-md-3">
                                               <div class="row borderleftc"> 
                                                 <div class="col-md-4">
-                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
+                                                    <img alt="User Pic" src="{{ !empty($invited_freelancers->user->user_basic->profile_picture)? $invited_freelancers->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                 </div>
                                                 <div class="col-md-8">
                                                     <h4 class="pname-c">
 
                                                        {{$invited_freelancers->user->first_name}} {{ $invited_freelancers->user->last_name }}
                                                      </h4>
-                                                       <p class="pdesination-c"> Full Stack Developer</p>
+                                                      
                                                       <p class="pdesination-c">{{isset($invited_freelancers->user->user_basic) ?$invited_freelancers->user->user_basic->designation:null}}</p>
                                                        
                                                         <p class="plocation"> {{$invited_freelancers->user->country->name}}</p>
@@ -224,7 +223,7 @@
                                         <div class="row skills-c">
                                             <div class="col-md-7">
                                                 
-                                                <h2>Has relevant skills to your job</h2>
+                                                <h2>Has {{count($invited_freelancers->user->skills)}} relevant skills to your job</h2>
                                                 <ul class="skills-listing">
 
                                                 @foreach ($invited_freelancers->user->skills as $skill )

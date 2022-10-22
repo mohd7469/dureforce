@@ -5,8 +5,9 @@
              <h5 class="modal-title" id="exampleModalLabel">Edit Company Details</h5>
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+          
           <div class="modal-body">
-            <form action="{{ route('profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
+            <form action="{{ route('buyer.basic.profile.save.company') }}" method="POST" id="company_profile" enctype="multipart/form-data">
                 @csrf
                 <div class="container-fluid welcome-body" id="">
                    
@@ -25,7 +26,7 @@
                                     
                                 <div class="col-md-6">
                                     <label class="mt-4">Phone</label>
-                                    <input type="number" name="phone" value="{{ old('name', @$user->company->number) }}" value=""
+                                    <input type="number" name="phone" value="{{ old('number', @$user->company->number) }}"
                                         placeholder="3948203"  />
                                 </div>
 
@@ -111,12 +112,7 @@
                                             value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
                                             />
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="mt-4">Facebook URL  </label>
-                                        <input type="text" id="facebook-website" name="facebook_url"
-                                            value="{{ old('name', @$user->company->facebook_url) }}" placeholder=""
-                                            />
-                                    </div>
+                                   
                                 </div>
 
                             </div>

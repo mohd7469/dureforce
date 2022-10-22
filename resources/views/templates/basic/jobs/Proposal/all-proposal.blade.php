@@ -72,7 +72,7 @@
                                             <div class="col-md-3">
                                                 <div class="row borderleftc">
                                                     <div class="col-md-4">
-                                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive">
+                                                        <img alt="User Pic" src="{{ !empty($proposal->user->user_basic->profile_picture)? $proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
                                                     <div class="col-md-8">
@@ -230,7 +230,7 @@
                                                 <div class="col-md-3">
                                                     <div class="row borderleftc">
                                                         <div class="col-md-4">
-                                                            <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive">
+                                                             <img alt="User Pic" src="{{ !empty($short_listed_proposal->user->user_basic->profile_picture)? $short_listed_proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                         </div>
 
                                                         <div class="col-md-8">

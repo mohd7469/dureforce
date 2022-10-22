@@ -39,7 +39,7 @@ class ProfileController extends Controller
      */
     public function saveExperience(Request $request)
     {
-        //dd($request->experiences);
+
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -48,7 +48,7 @@ class ProfileController extends Controller
             'experiences.*.company_name'=> 'required',
             'experiences.*.country_id'  => 'required',
             'experiences.*.start_date'  => 'required|before:today',
-            'experiences.*.end_date'    => 'after_or_equal:experiences.*.start_date',
+            'experiences.*.end_date'    => 'after_or_equal:experiences.*.start_date|before:today',
         ]);
         
         if ($validator->fails())
@@ -427,6 +427,8 @@ class ProfileController extends Controller
             'skills.*' =>'exists:skills,id',
             'project_url' => 'nullable',
             'description' => 'nullable',
+            'video_url'   => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'project_url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"]
         ];
 
         $validator = Validator::make($request_data, $rules);

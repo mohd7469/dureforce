@@ -61,7 +61,7 @@
 <script language="javascript" type="text/javascript">
     function submiSecurityForm() {
        $.ajax({
-        url: "{{ route('profile.password.change') }}",
+        url: "{{ route('buyer.basic.profile.password.change') }}",
         type: 'post',
         dataType: 'json',
         data: $('#securityFrom').serialize(),

@@ -58,54 +58,38 @@
                     <!-- Sidebar -->
                     <div class="side-nav col-12 col-md-4" id="sidebar">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="tab" class="{{ request()->get('view') === 'step-1' ? 'active' : '' }}">
+                            <li role="tab" class="{{ request()->get('profile') === 'step-1' ? 'active' : '' }}">
                                 <span
                                     class=''>1</span>
                                 <a data-toggle="tab" href="#profile">
                                     Basic
                                 </a>
                             </li>
-                            @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
-                                <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                    <span
-                                        class="">2</span>
-                                    <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
-                                        Experience
-                                    </a>
-                                </li>
-                                <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                    <span
-                                        class="">3</span>
-                                    <a data-toggle="tab" href="#profile3" class="" id="education_tab">
-                                        Education
-                                    </a>
-                                </li>
-                                <li role="tab" class="{{ request()->get('view') === 'step-4' ? 'active' : '' }}">
-                                    <span
-                                        class="">4</span>
-                                    <a data-toggle="tab" href="#profile4" class="" id="skills_tab" >
-                                        Skills & Rate
-                                    </a>
-                                </li>
-                            @else
+                            
 
-                                <li role="tab" class=" {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
+                                <li role="tab" class=" {{ request()->get('profile') === 'step-2' ? 'active' : '' }}">
                                     <span
                                         class="">2</span>
                                     <a data-toggle="tab" href="#profile2" class="" id="basics_nex_tab">
                                         Company
                                     </a>
                                 </li>
-                                <li role="tab" class="{{ request()->get('view') === 'step-3' ? 'active' : '' }}">
+                                <li role="tab" class="{{ request()->get('profile') === 'step-3' ? 'active' : '' }}">
                                     <span
                                         class="">3</span>
                                     <a data-toggle="tab" href="#profile3" class="" id="payment_tab">
-                                        Payment Methods
+                                        Payment Methods 
                                     </a>
                                 </li>
 
-                            @endif
-                            
+
+                                <li role="tab" class="{{ request()->get('profile') === 'step-5' ? 'active' : '' }}">
+                                    <span
+                                        class="">3</span>
+                                    <a data-toggle="tab" href="#profile5" class="" id="payment_tab_1">
+                                        Password & Security
+                                    </a>
+                                </li>
                            
                         </ul>
                     </div>
@@ -116,53 +100,33 @@
                         <div class="tab-content " id="content-div">
                             @csrf
                             
-                            <div id="profile" role="tabpanel"
-                                class="tab-pane {{ request()->get('view') === 'step-1' ? 'active' : '' }}">
-                                @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
+                            <div id="profile" role="tabpanel" class="tab-pane {{ request()->get('profile') === 'step-1' ? 'active' : '' }}">
+                                @if (in_array(\App\Models\Role::$FreelancerName,auth()->user()->getRoleNames()->toArray()))
 
-                                   @include($activeTemplate . 'profile.partials.user_profile')
+                                   @include($activeTemplate . 'profile.partials.view_client_basic')
                                 @else
-                                    @include($activeTemplate . 'profile.partials.client_basic')
+                                    @include($activeTemplate . 'profile.partials.view_client_basic')
                                 @endif
                             </div>
                            
-                            @if (App\Models\Role::$Freelancer == getLastLoginRoleId())
-
-                                <div id="profile2" role="tabpanel"
-                                    class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'profile.partials.user_exp')
+                            <div id="profile2" role="tabpanel" class="tab-pane {{ request()->get('profile') === 'step-2' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'profile.partials.company')
                                 </div>
                                 <div id="profile3" role="tabpanel"
 
-                                    class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'profile.partials.user_education')
-
-                                </div>
-                                <div id="profile4" role="tabpanel"
-                                    class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'profile.partials.user_skills')
-                                </div>
-                            @else
-
-                                <div id="profile2" role="tabpanel"
-                                    class="tab-pane {{ request()->get('view') === 'step-2' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'project_profile.partials.company')
-                                </div>
-                                <div id="profile3" role="tabpanel"
-
-                                    class="tab-pane {{ request()->get('view') === 'step-3' ? 'active' : '' }}">
-                                    @include($activeTemplate . 'project_profile.partials.payment_methods_index')
+                                    class="tab-pane {{ request()->get('profile') === 'step-3' ? 'active' : '' }}">
+                                    @include($activeTemplate . 'profile.partials.payment_methods_index')
 
                                 </div>
 
-                                <div id="profile4" role="tabpanel"
-
-                                    class="tab-pane {{ request()->get('view') === 'step-4' ? 'active' : '' }}">
+                                <div id="profile4" role="tabpanel" class="tab-pane {{ request()->get('profile') === 'step-4' ? 'active' : '' }}">
                                     @include($activeTemplate . 'project_profile.partials.payment_methods_store')
 
                                 </div>
-
-                            @endif
+                                <div id="profile5" role="tabpanel"
+                                class="tab-pane {{ request()->get('profile') === 'step-5' ? 'active' : '' }}">
+                                @include($activeTemplate . 'profile.partials.password_security')
+                            </div>
                            
                         </div>
                     </div>
@@ -199,6 +163,7 @@
         var educationTab=$('#education_tab');
         var skillsTab=$('#skills_tab');
         var paymentTab=$('#payment_tab');
+        var paymentTab1=$('#payment_tab_1');
 
         var skillRow = $("#skill-row");
         var experienceRow = $('#experiance-container');
@@ -222,17 +187,15 @@
         var user_company_form=$('#company_profile');
         var user_payment_methods_form=$('#payment_methods');
         var token= $('input[name=_token]').val();
-        var rate_per_hour=$('#freelancer_hourly_rate'); 
-        var  system_fee=$('#system_fee');
-        let  selectedLevels = [];
+        
+        let selectedLevels = [];
         var _languages = [];
         let _languages_levels = [];
         let _countries = [];
         let _degress = [];
 
 
-        
-     
+
 
         $('document').ready(function() {
             
@@ -242,11 +205,6 @@
                 tags: true
             });
             
-            
-            
-
-           
-
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -288,8 +246,6 @@
 
             });
 
-          
-
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
                 imgInp.addClass('imgInp-after');
@@ -311,18 +267,8 @@
                 var country_id = $(this).val();
                 getCountryCities(country_id);
             });
-
-            rate_per_hour.on('focusout', function(){
-
-                var fee=rate_per_hour.val()*0.20;
-                system_fee.html('$'+financial(fee));
-
-            });
-
         });
-        function financial(x) {
-            return Number.parseFloat(x).toFixed(2);
-        }
+
         function getCountryCities(country_id)
         {
             $.ajax({
@@ -523,33 +469,26 @@
                                                 <label class="mt-4">Education <span class="imp">*</span></label>
                                                 <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
                                             </div>
+                                            <div class="col-md-12">
 
-                                            <div class="row">
-                                                
-                                                <div class="col-sm-12 col-md-6 col-lg-6">
-
-                                                    <label class="mt-4">Degree <span class="imp">*</span></label>
-                                                    <select type="text" class="form-control" name="educations[`+edu_row_index+`][degree_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
-                                                    <option value=""  selected="">
-                                                    Select Degree
-                                                        </option>
-                                                            ${_degress?.map((degree) => {
-                                                            return ` <option value="${degree.id}"> ${degree.title}</option>`
-                                                            })}
-                                                    </select>
-                                                </div>
-                                                
-                                                <div class="col-sm-12 col-md-6 col-lg-6">
-
-                                                    <label class="mt-4">Field Of Study <span class="imp">*</span></label>
-                                                    <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
-                                                </div>
-
+                                                <label class="mt-4">Degree <span class="imp">*</span></label>
+                                                <select type="text" class="form-control" name="educations[`+edu_row_index+`][degree_id]" placeholder="City, Country" id="experiences.`+exp_row_index+`.country_id"/>
+                                                 <option value=""  selected="">
+                                                   Select Degree
+                                                    </option>
+                                                        ${_degress?.map((degree) => {
+                                                         return ` <option value="${degree.id}"> ${degree.title}</option>`
+                                                        })}
+                                                </select>
                                             </div>
+                                            <div class="col-md-12">
 
-                                            <div class="col-md-12 col-sm-12 ">
-                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-educatin-`+edu_row_index+`'))"
-                                                 type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
+                                                <label class="mt-4">Field Of Study <span class="imp">*</span></label>
+                                                <input type="text" name="educations[`+edu_row_index+`][field_of_study]" placeholder="Visual Arts" />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input class="form-check-input check current-working-check" onclick="checkDate($(this), $('.end-date-job-0'))"
+                        type="checkbox" name="educations[`+edu_row_index+`][is_enrolled]" /> I’m currently enroll here
 
                                                 
                                             </div>
@@ -560,12 +499,12 @@
                                                 <div class="col-md-6">
 
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-job-educatin-`+edu_row_index+`'))" >
+                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
                                                     
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                    <input type="date" class="end-date-job-educatin-`+edu_row_index+`" name="educations[`+edu_row_index+`][end_date]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" >
                                                 </div>
                                                 
                                             </div>
@@ -631,7 +570,6 @@
             $('input,select,textarea').removeClass('error-field');
             $('.select2').next().removeClass("error-field");
             // $('#profile','profile2','#profile3','#profile4').removeClass('active');
-            
             nextTab.click();
             scrollTop();
 
@@ -656,7 +594,7 @@
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('seller.profile.skills.save') }}",
+                url: "{{ route('buyer.basic.skills.save') }}",
                 method: "POST",
                 data:user_skills_form.serialize(),
                 type:'json',
@@ -691,7 +629,7 @@
             console.log(form_data);
             $.ajax({
                   type:"POST",
-                  url:"{{route('user.profile.basics.save')}}",
+                  url:"{{route('buyer.basic.profile.save')}}",
                   data: form_data,
                   processData: false,
                 contentType: false,
@@ -699,7 +637,9 @@
 
                       if(response.success){
                         notify('success', response.success);
+                        $('#clientBasicModal').modal('hide');
                         formPostProcess(experienceTab);
+                        location.reload();
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);
@@ -719,7 +659,7 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('buyer.profile.save.payment.methods')}}",
+                  url:"{{route('buyer.basic.profile.save.payment.methods')}}",
                   data: form_data,
                   processData: false,
                   contentType: false,
@@ -752,15 +692,19 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('buyer.profile.save.company')}}",
+                  url:"{{route('buyer.basic.profile.save.company')}}",
                   data: form_data,
                   processData: false,
                 contentType: false,
                   success:function(response){
 
+
                       if(response.success){
                         notify('success', response.success);
                         formPostProcess(paymentTab);
+                        $('#companyModal').modal('hide');
+                        location.reload();
+                        
                       }
                       else if(response.validation_errors){
                         displayErrorMessage(response.validation_errors);
@@ -780,7 +724,7 @@
                 headers: {
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('seller.profile.experience.save') }}",
+                url: "{{ route('buyer.basic.profile.experience.save') }}",
                 method: "POST",
                 data:user_experience_form.serialize(),
                 type:'json',
@@ -813,7 +757,7 @@
                     
                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url: "{{ route('seller.profile.education.save') }}",
+                url: "{{ route('buyer.basic.education.save') }}",
                 method: "POST",
                 data:user_education_form.serialize(),
                 type:'json',

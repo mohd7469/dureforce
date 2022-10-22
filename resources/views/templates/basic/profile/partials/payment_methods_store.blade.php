@@ -1,12 +1,10 @@
 @php
 $userPayment = App\Models\UserPayment::find(request()->get('id'));
-$cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id)->get();
-
 @endphp
 
 <div class="setProfile" id="">
 
-    <form action="{{ route('buyer.profile.save.payment.methods') }}" method="POST" id="payment_methods">
+    <form action="{{ route('profile.save.payment.methods') }}" method="POST" id="payment_methods">
         @csrf
         <div class="container-fluid welcome-body">
             <input type="hidden" name="payment_id" value="{{ request()->get('id') }}">
@@ -50,12 +48,12 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                                         class="imp">*</span></label>
                                 <input type="date" name="expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder=""  />
+                                    placeholder="" required />
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
                                 <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder=""  />
+                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required />
                             </div>
                         </div>
                         
@@ -63,7 +61,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
                             <input type="text" name="name_on_card"
                                 value="{{ old('name_on_card', @$userPayment->name_on_card) }}" placeholder=""
-                                 />
+                                required />
                         </div>
 
                         <div class="col-md-12">
@@ -101,12 +99,6 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                                 id="payment_method_cities"
                                     >
                                     <option value="">Select City</option>
-
-                                    @foreach ($cities as $city)
-                                        <option value="{{$city->id}}"
-                                        {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
-                                        >{{$city->name}}</option>
-                                    @endforeach
                             </select>
                             
                         </div>
@@ -114,7 +106,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
                             <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
-                                />
+                                required/>
                         </div>
 
                         

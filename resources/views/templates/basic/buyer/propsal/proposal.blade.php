@@ -29,9 +29,8 @@
                                 {{-- seller Profile --}}
                                 <div class="row pt-2 pb-2 profile-border-bottom">
                                     {{-- Profile img --}}
-                                    <div class="col-sm-4 col-xs-4 col-md-3 col-lg-1 pl-5">
-                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive"> 
-
+                                    <div class="col-sm-4 col-xs-4 col-md-3 col-lg-1 pl-5"> 
+                                        <img alt="User Pic" src="{{ !empty($user->user_basic->profile_picture)? $user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                     </div>
                                     {{-- profile info --}}
                                     <div class="col-sm-8 col-xs-8 col-md-3 col-lg-2 pt-2 profile-border-right">

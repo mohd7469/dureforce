@@ -164,9 +164,14 @@
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20 cstm-btn" style="display: inline">
-                                                    <a href="{{route('seller.proposal.create',$job->uuid)}}"   class="standard-btn mr-15">Submit Proposal</a>
-                                                    <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Save Job')</a>
-
+                                                    <a href="{{route('seller.proposal.create',$job->uuid)}}" style="font-size: 12px;"  class="standard-btn mr-15">Submit Proposal</a>
+                                                    <?php
+                                                    if (in_array($job->id,$user_saved_jobs)){
+                                                    ?>
+                                                    <a href="{{route('seller.jobs.remove.saved.single.view.listing',$job->id)}}" style="font-size: 15px;" class="standard-btn-1">@lang('Remove Job')</a>
+                                                    <?php } else{ ?>
+                                                    <a href="{{route('seller.jobs.save.single.view.listing',$job->id)}}"  class="standard-btn-1">@lang('Save Job')</a>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,11 +181,10 @@
                                                    <h5 class="hheading-c">About the client</h5>
                                                
                                                 <div class="col-12">
-                         
                                         <div class="card-block">
                                         <ul class="row">
                                         <div class="col-md-3 col-sm-3 profile-img">
-                                        <img class="btn-md " src="{{ !empty($user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $user->image, 'profile_image'): getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
+                                        <img class="btn-md " src="{{ !empty($job->user->basicProfile->profile_picture)? $job->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="" style="border-radius:50%; width: 55px;height: 55px">
                                         
                                         </div>
                                         <div class="col-md-9 col-sm-19 text-center">

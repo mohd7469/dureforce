@@ -77,7 +77,7 @@
                                                         <div class="col-md-1 col-lg-1" >
                                                             <?php
                                                             if(in_array($job->id, $user_saved_jobs_ids)){ ?>
-                                                                <a href="#" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                                <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
 
                                                                 <?php } else { ?>
                                                                     <a href="{{route('seller.jobs.save.listing',$job->id)}}" ><i class="far fa-heart" style="color: #7F007F; "></i></a>
@@ -135,7 +135,7 @@
                                                             {{--                                                            </a>--}}
                                                         </div>
                                                         <div class="col-md-1 col-lg-1" >
-                                                            <a href="#" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                            <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
                                                             </a>
                                                         </div>
 

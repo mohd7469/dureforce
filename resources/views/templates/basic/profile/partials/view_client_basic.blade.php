@@ -68,7 +68,27 @@
                       <div class="cp-info-container">
                          <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
-                            <p class="cp-jt">Boston, Massachusetts{{$basicProfile->location }}</p>
+                            <p class="cp-jt">
+
+                                @foreach ($countries as $country)
+                                @if($country->id == auth()->user()->country_id)
+                                    {{$country->name}}
+                                @endif
+                                @endforeach
+
+                                
+                              
+                            </p>
+                         </div>
+                         <div class="cp-info-box">
+                            <p class="cp--jbh">City</p>
+                            <p class="cp-jt">
+                                @foreach ($cities as $city)
+                                @if($city->id == $basicProfile->city_id)
+                                    {{$city->name}}
+                                @endif
+                                @endforeach
+                            </p>
                          </div>
         
                          <div class="cp-info-box">
@@ -77,28 +97,30 @@
                          </div>
         
         
-                         <div class="cp-info-box">
-                            <p class="cp--jbh">Email</p>
-                            <p class="cp-jt">{{ auth()->user()->email }}</p>
-                         </div>
+                        
         
                       </div>
 
 
                       <div class="cp-info-container">
                         <div class="cp-info-box">
+                            <p class="cp--jbh">Email</p>
+                            <p class="cp-jt">{{ auth()->user()->email }}</p>
+                         </div>
+
+                        <div class="cp-info-box">
                            <p class="cp--jbh">Language</p>
-                           {{-- @foreach ($user_languages_ as $language )
+                           @foreach ($user_languages_ as $language )
                               <p class="cp-jt">{{$language->iso_language_name }}</p>
-                           @endforeach --}}
+                           @endforeach
                            
                         </div>
        
                         <div class="cp-info-box">
                            <p class="cp--jbh">Proficiency Level</p>
-                           {{-- @foreach ($user_languages_level_ as $level )
+                           @foreach ($user_languages_level_ as $level )
                            <p class="cp-jt">{{$level->name }}</p>
-                            @endforeach --}}
+                            @endforeach
                         </div>
        
        
@@ -134,6 +156,15 @@
         position: relative;
         width: 100px;
         border-radius: 50%;
+    }
+    .modal-header button.btn-close {
+    background: url(/assets/images/job/x.png) !important;
+    height: 40px !important;
+    width: 32px !important;
+    background-repeat: no-repeat !important;
+    background-size: 27px !important;
+    position: relative;
+    background: red;
     }
     .upload-c {
     position: absolute;
