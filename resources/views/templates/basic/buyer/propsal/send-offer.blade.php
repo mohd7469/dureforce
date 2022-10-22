@@ -10,7 +10,7 @@
     <div class="">
         <div class="card-body p-0 d-flex align-items-center">
             <div class="image-div">
-                <img class="card-img-top image-ui" src="{{ getImage('assets/images/default.png') }}" alt="" alt="Card image cap">
+                <img class="card-img-top image-ui" src="{{ !empty($offer_letter->user->basicProfile->profile_picture)? $offer_letter->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                 <span class="logged-in">●</span>
 
               </div>
