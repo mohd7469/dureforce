@@ -595,7 +595,7 @@
                 });
              
                 $('.preview_portfolio').click(function(){
-                    $('.portfolio_title').html($('#project_name').val());
+                    $('#portfolio_title').html($('#project_name').val());
                     $('#portfolio_completion_date').html($('#project_completion_date').val());
                     $('#video_url_id').val();
                     var skills=$('#skills').select2('data');

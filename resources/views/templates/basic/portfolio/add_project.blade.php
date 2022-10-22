@@ -3,11 +3,10 @@
           
                 <div class="row">
           
-            
                     <div class="col-md-6">
                         <p class="title-c">Add portfolio project</p>
                         <label for="exampleInputEmail1">Project Title</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter a brief title of portfolio" name="name">
+                        <input type="text" class="form-control" id="project_name" aria-describedby="emailHelp" placeholder="Enter a brief title of portfolio" name="name">
                     </div>
                 
                 </div>

@@ -5,7 +5,7 @@
                 Preview
         </p>
     </div>
-    
+
     <section class="">
 
         <div class="card-body pt-0 border-bottom" >
@@ -20,7 +20,7 @@
 
                     {{-- title --}}
                     <span>
-                            <span id="portfolio_title" class="portfolio_title"></span>
+                            <span id="portfolio_title" ></span>
                             <a href="#" class="editbtn-d add_project">
                                 <img src="/assets/images/job/edit-icon.png">
                             </a>

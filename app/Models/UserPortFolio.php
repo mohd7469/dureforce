@@ -10,6 +10,10 @@ class UserPortFolio extends Model
     protected $table="user_portfolios";
 
     protected $fillable = [
+        'user_id',
+        'description',
+        'project_url',
+        'video_url',
         'name',
         'completion_date'
        

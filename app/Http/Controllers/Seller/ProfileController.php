@@ -171,6 +171,7 @@ class ProfileController extends Controller
         $userskills=$user->skills;
         $user_experience = $user->experiences;
         $user_education  = $user->education;
+        $user_portfolios = $user->portfolios; 
         $countries = Country::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
@@ -179,7 +180,7 @@ class ProfileController extends Controller
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
         $degrees = Degree::select('id', 'title')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees'));
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios'));
     }
     
     /**
@@ -367,12 +368,14 @@ class ProfileController extends Controller
     {
         DB::beginTransaction();
         try {
-            
+            $request_data = [];
+            parse_str($request->data, $request_data);
+            $request_data['user_id'] = auth()->user()->id;
             $portfolio=UserPortFolio::create(
-                $request->all()
+                $request_data
             );
 
-            $portfolio->skills()->attach($request->skills);
+            $portfolio->skills()->attach($request_data['skills']);
 
             if ($request->hasFile('file')) {
                 $path = imagePath()['attachments']['path'];
@@ -405,7 +408,13 @@ class ProfileController extends Controller
 
         }
     }
-
+    
+    /**
+     * validateUserPortfolio
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function validateUserPortfolio(Request $request)
     {
         $request_data = [];
