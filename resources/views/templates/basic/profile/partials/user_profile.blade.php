@@ -17,8 +17,9 @@
                <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                   class="imgInp" onchange="previewFile(this)"
                   title="" />
-               <image width="100" height="100" id="preview-img"
-                  src="{{ getImage('assets/images/default.png') }}" />
+               <!-- <image width="100" height="100" id="preview-img"
+                  src="{{ getImage('assets/images/default.png') }}" /> -->
+                <img class="card-img-top image-ui" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
             </div>
             <div class="row">
                <div
