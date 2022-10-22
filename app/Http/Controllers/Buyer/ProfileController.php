@@ -386,7 +386,7 @@ class ProfileController extends Controller
     
         $rules = [
             'card_number'     => 'required',
-            'expiration_date' => 'required|date',
+            'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
@@ -565,9 +565,11 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            // 'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|string|min:4|max:15'
-           
+             'vat' => 'required|string|min:4|max:15',
+             'url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+        
 
           
 
