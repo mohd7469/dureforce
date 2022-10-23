@@ -186,6 +186,8 @@
         var user_skills_form=$('#skills_save_form');
         var user_company_form=$('#company_profile');
         var user_payment_methods_form=$('#payment_methods');
+        
+        var user_payment_methods_form_=$('#payment_methods_');
         var token= $('input[name=_token]').val();
         
         let selectedLevels = [];
@@ -239,12 +241,19 @@
         
 
             user_payment_methods_form.submit(function (e) {
-
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserPaymentMethod();
 
             });
+            user_payment_methods_form_.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                editUserPaymentMethod();
+
+            });
+            
 
             if (previewImg.length > 0) {
                 previewImg.siblings('p').hide();
@@ -655,9 +664,40 @@
 
         function saveUserPaymentMethod()
         {
-            let form_data = new FormData(user_payment_methods_form[0]);
+             let form_data = new FormData(user_payment_methods_form[0]);
            
             $.ajax({
+                
+                  type:"POST",
+                  url:"{{route('buyer.basic.profile.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                        formPostProcess(paymentTab);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+        function editUserPaymentMethod()
+        {
+            let form_data = new FormData(user_payment_methods_form_[0]);
+            $.ajax({
+                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
                   type:"POST",
                   url:"{{route('buyer.basic.profile.save.payment.methods')}}",
                   data: form_data,

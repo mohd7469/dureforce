@@ -1,4 +1,4 @@
-<div id="carouselExampleControls" class="carousel" data-bs-ride="carousel">
+<div id="carouselUserProfile" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
     @foreach($sellers as $seller)
         <div class="carousel-item ">

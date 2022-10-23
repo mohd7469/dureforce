@@ -8,7 +8,7 @@
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods" enctype="multipart/form-data">
+            <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods_" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="container-fluid welcome-body" id="">
@@ -22,12 +22,12 @@
                                 <input type="hidden" name="update_payment_id" id="payment_id" value="">
                                 <div class="col-md-12">
                                     <label class="mt-4">Cardholder’s Name *  </label>
-                                    <input type="text" name="name_on_card" id="name_on_card" value=""
+                                    <input type="text" name="name_on_card" id="name_on_card" value="name_on_card"
                                         placeholder="Tidal Wave Inc." >
                                 </div>
                                 <div class="col-md-12">
                                     <label class="mt-4">Card Number *  </label>
-                                    <input type="text" name="card_number" id="card_number"
+                                    <input type="text" name="card_number" id="card_number" value="card_number"
                                         placeholder="Tidal Wave Inc."  value="" placeholder=""
                                         >
                                 </div>
