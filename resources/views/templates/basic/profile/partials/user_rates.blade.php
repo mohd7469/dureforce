@@ -12,7 +12,7 @@
                             time you submit a proposal.</p>
                         <hr>
                         <label class="mt-4">Hourly Rate <span class="imp">*</span></label>
-                        <input type="number" name="rates" class="field-rate col-md-6" placeholder="$" min="0" id="rate"
+                        <input type="number" step="any" name="rates" class="field-rate col-md-6" placeholder="$" min="0" id="rate"
                             value="{{ old('rates', @$user->rate->rates) }}" id="">
                         <div class="mt-4">
                             <h4>DureForce Service Fee</h4>

@@ -1190,7 +1190,7 @@
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Company Phone*  </label>
-                            <input type="number" name="phone" value="" placeholder="">
+                            <input type="number" name="phone"  step="any" value="" placeholder="">
                         </div>
                         <div class="col-md-12">
                             <label class="mt-4">Company Email Address* </label>

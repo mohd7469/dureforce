@@ -19,13 +19,13 @@ if (!empty($service)) {
 
                 <div class="col-lg-4 form-group">
                     <label>@lang('Per Hour Rate')*</label>
-                    <input type="number"  class="form-control" name="price"  id="price"  step=".01"
+                    <input type="number" step="any"  class="form-control" name="price"  id="price"  step=".01"
                         value="{{ old('price',  floatval(@$service->price) ?: "Enter Price") }}" placeholder="@lang('Enter Eg. $50')"
                        min="0" >
                 </div>
                 <div class="col-lg-4 form-group">
                     <label>@lang('Estimated Delivery Time')*</label>
-                    <input type="number" name="delivery_time" class="form-control mt-1" id="delivery"
+                    <input type="number" name="delivery_time" step="any" class="form-control mt-1" id="delivery"
                         value="{{ old('delivery_time', @$service->delivery_time) }}"
                         placeholder="@lang('Enter Hours')"
                            min="0"
@@ -77,14 +77,14 @@ Deployment ">
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang('Per Hour Rate')</label>
-                                <input type="number" class="form-control add_on_price"   name="add_on_price[]"
+                                <input type="number" class="form-control add_on_price" step="any"  name="add_on_price[]"
                                     placeholder="@lang('Per hour rate')" id="add_on_price" step=".01" >
 
 
                             </div>
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang(' Estimated Delivery Time ')</label>
-                                    <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+                                    <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
                                         placeholder="@lang('Enter Hours')" >
                             </div>
                         </div>

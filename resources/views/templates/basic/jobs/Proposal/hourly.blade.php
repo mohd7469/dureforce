@@ -53,7 +53,7 @@
                      <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
                      <small id="milestones_amount_receive" class="form-text text-muted">Total amount the client will see on your proposal</small>
                      <div class="input-group">
-                        <input type="number" name="hourly_bid_rate" class="form-control" id="hourly_bid_rate"  min="1">
+                        <input type="number" name="hourly_bid_rate" class="form-control" step="any" id="hourly_bid_rate"  min="1">
                         <span class="input-group-text float-end">$</span>
                      </div>
                   </div>
@@ -76,7 +76,7 @@
                   <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                   <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                   <div class="input-group">
-                     <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" readonly>
+                     <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly>
                      <span class="input-group-text float-end">$</span>
                   </div>
                   
@@ -95,13 +95,13 @@
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                            <small  class="form-text text-dark">Min. Hours Per Week</small>
-                           <input type="integer" class="form-control" id="start_hour_limit" name="start_hour_limit">
+                           <input type="integer" class="form-control" step="any" id="start_hour_limit" name="start_hour_limit">
 
                         </div>
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                            <small  class="form-text text-dark">Max. Hours Per Week</small>
-                           <input type="integer" class="form-control" id="end_hour_limit" name="end_hour_limit">
+                           <input type="integer" step="any" class="form-control" id="end_hour_limit" name="end_hour_limit">
 
                         </div>
                      </div>

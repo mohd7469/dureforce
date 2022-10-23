@@ -143,7 +143,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range {{$job->budget_type_id == \App\Models\BudgetType::$hourly ? '' : 'hide'}}"  >
                                                 
                                                 <label>@lang('Weekly Range(Starting)')*</label>
-                                                <input type="number" class="form-control" name="hourly_start_range" value="{{$job->hourly_start_range}}" placeholder="" >
+                                                <input type="number" class="form-control" name="hourly_start_range" value="{{$job->hourly_start_range}}" step="any" placeholder="" >
 
                                             </div>
 
@@ -152,7 +152,7 @@
                                                 
                                                 <label>@lang('Weekly Range(Ending)')*</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="hourly_end_range" value="{{$job->hourly_end_range}}" placeholder="" >
+                                                    <input type="number" step="any" class="form-control" name="hourly_end_range" value="{{$job->hourly_end_range}}" placeholder="" >
                                                 </div>
 
                                             </div>
@@ -163,7 +163,7 @@
 
                                                 <label>@lang('Budget Amount')*</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="fixed_amount" value="{{$job->fixed_amount}}" placeholder="" >
+                                                    <input type="number" class="form-control" name="fixed_amount" value="{{$job->fixed_amount}}" step="any" placeholder="" >
                                                 </div>
 
                                             </div>

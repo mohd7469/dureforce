@@ -387,6 +387,7 @@
                                                 name="phone_number"
                                                 placeholder=""
                                                 id="phone"
+                                                step="any"
                                                 value ="{{$basicProfile->phone_number}}"
                                             />
                                     </div>
