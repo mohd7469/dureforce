@@ -432,9 +432,9 @@ class ProfileController extends Controller
                     $userPayment->expiration_date = $request->expiration_date;
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
-                     $userPayment->country_id = $request->country_id;
-                     $userPayment->city_id = $request->city_id;
-                     $userPayment->address = $request->address;
+                    $userPayment->country_id = $request->country_id;
+                    $userPayment->city_id = $request->city_id;
+                    $userPayment->address = $request->address;
                     $userPayment->user_id = auth()->id();
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
