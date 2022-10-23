@@ -391,6 +391,7 @@ class ProfileController extends Controller
  
     public function buyersavePaymentMethod(Request $request)
     {
+
     
         $rules = [
             'card_number'     => 'required|numeric|digits_between:13,19',
@@ -425,7 +426,6 @@ class ProfileController extends Controller
 
                 DB::beginTransaction();
                 if($request->update_payment_id){
-
                     $userPayment = UserPayment::find($request->update_payment_id);
 
                     $userPayment->card_number = $request->card_number;
@@ -443,10 +443,12 @@ class ProfileController extends Controller
                     
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
+
                     
                     // return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-3'])]);
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-1'])]);
 
-                    return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-3'])->withNotify($notify);
+                    // return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-1'])->withNotify($notify);
 
 
                 }

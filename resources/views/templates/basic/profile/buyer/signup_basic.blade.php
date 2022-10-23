@@ -704,10 +704,10 @@
                   processData: false,
                   contentType: false,
                   success:function(response){
-
+                      console.log(response)
                       if(response.success){
                         notify('success', response.success);
-                        formPostProcess(paymentTab);
+                        // formPostProcess(paymentTab);
                           if(response.redirect_url)
                           {
                               window.location.replace(response.redirect_url);
