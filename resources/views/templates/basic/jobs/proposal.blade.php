@@ -222,13 +222,13 @@
                                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                                                    <small id="emailHelp" class="form-text text-dark">Min. Hours Per Week</small>
-                                                   <input type="integer" class="form-control" id="min_hours" name="min_hours">
+                                                   <input type="integer" class="form-control" step="any" id="min_hours" name="min_hours">
 
                                                 </div>
                                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                                                    <small id="emailHelp" class="form-text text-dark">Max. Hours Per Week</small>
-                                                   <input type="integer" class="form-control" id="max_hours" name="max_hours">
+                                                   <input type="integer" step="any" class="form-control" id="max_hours" name="max_hours">
 
                                                 </div>
                                              </div>

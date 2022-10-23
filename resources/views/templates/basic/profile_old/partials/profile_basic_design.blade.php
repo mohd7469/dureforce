@@ -703,6 +703,7 @@
                                                         <input
                                                             type="number"
                                                             name="mobile"
+                                                            step="any"
                                                             placeholder=""
                                                             id="phone"
                                                             value=""
@@ -1500,6 +1501,7 @@
                                                                 <input
                                                                 type="number"
                                                                 name="rates"
+                                                                step="any"
                                                                 class="field-rate col-md-10"
                                                                 min="0"
                                                                 id="rate"
