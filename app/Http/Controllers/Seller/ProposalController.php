@@ -182,10 +182,10 @@ class ProposalController extends Controller
 
             $rules = [
                 'delivery_mode_id' => 'required|exists:delivery_modes,id',
-                'hourly_bid_rate' => 'required|integer|min:1',
+                'hourly_bid_rate' => 'required|numeric|min:1',
                 'amount_receive' => 'required',
-                'start_hour_limit' => 'required_with:end_hour_limit|integer|min:1',
-                'end_hour_limit' => 'required_with:start_hour_limit|integer|gt:start_hour_limit',
+                'start_hour_limit' => 'required_with:end_hour_limit|numeric|min:1',
+                'end_hour_limit' => 'required_with:start_hour_limit|numeric|gt:start_hour_limit',
                 'cover_letter' => 'string'
             ];
 
@@ -199,7 +199,7 @@ class ProposalController extends Controller
                     'milestones.*.start_date' => 'date|required|after_or_equal:now',
                     'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
                     'milestones.*.amount' => 'string|required',
-                    'total_project_price' => 'required|integer',
+                    'total_project_price' => 'required',
                     'amount_receive' => 'required',
                     'cover_letter' => 'string|min:20'
                 ];
@@ -209,7 +209,7 @@ class ProposalController extends Controller
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'project_end_date' => 'required|date|after_or_equal:project_start_date',
                     'project_start_date' => 'required|date|after_or_equal:now',
-                    'total_project_price' => 'required|integer',
+                    'total_project_price' => 'required',
                     'amount_receive' => 'required',
                     'cover_letter' => 'string|min:20'
 
