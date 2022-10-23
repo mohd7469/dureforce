@@ -296,14 +296,14 @@
                       @endif
                    </div>
                    {{-- add another language btn --}}
-                   {{-- <button
+                   <button
                       type="button"
                       class="my-2"
                       id="add-language"
                       onclick="addMoreLanguages()"
                       >
                    Add another
-                   </button> --}}
+                   </button>
                 </div>
                 {{-- <div class="">
                    <div class="col-md-12">

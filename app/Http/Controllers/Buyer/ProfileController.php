@@ -391,9 +391,10 @@ class ProfileController extends Controller
  
     public function buyersavePaymentMethod(Request $request)
     {
+
     
         $rules = [
-            'card_number'     => 'required',
+            'card_number'     => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
@@ -425,16 +426,15 @@ class ProfileController extends Controller
 
                 DB::beginTransaction();
                 if($request->update_payment_id){
-
                     $userPayment = UserPayment::find($request->update_payment_id);
 
                     $userPayment->card_number = $request->card_number;
                     $userPayment->expiration_date = $request->expiration_date;
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
-                     $userPayment->country_id = $request->country_id;
-                     $userPayment->city_id = $request->city_id;
-                     $userPayment->address = $request->address;
+                    $userPayment->country_id = $request->country_id;
+                    $userPayment->city_id = $request->city_id;
+                    $userPayment->address = $request->address;
                     $userPayment->user_id = auth()->id();
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
@@ -443,10 +443,12 @@ class ProfileController extends Controller
                     
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
+
                     
                     // return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-3'])]);
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-1'])]);
 
-                    return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-3'])->withNotify($notify);
+                    // return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-1'])->withNotify($notify);
 
 
                 }
