@@ -681,8 +681,8 @@
                             <div class="col-md-7">
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1"
-                                             class="img-circle img-responsive img-card">
+                                        <img alt="User Pic" src="" id="profile-image-invite"
+                                             class="img-circle img-responsive img-card" style="border-radius:50%; width: 85px;height: 85px">
                                     </div>
                                     <input type="hidden" class="" id="freelancerid" value="">
                                     <input type="hidden" class="" id="job" value="">
@@ -844,7 +844,7 @@
 @push('script')
     <script>
         function inviteJobModal(freelancer,job,user_basic,country) {
-
+            console.log(freelancer);
             inviteJobForm[0].reset();
             var route="{{route('buyer.job.save.invite.freelancer',':id')}}";
             route=route.replace(':id',job.id);
@@ -857,9 +857,12 @@
             $('#freelancer_last_name').html(freelancer.last_name);
             $('#freelancer_designation').html(user_basic.designation);
             $('#freelancer_location').html(country.name);
+            if(user_basic.profile_picture != null){
+                $("#profile-image-invite").attr('src',user_basic.profile_picture);
+            }else{
+                $("#profile-image-invite").attr('src','/assets/images/default.png');
+            }
             $('#inviteJobModal').modal('show');
-
-
         }
 
 

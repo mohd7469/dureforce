@@ -7,17 +7,16 @@
           </div>
           <div class="modal-body">
             {{-- {{ route('profile.basics.save') }} --}}
-             <form action="#" method="POST" id="form-basic-save" class="form-basic-save"
+             <form action="" method="POST" id="form-basic-save" class="form-basic-save"
                 enctype="multipart/form-data">
                 @csrf
                 <div>
-                   <label class="mt-4 hidepc">Profile Picture</label>
+                   <label class="mt-4">Profile Picture</label>
                    <div class="profile-img col-md-12" action="">
-                      <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
-                         class="imgInp" onchange="previewFile(this)"
-                         title=""/>
-                      <image width="100" height="100" id="preview-img"
-                         src="{{ getImage('assets/images/default.png') }}"/>
+                   <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
+                           class="imgInp" onchange="previewFile(this)"
+                           title=""/>
+                    <image class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                    </div>
                    <div class="row">
                       <div class="col-md-12 col-sm-12">
