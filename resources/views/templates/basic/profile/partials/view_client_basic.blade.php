@@ -296,9 +296,9 @@ button.btn.btn-primary.cstm-edit {
     background: #EDEDED;
     padding: 13px 23px;
 }
-.profile-img.col-md-12, .hidepc {
+/* .profile-img.col-md-12, .hidepc {
     display: none;
-}
+} */
 .modal-body input[type="text"] {
     background: #FFFFFF;
     border: 1px solid #CBDFDF;
