@@ -35,7 +35,7 @@
         
                        <div class="cp-profile_c_main">
                            <div class="h-img">
-                               <img class="card-img-top image-ui rounded-circle" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                               <img class="card-img-top image-ui rounded-c" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                                <span type="file" name="profile_picture" class="upload-c">Icon</span>
                            </div>
                            <div class="cp-profile-h">{{$basicProfile->designation}}</div>
@@ -157,6 +157,11 @@
         width: 100px;
         border-radius: 50%;
     }
+    img.rounded-c {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
     .modal-header button.btn-close {
     background: url(/assets/images/job/x.png) !important;
     height: 40px !important;

@@ -1,4 +1,9 @@
 <style>
+    img.rounded-c {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
     .img-box {
         margin-top: 4px;
         width: 100px;
@@ -133,7 +138,7 @@ z-index: 1;
         
       <div class="cp-profile_c_main">
         <div class="h-img">
-            <img class="cp-prfileimg rounded-circle" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+            <img class="cp-prfileimg rounded-c" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
             
             <span class="upload-c">Icon</span>
         </div>
