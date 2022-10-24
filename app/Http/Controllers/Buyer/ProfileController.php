@@ -206,7 +206,7 @@ class ProfileController extends Controller
     
     
         $rules = [
-            'card_number'     => 'required|numeric|digits_between:13,19',
+            'card_number'     => 'required',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
@@ -395,7 +395,7 @@ class ProfileController extends Controller
     
         $rules = [
             'card_number'     => 'required|numeric|digits_between:13,19',
-            'expiration_date' => 'required|date',
+            'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
@@ -571,6 +571,7 @@ class ProfileController extends Controller
     }
     public function buyersaveCompany(Request $request)
     {
+       
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
@@ -592,22 +593,15 @@ class ProfileController extends Controller
                 $user = User::findOrFail(auth()->id());
                 $filename = '';
 
-                if ($request->hasFile('company_logo') && $request->company_logo != 'undefined') {
+                if ($request->hasFile('company_logo')) {
 
-                    $path = imagePath()['attachments']['path'];
-                    $file = $request->company_logo;
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $user->company()->update(['logo' => $url]);
-
-                    // $location = imagePath()['profile']['user']['path'];
-                    // $size = imagePath()['profile']['user']['size'];
-                    // $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+                    $location = imagePath()['profile']['user']['path'];
+                    $size = imagePath()['profile']['user']['size'];
+                    $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
                 }
 
                 if(empty($filename)) {
-                    $url = $user->company->logo ?? '';
+                    $filename = $user->company->logo ?? '';
                 }
 
                 $user->company()->delete();
@@ -615,7 +609,7 @@ class ProfileController extends Controller
                 $user->company()->save(new UserCompany([
                     'name'         => $request->get('name'),
                     'number'        => $request->get('phone'),
-                    'logo'         => $url,
+                    'logo'         => $filename,
                     'email'        => $request->get('email'),
                     'country_id'     => $request->get('country_id'),
                     'vat'          => $request->get('vat'),
