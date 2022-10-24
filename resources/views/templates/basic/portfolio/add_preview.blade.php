@@ -16,10 +16,10 @@
                         
                         <p class="p-title">
                             Title
-                    </p>
+                         </p>
 
-                    {{-- title --}}
-                    <span>
+                        {{-- title --}}
+                        <span>
                             <span id="portfolio_title" ></span>
                             <a href="#" class="editbtn-d add_project">
                                 <img src="/assets/images/job/edit-icon.png">
@@ -45,15 +45,20 @@
                             
                             <div class="col-md-7">
                                 <label>Skills</label>
+                                
                                 <ul class="skills-listing" id="portfolio_skills">
                                 
 
                                 </ul>
-                                <a href="#" class="editbtn-d add_details">
-                                    <img src="/assets/images/job/edit-icon.png">
-                                </a>
+                                <span>
+                                    <a href="#" class="editbtn-d add_details">
+                                        <img src="/assets/images/job/edit-icon.png">
+                                    </a>
+                                </span>
+                                
         
                             </div>
+                            
                         </div>
 
                     </div>

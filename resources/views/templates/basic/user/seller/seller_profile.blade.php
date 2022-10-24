@@ -663,7 +663,7 @@
                                     
                                 </div>
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div>
                                         <label class="mt-2"
                                         >Education
@@ -682,7 +682,7 @@
                                         />
                                     </div>
                                     
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-12">
                                     <div class="row">

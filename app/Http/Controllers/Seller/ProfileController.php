@@ -279,7 +279,6 @@ class ProfileController extends Controller
         $validator = \Validator::make($request->all(), 
         [
             'school_name'   => 'required',
-            'education' => 'required',
             'field_of_study'=> 'required',
             'description'  => 'required',
             'degree_id'  => 'required',
