@@ -204,15 +204,14 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
     
-    
         $rules = [
-            'card_number'     => 'required',
+            'card_number'     => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code'        => 'required',
             'name_on_card'    => 'required',
-            // 'country_id'         => 'required|exists:world_countries,id',
-            // 'city_id'            => 'required|exists:world_cities,id',
-            // 'address'  => 'required',
+            'country_id'         => 'required|exists:world_countries,id',
+            'city_id'            => 'required|exists:world_cities,id',
+            'address'  => 'required',
         ];
 
         $messages =[
@@ -220,9 +219,9 @@ class ProfileController extends Controller
             'expiration_date.required' => 'Expiration Date is required',
             'cvv_code.required'        => 'CVV Code is required',
             'name_on_card.required'    => 'Name on Card is required',
-            // 'street_address.required'  => 'Street Address is required',
-            // 'country_id'               => 'Country is required',
-            // 'city_id'                  => 'City is required',
+            'street_address.required'  => 'Street Address is required',
+            'country_id'               => 'Country is required',
+            'city_id'                  => 'City is required',
 
         ];
 
@@ -239,6 +238,7 @@ class ProfileController extends Controller
                 DB::beginTransaction();
                 if($request->update_payment_id){
 
+
                     $userPayment = UserPayment::find($request->update_payment_id);
 
                     $userPayment->card_number = $request->card_number;
@@ -246,14 +246,18 @@ class ProfileController extends Controller
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
                     $userPayment->user_id = auth()->id();
+                    $userPayment->country_id = $request->country_id;
+                    $userPayment->city_id = $request->city_id;
+                    $userPayment->address = $request->address;
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
                     $userPayment->save();
                     DB::commit();
+               
              
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
                     
-                    return redirect()->route('buyer.basic.profile')->withNotify($notify);
+                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
 
 
                 }
@@ -263,9 +267,9 @@ class ProfileController extends Controller
                         'expiration_date'=>$request->expiration_date,
                         'cvv_code'=>$request->cvv_code,
                         'name_on_card'=>$request->name_on_card,
-                        // 'country_id'=>$request->country_id,
-                        // 'city_id'=>$request->city_id,
-                        // 'address'=>$request->address,
+                        'country_id'=>$request->country_id,
+                        'city_id'=>$request->city_id,
+                        'address'=>$request->address,
                         'user_id'=>auth()->id(),
                         'is_primary' => 1,
                         'is_active'  =>1
