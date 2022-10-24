@@ -152,16 +152,23 @@
                            class="col-md-6 col-sm-12"
                            >
                            <label class="mt-4"
-                              >Language
+                              >Language 
                            <span
                               class="imp"
-                              >*</span
-                              ></label
+                              >*
+                              
+                              </span
+                              
                               >
+                              <small>{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  ' (English language is mandatory) ' : '' }}</small>
+                              </label
+                              >
+
                            <select
                               name="languages[{{$key}}][language_id]"
                               class="form-control select-lang "
                               id="languages.{{$key}}.language_id"
+                              style="{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'pointer-events: none; ' : '' }}"
                               >
                               <option
                                  value=""
@@ -175,6 +182,7 @@
                                  <option
                                     value="{{$language->id}}"
                                     {{ $language->id== $user_language->language_id ? 'selected' :'' }}
+                                   
                                  >
                                  {{ $language->iso_language_name }}
                               </option>
@@ -240,20 +248,21 @@
                         class="col-md-6 col-sm-12"
                         >
                         <label class="mt-4"
-                           >Language
+                           >Language 
                         <span
                            class="imp"
-                           >*</span
-                           ></label
+                           >*</span>
+                           <small> (English language is mandatory)</small>
+                           </label
                            >
                         <select
                            name="languages[0][language_id]"
                            class="form-control select-lang "
                            id="languages.0.language_id"
+                          style="pointer-events: none;"
                            >
                            <option
-                              value=""
-                              selected=""
+                              
                               >
                               Spoken
                               Language(s)
@@ -262,7 +271,7 @@
                            @foreach ($languages as $language)
                            <option
                               value="{{$language->id}}"
-                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected' : '' }}
+                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected ' : '' }}
                            >
                               {{ $language->iso_language_name }}
                            </option>
