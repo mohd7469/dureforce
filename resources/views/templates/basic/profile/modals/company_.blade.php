@@ -18,6 +18,15 @@
 
                             <div id="">
                                 <div class="col-md-12">
+                                    <label class="mt-4">Company Logo </label>
+                                    <div class="profile-img">
+                                        <input type="file" name="company_logo" id="img-upload"
+                                            accept="image/png, image/gif, image/jpeg" class="imgInp"
+                                            onchange="previewCompanyFile(this)"/>
+                                            <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
                                     <label class="mt-4">Name *  </label>
                                     <input type="text" name="name" id="company-name" value="{{ old('name', @$user->company->name) }}"
                                         placeholder="Tidal Wave Inc." value="">
@@ -34,25 +43,6 @@
                                     <label class="mt-4">Email * </label>
                                     <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="{{ old('name', @$user->company->email) }}"placeholder="martincollins12@gmail.com" />
                                 </div>
-                                </div>
-                                <div class="col-md-12" style="display:none">
-
-
-                                    <label class="mt-4">Company Logo </label>
-                                    <div class="profile-img">
-                                        <input type="file" name="company_logo" id="img-upload"
-                                            accept="image/png, image/gif, image/jpeg" class="imgInp"
-                                            onchange="previewCompanyFile(this)"/>
-                                        <img width="100" height="100" id="preview-img-company"
-                                            src="{{ getImage('assets/images/default.png') }}" />
-                                        @if (!empty(@$user->company->logo))
-                                            <img class="img-box"
-                                                id="preview-img-company-edit"
-                                                src="{{ asset('assets/images/user/profile') . '/' . $user->company->logo }}"
-                                                alt="">
-                                        @endif
-                                    </div>
-                                
                                 </div>
                                  <div class="row">
                                 <div class="col-md-6">

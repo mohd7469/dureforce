@@ -571,7 +571,6 @@ class ProfileController extends Controller
     }
     public function buyersaveCompany(Request $request)
     {
-       
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
@@ -593,15 +592,22 @@ class ProfileController extends Controller
                 $user = User::findOrFail(auth()->id());
                 $filename = '';
 
-                if ($request->hasFile('company_logo')) {
+                if ($request->hasFile('company_logo') && $request->company_logo != 'undefined') {
 
-                    $location = imagePath()['profile']['user']['path'];
-                    $size = imagePath()['profile']['user']['size'];
-                    $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+                    $path = imagePath()['attachments']['path'];
+                    $file = $request->company_logo;
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $user->company()->update(['logo' => $url]);
+
+                    // $location = imagePath()['profile']['user']['path'];
+                    // $size = imagePath()['profile']['user']['size'];
+                    // $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
                 }
 
                 if(empty($filename)) {
-                    $filename = $user->company->logo ?? '';
+                    $url = $user->company->logo ?? '';
                 }
 
                 $user->company()->delete();
@@ -609,7 +615,7 @@ class ProfileController extends Controller
                 $user->company()->save(new UserCompany([
                     'name'         => $request->get('name'),
                     'number'        => $request->get('phone'),
-                    'logo'         => $filename,
+                    'logo'         => $url,
                     'email'        => $request->get('email'),
                     'country_id'     => $request->get('country_id'),
                     'vat'          => $request->get('vat'),
