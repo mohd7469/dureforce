@@ -90,7 +90,6 @@ class ProfileController extends Controller
         [
             'educations' => 'required|array',
             'educations.*.school_name'   => 'required',
-            'educations.*.education' => 'required',
             'educations.*.field_of_study'=> 'required',
             'educations.*.description'  => 'required',
             'educations.*.degree_id'  => 'required',
