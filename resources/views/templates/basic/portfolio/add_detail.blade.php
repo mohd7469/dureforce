@@ -126,7 +126,7 @@
 
                 <div id="outer" class="text-right">
                     <div class="inner">
-                        <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
+                        <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn back-to-add-project-btn">Back</button>
                     </div>
                     <div class="inner">
                         <button type="button" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn preview_portfolio" id="preview_btn">Go to preview</button>

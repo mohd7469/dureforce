@@ -90,7 +90,6 @@ class ProfileController extends Controller
         [
             'educations' => 'required|array',
             'educations.*.school_name'   => 'required',
-            'educations.*.education' => 'required',
             'educations.*.field_of_study'=> 'required',
             'educations.*.description'  => 'required',
             'educations.*.degree_id'  => 'required',
@@ -279,7 +278,6 @@ class ProfileController extends Controller
         $validator = \Validator::make($request->all(), 
         [
             'school_name'   => 'required',
-            'education' => 'required',
             'field_of_study'=> 'required',
             'description'  => 'required',
             'degree_id'  => 'required',
