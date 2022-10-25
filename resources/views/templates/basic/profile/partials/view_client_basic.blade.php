@@ -152,6 +152,7 @@
         </script>
 @endpush
 <style>
+    
     .h-img{
         position: relative;
         width: 100px;
