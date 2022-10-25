@@ -586,17 +586,17 @@ blockquote::after {
     font-weight: 700;
 }
 @media (min-width: 576px){
-    .modal-dialog {
+    .modal-dialog-profile {
         max-width: 600px;
         margin: 1.75rem auto;
     }
 } 
- .modal-body{
+ .modal-body-profile{
     max-height: calc(100vh - 200px);
     overflow-y: auto;
     padding-top: 16px !important;
 }
-.section-heading-border{
+.section-heading-border-profile{
     border-bottom: 1px solid #C4C4C4;
     margin-bottom: 5px;
     padding-bottom: 5px;
