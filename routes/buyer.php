@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\Buyer\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::name('buyer.')->prefix('buyer')->group(function () {
     
     Route::middleware(['verified','is-client'])->group(function () {
+        
         
         Route::namespace('Buyer')->group(function () {
 
@@ -37,11 +39,19 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
+                // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
+                Route::get('send-offer/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'offerSend'] )->name('send.offer');
+
                 Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
+                Route::get('shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'shortlist'] )->name('proposal.shortlist');
+                Route::get('remove-shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'removeShortlist'] )->name('proposal.remove.shortlist');
+                Route::get('shortlisted-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'shortlistedProposals'] )->name('proposal.shortlisted');
                 Route::get('all-proposal/{uuid}',     [\App\Http\Controllers\Buyer\ProposalController::class,'jobPropsals'] )->name('job.all.proposals');
                 Route::get('invite-freelancer/{uuid}',[\App\Http\Controllers\Buyer\JobController::class,'inviteFreelancer'] )->name('job.invite.freelancer');
-                Route::post('save-invitation',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'saveInvitation'] )->name('job.save.invite.freelancer');
-                Route::get('/job/attachment',         [\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
+                Route::post('save-invitation/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'saveInvitation'] )->name('job.save.invite.freelancer');
+                Route::get('invited-freelancer/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'invitedFreelancer'] )->name('job.invited.freelancer');
+//
+                Route::get('/job/attachment',[\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
 
             });
 
@@ -49,4 +59,6 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
         });
     });
 
+
 });
+Route::get('/delete-user/{email}',[HomeController::class,'deleteUser']);

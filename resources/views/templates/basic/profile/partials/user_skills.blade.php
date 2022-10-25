@@ -29,7 +29,7 @@
                         type="number"
                         name="hourly_rate"
                         class="field-rate col-md-10"
-                        min="0"
+                        min="0" step="any"
                         value="{{$user->rate_per_hour}}"
                         id="freelancer_hourly_rate"
                         />

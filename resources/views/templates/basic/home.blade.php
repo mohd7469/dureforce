@@ -354,10 +354,8 @@
                                         </svg>
                                     </figure>
                                     <article class="col-md-6 mt-h" >
-                                        <h1 class="heading"><strong>Cloud Products Freelancing Platform</strong></h1>
-                                        <p class="para ">Hire the best solution architects to upscale your
-                                            business.
-                                            <br> Boost your career to new heights. Find the best jobs.
+                                        <h1 class="heading"><strong>Talent, Skill, & Experience. <br> Freelancing Redefined.</strong></h1>
+                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified <br> freelancers.
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
@@ -502,7 +500,7 @@
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
-                <h2 class="heading">Browse Expert Developers Directory</h2>
+                <h2 class="heading">Explore Trending Dure Force Publications</h2>
             </article>
             @include($activeTemplate . 'home.publications')
         </div>

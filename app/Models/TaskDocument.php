@@ -18,5 +18,4 @@ class TaskDocument extends Model
         return $this->belongsToMany(Job::class, 'id');
     }
 
-
 }

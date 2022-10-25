@@ -131,7 +131,7 @@
                                                 <select name="budget_type_id" class="form-control budget" id="budget_type_id" >
                                                     <option selected="" disabled="">@lang('Select Budget Type')</option>
                                                         @foreach($data['budget_types'] as $item)
-                                                            <option value="{{__($item->id)}}">{{__($item->title)}}</option>
+                                                            <option value="{{__($item->id)}}" {{App\Models\BudgetType::$hourly==$item->id ? 'selected' :''}}>{{__($item->title)}}</option>
                                                         @endforeach
                                                 </select>
                                             </div>
@@ -140,7 +140,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
                                                 
                                                 <label>@lang('Weekly Range(Starting)')*</label>
-                                                <input type="number" class="form-control" name="hourly_start_range" value="" placeholder="" >
+                                                <input type="number" step="any" class="form-control" name="hourly_start_range" value="" placeholder="" >
 
                                             </div>
 
@@ -149,7 +149,7 @@
                                                 
                                                 <label>@lang('Weekly Range(Ending)')*</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="hourly_end_range" value="" placeholder="" >
+                                                    <input type="number" class="form-control" step="any" name="hourly_end_range" value="" placeholder="" >
                                                 </div>
 
                                             </div>
@@ -160,7 +160,7 @@
 
                                                 <label>@lang('Budget Amount')*</label>
                                                 <div class="input-group mb-3">
-                                                    <input type="number" class="form-control" name="fixed_amount" value="" placeholder="" >
+                                                    <input type="number" class="form-control" name="fixed_amount" step="any" value="" placeholder="" >
                                                 </div>
 
                                             </div>

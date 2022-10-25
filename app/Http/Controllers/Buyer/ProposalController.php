@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PropsalStoreRequest;
 use App\Models\BudgetType;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,6 +89,65 @@ class ProposalController extends Controller
         }
         
     }
+    public function shortlist($proposal_id)
+    {
+
+        try {
+            $proposal = Proposal::with('job')->find($proposal_id);
+            $proposal->is_shortlisted=true;
+            $proposal->save();
+            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+        } catch (\Throwable $th) {
+            return "Some technical error occur";
+        }
+
+    }
+    public function removeShortlist($proposal_id)
+    {
+
+        try {
+            $proposal = Proposal::with('job')->find($proposal_id);
+            $proposal->is_shortlisted=false;
+            $proposal->save();
+            return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
+        } catch (\Throwable $th) {
+            return "Some technical error occur";
+        }
+
+    }
+    public function shortlistedProposals($job_uuid)
+    {
+
+        try {
+            $job=Job::withAll()->where('uuid',$job_uuid)->first();
+            $proposals = $job->proposal->where('is_shortlisted',true);
+            $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
+
+            $pageTitle = "Job Proposals";
+            return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job','short_listed_proposals'));
+
+        } catch (\Throwable $th) {
+            return $th;
+            //  return "Some technical error occur";
+        }
+
+    }
+
+    // send offer
+    public function offerSend($job_uuid)
+    {
+
+        try {
+            $offer_letter = Proposal::withAll()->where('uuid',$job_uuid)->first();
+            $pageTitle = "Send Offer";
+            return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','offer_letter'));
+
+        } catch (\Throwable $th) {
+            return $th;
+            //  return "Some technical error occur";
+        }
+
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -124,11 +185,11 @@ class ProposalController extends Controller
     public function jobPropsals($job_uuid)
     {
 
-
-
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $proposals = $job->proposal;
+        $proposals = $job->proposal->where('is_shortlisted',false);
+        $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
+
         $pageTitle = "Job Proposals";
-        return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job'));
+        return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job','short_listed_proposals'));
     }
 }

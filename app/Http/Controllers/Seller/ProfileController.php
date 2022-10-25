@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attachment;
 use App\Models\Category;
+use App\Models\Degree;
 use App\Models\LanguageLevel;
 use App\Models\Skills;
 use App\Models\User;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Khsing\World\Models\City;
 use App\Models\UserEducation;
 use App\Models\UserExperiences;
+use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
 use Khsing\World\Models\Country;
 
@@ -36,7 +39,7 @@ class ProfileController extends Controller
      */
     public function saveExperience(Request $request)
     {
-        //dd($request->experiences);
+
         $validator = \Validator::make($request->all(), 
         [
             'experiences' => 'required|array',
@@ -45,7 +48,7 @@ class ProfileController extends Controller
             'experiences.*.company_name'=> 'required',
             'experiences.*.country_id'  => 'required',
             'experiences.*.start_date'  => 'required|before:today',
-            'experiences.*.end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
+            'experiences.*.end_date'    => 'after_or_equal:experiences.*.start_date|before:today',
         ]);
         
         if ($validator->fails())
@@ -87,7 +90,6 @@ class ProfileController extends Controller
         [
             'educations' => 'required|array',
             'educations.*.school_name'   => 'required',
-            'educations.*.education' => 'required',
             'educations.*.field_of_study'=> 'required',
             'educations.*.description'  => 'required',
             'educations.*.degree_id'  => 'required',
@@ -168,6 +170,7 @@ class ProfileController extends Controller
         $userskills=$user->skills;
         $user_experience = $user->experiences;
         $user_education  = $user->education;
+        $user_portfolios = $user->portfolios; 
         $countries = Country::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
@@ -175,7 +178,8 @@ class ProfileController extends Controller
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries'));
+        $degrees = Degree::select('id', 'title')->get();
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios'));
     }
     
     /**
@@ -220,7 +224,6 @@ class ProfileController extends Controller
         }
     }
     
-    
     /**
      * editExperience
      *
@@ -263,5 +266,174 @@ class ProfileController extends Controller
 
         }
     }
+        
+    /**
+     * addEducation
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function addEducation(Request $request)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'school_name'   => 'required',
+            'field_of_study'=> 'required',
+            'description'  => 'required',
+            'degree_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            $user->education()->create($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date'));
+            return response()->json(["success" => "User Education Added Successfully"], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
     
+    /**
+     * editEducation
+     *
+     * @param  mixed $request
+     * @param  mixed $seller_education_id
+     * @return void
+     */
+    public function editEducation(Request $request,$seller_education_id)
+    {
+        $validator = \Validator::make($request->all(), 
+        [
+            'school_name'   => 'required',
+            'education' => 'required',
+            'field_of_study'=> 'required',
+            'description'  => 'required',
+            'degree_id'  => 'required',
+            'start_date'  => 'required|before:today',
+            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json(['validation_errors'=>$validator->errors()]);
+        }
+       
+        $user = auth()->user();        
+
+        try {
+            UserEducation::where('id',$seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date','is_enrolled'));
+            return response()->json(["success" => "User Education Updated Successfully"], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Addd Experience.'];
+            return back()->withNotify($notify);
+
+        }
+    }
+    
+    /**
+     * getUserPortfolio
+     *
+     * @return void
+     */
+    public function getUserPortfolio()
+    {
+        $skills=Skills::select('id','name')->get();
+
+        return view($this->activeTemplate.'portfolio.index',compact('skills'));
+    }
+
+        
+    /**
+     * saveUserPortfolio
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function saveUserPortfolio(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $request_data = [];
+            parse_str($request->data, $request_data);
+            $request_data['user_id'] = auth()->user()->id;
+            $portfolio=UserPortFolio::create(
+                $request_data
+            );
+
+            $portfolio->skills()->attach($request_data['skills']);
+
+            if ($request->hasFile('file')) {
+                $path = imagePath()['attachments']['path'];
+                foreach ($request->file as $file) {
+
+
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        
+                        $portfolio->attachments()->create([
+
+                            'name' => $filename,
+                            'uploaded_name' => $file->getClientOriginalName(),
+                            'url'           => $url,
+                            'type' =>$file_extension,
+                            'is_published' =>1
+
+                        ]);
+                }
+            }
+            DB::commit();
+            return response()->json(["success" => "User Portfolio Added Successfully ",'redirect' =>route('seller.profile.view')], 200);
+
+        } catch (\Exception $exp) {
+            return response()->json(['error' => $exp->getMessage()]);
+            $notify[] = ['errors', 'Failled To Add Portfolio.'];
+            return back()->withNotify($notify);
+
+        }
+    }
+    
+    /**
+     * validateUserPortfolio
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function validateUserPortfolio(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        
+        $rules = [
+            'name' => 'required',
+            'completion_date' => 'required|date|before:today',
+            'skills' => 'nullable|array',
+            'skills.*' =>'exists:skills,id',
+            'project_url' => 'nullable',
+            'description' => 'nullable',
+            'video_url'   => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'project_url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"]
+        ];
+
+        $validator = Validator::make($request_data, $rules);
+        if ($validator->fails()) {
+            return response()->json(["error" => $validator->errors()]);
+        } 
+        else
+            return response()->json(["validated" => "Portfolio Data Is Valid"]);
+    }
 }

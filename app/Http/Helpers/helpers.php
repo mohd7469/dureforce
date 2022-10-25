@@ -1240,7 +1240,7 @@ function getExperienceSession($obj)
 
 function getDegreetitle($obj)
 {
-    $degree_title=Degree::find($obj->degree_id)->first()->title;
+    $degree_title=Degree::find($obj->degree_id)->title;
     return $degree_title;
 
 }
@@ -1256,4 +1256,37 @@ function getProposelBid($proposal,$job)
 function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);
+}
+
+function getDaysHoursMinutesSeconds($timestamp){
+
+    $end = Carbon::parse($timestamp);
+    $current = Carbon::now();
+    $days = $end->diffInDays($current);
+    $hours = $end->diffInHours($current);
+    $minutes = $end->diffInMinutes($current);
+    $seconds = $end->diffInSeconds($current);
+    if ($days>0){
+        return $days." days ago";
+    }
+    elseif ($hours>0){
+        return $hours." hours ago";
+    }
+    elseif ($minutes>0){
+        return $minutes." minutes ago";
+    }
+    elseif ($seconds>0){
+        return $seconds." seconds ago";
+    }
+
+}
+function getYearMonthDays($timestamp){
+
+    $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp);
+    $month_name = $date->format('M');
+    $year = $date->year;
+    $day = $date->day;
+
+    return $month_name.' '. $day.', '. $year;
+
 }

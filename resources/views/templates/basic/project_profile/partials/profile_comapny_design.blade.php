@@ -899,7 +899,7 @@
                                     >
                                         <a
                                             class="btn--post btn active mr-1 d-inline-block"
-                                            href="http://127.0.0.1:8000/user/buyer/job/create"
+                                            href="{{ route('buyer.job.create') }}"
                                             >Post a Job</a
                                         >
                                         <div class="search-main">
@@ -1189,18 +1189,18 @@
                     
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone  </label>
-                            <input type="number" name="phone" value="" placeholder="">
+                            <label class="mt-4">Company Phone*  </label>
+                            <input type="number" name="phone"  step="any" value="" placeholder="">
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Email Address </label>
-                            <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="" placeholder="">
+                            <label class="mt-4">Company Email Address* </label>
+                            <input type="text" name="email" value="" placeholder="">
                             <div class="col-md-12">
                                 <label class="mt-4">Location  </label>
                                 <input type="text" id="company-location" name="location" value="" placeholder="City, Country">
                             </div>
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT  </label>
+                                <label class="mt-4">Company VAT*  </label>
                                 <input type="text" id="company-vat" value="" name="vat" placeholder="">
                             </div>
                             <div class="col-md-12">

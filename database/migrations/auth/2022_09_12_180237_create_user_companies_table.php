@@ -19,7 +19,7 @@ class CreateUserCompaniesTable extends Migration
             $table->unsignedBigInteger('country_id')->index()->nullable();
             $table->string('name')->nullable();
             $table->string('logo')->nullable();
-            $table->integer('number')->nullable();
+            $table->string('number')->nullable();
             $table->string('email')->nullable();
             $table->string('vat')->nullable();
             $table->string('website')->nullable();

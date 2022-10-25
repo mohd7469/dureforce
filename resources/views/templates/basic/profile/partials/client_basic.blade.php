@@ -1,4 +1,5 @@
 <div class="setProfile" id="basic-profile">
+
     <form action="{{ route('user.profile.basics.save') }}" method="POST" id="form-basic-save" class="form-basic-save"
           enctype="multipart/form-data">
         @csrf
@@ -7,19 +8,19 @@
 
             <h1 class="mb-4">{{auth()->user() ? auth()->user()->first_name.' '. auth()->user()->last_name : null}}</h1>
             <span class="cmnt pb-4">
-         Complete your profile to join our global community of freelancers and start
-         selling
-         your
-         service
-         to growing network of businesses.</span>
+                Complete your profile to join our global community of freelancers and start
+                selling
+                your
+                service
+                to growing network of businesses.
+            </span>
             <div>
                 <label class="mt-4">Profile Picture</label>
                 <div class="profile-img col-md-12" action="">
                     <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                            class="imgInp" onchange="previewFile(this)"
                            title=""/>
-                    <image width="100" height="100" id="preview-img"
-                           src="{{ getImage('assets/images/default.png') }}"/>
+                    <image class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                 </div>
                 <div class="row">
 
@@ -123,13 +124,15 @@
                                         >Language
                                             <span
                                                     class="imp"
-                                            >*</span
-                                            ></label
+                                            >*</span>
+                                            <small>{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  ' (English language is mandatory) ' : '' }}</small>
+                                            </label
                                         >
                                         <select
                                                 name="languages[{{$key}}][language_id]"
                                                 class="form-control select-lang "
                                                 id="languages.{{$key}}.language_id"
+                                                style="{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'pointer-events: none; ' : '' }}"
                                         >
                                             <option
                                                     value=""
@@ -166,6 +169,7 @@
                                                 name="languages[{{$key}}][language_level_id]"
                                                 class="form-control selected-level select-lang"
                                                 id="languages.{{$key}}.language_level_id"
+                                                
                                         >
                                             <option value="" selected="">
                                                 Proficiency Level
@@ -214,13 +218,15 @@
                             >Language
                                 <span
                                         class="imp"
-                                >*</span
-                                ></label
+                                >*</span>
+                                <small> (English language is mandatory)</small>
+                                </label
                             >
                             <select
                                     name="languages[0][language_id]"
                                     class="form-control select-lang "
                                     id="languages.0.language_id"
+                                    style="pointer-events: none;"
                             >
                                 <option
                                         value=""
@@ -233,6 +239,7 @@
                                 @foreach ($languages as $language)
                                     <option
                                             value="{{$language->id}}"
+                                            {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected ' : '' }}
                                     >
                                         {{ $language->iso_language_name }}
                                     </option>
@@ -297,4 +304,5 @@
             </div>
         </div>
     </form>
+
 </div>

@@ -50,7 +50,7 @@ class Job extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('projectStage')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
+        return $query->with('projectStage')->with('project_length')->with('category')->with('status')->with('rank')->with('jobType')->with('budgetType')->with('dod')->with('deliverable')->with('skill')->with('subCategory')->with('country')->with('documents')->with('proposal');
 
     }
 
@@ -117,7 +117,7 @@ class Job extends Model
     {
         return $this->hasMany(JobBiding::class, 'job_id');
     }
-    public function invite_freelaner()
+    public function invited_freelancer()
     {
         return $this->hasMany(InviteFreelancer::class, 'job_id');
     }
@@ -170,6 +170,10 @@ class Job extends Model
     public function delivery_mode()
     {
         return $this->morphMany(DeliveryMode::class, 'module');
+    }
+    public function save_job()
+    {
+        return $this->belongsToMany(User::class, 'user_saved_jobs');
     }
 
 }

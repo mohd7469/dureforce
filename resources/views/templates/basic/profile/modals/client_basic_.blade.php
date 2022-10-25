@@ -7,17 +7,16 @@
           </div>
           <div class="modal-body">
             {{-- {{ route('profile.basics.save') }} --}}
-             <form action="#" method="POST" id="form-basic-save" class="form-basic-save"
+             <form action="" method="POST" id="form-basic-save" class="form-basic-save"
                 enctype="multipart/form-data">
                 @csrf
                 <div>
-                   <label class="mt-4 hidepc">Profile Picture</label>
+                   <label class="mt-4">Profile Picture</label>
                    <div class="profile-img col-md-12" action="">
-                      <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
-                         class="imgInp" onchange="previewFile(this)"
-                         title=""/>
-                      <image width="100" height="100" id="preview-img"
-                         src="{{ getImage('assets/images/default.png') }}"/>
+                   <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
+                           class="imgInp" onchange="previewFile(this)"
+                           title=""/>
+                    <image class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                    </div>
                    <div class="row">
                       <div class="col-md-12 col-sm-12">
@@ -57,7 +56,7 @@
                    <div class="row">
                    <div class="col-md-6">
                       <label class="mt-4"
-                         >Location
+                         >City
                       <span class="imp"
                          >*</span
                          ></label
@@ -83,34 +82,34 @@
                       </select>
                    </div>
                    {{-- location --}}
-                   {{-- <div class="col-md-6">
-                     <label class="mt-4"
-                        >City
-                     <span class="imp"
-                        >*</span
-                        ></label
-                        >
+                   <div class="col-md-6">
+                                        
+                     <label class="mt-4">Location *  </label>
                      <select
-                        name="city_id"
-                        class="form-control select-lang"
-                        id="languages"
-                        >
-                        <option
-                           value=""
-                           >
-                           Select City
-                        </option>
-                        @foreach ($cities as $city)
-                        <option
-                        value="{{$city->id}}"
-                        {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
-                        >
-                        {{$city->name}}
-                        </option>
-                        @endforeach
+                         name="country_id"
+                         class="form-control select-lang"
+                         id="country_id"
+                         >
+                         <option
+                             value=""
+                         >
+                             Select Country
+
+                         </option>
+
+                         @foreach ($countries as $country)
+                             <option
+                             value="{{$country->id}}"
+                             {{ $country->id == auth()->user()->country_id ? 'selected' : '' }}
+                             >
+                             {{$country->name}}
+                             </option>
+                         @endforeach
+
                      </select>
-                  </div> --}}
-                  <div class="col-md-6">
+                     
+                 </div>
+                  <div class="col-md-12">
                      <label class="mt-4"
                         >Phone
                      <span class="imp"
@@ -135,11 +134,11 @@
                          ></label
                          >
                       <input
-                         type="number"
+                         type="email"
                          name="email"
                          placeholder=""
                          id="email"
-                         value="{{$basicProfile->email}}"
+                         value="{{auth()->user()->email}}"
                          />
                    </div>
                    {{-- language row --}}
@@ -296,14 +295,14 @@
                       @endif
                    </div>
                    {{-- add another language btn --}}
-                   {{-- <button
+                   <button
                       type="button"
                       class="my-2"
                       id="add-language"
                       onclick="addMoreLanguages()"
                       >
                    Add another
-                   </button> --}}
+                   </button>
                 </div>
                 {{-- <div class="">
                    <div class="col-md-12">

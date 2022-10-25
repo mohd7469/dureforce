@@ -1,5 +1,7 @@
 @php
 $userPayment = App\Models\UserPayment::find(request()->get('id'));
+$cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id)->get();
+
 @endphp
 
 <div class="setProfile" id="">
@@ -7,12 +9,12 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
     <form action="{{ route('buyer.profile.save.payment.methods') }}" method="POST" id="payment_methods">
         @csrf
         <div class="container-fluid welcome-body">
-            <input type="hidden" name="payment_id" value="{{ request()->get('id') }}">
+            <input type="hidden" name="update_payment_id" value="{{ request()->get('id') }}">
             <h1 class="mb-4">Payment Methods</h1>
             <span class="cmnt col-md-12 pb-4">
                 Add or delete payment methods for your account.</span>
 
-            <h5 class="mt-3 d-flex">Credit / Debit Cards (Stripe)
+            <h5 class="mt-3 d-flex">Credit / Debit Cards (Stripe) 
                 <figure class="mx-2">
                     <svg width="147" height="23" viewBox="0 0 147 23" fill="none" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -39,7 +41,7 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                             <label class="mt-1">Card Number <span class="imp">*</span></label>
                             <input type="text" name="card_number"
                                 value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
-                                required />
+                                 />
                         </div>
 
                         <div class="row">
@@ -48,12 +50,12 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                                         class="imp">*</span></label>
                                 <input type="date" name="expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required />
+                                    placeholder=""  />
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
                                 <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required />
+                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder=""  />
                             </div>
                         </div>
                         
@@ -61,7 +63,7 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                             <label class="mt-4">Name On Card <span class="imp">*</span></label>
                             <input type="text" name="name_on_card"
                                 value="{{ old('name_on_card', @$userPayment->name_on_card) }}" placeholder=""
-                                required />
+                                 />
                         </div>
 
                         <div class="col-md-12">
@@ -99,6 +101,12 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                                 id="payment_method_cities"
                                     >
                                     <option value="">Select City</option>
+
+                                    @foreach ($cities as $city)
+                                        <option value="{{$city->id}}"
+                                        {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
+                                        >{{$city->name}}</option>
+                                    @endforeach
                             </select>
                             
                         </div>
@@ -106,8 +114,9 @@ $userPayment = App\Models\UserPayment::find(request()->get('id'));
                         <div class="col-md-12">
                             <label class="mt-4">Street Address <span class="imp">*</span></label>
                             <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
-                                required/>
+                                />
                         </div>
+                       
 
                         
 

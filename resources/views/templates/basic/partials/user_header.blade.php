@@ -28,14 +28,14 @@
                                         @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
                                 </li>
                                 
-                                @if( getLastLoginRoleId() == APP\Models\Role::$Freelancer )
+                                @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
 
                                     <li>
                                         <a href="{{ route('user.home') }}"
                                             @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
                                     </li>
 
-                                @elseif (getLastLoginRoleId() == APP\Models\Role::$Client)
+                                @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
                                     
                                     <li>
                                         <a href="{{ route('user.home') }}"
@@ -49,13 +49,7 @@
                                         @if (request()->routeIs('ticket.open')) class="active" @endif>@lang('Get
                                         Support')</a></li>
                             </ul>
-                            {{-- <div class="language-select-area">
-                                <select class="language-select langSel">
-                                     @foreach ($language as $item)
-                                        <option value="{{$item->code}}" @if (session('lang') == $item->code) selected  @endif>{{ __($item->name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div> --}}
+                           
 
                             <div class="header-right dropdown">
                                 <button type="button" data-bs-toggle="dropdown" data-display="static"
@@ -63,9 +57,17 @@
                                     <div
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <div class="header-user-thumb">
-                                            <a href="JavaScript:Void(0);"><img
+                                            <a href="JavaScript:Void(0);">
+                                                @if(isset(auth()->user()->basicProfile->profile_picture))
+                                                <img
+                                                    src="{{ auth()->user()->basicProfile->profile_picture}}" height="400" width="400"
+                                                    alt="client">
+                                                @else
+                                                <img
                                                     src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, '400x400') }}"
-                                                    alt="client"></a>
+                                                    alt="client">
+                                                @endif    
+                                            </a>
                                         </div>
                                         <div class="header-user-content">
                                             <span>{{ auth()->user()->username }}</span>
@@ -78,37 +80,21 @@
                                     {{-- @todo make policies or gates when have free time. --}}
 
                                     @if (auth()->user()->type == App\Models\User::PROJECT_MANAGER)
-                                        @if (auth()->user()->getLanguagesMoreThanOneCount() &&
-    auth()->user()->getCompaniesMoreThanOneCount() &&
-    auth()->user()->getPaymentMethodsMoreThanOneCount())
-                                            <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <i class="dropdown-menu__icon las la-user-circle"></i>
-                                                <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
-                                            </a>
-                                            <a href="{{ route('profile', auth()->user()->username) }}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <i class="dropdown-menu__icon las la-user-circle"></i>
-                                                <span class="dropdown-menu__caption">@lang('View Profile')</span>
-                                            </a>
-                                        @endif
+                                       
                                     @else
-                                        @if (auth()->user()->getLanguagesMoreThanOneCount() &&
-                                                auth()->user()->getExperienceMoreThanOneCount() &&
-                                                auth()->user()->getSkillsMoreThanOneCount() &&
-                                                auth()->user()->getEduationMoreThanOneCount())
+                                       
                                             <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                             </a>
-                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.profile.view')}}"
+                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <i class="dropdown-menu__icon las la-user-circle"></i>
                                                 <span class="dropdown-menu__caption">@lang('View Profile')</span>
                                                 {{-- seller profile  --}}
                                             </a>
-                                        @endif
+                                        
                                     @endif
 
                                     <a href="{{ route('user.change.password') }}"

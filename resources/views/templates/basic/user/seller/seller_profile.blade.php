@@ -17,12 +17,12 @@
                         <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
-                                    <img src="{{ asset('assets/images/default.png') }}"  class="thumbnail">
+                                    <img class="thumbnail" src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                                     <h4 class="my-3 text-center">{{$user->full_name}}</h4>
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
                                     <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
-{{--                                  edit profile modal--}}
+                                    {{--                                  edit profile modal--}}
                                     <div class="d-flex mt-5">
                                         <button type="button" class="standard-btn-sm-edit text-center " data-bs-toggle="modal" data-bs-target="#editprofile">
                                             Edit Profile
@@ -207,6 +207,8 @@
                                            </div>
                                     </div>
                                 </div>
+                            
+                                {{-- experience tab --}}
                             <div class="tab-pane container fade" id="Exp">
                                 <div class="container mt-5 mb-5">
                                     <div class="row section-heading-border justify-content-center align-items-center">
@@ -217,7 +219,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="row mt-4">
+                                    <div class="row mt-2">
 
                                         @foreach ($user_experience as $experience)
 
@@ -243,82 +245,76 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="tab-pane container fade" id="set">
-                            <div class="row portfolio">
-                                 <div class="col-xl-4 col-lg-6 col-md-6">
-                                    <div class="card" style="width: 18rem;">
-                                        <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Project Name</h3>
-                                            <p class="card-text">This is a short project description..</p>
-                                        </div>
+                                
+                                <div class="row section-heading-border justify-content-center align-items-center">
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My PortFolios</b></div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                        <a href="{{route('seller.profile.portfolio')}}">
+                                            <button  role="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal"  >
+                                                Add Portfolio
+                                            </button>
+                                        </a>
+                                        
                                     </div>
                                 </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
+
+                                <div class="row portfolio">
+                                    
+                                    @foreach ($user_portfolios as $portfolio)
+
+                                        <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:85px;">
+
+                                            <div class="card" style="width: 18rem;height:220px;">
+                                                <img class="card-img-top" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">{{$portfolio->name}}</h3>
+                                                    <p class="card-text">{{$portfolio->description}}</p>
+                                                </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3  ">
-                                    <div class="card" style="width: 18rem;">
-                                        <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h3 class="card-title">Project Name</h3>
-                                            <p class="card-text">This is a short project description..</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-xl-4 col-lg-6  col-md-6 mt-3   ">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 123.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  <div class="col-xl-4 col-lg-6  col-md-6  mt-3  ">
-                                        <div class="card" style="width: 18rem;">
-                                            <img class="card-img-top" src="{{ asset('assets/images/seller/Rectangle 122.png')}}" alt="Card image cap">
-                                            <div class="card-body">
-                                                <h3 class="card-title">Project Name</h3>
-                                                <p class="card-text">This is a short project description..</p>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    @endforeach
+                                    
                                 </div>
                             </div>
+
                             {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
+                                
                                 <div class="container mt-5 mb-5">
-                                    <div class="row">
+                                    
+                                    <div class="row section-heading-border justify-content-center align-items-center">
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Education & Certificates</b></div>
+                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addeducation" id="add-edu-btn">
+                                                Add Education & Certificates
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                   
                                         {{-- Education --}}
                                         @foreach ($user_education as $education_obj)
-                                            <div class="col-xl-12 card-text-tab1 border-left">
+                                            
+                                            <div class="col-xl-10 col-lg-8 col-md-8 col-sm-8 card-text-tab1 border-left">
                                                 <h4>{{getDegreeTitle($education_obj)}}</h4>
                                                 <p class="short-text">{{$education_obj->school_name}}</p><br/>
                                                 <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
                                                 <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>  {{'location'}} </p><br/>
                                             </div>
-                                        @endforeach
-                                        
 
-                                       
+                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
+                                                <i class="fa fa-edit" onclick="editEducation({{$education_obj}})"></i>
+                                            </div>
+                                        @endforeach
+                                                                               
                                     </div>
                                 </div>
+
                             </div>
                             <div class="tab-pane container fade" id="tes">
                                 <div class="row">
@@ -338,7 +334,7 @@
             </div>
         </div>
 
-        {{--      profile modal--}}
+        {{-- profile modal  --}}
         <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
             <div class="modal-dialog">
@@ -391,6 +387,7 @@
                                                 name="phone_number"
                                                 placeholder=""
                                                 id="phone"
+                                                step="any"
                                                 value ="{{$basicProfile->phone_number}}"
                                             />
                                     </div>
@@ -452,7 +449,7 @@
                                                     
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-12">
-                                                            <label class="mt-4">Language
+                                                            <label class="mt-2">Language
                                                             <span class="imp">*</span></label>
                                                             <select
                                                                 name="languages[{{$key}}][language_id]"
@@ -480,7 +477,7 @@
 
                                                         {{-- proficiency level --}}
                                                         <div class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12">
-                                                            <label class="mt-4"> Profeciency Level<span class="imp">*</span></label>
+                                                            <label class="mt-2"> Profeciency Level<span class="imp">*</span></label>
                                                         
                                                             <select
                                                                 name="languages[{{$key}}][language_level_id]"
@@ -508,7 +505,7 @@
 
                                                         {{-- delete btn --}}
                                                         @if ($key > 0)
-                                                            <div class="col-md-1" style="margin-top:20px; ">
+                                                            <div class="col-md-1" >
                                                                 <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-{{$key}}')"><i class="fa fa-trash"></i></button>
                                                             </div>
                                                         @endif
@@ -630,8 +627,216 @@
             </div>
         </div>
 
+        {{-- Education Model --}}
+        <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Education</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{route('seller.profile.education.add')}}" id="education_form" method="post">
+            
+                            @csrf
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div>
+                                        <label 
+                                        >School /
+                                            College /
+                                            University
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+        
+                                        <input
+                                                type="text"
+                                                name="school_name"
+                                                id="edu_school_name"
+                                                placeholder="E.g. University Of Lo sdssdndon"
+                                        />
+                                    </div>
+                                    
+                                </div>
+
+                                {{-- <div class="col-md-12">
+                                    <div>
+                                        <label class="mt-2"
+                                        >Education
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+                                        <input
+        
+                                                name="education"
+                                                id="edu_education"
+                                                value=""
+                                                type="text"
+                                                placeholder="E.g. University Of London"
+                                        />
+                                    </div>
+                                    
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6 ">
+    
+                                            <label class="mt-2">Degree <span class="imp">*</span></label>
+        
+                                            <select name="degree_id" class="form-control select-lang" id="edu_degree_id">
+                                                <option value="" selected=""> Select Degree</option>
+                                                @foreach ($degrees as $degree)
+                                                    <option value="{{$degree->id}}" > {{ $degree->title }} </option>
+                                                @endforeach
+                                            </select>
+        
+                                        </div>
+        
+                                        <div class="col-md-6">
+                                            <label class="mt-2">Field Of Study <span class="imp">*</span>
+                                            </label>
+                                            <input
+                                                    id="edu_field_of_study"
+                                                    type="text"
+                                                    name="field_of_study"
+                                                    id="field_of_study"
+                                                    placeholder="Visual Arts"/>
+                                        </div>
+                                    </div>
+                                   
+    
+                                </div>
+
+                                <div class="col-md-12 mt-2">
+                                    
+                                    <div
+                                            class="form-check"
+                                    >
+                                        <input
+                                                class="form-check-input check current-working-check"
+                                                onclick="checkDate($(this), $('.end-date-job-education'))"
+                                                type="checkbox"
+                                                name="is_enrolled"
+                                                id="edu_isCurrent"
+    
+                                        />
+                                        <label
+                                                class="form-check-label"
+                                                for="flexCheckDefault"
+                                        >I’m
+                                            currently
+                                            enroll
+                                            here</label
+                                        >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <label class="mt-2"
+                                        >Dates Attended
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div
+                                                class="col-md-6"
+                                        >
+                                            <label
+                                                    for=""
+                                                    class="mt-2"
+                                            >From Date
+                                                <span
+                                                        class="imp"
+                                                >*</span
+                                                ></label
+                                            >
+                                            <input
+                                                    type="date"
+                                                    id="edu_start_date"
+                                                    name="start_date"
+                                                    id="start_date"
+                                                    onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
+        
+                                            />
+                                        </div>
+                                        <div
+                                                class="col-md-6"
+                                        >
+                                            <label
+                                                    for=""
+                                                    class="mt-2 "
+                                            >To Date
+                                                <span
+                                                        class="imp"
+                                                >*</span
+                                                ></label
+                                            >
+                                            <input
+                                                class="end-date-job-education"
+                                                    type="date"
+                                                    name="end_date"
+                                                    id="edu_end_date"
+                                                    onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
+                                                    onchange="checkIfDateGreaterInsti($(this))"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div>
+                                            <label class="mt-2"
+                                        >Description
+                                            <span
+                                                    class="imp"
+                                            >*</span
+                                            ></label
+                                        >
+                                        <textarea
+                                                
+                                                name="description"
+                                                id="edu_description"
+                                                placeholder="Add Description  "
+                                                style="min-height: 90px !important"
+                                        ></textarea>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row d-flex flex-row-reverse mt-2">
+
+                                <button type="submit" class="btn-save" id="edu-btn">Save</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
 @endsection
 @push('script-lib')
+
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/seller_profile.js')}}"></script>
 
@@ -645,9 +850,12 @@
     let _degress = [];
     let user_basic_form=$('#form-basic-save');
     let experience_form=$('#experience_form');
+    let education_form=$('#education_form');
     let row_index= $('#languages_basics').val();
     let exp_btn=$('#exp-btn');
     let add_exp_btn=$('#add-exp-btn');
+    let add_edu_btn=$('#add-edu-btn');
+
     $(document).ready(function() {
         
         readmore();
@@ -656,7 +864,16 @@
         add_exp_btn.click(function(e){
             experience_form.attr('action', "{{route('seller.profile.experience.add')}}");
             experience_form[0].reset();
+            $('#exp_end_date').prop('disabled',false);
+            $('#exp_description').empty();
 
+        });
+
+        add_edu_btn.click(function(e){
+            education_form.attr('action', "{{route('seller.profile.education.add')}}");
+            education_form[0].reset();
+            $('#edu_end_date').prop('disabled',false);
+            $('#edu_description').empty();
         });
 
         user_basic_form.submit(function (e) {
@@ -669,6 +886,12 @@
             e.preventDefault();
             e.stopPropagation(); 
             addExperience();
+        });
+
+        education_form.submit(function (e) {
+            e.preventDefault();
+            e.stopPropagation(); 
+            addEducation();
         });
 
         $("#skills").select2({
@@ -792,6 +1015,39 @@
         
     }
 
+    function addEducation()
+    {
+        
+        let form_data = new FormData(education_form[0]);
+        let route=education_form.attr('action');
+        $.ajax({
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:route,
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
+
+                if(response.success){
+                    notify('success', response.success);
+                    $('#addeducation').modal('hide');
+                    location.reload();
+                
+                }
+                else if(response.validation_errors){
+                    displayErrorMessage(response.validation_errors);
+                }
+                else{
+                    errorMessages(response.errors);
+                }
+
+            }
+        });
+    }
+
     function addExperience()
     {
         
@@ -832,7 +1088,7 @@
                                         
                                 <div class="row" >
                                     <div class="col-md-6 col-sm-10">
-                                        <label class="mt-4">Language <span class="imp">*</span></label>
+                                        <label class="mt-2">Language <span class="imp">*</span></label>
                                         <select name="languages[`+row_index+`][language_id]" class="form-control select-lang py-2" id="languages.`+row_index+`.language_id">
                                             <option value=""  selected="">
                                             Spoken Language(s)
@@ -843,7 +1099,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-5 col-sm-10">
-                                        <label class="mt-4">Profeciency Level <span class="imp">*</span></label>
+                                        <label class="mt-2">Profeciency Level <span class="imp">*</span></label>
                                         <select name="languages[`+row_index+`][language_level_id]" class="form-control select-lang" id="languages.`+row_index+`.language_level_id" >
                                             <option value=""   selected="">
                                                                     My Level is
@@ -853,7 +1109,7 @@
                                             })}
                                         </select>
                                     </div>
-                                    <div class="col-md-1" style="margin-top:15px">
+                                    <div class="col-md-1" >
                                         <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5" onclick="removerow('#moreLanguage-row-`+row_index  +`')"><i class="fa fa-trash"></i></button>
 
                                     </div>
@@ -888,7 +1144,36 @@
         }
 
         $('#exp_description').html(experience_obj.description);
-        $('#exp_country_id option[value='+experience_obj.country_id+']').attr('selected','selected');
+        $('#exp_country_id option[value='+experience_obj.country_id+']').prop('selected',true);
+    }
+
+    function editEducation(education_obj)
+    {
+        education_form[0].reset();
+        var route="{{route('seller.profile.education.edit',':id')}}";
+        route=route.replace(':id',education_obj.id);
+        education_form.attr('action', route);
+        $('#addeducation').modal('show');
+        $("#edu_school_name").val( education_obj.school_name );
+        $('#edu_education').val(education_obj.education);
+        $('#edu_field_of_study').val(education_obj.field_of_study);
+        $('#edu_start_date').val(education_obj.start_date);
+
+        if(education_obj.is_enrolled ){
+
+            $('#edu_isCurrent').prop('checked',true);
+            $('#edu_end_date').prop('disabled',true);
+        }
+        else
+        {
+
+            $('#edu_end_date').val(education_obj.end_date);
+            
+        }
+
+        $('#edu_description').html(education_obj.description);
+
+        $('#edu_degree_id option[value='+education_obj.degree_id+']').prop('selected',true);
     }
 
 </script>

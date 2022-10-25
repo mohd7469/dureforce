@@ -29,12 +29,13 @@ class CreateProposalsTable extends Migration
             $table->integer('end_hour_limit')->nullable();
             $table->longText('cover_letter')->nullable();
             $table->boolean('is_active')->default(true)->nullable();
+            $table->boolean('is_shortlisted')->default(false)->nullable();
             $table->date('project_start_date')->nullable();
             $table->date('project_end_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('delivery_mode_id')->references('id')->on('proposals')->onDelete('cascade');
+            $table->foreign('delivery_mode_id')->references('id')->on('delivery_modes')->onDelete('cascade');
             $table->foreign('service_fees_id')->references('id')->on('service_fees')->onDelete('cascade');
 
         });

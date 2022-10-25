@@ -153,11 +153,19 @@
                                           Your Profile Rate
                                          <span class="badge badge-primary badge-pill">$30.00/hr</span>
                                        </li>
-                                       
-                                       <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        @if($proposal->budget_type_id == \App\Models\BudgetType::$hourly)
+
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
                                           Client’s Weekly Hourly Range
-                                         <span class="badge badge-primary badge-pill">$15.00 - $25.00/hr</span>
+                                         <span class="badge badge-primary badge-pill"> {{ '$'.$proposal->hourly_start_range." - $".$proposal->hourly_end_range }} </span>
                                        </li>
+                                        @else
+
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                Client’s Budget for Job
+                                                <span class="badge badge-primary badge-pill"> {{ '$'.$proposal->fixed_amount}} </span>
+                                            </li>
+                                        @endif
       
                                        <li class="list-group-item d-flex justify-content-between align-items-center">
                                           Estimated Project Start Date
@@ -214,13 +222,13 @@
                                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                                                    <small id="emailHelp" class="form-text text-dark">Min. Hours Per Week</small>
-                                                   <input type="integer" class="form-control" id="min_hours" name="min_hours">
+                                                   <input type="integer" class="form-control" step="any" id="min_hours" name="min_hours">
 
                                                 </div>
                                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                                                    <small id="emailHelp" class="form-text text-dark">Max. Hours Per Week</small>
-                                                   <input type="integer" class="form-control" id="max_hours" name="max_hours">
+                                                   <input type="integer" step="any" class="form-control" id="max_hours" name="max_hours">
 
                                                 </div>
                                              </div>
@@ -268,7 +276,7 @@
                               
                               {{-- Cover Letter --}}
                               <div class="form-group">
-                                 <label for="cover_letter">Cover Letter</label>
+                                 <label for="cover_letter">Cover Letter*</label>
                                  <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
                                </div>
 

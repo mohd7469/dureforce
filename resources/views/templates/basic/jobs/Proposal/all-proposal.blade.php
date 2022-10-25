@@ -1,105 +1,98 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
 
-
-
-    <section class="all-sections pt-3">
+<section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
+   @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
       <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
-         <article class="main-section">
-            <div class="section-inner">
-               <div class="item-section item-details-section">
-                  <div class="container single-jobc">
-                        <div class="allpropsel_container">
-                            @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
-
-                        <div class="container">
-                            <div class="row">
+        <div class="container network_wrapper col-sm ">
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">All_Proposals</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#Shortlisted">Shortlisted ({{count($short_listed_proposals)}})</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Messaged (2)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form class="card-body tab-content"> 
+                        <div class="tab-pane active" id="All_Proposals">
+                            <div class="card-text text-center">
+                            <div class="row card-text">
                                 <div class="col-12"></div>
                                     <div class="col-md-2">
                                         <h2 class="prosals-h">All Proposals</h2>
-
                                     </div>
-
                                     <div class="col-md-10 sorting-mbl">
                                         <div class="row">
                                             <!--Sorting Section Start-->
-                                                  <div class="col-md-4">
-                                                       <div id="custom-search-input">
-                                                            <div class="input-group">
-                                                                <input type="text" class="search-query form-control" placeholder="Search" />
-                                                                <span class="input-group-btn">
-                                                                    <button type="button" disabled>
-                                                                        <span class="fa fa-search"></span>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-
-                                                        </div>
+                                            <div class="col-md-4">
+                                                <div id="custom-search-input">
+                                                    <div class="input-group">
+                                                        <input type="text" class="search-query form-control" placeholder="Search" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" disabled>
+                                                                <span class="fa fa-search"></span>
+                                                            </button>
+                                                        </span>
                                                     </div>
-                                                    <div class="col-md-4">
-
-                                                        <form>
-                                                            <select name="Best match" id="bestmatch">
-                                                                <option>Best match</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                                <option>1</option>
-                                                            </select>
-                                                        </form>
-                                                    </div>
-
-
-                                         <!--Sorting Section End-->
-
-                                        <div class="col-md-4">
-                                        <form>
-                                            <select name="Filters" id="Filters">
-                                                <option>Filters</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                                <option>1</option>
-                                            </select>
-                                        </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                    <select name="Best match" id="bestmatch">
+                                                        <option>Best match</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                    </select>
+                                            </div>
+                                            <!--Sorting Section End-->
+                                            <div class="col-md-4">
+                                                    <select name="Filters" id="Filters">
+                                                        <option>Filters</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                    </select>
+                                            </div>
                                         </div>
-
-                                       </div>
                                     </div>
                                 </div>
-
-                                 <!--Bio Profile Section Start-->
-                            @foreach ($proposals as $proposal)
-
-                                <div class="" >
+                                    <!--Bio Profile Section Start-->
+                                    @foreach ($proposals as $proposal)
+                                    <div class="" >
                                         <div class="row biorow">
-                                           <div class="col-md-3">
-                                              <div class="row borderleftc">
-                                                <div class="col-md-4">
-                                                    <img alt="User Pic" src="/assets/images/job/profile-img.png" id="profile-image1" class="img-circle img-responsive">
-                                                </div>
-
-                                                  <div class="col-md-8">
-                                                    
-                                                    <h4 class="pname-c">
-
-                                                        {{$proposal->user->full_name}}
-
-                                                     </h4>
-
-                                                      <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
-
-                                                     <div class="col-md-4">
-                                                        <p class="plocation">{{$proposal->user->location }}</p>
+                                            <div class="col-md-3">
+                                                <div class="row borderleftc">
+                                                    <div class="col-md-4">
+                                                        <img alt="User Pic" src="{{ !empty($proposal->user->user_basic->profile_picture)? $proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
-                                                 </div>
+                                                    <div class="col-md-8">
+
+                                                        <h4 class="pname-c">
+
+                                                            {{$proposal->user->full_name}}
+
+                                                        </h4>
+
+                                                        <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
+
+                                                        <p class="plocation"><span style="margin-right: 60px;">{{$proposal->user->location }}</span></p>
 
 
-                                              </div>
-                                           </div>
+                                                    </div>
 
+
+                                                </div>
+                                            </div>
                                             <div class="col-md-5">
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
@@ -116,90 +109,244 @@
                                                         <p class="rateperh">Job Success Rate</p>
                                                         <p class="perhourprice">90%</p>
                                                     </div>
-                                                 </div>
+                                                </div>
                                             </div>
-
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
 
-                                                    <a href="#" class="btn-products-s">Shortlist</a>
+                                                    <a href="{{route('buyer.proposal.shortlist',$proposal->id)}}" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
                                             </div>
-                                     </div>
-
-
-                                <!--===  Bio Profile Section End ===-->
-
+                                        </div>
+                                        <!--===  Bio Profile Section End ===-->
                                         <!--Product Description Start-->
-                                            <div class="row p_desription">
-                                                <div class="col-md-12">
-                                                    @isset($proposal->cover_letter)
-                                                    <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
-                                                    @endisset
+                                        <div class="row p_desription" style="text-align: left;">
+                                            <div class="col-md-12">
+                                                @isset($proposal->cover_letter)
+                                                <p> <strong>Cover Letter -  </strong> {{$proposal->cover_letter}}</p>
+                                                @endisset
+                                            </div>
+                                        </div>
+                                        <!--Product Description End-->
+                                        <!--Skills Section Start-->
+                                        <div class="row skills-c">
+                                            <div class="col-md-6 col-lg-6" style="text-align: left;">
+
+                                                <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
+
+                                                @foreach($proposal->user->skills as $skill)
+
+                                                    <ul class="skills-listing">
+
+                                                        <li>{{$skill->name}} </li>
+
+                                                    </ul>
+
+                                                @endforeach
+                                            </div >
+                                            @isset($proposal->attachment)
+                                            <div class="col-md-6 col-lg-6">
+                                                <div class="attachment">
+                                                    <div class="service_subtitle2 mt-20 heading-text">
 
 
+                                                            <h2> Attachments</h2>
+                                                        <div class="row">
+                                                            @foreach($proposal->attachment as $document)
+                                                            <ul class="skills-listing col-lg-4 col-md-4">
+
+                                                                <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
+
+
+                                                            </ul>
+
+                                                        @endforeach
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            @endisset
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    @endforeach
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="Shortlisted">
+
+                                <div class="card-text text-center">
+                                    <div class="row card-text">
+                                        <div class="col-12"></div>
+                                        <div class="col-md-2">
+                                            <h2 class="prosals-h">Shortlisted Proposals</h2>
+                                        </div>
+                                        <div class="col-md-10 sorting-mbl">
+                                            <div class="row">
+                                                <!--Sorting Section Start-->
+                                                <div class="col-md-4">
+                                                    <div id="custom-search-input">
+                                                        <div class="input-group">
+                                                            <input type="text" class="search-query form-control" placeholder="Search" />
+                                                            <span class="input-group-btn">
+                                                            <button type="button" disabled>
+                                                                <span class="fa fa-search"></span>
+                                                            </button>
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select name="Best match" id="bestmatch">
+                                                        <option>Best match</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                    </select>
+                                                </div>
+                                                <!--Sorting Section End-->
+                                                <div class="col-md-4">
+                                                    <select name="Filters" id="Filters">
+                                                        <option>Filters</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                        <option>1</option>
+                                                    </select>
                                                 </div>
                                             </div>
-
-                                            <!--Product Description End-->
-
-                         <!--Skills Section Start-->
-
-                            <div class="row skills-c">
-                                <div class="col-md-6 col-lg-6">
-
-                                    <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
-
-                                    @foreach($proposal->user->skills as $skill)
-                                        
-                                        <ul class="skills-listing">
-
-                                            <li>{{$skill->name}} </li>
-
-                                        </ul>
-
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6 col-lg-6">
-                                    <div class="attachment">
-                                        <div class="service_subtitle2 mt-20 heading-text">
-                                            @isset($proposal->attachment)
-                                                @foreach($proposal->attachment as $document)
-                                                <h2> Attachments</h2>
-                                            
-                                                <ul class="skills-listing">
-            
-                                                    <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->name}} </a>
-
-            
-                                                </ul>
-                                                    @endforeach
-                                            @endisset
-
-                                                {{-- <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a685426951662363269.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>Golf Bag.jpeg </a>
-                                                <a href="https://stgdureforcestg.blob.core.windows.net/attachments/6315a6867b4181662363270.jpeg" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>631239f40174d1662138868.jpeg </a> --}}
-
                                         </div>
-                                  </div>
+                                    </div>
+                                    <!--Bio Profile Section Start-->
+                                    @foreach ($short_listed_proposals as $short_listed_proposal)
+                                        <div class="" >
+                                            <div class="row biorow">
+                                                <div class="col-md-3">
+                                                    <div class="row borderleftc">
+                                                        <div class="col-md-4">
+                                                             <img alt="User Pic" src="{{ !empty($short_listed_proposal->user->user_basic->profile_picture)? $short_listed_proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
+                                                        </div>
 
+                                                        <div class="col-md-8">
+
+                                                            <h4 class="pname-c">
+
+                                                                {{$short_listed_proposal->user->full_name}}
+
+                                                            </h4>
+
+                                                            <p class="pdesination-c"> {{$short_listed_proposal->user->job_title}} </p>
+
+                                                            <p class="plocation"><span style="margin-right: 60px;">{{$short_listed_proposal->user->location }}</span></p>
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row btns-per">
+                                                        <div class="col-md-4">
+                                                            <p class="rateperh">Rate Per Hour</p>
+
+                                                            <p class="perhourprice">${{$short_listed_proposal->user->rate_per_hour}} / Per Hour</p>
+
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p class="rateperh">Total Earnings</p>
+                                                            <p class="perhourprice">$120k + earned</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p class="rateperh">Job Success Rate</p>
+                                                            <p class="perhourprice">90%</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row btns-s">
+                                                        <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
+                                                        <a href="{{route('buyer.send.offer',$short_listed_proposal->uuid)}}" class="btn-products-s">Send Offer</a>
+                                                        <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
+                                                        <a href="#" class="btn-products-s phire">Hire</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--===  Bio Profile Section End ===-->
+                                            <!--Product Description Start-->
+                                            <div class="row p_desription" style="text-align: left;">
+                                                <div class="col-md-12">
+                                                    @isset($short_listed_proposal->cover_letter)
+                                                        <p> <strong>Cover Letter -  </strong> {{$short_listed_proposal->cover_letter}}</p>
+                                                    @endisset
+                                                </div>
+                                            </div>
+                                            <!--Product Description End-->
+                                            <!--Skills Section Start-->
+                                            <div class="row skills-c">
+                                                <div class="col-md-6 col-lg-6" style="text-align: left;">
+
+                                                    <h2>Has {{count($short_listed_proposal->user->skills)}} relevant skills to your job</h2>
+
+                                                    @foreach($short_listed_proposal->user->skills as $skill)
+
+                                                        <ul class="skills-listing">
+
+                                                            <li>{{$skill->name}} </li>
+
+                                                        </ul>
+
+                                                    @endforeach
+                                                </div >
+                                                @isset($short_listed_proposal->attachment)
+                                                    <div class="col-md-6 col-lg-6">
+                                                        <div class="attachment">
+                                                            <div class="service_subtitle2 mt-20 heading-text">
+
+
+                                                                <h2> Attachments</h2>
+                                                                <div class="row">
+                                                                    @foreach($short_listed_proposal->attachment as $document)
+                                                                        <ul class="skills-listing col-lg-4 col-md-4">
+
+                                                                            <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
+
+
+                                                                        </ul>
+
+                                                                    @endforeach
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                            @endisset
+                                                <!--Skills Section End-->
+                                            </div>
+                                            <hr>
+                                            @endforeach
+                                        </div>
                                 </div>
 
-                                    <!--Skills Section End-->
-                            </div>
-
-                          <hr>
-
-                             @endforeach
                         </div>
-                    </div>
-                  </div>
-               </div>
-            </div>
-            </div>
-         </article>
+                        <div class="tab-pane" id="Messaged">
+                            <p class="card-text text-center">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <h3 class="display-1 fw-bold">Messaged Data Not Found</h3>
+                            </div>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+        </div>
+                <!-- Tabs content -->                                            
       </div>
    </div>
 </section>
@@ -211,6 +358,34 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    .nav-link.active {
+        background: -o-linear-gradient(left, #1c6a6a 0%, #1c6a6a 100%) !important;
+        background: linear-gradient(to right, #1c6a6a 0%, #1c6a6a 100%) !important;
+    }
+    .nav-tabs {
+        margin: 0px !important;
+        border-bottom: 1px solid #e1e7ec;
+    }
+    .card-header {
+        padding: 0.8rem 1rem !important;
+        margin-bottom: 0 !important;
+        background-color: rgba(0,0,0,0) !important;
+        border-bottom: 0px solid rgba(0,0,0,.125) !important;
+    }
+    .invite-container {
+        border: 1px solid #CBDFDF;
+        padding: 0px 0px 0px 0px;
+    }
+    .container {
+        width: 100%;
+        padding: 0px !important;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .card {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
     .attachment{
         display: inline-block;
     width: 100%;
@@ -317,19 +492,19 @@ p.perhourprice {
 .borderleftc:after{
     display: none;
 }
-.plocation {
-    font-weight: 600;
-    font-size: 14px;
-    position: relative;
-    padding-left: 0px;
-    margin-top: 2px;
-    margin-bottom: 40px !important;
-    margin-top: 16px;
-    display: inline-block;
-}
-p.plocation:before{
-    left: -24px;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 14px;*/
+/*    position: relative;*/
+/*    padding-left: 0px;*/
+/*    margin-top: 2px;*/
+/*    margin-bottom: 40px !important;*/
+/*    margin-top: 16px;*/
+/*    display: inline-block;*/
+/*}*/
+/*p.plocation:before{*/
+/*    left: -24px;*/
+/*}*/
 .row.btns-s {
     position: relative;
     left: 0px;
@@ -496,25 +671,25 @@ select#bestmatch {
     top: 0px;
 }
 
-.plocation {
-    font-weight: 600;
-    font-size: 12px !important;
-    line-height: 18px;
-    color: #000000;
-    position: relative;
-    padding-left: 20px !important;
-    margin-top: 12px !important;
-}
-p.plocation:before {
-    width: 20px;
-    height: 20px;
-    background: red;
-    position: absolute;
-    left: 0px !important;
-    top: 4px !important; 
-    content: '';
-    background: url(/assets/images/job/location-icon.png) no-repeat;
-}
+/*.plocation {*/
+/*    font-weight: 600;*/
+/*    font-size: 12px !important;*/
+/*    line-height: 18px;*/
+/*    color: #000000;*/
+/*    position: relative;*/
+/*    padding-left: 20px !important;*/
+/*    margin-top: 12px !important;*/
+/*}*/
+/*p.plocation:before {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    background: red;*/
+/*    position: absolute;*/
+/*    left: 0px !important;*/
+/*    top: 4px !important; */
+/*    content: '';*/
+/*    background: url(/assets/images/job/location-icon.png) no-repeat;*/
+/*}*/
 }
 @media only screen and (max-width:320px){
 a.btn-products-s {

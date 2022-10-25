@@ -90,7 +90,7 @@
                             <div class="col-lg-12 text-center">
                                 <div class="account-item mt-10">
                                     <label
-                                        ><span class="span-color">@lang('Already Have An Account')?</span>
+                                        ><span class="span-color">@lang("Don't Have An Account")?</span>
                                         <a
                                             href="{{ route('user.register') }}"
                                             class="text--base"

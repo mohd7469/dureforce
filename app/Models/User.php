@@ -59,7 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithAll($query){
 
-        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills');
+        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills')->with('portfolios');
 
     }
 
@@ -104,6 +104,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Software::class)->where('status', 1);
     }
 
+    public function portfolios()
+    {
+        return $this->hasMany(UserPortFolio::class);
+       
+    }
     public function jobs()
     {
         // return $this->hasMany(Job::class)->where('status', 1);
@@ -350,6 +355,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(UserBasic::class);
 
+    }
+    public function invitations()
+    {
+        return $this->hasMany(InviteFreelancer::class);
+    }
+    public function save_job()
+    {
+        return $this->belongsToMany(Job::class, 'user_saved_jobs');
     }
 
 }   

@@ -315,12 +315,14 @@
             rate_per_hour.on('focusout', function(){
 
                 var fee=rate_per_hour.val()*0.20;
-                system_fee.html('$'+Math.round(fee,2));
+                system_fee.html('$'+financial(fee));
 
             });
 
         });
-
+        function financial(x) {
+            return Number.parseFloat(x).toFixed(2);
+        }
         function getCountryCities(country_id)
         {
             $.ajax({
@@ -517,10 +519,7 @@
                                                 <label class="mt-4">School / College / University <span class="imp">*</span></label>
                                                 <input type="text" name="educations[`+edu_row_index+`][school_name]" placeholder="E.g. University Of London">
                                             </div>
-                                            <div class="col-md-12">
-                                                <label class="mt-4">Education <span class="imp">*</span></label>
-                                                <input type="text" name="educations[`+edu_row_index+`][education]" placeholder="E.g. University Of London">
-                                            </div>
+                                           
 
                                             <div class="row">
                                                 

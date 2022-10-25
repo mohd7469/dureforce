@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\DOD;
+use App\Models\InviteFreelancer;
 use App\Models\JobType;
 use App\Models\Module;
 use App\Models\ProjectStage;
@@ -49,7 +50,7 @@ class JobController extends Controller
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
-        $data['experience_levels'] = Rank::select(['id', 'level'])->get();
+        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
         $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
 
@@ -68,7 +69,7 @@ class JobController extends Controller
 
     public function create(Request $request)
     {
-
+    
         $pageTitle = "Create Job";
         $data = $this->getJobData();
 
@@ -83,7 +84,7 @@ class JobController extends Controller
         $user = Auth::user();
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod', 'status','proposal')->latest()->paginate(getPaginate());
+        $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
 
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
@@ -125,9 +126,9 @@ class JobController extends Controller
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = Auth::user();
-
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
+           
 
             $job = Job::create([
                 "user_id" => $user->id,
@@ -165,7 +166,7 @@ class JobController extends Controller
                 foreach ($request->file as $file) {
 
                     $this->fileValidate($file);
-                    try {
+
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
@@ -178,13 +179,11 @@ class JobController extends Controller
                         $document->is_published = "Active";
                         $job->documents()->save($document);
 
-                    } catch (\Exception $exp) {
-                        return response()->json(["error" => $exp->getMessage()]);;
-                    }
 
                 }
             }
             DB::commit();
+            session()->put('notify', ["Job Created Successfully"]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
@@ -203,7 +202,7 @@ class JobController extends Controller
         $data = $this->getJobData();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $data['sub_categories'] = $sub_category;
-        $data['documents']=json_encode($job->documents->toArray());
+        $data['documents'] = json_encode($job->documents->toArray());
         $pageTitle = "Job Update";
 
         return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
@@ -265,7 +264,6 @@ class JobController extends Controller
                 foreach ($request->file as $file) {
 
                     $this->fileValidate($file);
-                    try {
                         $filename = uploadAttachments($file, $path);
 
                         $file_extension = getFileExtension($file);
@@ -278,10 +276,7 @@ class JobController extends Controller
                         $document->is_published = "Active";
                         $job->documents()->save($document);
 
-                    } catch (\Exception $exp) {
-                        $notify[] = ['error', 'Image could not be uploaded.'];
-                        return back()->withNotify($notify);
-                    }
+
 
                 }
             }
@@ -352,37 +347,36 @@ class JobController extends Controller
         }
     }
 
-   
 
-    public function singleJob($uuid){
-        
+    public function singleJob($uuid)
+    {
+
 
         $job = Job::where('uuid', $uuid)->withAll()->first();
-        
-        
+
+
         $skillCats = SkillCategory::select('name', 'id')->get();
 
         foreach ($skillCats as $skillCat) {
 
-         $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
 
         }
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $pageTitle = "All Jobs";
-        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job','data'));
+        return view('templates.basic.jobs.single-job', compact('pageTitle', 'job', 'data'));
 
     }
 
     public function downnloadAttach(Request $request)
     {
 
-       
+
         $file = TaskDocument::find($request->id);
         $filename = $file->name;
         $tempImage = tempnam(sys_get_temp_dir(), $filename);
-        copy($file->url, $tempImage);     
-
+        copy($file->url, $tempImage);
 
 
         return response()->download($tempImage, $filename);
@@ -423,24 +417,27 @@ class JobController extends Controller
         }
 
     }
-    
+
     public function product()
     {
-        
+
         $proposals = Proposal::WithAll()->get();
         $pageTitle = "Product";
 
-        return view('templates.basic.jobs.all-proposal', compact('pageTitle','proposals'));
+        return view('templates.basic.jobs.all-proposal', compact('pageTitle', 'proposals'));
 
     }
 
-    public function inviteFreelancer($job_uuid){
+    public function inviteFreelancer($job_uuid)
+    {
+        $job = Job::where('uuid', $job_uuid)->with('invited_freelancer')->first();
 
-        $freelancers = User::role('Freelancer')->with('skills','education','country','user_basic')->get();
-        //dd($freelancers);
-        $job=Job::where('uuid',$job_uuid)->first();
+        $user_ids = $job->invited_freelancer->pluck('user_id');
+
+        $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic')->get();
+        $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
         $pageTitle = "inviteProposal";
-        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle','job','freelancers'));
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle', 'job', 'freelancers','invited_freelancers'));
 
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Http\Controllers\Admin\ServiceAttributeController;
 use App\Http\Controllers\Job\JobController;
 use App\Models\User;
@@ -25,7 +24,6 @@ Route::middleware('verified')->group(function () {
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
 
 
-
 });
 
 // --------------------------------------------------------------------------------------------------------------
@@ -47,13 +45,16 @@ Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
-Route::view('/invited-freelancer', 'templates.basic.jobs.invited-freelancer');
 // Offer page design design
 Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
+//Seller Add Portfolio pages
 
 
+Route::view('/portfolio', 'templates.basic.portfolio.index');
+
+Route::view('/job-listing', 'templates.basic.offers.myjob');
 
 Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('paypal', 'Paypal\ProcessController@ipn')->name('Paypal');
@@ -541,7 +542,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('verified')->group(function () {
 
-        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class,'home'])->name('home')->middleware(['is-profile-completed']);
+        Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'home'])->name('home')->middleware(['is-profile-completed']);
 
         Route::get('authorization', 'AuthorizationController@authorizeForm')->name('authorization');
         Route::get('resend-verify', 'AuthorizationController@sendVerifyCode')->name('send.verify.code');
@@ -554,7 +555,6 @@ Route::name('user.')->prefix('user')->group(function () {
 
             Route::middleware('is-profile-completed')->group(function () {
 
-              
 
                 Route::get('profile-setting', 'UserController@profile')->name('profile.setting');
                 Route::post('profile-setting', 'UserController@submitProfile');
@@ -647,7 +647,6 @@ Route::name('user.')->prefix('user')->group(function () {
         });
 
 
-
         Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
         Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
         Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
@@ -673,11 +672,9 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('software/document/download/{id}', 'HomeController@buyerSoftwareDocumentFile')->name('buyer.software.document.download');
             Route::get('hire/employees', 'HomeController@hireEmploy')->name('buyer.hire.employ');
             Route::get('hire/employees/details/{id}', 'HomeController@hireEmployDetails')->name('buyer.hire.employ.details');
- 
 
 
         });
-
 
 
         //JobBiding
@@ -765,3 +762,27 @@ Route::get('/add/{id}', 'SiteController@adclicked')->name('add.clicked');
 Route::post('/subscribe', 'SiteController@subscribe')->name('subscribe');
 Route::get('{slug}/{id}', 'SiteController@footerMenu')->name('footer.menu');
 Route::get('/skills', 'SkillCategoryController@skills')->name('skills');
+
+Route::get('/profile/view', 'ProfileController@buyerProfile');
+
+
+
+
+
+
+Route::name('buyer.basic.')->prefix('buyer')->group(function () {
+    
+    Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile');
+    Route::post('/profle/password/change', 'Buyer\ProfileController@buyerprofilePasswordChange')->name('profile.password.change');
+    Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+    Route::post('/user-profile', 'Buyer\ProfileController@buyersaveUserBasics')->name('profile.save');
+    Route::post('/save-payment-methods', 'Buyer\ProfileController@buyersavePaymentMethod')->name('profile.save.payment.methods');
+    // Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
+    Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
+    Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
+    Route::post('/save-company', 'Buyer\ProfileController@buyersaveCompany')->name('profile.save.company');
+    Route::delete('/buyer-payment-destroy/{id}', 'Buyer\ProfileController@buyerdestroy')->name('profile.payment.destroy');
+ 
+    
+    
+});

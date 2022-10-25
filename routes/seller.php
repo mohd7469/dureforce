@@ -17,24 +17,36 @@ Route::name('seller.')->group(function () {
                 Route::post('/experience/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveExperience'])->name('experience.save');
                 Route::post('/experience/add', [\App\Http\Controllers\Seller\ProfileController::class,'addExperience'])->name('experience.add');
                 Route::post('/experience/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editExperience'])->name('experience.edit');
-                
+                Route::post('/education/add', [\App\Http\Controllers\Seller\ProfileController::class,'addEducation'])->name('education.add');
+                Route::post('/education/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editEducation'])->name('education.edit');
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
                 Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view');
+                Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
+                Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
+                Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
 
             });
 
             // profile completed  routes
             Route::middleware('is-profile-completed')->group(function () {
 
-                Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing');
+                Route::get('/jobs-listing-old/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
+                Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'indexNew'] )->name('jobs.listing');
+                Route::get('/save-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveJob'] )->name('jobs.save.listing');
+                Route::get('/save-single-job-view/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveSingleJobView'] )->name('jobs.save.single.view.listing');
+                Route::get('/remove-saved-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'removeSavedJob'] )->name('jobs.remove.saved.listing');
+                Route::get('/remove-saved-single-job-view/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'removeSavedSingleJobView'] )->name('jobs.remove.saved.single.view.listing');
                 Route::get('/job-detail/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'jobView'] )->name('job.jobview');
+                Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
                
                 Route::name('proposal.')->group(function () {
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
                     Route::post('/validate-proposal',      [\App\Http\Controllers\Seller\ProposalController::class,'validatePropsal'] )->name('validate');
                     Route::post('proposal-store/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'savePropsal'])->name('store');
                     Route::get('proposal-lists',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');
+
                 });
+
 
             });
 

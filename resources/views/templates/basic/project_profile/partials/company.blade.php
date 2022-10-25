@@ -30,27 +30,20 @@
                                 <input type="file" name="company_logo" id="img-upload"
                                     accept="image/png, image/gif, image/jpeg" class="imgInp"
                                     onchange="previewCompanyFile(this)"/>
-                                <img width="100" height="100" id="preview-img-company"
-                                    src="{{ getImage('assets/images/default.png') }}" />
-                                @if (!empty(@$user->company->logo))
-                                    <img class="img-box"
-                                        id="preview-img-company-edit"
-                                        src="{{ asset('assets/images/user/profile') . '/' . $user->company->logo }}"
-                                        alt="">
-                                @endif
+                                    <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
                             </div>
                           
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone  </label>
-                            <input type="number" name="phone" value="{{ old('name', @$user->company->number) }}" value=""
+                            <label class="mt-4">Company Phone*  </label>
+                            <input type="number" step="any" name="phone" value="{{ old('name', @$user->company->number) }}" value=""
                                 placeholder=""  />
                         </div>
                         <div class="col-md-12">
                             
                             <div class="col-md-12">
-                                <label class="mt-4">Company Email Address </label>
-                                <input type="text" name="email" pattern="\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b" value="{{ old('name', @$user->company->email) }}"placeholder="" />
+                                <label class="mt-4">Company Email Address* </label>
+                                <input type="text" name="email"  value="{{ old('name', @$user->company->email) }}"placeholder="" />
                             </div>
                             <div class="col-md-12">
                                 
@@ -81,7 +74,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT  </label>
+                                <label class="mt-4">Company VAT*  </label>
                                 <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
                                     placeholder=""  />
                             </div>

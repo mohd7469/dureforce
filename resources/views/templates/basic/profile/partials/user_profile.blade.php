@@ -17,8 +17,9 @@
                <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                   class="imgInp" onchange="previewFile(this)"
                   title="" />
-               <image width="100" height="100" id="preview-img"
-                  src="{{ getImage('assets/images/default.png') }}" />
+               <!-- <image width="100" height="100" id="preview-img"
+                  src="{{ getImage('assets/images/default.png') }}" /> -->
+                <img class="card-img-top image-ui" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
             </div>
             <div class="row">
                <div
@@ -151,16 +152,23 @@
                            class="col-md-6 col-sm-12"
                            >
                            <label class="mt-4"
-                              >Language
+                              >Language 
                            <span
                               class="imp"
-                              >*</span
-                              ></label
+                              >*
+                              
+                              </span
+                              
                               >
+                              <small>{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  ' (English language is mandatory) ' : '' }}</small>
+                              </label
+                              >
+
                            <select
                               name="languages[{{$key}}][language_id]"
                               class="form-control select-lang "
                               id="languages.{{$key}}.language_id"
+                              style="{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'pointer-events: none; ' : '' }}"
                               >
                               <option
                                  value=""
@@ -174,6 +182,7 @@
                                  <option
                                     value="{{$language->id}}"
                                     {{ $language->id== $user_language->language_id ? 'selected' :'' }}
+                                   
                                  >
                                  {{ $language->iso_language_name }}
                               </option>
@@ -239,20 +248,21 @@
                         class="col-md-6 col-sm-12"
                         >
                         <label class="mt-4"
-                           >Language
+                           >Language 
                         <span
                            class="imp"
-                           >*</span
-                           ></label
+                           >*</span>
+                           <small> (English language is mandatory)</small>
+                           </label
                            >
                         <select
                            name="languages[0][language_id]"
                            class="form-control select-lang "
                            id="languages.0.language_id"
+                          style="pointer-events: none;"
                            >
                            <option
-                              value=""
-                              selected=""
+                              
                               >
                               Spoken
                               Language(s)
@@ -261,7 +271,7 @@
                            @foreach ($languages as $language)
                            <option
                               value="{{$language->id}}"
-                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected' : '' }}
+                              {{ $language->id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'selected ' : '' }}
                            >
                               {{ $language->iso_language_name }}
                            </option>
