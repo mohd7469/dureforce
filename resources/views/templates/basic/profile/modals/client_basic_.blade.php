@@ -322,3 +322,32 @@
        </div>
     </div>
  </div>
+
+ <style>
+    .modal-header .btn-close {
+        margin-bottom: 0px !important;
+    }
+    .modal-dialog{
+       max-width:600px !important;
+    }
+    .setProfile .profile-img img{
+       width:100px;
+       height:100px;
+       margin:0px !important;
+    }
+    .mt-4 {
+    margin-top: 1rem!important;
+    float:left;
+}
+.modal-body {
+    max-height: calc(88vh - 35px);
+    }
+    .setProfile .profile-img{
+       height:105px;
+    }
+    .setProfile .profile-img {
+    height: 105px;
+    position: relative;
+    left: 120px;
+}
+ </style>
