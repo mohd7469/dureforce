@@ -337,7 +337,7 @@
         {{-- profile modal  --}}
         <div class="modal fade " id="editprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-profile">
 
                 <div class="modal-content">
 
@@ -345,7 +345,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body modal-body-profile">
                         <form action="" id="form-basic-save">
                             @csrf
                             <div class="row">
@@ -540,13 +540,13 @@
         </div>
         {{-- Add Experience Model --}}
         <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
                         <h5 class="modal-title" id="exampleModalLabel">Experience</h5>
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body modal-body-profile">
                         <form action="{{route('seller.profile.experience.add')}}" id="experience_form" method="post">
             
                             @csrf
@@ -629,13 +629,13 @@
 
         {{-- Education Model --}}
         <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
                         <h5 class="modal-title" id="exampleModalLabel">Education</h5>
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body modal-body-profile">
                         <form action="{{route('seller.profile.education.add')}}" id="education_form" method="post">
             
                             @csrf
