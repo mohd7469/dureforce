@@ -520,7 +520,7 @@
             },
         };
 
-        var chart = new ApexCharts(document.querySelector("#withdraw-line"), options);
+        // var chart = new ApexCharts(document.querySelector("#withdraw-line"), options);
 
         chart.render();
 
@@ -600,9 +600,7 @@
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: @json($chart['user_browser_counter']->keys()),
                 datasets: [{
-                    data: {{ $chart['user_browser_counter']->flatten() }},
                     backgroundColor: [
                         '#ff7675',
                         '#6c5ce7',
@@ -665,9 +663,7 @@
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: @json($chart['user_os_counter']->keys()),
                 datasets: [{
-                    data: {{ $chart['user_os_counter']->flatten() }},
                     backgroundColor: [
                         '#ff7675',
                         '#6c5ce7',
@@ -729,9 +725,7 @@
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: @json($chart['user_country_counter']->keys()),
                 datasets: [{
-                    data: {{ $chart['user_country_counter']->flatten() }},
                     backgroundColor: [
                         '#ff7675',
                         '#6c5ce7',

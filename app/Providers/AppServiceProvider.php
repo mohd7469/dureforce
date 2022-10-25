@@ -65,15 +65,15 @@ class AppServiceProvider extends ServiceProvider
         
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
-                'banned_users_count'           => User::banned()->count(),
-                'email_unverified_users_count' => User::emailUnverified()->count(),
-                'sms_unverified_users_count'   => User::smsUnverified()->count(),
-                'pending_ticket_count'         => SupportTicket::whereIN('status', [0,2])->count(),
-                'pending_deposits_count'    => Deposit::pending()->count(),
-                'pending_withdraw_count'    => Withdrawal::pending()->count(),
-                'servicePending'    => Service::where('status', 0)->count(),
-                'softwarePending'    => Software::where('status', 0)->count(),
-                'jobPending'    => Job::where('status', 0)->count(),
+                'banned_users_count'           => User::all()->count(),
+                'email_unverified_users_count' => User::all()->count(),
+                'sms_unverified_users_count'   => User::all()->count(),
+                'pending_ticket_count'         => SupportTicket::all()->count(),
+                'pending_deposits_count'    => Deposit::all()->count(),
+                'pending_withdraw_count'    => Withdrawal::all()->count(),
+                'servicePending'    => Service::all()->count(),
+                'softwarePending'    => Software::all()->count(),
+                'jobPending'    => Job::all()->count(),
             ]);
         });
 

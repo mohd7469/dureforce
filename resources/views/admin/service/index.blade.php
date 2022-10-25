@@ -29,14 +29,14 @@
                                     </div>
                                 </td>
                                 <td data-label="@lang('Seller')">
-                                    <span class="font-weight-bold">{{$service->user->fullname}}</span>
+                                    <span class="font-weight-bold">{{ isset($service->user->fullname) ? $service->user->fullname : ''; }}</span>
                                     <br>
                                     <span class="small">
-                                    <a href="{{ route('admin.users.detail', $service->user_id) }}"><span>@</span>{{ $service->user->username }}</a>
+                                    <a href="{{ route('admin.users.detail', $service->user_id) }}"><span>@</span>{{ isset($service->user->username) ? $service->user->username : ''; }}</a>
                                     </span>
                                 </td>
                                 <td data-label="@lang('Category / SubCategory')">
-                                    <span class="font-weight-bold">{{__($service->category->name)}}</span>
+                                    <span class="font-weight-bold">{{isset($service->category->name) ? __($service->category->name): '';}}</span>
                                     <br>
                                     @if($service->sub_category_id)
                                         <span>{{__($service->subCategory->name)}}</span>
