@@ -9,12 +9,12 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
     <form action="{{ route('buyer.profile.save.payment.methods') }}" method="POST" id="payment_methods">
         @csrf
         <div class="container-fluid welcome-body">
-            <input type="hidden" name="payment_id" value="{{ request()->get('id') }}">
+            <input type="hidden" name="update_payment_id" value="{{ request()->get('id') }}">
             <h1 class="mb-4">Payment Methods</h1>
             <span class="cmnt col-md-12 pb-4">
                 Add or delete payment methods for your account.</span>
 
-            <h5 class="mt-3 d-flex">Credit / Debit Cards (Stripe)
+            <h5 class="mt-3 d-flex">Credit / Debit Cards (Stripe) 
                 <figure class="mx-2">
                     <svg width="147" height="23" viewBox="0 0 147 23" fill="none" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -116,6 +116,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                             <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
                                 />
                         </div>
+                       
 
                         
 
