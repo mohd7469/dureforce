@@ -54,22 +54,7 @@
                                                 placeholder="E.g. University Of London"
                                         />
                                     </div>
-                                    <div class="col-md-12">
-                                        <label class="mt-4"
-                                        >Education
-                                            <span
-                                                    class="imp"
-                                            >*</span
-                                            ></label
-                                        >
-                                        <input
-                                                name="educations[{{$key}}][education]"
-                                                id="educations.{{$key}}.education"
-                                                value="{{$Usereducation['education']}}"
-                                                type="text"
-                                                placeholder="E.g. University Of London"
-                                        />
-                                    </div>
+                                   
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label class="mt-4">Degree <span class="imp">*</span>
@@ -222,23 +207,7 @@
                                         placeholder="E.g. University Of Lo sdssdndon"
                                 />
                             </div>
-                            <div class="col-md-12">
-                                <label class="mt-4"
-                                >Education
-                                    <span
-                                            class="imp"
-                                    >*</span
-                                    ></label
-                                >
-                                <input
-
-                                        name="educations[0][education]"
-                                        id="educations.0.education"
-                                        value=""
-                                        type="text"
-                                        placeholder="E.g. University Of London"
-                                />
-                            </div>
+                           
                             <div class="row">
                                 
                                 <div class="col-md-6">

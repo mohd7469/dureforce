@@ -595,6 +595,7 @@
                 });
              
                 $('.preview_portfolio').click(function(){
+
                     $('#portfolio_title').html($('#project_name').val());
                     $('#portfolio_completion_date').html($('#project_completion_date').val());
                     $('#video_url_id').val();
@@ -621,6 +622,13 @@
                     formPostProcess(add_project,preview_tab);
 
                 });
+
+                $('.back-to-add-project-btn').click(function(){
+                    formPostProcess(add_project,detail_tab);
+
+                });
+
+                
 
 
                 $(document).on('click', '.add_details', function() {
@@ -652,6 +660,7 @@
                     }
                 });  
             }
+            
             function displayAlertMessage(message)
             {
                 iziToast.error({
