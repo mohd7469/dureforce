@@ -32,11 +32,11 @@
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Status')
-                            @if (@$software->user->status == 1)
+                      
                                 <span class="badge badge-pill bg--success">@lang('Active')</span>
-                            @elseif(@$software->user->status == 0)
+                          
                                 <span class="badge badge-pill bg--danger">@lang('Banned')</span>
-                            @endif
+                        
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">

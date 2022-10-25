@@ -56,19 +56,19 @@
                             </td>
 
                             <td data-label="@lang('Status')">
-                                @if($job->status == 1)
+                                @if($job->status->id == 1)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                     <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status == 2)
+                                @elseif($job->status->id == 2)
                                     <span class="font-weight-normal badge--warning">@lang('Closed')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status == 3)
+                                @elseif($job->status->id == 3)
                                     <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status == 0)
+                                @elseif($job->status->id == 0)
                                     <span class="font-weight-normal badge--primary">@lang('Pending')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
@@ -82,7 +82,7 @@
                             </td>
 
                             <td data-label="@lang('Action')">
-                                @if($job->status == 0)
+                                @if($job->status->id == 0)
                                     <button class="icon-btn btn--success ml-1 approved" data-toggle="tooltip" data-id="{{$job->id}}" data-original-title="@lang('Approved')">
                                         <i class="las la-check"></i>
                                     </button>
@@ -92,7 +92,7 @@
                                     </button>
                                 @endif
 
-                                @if($job->status == 1)
+                                @if($job->status->id == 1)
                                     <button class="icon-btn btn--warning ml-1 closed" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">@lang('Closed')</button>
                                 @endif
 

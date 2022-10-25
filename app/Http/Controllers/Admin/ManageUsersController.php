@@ -33,7 +33,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Active Users';
         $emptyMessage = 'No active user found';
-        $users = User::active()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -41,7 +41,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Banned Users';
         $emptyMessage = 'No banned user found';
-        $users = User::banned()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -49,7 +49,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Email Unverified Users';
         $emptyMessage = 'No email unverified user found';
-        $users = User::emailUnverified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
     public function emailVerifiedUsers()
@@ -65,7 +65,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'SMS Unverified Users';
         $emptyMessage = 'No sms unverified user found';
-        $users = User::smsUnverified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -83,7 +83,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Users with balance';
         $emptyMessage = 'No sms verified user found';
-        $users = User::where('balance','!=',0)->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -437,9 +437,9 @@ class ManageUsersController extends Controller
             'subject' => 'required|string|max:190',
         ]);
 
-        foreach (User::where('status', 1)->cursor() as $user) {
-            sendGeneralEmail($user->email, $request->subject, $request->message, $user->username);
-        }
+        // foreach (User::where('status', 1)->cursor() as $user) {
+        //     sendGeneralEmail($user->email, $request->subject, $request->message, $user->username);
+        // }
 
         $notify[] = ['success', 'All users will receive an email shortly.'];
         return back()->withNotify($notify);
