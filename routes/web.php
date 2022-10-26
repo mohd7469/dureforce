@@ -10,7 +10,7 @@ Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
 
-Route::get('/user/test', 'CommonProfileController@userTest');
+Route::get('/user/chat', 'CommonProfileController@userChat');
 
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them

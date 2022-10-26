@@ -290,9 +290,9 @@ class CommonProfileController extends Controller
         }
     }
 
-    public function userTest()
+    public function userChat()
     {
         $pageTitle='Chat Container';
-        return Inertia::render('ExampleComponent',['pageTitle' =>$pageTitle]);
+        return Inertia::render('Chat/ChatContainerComponent',['pageTitle' =>$pageTitle]);
     }
 }

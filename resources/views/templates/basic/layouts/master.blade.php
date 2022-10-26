@@ -29,10 +29,7 @@
           rel="stylesheet"/>
 </head>
 <body>
-    @if (isset($page))
-            @inertia
-        </div>
-    @endif
+    
    
    
    
@@ -52,6 +49,10 @@
 
 
 @include($activeTemplate.'partials.user_header')
+
+@if (isset($page))
+    @inertia   
+@endif
 @yield('content')
 @include($activeTemplate.'partials.footer')
 

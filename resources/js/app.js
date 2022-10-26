@@ -5,8 +5,10 @@
  */
 
 require('./bootstrap');
-
+import {InertiaApp} from '@inertiajs/inertia-vue'
+import Vue from 'vue';
 window.Vue = require('vue').default;
+Vue.use(InertiaApp)
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,6 +29,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-});
+ 
+ const app = document.getElementById('app')
+ 
+ new Vue({
+     render: h => h(InertiaApp, {
+         props: {
+             initialPage: JSON.parse(app.dataset.page),
+             resolveComponent: name => require(`./components/${name}`).default,
+         },
+     }),
+ }).$mount(app)
+
