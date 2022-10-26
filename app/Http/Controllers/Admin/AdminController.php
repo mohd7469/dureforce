@@ -158,8 +158,15 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             try {
-                $old = $user->image ?: null;
-                $user->image = uploadImage($request->image, imagePath()['profile']['admin']['path'], imagePath()['profile']['admin']['size'], $old);
+
+                $path = imagePath()['attachments']['path'];
+                $file = $request->image;
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                // $user->image->update(['image' => $url]);
+                //$old = $user->image ?: null;
+                //$user->image = uploadImage($request->image, imagePath()['profile']['admin']['path'], imagePath()['profile']['admin']['size'], $old);
             } catch (\Exception $exp) {
                 $notify[] = ['error', 'Image could not be uploaded.'];
                 return back()->withNotify($notify);
@@ -168,6 +175,7 @@ class AdminController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->image = $url;
         $user->save();
         $notify[] = ['success', 'Your profile has been updated.'];
         return redirect()->route('admin.profile')->withNotify($notify);
