@@ -69,7 +69,9 @@
             <li class="dropdown">
                 <button type="button" class="" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                   <span class="navbar-user">
-                    <span class="navbar-user__thumb"><img src="{{ getImage('assets/admin/images/profile/'. auth()->guard('admin')->user()->image) }}" alt="image"></span>
+                    <span class="navbar-user__thumb">
+                      <img src="{{ !empty(auth()->guard('admin')->user()->image)? auth()->guard('admin')->user()->image: getImage('assets/images/default.png') }}" alt="Profile image">
+                    </span>
                     <span class="navbar-user__info">
                       <span class="navbar-user__name">{{auth()->guard('admin')->user()->username}}</span>
                     </span>
