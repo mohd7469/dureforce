@@ -10,6 +10,7 @@ Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
 
+Route::get('/user/test', 'CommonProfileController@userTest');
 
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them

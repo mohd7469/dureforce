@@ -19,6 +19,7 @@ use App\Models\User;
 use Khsing\World\Models\City;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class CommonProfileController extends Controller
 {
@@ -289,4 +290,9 @@ class CommonProfileController extends Controller
         }
     }
 
+    public function userTest()
+    {
+        $pageTitle='Chat Container';
+        return Inertia::render('ExampleComponet',['pageTitle' =>$pageTitle]);
+    }
 }
