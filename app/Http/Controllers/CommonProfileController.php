@@ -293,6 +293,6 @@ class CommonProfileController extends Controller
     public function userTest()
     {
         $pageTitle='Chat Container';
-        return Inertia::render('ExampleComponet',['pageTitle' =>$pageTitle]);
+        return Inertia::render('ExampleComponent',['pageTitle' =>$pageTitle]);
     }
 }

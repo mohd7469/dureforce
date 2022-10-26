@@ -22,19 +22,19 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
-    <link rel="stylesheet" href="{{ asset('css/app.css')}}" />
+    {{-- <link rel="stylesheet" href="{{ asset('public/css/app.css')}}" /> --}}
     @stack('style-lib')
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
           rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-            <div class="row">
-                @inertia
-            </div>
-
-    </div>
+    @if (isset($page))
+            @inertia
+        </div>
+    @endif
+   
+   
    
 @stack('fbComment')
 
@@ -81,8 +81,9 @@
     </div>
 </div>
 
-<script src="{{ asset('js/app.js') }}" type="text/javascript">
-<script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
+    
+    <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
+    <script src="{{ asset('public/js/app.js') }}" type="text/javascript"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/swiper.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-ui.min.js')}}"></script>
