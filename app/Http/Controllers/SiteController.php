@@ -17,6 +17,7 @@ use App\Models\UserCompany;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Redis;
 use Validator;
 use App\Models\Booking;
 use App\Models\JobBiding;
@@ -41,6 +42,7 @@ class SiteController extends Controller
 
     public function index()
     {
+
         $pageTitle = "Home";
         $emptyMessage = "No data found";
         $services =[];
