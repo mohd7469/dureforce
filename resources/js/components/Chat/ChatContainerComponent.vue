@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Chat Container</div>
+                    
 
                     <div class="card-body">
                         <div class="row">
@@ -39,3 +39,8 @@
         }
     }
 </script>
+<style scoped>
+.container{
+    margin-top: 20px;
+}
+</style>
