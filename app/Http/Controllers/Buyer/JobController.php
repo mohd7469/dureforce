@@ -434,7 +434,7 @@ class JobController extends Controller
 
         $user_ids = $job->invited_freelancer->pluck('user_id');
 
-        $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic')->get();
+        $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic','experiences','skills','education')->get();
         $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
         $pageTitle = "inviteProposal";
         return view('templates.basic.jobs.invite-freelancer', compact('pageTitle', 'job', 'freelancers','invited_freelancers'));
