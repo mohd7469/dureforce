@@ -11,6 +11,8 @@ class Rank extends Model
     use HasFactory;
     protected $fillable = ['level', 'amount'];
     protected $table = "ranks";
+    public const Model_Name_Space = "App\Models\Rank";
+    public const Redis_Key = "experience_levels";
 
     public function jobs()
     {

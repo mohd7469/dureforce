@@ -10,6 +10,8 @@ class Country extends Model
     use HasFactory;
     protected $table = 'world_countries';
 
+    public const Model_Name_Space = "App\Models\Country";
+    public const Redis_Key = "countries";
     public function job(){
 
         return  $this->belongsTo(Job::class);

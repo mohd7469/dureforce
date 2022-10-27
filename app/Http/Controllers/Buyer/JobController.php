@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\DOD;
@@ -43,25 +44,27 @@ class JobController extends Controller
     public function getJobData()
     {
         $data = [];
-
-        $data['countries'] = World::Countries();
-
-        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
-
-        $data['categories'] = Category::select(['id', 'name'])->get();
-
-        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
-
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
-
-        $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
-
-        $data['project_length'] = ProjectLength::OnlyJob()->select(['id', 'name'])->get();
+        $data['countries'] = getRedisData(Country::Model_Name_Space,Country::Redis_Key);
+        $data['job_types'] = getRedisData(JobType::Model_Name_Space,JobType::Redis_Key);
+        $data['categories'] = getRedisData(Category::Model_Name_Space,Category::Redis_Key);
+        $data['experience_levels'] = getRedisData(Rank::Model_Name_Space,Rank::Redis_Key);
+        $data['budget_types'] = getRedisData(BudgetType::Model_Name_Space,BudgetType::Redis_Key);
+        $data['deliverables'] = getRedisData(Deliverable::Model_Name_Space,Deliverable::Redis_Key);
+        $data['project_length'] = getRedisData(ProjectLength::Model_Name_Space,ProjectLength::Redis_Key);
+        $data['project_stages'] = getRedisData(ProjectStage::Model_Name_Space,ProjectStage::Redis_Key);
+        $data['dods'] = getRedisData(DOD::Model_Name_Space,DOD::Redis_Key);
 
 
-        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
 
-        $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+//        $data['countries'] = Country::orderBy('name', 'ASC')->get();
+//        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
+//        $data['categories'] = Category::select(['id', 'name'])->get();
+//        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
+//        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
+//        $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
+//        $data['project_length'] = ProjectLength::OnlyJob()->select(['id', 'name'])->get();
+//        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
+//        $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
 
 
         return $data;
