@@ -1019,7 +1019,6 @@ function urlPath($routeName, $routeParam = null)
     return $path;
 }
 
-
 function rankUser($userId)
 {
     $user = User::find($userId);
@@ -1031,7 +1030,6 @@ function rankUser($userId)
         }
     }
 }
-
 
 function impressionCount($id)
 {
@@ -1187,6 +1185,7 @@ function getUserRoleId()
     }
 
 }
+
 function getLastLoginRoleId()
 {
     $user=auth()->user();
@@ -1203,11 +1202,13 @@ function getLanaguageName($id)
 {
     return ModelsLanguage::where('id',$id)->first()->iso_language_name;
 }
+
 function getProficiencyLevelName($id)
 {
     return LanguageLevel::where('id',$id)->first()->name;
 
 } 
+
 function getUserEducation($obj)
 {
     $degree_title=Degree::find($obj->degree_id)->first()->title;
@@ -1218,6 +1219,7 @@ function getUserEducation($obj)
         $education.='-PRESENT';
     return $education;
 }
+
 function getDegreeSession($obj)
 {
     $session= Carbon::parse($obj->start_date)->format('Y') ;
@@ -1244,6 +1246,7 @@ function getDegreetitle($obj)
     return $degree_title;
 
 }
+
 function getProposelBid($proposal,$job)
 {
     $propsal_amount='';
@@ -1280,6 +1283,7 @@ function getDaysHoursMinutesSeconds($timestamp){
     }
 
 }
+
 function getYearMonthDays($timestamp){
 
     $date = Carbon::createFromFormat('Y-m-d H:i:s', $timestamp);
