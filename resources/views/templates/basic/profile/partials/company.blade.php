@@ -128,7 +128,7 @@ z-index: 1;
         <p class="cp-basic">Company Details</p>
         <div style="float:right">
             <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#companyModal">
-                Edit
+                Edit 
             </button>   
         
         </div>
@@ -137,12 +137,17 @@ z-index: 1;
       <!----== Client Info Section Start ==----->
         
       <div class="cp-profile_c_main">
-        <div class="h-img">
+        <div class="profile-img-buyer col-md-12" action="" style="background-color: transparent;">
+            <input type="file" name="company_logo" id="img-upload-company" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after" onchange="return previewCompanyFile(this);" title="">
+            <img class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+            <div class="cp-profile-h">{{$basicProfile->designation}}</div>
+        </div>
+        {{-- <div class="h-img">
             <img class="cp-prfileimg rounded-c" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
             
             <span class="upload-c">Icon</span>
         </div>
-        <div class="cp-profile-h">{{$basicProfile->designation}}</div>
+        <div class="cp-profile-h">{{$basicProfile->designation}}</div> --}}
     </div>
 
     <!----============End================--->   
@@ -221,3 +226,15 @@ z-index: 1;
     
 </div>
 </div>
+
+@push('script')
+    <script>
+        "use strict";
+        $("#img-upload-company").on('change',function(){
+            
+            $('#company_profile').submit();
+
+    });
+
+        </script>
+@endpush

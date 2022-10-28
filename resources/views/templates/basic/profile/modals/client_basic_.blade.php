@@ -11,13 +11,13 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div>
-                   <label class="mt-4">Profile Picture</label>
+                   {{-- <label class="mt-4">Profile Picture</label>
                    <div class="profile-img col-md-12" action="">
                    <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
                            class="imgInp" onchange="previewFile(this)"
                            title=""/>
                     <image class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
-                   </div>
+                   </div> --}}
                    <div class="row">
                       <div class="col-md-12 col-sm-12">
                          <label class="mt-4"
@@ -328,7 +328,8 @@
         margin-bottom: 0px !important;
     }
     .modal-dialog{
-       max-width:600px !important;
+       max-width:100% !important;
+      
     }
     .setProfile .profile-img img{
        width:100px;
@@ -340,7 +341,7 @@
     float:left;
 }
 .modal-body {
-    max-height: calc(88vh - 35px);
+    max-height:100% !important;
     }
     .setProfile .profile-img{
        height:105px;
