@@ -46,11 +46,12 @@
                             <div class="col-md-7">
                                 <label>Skills</label>
                                 
-                                <ul class="skills-listing" id="portfolio_skills">
+                                
+                                <span>
+                                    <ul class="skills-listing" id="portfolio_skills">
                                 
 
-                                </ul>
-                                <span>
+                                    </ul>
                                     <a href="#" class="editbtn-d add_details">
                                         <img src="/assets/images/job/edit-icon.png">
                                     </a>
@@ -98,7 +99,7 @@
             {{-- btns --}}
             <div id="outer" class="text-right">
                 <div class="inner">
-                    <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn">Back</button>
+                    <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn add_details">Back</button>
                 </div>
                 <div class="inner">
                     <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Publish</button>

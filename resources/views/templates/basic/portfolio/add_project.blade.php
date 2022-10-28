@@ -30,7 +30,7 @@
 
                     <div class="col-md-6">
                         <div class="btns-addp">
-                            <button type="button" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button>
+                            <a href="{{route('seller.profile.view')}}"><button type="button" class="float-left cncl-btn" data-bs-dismiss="modal">Cancle</button></a>
                             <button type="button" class="submit-btn w-80 float-right" id="go_to_detail_btn">Go to Add Details</button>
                         </div>
     
