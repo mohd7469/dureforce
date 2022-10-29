@@ -26,14 +26,15 @@ class RedisConfiguration extends ServiceProvider
         $redis_credentials = getRedisCredentials();
 
         if ($redis_credentials) {
-            $config = array(
-                'host' => 'dpapi.redis.cache.windows.net',
-                'password' => 'haiUTPDY6A6NVDqKB7oe4EdAA8ybPea0ExiOMUqSOSg',
-                'port' => '6380',
-                'client' => 'predis',
+            $default = array(
+                'host' => $redis_credentials->host,
+                'password' => $redis_credentials->password,
+                'port' => $redis_credentials->port,
             );
+            $client = $redis_credentials->client;
 
-            Config::set('mail.mailers.smtp', $config);
+            Config::set('database.redis.default', $default);
+            Config::set('database.redis.client', $client);
         }
     }
 }
