@@ -6250,6 +6250,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -6269,6 +6273,100 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11794,7 +11892,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-e3cef1e0]{\r\n    margin-top: 20px;\n}\n.card-body[data-v-e3cef1e0] {\r\n    flex: 1 1 auto;\r\n    padding: 0rem 1rem;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-e3cef1e0]{\r\n    margin-bottom: -19px;\n}\n.card-body[data-v-e3cef1e0] {\r\n    flex: 1 1 auto;\r\n    padding: 0rem 1rem;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11818,7 +11916,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user-font-size[data-v-ef8bd22e]{\n    font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\n    \n    padding-top: 7px;\n    padding-bottom: 7px;\n}\n.border-right-custom[data-v-ef8bd22e]{\n    border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\n    --bs-gutter-x: 1.5rem;\n    --bs-gutter-y: 0;\n    display: flex;\n    flex-wrap: wrap;\n    margin-top: calc(var(--bs-gutter-y) * -1);\n    margin-right: 0px !important; \n    margin-left: calc(var(--bs-gutter-x)/ -2);\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.online_icon[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 29px;\r\n    top: -20px;\n}\n.user-font-size[data-v-ef8bd22e]{\r\n        font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\r\n        \r\n        padding-top: 7px;\n}\n.border-right-custom[data-v-ef8bd22e]{\r\n        border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\r\n        --bs-gutter-x: 1.5rem;\r\n        --bs-gutter-y: 0;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        margin-top: calc(var(--bs-gutter-y) * -1);\r\n        margin-right: 0px !important; \r\n        margin-left: calc(var(--bs-gutter-x)/ -2);\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11842,7 +11940,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-propsal[data-v-478330f7]{\n\n    width: 117px;\n    height: 30px;\n    left: 1147px;\n    top: 86px;\n    background: #007F7F;\n    border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\n    width: 94px;\n    height: 30px;\n    left: 1043px;\n    top: 86px;\n    border: 2px solid #007F7F;\n    border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\n    padding-left: 0px;\n    padding-right: 0px;\n    height: 500px;\n}\n.align-header[data-v-478330f7]{\n    margin-top: -4px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-propsal[data-v-478330f7]{\n\n        width: 117px;\n        height: 30px;\n        left: 1147px;\n        top: 86px;\n        background: #007F7F;\n        border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\n        width: 94px;\n        height: 30px;\n        left: 1043px;\n        top: 86px;\n        border: 2px solid #007F7F;\n        border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\n        padding-left: 0px;\n        padding-right: 0px;\n}\n.message-body[data-v-478330f7]{\n        height: 400px;\n}\n.align-header[data-v-478330f7]{\n        margin-top: -4px;\n}\n.no-border[data-v-478330f7]{\n        border: none;\n}\n.background[data-v-478330f7]{\n        border-top: 1px solid #CBDFDF;\n        margin-left: 0px;\n        margin-right: 0px;\n}\n.msg_card_body[data-v-478330f7]{\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]{\n        background-color: rgba(0,0,0,0.3) !important;\n        border:0 !important;\n        color:white !important;\n        height: 60px !important;\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]:focus{\n         box-shadow:none !important;\n         outline:0px !important;\n}\n.active[data-v-478330f7]{\n        background-color: rgba(0,0,0,0.3);\n}\n.user_img[data-v-478330f7]{\n        height: 70px;\n        width: 70px;\n        border:1.5px solid #f5f6fa;\n}\n.user_img_msg[data-v-478330f7]{\n        height: 40px;\n        width: 40px;\n        border:1.5px solid #f5f6fa;\n}\n.img_cont[data-v-478330f7]{\n        position: relative;\n        height: 70px;\n        width: 70px;\n}\n.img_cont_msg[data-v-478330f7]{\n        height: 40px;\n        width: 40px;\n}\n.online_icon[data-v-478330f7]{\n    position: relative;\n    height: 10px;\n    width: 10px;\n    background-color: #4cd137;\n    border-radius: 50%;\n    border: 1.5px solid white;\n    left: 28px;\n    top: -20px;\n}\n.offline[data-v-478330f7]{\n    position: relative;\n    height: 10px;\n    width: 10px;\n    background-color: #c23616;\n    border-radius: 50%;\n    border: 1.5px solid white;\n    right: 0px;\n    top: -20px;\n}\n.user_info[data-v-478330f7]{\n    margin-top: auto;\n    margin-bottom: auto;\n    margin-left: 15px;\n}\n.user_info span[data-v-478330f7]{\n    font-size: 20px;\n    color: white;\n}\n.user_info p[data-v-478330f7]{\nfont-size: 10px;\ncolor: rgba(255,255,255,0.6);\n}\n.msg_cotainer[data-v-478330f7]{\n    margin-top: auto;\n    margin-bottom: auto;\n    margin-left: 10px;\n    border-radius: 25px;\n    background-color: #82ccdd;\n    padding: 10px;\n    position: relative;\n    top:25px;\n}\n.msg_cotainer_send[data-v-478330f7]{\n    margin-top: auto;\n    margin-bottom: auto;\n    margin-right: 10px;\n    border-radius: 25px;\n    background-color: #78e08f;\n    padding: 10px;\n    position: relative;\n    top:25px;\n}\n.msg_time[data-v-478330f7]{\n    position: absolute;\n    left: 0;\n    bottom: -23px;\n    font-size: 10px;\n}\n.user_name[data-v-478330f7]{\n    position: absolute;\n    left: 0;\n    bottom: -15px;\n    top: -22px;\n    font-size: 10px;\n}\n.sender_user_name[data-v-478330f7]{\n    position: absolute;\n    right:0;\n    bottom: -15px;\n    font-size: 10px;\n    top: -22px;\n}\n.msg_time_send[data-v-478330f7]{\n    position: absolute;\n    right:0;\n    bottom: -15px;\n    font-size: 10px;\n    top: 41px;\n}\n.msg_head[data-v-478330f7]{\n    position: relative;\n}\n\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34858,13 +34956,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-4 border-right-custom" }, [
       _c("div", { staticClass: "row border-bottom" }, [
-        _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "col-md-2" }, [
           _c("img", {
             staticClass: "img-circle img-responsive",
             staticStyle: {
               "border-radius": "50%",
-              width: "60px",
-              height: "57px",
+              width: "40px",
+              height: "40px",
             },
             attrs: {
               alt: "User Pic",
@@ -34872,9 +34970,11 @@ var staticRenderFns = [
               id: "profile-image1",
             },
           }),
+          _vm._v(" "),
+          _c("span", { staticClass: "online_icon" }),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5 align-self-center" }, [
+        _c("div", { staticClass: "col-md-6 " }, [
           _c("b", { staticClass: "user-font-size" }, [_vm._v("Sajid Mehmood")]),
           _vm._v(" "),
           _c("span", { staticClass: "user-font-size" }, [
@@ -34888,13 +34988,13 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row border-bottom" }, [
-        _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "col-md-2" }, [
           _c("img", {
             staticClass: "img-circle img-responsive",
             staticStyle: {
               "border-radius": "50%",
-              width: "60px",
-              height: "57px",
+              width: "40px",
+              height: "40px",
             },
             attrs: {
               alt: "User Pic",
@@ -34902,9 +35002,11 @@ var staticRenderFns = [
               id: "profile-image1",
             },
           }),
+          _vm._v(" "),
+          _c("span", { staticClass: "offline" }),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5 align-self-center" }, [
+        _c("div", { staticClass: "col-md-6 " }, [
           _c("b", { staticClass: "user-font-size" }, [_vm._v("Sajid Mehmood")]),
           _vm._v(" "),
           _c("span", { staticClass: "user-font-size" }, [
@@ -34918,13 +35020,13 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row border-bottom" }, [
-        _c("div", { staticClass: "col-md-3" }, [
+        _c("div", { staticClass: "col-md-2" }, [
           _c("img", {
             staticClass: "img-circle img-responsive",
             staticStyle: {
               "border-radius": "50%",
-              width: "60px",
-              height: "57px",
+              width: "40px",
+              height: "40px",
             },
             attrs: {
               alt: "User Pic",
@@ -34932,9 +35034,11 @@ var staticRenderFns = [
               id: "profile-image1",
             },
           }),
+          _vm._v(" "),
+          _c("span", { staticClass: "offline" }),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-5 align-self-center" }, [
+        _c("div", { staticClass: "col-md-6 " }, [
           _c("b", { staticClass: "user-font-size" }, [_vm._v("Sajid Mehmood")]),
           _vm._v(" "),
           _c("span", { staticClass: "user-font-size" }, [
@@ -34983,7 +35087,7 @@ var staticRenderFns = [
         _c("span", { staticClass: "float-sm-left" }, [
           _c("b", [_vm._v("Tristan Mason")]),
           _vm._v(" "),
-          _c("span", [_vm._v("12:37 PM GMT+1")]),
+          _c("small", [_vm._v("12:37 PM GMT+1")]),
         ]),
         _vm._v(" "),
         _c("span", { staticClass: "float-right align-header" }, [
@@ -34995,7 +35099,190 @@ var staticRenderFns = [
         ]),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card-body" }),
+      _c("div", { staticClass: "card-body msg_card_body" }, [
+        _c("div", { staticClass: "d-flex justify-content-start mb-4" }, [
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "online_icon" }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "msg_cotainer" }, [
+            _vm._v(
+              "\n                    Hi, how are you arslan\n                    "
+            ),
+            _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("8:40 AM, Today")]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-end mb-4" }, [
+          _c("div", { staticClass: "msg_cotainer_send" }, [
+            _vm._v(
+              "\n                    Hi sajid i am good tnx how about you?\n                    "
+            ),
+            _c("b", { staticClass: "sender_user_name" }, [
+              _vm._v("Arslan Ayoub"),
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time_send" }, [
+              _vm._v("8:55 AM, Today"),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "offline" }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-start mb-4" }, [
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "online_icon" }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "msg_cotainer" }, [
+            _vm._v(
+              "\n                    I am good too, thank you for your chat template\n                    "
+            ),
+            _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:00 AM, Today")]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-end mb-4" }, [
+          _c("div", { staticClass: "msg_cotainer_send" }, [
+            _vm._v(
+              "\n                    You are welcome\n                    "
+            ),
+            _c("b", { staticClass: "sender_user_name" }, [
+              _vm._v("Arslan Ayoub"),
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time_send" }, [
+              _vm._v("9:05 AM, Today"),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "offline" }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-start mb-4" }, [
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "online_icon" }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "msg_cotainer" }, [
+            _vm._v(
+              "\n                    I am looking for your next templates\n                    "
+            ),
+            _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:07 AM, Today")]),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-end mb-4" }, [
+          _c("div", { staticClass: "msg_cotainer_send" }, [
+            _vm._v(
+              "\n                    Ok, thank you have a good day\n                    "
+            ),
+            _c("b", { staticClass: "sender_user_name" }, [
+              _vm._v("Arslan Ayoub"),
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time_send" }, [
+              _vm._v("9:10 AM, Today"),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "offline" }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex justify-content-start mb-4" }, [
+          _c("div", { staticClass: "img_cont_msg" }, [
+            _c("img", {
+              staticClass: "rounded-circle user_img_msg",
+              attrs: {
+                src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+              },
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "online_icon" }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "msg_cotainer" }, [
+            _vm._v("\n                    Bye, see you\n                    "),
+            _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:12 AM, Today")]),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("form", { attrs: { action: "" } }, [
+          _c("div", { staticClass: "row background" }, [
+            _c("div", { staticClass: "col-md-11" }, [
+              _c("input", {
+                staticClass: "no-border",
+                attrs: { type: "text", placeholder: "Write Your Message" },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1 align-self-center" }, [
+              _c("i", { staticClass: "fas fa-paperclip" }),
+              _vm._v(" "),
+              _c("i", { staticClass: "fas fa-location-arrow" }),
+            ]),
+          ]),
+        ]),
+      ]),
     ])
   },
 ]
