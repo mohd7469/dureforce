@@ -12,6 +12,9 @@ class Deliverable extends Model
 
     protected $fillable = ['name', 'slug', 'module_id'];
     protected $table = "deliverables";
+    public const Model_Name_Space = "App\Models\Deliverable";
+    public const Redis_Key = "deliverables";
+
 
     public function scopeOnlyJob($query)
     {

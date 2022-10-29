@@ -26,6 +26,7 @@
         "microsoft/azure-storage-blob": "*",
         "mollie/laravel-mollie": "^2.14",
         "phpmailer/phpmailer": "^6.6",
+        "predis/predis": "^2.0",
         "razorpay/razorpay": "^2.5",
         "sendgrid/sendgrid": "^7.6",
         "spatie/laravel-permission": "^5.5",
@@ -63,7 +64,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "app/Http/Helpers/helpers.php"
+            "app/Http/Helpers/helpers.php",
+            "app/Http/Helpers/redisHelper.php"
         ]
     },
     "autoload-dev": {
