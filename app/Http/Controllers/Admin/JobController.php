@@ -18,7 +18,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Manage All Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::latest()->withAll('user', 'category', 'subCategory','project_lengths')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -33,7 +33,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Pending Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::where('status', 0)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::where('status_id', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -41,7 +41,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Approved Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::where('status', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::where('status_id', 2)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -49,7 +49,7 @@ class JobController extends Controller
     {
         $pageTitle = "Closed Job";
         $emptyMessage = "No data found";
-        $jobs = Job::where('status', 2)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+        $jobs = Job::where('status_id', 3)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
         return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -57,7 +57,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Cancel Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::where('status', 3)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::where('status_id', 4)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 

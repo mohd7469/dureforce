@@ -24,16 +24,16 @@
                         <tr @if($loop->odd) class="table-light" @endif>
                             <td data-label="@lang('Title')">
                                 <div class="user">
-                                    <div class="thumb"><img src="{{ getImage('assets/images/job/'.$job->image,'590x300')}}" alt="@lang('image')"></div>
-                                    <span class="name">{{__(str_limit($job->title, 10))}}</span>
+                                    <!-- <div class="thumb"><img src="{{ getImage('assets/images/job/'.$job->image,'590x300')}}" alt="@lang('image')"></div> -->
+                                    <span class="name">{{__(str_limit($job->title, 20))}}</span>
                                 </div>
                             </td>
 
                             <td data-label="@lang('Buyer')">
-                                <span class="font-weight-bold">{{$job->user->fullname}}</span>
+                                <span class="font-weight-bold">{{ isset($job->user->fullname) ? $job->user->fullname : ''}}</span>
                                 <br>
                                 <span class="small">
-                                <a href="{{ route('admin.users.detail', $job->user_id) }}"><span>@</span>{{ $job->user->username }}</a>
+                                <a href="{{ route('admin.users.detail', $job->user_id) }}"><span>@</span>{{ isset($job->user->username) ? $job->user->fullname : '' }}</a>
                                 </span>
                             </td>
 
@@ -52,23 +52,23 @@
                             </td>
 
                              <td data-label="@lang('Delivery Time')">
-                               <span class="font-weight-bold">{{($job->delivery_time)}} @lang('Days')</span>
+                               <span class="font-weight-bold">{{($job->project_length->name)}}</span>
                             </td>
 
                             <td data-label="@lang('Status')">
-                                @if($job->status->id == 1)
+                                @if($job->status->id == 2)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                     <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status->id == 2)
+                                @elseif($job->status->id == 3)
                                     <span class="font-weight-normal badge--warning">@lang('Closed')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status->id == 3)
+                                @elseif($job->status->id == 4)
                                     <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status->id == 0)
+                                @elseif($job->status->id == 1)
                                     <span class="font-weight-normal badge--primary">@lang('Pending')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
@@ -76,13 +76,19 @@
                             </td>
 
                             <td data-label="@lang('Last Update')">
-                                <span>{{showDateTime($job->updated_at)}}</span>
+                                @if(isset($job->created_at))
+                                <span>{{showDateTime($job->created_at)}}</span>
+                                <br>
+                                 {{diffforhumans($job->created_at)}}
+                                 @else
+                                 <span>{{showDateTime($job->updated_at)}}</span>
                                 <br>
                                  {{diffforhumans($job->updated_at)}}
+                                 @endif
                             </td>
 
                             <td data-label="@lang('Action')">
-                                @if($job->status->id == 0)
+                                @if($job->status->id == 1)
                                     <button class="icon-btn btn--success ml-1 approved" data-toggle="tooltip" data-id="{{$job->id}}" data-original-title="@lang('Approved')">
                                         <i class="las la-check"></i>
                                     </button>
@@ -92,8 +98,15 @@
                                     </button>
                                 @endif
 
-                                @if($job->status->id == 1)
-                                    <button class="icon-btn btn--warning ml-1 closed" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">@lang('Closed')</button>
+                                @if($job->status->id == 2)
+                                    <button class="icon-btn btn--warning ml-1 closed" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">
+                                    <i class="las la-check"></i>
+                                    </button>
+                                @endif
+                                @if($job->status->id == 2)
+                                    <button class="icon-btn btn--danger ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">
+                                        <i class="las la-times"></i>
+                                </button>
                                 @endif
 
                                 <a href="{{route('admin.job.biding.list', $job->id)}}" class="icon-btn btn--info ml-1" data-toggle="tooltip" data-original-title="@lang('Biding list')">@lang('Biding List')</a>
