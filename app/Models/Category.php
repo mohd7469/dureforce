@@ -13,8 +13,6 @@ class Category extends Model
     use HasFactory;
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $fillable = ['name','status'];
-    public const Model_Name_Space = "App\Models\Category";
-    public const Redis_Key = "categories";
 
     const ServiceType = 1;
     const SoftwareType = 2;

@@ -178,7 +178,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SystemMailConfiguration::class,
-        App\Providers\RedisConfiguration::class,
     ],
 
     /*

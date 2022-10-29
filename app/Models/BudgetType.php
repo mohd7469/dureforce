@@ -14,8 +14,6 @@ class BudgetType extends Model
     protected $fillable = ['title','module_id'];
     public static $hourly = 1;
     public static $fixed = 2;
-    public const Model_Name_Space = "App\Models\BudgetType";
-    public const Redis_Key = "budget_types";
 
     public function scopeOnlyJob($query)
     {

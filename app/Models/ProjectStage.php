@@ -10,8 +10,6 @@ class ProjectStage extends Model
 {
     use HasFactory,SoftDeletes;
     protected $fillable = ['title','module_id'];
-    public const Model_Name_Space = "App\Models\ProjectStage";
-    public const Redis_Key = "project_stages";
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);

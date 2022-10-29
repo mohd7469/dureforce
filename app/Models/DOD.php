@@ -11,8 +11,6 @@ class DOD extends Model
 
     use HasFactory;
     protected $fillable = ['title','module_id'];
-    public const Model_Name_Space = "App\Models\DOD";
-    public const Redis_Key = "dods";
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);

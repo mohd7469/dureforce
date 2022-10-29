@@ -10,8 +10,6 @@ class JobType extends Model
 {
     use HasFactory,SoftDeletes;
     protected $fillable = ['title','module_id'];
-    public const Model_Name_Space = "App\Models\JobType";
-    public const Redis_Key = "job_types";
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);
