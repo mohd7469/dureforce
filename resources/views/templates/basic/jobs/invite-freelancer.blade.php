@@ -66,7 +66,8 @@
                                             </div>
                                     </div>
                                     @foreach ($freelancers as $freelancer )
-                                    <div class=""> 
+                                    @if($freelancer->user_basic !=null && $freelancer->experiences !=null && $freelancer->skills !=null && $freelancer->education !=null)
+                                    <div class="">
                                         <div class="row biorow">
                                             <div class="col-md-3">
                                                 <div class="row borderleftc"> 
@@ -124,6 +125,7 @@
                                         <!--Skills Section End-->
                                     </div> 
                                     <hr>
+                                    @endif
                                     @endforeach
                                 </div>
                             <div class="tab-pane" id="Invited_Freelancers_tab">

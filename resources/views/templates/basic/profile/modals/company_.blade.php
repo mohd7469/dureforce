@@ -17,7 +17,7 @@
                         <div id="company-container" class="company-c-style">
 
                             <div id="">
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <label class="mt-4">Company Logo </label>
                                     <div class="profile-img">
                                         <input type="file" name="company_logo" id="img-upload"
@@ -25,7 +25,7 @@
                                             onchange="previewCompanyFile(this)"/>
                                             <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <label class="mt-4">Name *  </label>
                                     <input type="text" name="name" id="company-name" value="{{ old('name', @$user->company->name) }}"
@@ -143,7 +143,7 @@
     float:left;
 }
 .modal-body {
-    max-height: calc(88vh - 35px);
+    max-height:100% !important;
     }
     .setProfile .profile-img{
        height:105px;
