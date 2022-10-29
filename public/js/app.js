@@ -35118,7 +35118,7 @@ var staticRenderFns = [
             ),
             _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time" }, [_vm._v("8:40 AM, Today")]),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("8:40 AM")]),
           ]),
         ]),
         _vm._v(" "),
@@ -35131,9 +35131,7 @@ var staticRenderFns = [
               _vm._v("Arslan Ayoub"),
             ]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time_send" }, [
-              _vm._v("8:55 AM, Today"),
-            ]),
+            _c("span", { staticClass: "msg_time_send" }, [_vm._v("8:55 AM")]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "img_cont_msg" }, [
@@ -35166,7 +35164,7 @@ var staticRenderFns = [
             ),
             _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time" }, [_vm._v("9:00 AM, Today")]),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:00 AM")]),
           ]),
         ]),
         _vm._v(" "),
@@ -35179,9 +35177,7 @@ var staticRenderFns = [
               _vm._v("Arslan Ayoub"),
             ]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time_send" }, [
-              _vm._v("9:05 AM, Today"),
-            ]),
+            _c("span", { staticClass: "msg_time_send" }, [_vm._v("9:05 AM")]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "img_cont_msg" }, [
@@ -35214,7 +35210,7 @@ var staticRenderFns = [
             ),
             _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time" }, [_vm._v("9:07 AM, Today")]),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:07 AM")]),
           ]),
         ]),
         _vm._v(" "),
@@ -35227,9 +35223,7 @@ var staticRenderFns = [
               _vm._v("Arslan Ayoub"),
             ]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time_send" }, [
-              _vm._v("9:10 AM, Today"),
-            ]),
+            _c("span", { staticClass: "msg_time_send" }, [_vm._v("9:10 AM")]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "img_cont_msg" }, [
@@ -35260,7 +35254,7 @@ var staticRenderFns = [
             _vm._v("\n                    Bye, see you\n                    "),
             _c("b", { staticClass: "user_name" }, [_vm._v("Sajid Mehmood")]),
             _vm._v(" "),
-            _c("span", { staticClass: "msg_time" }, [_vm._v("9:12 AM, Today")]),
+            _c("span", { staticClass: "msg_time" }, [_vm._v("9:12 AM")]),
           ]),
         ]),
       ]),

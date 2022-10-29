@@ -22,14 +22,14 @@
                     <div class="msg_cotainer">
                         Hi, how are you arslan
                         <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">8:40 AM, Today</span>
+                        <span class="msg_time">8:40 AM</span>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mb-4">
                     <div class="msg_cotainer_send">
                         Hi sajid i am good tnx how about you?
                         <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">8:55 AM, Today</span>
+                        <span class="msg_time_send">8:55 AM</span>
                     </div>
                     <div class="img_cont_msg">
                         <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
@@ -44,14 +44,14 @@
                     <div class="msg_cotainer">
                         I am good too, thank you for your chat template
                         <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">9:00 AM, Today</span>
+                        <span class="msg_time">9:00 AM</span>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mb-4">
                     <div class="msg_cotainer_send">
                         You are welcome
                         <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">9:05 AM, Today</span>
+                        <span class="msg_time_send">9:05 AM</span>
                     </div>
                     <div class="img_cont_msg">
                         <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
@@ -66,14 +66,14 @@
                     <div class="msg_cotainer">
                         I am looking for your next templates
                         <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">9:07 AM, Today</span>
+                        <span class="msg_time">9:07 AM</span>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mb-4">
                     <div class="msg_cotainer_send">
                         Ok, thank you have a good day
                         <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">9:10 AM, Today</span>
+                        <span class="msg_time_send">9:10 AM</span>
                     </div>
                     <div class="img_cont_msg">
                         <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
@@ -89,7 +89,7 @@
                         Bye, see you
                         <b class="user_name">Sajid Mehmood</b>
 
-                        <span class="msg_time">9:12 AM, Today</span>
+                        <span class="msg_time">9:12 AM</span>
                     </div>
                 </div>
             </div>
