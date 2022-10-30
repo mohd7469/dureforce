@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{$general->sitename(__($pageTitle))}}</title>
+    {{-- <title>{{$general->sitename(__($pageTitle))}}</title> --}}
     @include('partials.seo')
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap"
@@ -22,13 +22,16 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
-
     @stack('style-lib')
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
           rel="stylesheet"/>
 </head>
 <body>
+    
+   
+   
+   
 @stack('fbComment')
 
 <div class="preloader">
@@ -45,6 +48,11 @@
 
 
 @include($activeTemplate.'partials.user_header')
+
+@if (isset($page))
+    @inertia  
+
+@endif
 @yield('content')
 @include($activeTemplate.'partials.footer')
 
@@ -74,8 +82,8 @@
     </div>
 </div>
 
-
-<script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
+    
+    <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/swiper.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-ui.min.js')}}"></script>
@@ -98,6 +106,9 @@
         });
     })(jQuery);
 </script>
+@if (isset($page))
+    <script src="{{ asset('public/js/app.js') }}" type="text/javascript"></script>
+@endif
 
 </body>
 </html>
