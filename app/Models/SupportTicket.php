@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class SupportTicket extends Model
 {
     protected $guarded = ['id'];
+    protected $table="support_tickets";
+    public const Model_NameSpace = "App\Models\SupportTicket";
 
     public function getFullnameAttribute()
     {
@@ -27,4 +29,7 @@ class SupportTicket extends Model
         return $this->hasMany(SupportMessage::class);
     }
 
+    public function attachments(){
+        return $this->morphMany(Attachment::class,'section');
+    }
 }

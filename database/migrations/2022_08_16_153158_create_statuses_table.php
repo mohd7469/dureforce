@@ -17,7 +17,8 @@ class CreateStatusesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->string('type')->nullable();
+            $table->unsignedBigInteger('module_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
 
