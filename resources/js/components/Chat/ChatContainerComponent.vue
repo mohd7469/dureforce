@@ -20,13 +20,11 @@
 <script>
    import ChatUsers from "./ChatUsersComponent.vue";
    import Messages from "./MessageContainerComponent.vue";
-   import MessageInput from "./MessageInputComponent.vue";
     
     export default {
         components: {
             ChatUsers,
             Messages,
-            MessageInput
         },
         mounted() {
             console.log('Component mounted.')

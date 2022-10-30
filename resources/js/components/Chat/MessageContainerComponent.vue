@@ -245,8 +245,7 @@ color: rgba(255,255,255,0.6);
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 10px;
-    border-radius: 25px;
-    background-color: #82ccdd;
+    background-color: ghostwhite;
     padding: 10px;
     position: relative;
     top:25px;
@@ -256,11 +255,11 @@ color: rgba(255,255,255,0.6);
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 10px;
-    border-radius: 25px;
-    background-color: #78e08f;
+    background-color: ghostwhite;
     padding: 10px;
     position: relative;
     top:25px;
+    
 }
 .msg_time{
     position: absolute;

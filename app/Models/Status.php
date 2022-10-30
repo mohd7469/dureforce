@@ -13,6 +13,7 @@ class Status extends Model
     protected $table = "statuses";
     public static $Pending=1;
     public static $Approved=2;
+    public static $Closed=3;
 
     public function jobs()
     {
