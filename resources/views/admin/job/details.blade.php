@@ -7,6 +7,7 @@
             
             <input type="hidden" value="{{$job->category_id}}" id="category_id">
             <input type="hidden" {{$job->sub_category_id}} id="sub_category_id">
+            <input type="hidden" value="{{$data['selected_skills']}}" name="job_skills" id="job_skills" >
             
         </div>
     </div>
@@ -89,7 +90,7 @@
 
                     
                     <div id="form_attributes">
-                        <div class="row custom_cards_s" id="'+main_category_id+'">
+                        <!-- <div class="row custom_cards_s" id="'+main_category_id+'">
                             <h4 class="d-heading">'+main_category+'</h4>
                             <div class="col-md-6">
                                 <div class="card" >
@@ -103,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div> 
                 </div>
                 </div>
@@ -194,5 +195,8 @@
 @push('breadcrumb-plugins')
     <a href="{{ route('admin.job.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i class="la la-fw la-backward"></i>@lang('Go Back')</a>
 @endpush
+@push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+
+@endpush
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/admin_job_view.css')}}">

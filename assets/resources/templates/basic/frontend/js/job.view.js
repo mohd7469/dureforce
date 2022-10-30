@@ -19,6 +19,8 @@ function populateSkills(data)
     selected_skills=(selected_skills.split(','));
     selected_skills=selected_skills.map(Number);
 
+    console.log(selected_skills);
+
     
     for (var main_category in data) { //heading main
         
