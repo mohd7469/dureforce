@@ -11,7 +11,7 @@ Route::get('/clear', function () {
 });
 
 Route::get('/user/chat', 'CommonProfileController@userChat');
-
+Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {
@@ -21,7 +21,6 @@ Route::middleware('verified')->group(function () {
     Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
-    Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
     Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
 
 
@@ -249,7 +248,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('job/cancelBy', 'JobController@cancelBy')->name('job.cancelBy');
             Route::post('job/approvedBy', 'JobController@approvedBy')->name('job.approvedBy');
             Route::post('job/closedBy', 'JobController@closedBy')->name('job.closedBy');
-            Route::get('job/details/{id}', 'JobController@details')->name('job.details');
+            Route::get('job/details/{uuid}', 'JobController@details')->name('job.details');
             Route::get('job/biding/list/{id}', 'JobController@jobBiding')->name('job.biding.list');
             Route::get('job/biding/details/{id}', 'JobController@jobBidingDetails')->name('job.biding.details');
             Route::get('job/category', 'JobController@jobCategory')->name('job.category');
