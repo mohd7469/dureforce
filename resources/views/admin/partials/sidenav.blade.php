@@ -392,10 +392,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.job.pending') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Pending')</span>
-                                        @if ($jobPending)
+                                        <!-- @if ($jobPending)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
-                                        @endif
+                                        @endif -->
                                     </a>
                                 </li>
 
