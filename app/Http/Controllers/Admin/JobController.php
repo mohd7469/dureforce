@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Job;
+use App\Models\Skills;
+use App\Models\SkillCategory;
 use App\Models\Category;
 use Carbon\Carbon;
 use App\Models\JobBiding;
@@ -22,11 +24,23 @@ class JobController extends Controller
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
-    public function details($id)
+    public function details($uuid)
     {
+        // dd($uuid);
     	$pageTitle = "Job Details";
-    	$job = Job::findOrFail($id);
-    	return view('admin.job.details', compact('pageTitle', 'job'));
+    	// $job = Job::findOrFail($uuid);
+        $job = Job::where('uuid',$uuid)->withAll()->first();
+        $skillCats = SkillCategory::select('name', 'id')->get();
+
+        foreach ($skillCats as $skillCat) {
+
+            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+
+        }
+        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+
+    	return view('admin.job.details', compact('pageTitle', 'job', 'data'));
     }
 
     public function pending()

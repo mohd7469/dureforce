@@ -249,7 +249,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('job/cancelBy', 'JobController@cancelBy')->name('job.cancelBy');
             Route::post('job/approvedBy', 'JobController@approvedBy')->name('job.approvedBy');
             Route::post('job/closedBy', 'JobController@closedBy')->name('job.closedBy');
-            Route::get('job/details/{id}', 'JobController@details')->name('job.details');
+            Route::get('job/details/{uuid}', 'JobController@details')->name('job.details');
             Route::get('job/biding/list/{id}', 'JobController@jobBiding')->name('job.biding.list');
             Route::get('job/biding/details/{id}', 'JobController@jobBidingDetails')->name('job.biding.details');
             Route::get('job/category', 'JobController@jobCategory')->name('job.category');
