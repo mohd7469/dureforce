@@ -26,7 +26,9 @@
                             Title
                          <span class="imp"
                             >*</span
-                            ></label
+                            >
+                            <small></small>
+                            </label
                             >
                          <input
                             type="text"
@@ -162,12 +164,14 @@
                                <span
                                   class="imp"
                                   >*</span
-                                  ></label
+                                  >{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  ' (English is mandatory) ' : '' }}
+                                  </label
                                   >
                                <select
                                   name="languages[{{$key}}][language_id]"
                                   class="form-control select-lang "
                                   id="languages.{{$key}}.language_id"
+                                  style="{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'pointer-events: none; ' : '' }}"
                                   >
                                   <option
                                      value=""

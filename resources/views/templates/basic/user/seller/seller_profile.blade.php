@@ -450,11 +450,15 @@
                                                     <div class="row">
                                                         <div class="col-md-6 col-sm-12">
                                                             <label class="mt-2">Language
-                                                            <span class="imp">*</span></label>
+                                                            <span class="imp">*</span>
+                                                            <small>{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  ' (English is mandatory) ' : '' }}</small>
+                                                        </label>
+                                                            
                                                             <select
                                                                 name="languages[{{$key}}][language_id]"
                                                                 class="form-control select-lang "
                                                                 id="languages.{{$key}}.language_id"
+                                                                style="{{ $user_language->language_id ==App\Models\Language::$ENGLISH_LANGUAGE_ID  ?  'pointer-events: none; ' : '' }}"
                                                                 >
                                                                 <option
                                                                     value=""
