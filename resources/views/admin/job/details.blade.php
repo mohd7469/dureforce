@@ -34,7 +34,7 @@
 
                             <div class="col-md-7 col-lg-7 col-xl-7 col-sm-12 col-xs-12 float-right" >
                                 <div class="float-right">
-                                    <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status->name ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
+                                    <p class="job_staus" style="display: inline"> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
                                     
                                 </div>
                                 
@@ -90,21 +90,7 @@
 
                     
                     <div id="form_attributes">
-                        <!-- <div class="row custom_cards_s" id="'+main_category_id+'">
-                            <h4 class="d-heading">'+main_category+'</h4>
-                            <div class="col-md-6">
-                                <div class="card" >
-                                    <div class="card-body">
-                                        <h5 class="card-title">'+sub_category_enum+'</h5>
-                                        <div class="row" id="'+sub_category_id+'">
-                                            <div class="col-md-6">
-                                                <p class="card-text">'+skill_name+'</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
+
                     </div> 
                 </div>
                 </div>
@@ -164,9 +150,9 @@
 
             <div class="widget-btn- mt-20 cstm-btn text-cent">
                 @if($job->status->id == 1)
-                    <button class="icon-btn btn--success ml-1 approved" data-toggle="tooltip" data-id="{{$job->id}}" data-original-title="@lang('Approved')">
+                    <button class="icon-btn btn--success ml-1 approved" data-toggle="tooltip" data-id="{{$job->id}}" data-original-title="@lang('Approve')">
                         <!-- <i class="las la-check"></i> -->
-                        @lang('Approved')
+                        @lang('Approve')
                     </button>
 
                     <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$job->id}}">
@@ -176,15 +162,15 @@
                     @endif
 
                     @if($job->status->id == 2)
-                        <button class="icon-btn btn--warning ml-1 closed" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">
+                        <button class="icon-btn btn--warning ml-1 closed" data-toggle="tooltip" title="" data-original-title="@lang('Close')" data-id="{{$job->id}}">
                         <!-- <i class="las la-check"></i> -->
-                        @lang('Closed')
+                        @lang('Close')
                         </button>
                     @endif
                     @if($job->status->id == 2)
-                        <button class="icon-btn btn--danger ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">
+                        <button class="icon-btn btn--danger ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Close')" data-id="{{$job->id}}">
                             <!-- <i class="las la-times"></i> -->
-                            @lang('Closed')
+                            @lang('Close')
                     </button>
                 @endif
             </div>
