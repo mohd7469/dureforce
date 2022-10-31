@@ -1218,23 +1218,24 @@ function getUserEducation($obj)
         $education.='-PRESENT';
     return $education;
 }
+
 function getDegreeSession($obj)
 {
-    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    $session= Carbon::parse($obj->start_date)->format(config('settings.date_format','m/d/Y')) ;
     if(!$obj->is_enrolled)
-     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+     $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
     else
-    $session.='-PRESENT';
+    $session.=' - PRESENT';
     return $session;
 }
 
 function getExperienceSession($obj)
 {
-    $session= Carbon::parse($obj->start_date)->format('Y') ;
+    $session= Carbon::parse($obj->start_date)->format(config('settings.date_format','m/d/Y')) ;
     if(!$obj->is_working)
-     $session.='-'.Carbon::parse($obj->end_date)->format('Y');
+     $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
     else
-    $session.='-PRESENT';
+    $session.=' - PRESENT';
     return $session;
 }
 
