@@ -158,19 +158,19 @@ class JobController extends Controller
         switch ($scope) {
             case 'approved':
                 $pageTitle .= 'Approved ';
-                $jobs = $jobs->where('status', 1);
+                $jobs = $jobs->where('status_id', 2);
                 break;
             case 'pending':
                 $pageTitle .= 'Pending ';
-                $jobs = $jobs->where('status', 0);
+                $jobs = $jobs->where('status_id', 1);
                 break;
             case 'closed':
                 $pageTitle .= 'Cancel ';
-                $jobs = $jobs->where('status', 2);
+                $jobs = $jobs->where('status_id', 3);
                 break;
             case 'cancel':
                 $pageTitle .= 'Cancel ';
-                $jobs = $jobs->where('status', 3);
+                $jobs = $jobs->where('status_id', 10);
                 break;
         }
         $jobs = $jobs->latest()->paginate(getPaginate());
