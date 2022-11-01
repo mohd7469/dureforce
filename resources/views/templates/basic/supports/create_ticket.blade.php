@@ -56,34 +56,34 @@
      </div>
 
         {{-- Required documents --}}
-        <div class="form-group">
-           <label>@lang('Required Documents')</label>
-        
-              <div id="dropzone">
-                 <div class="dropzone needsclick" id="demo-upload" action="#" >
-                    <div class="fallback">
-                          <input name="file" type="file" multiple />
-                    </div>
-                    <div>
-                          <div class="upload_icon">
-                             <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
-                             <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
-                          </div>
-                    </div>
-                    
-                    <div class="dz-message"> 
-                          @lang('Drag or Drop to Upload')  <br> 
-                          <span class="text text-primary ">
-                             @lang('Browse')  
-                             
-                          </span>
-                    </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 form-group">
+                <label>Required Documents</label>
+            
+                    <div id="dropzone">
+                        <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
+                            
+                            <div>
+                                <div class="upload_icon_">
+                                    <img src="http://127.0.0.1:8000/assets/images/frontend/job/upload.svg" alt="">
+                                    <img src="http://127.0.0.1:8000/assets/images/frontend/job/arrow_up.svg" alt="" class="upload_inner_arrow_">
+                                </div>
+                            </div>
+                            
+                            <div class="dz-message "> 
+                                Drag or Drop to Upload   
+                                <span class="" style="color:#007F7F">
+                                    Browse  
+                                    
+                                </span>
+                            </div>
 
-                 </div>
-              </div>
-           
-     
+                        </div>
+                    </div>
+        
+            </div>
         </div>
+        
         <small class="allow-text">Allowed File Extensions: .jpg, .jpeg, .png, .doc, .docx</small>
          {{-- Cover Letter --}}
          <div class="form-group">
@@ -407,6 +407,17 @@ a.btn-atach-m {
 }
 
 @media only screen and (max-width:767px){
+    .dz-message {
+   
+    position: relative;
+    top: 22%;
+    left: 0% !important;
+}
+.upload_inner_arrow_ {
+    position: absolute;
+    text-align: center !important;
+    left: 48.2%;
+}
     .userlist {
     padding: 36px 24px 26px 24px;
 }
@@ -432,6 +443,24 @@ a.closeticket {
 .userlist:nth-child(2) .userprofile {
     margin-left: -21px;
 }
+
+}
+.upload_icon_ {
+    position: absolute;
+    left: 0%;
+    right: 12%;
+    top: 55%;
+    bottom: 22%;
+    text-align: center;
+}
+.upload_inner_arrow_ {
+    position: absolute;
+    top: 53%;
+    bottom: 9.5%;
+    right: 49.3%;
+    text-align: center;
+}
+
 
 </style>
 
