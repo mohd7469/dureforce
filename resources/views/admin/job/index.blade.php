@@ -64,7 +64,7 @@
                                     <span class="font-weight-normal badge--warning">@lang('Closed')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
-                                @elseif($job->status->id == 4)
+                                @elseif($job->status->id == 10)
                                     <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
@@ -104,7 +104,7 @@
                                     </button>
                                 @endif
                                 @if($job->status->id == 2)
-                                    <button class="icon-btn btn--danger ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Closed')" data-id="{{$job->id}}">
+                                    <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$job->id}}">
                                         <i class="las la-times"></i>
                                 </button>
                                 @endif
