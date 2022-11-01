@@ -19,6 +19,8 @@ function populateSkills(data)
     selected_skills=(selected_skills.split(','));
     selected_skills=selected_skills.map(Number);
 
+    console.log(selected_skills);
+
     
     for (var main_category in data) { //heading main
         
@@ -33,21 +35,21 @@ function populateSkills(data)
             var sub_skills=skills.map(a => a.id);
             if(selected_skills.some(r => sub_skills.includes(r))){
                 remove=false
-                $('#'+main_category_id).append('<div class="col-md-6"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="row" id="'+sub_category_id+'"><div class="col-md-6">');
+                $('#'+main_category_id).append('<div class="col-md-6"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="admin-row row" id="'+sub_category_id+'">');
                 
                     for (var skill_index in skills) {
                     
                     var skill_id=skills[skill_index].id;
                     var skill_name=skills[skill_index].name;
                     if( selected_skills.includes(skill_id)){
-                        $('#'+sub_category_id).append('<p class="card-text">'+skill_name+'</p>');
+                        $('#'+sub_category_id).append('<p class="card-text ad-job-detail">'+skill_name+'</p>');
                     }
                 }
             }
             
             
         }
-        $('#'+main_category_id).append('<div/></div>');
+        $('#'+main_category_id).append('</div>');
         if(remove)
             $('#'+main_category_id).remove();
 

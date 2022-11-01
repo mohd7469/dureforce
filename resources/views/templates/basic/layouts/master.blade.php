@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {{-- <title>{{$general->sitename(__($pageTitle))}}</title> --}}
+    <title>{{$general->sitename(__($pageTitle))}}</title>
     @include('partials.seo')
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap"
@@ -49,10 +49,7 @@
 
 @include($activeTemplate.'partials.user_header')
 
-@if (isset($page))
-    @inertia  
 
-@endif
 @yield('content')
 @include($activeTemplate.'partials.footer')
 
@@ -106,9 +103,5 @@
         });
     })(jQuery);
 </script>
-@if (isset($page))
-    <script src="{{ asset('public/js/app.js') }}" type="text/javascript"></script>
-@endif
-
 </body>
 </html>

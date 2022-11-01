@@ -109,9 +109,9 @@
                                 </button>
                                 @endif
 
-                                <a href="{{route('admin.job.biding.list', $job->id)}}" class="icon-btn btn--info ml-1" data-toggle="tooltip" data-original-title="@lang('Biding list')">@lang('Biding List')</a>
+                                <a href="{{route('admin.job.biding.list', $job->uuid)}}" class="icon-btn btn--info ml-1" data-toggle="tooltip" data-original-title="@lang('Biding list')">@lang('Biding List')</a>
 
-                                <a href="{{route('admin.job.details', $job->id)}}" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a>
+                                <a href="{{route('admin.job.details', $job->uuid)}}" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a>
                                
                              
                             </td>
