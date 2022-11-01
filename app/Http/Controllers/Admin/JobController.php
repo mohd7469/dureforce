@@ -71,7 +71,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Cancel Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::where('status_id', 4)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::where('status_id', 10)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -82,7 +82,7 @@ class JobController extends Controller
             'id' => 'required|exists:jobs,id'
         ]);
         $job = Job::findOrFail($request->id);
-        $job->status = 1;
+        $job->status_id = 2;
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been approved'];
@@ -95,7 +95,7 @@ class JobController extends Controller
             'id' => 'required|exists:jobs,id'
         ]);
         $job = Job::findOrFail($request->id);
-        $job->status = 3;
+        $job->status_id = 10;
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been canceled'];
@@ -109,7 +109,7 @@ class JobController extends Controller
             'id' => 'required|exists:jobs,id'
         ]);
         $job = Job::findOrFail($request->id);
-        $job->status = 2;
+        $job->status_id = 3;
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been closed'];
