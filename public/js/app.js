@@ -6172,8 +6172,43 @@ __webpack_require__.r(__webpack_exports__);
     ChatUsers: _ChatUsersComponent_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     Messages: _MessageContainerComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default
   },
+  data: function data() {
+    return {
+      users: [],
+      messages: [],
+      active_user: {}
+    };
+  },
+  methods: {
+    sendMessage: function sendMessage() {// axios.post('/formSubmit', {  
+      //     name: this.name,  
+      //     description: this.description  
+      // })  
+      // .then(function (response) {  
+      //     currentObj.output = response.data;  
+      // })  
+      // .catch(function (error) {  
+      //     currentObj.output = error;  
+      // }); 
+    },
+    getUSers: function getUSers() {
+      var _this = this;
+
+      axios.get('/chat/get_users').then(function (response) {
+        _this.users = response.data.users;
+
+        _this.setCurrentUser(_this.users[0]);
+      });
+    },
+    setCurrentUser: function setCurrentUser(user) {
+      this.active_user = user;
+    }
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+  },
+  created: function created() {
+    this.getUSers();
   }
 });
 
