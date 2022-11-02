@@ -15,17 +15,16 @@
                     <div class="row">
                         
                         <p class="p-title">
-                            Title
-                         </p>
-
-                        {{-- title --}}
-                        <span>
-                            <span id="portfolio_title" ></span>
+                            <span>Title </span>
                             <a href="#" class="editbtn-d add_project">
                                 <img src="/assets/images/job/edit-icon.png">
                             </a>
-                        </span>
-                        
+                         </p>
+
+                        {{-- title --}}
+                       
+                        <span id="portfolio_title" ></span>
+                           
                         {{-- images --}}
                         <div class="row card" style="background-color: transparent !important;box-shadow:none;border:none;margin-top: 9px;">
                             
@@ -44,19 +43,23 @@
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                             
                             <div class="col-md-7">
-                                <label>Skills</label>
-                                
-                                
-                                <span>
+                                <label>
                                     <span>
-                                        <ul class="skills-listing" id="portfolio_skills">
-                                    
-
-                                        </ul>
+                                    Skills
                                     </span>
+                                    
                                     <a href="#" class="editbtn-d add_details">
                                         <img src="/assets/images/job/edit-icon.png">
                                     </a>
+                                </label>
+                                
+                                
+                                <span>
+                                   
+                                    <ul class="skills-listing" id="portfolio_skills">
+                                
+                                    </ul>
+                                    
                                 </span>
                                 
         
