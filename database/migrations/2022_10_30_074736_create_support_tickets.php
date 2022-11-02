@@ -20,6 +20,7 @@ class CreateSupportTickets extends Migration
             $table->unsignedBigInteger('priority_id')->index()->nullable();
             $table->unsignedBigInteger('status_id')->index()->nullable();
 
+            $table->string('ticket_no')->nullable();
             $table->string('subject')->nullable();
             $table->longText('message')->nullable();
             $table->softDeletes();

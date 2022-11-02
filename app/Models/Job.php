@@ -31,7 +31,10 @@ class Job extends Model
         "status_id"
 
     ];
-    
+
+    public static $Pending=1;
+    public static $Approved=2;
+    public static $Closed=3;
 
     const UPDATED_AT = null;
     

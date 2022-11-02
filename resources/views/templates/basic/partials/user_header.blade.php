@@ -45,8 +45,8 @@
                                 @endif
                                 <li><a href="{{ route('user.conversation.inbox') }}"
                                         @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Inbox')</a></li>
-                                <li><a href="{{ route('ticket.open') }}"
-                                        @if (request()->routeIs('ticket.open')) class="active" @endif>@lang('Get
+                                <li><a href="{{ route('ticket') }}"
+                                        @if (request()->routeIs('ticket')) class="active" @endif>@lang('Get
                                         Support')</a></li>
                             </ul>
                            

@@ -87,6 +87,7 @@ Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
 });
 
 // User Support Ticket
+Route::middleware('is-profile-completed')->group(function () {
 Route::prefix('ticket')->group(function () {
     Route::get('/', 'TicketController@supportTicket')->name('ticket');
     Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
@@ -94,6 +95,7 @@ Route::prefix('ticket')->group(function () {
     Route::get('/view/{ticket}', 'TicketController@viewTicket')->name('ticket.view');
     Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
     Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
+});
 });
 
 

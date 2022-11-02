@@ -365,5 +365,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Job::class, 'user_saved_jobs');
     }
 
+    public function supportTickets()
+    {
+        return $this->hasMany(SupportTicket::class);
+    }
+
 }   
 //
