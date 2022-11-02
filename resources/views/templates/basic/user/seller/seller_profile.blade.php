@@ -608,7 +608,7 @@
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
-                                        <label for="Description ">Description </label>
+                                        <label for="Description ">Description *</label>
                                         <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities" id="exp_description"></textarea>
                                     </div>
                                 </div>
