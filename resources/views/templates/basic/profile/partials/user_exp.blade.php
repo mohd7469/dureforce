@@ -161,6 +161,7 @@
                                        >
                                        <input
                                           type="date"
+                                          min="1970-01-01"
                                           name="experiences[{{$key}}][start_date]"
                                           id="experiences.{{$key}}.start_date"
                                           onchange="setMinDateJob($(this), $('.end-date-job-{{$key}}'))"
@@ -188,6 +189,7 @@
                                           id="experiences.{{$key}}.end_date"
                                           onchange="checkIfDateGreaterJob($(this))"
                                           type="date"
+                                          min="1970-01-01"
                                           name="experiences[{{$key}}][end_date]"
                                           @if ($Userexperience['end_date'])
                                             value="{{ \Carbon\Carbon::parse($Userexperience['end_date'])->format('Y-m-d') }}"   
@@ -346,6 +348,7 @@
                                     >
                                     <input
                                        type="date"
+                                       min="1970-01-01"
                                        name="experiences[0][start_date]"
                                        id="experiences.0.start_date"
                                        onchange="setMinDateJob($(this), $('.end-date-job-0'))"
@@ -373,6 +376,7 @@
                                        id="experiences.0.end_date"
                                        onchange="checkIfDateGreaterJob($(this))"
                                        type="date"
+                                       min="1970-01-01"
                                        name="experiences[0][end_date]"
                                        value=""
                                     />

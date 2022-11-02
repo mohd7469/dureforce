@@ -421,7 +421,7 @@ class ProfileController extends Controller
         $rules = [
             'name' => 'required',
             'completion_date' => 'required|date|before:today',
-            'skills' => 'nullable|array',
+            'skills' => 'nullable|array|max:15',
             'skills.*' =>'exists:skills,id',
             'project_url' => 'nullable',
             'description' => 'nullable',

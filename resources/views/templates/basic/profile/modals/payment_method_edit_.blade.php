@@ -37,7 +37,7 @@
                                     <label class="mt-4">Expiry Date *</label>
                                     <input type="date" name="expiration_date" id="expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required />
+                                    placeholder="" required  min="1970-01-01" />
                                 </div>
 
                                 <div class="col-md-6">

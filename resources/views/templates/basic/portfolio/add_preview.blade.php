@@ -39,10 +39,8 @@
 
                     {{-- skills --}}
                     <div class="row pt-5 pb-5">
-                        
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                             
-                            <div class="col-md-7">
+                            <div class="col-md-12">
                                 <label>
                                     <span>
                                     Skills
@@ -53,16 +51,11 @@
                                     </a>
                                 </label>
                                 
-                                
-                                <span>
-                                   
+                                <div class="col-md-12 ">
                                     <ul class="skills-listing" id="portfolio_skills">
                                 
                                     </ul>
-                                    
-                                </span>
-                                
-        
+                                </div>
                             </div>
                             
                         </div>
@@ -78,37 +71,35 @@
                         </div>
 
                     </div>
-                </div>
 
-            </div>
-        </div>
-
-
-        <div class="container pt-5 pb-5 pl=">
-            {{-- completion date --}}
-            <div class="row">
-                <label><p class="pb-4" id="portfolio_completion_date">
-                
-                </p>
-            </div>
-            {{-- Project URL --}}
-            <div class="row">
-
+                     {{-- completion date --}}
+                    <div class="row">
+                        <label><p class="pb-4" id="portfolio_completion_date">
                         
-                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
-                    <label>Project URL <a href="#" class="editbtn-d editbtn-d-p add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
-                    <p id="portfolio_url"></p>
+                        </p>
+                    </div>
+                    {{-- Project URL --}}
+                    <div class="row">
+
+                                
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-xs-12 form-group">
+                            <label>Project URL <a href="#" class="editbtn-d editbtn-d-p add_details"><img src="/assets/images/job/edit-icon.png"></a></label>
+                            <p id="portfolio_url"></p>
+                        </div>
+
+                         {{-- btns --}}
+                        <div id="outer" class="text-right">
+                            <div class="inner">
+                                <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn add_details">Back</button>
+                            </div>
+                            <div class="inner">
+                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Publish</button>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-            </div>
-            {{-- btns --}}
-            <div id="outer" class="text-right">
-                <div class="inner">
-                    <button type="button" class="pl-4   mt-20 w-70 cancel-job-btn add_details">Back</button>
-                </div>
-                <div class="inner">
-                    <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Publish</button>
-                </div>
             </div>
         </div>
 
@@ -203,4 +194,5 @@ span.short-d {
     line-height: 18px;
     color: #000000;
 }
+
 </style>

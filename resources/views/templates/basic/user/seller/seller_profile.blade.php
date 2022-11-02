@@ -600,15 +600,15 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date">
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" min="1970-01-01">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date">
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" min="1970-01-01">
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
-                                        <label for="Description ">Description </label>
+                                        <label for="Description ">Description *</label>
                                         <textarea type="text" class="form-control" name="description" style="min-height: 90px !important" placeholder="Describe your responsibilities" id="exp_description"></textarea>
                                     </div>
                                 </div>
@@ -769,8 +769,8 @@
                                                     name="start_date"
                                                     id="start_date"
                                                     onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
-        
-                                            />
+                                                    min="1970-01-01"
+                                            />  
                                         </div>
                                         <div
                                                 class="col-md-6"
@@ -791,6 +791,7 @@
                                                     id="edu_end_date"
                                                     onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
                                                     onchange="checkIfDateGreaterInsti($(this))"
+                                                    min="1970-01-01"
                                             />
                                         </div>
                                     </div>
