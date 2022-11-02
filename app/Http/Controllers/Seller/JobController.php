@@ -47,10 +47,10 @@ class JobController extends Controller
     {
 
         $user = auth()->user();
-        $user_saved_jobs = $user->save_job;
+        $user_saved_jobs = $user->save_job->where('status_id',Job::$Approved);
         $user_saved_jobs_ids = $user_saved_jobs->pluck('id')->toArray();
 
-        $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+        $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
 
         $categories = Category::with('subCategory')->get();
         if($category == null){
