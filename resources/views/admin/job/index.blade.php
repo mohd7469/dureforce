@@ -48,8 +48,12 @@
                             </td>
 
                             <td data-label="@lang('Budget')">
-                               <span class="font-weight-bold">{{ $general->cur_sym }}{{ getAmount($job->amount) }}</span>
-                            </td>
+                                @if($job->fixed_amount != '0.00')
+                                    <span class="font-weight-bold">{{__($job->fixed_amount)}}</span>
+                                @else
+                                    <span class="font-weight-bold">{{__($job->hourly_start_range)}} @lang('to') {{__($job->hourly_end_range)}}</span>
+                                </td>
+                                @endif
 
                              <td data-label="@lang('Delivery Time')">
                                <span class="font-weight-bold">{{($job->project_length->name)}}</span>
