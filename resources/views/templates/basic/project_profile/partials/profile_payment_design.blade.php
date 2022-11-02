@@ -1122,7 +1122,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="mt-4">Expiration Date <span class="imp">*</span></label>
-                                <input type="date" name="expiration_date" value="" placeholder="" required="">
+                                <input type="date" min="1970-01-01" name="expiration_date" value="" placeholder="" required="">
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>

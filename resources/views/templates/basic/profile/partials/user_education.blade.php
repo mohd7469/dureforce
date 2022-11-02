@@ -134,7 +134,7 @@
                                                     id="educations.{{$key}}.start_date"
                                                     onchange="setMinDateInsti($(this), $('.end-date-{{$key}}'))"
                                                     value="{{\Carbon\Carbon::parse($Usereducation['start_date'])->format('Y-m-d') }}"
-
+                                                    min="1970-01-01"
                                             />
                                         </div>
                                         <div
@@ -152,6 +152,7 @@
                                             <input
                                                     type="date"
                                                     class="end-date-job-education-{{$key}}"
+                                                    min="1970-01-01"
                                                     name="educations[{{$key}}][end_date]"
                                                     id="educations.{{$key}}.end_date"
                                                     onchange="checkIfDateGreaterInsti($(this))"
@@ -281,7 +282,7 @@
                                     >
                                     <input
                                             type="date"
-
+                                            min="1970-01-01"
                                             name="educations[0][start_date]"
                                             id="educations.0.start_date"
                                             onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
@@ -303,6 +304,7 @@
                                     <input
                                            class="end-date-job-education-0"
                                             type="date"
+                                            min="1970-01-01"
                                             name="educations[0][end_date]"
                                             id="educations.0.end_date"
                                             onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"

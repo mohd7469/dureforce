@@ -1194,7 +1194,7 @@
                                                                         id="ex_start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
                                                                         value="{{\Carbon\Carbon::parse($Userexperience['start_date_job'])->format('d-m-Y') }}" 
-
+                                                                        min="1970-01-01"
                     
                                                                        
                                                                     />
@@ -1219,7 +1219,8 @@
                                                                         type="date"
                                                                         name="end_date_job[]"
                                                                         value="{{\Carbon\Carbon::parse($Userexperience['end'])->format('dd/mm/YY')}}"
-                                                                    />
+                                                                        min="1970-01-01"
+                                                                        />
                                                                 </div>
                                                             </div>
                                                             <div
@@ -1391,7 +1392,8 @@
                                                                     name="start_date_institute[]"
                                                                     id="from_date"
                                                                     onchange="setMinDateInsti($(this), $('.end-date-insti'))"
-                                                                />
+                                                                    min="1970-01-01"
+                                                                    />
                                                             </div>
                                                             <div
                                                                 class="col-md-6"
@@ -1411,6 +1413,7 @@
                                                                     name="end_date_institute[]"
                                                                     id="to_date"
                                                                     onchange="checkIfDateGreaterInsti($(this))"
+                                                                    min="1970-01-01"
                                                                 />
                                                             </div>
                                                         </div>
@@ -1978,11 +1981,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" >
+                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" min="1970-01-01">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" >
+                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" min="1970-01-01">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -2047,11 +2050,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" min="1970-01-01">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" min="1970-01-01">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">

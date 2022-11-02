@@ -48,7 +48,7 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
                             <div class="col-md-6">
                                 <label class="mt-4">Expiration Date <span
                                         class="imp">*</span></label>
-                                <input type="date" name="expiration_date"
+                                <input type="date" name="expiration_date" min="1970-01-01"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
                                     placeholder=""  />
                             </div>
