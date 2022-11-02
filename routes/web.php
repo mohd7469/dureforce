@@ -52,6 +52,7 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //support-ticket-create
 Route::view('/support-listing', 'templates.basic.supports.sport_listing');
 Route::view('/ticket-details', 'templates.basic.supports.ticket_details');
+Route::view('/create-ticket', 'templates.basic.supports.create_ticket');
 
 
 //Seller Add Portfolio pages

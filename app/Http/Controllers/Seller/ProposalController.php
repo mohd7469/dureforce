@@ -177,6 +177,15 @@ class ProposalController extends Controller
         $request_data = [];
         parse_str($request->data, $request_data);
         $rules = [];
+        $custom_messages =[
+
+            'start_hour_limit.required_with' => 'Enter min hours field value or make empty max hours field',
+            'end_hour_limit.required_with' => 'Enter max hours field value or make empty min hours field',
+            'start_hour_limit.min' => 'Min hours field value must be greater than 0',
+            'end_hour_limit.gt' => 'Max hours field value must be greater than min hours field'
+
+        ];
+
         // hourly budget type
         if ($request_data['job_type'] == BudgetType::$hourly) {
 
@@ -188,6 +197,7 @@ class ProposalController extends Controller
                 'end_hour_limit' => 'required_with:start_hour_limit|numeric|gt:start_hour_limit',
                 'cover_letter' => 'string'
             ];
+
 
         } // fixed budget
         elseif ($request_data['job_type'] == BudgetType::$fixed) {
@@ -216,7 +226,7 @@ class ProposalController extends Controller
                 ];
             }
         }
-        $validator = Validator::make($request_data, $rules);
+        $validator = Validator::make($request_data, $rules,$custom_messages);
         if ($validator->fails()) {
 
             return response()->json(["error" => $validator->errors()]);
