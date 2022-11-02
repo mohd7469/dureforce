@@ -35,6 +35,8 @@ class Job extends Model
     public static $Pending=1;
     public static $Approved=2;
     public static $Closed=3;
+    public static $Canceled=10;
+
 
     const UPDATED_AT = null;
     

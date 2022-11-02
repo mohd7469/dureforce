@@ -10,6 +10,7 @@
     <hr>
     
      <div class="card-body" >
+         <form  action="{{route('buyer.job.store')}}" method="POST" >
         <div class="row">
 
         <div class="form-group col-md-6">
@@ -80,7 +81,7 @@
          <div class="comment-box">
            <input type="submit" value="Submit" class="btn-postcoment">
         </div>
-        
+         </form>
      </div>
 
 

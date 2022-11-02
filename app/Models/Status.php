@@ -16,6 +16,7 @@ class Status extends Model
     public static $Pending=1;
     public static $Approved=2;
     public static $Closed=3;
+    public static $Canceled=3;
 
     //Priority
     public static $High=7;
