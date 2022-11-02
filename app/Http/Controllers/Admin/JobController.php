@@ -128,7 +128,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been approved'];
         // return redirect()->back()->withNotify($notify);
-    	return redirect('admin/job/details/'.$job->uuid)->with(['notify']);
+    	return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
     }
 
     public function detailCancelBy(Request $request)
@@ -142,7 +142,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been canceled'];
         // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->with(['notify']);
+        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
     }
 
 
@@ -157,7 +157,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been closed'];
         // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->with(['notify']);
+        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
     }
 
 
