@@ -41,17 +41,19 @@
                     {{-- skills --}}
                     <div class="row pt-5 pb-5">
                         
-                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
                             
                             <div class="col-md-7">
                                 <label>Skills</label>
                                 
                                 
                                 <span>
-                                    <ul class="skills-listing" id="portfolio_skills">
-                                
+                                    <span>
+                                        <ul class="skills-listing" id="portfolio_skills">
+                                    
 
-                                    </ul>
+                                        </ul>
+                                    </span>
                                     <a href="#" class="editbtn-d add_details">
                                         <img src="/assets/images/job/edit-icon.png">
                                     </a>
