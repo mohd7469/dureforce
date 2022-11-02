@@ -165,7 +165,7 @@
                         margin-top:40px;
                     }
                     ul.skills-listing {
-                        display: -webkit-inline-box;
+                        display: block;
                     
                     }
                     .list-style li::marker {
@@ -185,6 +185,7 @@
                     line-height: 18px;
                     color: #FFFFFF;
                     margin-right: 1%;
+                    margin-top: 9px;
                     }
                     .container{
                         max-width:1390px;
@@ -483,8 +484,19 @@
 
             $(document).ready(function(){
                 $('.select2').select2({
-                    tags: true
+                    tags: true,
+                    maximumSelectionLength: 15
                 });
+                $('select').on('select2:close', function (evt) {
+                    var uldiv = $(this).siblings('span.select2').find('ul')
+                    
+                    var count = $(this).select2('data').length;
+
+                        if(count>15){
+                            displayAlertMessage("Max 15 skills can be selected");
+                        }
+                          
+                });        
                 var form_data='';
                 var action_url="{{route('seller.profile.portfolio.store')}}";
                 var dropzone = new Dropzone('#demo-upload', {
