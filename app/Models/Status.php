@@ -22,6 +22,9 @@ class Status extends Model
     public static $Medium=8;
     public static $Low=9;
 
+    public static $Priority="priority";
+    public static $SupportTicket="App\Models\SupportTicket";
+
 
 
 

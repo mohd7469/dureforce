@@ -52,7 +52,7 @@ Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //support-ticket-create
 Route::view('/support-listing', 'templates.basic.supports.sport_listing');
 Route::view('/ticket-details', 'templates.basic.supports.ticket_details');
-Route::view('/create-ticket', 'templates.basic.supports.create_ticket');
+
 
 
 //Seller Add Portfolio pages
@@ -92,7 +92,9 @@ Route::middleware('is-profile-completed')->group(function () {
 Route::prefix('ticket')->group(function () {
     Route::get('/', 'TicketController@supportTicket')->name('ticket');
     Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
-    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
+//    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
+    Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
+    Route::get('/store-ticket', 'TicketController@create')->name('ticket.store');
     Route::get('/view/{ticket}', 'TicketController@viewTicket')->name('ticket.view');
     Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
     Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');

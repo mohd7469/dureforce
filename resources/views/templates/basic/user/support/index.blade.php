@@ -6,7 +6,7 @@
                     <!----Second Section Start---->
                     <div class="second-section-con">
                         <div class="all-s"> All Support Tickets</div>
-                        <a href="#" class="cnt-btn">Create New Ticket</a>
+                        <a href="{{route('ticket.create')}}"  class="cnt-btn">Create New Ticket</a>
                         <div class="f-container">
                             <div name="Filters" id="Filters"></div>
 

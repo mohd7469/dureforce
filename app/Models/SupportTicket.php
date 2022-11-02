@@ -13,6 +13,7 @@ class SupportTicket extends Model
     public static $Open=4;
     public static $Closed=5;
     public static $OnHold=6;
+    
     public function getFullnameAttribute()
     {
         return $this->name;

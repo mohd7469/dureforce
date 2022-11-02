@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\Status;
 use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -32,6 +34,21 @@ class TicketController extends Controller
 
         $pageTitle = "Support Tickets";
         return view($this->activeTemplate . 'user.support.index', compact('tickets', 'pageTitle'));
+    }
+
+
+    public function create(Request $request)
+    {
+        try {
+            $pageTitle = "Create Support Ticket";
+            $user = auth()->user();
+            $priorities = Status::where('type',Status::$Priority)->get();
+            return view($this->activeTemplate . 'user.support.create_ticket', compact('user', 'pageTitle','priorities'));
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+
     }
 
 
@@ -123,6 +140,7 @@ class TicketController extends Controller
         $notify[] = ['success', 'ticket created successfully!'];
         return redirect()->route('ticket')->withNotify($notify);
     }
+
 
     public function viewTicket($ticket)
     {
