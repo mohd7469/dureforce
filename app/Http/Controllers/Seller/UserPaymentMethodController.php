@@ -45,7 +45,7 @@ class UserPaymentMethodController extends Controller
         $request->validate([
             'card_number'     => 'required',
             'expiration_date' => 'required|date',
-            'cvv_code'        => 'required',
+            'cvv_code'        => 'required|min:3|max:5',
             'name_on_card'    => 'required',
             'country'         => 'required',
             'city'            => 'required',
