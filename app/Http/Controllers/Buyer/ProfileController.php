@@ -10,6 +10,8 @@ use App\Models\LanguageLevel;
 use App\Models\Skills;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ModuleOffer;
+
 use App\Models\UserBasic;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -650,73 +652,54 @@ class ProfileController extends Controller
     {
     
         $request_data = $request->all();
-        dd($request->all());
+        // dd($request_data);
         
 
         $rules = [
-            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string',
-            'about' => 'required|string',
-            'phone_number' => ['required', new PhoneNumberValidate],
-            'city_id' => 'required|exists:world_cities,id',
-            'languages' => 'required|array',
-            'languages.*.language_id' => 'required|exists:world_languages,id',
-            'languages.*.language_level_id' => 'required|exists:language_levels,id',
+          //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'offer_ammount' => 'required',
+            'deposit_fund' => 'required',
+            'description' => 'required',
+            'accept_privacy_policy' => 'required',
+
         ];
-        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
-            $rules['category_id'] = 'required|array';
-            $rules['category_id.*'] = 'exists:categories,id';
-        }
+
+
+
 
         $validator = Validator::make($request_data, $rules);
         if ($validator->fails()) {
-            return response()->json(["validation_errors" => $validator->errors()]);
+            return redirect()->back()
+            ->withInput()
+            ->withErrors($validator);
+           // return response()->json(["validation_errors" => $validator->errors()]);
         } else {
             try {
 
                 DB::beginTransaction();
-
-                $user = auth()->user();
-                if($request->email){
-                    $user1 = User::find( auth()->user()->id);
-                    $user1->email = $request->email;
-                    $user1->country_id = $request->country_id;
-                    $user1->save();
-                }
-
-                
-                $user->basicProfile()->updateOrCreate(
-                    ['user_id' => $user->id],
-                    
-                    [
-                        'city_id' => $request_data['city_id'],
-                        'designation' => $request_data['designation'],
-                        'about' => $request_data['about'],
-                        'phone_number' => $request_data['phone_number'],
-                        
-                        
-                    
-                    ]);
-                $user->languages()->delete();
-                $user->languages()->createMany($request_data['languages']);
-                if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
-                    $user->categories()->sync($request_data['category_id']);
-                }
-
-                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
-
-                    $path = imagePath()['attachments']['path'];
-                    $file = $request->profile_picture;
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $user->basicProfile()->update(['profile_picture' => $url]);
-
-                }
+                $user = new ModuleOffer;
+                $user->offer_amount = $request->offer_amount;
+                $user->description_of_work = $request->description;
                 $user->save();
 
+
+                // $user->languages()->createMany($request_data['languages']);
+
+
+                // if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
+
+                //     $path = imagePath()['attachments']['path'];
+                //     $file = $request->profile_picture;
+                //     $filename = uploadAttachments($file, $path);
+                //     $file_extension = getFileExtension($file);
+                //     $url = $path . '/' . $filename;
+                //     $user->basicProfile()->update(['profile_picture' => $url]);
+
+                // }
+
+
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'profile' => 'step-1'])]); 
+                return redirect()->back();
 
 
 
