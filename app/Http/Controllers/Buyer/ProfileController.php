@@ -11,6 +11,7 @@ use App\Models\Skills;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ModuleOffer;
+use App\Models\Job;
 
 use App\Models\UserBasic;
 use DB;
@@ -650,6 +651,7 @@ class ProfileController extends Controller
 
     public function offerSave(Request $request)
     {
+
     
         $request_data = $request->all();
         // dd($request_data);
@@ -677,26 +679,12 @@ class ProfileController extends Controller
             try {
 
                 DB::beginTransaction();
-                $user = new ModuleOffer;
-                $user->offer_amount = $request->offer_amount;
-                $user->description_of_work = $request->description;
-                $user->save();
 
-
-                // $user->languages()->createMany($request_data['languages']);
-
-
-                // if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
-
-                //     $path = imagePath()['attachments']['path'];
-                //     $file = $request->profile_picture;
-                //     $filename = uploadAttachments($file, $path);
-                //     $file_extension = getFileExtension($file);
-                //     $url = $path . '/' . $filename;
-                //     $user->basicProfile()->update(['profile_picture' => $url]);
-
-                // }
-
+                $module_offer = new ModuleOffer;
+                $module_offer->offer_amount = $request->offer_amount;
+                $module_offer->description_of_work = $request->description;
+                $job = Job::find(35);
+                $job->moduleOffer()->save($module_offer);
 
                 DB::commit();
                 return redirect()->back();
