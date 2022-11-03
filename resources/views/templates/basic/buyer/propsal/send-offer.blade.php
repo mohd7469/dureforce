@@ -60,7 +60,7 @@
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>
            <div class="d-flex">
-            <input type="number" class="form-control text-end" placeholder="20.00"><span class="ml-2 per-hour"></span>
+            <input type="number" name="offer_ammount" class="form-control text-end" placeholder="20.00"><span class="ml-2 per-hour"></span>
            </div>
            <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
           </div>
@@ -101,7 +101,8 @@
     <hr>
 
     <!-- start date  -->
-    <form>
+    <form method="POST" action="{{route('offer.save')}}">
+      @csrf
     <div class="form-row" id="dynamicTable">
         
         <h6 class="color-green">Project Milestones</h6>
@@ -124,7 +125,7 @@
       <button type="button" name="add" id="add" class="addMoreButton my-2">
           Add another
       </button>
-    </form>
+   
 
     <!-- start date  -->
     <hr>
@@ -145,12 +146,12 @@
     <div>
         <h6 class="mt-4">Description of Work</h6>
         
-    <form>
+
     
     <textarea  class="p-3 border-grey text-area-responsive"
     id="w3review" name="w3review" rows="5" cols="65">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto voluptates similique quas dolore, reprehenderit at illum! Assumenda sit quia culpa error, modi ea, aliquam cumque obcaecati repudiandae ex hic?</textarea>
 
-    </form>
+
     <div>
     <br>
     <button class="btn-outline-green"><i class="fa fa-paperclip" aria-hidden="true"></i>
@@ -205,10 +206,11 @@
         </div>
         <div class="d-flex align-items-center">
             <button class="btn-purple-outline">Cancel</button>
-            <button class="btn-purple ml-2">Continue</button>
+            <button type="submit" class="btn-purple ml-2">Continue</button>
 
         </div>
     </div>
+  </form>
 
     <!-- policy section -->
     </div>
