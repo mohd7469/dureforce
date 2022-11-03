@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class ModuleOffer extends Model
 {
     use HasFactory;
-    protected $table = 'module_offers';
-    protected $fillable = [];
-
+    protected $table="module_offers";
 
 }
