@@ -6,8 +6,10 @@
 
 require('./bootstrap');
 import {InertiaApp} from '@inertiajs/inertia-vue'
+import VueChatScroll from 'vue-chat-scroll'
 import Vue from 'vue';
 window.Vue = require('vue').default;
+Vue.use(VueChatScroll)
 Vue.use(InertiaApp)
 
 /**
