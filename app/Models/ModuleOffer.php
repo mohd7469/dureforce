@@ -10,7 +10,7 @@ class ModuleOffer extends Model
 {
     use HasFactory;
     protected $table="module_offers";
-    protected $fillable = [];
+    protected $guarded = [];
 
     public function moduleMilestones()
     {

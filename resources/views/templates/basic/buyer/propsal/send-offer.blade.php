@@ -15,6 +15,7 @@
         {{session('success')}}
       </div>
   @endif
+
         <div class="card-body p-0 d-flex align-items-center">
          
             <div class="image-div">
@@ -66,6 +67,11 @@
   @csrf
   <div class="mt-4">
       <input type="hidden" name="job_id" value="{{$offer_letter->module_id}}" />
+      <input type="hidden" name="contract_title" value="{{$offer_letter->user->job_title}}">
+      <input type="hidden" name="start_date" value="{{$offer_letter->project_start_date}}">
+      <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
+
+      
         <div class="form-row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>
@@ -124,7 +130,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
-            <input type="text" name="addmore[0][due_date]" class="form-control" placeholder="">
+            <input type="date" name="addmore[0][due_date]" class="form-control" placeholder="">
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
@@ -164,15 +170,10 @@
         <span style="color:#dc3545">{{ $errors->first('description') }}.</span>
     @endif
 
-    <div  >
+    <div>
     <br>
-    {{-- <button name="attachment" class="btn-outline-green" type="file">
-      <i class="fa fa-paperclip" aria-hidden="true"></i> --}}
-    </button>
-
-    <button class="btn-outline-green"><i class="fa fa-paperclip" aria-hidden="true"></i>
-      Upload File</button>
-
+    <input name="attachment" class="btn-outline-green" type="file"/>
+      <i class="fa fa-paperclip" aria-hidden="true"></i>
        
       
     </div>
@@ -253,7 +254,7 @@
     $("#add").click(function(){
         ++i;
         // $("#dynamicTable").append('<tr><td><input type="text" name="addmore['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="addmore['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="addmore['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
 
     });
     $(document).on('click', '.remove-tr', function(){  

@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ModuleOfferMilestone extends Model
 {
     use HasFactory;
-    protected $fillable = [];
+    protected $guarded = [];  
 
-    public function moduleMilestone()
-    {
-        return $this->belongsTo(ModuleOffer::class);
-    }
+    // public function moduleMilestone()
+    // {
+    //     return $this->belongsTo(ModuleOffer::class);
+    // }
 
 }
