@@ -9,7 +9,14 @@
     <h6 class="fw-bold my-2 offer-letter-alignment-top">Send Offer</h5>
   <div class="card card-border p-3">
     <div class="">
+      @if(session('success'))
+
+      <div class="alert alert-success" style="float: right" role="alert">
+        {{session('success')}}
+      </div>
+  @endif
         <div class="card-body p-0 d-flex align-items-center">
+         
             <div class="image-div">
                 <img class="card-img-top image-ui" src="{{ !empty($offer_letter->user->basicProfile->profile_picture)? $offer_letter->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                 <span class="logged-in">●</span>
@@ -58,7 +65,7 @@
 <form method="POST" action="{{route('offer.save')}}">
   @csrf
   <div class="mt-4">
-
+      <input type="hidden" name="job_id" value="{{$offer_letter->module_id}}" />
         <div class="form-row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>

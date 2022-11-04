@@ -11,9 +11,9 @@ class ModuleOffer extends Model
     use HasFactory;
     protected $table="module_offers";
 
-    public function jobs()
+    public function module_milestones()
     {
-        return $this->belongsToMany(Job::class, 'module_id');
+        return $this->belongsToMany(Mode::class, 'module_id');
     }
 
 }

@@ -654,9 +654,7 @@ class ProfileController extends Controller
 
     
         $request_data = $request->all();
-        // dd($request_data);
         
-
         $rules = [
           //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'offer_ammount' => 'required',
@@ -683,11 +681,12 @@ class ProfileController extends Controller
                 $module_offer = new ModuleOffer;
                 $module_offer->offer_amount = $request->offer_amount;
                 $module_offer->description_of_work = $request->description;
-                $job = Job::find(35);
+                $job = Job::find($request->job_id);
                 $job->moduleOffer()->save($module_offer);
 
                 DB::commit();
-                return redirect()->back();
+                session()->put('notify', ["Offer Successfully saved!"]);
+                return redirect()->back()->withSuccess( 'Offer successfully saved!');;
 
 
 
