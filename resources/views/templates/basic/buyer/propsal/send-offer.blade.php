@@ -164,10 +164,15 @@
         <span style="color:#dc3545">{{ $errors->first('description') }}.</span>
     @endif
 
-    <div>
+    <div  >
     <br>
-    <input name="attachment" class="btn-outline-green" type="file"/>
-      <i class="fa fa-paperclip" aria-hidden="true"></i>
+    {{-- <button name="attachment" class="btn-outline-green" type="file">
+      <i class="fa fa-paperclip" aria-hidden="true"></i> --}}
+    </button>
+
+    <button class="btn-outline-green"><i class="fa fa-paperclip" aria-hidden="true"></i>
+      Upload File</button>
+
        
       
     </div>

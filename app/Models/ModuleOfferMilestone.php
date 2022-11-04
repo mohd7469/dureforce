@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ModuleOffer extends Model
+class ModuleOfferMilestone extends Model
 {
     use HasFactory;
-    protected $table="module_offers";
     protected $fillable = [];
 
-    public function moduleMilestones()
+    public function moduleMilestone()
     {
-        return $this->hasMany(ModuleOfferMilestone::class, 'module_offer_id');
+        return $this->belongsTo(ModuleOffer::class);
     }
 
 }
