@@ -172,9 +172,11 @@
 
     <div>
     <br>
-    <input name="attachment" class="btn-outline-green" type="file"/>
-      <i class="fa fa-paperclip" aria-hidden="true"></i>
-       
+    {{-- <input name="attachment" class="btn-outline-green" type="file"/>
+      <i class="fa fa-paperclip" aria-hidden="true"></i> --}}
+      <button class="btn-outline-green disabled"><i class="fa fa-paperclip" aria-hidden="true"></i>
+        Upload File</button>
+      </button> 
       
     </div>
     <h6 class="my-4">Attachments</h6>
@@ -246,6 +248,12 @@
 
 @endsection
 @push('style')
+<style>
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>
     <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
 @endpush
 @push('script')

@@ -713,7 +713,7 @@ class ProfileController extends Controller
 
                 DB::commit();
                 session()->put('notify', ["Offer Successfully saved!"]);
-                return redirect()->back()->withSuccess( 'Offer successfully saved!');;
+                return redirect()->back()->withSuccess( 'Offer successfully saved!');
 
 
 
