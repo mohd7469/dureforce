@@ -1191,6 +1191,20 @@ function getLastLoginRoleId()
     $user=auth()->user();
     return $user->last_role_activity;
 }
+function getLastLoginRoleName()
+{
+    $user=auth()->user();
+    $last_role=$user->last_role_activity;
+    if($last_role==Role::$Freelancer)
+        return Role::$FreelancerName;
+    elseif($last_role==Role::$Client)
+        return Role::$ClientName;
+    elseif($last_role==Role::$Admin)
+        return Role::$AdminName;
+    else
+        return '';
+
+}
 
 function getNumberOfPropsals($uuid)
 {
