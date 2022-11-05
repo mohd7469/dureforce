@@ -13,7 +13,7 @@ class ChatController extends Controller
 {
     public function getUsers()
     {
-        $users=User::where('last_role_activity',Role::$Freelancer)->where('id','!=',Auth()->user()->id)->with('basicProfile')->get();
+        $users=User::where('id','!=',Auth()->user()->id)->with('basicProfile')->get();
         return response()->json(['users'=> $users]);
     }
 
@@ -29,7 +29,13 @@ class ChatController extends Controller
     public function saveMessage(Request $request)
     {
         $request->request->add(['sender_id' => auth()->user()->id,'role' => strtolower(getLastLoginRoleName())]);
-        ChatMessage::create($request->all());
+        ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
         return response()->json(['message' => 'message successfully added']);
+    }
+
+    public function deleteMessage(Request $request, ChatMessage $chat_message_id)
+    {
+       $chat_message_id->delete();
+        return response()->json(['message' => 'message Deleted Successfully']);
     }
 }

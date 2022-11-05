@@ -24,18 +24,45 @@
                         <span class="online_icon"></span>
                     </div>
                     <div class="msg_cotainer">
-                        {{message.message}}
+                        <div>
+                            
+                            <div class="dropdown icon" v-if="active_user.id!=message.sender_id">
+                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
+                                </ul>
+                            </div>
+                            {{message.message}}
+                        </div>
                         <b class="user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
                         <span class="msg_time">{{formattedDate(message.created_at)}}</span>
                     </div>
                 </div>
 
                 <div class="d-flex justify-content-end mb-4 mt-custom" v-else>
+
                     <div class="msg_cotainer_send">
-                       {{message.message}}
-                        <b class="sender_user_name">{{message.user.first_name}} {{message.user.last_name}}  </b>
+
+                        <div>
+                            
+                            <div class="dropdown icon_send" v-if="active_user.id!=message.sender_id">
+                                
+                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
+                                    
+                                </ul>
+                            </div>
+                            {{message.message}}
+                        </div>
+                        <b class="sender_user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
                         <span class="msg_time_send">{{formattedDate(message.created_at)}}</span>
                     </div>
+
                     <div class="img_cont_msg">
                         <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
                         <img  v-else  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
@@ -88,8 +115,9 @@
         data() {
         return {
                 message_form:{
+                    id:'',
                     message : '',
-                    send_to : '',
+                    send_to_id : '',
                     module_type : 'App\\Models\\Job',
                     module_id : 35,
                 },
@@ -102,15 +130,17 @@
         methods: {
             formattedDate(date)
             {
-               return moment(String(date)).format('MM/DD/YYYY hh:mm')
+               return moment(String(date)).format('hh:mm A')
             },
             sendMessage(){
                 
                 if(this.message_form.message !=' '){
-                    this.message_form.send_to=this.active_user.id;
+                    this.message_form.send_to_id=this.active_user.id;
                     axios.post('../chat/save/message',this.message_form)
                     .then(res=>{
                         this.message_form.message='';
+                        this.message_form.id='';
+
                         this.$emit('newMessage');
                         
                     }).catch((error) => {
@@ -121,6 +151,26 @@
                     });
                 }
             },
+            deleteMessage(message_id)
+            {
+                axios.delete('../chat/delete/message/'+message_id)
+                    .then(res=>{
+                       
+                        this.$emit('newMessage');
+                        
+                    }).catch((error) => {
+                        const errors = error.response.data.errors;
+                        for (let field of Object.keys(errors)) {
+                            this.errors.push(errors[field][0]);
+                        }
+                    });
+            },
+            editMessage(message){
+
+                this.message_form.id=message.id;
+                this.message_form.message=message.message;
+
+            }
         },
         components: {
         },
@@ -128,19 +178,41 @@
 </script>
 
 <style scoped>
+.icon_send {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -7px;
+    top: -15px;
 
-.mt-custom{
-    margin-top: 40px;
-}
+  }
 
-.btn-propsal{
+  .icon {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2px;
+    top: -15px;
 
-        width: 117px;
-        height: 30px;
-        left: 1147px;
-        top: 86px;
-        background: #007F7F;
-        border-radius: 6px;
+  }
+    .mt-custom{
+        margin-top: 40px;
+    }
+
+    .btn-propsal{
+
+            width: 117px;
+            height: 30px;
+            left: 1147px;
+            top: 86px;
+            background: #007F7F;
+            border-radius: 6px;
 
     }
     .btn-job{
@@ -258,6 +330,7 @@ color: rgba(255,255,255,0.6);
     padding: 10px;
     position: relative;
     top:25px;
+    min-width: 85px;
     
 }
 .msg_cotainer_send{
@@ -268,6 +341,8 @@ color: rgba(255,255,255,0.6);
     padding: 10px;
     position: relative;
     top:25px;
+    right: 0px;
+    min-width: 85px;
     
 }
 .msg_time{
