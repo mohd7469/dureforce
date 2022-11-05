@@ -33,7 +33,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Active Users';
         $emptyMessage = 'No active user found';
-        $users = User::orderBy('id','desc')->paginate(getPaginate());
+        $users = User::where('is_active', 1)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -41,7 +41,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Banned Users';
         $emptyMessage = 'No banned user found';
-        $users = User::orderBy('id','desc')->paginate(getPaginate());
+        $users = User::where('is_active', 2)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -49,7 +49,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Email Unverified Users';
         $emptyMessage = 'No email unverified user found';
-        $users = User::orderBy('id','desc')->paginate(getPaginate());
+        $users = User::EmailUnverified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
     public function emailVerifiedUsers()
