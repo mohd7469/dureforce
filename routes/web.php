@@ -10,6 +10,9 @@ Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
 
+Route::post('/offer/save/', 'Buyer\ProfileController@offerSave')->name('offer.save');
+
+
 Route::get('/user/chat', 'CommonProfileController@userChat');
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
 // ---------------------------------------------------------------------------------------------------------------
@@ -47,6 +50,11 @@ Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 // Offer page design design
 Route::view('/offers', 'templates.basic.offers.view-offer');
+
+
+
+
+
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //support-ticket-create
@@ -253,6 +261,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('job/cancelBy', 'JobController@cancelBy')->name('job.cancelBy');
             Route::post('job/approvedBy', 'JobController@approvedBy')->name('job.approvedBy');
             Route::post('job/closedBy', 'JobController@closedBy')->name('job.closedBy');
+            Route::post('job/detailCancelBy', 'JobController@detailCancelBy')->name('job.detailCancelBy');
+            Route::post('job/detailApprovedBy', 'JobController@detailApprovedBy')->name('job.detailApprovedBy');
+            Route::post('job/detailClosedBy', 'JobController@detailClosedBy')->name('job.detailClosedBy');
             Route::get('job/details/{uuid}', 'JobController@details')->name('job.details');
             Route::get('job/biding/list/{id}', 'JobController@jobBiding')->name('job.biding.list');
             Route::get('job/biding/details/{id}', 'JobController@jobBidingDetails')->name('job.biding.details');

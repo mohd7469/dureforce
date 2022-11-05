@@ -26,19 +26,20 @@ class JobController extends Controller
 
     public function details($uuid)
     {
-        // dd($uuid);
     	$pageTitle = "Job Details";
-    	// $job = Job::findOrFail($uuid);
+
         $job = Job::where('uuid',$uuid)->withAll()->first();
-        $skillCats = SkillCategory::select('name', 'id')->get();
-
-        foreach ($skillCats as $skillCat) {
-
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-
+        if(isset($job)){
+            $skillCats = SkillCategory::select('name', 'id')->get();
+            foreach ($skillCats as $skillCat) {
+                $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+            }
+            $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+            $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+    
+        }else{
+            $data['selected_skills'] = '';
         }
-        $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
-        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
 
     	return view('admin.job.details', compact('pageTitle', 'job', 'data'));
     }
@@ -86,7 +87,7 @@ class JobController extends Controller
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been approved'];
-        return back()->withNotify($notify);
+        return redirect()->back()->withNotify($notify);
     }
 
     public function cancelBy(Request $request)
@@ -99,7 +100,7 @@ class JobController extends Controller
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been canceled'];
-        return back()->withNotify($notify);
+        return redirect()->back()->withNotify($notify);
     }
 
 
@@ -113,7 +114,50 @@ class JobController extends Controller
         $job->created_at = Carbon::now();
         $job->save();
         $notify[] = ['success', 'Job has been closed'];
-        return back()->withNotify($notify);
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function detailApprovedBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:jobs,id'
+        ]);
+        $job = Job::findOrFail($request->id);
+        $job->status_id = 2;
+        $job->created_at = Carbon::now();
+        $job->save();
+        $notify[] = ['success', 'Job has been approved'];
+        // return redirect()->back()->withNotify($notify);
+    	return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+    }
+
+    public function detailCancelBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:jobs,id'
+        ]);
+        $job = Job::findOrFail($request->id);
+        $job->status_id = 10;
+        $job->created_at = Carbon::now();
+        $job->save();
+        $notify[] = ['success', 'Job has been canceled'];
+        // return redirect()->back()->withNotify($notify);
+        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+    }
+
+
+    public function detailClosedBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:jobs,id'
+        ]);
+        $job = Job::findOrFail($request->id);
+        $job->status_id = 3;
+        $job->created_at = Carbon::now();
+        $job->save();
+        $notify[] = ['success', 'Job has been closed'];
+        // return redirect()->back()->withNotify($notify);
+        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
     }
 
 

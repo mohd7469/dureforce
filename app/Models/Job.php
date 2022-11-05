@@ -142,6 +142,10 @@ class Job extends Model
     {
         return $this->morphMany(TaskDocument::class, 'module');
     }
+    public function moduleOffer()
+    {
+        return $this->morphMany(ModuleOffer::class, 'module');
+    }
 
     public function messages()
     {

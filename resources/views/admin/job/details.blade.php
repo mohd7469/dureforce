@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('panel')
+@if(isset($job))
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <div class="item-details-content">
@@ -168,21 +169,125 @@
                         </button>
                     @endif
                     @if($job->status->id == 2)
-                        <button class="icon-btn btn--danger ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Close')" data-id="{{$job->id}}">
+                        <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$job->id}}">
                             <!-- <i class="las la-times"></i> -->
-                            @lang('Close')
+                            @lang('Cancel')
                     </button>
                 @endif
             </div>
         </div>
     </div>
 </div>
+@else
+<div class="row">
+    <div class="col-md-12 bg-white">
+        <h2 class="text-center">Data Not Exists</h2>
+    </div>
+</div>
+@endif
+<div class="modal fade" id="approvedby" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Approval Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{route('admin.job.detailApprovedBy')}}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to approved this job post?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cancelBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.job.detailCancelBy') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to cancel this job post?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="closedBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Closed Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.job.detailClosedBy') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to closed this job post?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
+@push('script')
+<script>
+    'use strict';
+    $('.approved').on('click', function () {
+        var modal = $('#approvedby');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.cancel').on('click', function () {
+        var modal = $('#cancelBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.closed').on('click', function () {
+        var modal = $('#closedBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+</script>
+@endpush
 @push('breadcrumb-plugins')
     <a href="{{ route('admin.job.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i class="la la-fw la-backward"></i>@lang('Go Back')</a>
 @endpush
 @push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
-
 @endpush
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/admin_job_view.css')}}">

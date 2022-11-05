@@ -1,5 +1,6 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
+
     <section class="all-sections pt-3">
         <div class="container-fluid p-max-sm-0">
             <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
@@ -8,7 +9,15 @@
     <h6 class="fw-bold my-2 offer-letter-alignment-top">Send Offer</h5>
   <div class="card card-border p-3">
     <div class="">
+      @if(session('success'))
+
+      <div class="alert alert-success" style="float: right" role="alert">
+        {{session('success')}}
+      </div>
+  @endif
+
         <div class="card-body p-0 d-flex align-items-center">
+         
             <div class="image-div">
                 <img class="card-img-top image-ui" src="{{ !empty($offer_letter->user->basicProfile->profile_picture)? $offer_letter->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                 <span class="logged-in">●</span>
@@ -54,19 +63,27 @@
 </div>
 <!-- Payment cards -->
 <!-- Form -->
-<div class="mt-4">
-    <form>
+<form method="POST" action="{{route('offer.save')}}">
+  @csrf
+  <div class="mt-4">
+      <input type="hidden" name="job_id" value="{{$offer_letter->module_id}}" />
+      <input type="hidden" name="contract_title" value="{{$offer_letter->user->job_title}}">
+      <input type="hidden" name="start_date" value="{{$offer_letter->project_start_date}}">
+      <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
+
+      
         <div class="form-row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>
            <div class="d-flex">
-            <input type="number" class="form-control text-end" placeholder="20.00"><span class="ml-2 per-hour"></span>
+            <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="20.00">
+            <span class="ml-2 per-hour"></span>
            </div>
            <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
           </div>
           
         </div>
-      </form>
+    
 </div>
 <!-- form -->
 
@@ -80,7 +97,7 @@
 <div class="mt-3">
     <h6 class="color-green">Deposit funds into Escrow</h6>
     <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
-      <form>
+    
           <div class="form-row">
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
@@ -96,24 +113,24 @@
             </div>
             
           </div>
-        </form>
+      
     </div>
     <hr>
 
     <!-- start date  -->
-    <form>
-    <div class="form-row" id="dynamicTable">
+
+      <div class="form-row" id="dynamicTable">
         
         <h6 class="color-green">Project Milestones</h6>
         <p class="text-muted fs-15px mt-1">Add project milestones and pay in installments as each milestone is completed to your satisfaction. Due dates will be set in Coordinated Universal Time (UTC).</p>
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Milestone Description</h6></label>
-            <input type="text" name="addmore[0][descr]" class="form-control" placeholder="">
+            <input type="text" name="addmore[0][descr]" class="form-control"  placeholder="">
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
-            <input type="text" name="addmore[0][due_date]" class="form-control" placeholder="">
+            <input type="date" name="addmore[0][due_date]" class="form-control" placeholder="">
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
@@ -124,7 +141,7 @@
       <button type="button" name="add" id="add" class="addMoreButton my-2">
           Add another
       </button>
-    </form>
+   
 
     <!-- start date  -->
     <hr>
@@ -145,16 +162,22 @@
     <div>
         <h6 class="mt-4">Description of Work</h6>
         
-    <form>
-    
-    <textarea  class="p-3 border-grey text-area-responsive"
-    id="w3review" name="w3review" rows="5" cols="65">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto voluptates similique quas dolore, reprehenderit at illum! Assumenda sit quia culpa error, modi ea, aliquam cumque obcaecati repudiandae ex hic?</textarea>
 
-    </form>
+    
+    <textarea  class="p-3 border-grey text-area-responsive {{ $errors->has('description') ? ' is-invalid' : '' }}"   value="{{ old('description') }}"
+    id="w3review" name="description" rows="5" cols="65">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto voluptates similique quas dolore, reprehenderit at illum! Assumenda sit quia culpa error, modi ea, aliquam cumque obcaecati repudiandae ex hic?</textarea>
+    @if ($errors->has('description'))
+        <span style="color:#dc3545">{{ $errors->first('description') }}.</span>
+    @endif
+
     <div>
     <br>
-    <button class="btn-outline-green"><i class="fa fa-paperclip" aria-hidden="true"></i>
+    {{-- <input name="attachment" class="btn-outline-green" type="file"/>
+      <i class="fa fa-paperclip" aria-hidden="true"></i> --}}
+      <button class="btn-outline-green disabled"><i class="fa fa-paperclip" aria-hidden="true"></i>
         Upload File</button>
+      </button> 
+      
     </div>
     <h6 class="my-4">Attachments</h6>
     <div class="d-flex flex-column">
@@ -200,15 +223,16 @@
     <!-- policy section -->
     <div class="d-flex justify-content-between align-items-center responsive-check my-3 offer-letter-alignment ">
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input name="accept_privacy_policy" type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span>and <span>Privacy Policy</span></label>
         </div>
         <div class="d-flex align-items-center">
             <button class="btn-purple-outline">Cancel</button>
-            <button class="btn-purple ml-2">Continue</button>
+            <button type="submit" class="btn-purple ml-2">Continue</button>
 
         </div>
     </div>
+  </form>
 
     <!-- policy section -->
     </div>
@@ -224,6 +248,12 @@
 
 @endsection
 @push('style')
+<style>
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+</style>
     <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
 @endpush
 @push('script')
@@ -232,7 +262,7 @@
     $("#add").click(function(){
         ++i;
         // $("#dynamicTable").append('<tr><td><input type="text" name="addmore['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="addmore['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="addmore['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
 
     });
     $(document).on('click', '.remove-tr', function(){  
