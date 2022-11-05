@@ -151,9 +151,7 @@
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
-
-
-                                                            <h2> Attachments</h2>
+                                                        <h2> Attachments</h2>
                                                         <div class="row">
                                                             @foreach($proposal->attachment as $document)
                                                             <ul class="skills-listing col-lg-4 col-md-4">
