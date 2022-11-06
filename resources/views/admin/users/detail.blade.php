@@ -8,7 +8,7 @@
                 <div class="card-body p-0">
                     <div class="p-3 bg--white">
                         <div class="">
-                            <img src="{{ getImage(imagePath()['profile']['user']['path'].'/'.$user->image,imagePath()['profile']['user']['size'])}}" alt="@lang('Profile Image')" class="b-radius--10 w-100">
+                            <img src="{{ isset($user->basicProfile->profile_picture) ? ($user->basicProfile->profile_picture) : asset('assets\images\default.png')}}" alt="@lang('Profile Image')" class="b-radius--10 w-100">
                         </div>
                         <div class="mt-15">
                             <h4 class="">{{$user->fullname}}</h4>
@@ -31,8 +31,11 @@
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Status')
+                                @if($user->is_active == 1)
                                 <span class="badge badge-pill bg--success">@lang('Active')</span>
+                                @else
                                 <span class="badge badge-pill bg--danger">@lang('Banned')</span>
+                                @endif
                         
                         </li>
 
@@ -49,10 +52,10 @@
                     <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
                         @lang('Add/Subtract Balance')
                     </a>
-                    <a href="{{ route('admin.users.login.history.single', $user->id) }}"
+                    <!-- <a href="{{ route('admin.users.login.history.single', $user->id) }}"
                        class="btn btn--primary btn--shadow btn-block btn-lg">
                         @lang('Login Logs')
-                    </a>
+                    </a> -->
                     <a href="{{route('admin.users.email.single',$user->id)}}"
                        class="btn btn--info btn--shadow btn-block btn-lg">
                         @lang('Send Email')
@@ -60,9 +63,9 @@
                     <a href="{{route('admin.users.login',$user->id)}}" target="_blank" class="btn btn--dark btn--shadow btn-block btn-lg">
                         @lang('Login as User')
                     </a>
-                    <a href="{{route('admin.users.email.log',$user->id)}}" class="btn btn--warning btn--shadow btn-block btn-lg">
+                    <!-- <a href="{{route('admin.users.email.log',$user->id)}}" class="btn btn--warning btn--shadow btn-block btn-lg">
                         @lang('Email Log')
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>
@@ -225,14 +228,14 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('First Name')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="firstname" value="{{$user->firstname}}">
+                                    <input class="form-control" type="text" name="firstname" value="{{$user->first_name}}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Last Name') <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="lastname" value="{{$user->lastname}}">
+                                    <input class="form-control" type="text" name="lastname" value="{{$user->last_name}}">
                                 </div>
                             </div>
                         </div>
@@ -288,7 +291,7 @@
                                     <label class="form-control-label font-weight-bold">@lang('Country') </label>
                                     <select name="country" class="form-control">
                                         @foreach($countries as $key => $country)
-                                            <option value="{{ $key }}" @if($country->country == @$user->address->country ) selected @endif>{{ __($country->country) }}</option>
+                                            <option value="{{ $key }}" @if($country->country == @$user->country ) selected @endif>{{ __($country->country) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -302,37 +305,37 @@
                                 <input type="checkbox" data-onstyle="-success" data-offstyle="-danger"
                                        data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('Banned')" data-width="100%"
                                        name="status"
-                                       @if($user->status) checked @endif>
+                                       @if($user->is_active == 1) checked @endif>
                             </div>
 
                             <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
                                 <label class="form-control-label font-weight-bold">@lang('Email Verification') </label>
                                 <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                       data-toggle="toggle" data-on="@lang('Verified')" data-off="@lang('Unverified')" name="ev"
-                                       @if($user->ev) checked @endif>
+                                       data-toggle="toggle" data-on="@lang('Verified')" data-off="@lang('Unverified')" name="email_verified_at"
+                                       @if($user->email_verified_at != null) checked @endif>
 
                             </div>
 
-                            <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
+                            <!-- <div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">
                                 <label class="form-control-label font-weight-bold">@lang('SMS Verification') </label>
                                 <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
                                        data-toggle="toggle" data-on="@lang('Verified')" data-off="@lang('Unverified')" name="sv"
                                        @if($user->sv) checked @endif>
 
-                            </div>
-                            <div class="form-group  col-md-6  col-sm-3 col-12">
+                            </div> -->
+                            <!-- <div class="form-group  col-md-6  col-sm-3 col-12">
                                 <label class="form-control-label font-weight-bold">@lang('2FA Status') </label>
                                 <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
                                        data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('Deactive')" name="ts"
                                        @if($user->ts) checked @endif>
-                            </div>
+                            </div> -->
 
-                            <div class="form-group  col-md-6  col-sm-3 col-12">
+                            <!-- <div class="form-group  col-md-6  col-sm-3 col-12">
                                 <label class="form-control-label font-weight-bold">@lang('2FA Verification') </label>
                                 <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
                                        data-toggle="toggle" data-on="@lang('Verified')" data-off="@lang('Unverified')" name="tv"
                                        @if($user->tv) checked @endif>
-                            </div>
+                            </div> -->
                         </div>
 
 
