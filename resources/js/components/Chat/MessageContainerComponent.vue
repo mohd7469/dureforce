@@ -2,124 +2,175 @@
     
     <div class="col-md-8 remove-space">
         
-            <div class="card-header">
-                <span class="float-sm-left">
-                    <b>Tristan Mason</b> 
-                    <small>12:37 PM GMT+1</small> 
-                </span>
-                <span class="float-right align-header">
-                    <button class="btn-job">View Job</button>
-                    <button class="btn-propsal">View Proposal</button>
-                </span>
-            </div>
-            
-            <div class="card-body msg_card_body">
-                <div class="d-flex justify-content-start mb-4">
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="online_icon"></span>
-                    </div>
-                    <div class="msg_cotainer">
-                        Hi, how are you arslan
-                        <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">8:40 AM</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mb-4">
-                    <div class="msg_cotainer_send">
-                        Hi sajid i am good tnx how about you?
-                        <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">8:55 AM</span>
-                    </div>
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="offline"></span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start mb-4">
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="online_icon"></span>
-                    </div>
-                    <div class="msg_cotainer">
-                        I am good too, thank you for your chat template
-                        <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">9:00 AM</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mb-4">
-                    <div class="msg_cotainer_send">
-                        You are welcome
-                        <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">9:05 AM</span>
-                    </div>
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="offline"></span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start mb-4">
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="online_icon"></span>
-                    </div>
-                    <div class="msg_cotainer">
-                        I am looking for your next templates
-                        <b class="user_name">Sajid Mehmood</b>
-                        <span class="msg_time">9:07 AM</span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mb-4">
-                    <div class="msg_cotainer_send">
-                        Ok, thank you have a good day
-                        <b class="sender_user_name">Arslan Ayoub</b>
-                        <span class="msg_time_send">9:10 AM</span>
-                    </div>
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="offline"></span>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-start mb-4">
-                    <div class="img_cont_msg">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        <span class="online_icon"></span>
-                    </div>
-                    <div class="msg_cotainer">
-                        Bye, see you
-                        <b class="user_name">Sajid Mehmood</b>
-
-                        <span class="msg_time">9:12 AM</span>
-                    </div>
-                </div>
-            </div>
-            
+        <div class="card-header">
+            <span class="float-sm-left">
+                <b>Tristan Mason</b> 
+                <small>12:37 PM GMT+1</small> 
+            </span>
+            <span class="float-right align-header">
+                <button class="btn-job">View Job</button>
+                <button class="btn-propsal">View Proposal</button>
+            </span>
+        </div>
         
-            <div>
-                <form action="">
-                    <div class="row background">
-                        <div class="col-md-11">
-                            <input type="text"  class="no-border" placeholder="Write Your Message"></input>
-                        </div>
-                        <div class="col-md-1 align-self-center">
-                            <i class="fas fa-paperclip"></i>
-                            <i class="fas fa-location-arrow"></i>
-                           
-                        </div>
-                    </div>
-                </form>
+        <div class="card-body msg_card_body" v-chat-scroll>
+            <div v-for="message of messages">
                 
+                <div class="d-flex justify-content-start mb-4 mt-custom" v-if="message.role=='freelancer'">
+                    <div class="img_cont_msg">
+                        <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
+                        <img v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                        
+                        <span class="online_icon"></span>
+                    </div>
+                    <div class="msg_cotainer">
+                        <div>
+                            
+                            <div class="dropdown icon" v-if="active_user.id!=message.sender_id">
+                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
+                                </ul>
+                            </div>
+                            {{message.message}}
+                        </div>
+                        <b class="user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
+                        <span class="msg_time">{{formattedDate(message.created_at)}}</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-4 mt-custom" v-else>
+
+                    <div class="msg_cotainer_send">
+
+                        <div>
+                            
+                            <div class="dropdown icon_send" v-if="active_user.id!=message.sender_id">
+                                
+                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
+                                    
+                                </ul>
+                            </div>
+                            {{message.message}}
+                        </div>
+                        <b class="sender_user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
+                        <span class="msg_time_send">{{formattedDate(message.created_at)}}</span>
+                    </div>
+
+                    <div class="img_cont_msg">
+                        <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
+                        <img  v-else  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                        
+                        <span class="offline"></span>
+                    </div>
+                </div>
+
             </div>
+          
+        </div>
+        
+        <div>
+            
+            <div class="row background">
+                
+                <div class="col-md-11">
+                    <input type="text"  class="no-border" 
+                    placeholder="Write Your Message" 
+                    v-model="message_form.message"
+                    @keyup.enter="sendMessage()"
+                >
+                </div>
+                <div class="col-md-1 align-self-center">
+                    <i class="fas fa-paperclip" ></i>
+                    <i class="fas fa-location-arrow" @click="sendMessage()"></i>
+                    
+                </div>
+            </div>
+           
+            
+        </div>
         
     </div>
   
 </template>
 
 <script>
-
+    import moment from 'moment'; 
     export default {
+        
+        props:{
+            messages:[],
+            active_user:{
+
+            }
+            
+           
+        },
+        data() {
+        return {
+                message_form:{
+                    id:'',
+                    message : '',
+                    send_to_id : '',
+                    module_type : 'App\\Models\\Job',
+                    module_id : 35,
+                },
+                errors:[]
+            }
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            formattedDate(date)
+            {
+               return moment(String(date)).format('hh:mm A')
+            },
+            sendMessage(){
+                
+                if(this.message_form.message !=' '){
+                    this.message_form.send_to_id=this.active_user.id;
+                    axios.post('../chat/save/message',this.message_form)
+                    .then(res=>{
+                        this.message_form.message='';
+                        this.message_form.id='';
+
+                        this.$emit('newMessage');
+                        
+                    }).catch((error) => {
+                        const errors = error.response.data.errors;
+                        for (let field of Object.keys(errors)) {
+                            this.errors.push(errors[field][0]);
+                        }
+                    });
+                }
+            },
+            deleteMessage(message_id)
+            {
+                axios.delete('../chat/delete/message/'+message_id)
+                    .then(res=>{
+                       
+                        this.$emit('newMessage');
+                        
+                    }).catch((error) => {
+                        const errors = error.response.data.errors;
+                        for (let field of Object.keys(errors)) {
+                            this.errors.push(errors[field][0]);
+                        }
+                    });
+            },
+            editMessage(message){
+
+                this.message_form.id=message.id;
+                this.message_form.message=message.message;
+
+            }
         },
         components: {
         },
@@ -127,14 +178,41 @@
 </script>
 
 <style scoped>
+.icon_send {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -7px;
+    top: -15px;
+
+  }
+
+  .icon {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 2px;
+    top: -15px;
+
+  }
+    .mt-custom{
+        margin-top: 40px;
+    }
+
     .btn-propsal{
 
-        width: 117px;
-        height: 30px;
-        left: 1147px;
-        top: 86px;
-        background: #007F7F;
-        border-radius: 6px;
+            width: 117px;
+            height: 30px;
+            left: 1147px;
+            top: 86px;
+            background: #007F7F;
+            border-radius: 6px;
 
     }
     .btn-job{
@@ -167,6 +245,9 @@
     
     .msg_card_body{
         overflow-y: auto;
+        min-height: 570px;
+        max-height: 570px;
+
     }
     
     .type_msg{
@@ -249,6 +330,7 @@ color: rgba(255,255,255,0.6);
     padding: 10px;
     position: relative;
     top:25px;
+    min-width: 85px;
     
 }
 .msg_cotainer_send{
@@ -259,6 +341,8 @@ color: rgba(255,255,255,0.6);
     padding: 10px;
     position: relative;
     top:25px;
+    right: 0px;
+    min-width: 85px;
     
 }
 .msg_time{

@@ -6,8 +6,15 @@
                     
                     <div class="card-body">
                         <div class="row">
-                            <ChatUsers></ChatUsers>
-                            <Messages></Messages>
+                            <ChatUsers 
+                                v-bind:users="users"
+                                @userChange="setCurrentUser($event)"
+                            ></ChatUsers>
+                            <Messages 
+                                v-bind:messages="messages" 
+                                v-bind:active_user="active_user" 
+                                @newMessage="getActiveUserChat"
+                            ></Messages>
                             
                         </div>
                     </div>
@@ -35,29 +42,33 @@
         },  
         methods: {  
              
-            sendMessage(){
-                // axios.post('/formSubmit', {  
-                //     name: this.name,  
-                //     description: this.description  
-                // })  
-                // .then(function (response) {  
-                //     currentObj.output = response.data;  
-                // })  
-                // .catch(function (error) {  
-                //     currentObj.output = error;  
-                // }); 
-            },
-
+            
             getUSers(){
+
                 axios.get('/chat/get_users')
                 .then( response => {
                     this.users=response.data.users;
                     this.setCurrentUser(this.users[0]);
                 }) ;
+                
             },
 
             setCurrentUser(user){
+
                 this.active_user=user;
+                this.getActiveUserChat();
+
+            },
+            getActiveUserChat()
+            {
+                axios.post('/chat/messages', {  
+                    send_to_id: this.active_user.id,  
+                    job_id: 35  
+                })  
+
+                .then( response => {
+                    this.messages=response.data.messages;
+                }) ;
             }
 
             

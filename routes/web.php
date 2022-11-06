@@ -13,7 +13,6 @@ Route::get('/clear', function () {
 Route::post('/offer/save/', 'Buyer\ProfileController@offerSave')->name('offer.save');
 
 
-Route::get('/user/chat', 'CommonProfileController@userChat');
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
