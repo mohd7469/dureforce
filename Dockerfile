@@ -20,10 +20,8 @@ RUN rm /etc/php/8.1/fpm/pool.d/www.conf
 
 RUN rm -rf /html/nginx-conf
 RUN mkdir /run/php
-RUN chmod 555 -R /html
-RUN chmod 777 /html
+RUN chmod 777 -R /html
 COPY --from=builder /src/node_modules /html/node_modules
-RUN chmod 555 /html
 
 EXPOSE 80
 
