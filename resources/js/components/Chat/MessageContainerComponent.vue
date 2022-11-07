@@ -4,8 +4,8 @@
         
         <div class="card-header">
             <span class="float-sm-left">
-                <b>Tristan Mason</b> 
-                <small>12:37 PM GMT+1</small> 
+                <b>{{active_user.first_name}} {{active_user.last_name}} </b> 
+                <small>{{formattedDate(active_user.created_at)}}</small> 
             </span>
             <span class="float-right align-header">
                 <button class="btn-job">View Job</button>

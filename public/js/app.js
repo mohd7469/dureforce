@@ -6183,7 +6183,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: [],
       messages: [],
-      active_user: {}
+      active_user: {},
+      pusher_obj: {}
     };
   },
   methods: {
@@ -6199,15 +6200,7 @@ __webpack_require__.r(__webpack_exports__);
     setCurrentUser: function setCurrentUser(user) {
       this.active_user = user;
       this.getActiveUserChat();
-      Pusher.logToConsole = true;
-      var pusher = new Pusher('4afebaf3067764a250af', {
-        cluster: 'us3'
-      });
-      var channel = pusher.subscribe('user-' + this.active_user.id + '-message-channel');
-      channel.bind('new-message', function (data) {
-        console.log(data.message);
-        this.messages.push(data.message);
-      });
+      this.userPuserChannel();
     },
     getActiveUserChat: function getActiveUserChat() {
       var _this2 = this;
@@ -6218,9 +6211,23 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this2.messages = response.data.messages;
       });
+    },
+    userPuserChannel: function userPuserChannel() {
+      var channel = this.pusher_obj.subscribe('user-' + this.active_user.id + '-message-channel');
+      console.log(channel);
+      channel.bind('new-message', function (data) {
+        console.log(channel);
+        console.log(data.message);
+        console.log(this.messages[0]);
+        this.messages.push(data.message);
+      });
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.pusher_obj = new Pusher('4afebaf3067764a250af', {
+      cluster: 'us3'
+    });
+  },
   created: function created() {
     this.getUSers();
     console.log('Component mounted.');
@@ -56716,7 +56723,24 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-8 remove-space" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "card-header" }, [
+      _c("span", { staticClass: "float-sm-left" }, [
+        _c("b", [
+          _vm._v(
+            _vm._s(_vm.active_user.first_name) +
+              " " +
+              _vm._s(_vm.active_user.last_name) +
+              " "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("small", [
+          _vm._v(_vm._s(_vm.formattedDate(_vm.active_user.created_at))),
+        ]),
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -56982,18 +57006,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("span", { staticClass: "float-sm-left" }, [
-        _c("b", [_vm._v("Tristan Mason")]),
-        _vm._v(" "),
-        _c("small", [_vm._v("12:37 PM GMT+1")]),
-      ]),
+    return _c("span", { staticClass: "float-right align-header" }, [
+      _c("button", { staticClass: "btn-job" }, [_vm._v("View Job")]),
       _vm._v(" "),
-      _c("span", { staticClass: "float-right align-header" }, [
-        _c("button", { staticClass: "btn-job" }, [_vm._v("View Job")]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn-propsal" }, [_vm._v("View Proposal")]),
-      ]),
+      _c("button", { staticClass: "btn-propsal" }, [_vm._v("View Proposal")]),
     ])
   },
 ]

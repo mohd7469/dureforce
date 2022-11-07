@@ -304,7 +304,6 @@
                                                 <h4>{{getDegreeTitle($education_obj)}}</h4>
                                                 <p class="short-text">{{$education_obj->school_name}}</p><br/>
                                                 <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
-                                                <p class="short-text"><i class="fa fa-map-marker-alt" aria-hidden="true"></i>  {{'location'}} </p><br/>
                                             </div>
 
                                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
