@@ -6199,6 +6199,15 @@ __webpack_require__.r(__webpack_exports__);
     setCurrentUser: function setCurrentUser(user) {
       this.active_user = user;
       this.getActiveUserChat();
+      Pusher.logToConsole = true;
+      var pusher = new Pusher('4afebaf3067764a250af', {
+        cluster: 'us3'
+      });
+      var channel = pusher.subscribe('user-' + this.active_user.id + '-message-channel');
+      channel.bind('new-message', function (data) {
+        console.log(data.message);
+        this.messages.push(data.message);
+      });
     },
     getActiveUserChat: function getActiveUserChat() {
       var _this2 = this;
@@ -6211,11 +6220,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
+  mounted: function mounted() {},
   created: function created() {
     this.getUSers();
+    console.log('Component mounted.');
   }
 });
 
@@ -6268,7 +6276,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    users: []
+    users: Array
   },
   methods: {
     formattedDate: function formattedDate(date) {
@@ -6399,12 +6407,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    messages: [],
-    active_user: {}
+    messages: Array,
+    active_user: Object
   },
   data: function data() {
     return {
@@ -6418,9 +6425,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: []
     };
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
+  mounted: function mounted() {},
   methods: {
     formattedDate: function formattedDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(String(date)).format('hh:mm A');
