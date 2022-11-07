@@ -6213,13 +6213,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     userPuserChannel: function userPuserChannel() {
+      var _this3 = this;
+
       var channel = this.pusher_obj.subscribe('user-' + this.active_user.id + '-message-channel');
-      console.log(channel);
       channel.bind('new-message', function (data) {
-        console.log(channel);
         console.log(data.message);
-        console.log(this.messages[0]);
-        this.messages.push(data.message);
+
+        _this3.messages.push(data.message);
+      });
+      channel.bind('delete-message', function (data) {
+        _this3.messages.splice(_this3.messages.findIndex(function (a) {
+          return a.id === data.message.id;
+        }), 1);
+      });
+      channel.bind('edited-message', function (data) {
+        console.log(data.message);
+
+        _this3.messages.push(data.message);
       });
     }
   },
