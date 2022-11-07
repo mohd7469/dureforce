@@ -13,4 +13,8 @@ class ChatMessage extends Model
     {
         return $this->belongsTo(User::class, 'sender_id')->with('basicProfile');
     }
+    public function send_to_user()
+    {
+        return $this->belongsTo(User::class, 'send_to_id')->with('basicProfile');
+    }
 }

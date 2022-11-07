@@ -49,14 +49,25 @@
                 .then( response => {
                     this.users=response.data.users;
                     this.setCurrentUser(this.users[0]);
+                    
                 }) ;
-                
+
             },
 
             setCurrentUser(user){
 
                 this.active_user=user;
                 this.getActiveUserChat();
+                Pusher.logToConsole = true;
+                    var pusher = new Pusher('4afebaf3067764a250af', {
+                        cluster: 'us3'
+                    });
+
+                    var channel = pusher.subscribe('user-'+this.active_user.id+'-message-channel');
+                        channel.bind('new-message', function(data) {
+                        console.log(data.message);
+                        this.messages.push(data.message);
+                });
 
             },
             getActiveUserChat()
@@ -74,10 +85,12 @@
             
         },
         mounted() {
-            console.log('Component mounted.')
+           
         },
         created(){
             this.getUSers();
+            console.log('Component mounted.')
+            
         }
     }
 </script>
