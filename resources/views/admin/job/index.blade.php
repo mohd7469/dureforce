@@ -12,7 +12,7 @@
                             <th>@lang('Buyer')</th>
                             <th>@lang('Category / SubCategory')</th>
                             <th>@lang('Budget')</th>
-                            <th>@lang('Delivery Time')</th>
+                            <th>@lang('Delivery Time11')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
                             <th>@lang('Action')</th>
@@ -69,7 +69,7 @@
                                      <br>
                                     {{diffforhumans($job->created_at)}}
                                 @elseif($job->status->id == 10)
-                                    <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
+                                    <span class="font-weight-normal badge--danger">@lang('Canceled')</span>
                                      <br>
                                     {{diffforhumans($job->created_at)}}
                                 @elseif($job->status->id == 1)
@@ -97,7 +97,7 @@
                                         <i class="las la-check"></i>
                                     </button>
 
-                                    <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$job->id}}">
+                                    <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Canceled')" data-id="{{$job->id}}">
                                         <i class="las la-times"></i>
                                     </button>
                                 @endif
@@ -108,7 +108,7 @@
                                     </button>
                                 @endif
                                 @if($job->status->id == 2)
-                                    <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$job->id}}">
+                                    <button class="icon-btn btn--danger ml-1 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Canceled')" data-id="{{$job->id}}">
                                         <i class="las la-times"></i>
                                 </button>
                                 @endif
