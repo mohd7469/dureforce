@@ -65,7 +65,7 @@
                                 <tr>
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
                                     <td><a href="{{route('seller.proposal.create',1)}}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
-                                    <td>{{$ticket->ticket_no}}</td>
+                                    <td>{{$ticket->subject}}</td>
                                     <td>12</td>
 
 
