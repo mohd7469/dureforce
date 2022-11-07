@@ -37,7 +37,8 @@
             return {  
               users: [],  
               messages: [],  
-              active_user: {}  
+              active_user: {}  ,
+              pusher_obj:{},
             };  
         },  
         methods: {  
@@ -58,16 +59,7 @@
 
                 this.active_user=user;
                 this.getActiveUserChat();
-                Pusher.logToConsole = true;
-                    var pusher = new Pusher('4afebaf3067764a250af', {
-                        cluster: 'us3'
-                    });
-
-                    var channel = pusher.subscribe('user-'+this.active_user.id+'-message-channel');
-                        channel.bind('new-message', function(data) {
-                        console.log(data.message);
-                        this.messages.push(data.message);
-                });
+                this.userPuserChannel();
 
             },
             getActiveUserChat()
@@ -80,12 +72,23 @@
                 .then( response => {
                     this.messages=response.data.messages;
                 }) ;
+            },
+            userPuserChannel()
+            {
+                var channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
+                    console.log(channel);
+                    channel.bind('new-message', function(data) {
+                    console.log(channel);
+                    console.log(data.message);
+                    console.log(this.messages[0]);
+                    this.messages.push(data.message);
+                });
             }
-
-            
         },
         mounted() {
-           
+            this.pusher_obj = new Pusher('4afebaf3067764a250af', {
+                cluster: 'us3'
+            });
         },
         created(){
             this.getUSers();
