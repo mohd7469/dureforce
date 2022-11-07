@@ -1,7 +1,10 @@
 FROM mshakirfattani/nginx-php-composer:1.0
+FROM node:14.19.3 AS builder
 
 ARG DEBIAN_FRONTEND=noninteractive
+COPY package.json .
 
+RUN npm i
 WORKDIR /html 
 
 RUN composer -V
