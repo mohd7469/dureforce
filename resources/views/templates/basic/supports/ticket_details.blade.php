@@ -1,21 +1,8 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
 <!---Inner NavBar Section Start--->
-<div class="categories_type_container">  
-    <ul class="text-center ul-margin">
-        <li class="nav-item active">
-            <a href="http://127.0.0.1:8000/service/?category_id=1&amp;category_name=Microservices">Microservices</a>
-        </li>
-        <li class="nav-item active">
+<section>
 
-            <a href="http://127.0.0.1:8000/service/?category_id=2&amp;category_name=Security">Security</a>
-        </li>
-        <li class="nav-item active">
-
-            <a href="http://127.0.0.1:8000/service/?category_id=3&amp;category_name=Api Gateway">Api Gateway</a>
-        </li>
-    </ul>
-</div>
 <div class="container">
     <div class="secondsb-con"> 
         <p class="sbheading-c">All Support Tickets > #469253 > <strong>How to create a service</strong></p>
