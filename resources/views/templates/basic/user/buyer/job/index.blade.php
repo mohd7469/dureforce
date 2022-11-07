@@ -54,7 +54,7 @@
                                                     <span class="status-btn btn--warning">@lang('Closed')</span>
                                                 
                                                 @else
-                                                    <button class="status-btn btn--danger">@lang('Canceled')</button>
+                                                    <button class="status-btn btn--danger"> @lang('Canceled') </button>
                                                     
                                                 @endif
 
