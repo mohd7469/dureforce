@@ -664,8 +664,10 @@ class ProfileController extends Controller
             'deposit_fund' => 'required',
             'description' => 'required',
             'accept_privacy_policy' => 'required',
-            'addmore' => 'required|array',
-
+            'milestone' => 'required|array',
+            'milestone.*.descr' => 'required',
+            'milestone.*.due_date' => 'required',
+            'milestone.*.desposit_amout' => 'required',
 
         ];
 
@@ -675,8 +677,7 @@ class ProfileController extends Controller
         $validator = Validator::make($request_data, $rules);
         if ($validator->fails()) {
             return redirect()->back()
-            ->withInput()
-            ->withErrors($validator);
+            ->withErrors($validator) ->withInput();
            // return response()->json(["validation_errors" => $validator->errors()]);
         } else {
             try {
@@ -693,10 +694,10 @@ class ProfileController extends Controller
                 $job = Job::find($request->job_id);
                 $job->moduleOffer()->save($module_offer);
 
-                if (($request->addmore))
+                if (($request->milestone))
                 {
 
-                  $ModuleOfferMilestones =  $request->addmore;
+                  $ModuleOfferMilestones =  $request->milestone;
                   foreach($ModuleOfferMilestones as $ModuleOfferMilestone) {
                     ModuleOfferMilestone::updateOrCreate([
                         'module_offer_id'   => $module_offer->id,
@@ -712,8 +713,8 @@ class ProfileController extends Controller
 
 
                 DB::commit();
-                session()->put('notify', ["Offer Successfully saved!"]);
-                return redirect()->back()->withSuccess( 'Offer successfully saved!');
+                $notify[] = ['success', 'Offer Successfully saved!'];
+                return redirect()->back()->withNotify($notify);
 
 
 

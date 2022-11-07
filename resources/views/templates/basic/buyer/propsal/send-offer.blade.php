@@ -126,19 +126,19 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Milestone Description</h6></label>
-            <input type="text" name="addmore[0][descr]" class="form-control"  placeholder="">
+            <input type="text" name="milestone[0][descr]" class="form-control"  value="{{ old('milestone.0.descr') }}"  id="milestone.0.descr" placeholder="" >
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
-            <input type="date" name="addmore[0][due_date]" class="form-control" placeholder="">
+            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="">
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="addmore[0][desposit_amout]" class="form-control text-end" placeholder="20.00">
+            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="20.00">
           </div>
         </div>
     </div>
-      <button type="button" name="add" id="add" class="addMoreButton my-2">
+      <button type="button" name="add" id="add" class="milestoneButton my-2">
           Add another
       </button>
    
@@ -166,9 +166,7 @@
     
     <textarea  class="p-3 border-grey text-area-responsive {{ $errors->has('description') ? ' is-invalid' : '' }}"   value="{{ old('description') }}"
     id="w3review" name="description" rows="5" cols="65">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto voluptates similique quas dolore, reprehenderit at illum! Assumenda sit quia culpa error, modi ea, aliquam cumque obcaecati repudiandae ex hic?</textarea>
-    @if ($errors->has('description'))
-        <span style="color:#dc3545">{{ $errors->first('description') }}.</span>
-    @endif
+
 
     <div>
     <br>
@@ -261,8 +259,8 @@
     var i = 0;
     $("#add").click(function(){
         ++i;
-        // $("#dynamicTable").append('<tr><td><input type="text" name="addmore['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="addmore['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="addmore['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="addmore['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="addmore['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="addmore['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        // $("#dynamicTable").append('<tr><td><input type="text" name="milestone['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="milestone['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="milestone['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
 
     });
     $(document).on('click', '.remove-tr', function(){  
