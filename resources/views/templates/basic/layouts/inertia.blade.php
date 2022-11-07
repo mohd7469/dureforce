@@ -19,10 +19,11 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
+    
     @stack('style-lib')
     @stack('style')
-    <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
-          rel="stylesheet"/>
+    <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}" rel="stylesheet"/>
+
 </head>
 <body>
     
@@ -32,7 +33,7 @@
 @inertia
 
 @include($activeTemplate.'partials.inertia_footer')
-
+<script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 

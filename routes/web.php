@@ -10,7 +10,9 @@ Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
 
-Route::get('/user/chat', 'CommonProfileController@userChat');
+Route::post('/offer/save/', 'Buyer\ProfileController@offerSave')->name('offer.save');
+
+
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
@@ -47,6 +49,11 @@ Route::view('/selection-design', 'auth.user_selection_design');
 Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.profile_basic_design');
 // Offer page design design
 Route::view('/offers', 'templates.basic.offers.view-offer');
+
+
+
+
+
 Route::view('/current-hires', 'templates.basic.offers.current-offer');
 Route::view('/post-hire', 'templates.basic.offers.post-hire');
 //support-ticket-create

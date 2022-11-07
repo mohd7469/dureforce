@@ -44,20 +44,17 @@
                                                 @if($job->status->slug == 'approved')
                                                     <span class="status-btn status-approved">@lang('Approved')</span>
                                                     
-                                                @elseif($job->status->slug == 'draft')
-                                                    <span class="status-btn status-draft">@lang('Draft')</span>
+                                                <!-- @elseif($job->status->slug == 'draft')
+                                                    <span class="status-btn status-draft">@lang('Draft')</span> -->
                                                 
                                                 @elseif($job->status->slug == 'pending')
                                                     <span class="status-btn status-pending">@lang('Pending')</span>
                                                     
-                                                @elseif($job->status->slug == 'rejected')
-                                                    <span class="status-btn status-pending">@lang('Cancel')</span>
-
-                                                @elseif($job->status->slug == 'approved')
-                                                    <span class="status-btn status-pending">@lang('Approved')</span>
+                                                @elseif($job->status->slug == 'closed')
+                                                    <span class="status-btn btn--warning">@lang('Closed')</span>
                                                 
                                                 @else
-                                                    <button class="status-btn status-approved">@lang('Approved')</button>
+                                                    <button class="status-btn btn--danger">@lang('Canceled')</button>
                                                     
                                                 @endif
 

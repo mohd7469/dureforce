@@ -1,72 +1,64 @@
 <template>
     
-    <div class="col-md-4 border-right-custom">
+    <div class="col-md-4 border-right-custom div-diemension">
         
-        <div class="row border-bottom">
-            <div class="col-md-2">
-                <img alt="User Pic" src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
+        <div class="row border-bottom" v-for="user of users" @click="changeUser(user)">
+            <div class="col-md-2" >
+                <img alt="User Pic" v-if="user.basic_profile && user.basic_profile.profile_picture!=null" :src="user.basic_profile.profile_picture" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
+                <img alt="User Pic" v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
+                
                 <span class="online_icon"></span>
             </div>
 
             <div class="col-md-6 ">
-                <b class="user-font-size">Sajid Mehmood</b>
-                <span class="user-font-size">Full Stack Developer</span>
+                <b class="user-font-size">{{user.first_name}} {{user.last_name}}</b></br>
+                <span class="user-font-size" v-if="user.basic_profile">{{user.basic_profile.designation}}</span>
                 
             </div>
 
             <div class="col-md-4 ">
-                <span class="user-font-size">22-09-2022</span>
+                <span class="user-font-size">{{formattedDate(user.created_at)}}</span>
             </div>
 
         </div>
 
-        <div class="row border-bottom">
-            <div class="col-md-2">
-                <img alt="User Pic" src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
-                <span class="offline"></span>
-            </div>
+       
 
-            <div class="col-md-6 ">
-                <b class="user-font-size">Sajid Mehmood</b>
-                <span class="user-font-size">Full Stack Developer</span>
-            </div>
-
-            <div class="col-md-4 ">
-                <span class="user-font-size">22-09-2022</span>
-            </div>
-
-        </div>
-
-        <div class="row border-bottom">
-            <div class="col-md-2">
-                <img alt="User Pic" src="https://raw.githubusercontent.com/mdn/learning-area/master/html/multimedia-and-embedding/images-in-html/dinosaur_small.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
-                <span class="offline"></span>   
-            </div>
-
-            <div class="col-md-6 ">
-                <b class="user-font-size">Sajid Mehmood</b>
-                <span class="user-font-size">Full Stack Developer</span>
-            </div>
-
-            <div class="col-md-4 ">
-                <span class="user-font-size">22-09-2022</span>
-            </div>
-
-        </div>
-        
     </div>
 
             
 </template>
 
 <script>
+    import moment from 'moment';    
     export default {
+        props: {
+
+            users: Array,
+           
+        },
+        methods: {
+            formattedDate(date)
+            {
+               return moment(String(date)).format('MM/DD/YYYY hh:mm')
+            },
+            changeUser(user)
+            {
+                this.$emit('userChange',user);
+            }
+
+        },
         mounted() {
             console.log('Component mounted.')
         }
     }
 </script>
 <style scoped>
+.div-diemension{
+    max-height: 660px;
+    min-height: 660px;
+    overflow: overlay;
+}
 .online_icon{
     position: relative;
     height: 10px;

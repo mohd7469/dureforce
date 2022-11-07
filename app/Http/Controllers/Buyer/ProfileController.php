@@ -10,6 +10,11 @@ use App\Models\LanguageLevel;
 use App\Models\Skills;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ModuleOffer;
+use App\Models\Job;
+use App\Models\ModuleOfferMilestone;
+
+
 use App\Models\UserBasic;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -642,6 +647,87 @@ class ProfileController extends Controller
         $userPayment->delete();
         $notify[] = ['success', 'Your Payment Method is Deleted.'];
         return redirect()->route('buyer.basic.profile', ['profile' => 'step-3'])->withNotify($notify);
+    }
+
+
+
+    public function offerSave(Request $request)
+    {
+
+    
+        $request_data = $request->all();
+         //dd($request->all());
+        
+        $rules = [
+          //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'offer_ammount' => 'required',
+            'deposit_fund' => 'required',
+            'description' => 'required',
+            'accept_privacy_policy' => 'required',
+            'milestone' => 'required|array',
+            'milestone.*.descr' => 'required',
+            'milestone.*.due_date' => 'required',
+            'milestone.*.desposit_amout' => 'required',
+
+        ];
+
+
+
+
+        $validator = Validator::make($request_data, $rules);
+        if ($validator->fails()) {
+            return redirect()->back()
+            ->withErrors($validator) ->withInput();
+           // return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+            try {
+
+                DB::beginTransaction();
+
+                $module_offer = new ModuleOffer;
+                $module_offer->offer_amount = $request->offer_ammount;
+                $module_offer->description_of_work = $request->description;
+                $module_offer->contract_title = $request->contract_title;
+                $module_offer->start_date = $request->start_date;
+                $module_offer->rate_per_hour = $request->rate_per_hour;
+                
+                $job = Job::find($request->job_id);
+                $job->moduleOffer()->save($module_offer);
+
+                if (($request->milestone))
+                {
+
+                  $ModuleOfferMilestones =  $request->milestone;
+                  foreach($ModuleOfferMilestones as $ModuleOfferMilestone) {
+                    ModuleOfferMilestone::updateOrCreate([
+                        'module_offer_id'   => $module_offer->id,
+                    ],[
+                        'due_date' => $ModuleOfferMilestone['due_date'],
+                        'is_paid' => false,
+                        'amount'=> $ModuleOfferMilestone['desposit_amout'],
+                        'description'=> $ModuleOfferMilestone['descr'],
+
+                    ]);
+                }
+                }
+
+
+                DB::commit();
+                $notify[] = ['success', 'Offer Successfully saved!'];
+                return redirect()->back()->withNotify($notify);
+
+
+
+            } catch (\Throwable $exception) {
+
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+
+
+            }
+        }
     }
    
 

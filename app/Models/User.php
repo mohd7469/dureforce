@@ -230,20 +230,20 @@ class User extends Authenticatable implements MustVerifyEmail
     //     return $this->where('status', 0);
     // }
 
-    // public function scopeEmailUnverified()
-    // {
-    //     return $this->where('ev', 0);
-    // }
+    public function scopeEmailUnverified()
+    {
+        return $this->where('email_verified_at', null);
+    }
 
     // public function scopeSmsUnverified()
     // {
     //     return $this->where('sv', 0);
     // }
 
-    // public function scopeEmailVerified()
-    // {
-    //     return $this->where('ev', 1);
-    // }
+    public function scopeEmailVerified()
+    {
+        return $this->where('email_verified_at','!=', null);
+    }
 
     // public function scopeSmsVerified()
     // {
