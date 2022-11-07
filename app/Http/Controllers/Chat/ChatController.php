@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Chat;
 
+use App\Events\MessageDeleteEvent;
 use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
@@ -38,6 +39,8 @@ class ChatController extends Controller
     public function deleteMessage(Request $request, ChatMessage $chat_message_id)
     {
        $chat_message_id->delete();
+       event(new MessageDeleteEvent($chat_message_id, $chat_message_id->user));
+
         return response()->json(['message' => 'message Deleted Successfully']);
     }
 }
