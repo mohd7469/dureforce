@@ -10,12 +10,13 @@
     <hr>
     
      <div class="card-body" >
-         <form  action="{{route('buyer.job.store')}}" method="POST" >
+         <form  action="{{route('ticket.store')}}" method="POST" >
+             @csrf
         <div class="row">
 
         <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Full Name </label>
-            <input type="email" class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" placeholder="{{$user->first_name}} {{$user->last_name}}">
+            <input type="text" class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" placeholder="{{$user->first_name}} {{$user->last_name}}">
            
           </div>
 
@@ -26,13 +27,13 @@
           </div>
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Subject </label>
-            <input type="email" class="form-control back" name="subject" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Subject">
+            <input type="text" class="form-control back" name="subject" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Subject">
            
           </div>
 
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Priority</label>
-            <select class="form-select form-select-sm form-control back" aria-label=".form-select-sm example">
+            <select class="form-select form-select-sm form-control back" name="priority_id" aria-label=".form-select-sm example">
                 <option>Priority</option>
                 @foreach($priorities as $priority)
                 <option value="{{$priority->id}}">{{$priority->name}}</option>
@@ -47,22 +48,22 @@
         <div class="row">
             <div class="col-xl-12 col-lg-12 form-group">
                 <label>Required Documents</label>
-            
+
                     <div id="dropzone">
                         <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
-                            
+
                             <div>
                                 <div class="upload_icon_">
                                     <img src="http://127.0.0.1:8000/assets/images/frontend/job/upload.svg" alt="">
                                     <img src="http://127.0.0.1:8000/assets/images/frontend/job/arrow_up.svg" alt="" class="upload_inner_arrow_">
                                 </div>
                             </div>
-                            
-                            <div class="dz-message "> 
-                                Drag or Drop to Upload   
+
+                            <div class="dz-message ">
+                                Drag or Drop to Upload
                                 <span class="" style="color:#007F7F">
-                                    Browse  
-                                    
+                                    Browse
+
                                 </span>
                             </div>
 
@@ -76,7 +77,7 @@
          {{-- Cover Letter --}}
          <div class="form-group">
             <label for="cover_letter">Message</label>
-            <textarea class="form-control cover-letter back" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
+            <textarea class="form-control cover-letter back" id="cover_letter" rows="20" cols="8" name="message" ></textarea>
          </div>
          <div class="comment-box">
            <input type="submit" value="Submit" class="btn-postcoment">
