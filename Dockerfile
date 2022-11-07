@@ -18,14 +18,12 @@ COPY nginx-conf/fastcgi_params /etc/nginx/fastcgi_params
 RUN sed 's/www-data/nginx/' /etc/php/8.1/fpm/pool.d/www.conf > /etc/php/8.1/fpm/pool.d/nginx.conf
 RUN rm /etc/php/8.1/fpm/pool.d/www.conf
 
-
-COPY --from=builder /src/node_modules /html/node_modules
-
 RUN rm -rf /html/nginx-conf
-
 RUN mkdir /run/php
-
 RUN chmod 555 -R /html
+RUN chmod 777 /html
+COPY --from=builder /src/node_modules /html/node_modules
+RUN chmod 555 /html
 
 EXPOSE 80
 
