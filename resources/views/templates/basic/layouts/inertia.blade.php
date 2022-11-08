@@ -19,15 +19,15 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
-    
+
     @stack('style-lib')
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}" rel="stylesheet"/>
 
 </head>
 <body>
-    
-    
+
+
 @include($activeTemplate.'partials.inertia_user_header')
 
 @inertia
