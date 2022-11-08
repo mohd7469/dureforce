@@ -242,14 +242,14 @@ function addRow()
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Start Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="milestones['+row_id+'][start_date]" value="" id="milestones.'+row_id+'.start_date" min="1970-01-01">'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][start_date]" value="" id="milestones.'+row_id+'.start_date" >'+
             '</div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Due Date*</label>'+
             '<div class="input-group mb-3">'+
-            '<input type="date" class="form-control" name="milestones['+row_id+'][end_date]" value=""  id="milestones.'+row_id+'.end_date" min="1970-01-01">'+
+            '<input type="date" class="form-control" name="milestones['+row_id+'][end_date]" value=""  id="milestones.'+row_id+'.end_date" >'+
             '</div>'+
           '</div>'+
 

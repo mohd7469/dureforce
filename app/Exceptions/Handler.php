@@ -35,9 +35,11 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        // $this->reportable(function (Throwable $e) {
-        //     print_r($e);
-        // });
+        $this->reportable(function (Throwable $e) {
+            echo "<!-- ";
+            print_r($e);
+            echo " -->";
+        });
         // // redirects user to login page if csrf token expires
         // $this->renderable(function(\Exception $e){
 

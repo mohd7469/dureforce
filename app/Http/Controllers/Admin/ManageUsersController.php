@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Job;
+use App\Models\Country;
 use App\Models\Booking;
 use App\Models\UserLogin;
 use App\Models\WithdrawMethod;
@@ -26,7 +27,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Users';
         $emptyMessage = 'No user found';
-        $users = User::WithAll()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -34,7 +35,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Active Users';
         $emptyMessage = 'No active user found';
-        $users = User::WithAll()->where('is_active', 1)->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->where('is_active', 1)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -42,7 +43,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Banned Users';
         $emptyMessage = 'No banned user found';
-        $users = User::WithAll()->where('is_active', 0)->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->where('is_active', 0)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -50,14 +51,14 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Email Unverified Users';
         $emptyMessage = 'No email unverified user found';
-        $users = User::WithAll()->EmailUnverified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->EmailUnverified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
     public function emailVerifiedUsers()
     {
         $pageTitle = 'Email Verified Users';
         $emptyMessage = 'No email verified user found';
-        $users = User::WithAll()->emailVerified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->emailVerified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -66,7 +67,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'SMS Unverified Users';
         $emptyMessage = 'No sms unverified user found';
-        $users = User::WithAll()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -75,7 +76,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'SMS Verified Users';
         $emptyMessage = 'No sms verified user found';
-        $users = User::WithAll()->smsVerified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->smsVerified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -84,7 +85,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Users with balance';
         $emptyMessage = 'No sms verified user found';
-        $users = User::WithAll()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -93,7 +94,7 @@ class ManageUsersController extends Controller
     public function search(Request $request, $scope)
     {
         $search = $request->search;
-        $users = User::WithAll()->where(function ($user) use ($search) {
+        $users = User::with('country')->where(function ($user) use ($search) {
             $user->where('username', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
         });
@@ -134,7 +135,8 @@ class ManageUsersController extends Controller
         $totalJob = Job::where('user_id',$user->id)->count();
         $totalServiceBooking = Booking::where('user_id',$user->id)->whereNotNull('service_id')->where('status', '!=', 0)->count();
         $totalPurchaseSoftware = Booking::where('user_id',$user->id)->whereNotNull('software_id')->where('status', '!=', 0)->count();
-        $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        // $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $countries = Country::select('id', 'name')->get();
         return view('admin.users.detail', compact('pageTitle', 'user','totalDeposit','totalWithdraw','totalTransaction','countries', 'totalService', 'totalSoftware', 'totalJob', 'totalServiceBooking', 'totalPurchaseSoftware'));
     }
 

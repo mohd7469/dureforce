@@ -133,9 +133,6 @@
                     this.message_form.send_to_id=this.active_user.id;
                     axios.post('../chat/save/message',this.message_form)
                     .then(res=>{
-                        this.message_form.message='';
-                        this.message_form.id='';
-
                         this.$emit('newMessage');
                         
                     }).catch((error) => {
@@ -144,6 +141,8 @@
                             this.errors.push(errors[field][0]);
                         }
                     });
+                    this.message_form.message='';
+                    this.message_form.id='';
                 }
             },
             deleteMessage(message_id)

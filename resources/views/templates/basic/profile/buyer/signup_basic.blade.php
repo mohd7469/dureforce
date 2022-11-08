@@ -443,11 +443,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                    <input type="date" class="date" name="experiences[`+exp_row_index+`][start_date]" onchange="setMinDateJob($(this), $('.end-date-job'))" id="experiences.`+exp_row_index+`.start_date" min="1970-01-01">
+                                                    <input type="date" class="date" name="experiences[`+exp_row_index+`][start_date]" onchange="setMinDateJob($(this), $('.end-date-job'))" id="experiences.`+exp_row_index+`.start_date" >
                                                 </div> 
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="experiences[`+exp_row_index+`][end_date]" id="experiences.`+exp_row_index+`.end_date" min="1970-01-01">
+                                                    <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="experiences[`+exp_row_index+`][end_date]" id="experiences.`+exp_row_index+`.end_date" >
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -508,12 +508,12 @@
                                                 <div class="col-md-6">
 
                                                     <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" min="1970-01-01">
+                                                    <input type="date" name="educations[`+edu_row_index+`][start_date]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
                                                     
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" min="1970-01-01">
+                                                    <input type="date" class="end-date-insti" name="educations[`+edu_row_index+`][start_date_job]" onchange="checkIfDateGreaterInsti($(this))" >
                                                 </div>
                                                 
                                             </div>

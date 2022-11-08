@@ -85,7 +85,6 @@ class JobController extends Controller
         $pageTitle = "Manage Job";
         $emptyMessage = "No data found";
         $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
-
         return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
