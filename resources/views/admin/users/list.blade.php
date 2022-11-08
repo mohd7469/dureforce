@@ -17,7 +17,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse($users as $user)
+                            @forelse($users as $key =>$user)
                             <tr>
                                 <td data-label="@lang('User')">
                                     <span class="font-weight-bold">{{$user->fullname}}</span>
@@ -32,7 +32,7 @@
                                     {{ $user->email }}<br>{{ $user->mobile }}
                                 </td>
                                 <td data-label="@lang('Country')">
-                                    <span class="font-weight-bold" data-toggle="tooltip" data-original-title="{{ @$user->address->country }}">{{ $user->country_code }}</span>
+                                    <span class="font-weight-bold" data-toggle="tooltip" data-original-title="{{ $users[$key]->country->name }}">{{ $users[$key]->country->name }}</span>
                                 </td>
 
 
