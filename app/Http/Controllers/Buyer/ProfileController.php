@@ -674,7 +674,7 @@ class ProfileController extends Controller
          else {
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
-                  'offer_ammount' => 'required',
+                  //'offer_ammount' => 'required',
                   'deposit_fund' => 'required',
                   'description' => 'required',
                   'accept_privacy_policy' => 'required',

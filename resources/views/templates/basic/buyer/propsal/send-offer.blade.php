@@ -72,17 +72,7 @@
       <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
 
       
-        <div class="form-row">
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <h6 class="color-green mt-3">Pay by Fixed Price</h6>
-           <div class="d-flex">
-            <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="00.00">
-            <span class="ml-2 per-hour"></span>
-           </div>
-           <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
-          </div>
-          
-        </div>
+        
     
 </div>
 <!-- form -->
@@ -116,6 +106,20 @@
             
           </div>
       
+    </div>
+    <hr>
+    <div style="display: none" id="amount">
+    <div class="form-row">
+      <div class="col-lg-3 col-md-6 col-sm-12">
+        <h6 class="color-green mt-3">Pay by Fixed Price</h6>
+       <div class="d-flex">
+        <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="00.00">
+        <span class="ml-2 per-hour"></span>
+       </div>
+       <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
+      </div>
+      
+    </div>
     </div>
     <hr>
 
@@ -279,6 +283,7 @@
             alert('check');
         } else {
           $("#milestone").show();
+          $("#amount").hide();
         }
     }
     function change_1() {
@@ -287,6 +292,7 @@
             alert('check');
         } else {
           $("#milestone").hide();
+          $("#amount").show();
         }
     }
 
