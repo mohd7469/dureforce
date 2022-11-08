@@ -101,8 +101,8 @@ Route::prefix('ticket')->group(function () {
     Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
 //    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
     Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
-    Route::get('/store-ticket', 'TicketController@create')->name('ticket.store');
-    Route::get('/view/{ticket}', 'TicketController@viewTicket')->name('ticket.view');
+    Route::post('/store-ticket', 'TicketController@store')->name('ticket.store');
+    Route::get('/view/{ticket}', 'TicketController@show')->name('ticket.view');
     Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
     Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
 });

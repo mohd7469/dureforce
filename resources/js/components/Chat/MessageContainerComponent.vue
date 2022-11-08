@@ -4,8 +4,8 @@
         
         <div class="card-header">
             <span class="float-sm-left">
-                <b>Tristan Mason</b> 
-                <small>12:37 PM GMT+1</small> 
+                <b>{{active_user.first_name}} {{active_user.last_name}} </b> 
+                <small>{{formattedDate(active_user.created_at)}}</small> 
             </span>
             <span class="float-right align-header">
                 <button class="btn-job">View Job</button>
@@ -14,15 +14,18 @@
         </div>
         
         <div class="card-body msg_card_body" v-chat-scroll>
+
             <div v-for="message of messages">
                 
                 <div class="d-flex justify-content-start mb-4 mt-custom" v-if="message.role=='freelancer'">
+                    
                     <div class="img_cont_msg">
                         <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
                         <img v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                         
                         <span class="online_icon"></span>
                     </div>
+
                     <div class="msg_cotainer">
                         <div>
                             
@@ -59,22 +62,18 @@
                             </div>
                             {{message.message}}
                         </div>
+
                         <b class="sender_user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
                         <span class="msg_time_send">{{formattedDate(message.created_at)}}</span>
                     </div>
-
                     <div class="img_cont_msg">
-                        <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
-                        <img  v-else  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        
+                        <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg"><img  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg" v-else>
                         <span class="offline"></span>
                     </div>
                 </div>
 
             </div>
-          
         </div>
-        
         <div>
             
             <div class="row background">
@@ -105,15 +104,11 @@
     export default {
         
         props:{
-            messages:[],
-            active_user:{
-
-            }
-            
-           
+            messages:Array,
+            active_user:Object
         },
         data() {
-        return {
+            return {
                 message_form:{
                     id:'',
                     message : '',
@@ -125,7 +120,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            
         },
         methods: {
             formattedDate(date)
@@ -176,6 +171,8 @@
         },
     }
 </script>
+
+
 
 <style scoped>
 .icon_send {

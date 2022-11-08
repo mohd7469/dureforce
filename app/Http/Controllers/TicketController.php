@@ -142,7 +142,53 @@ class TicketController extends Controller
     }
 
 
+    public function store(Request $request)
+    {
+
+        $user = auth()->user();
+
+        do {
+            $ticket_no = rand(1, 1000000000);
+            $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+        } while ($ticket_exists);
+
+
+
+        $ticket =SupportTicket::create([
+            "user_id"=>$user->id,
+            "role_id"=>$user->last_role_activity,
+            "priority_id"=>$request->priority_id,
+            "status_id"=>SupportTicket::$Open,
+            "ticket_no"=>$ticket_no,
+            "subject"=>$request->subject,
+            "message"=>$request->message,
+        ]);
+
+
+        $notify[] = ['success', 'ticket created successfully!'];
+        return redirect()->route('ticket')->withNotify($notify);
+    }
+
+
     public function viewTicket($ticket)
+    {
+        $pageTitle = "Support Tickets";
+        $userId = 0;
+        if (Auth::user()) {
+            $userId = Auth::id();
+        }
+        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
+        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
+        $user = auth()->user();
+        if ($user) {
+            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+        } else {
+            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+        }
+
+    }
+
+    public function show($ticket)
     {
         $pageTitle = "Support Tickets";
         $userId = 0;

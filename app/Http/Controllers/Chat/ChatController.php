@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Chat;
 
+use App\Events\MessageDeleteEvent;
+use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
 use App\Models\Job;
@@ -29,13 +31,16 @@ class ChatController extends Controller
     public function saveMessage(Request $request)
     {
         $request->request->add(['sender_id' => auth()->user()->id,'role' => strtolower(getLastLoginRoleName())]);
-        ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
+        $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
+        event(new NewMessageEvent($message, $message->user));
         return response()->json(['message' => 'message successfully added']);
     }
 
     public function deleteMessage(Request $request, ChatMessage $chat_message_id)
     {
        $chat_message_id->delete();
+       event(new MessageDeleteEvent($chat_message_id, $chat_message_id->user));
+
         return response()->json(['message' => 'message Deleted Successfully']);
     }
 }

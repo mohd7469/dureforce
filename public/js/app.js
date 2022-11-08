@@ -6183,7 +6183,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       users: [],
       messages: [],
-      active_user: {}
+      active_user: {},
+      pusher_obj: {}
     };
   },
   methods: {
@@ -6199,6 +6200,7 @@ __webpack_require__.r(__webpack_exports__);
     setCurrentUser: function setCurrentUser(user) {
       this.active_user = user;
       this.getActiveUserChat();
+      this.userPuserChannel();
     },
     getActiveUserChat: function getActiveUserChat() {
       var _this2 = this;
@@ -6209,13 +6211,36 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this2.messages = response.data.messages;
       });
+    },
+    userPuserChannel: function userPuserChannel() {
+      var _this3 = this;
+
+      var channel = this.pusher_obj.subscribe('user-' + this.active_user.id + '-message-channel');
+      channel.bind('new-message', function (data) {
+        console.log(data.message);
+
+        _this3.messages.push(data.message);
+      });
+      channel.bind('delete-message', function (data) {
+        _this3.messages.splice(_this3.messages.findIndex(function (a) {
+          return a.id === data.message.id;
+        }), 1);
+      });
+      channel.bind('edited-message', function (data) {
+        console.log(data.message);
+
+        _this3.messages.push(data.message);
+      });
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.pusher_obj = new Pusher('4afebaf3067764a250af', {
+      cluster: 'us3'
+    });
   },
   created: function created() {
     this.getUSers();
+    console.log('Component mounted.');
   }
 });
 
@@ -6268,7 +6293,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    users: []
+    users: Array
   },
   methods: {
     formattedDate: function formattedDate(date) {
@@ -6399,12 +6424,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    messages: [],
-    active_user: {}
+    messages: Array,
+    active_user: Object
   },
   data: function data() {
     return {
@@ -6418,9 +6442,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: []
     };
   },
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  },
+  mounted: function mounted() {},
   methods: {
     formattedDate: function formattedDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(String(date)).format('hh:mm A');
@@ -56711,7 +56733,24 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-8 remove-space" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "card-header" }, [
+      _c("span", { staticClass: "float-sm-left" }, [
+        _c("b", [
+          _vm._v(
+            _vm._s(_vm.active_user.first_name) +
+              " " +
+              _vm._s(_vm.active_user.last_name) +
+              " "
+          ),
+        ]),
+        _vm._v(" "),
+        _c("small", [
+          _vm._v(_vm._s(_vm.formattedDate(_vm.active_user.created_at))),
+        ]),
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -56977,18 +57016,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("span", { staticClass: "float-sm-left" }, [
-        _c("b", [_vm._v("Tristan Mason")]),
-        _vm._v(" "),
-        _c("small", [_vm._v("12:37 PM GMT+1")]),
-      ]),
+    return _c("span", { staticClass: "float-right align-header" }, [
+      _c("button", { staticClass: "btn-job" }, [_vm._v("View Job")]),
       _vm._v(" "),
-      _c("span", { staticClass: "float-right align-header" }, [
-        _c("button", { staticClass: "btn-job" }, [_vm._v("View Job")]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn-propsal" }, [_vm._v("View Proposal")]),
-      ]),
+      _c("button", { staticClass: "btn-propsal" }, [_vm._v("View Proposal")]),
     ])
   },
 ]

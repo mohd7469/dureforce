@@ -33,16 +33,16 @@
             ChatUsers,
             Messages,
         },
-        data() {  
+        data(){  
             return {  
               users: [],  
               messages: [],  
-              active_user: {}  
+              active_user: {}  ,
+              pusher_obj:{},
             };  
         },  
         methods: {  
              
-            
             getUSers(){
 
                 axios.get('/chat/get_users')
@@ -50,13 +50,13 @@
                     this.users=response.data.users;
                     this.setCurrentUser(this.users[0]);
                 }) ;
-                
-            },
 
+            },
             setCurrentUser(user){
 
                 this.active_user=user;
                 this.getActiveUserChat();
+                this.userPuserChannel();
 
             },
             getActiveUserChat()
@@ -69,15 +69,32 @@
                 .then( response => {
                     this.messages=response.data.messages;
                 }) ;
+            },
+            userPuserChannel()
+            {
+                var channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
+                    channel.bind('new-message', (data)=> {
+                        console.log(data.message);
+                        this.messages.push(data.message)    ;
+                    });
+                    channel.bind('delete-message', (data)=> {
+                        this.messages.splice(this.messages.findIndex(a => a.id === data.message.id) , 1)
+                    });
+                    channel.bind('edited-message', (data)=> {
+                        console.log(data.message);
+                        this.messages.push(data.message)    ;
+                    });
             }
-
-            
         },
         mounted() {
-            console.log('Component mounted.')
+            this.pusher_obj = new Pusher('4afebaf3067764a250af', {
+                cluster: 'us3'
+            });
         },
         created(){
             this.getUSers();
+            console.log('Component mounted.')
+            
         }
     }
 </script>
