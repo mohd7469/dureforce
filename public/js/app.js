@@ -6453,9 +6453,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.message_form.message != ' ') {
         this.message_form.send_to_id = this.active_user.id;
         axios.post('../chat/save/message', this.message_form).then(function (res) {
-          _this.message_form.message = '';
-          _this.message_form.id = '';
-
           _this.$emit('newMessage');
         })["catch"](function (error) {
           var errors = error.response.data.errors;
@@ -6466,6 +6463,8 @@ __webpack_require__.r(__webpack_exports__);
             _this.errors.push(errors[field][0]);
           }
         });
+        this.message_form.message = '';
+        this.message_form.id = '';
       }
     },
     deleteMessage: function deleteMessage(message_id) {
