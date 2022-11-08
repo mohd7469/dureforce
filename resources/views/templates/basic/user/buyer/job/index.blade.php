@@ -25,7 +25,6 @@
                 
                             <tbody class="text-center">
                                 @forelse($jobs as $key => $job)
-                                {{ $key }}
                                     <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$job->uuid}}">
                                         <td data-label="@lang('Title')" class="text-start">
                                             {{-- route('job.details', [slug($job->title), encrypt($job->id)]) --}}
