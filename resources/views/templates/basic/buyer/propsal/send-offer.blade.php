@@ -133,7 +133,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
-            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" min="1970-01-01" value="">
+            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="">
            
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">

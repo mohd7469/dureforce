@@ -680,13 +680,14 @@ class ProfileController extends Controller
                   'accept_privacy_policy' => 'required',
                   'milestone' => 'required|array',
                   'milestone.*.descr' => 'required',
-                  'milestone.*.due_date' => 'required',
+                  'milestone.*.due_date' => 'required|date|after_or_equal:now',
                   'milestone.*.desposit_amout' => 'required',
       
               ];
               
               $messages =[
                   'deposit_fund.required'     => 'Diposit fund checbox required',
+                  'milestone.*.due_date' => 'Date formate is not correct',
       
               ];
          }
