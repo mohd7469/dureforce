@@ -16,17 +16,100 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li>
-                                    <a href="{{ route('service') }}"
-                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
+                                    <!-- <a href="{{ route('seller.jobs.listing') }}"
+                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a> -->
+                                    <div class="dropdown">
+                                        <button class="bg-white" type="button" data-bs-toggle="dropdown" data-display="static"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <a href="{{ route('seller.jobs.listing') }}"
+                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right" style="background-color: #E2F1F1;">
+                                            <a href="{{ route('seller.jobs.listing') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Search Jobs')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('My Jobs')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Saved Jobs')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </li>
                                 <li>
-                                    <a href="{{ route('software') }}"
-                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
+                                    <div class="dropdown">
+                                        <button class="bg-white" type="button" data-bs-toggle="dropdown" data-display="static"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <a href="#"
+                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right" style="background-color: #E2F1F1;">
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('All Proposals')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Submitted Proposals')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Active Proposals')</span>
+                                            </a>
+                                        </div>
+                                    </div>    
                                 </li>
                                 <li>
-                                    <a href="{{ route('seller.jobs.listing') }}"
-                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a>
+                                    <!-- <a href="{{ route('service') }}"
+                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a> -->
+                                    <div class="dropdown">
+                                        <button class="bg-white" type="button" data-bs-toggle="dropdown" data-display="static"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <a href="{{ route('service') }}"
+                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right" style="background-color: #E2F1F1;">
+                                            <a href="{{ route('service') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('My Services')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Create a Service')</span>
+                                            </a>
+                                        </div>
+                                    </div>    
                                 </li>
+                                <li>
+                                    <!-- <a href="{{ route('software') }}"
+                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a> -->
+                                    <div class="dropdown">
+                                        <button class="bg-white" type="button" data-bs-toggle="dropdown" data-display="static"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <a href="{{ route('software') }}"
+                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right" style="background-color: #E2F1F1;">
+                                            <a href="{{ route('software') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('My Softwares')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Create a Software')</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                
                                 
                                 @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
 
@@ -44,10 +127,9 @@
 
                                 @endif
                                 <li><a href="{{ route('user.conversation.inbox') }}"
-                                        @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Inbox')</a></li>
+                                        @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Messages')</a></li>
                                 <li><a href="{{ route('ticket') }}"
-                                        @if (request()->routeIs('ticket')) class="active" @endif>@lang('Get
-                                        Support')</a></li>
+                                        @if (request()->routeIs('ticket')) class="active" @endif>@lang('Support')</a></li>
                             </ul>
                            
 
@@ -83,17 +165,17 @@
                                        
                                     @else
                                        
-                                            <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <i class="dropdown-menu__icon las la-user-circle"></i>
-                                                <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
-                                            </a>
-                                            <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <i class="dropdown-menu__icon las la-user-circle"></i>
-                                                <span class="dropdown-menu__caption">@lang('View Profile')</span>
-                                                {{-- seller profile  --}}
-                                            </a>
+                                    <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-user-circle"></i>
+                                        <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
+                                    </a>
+                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-user-circle"></i>
+                                        <span class="dropdown-menu__caption">@lang('View Profile')</span>
+                                        {{-- seller profile  --}}
+                                    </a>
                                         
                                     @endif
 
