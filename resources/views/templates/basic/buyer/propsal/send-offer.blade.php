@@ -72,17 +72,7 @@
       <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
 
       
-        <div class="form-row">
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <h6 class="color-green mt-3">Pay by Fixed Price</h6>
-           <div class="d-flex">
-            <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="00.00">
-            <span class="ml-2 per-hour"></span>
-           </div>
-           <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
-          </div>
-          
-        </div>
+        
     
 </div>
 <!-- form -->
@@ -103,7 +93,9 @@
           <div class="form-row">
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
+                  {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="change_1()"> --}}
                   <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="change_1()">
+
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
               </div>
             </div>
@@ -116,6 +108,20 @@
             
           </div>
       
+    </div>
+    <hr>
+    <div style="display: none" id="amount">
+    <div class="form-row">
+      <div class="col-lg-3 col-md-6 col-sm-12">
+        <h6 class="color-green mt-3">Pay by Fixed Price</h6>
+       <div class="d-flex">
+        <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"  value=""  placeholder="00.00" min="0">
+        <span class="ml-2 per-hour"></span>
+       </div>
+       <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
+      </div>
+      
+    </div>
     </div>
     <hr>
 
@@ -138,7 +144,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="00.00">
+            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="00.00" min="0">
           </div>
         </div>
     </div>
@@ -270,7 +276,13 @@
     });
     $(document).on('click', '.remove-tr', function(){  
          $(this).parents('.row-line').remove();
-    });  
+    }); 
+
+    $( document ).ready(function() {
+
+      $("#offer_ammount").val('0'); 
+    });
+  
 
 
     function change() {
@@ -279,6 +291,7 @@
             alert('check');
         } else {
           $("#milestone").show();
+          $("#amount").hide();
         }
     }
     function change_1() {
@@ -287,6 +300,7 @@
             alert('check');
         } else {
           $("#milestone").hide();
+          $("#amount").show();
         }
     }
 
