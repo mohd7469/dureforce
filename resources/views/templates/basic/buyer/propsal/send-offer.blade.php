@@ -76,7 +76,7 @@
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>
            <div class="d-flex">
-            <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="20.00">
+            <input type="number" name="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"   value="{{ old('offer_ammount') }}" placeholder="00.00">
             <span class="ml-2 per-hour"></span>
            </div>
            <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
@@ -95,19 +95,21 @@
 </div>
 <!-- Weekly Limit  -->
 <div class="mt-3">
+  <input type="hidden" id="switch" onclick="change()">
+
     <h6 class="color-green">Deposit funds into Escrow</h6>
     <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
     
           <div class="form-row">
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="change_1()">
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund"  onclick="change()">
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit a lesser amount to cover the first milestone</label>
               </div>
             </div>
@@ -118,6 +120,7 @@
     <hr>
 
     <!-- start date  -->
+    <div style="display: none" id="milestone">
 
       <div class="form-row" id="dynamicTable">
         
@@ -130,17 +133,19 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
-            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="">
+            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="">
+           
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="20.00">
+            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="00.00">
           </div>
         </div>
     </div>
       <button type="button" name="add" id="add" class="milestoneButton my-2">
           Add another
       </button>
+    </div>
    
 
     <!-- start date  -->
@@ -260,11 +265,31 @@
     $("#add").click(function(){
         ++i;
         // $("#dynamicTable").append('<tr><td><input type="text" name="milestone['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="milestone['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="milestone['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amout]" class="form-control text-end" placeholder="20.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amout]" class="form-control text-end" placeholder="00.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
 
     });
     $(document).on('click', '.remove-tr', function(){  
          $(this).parents('.row-line').remove();
     });  
+
+
+    function change() {
+        var decider = document.getElementById('switch');
+        if(decider.checked){
+            alert('check');
+        } else {
+          $("#milestone").show();
+        }
+    }
+    function change_1() {
+        var decider = document.getElementById('switch');
+        if(decider.checked){
+            alert('check');
+        } else {
+          $("#milestone").hide();
+        }
+    }
+
+
 </script>
 @endpush

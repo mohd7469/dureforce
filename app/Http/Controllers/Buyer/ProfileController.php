@@ -654,27 +654,46 @@ class ProfileController extends Controller
     public function offerSave(Request $request)
     {
 
-    
         $request_data = $request->all();
-         //dd($request->all());
-        
-        $rules = [
-          //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'offer_ammount' => 'required',
-            'deposit_fund' => 'required',
-            'description' => 'required',
-            'accept_privacy_policy' => 'required',
-            'milestone' => 'required|array',
-            'milestone.*.descr' => 'required',
-            'milestone.*.due_date' => 'required',
-            'milestone.*.desposit_amout' => 'required',
 
-        ];
+         if($request->milestone[0]['descr'] == null && $request->milestone[0]['due_date'] == null) {
+
+            $rules = [
+                //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
+                  'offer_ammount' => 'required',
+                  'deposit_fund' => 'required',
+                  'description' => 'required',
+                  'accept_privacy_policy' => 'required',
+      
+              ];
+              $messages =[
+                  'deposit_fund.required'     => 'Diposit fund checbox required',
+              ];
+
+         }
+         else {
+            $rules = [
+                //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
+                  'offer_ammount' => 'required',
+                  'deposit_fund' => 'required',
+                  'description' => 'required',
+                  'accept_privacy_policy' => 'required',
+                  'milestone' => 'required|array',
+                  'milestone.*.descr' => 'required',
+                  'milestone.*.due_date' => 'required|date|after_or_equal:now',
+                  'milestone.*.desposit_amout' => 'required',
+      
+              ];
+              
+              $messages =[
+                  'deposit_fund.required'     => 'Diposit fund checbox required',
+                  'milestone.*.due_date' => 'Date formate is not correct',
+      
+              ];
+         }
 
 
-
-
-        $validator = Validator::make($request_data, $rules);
+        $validator = Validator::make($request_data, $rules, $messages);
         if ($validator->fails()) {
             return redirect()->back()
             ->withErrors($validator) ->withInput();
