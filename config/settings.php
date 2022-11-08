@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'date_format' => 'm/d/Y'
+    'date_format' => 'd/m/Y'
 ];
