@@ -188,20 +188,31 @@ class TicketController extends Controller
 
     }
 
+//    public function show($ticket)
+//    {
+//        $pageTitle = "Support Tickets";
+//        $userId = 0;
+//        if (Auth::user()) {
+//            $userId = Auth::id();
+//        }
+//        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
+//        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
+//        $user = auth()->user();
+//        if ($user) {
+//            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+//        } else {
+//            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+//        }
+//
+//    }
     public function show($ticket)
     {
-        $pageTitle = "Support Tickets";
-        $userId = 0;
-        if (Auth::user()) {
-            $userId = Auth::id();
-        }
-        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
-        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
-        $user = auth()->user();
-        if ($user) {
-            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
-        } else {
-            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+        try {
+            $pageTitle = "Support Ticket Details";
+            return view($this->activeTemplate . 'user.support.ticket_details', compact( 'pageTitle'));
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
         }
 
     }
