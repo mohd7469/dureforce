@@ -22,7 +22,6 @@
 
                             </tr>
                             </thead>
-                
                             <tbody class="text-center">
                                 @forelse($jobs as $key => $job)
                                     <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$job->uuid}}">
