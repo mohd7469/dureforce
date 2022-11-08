@@ -653,7 +653,7 @@ class ProfileController extends Controller
 
     public function offerSave(Request $request)
     {
-
+       
         $request_data = $request->all();
 
          if($request->milestone[0]['descr'] == null && $request->milestone[0]['due_date'] == null) {
@@ -661,21 +661,23 @@ class ProfileController extends Controller
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
                   'offer_ammount' => 'required',
-                  'deposit_fund' => 'required',
+                  'description' => 'required',
+                //   'deposit_fund' => 'required',
                   'description' => 'required',
                   'accept_privacy_policy' => 'required',
       
               ];
               $messages =[
-                  'deposit_fund.required'     => 'Diposit fund checbox required',
+                //   'deposit_fund.required'     => 'Diposit fund checbox required',
               ];
 
          }
-         else {
+         else if($request->offer_ammount == 0){
+
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
                   //'offer_ammount' => 'required',
-                  'deposit_fund' => 'required',
+                  //'deposit_fund' => 'required',
                   'description' => 'required',
                   'accept_privacy_policy' => 'required',
                   'milestone' => 'required|array',
@@ -687,6 +689,27 @@ class ProfileController extends Controller
               
               $messages =[
                   'deposit_fund.required'     => 'Diposit fund checbox required',
+                  'milestone.*.due_date' => 'Date formate is not correct',
+      
+              ];
+             
+         }
+         else {
+            $rules = [
+                //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
+                //   'offer_ammount' => 'required',
+                  //'deposit_fund' => 'required',
+                  'description' => 'required',
+                  'accept_privacy_policy' => 'required',
+                  'milestone' => 'required|array',
+                  'milestone.*.descr' => 'required',
+                  'milestone.*.due_date' => 'required|date|after_or_equal:now',
+                  'milestone.*.desposit_amout' => 'required',
+      
+              ];
+              
+              $messages =[
+                //   'deposit_fund.required'     => 'Diposit fund checbox required',
                   'milestone.*.due_date' => 'Date formate is not correct',
       
               ];
