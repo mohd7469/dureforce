@@ -487,6 +487,13 @@
                     tags: true,
                     maximumSelectionLength: 15
                 });
+
+                $('#completion_date').on('focusout',function(){
+                    date=Date.parse($('#completion_date').val());
+                    if(isNaN(date))
+                        displayAlertMessage("Wrong completion date");
+                });
+
                 $('select').on('select2:close', function (evt) {
                     var uldiv = $(this).siblings('span.select2').find('ul')
                     
@@ -640,9 +647,6 @@
 
                 });
 
-                
-
-
                 $(document).on('click', '.add_details', function() {
                     formPostProcess(detail_tab,preview_tab);
 
@@ -650,7 +654,9 @@
                 
             });
            
-            
+            function isValidDate(d) {
+                return d instanceof Date && !isNaN(d);
+            }
             function submitProposal(data)
             {
                 var action_url="{{route('seller.profile.portfolio.store')}}";

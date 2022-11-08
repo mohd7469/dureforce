@@ -197,7 +197,7 @@ class ProfileController extends Controller
             'company_name'=> 'required',
             'country_id'  => 'required',
             'start_date'  => 'required|before:today',
-            'end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
+            'end_date'    => 'before:today|after_or_equal:start_date',
         ]);
         
         if ($validator->fails())
