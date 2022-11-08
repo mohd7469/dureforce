@@ -49,9 +49,9 @@
             <div class="card b-radius--10 overflow-hidden mt-30 box--shadow1">
                 <div class="card-body">
                     <h5 class="mb-20 text-muted">@lang('User action')</h5>
-                    <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
+                    <!-- <a data-toggle="modal" href="#addSubModal" class="btn btn--success btn--shadow btn-block btn-lg">
                         @lang('Add/Subtract Balance')
-                    </a>
+                    </a> -->
                     <!-- <a href="{{ route('admin.users.login.history.single', $user->id) }}"
                        class="btn btn--primary btn--shadow btn-block btn-lg">
                         @lang('Login Logs')
@@ -228,14 +228,14 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('First Name')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="firstname" value="{{$user->first_name}}">
+                                    <input class="form-control" type="text" name="firstname" value="{{ isset($user->first_name) ? $user->first_name : '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Last Name') <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="lastname" value="{{$user->last_name}}">
+                                    <input class="form-control" type="text" name="lastname" value="{{ isset($user->last_name) ? $user->last_name: '' }}">
                                 </div>
                             </div>
                         </div>
@@ -244,54 +244,54 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Email') <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="email" name="email" value="{{$user->email}}">
+                                    <input class="form-control" type="email" name="email" value="{{ isset($user->email) ? $user->email : '' }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Mobile Number') <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="mobile" value="{{$user->mobile}}">
+                                    <input class="form-control" type="text" name="mobile" value="{{ isset($user->user_basic->phone_number) ? $user->user_basic->phone_number : '' }}">
                                 </div>
                             </div>
                         </div>
 
 
                         <div class="row mt-4">
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Address') </label>
                                     <input class="form-control" type="text" name="address" value="{{@$user->address->address}}">
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label font-weight-bold">@lang('City') </label>
-                                    <input class="form-control" type="text" name="city" value="{{@$user->address->city}}">
+                                    <input class="form-control" type="text" name="city" value="{{ @$user->location }}">
                                 </div>
                             </div>
 
-                            <div class="col-xl-3 col-md-6">
+                            <!-- <div class="col-xl-3 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('State') </label>
                                     <input class="form-control" type="text" name="state" value="{{@$user->address->state}}">
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-xl-3 col-md-6">
+                            <!-- <div class="col-xl-3 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Zip/Postal') </label>
                                     <input class="form-control" type="text" name="zip" value="{{@$user->address->zip}}">
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <div class="col-xl-3 col-md-6">
+                            <div class="col-xl-6 col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Country') </label>
                                     <select name="country" class="form-control">
                                         @foreach($countries as $key => $country)
-                                            <option value="{{ $key }}" @if($country->country == @$user->country ) selected @endif>{{ __($country->country) }}</option>
+                                            <option value="{{ $key }}" @if($country->id == @$user->country_id ) selected @endif>{{ __($country->name) }}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -39,9 +39,9 @@ class AdminController extends Controller
 
         // User Info
         $widget['total_users'] = User::count();
-        $widget['verified_users'] = User::all()->count();
-        $widget['email_unverified_users'] = User::all()->count();
-        $widget['sms_unverified_users'] = User::all()->count();
+        $widget['verified_users'] = User::where('is_active', 1)->count();
+        $widget['email_unverified_users'] = User::where('email_verified_at', null)->count();
+        $widget['sms_unverified_users'] = User::where('sms_verified_at', null)->count();
 
         // Monthly Deposit & Withdraw Report Graph
         $report['months'] = collect([]);
