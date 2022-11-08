@@ -102,7 +102,8 @@ Route::prefix('ticket')->group(function () {
 //    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
     Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
     Route::post('/store-ticket', 'TicketController@store')->name('ticket.store');
-    Route::get('/view/{ticket}', 'TicketController@show')->name('ticket.view');
+//    Route::get('/view/{ticket}', 'TicketController@show')->name('ticket.view');
+    Route::get('/view-ticket/{ticket}', 'TicketController@show')->name('ticket.view');
     Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
     Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
 });
