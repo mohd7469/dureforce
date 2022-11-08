@@ -599,11 +599,11 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" min="1970-01-01">
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" >
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" min="1970-01-01">
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" >
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
@@ -768,7 +768,7 @@
                                                     name="start_date"
                                                     id="start_date"
                                                     onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
-                                                    min="1970-01-01"
+                                                    
                                             />  
                                         </div>
                                         <div
@@ -790,7 +790,7 @@
                                                     id="edu_end_date"
                                                     onchange="setMinDateJob($(this), $('.end-date-job-education-0'))"
                                                     onchange="checkIfDateGreaterInsti($(this))"
-                                                    min="1970-01-01"
+                                                    
                                             />
                                         </div>
                                     </div>

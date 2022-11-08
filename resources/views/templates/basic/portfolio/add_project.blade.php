@@ -25,7 +25,7 @@
                     <div class="col-md-6">
                     
                         <label for="exampleInputEmail1">Completion Date (optional)</label>
-                        <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date" min="1970-01-01" >
+                        <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date"  >
                     </div>
 
                     <div class="col-md-6">
