@@ -40,21 +40,20 @@
                                         </td>
                                         
                                         <td data-label="@lang('Status')">
-                                                @if($job->status->slug == 'approved')
+                                                @if($job->status->id == \App\Models\Job::$Approved)
                                                     <span class="status-btn status-approved">@lang('Approved')</span>
                                                     
-                                                <!-- @elseif($job->status->slug == 'draft')
-                                                    <span class="status-btn status-draft">@lang('Draft')</span> -->
+                                                 @elseif($job->status->id == \App\Models\Job::$Closed)
+                                                    <span class="status-btn status-draft">@lang('Closed')</span> 
                                                 
-                                                @elseif($job->status->slug == 'pending')
+                                                @elseif($job->status->id == \App\Models\Job::$Pending)
                                                     <span class="status-btn status-pending">@lang('Pending')</span>
                                                     
-                                                @elseif($job->status->slug == 'closed')
-                                                    <span class="status-btn btn--warning">@lang('Closed')</span>
+                                                @elseif($job->status->id == \App\Models\Job::$Canceled)
+                                                    <span class="status-btn btn--warning">@lang('Canceled')</span>
                                                 
                                                 @else
-                                                    <button class="status-btn btn--danger">@lang('Canceled')</button>
-                                                    
+                                                    <button class="status-btn btn--danger">@lang('Canceled 2')</button>
                                                 @endif
 
                                         </td>
@@ -69,6 +68,8 @@
                                             {{-- {{route('buyer.job.edit', [slug($job->title), $job->id])}} --}}
 
                                                 <a href="{{route('buyer.job.single.view', [$job->uuid])}} " ><i class="fa fa-eye icon-color" style="margin-right:7px; "></i></a>
+                                            @if($job->status->id == \App\Models\Job::$Pending)
+
                                                 <a href="{{route('buyer.job.edit', [$job->uuid])}}" ><i class="fa fa-edit icon-color" style="margin-right:7px; "></i></a>
                                             {{-- @else --}}
                                                 {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
@@ -76,6 +77,7 @@
                                             {{--  @if($job->status->slug!= 'approved')  --}}
                                                 <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color" style="margin-right:7px; "></i></a>
                                             {{--  @endif  --}}
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty

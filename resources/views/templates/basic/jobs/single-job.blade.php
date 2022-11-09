@@ -12,7 +12,7 @@
                     <div class="section-inner">
                         <div class="item-section item-details-section">
                             <div class="container">
-                                @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
+                                @include('templates.basic.jobs.breadcrum',['job'=>$job])
                                 <div class="item-details-content" style="padding-top: 0px;">
                                     <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
                                     
@@ -167,8 +167,9 @@
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}"    class="standard-btn ">View Proposals ({{$job->proposal->count()}})</a>
+                                                    @if($job->status->id == \App\Models\Job::$Pending)
                                                     <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
-
+                                                    @endif
 
 
                                                 </div>
