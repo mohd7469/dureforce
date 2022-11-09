@@ -164,22 +164,28 @@ class ProfileController extends Controller
      */
     public function getUserProfile()
     {
-        $pageTitle = 'Seller Profile';
-        $user = User::withAll()->find(auth()->user()->id);
-        $skills=Skills::select('id','name')->get();
-        $userskills=$user->skills;
-        $user_experience = $user->experiences;
-        $user_education  = $user->education;
-        $user_portfolios = $user->portfolios; 
-        $countries = Country::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-        $basicProfile=$user->basicProfile;
-        $user_languages=$user->languages;
-        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
-        $categories = Category::select('id', 'name')->get();
-        $degrees = Degree::select('id', 'title')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios'));
+        try{
+            $pageTitle = 'Seller Profile';
+            $user = User::withAll()->find(auth()->user()->id);
+            $skills=Skills::select('id','name')->get();
+            $userskills=$user->skills;
+            $user_experience = $user->experiences;
+            $user_education  = $user->education;
+            $user_portfolios = $user->portfolios; 
+            $countries = Country::select('id', 'name')->get();
+            $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+            $basicProfile=$user->basicProfile;
+            $user_languages=$user->languages;
+            $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+            $language_levels = LanguageLevel::select('id', 'name')->get();
+            $categories = Category::select('id', 'name')->get();
+            $degrees = Degree::select('id', 'title')->get();
+            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios'));
+      
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
     }
     
     /**
@@ -350,9 +356,15 @@ class ProfileController extends Controller
      */
     public function getUserPortfolio()
     {
-        $skills=Skills::select('id','name')->get();
+        try{
+            $skills=Skills::select('id','name')->get();
 
-        return view($this->activeTemplate.'portfolio.index',compact('skills'));
+            return view($this->activeTemplate.'portfolio.index',compact('skills'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
         

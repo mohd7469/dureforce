@@ -22,11 +22,17 @@ class PaymentController extends Controller
 
     public function deposit()
     {
-        $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
-            $gate->where('status', 1);
-        })->with('method')->orderby('method_code')->get();
-        $pageTitle = 'Deposit Methods';
-        return view($this->activeTemplate . 'user.payment.deposit', compact('gatewayCurrency', 'pageTitle'));
+        try{
+            $gatewayCurrency = GatewayCurrency::whereHas('method', function ($gate) {
+                $gate->where('status', 1);
+            })->with('method')->orderby('method_code')->get();
+            $pageTitle = 'Deposit Methods';
+            return view($this->activeTemplate . 'user.payment.deposit', compact('gatewayCurrency', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function depositInsert(Request $request)
@@ -76,17 +82,24 @@ class PaymentController extends Controller
 
     public function depositPreview()
     {
+        try{
+            $track = session()->get('Track');
+            $data = Deposit::where('trx', $track)->where('status',0)->orderBy('id', 'DESC')->firstOrFail();
+            $pageTitle = 'Payment Preview';
+            return view($this->activeTemplate . 'user.payment.preview', compact('data', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
 
-        $track = session()->get('Track');
-        $data = Deposit::where('trx', $track)->where('status',0)->orderBy('id', 'DESC')->firstOrFail();
-        $pageTitle = 'Payment Preview';
-        return view($this->activeTemplate . 'user.payment.preview', compact('data', 'pageTitle'));
+       
     }
 
 
     public function depositConfirm()
     {
-        $track = session()->get('Track');
+        try{
+            $track = session()->get('Track');
         $deposit = Deposit::where('trx', $track)->where('status',0)->orderBy('id', 'DESC')->with('gateway')->firstOrFail();
         
         if ($deposit->method_code >= 1000) {
@@ -119,6 +132,11 @@ class PaymentController extends Controller
 
         $pageTitle = 'Payment Confirm';
         return view($this->activeTemplate . $data->view, compact('data', 'pageTitle', 'deposit'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
@@ -271,119 +289,131 @@ class PaymentController extends Controller
 
     public function manualDepositConfirm()
     {
-        $track = session()->get('Track');
-        $data = Deposit::with('gateway')->where('status', 0)->where('trx', $track)->first();
-        if (!$data) {
-            return redirect()->route(gatewayRedirectUrl());
-        }
-        if ($data->method_code > 999) {
-
-            $pageTitle = 'Deposit Confirm';
-            $method = $data->gatewayCurrency();
-            return view($this->activeTemplate . 'user.manual_payment.manual_confirm', compact('data', 'pageTitle', 'method'));
-        }
-        abort(404);
+        try{
+            $track = session()->get('Track');
+            $data = Deposit::with('gateway')->where('status', 0)->where('trx', $track)->first();
+            if (!$data) {
+                return redirect()->route(gatewayRedirectUrl());
+            }
+            if ($data->method_code > 999) {
+    
+                $pageTitle = 'Deposit Confirm';
+                $method = $data->gatewayCurrency();
+                return view($this->activeTemplate . 'user.manual_payment.manual_confirm', compact('data', 'pageTitle', 'method'));
+            }
+            abort(404);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function manualDepositUpdate(Request $request)
     {
-        $track = session()->get('Track');
-        $data = Deposit::with('gateway')->where('status', 0)->where('trx', $track)->first();
-        if (!$data) {
-            return redirect()->route(gatewayRedirectUrl());
-        }
-
-        $params = json_decode($data->gatewayCurrency()->gateway_parameter);
-
-        $rules = [];
-        $inputField = [];
-        $verifyImages = [];
-
-        if ($params != null) {
-            foreach ($params as $key => $custom) {
-                $rules[$key] = [$custom->validation];
-                if ($custom->type == 'file') {
-                    array_push($rules[$key], 'image');
-                    array_push($rules[$key], new FileTypeValidate(['jpg','jpeg','png']));
-                    array_push($rules[$key], 'max:2048');
-
-                    array_push($verifyImages, $key);
-                }
-                if ($custom->type == 'text') {
-                    array_push($rules[$key], 'max:191');
-                }
-                if ($custom->type == 'textarea') {
-                    array_push($rules[$key], 'max:300');
-                }
-                $inputField[] = $key;
+        try{
+            $track = session()->get('Track');
+            $data = Deposit::with('gateway')->where('status', 0)->where('trx', $track)->first();
+            if (!$data) {
+                return redirect()->route(gatewayRedirectUrl());
             }
-        }
-        $this->validate($request, $rules);
-
-
-        $directory = date("Y")."/".date("m")."/".date("d");
-        $path = imagePath()['verify']['deposit']['path'].'/'.$directory;
-        $collection = collect($request);
-        $reqField = [];
-        if ($params != null) {
-            foreach ($collection as $k => $v) {
-                foreach ($params as $inKey => $inVal) {
-                    if ($k != $inKey) {
-                        continue;
-                    } else {
-                        if ($inVal->type == 'file') {
-                            if ($request->hasFile($inKey)) {
-                                try {
-                                    $reqField[$inKey] = [
-                                        'field_name' => $directory.'/'.uploadImage($request[$inKey], $path),
-                                        'type' => $inVal->type,
-                                    ];
-                                } catch (\Exception $exp) {
-                                    $notify[] = ['error', 'Could not upload your ' . $inKey];
-                                    return back()->withNotify($notify)->withInput();
-                                }
-                            }
+    
+            $params = json_decode($data->gatewayCurrency()->gateway_parameter);
+    
+            $rules = [];
+            $inputField = [];
+            $verifyImages = [];
+    
+            if ($params != null) {
+                foreach ($params as $key => $custom) {
+                    $rules[$key] = [$custom->validation];
+                    if ($custom->type == 'file') {
+                        array_push($rules[$key], 'image');
+                        array_push($rules[$key], new FileTypeValidate(['jpg','jpeg','png']));
+                        array_push($rules[$key], 'max:2048');
+    
+                        array_push($verifyImages, $key);
+                    }
+                    if ($custom->type == 'text') {
+                        array_push($rules[$key], 'max:191');
+                    }
+                    if ($custom->type == 'textarea') {
+                        array_push($rules[$key], 'max:300');
+                    }
+                    $inputField[] = $key;
+                }
+            }
+            $this->validate($request, $rules);
+    
+    
+            $directory = date("Y")."/".date("m")."/".date("d");
+            $path = imagePath()['verify']['deposit']['path'].'/'.$directory;
+            $collection = collect($request);
+            $reqField = [];
+            if ($params != null) {
+                foreach ($collection as $k => $v) {
+                    foreach ($params as $inKey => $inVal) {
+                        if ($k != $inKey) {
+                            continue;
                         } else {
-                            $reqField[$inKey] = $v;
-                            $reqField[$inKey] = [
-                                'field_name' => $v,
-                                'type' => $inVal->type,
-                            ];
+                            if ($inVal->type == 'file') {
+                                if ($request->hasFile($inKey)) {
+                                    try {
+                                        $reqField[$inKey] = [
+                                            'field_name' => $directory.'/'.uploadImage($request[$inKey], $path),
+                                            'type' => $inVal->type,
+                                        ];
+                                    } catch (\Exception $exp) {
+                                        $notify[] = ['error', 'Could not upload your ' . $inKey];
+                                        return back()->withNotify($notify)->withInput();
+                                    }
+                                }
+                            } else {
+                                $reqField[$inKey] = $v;
+                                $reqField[$inKey] = [
+                                    'field_name' => $v,
+                                    'type' => $inVal->type,
+                                ];
+                            }
                         }
                     }
                 }
+                $data->detail = $reqField;
+            } else {
+                $data->detail = null;
             }
-            $data->detail = $reqField;
-        } else {
-            $data->detail = null;
-        }
-
-
-
-        $data->status = 2; // pending
-        $data->save();
-
-
-        $adminNotification = new AdminNotification();
-        $adminNotification->user_id = $data->user->id;
-        $adminNotification->title = 'Deposit request from '.$data->user->username;
-        $adminNotification->click_url = urlPath('admin.deposit.details',$data->id);
-        $adminNotification->save();
-
-        $general = GeneralSetting::first();
-        notify($data->user, 'DEPOSIT_REQUEST', [
-            'method_name' => $data->gatewayCurrency()->name,
-            'method_currency' => $data->method_currency,
-            'method_amount' => getAmount($data->final_amo),
-            'amount' => getAmount($data->amount),
-            'charge' => getAmount($data->charge),
-            'currency' => $general->cur_text,
-            'rate' => getAmount($data->rate),
-            'trx' => $data->trx
-        ]);
-
-        $notify[] = ['success', 'You have deposit request has been taken.'];
-        return redirect()->route('user.deposit.history')->withNotify($notify);
+    
+    
+    
+            $data->status = 2; // pending
+            $data->save();
+    
+    
+            $adminNotification = new AdminNotification();
+            $adminNotification->user_id = $data->user->id;
+            $adminNotification->title = 'Deposit request from '.$data->user->username;
+            $adminNotification->click_url = urlPath('admin.deposit.details',$data->id);
+            $adminNotification->save();
+    
+            $general = GeneralSetting::first();
+            notify($data->user, 'DEPOSIT_REQUEST', [
+                'method_name' => $data->gatewayCurrency()->name,
+                'method_currency' => $data->method_currency,
+                'method_amount' => getAmount($data->final_amo),
+                'amount' => getAmount($data->amount),
+                'charge' => getAmount($data->charge),
+                'currency' => $general->cur_text,
+                'rate' => getAmount($data->rate),
+                'trx' => $data->trx
+            ]);
+    
+            $notify[] = ['success', 'You have deposit request has been taken.'];
+            return redirect()->route('user.deposit.history')->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 

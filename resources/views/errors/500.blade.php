@@ -19,7 +19,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-7 text-center">
-          <img src="{{ asset('assets/errors/images/error-404.png') }}" alt="@lang('image')">
+          <img src="{{ asset('assets/errors/images/error-500.png') }}" alt="@lang('image')">
           <h2 class="title">@lang('There is a technical Error occur')</h2>
           <p>@lang('Please contact at support')</p>
           <a href="{{ route('home') }}" class="cmn-btn mt-4">@lang('Go to Home')</a>

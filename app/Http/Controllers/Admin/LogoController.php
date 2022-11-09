@@ -16,10 +16,16 @@ class LogoController extends Controller
     public function index()
     {
         //
-        $pageTitle = "Logos ";
-        $emptyMessage = "No data found";
-        $attributes = Logo::latest()->paginate(getPaginate());
-        return view('admin.logos.index', compact('attributes', 'pageTitle', 'emptyMessage'));
+        try{
+            $pageTitle = "Logos ";
+            $emptyMessage = "No data found";
+            $attributes = Logo::latest()->paginate(getPaginate());
+            return view('admin.logos.index', compact('attributes', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     /**

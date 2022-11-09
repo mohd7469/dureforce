@@ -17,23 +17,37 @@ class ConversationController extends Controller
 
     public function inbox()
     {
-        $pageTitle = "Inbox";
+        try{
+            $pageTitle = "Inbox";
         $user = Auth::user();
         $conversions = Conversation::where('sender_id', $user->id)->orWhere('receiver_id', $user->id)->latest()->get();
         return view($this->activeTemplate . 'user.message.inbox', compact('pageTitle', 'conversions'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function chat($conversionId)
     {
-        $conversions = Conversation::findOrFail($conversionId);
-        $pageTitle = "Chat List";
-        $messages = Message::where('conversion_id',$conversions->id)->with('sender', 'receiver')->get();
-        return view(activeTemplate() . 'user.message.chat', compact('pageTitle','messages', 'conversionId'));
+        try{
+            $conversions = Conversation::findOrFail($conversionId);
+            $pageTitle = "Chat List";
+            $messages = Message::where('conversion_id',$conversions->id)->with('sender', 'receiver')->get();
+            return view(activeTemplate() . 'user.message.chat', compact('pageTitle','messages', 'conversionId'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
     
     public function store(Request $request)
     {
+        try{
+             
         $user = Auth::user();
         if($user->id != $request->recevier_id)
         {
@@ -59,12 +73,17 @@ class ConversationController extends Controller
         }
         $notify[] = ['error', "it's You"];
         return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function messageStore(Request $request)
     {
-       
-        $conversionId =Conversation::findOrFail(decrypt($request->conversion_id));
+        try{
+            $conversionId =Conversation::findOrFail(decrypt($request->conversion_id));
         $receiver =User::findOrFail(decrypt($request->receiver_id));
         if($request->image == null){
             $request->validate(['message' => 'required|max:500']);
@@ -97,5 +116,10 @@ class ConversationController extends Controller
         $message->save();
         $notify[] = ['success', 'Message Sent'];
         return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 }

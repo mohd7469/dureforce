@@ -42,7 +42,8 @@ class JobController extends Controller
 
     public function getJobData()
     {
-        $data = [];
+        try{
+            $data = [];
 
         $data['countries'] = World::Countries();
 
@@ -65,27 +66,43 @@ class JobController extends Controller
 
 
         return $data;
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
     public function create(Request $request)
     {
-    
-        $pageTitle = "Create Job";
+        try{
+            $pageTitle = "Create Job";
         $data = $this->getJobData();
 
 
         return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
 
 
     }
 
     public function index()
     {
-        $user = Auth::user();
-        $pageTitle = "Manage Job";
-        $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        try{
+            $user = Auth::user();
+            $pageTitle = "Manage Job";
+            $emptyMessage = "No data found";
+            $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
+            return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function jobDataValidate(Request $request)
@@ -197,15 +214,21 @@ class JobController extends Controller
 
     public function edit($uuid)
     {
-        $job = Job::withAll()->where('uuid', $uuid)->first();
-        $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
-        $data = $this->getJobData();
-        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        $data['sub_categories'] = $sub_category;
-        $data['documents'] = json_encode($job->documents->toArray());
-        $pageTitle = "Job Update";
-
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
+        try{
+            $job = Job::withAll()->where('uuid', $uuid)->first();
+            $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
+            $data = $this->getJobData();
+            $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+            $data['sub_categories'] = $sub_category;
+            $data['documents'] = json_encode($job->documents->toArray());
+            $pageTitle = "Job Update";
+    
+            return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+      
     }
 
     public function update(Request $request, $uuid)
@@ -295,27 +318,40 @@ class JobController extends Controller
 
     private function fileValidate($file)
     {
-        $allowedExts = array('jpeg', 'jpg', 'png', 'pdf');
+        try{
+            $allowedExts = array('jpeg', 'jpg', 'png', 'pdf');
         $ext = strtolower($file->getClientOriginalExtension());
         if (!in_array($ext, $allowedExts)) {
             $notify = 'Only jpeg, jpg, png files are allowed';
             return back()->withNotify($notify);
         }
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
+        
     }
 
 
     public function cancelBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $user = Auth::user();
-        $job = Job::where('user_id', $user->id)->where('id', $request->id)->firstOrFail();
-        $job->status = 2;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been closed.'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $user = Auth::user();
+            $job = Job::where('user_id', $user->id)->where('id', $request->id)->firstOrFail();
+            $job->status = 2;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been closed.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
 
@@ -351,8 +387,8 @@ class JobController extends Controller
     public function singleJob($uuid)
     {
 
-
-        $job = Job::where('uuid', $uuid)->withAll()->first();
+        try{
+            $job = Job::where('uuid', $uuid)->withAll()->first();
 
 
         $skillCats = SkillCategory::select('name', 'id')->get();
@@ -366,6 +402,11 @@ class JobController extends Controller
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         $pageTitle = "All Jobs";
         return view('templates.basic.jobs.single-job', compact('pageTitle', 'job', 'data'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
 
     }
 
@@ -420,17 +461,24 @@ class JobController extends Controller
 
     public function product()
     {
-
-        $proposals = Proposal::WithAll()->get();
+        try{
+            $proposals = Proposal::WithAll()->get();
         $pageTitle = "Product";
 
         return view('templates.basic.jobs.all-proposal', compact('pageTitle', 'proposals'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+
+        
 
     }
 
     public function inviteFreelancer($job_uuid)
     {
-        $job = Job::where('uuid', $job_uuid)->with('invited_freelancer')->first();
+        try{
+            $job = Job::where('uuid', $job_uuid)->with('invited_freelancer')->first();
 
         $user_ids = $job->invited_freelancer->pluck('user_id');
 
@@ -438,6 +486,11 @@ class JobController extends Controller
         $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
         $pageTitle = "inviteProposal";
         return view('templates.basic.jobs.invite-freelancer', compact('pageTitle', 'job', 'freelancers','invited_freelancers'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
 
     }
 }

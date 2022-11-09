@@ -16,50 +16,81 @@ class DepositController extends Controller
 
     public function pending()
     {
-        $pageTitle = 'Pending Deposits';
+        try{
+            $pageTitle = 'Pending Deposits';
         $emptyMessage = 'No pending deposits.';
         $deposits = Deposit::where('method_code', '>=', 1000)->where('status', 2)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function approved()
     {
-        $pageTitle = 'Approved Deposits';
-        $emptyMessage = 'No approved deposits.';
-        $deposits = Deposit::where('method_code','>=',1000)->where('status', 1)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
-        return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        try{
+            $pageTitle = 'Approved Deposits';
+            $emptyMessage = 'No approved deposits.';
+            $deposits = Deposit::where('method_code','>=',1000)->where('status', 1)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
+            return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 
     public function successful()
     {
-        $pageTitle = 'Successful Deposits';
-        $emptyMessage = 'No successful deposits.';
-        $deposits = Deposit::where('status', 1)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
-        return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        try{
+            $pageTitle = 'Successful Deposits';
+            $emptyMessage = 'No successful deposits.';
+            $deposits = Deposit::where('status', 1)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
+            return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 
     public function rejected()
     {
-        $pageTitle = 'Rejected Deposits';
-        $emptyMessage = 'No rejected deposits.';
-        $deposits = Deposit::where('method_code', '>=', 1000)->where('status', 3)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
-        return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        try{
+            $pageTitle = 'Rejected Deposits';
+            $emptyMessage = 'No rejected deposits.';
+            $deposits = Deposit::where('method_code', '>=', 1000)->where('status', 3)->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
+            return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+   
     }
 
     public function deposit()
     {
-        $pageTitle = 'Deposit History';
+        try{
+            $pageTitle = 'Deposit History';
         $emptyMessage = 'No deposit history available.';
         $deposits = Deposit::with(['user', 'gateway'])->where('status','!=',0)->orderBy('id','desc')->paginate(getPaginate());
         $successful = Deposit::where('status',1)->sum('amount');
         $pending = Deposit::where('status',2)->sum('amount');
         $rejected = Deposit::where('status',3)->sum('amount');
         return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits','successful','pending','rejected'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function depositViaMethod($method,$type = null){
-        $method = Gateway::where('alias',$method)->firstOrFail();        
+        try{
+            $method = Gateway::where('alias',$method)->firstOrFail();        
         if ($type == 'approved') {
             $pageTitle = 'Approved Payment Via '.$method->name;
             $deposits = Deposit::where('method_code','>=',1000)->where('method_code',$method->code)->where('status', 1)->orderBy('id','desc')->with(['user', 'gateway']);
@@ -84,11 +115,17 @@ class DepositController extends Controller
         $methodAlias = $method->alias;
         $emptyMessage = 'No Deposit Found';
         return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits','methodAlias','successful','pending','rejected'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function search(Request $request, $scope)
     {
-        $search = $request->search;
+        try{
+            $search = $request->search;
         $emptyMessage = 'No search result was found.';
         $deposits = Deposit::with(['user', 'gateway'])->where('status','!=',0)->where(function ($q) use ($search) {
             $q->where('trx', 'like', "%$search%")->orWhereHas('user', function ($user) use ($search) {
@@ -112,129 +149,157 @@ class DepositController extends Controller
         $pageTitle .= '-' . $search;
 
         return view('admin.deposit.log', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'deposits'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function dateSearch(Request $request,$scope = null){
-        $search = $request->date;
-        if (!$search) {
-            return back();
-        }
-        $date = explode('-',$search);
-        $start = @$date[0];
-        $end = @$date[1];
-        // date validation
-        $pattern = "/\d{2}\/\d{2}\/\d{4}/";
-        if ($start && !preg_match($pattern,$start)) {
-            $notify[] = ['error','Invalid date format'];
-            return redirect()->route('admin.deposit.list')->withNotify($notify);
-        }
-        if ($end && !preg_match($pattern,$end)) {
-            $notify[] = ['error','Invalid date format'];
-            return redirect()->route('admin.deposit.list')->withNotify($notify);
-        }
-
-
-        if ($start) {
-            $deposits = Deposit::where('status','!=',0)->whereDate('created_at',Carbon::parse($start));
-        }
-        if($end){
-            $deposits = Deposit::where('status','!=',0)->whereDate('created_at','>=',Carbon::parse($start))->whereDate('created_at','<=',Carbon::parse($end));
-        }
-        if ($request->method) {
-            $method = Gateway::where('alias',$request->method)->firstOrFail();
-            $deposits = $deposits->where('method_code',$method->code);
-        }
-        if ($scope == 'pending') {
-            $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 2);
-        }elseif($scope == 'approved'){
-            $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 1);
-        }elseif($scope == 'rejected'){
-            $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 3);
-        }
-        $deposits = $deposits->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
-        $pageTitle = ' Deposits Log';
-        $emptyMessage = 'No Deposit Found';
-        $dateSearch = $search;
-        return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits','dateSearch','scope'));
+        try{
+            $search = $request->date;
+            if (!$search) {
+                return back();
+            }
+            $date = explode('-',$search);
+            $start = @$date[0];
+            $end = @$date[1];
+            // date validation
+            $pattern = "/\d{2}\/\d{2}\/\d{4}/";
+            if ($start && !preg_match($pattern,$start)) {
+                $notify[] = ['error','Invalid date format'];
+                return redirect()->route('admin.deposit.list')->withNotify($notify);
+            }
+            if ($end && !preg_match($pattern,$end)) {
+                $notify[] = ['error','Invalid date format'];
+                return redirect()->route('admin.deposit.list')->withNotify($notify);
+            }
+    
+    
+            if ($start) {
+                $deposits = Deposit::where('status','!=',0)->whereDate('created_at',Carbon::parse($start));
+            }
+            if($end){
+                $deposits = Deposit::where('status','!=',0)->whereDate('created_at','>=',Carbon::parse($start))->whereDate('created_at','<=',Carbon::parse($end));
+            }
+            if ($request->method) {
+                $method = Gateway::where('alias',$request->method)->firstOrFail();
+                $deposits = $deposits->where('method_code',$method->code);
+            }
+            if ($scope == 'pending') {
+                $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 2);
+            }elseif($scope == 'approved'){
+                $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 1);
+            }elseif($scope == 'rejected'){
+                $deposits = $deposits->where('method_code', '>=', 1000)->where('status', 3);
+            }
+            $deposits = $deposits->with(['user', 'gateway'])->orderBy('id','desc')->paginate(getPaginate());
+            $pageTitle = ' Deposits Log';
+            $emptyMessage = 'No Deposit Found';
+            $dateSearch = $search;
+            return view('admin.deposit.log', compact('pageTitle', 'emptyMessage', 'deposits','dateSearch','scope'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function details($id)
     {
-        $general = GeneralSetting::first();
+        try{
+            $general = GeneralSetting::first();
         $deposit = Deposit::where('id', $id)->with(['user', 'gateway'])->firstOrFail();
         $pageTitle = $deposit->user->username.' requested ' . getAmount($deposit->amount) . ' '.$general->cur_text;
         $details = ($deposit->detail != null) ? json_encode($deposit->detail) : null;
         return view('admin.deposit.detail', compact('pageTitle', 'deposit','details'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function approve(Request $request)
     {
+        try{
+            $request->validate(['id' => 'required|integer']);
+            $deposit = Deposit::where('id',$request->id)->where('status',2)->firstOrFail();
+            $deposit->status = 1;
+            $deposit->save();
+            
+            $user = User::find($deposit->user_id);
+            $user->balance = $user->balance + $deposit->amount;
+            $user->save();
+    
+            $transaction = new Transaction();
+            $transaction->user_id = $deposit->user_id;
+            $transaction->amount = $deposit->amount;
+            $transaction->post_balance = $user->balance;
+            $transaction->charge = $deposit->charge;
+            $transaction->trx_type = '+';
+            $transaction->details = 'Deposit Via ' . $deposit->gatewayCurrency()->name;
+            $transaction->trx =  $deposit->trx;
+            $transaction->save();
+    
+            $general = GeneralSetting::first();
+            notify($user, 'DEPOSIT_APPROVE', [
+                'method_name' => $deposit->gatewayCurrency()->name,
+                'method_currency' => $deposit->method_currency,
+                'method_amount' => getAmount($deposit->final_amo),
+                'amount' => getAmount($deposit->amount),
+                'charge' => getAmount($deposit->charge),
+                'currency' => $general->cur_text,
+                'rate' => getAmount($deposit->rate),
+                'trx' => $deposit->trx,
+                'post_balance' => $user->balance
+            ]);
+            $notify[] = ['success', 'Deposit request has been approved.'];
+    
+            return redirect()->route('admin.deposit.pending')->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
 
-        $request->validate(['id' => 'required|integer']);
-        $deposit = Deposit::where('id',$request->id)->where('status',2)->firstOrFail();
-        $deposit->status = 1;
-        $deposit->save();
-        
-        $user = User::find($deposit->user_id);
-        $user->balance = $user->balance + $deposit->amount;
-        $user->save();
-
-        $transaction = new Transaction();
-        $transaction->user_id = $deposit->user_id;
-        $transaction->amount = $deposit->amount;
-        $transaction->post_balance = $user->balance;
-        $transaction->charge = $deposit->charge;
-        $transaction->trx_type = '+';
-        $transaction->details = 'Deposit Via ' . $deposit->gatewayCurrency()->name;
-        $transaction->trx =  $deposit->trx;
-        $transaction->save();
-
-        $general = GeneralSetting::first();
-        notify($user, 'DEPOSIT_APPROVE', [
-            'method_name' => $deposit->gatewayCurrency()->name,
-            'method_currency' => $deposit->method_currency,
-            'method_amount' => getAmount($deposit->final_amo),
-            'amount' => getAmount($deposit->amount),
-            'charge' => getAmount($deposit->charge),
-            'currency' => $general->cur_text,
-            'rate' => getAmount($deposit->rate),
-            'trx' => $deposit->trx,
-            'post_balance' => $user->balance
-        ]);
-        $notify[] = ['success', 'Deposit request has been approved.'];
-
-        return redirect()->route('admin.deposit.pending')->withNotify($notify);
+       
     }
 
     public function reject(Request $request)
     {
-
-        $request->validate([
-            'id' => 'required|integer',
-            'message' => 'required|max:250'
-        ]);
-        $deposit = Deposit::where('id',$request->id)->where('status',2)->firstOrFail();
-
-        $deposit->admin_feedback = $request->message;
-        $deposit->status = 3;
-        $deposit->save();
-
-        $general = GeneralSetting::first();
-        notify($deposit->user, 'DEPOSIT_REJECT', [
-            'method_name' => $deposit->gatewayCurrency()->name,
-            'method_currency' => $deposit->method_currency,
-            'method_amount' => getAmount($deposit->final_amo),
-            'amount' => getAmount($deposit->amount),
-            'charge' => getAmount($deposit->charge),
-            'currency' => $general->cur_text,
-            'rate' => getAmount($deposit->rate),
-            'trx' => $deposit->trx,
-            'rejection_message' => $request->message
-        ]);
-
-        $notify[] = ['success', 'Deposit request has been rejected.'];
-        return  redirect()->route('admin.deposit.pending')->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|integer',
+                'message' => 'required|max:250'
+            ]);
+            $deposit = Deposit::where('id',$request->id)->where('status',2)->firstOrFail();
+    
+            $deposit->admin_feedback = $request->message;
+            $deposit->status = 3;
+            $deposit->save();
+    
+            $general = GeneralSetting::first();
+            notify($deposit->user, 'DEPOSIT_REJECT', [
+                'method_name' => $deposit->gatewayCurrency()->name,
+                'method_currency' => $deposit->method_currency,
+                'method_amount' => getAmount($deposit->final_amo),
+                'amount' => getAmount($deposit->amount),
+                'charge' => getAmount($deposit->charge),
+                'currency' => $general->cur_text,
+                'rate' => getAmount($deposit->rate),
+                'trx' => $deposit->trx,
+                'rejection_message' => $request->message
+            ]);
+    
+            $notify[] = ['success', 'Deposit request has been rejected.'];
+            return  redirect()->route('admin.deposit.pending')->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
 
     }
 }

@@ -13,51 +13,75 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $pageTitle = "Category list";
+        try{
+            $pageTitle = "Category list";
         $emptyMessage = "No data found";
         $categorys = Category::with('subCategory')->latest()->paginate(getPaginate());
         return view('admin.category.index', compact('categorys', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|unique:categories|max:50',
-            'type_id' => 'required',
-        ]);
-        $category = new Category;
-        $category->name = $request->name;
-        $category->type_id = $request->type_id;
-        $category->status = $request->status ? 1 : 2;
-        $category->save();
-        $notify[] = ['success', 'Category has been created'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'name' => 'required|unique:categories|max:50',
+                'type_id' => 'required',
+            ]);
+            $category = new Category;
+            $category->name = $request->name;
+            $category->type_id = $request->type_id;
+            $category->status = $request->status ? 1 : 2;
+            $category->save();
+            $notify[] = ['success', 'Category has been created'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function update(Request $request)
     {
-        $request->validate([
-            'name' => 'required|max:50|unique:categories,name,' . $request->id,
-            'id' => 'required|exists:categories,id',
-            'type_id' => 'required',
-        ]);
-        $category = Category::find($request->id);
-        $category->name = $request->name;
-        $category->type_id = $request->type_id;
-        $category->status = $request->status ? 1 : 2;
-        $category->save();
-        $notify[] = ['success', 'Category has been updated'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'name' => 'required|max:50|unique:categories,name,' . $request->id,
+                'id' => 'required|exists:categories,id',
+                'type_id' => 'required',
+            ]);
+            $category = Category::find($request->id);
+            $category->name = $request->name;
+            $category->type_id = $request->type_id;
+            $category->status = $request->status ? 1 : 2;
+            $category->save();
+            $notify[] = ['success', 'Category has been updated'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function subCategoryIndex()
     {
-        $pageTitle = "Sub Category list";
+        try{
+            $pageTitle = "Sub Category list";
         $emptyMessage = "No data found";
         $categorys = Category::where('status', 1)->get();
         $subCategorys = SubCategory::with('category')->latest()->paginate(getPaginate());
         return view('admin.category.sub_index', compact('subCategorys', 'pageTitle', 'emptyMessage', 'categorys'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
@@ -122,11 +146,17 @@ class CategoryController extends Controller
 
     private function fileValidate($file)
     {
-        $allowedExts = array('jpeg', 'jpg', 'png');
-        $ext = strtolower($file->getClientOriginalExtension());
-        if (!in_array($ext, $allowedExts)) {
-            $notify = 'Only jpeg, jpg, png files are allowed';
-            return back()->withNotify($notify);
-        }
+        try{
+            $allowedExts = array('jpeg', 'jpg', 'png');
+            $ext = strtolower($file->getClientOriginalExtension());
+            if (!in_array($ext, $allowedExts)) {
+                $notify = 'Only jpeg, jpg, png files are allowed';
+                return back()->withNotify($notify);
+            }
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 }

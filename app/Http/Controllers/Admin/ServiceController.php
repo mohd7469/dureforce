@@ -15,144 +15,216 @@ class ServiceController extends Controller
     
     public function index()
     {
-    	$pageTitle = "Manage All Service";
+        try{
+            $pageTitle = "Manage All Service";
     	$emptyMessage = "No data found";
     	$services = Service::with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function details($id)
     {
-    	$pageTitle = "Service details";
+        try{
+            $pageTitle = "Service details";
     	$service = Service::findOrFail($id);
     	return view('admin.service.details', compact('pageTitle', 'service'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
 
     public function pending()
     {
-    	$pageTitle = "Manage Pending Service";
+        try{
+            $pageTitle = "Manage Pending Service";
     	$emptyMessage = "No data found";
     	$services = Service::where('status', 0)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
     public function approved()
     {
-    	$pageTitle = "Manage Approved Service";
+        try{
+            $pageTitle = "Manage Approved Service";
     	$emptyMessage = "No data found";
     	$services = Service::where('status', 1)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
     public function cancel()
     {
-    	$pageTitle = "Manage Cancel Service";
+        try{
+            $pageTitle = "Manage Cancel Service";
     	$emptyMessage = "No data found";
     	$services = Service::where('status', 3)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function approvedBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:services,id'
-        ]);
-        $service = Service::findOrFail($request->id);
-        
-        if(!$service->creation_status) {
-            $notify[] = ['error', 'Service cannot be approved because it is not complete.'];
+        try{
+            $request->validate([
+                'id' => 'required|exists:services,id'
+            ]);
+            $service = Service::findOrFail($request->id);
+            
+            if(!$service->creation_status) {
+                $notify[] = ['error', 'Service cannot be approved because it is not complete.'];
+                return back()->withNotify($notify);
+            }
+    
+            $service->status = 1;
+            $service->created_at = Carbon::now();
+            $service->save();
+            $notify[] = ['success', 'Service has been approved'];
             return back()->withNotify($notify);
-        }
-
-        $service->status = 1;
-        $service->created_at = Carbon::now();
-        $service->save();
-        $notify[] = ['success', 'Service has been approved'];
-        return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
     public function cancelBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:services,id'
-        ]);
-        $service = Service::findOrFail($request->id);
-        $service->status = 2;
-        $service->created_at = Carbon::now();
-        $service->save();
-        $notify[] = ['success', 'Service has been canceled'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:services,id'
+            ]);
+            $service = Service::findOrFail($request->id);
+            $service->status = 2;
+            $service->created_at = Carbon::now();
+            $service->save();
+            $notify[] = ['success', 'Service has been canceled'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function featuredInclude(Request $request)
     {
-    	$request->validate([
-            'id' => 'required|exists:services,id'
-        ]);
-        $service = Service::findOrFail($request->id);
-        $service->featured = 1;
-        $service->save();
-        $notify[] = ['success', 'Include this service featured list'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:services,id'
+            ]);
+            $service = Service::findOrFail($request->id);
+            $service->featured = 1;
+            $service->save();
+            $notify[] = ['success', 'Include this service featured list'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function featuredNotInclude(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:services,id'
-        ]);
-        $service = Service::findOrFail($request->id);
-        $service->featured = 0;
-        $service->save();
-        $notify[] = ['success', 'Remove this service featured list'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:services,id'
+            ]);
+            $service = Service::findOrFail($request->id);
+            $service->featured = 0;
+            $service->save();
+            $notify[] = ['success', 'Remove this service featured list'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
 
     public function serviceCategory(Request $request)
     {
-    	$category = Category::findOrFail($request->category);
+        try{
+            $category = Category::findOrFail($request->category);
         $categoryId = $category->id;
     	$pageTitle = "Service search by category - " . $category->name;
     	$emptyMessage = "No data found";
     	$services = Service::where('category_id', $category->id)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services', 'categoryId'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function search(Request $request, $scope)
     {
-        $search = $request->search;
-        $services = Service::where(function ($services) use ($search) {
-            $services->where('price', $search)
-                ->orWhereHas('user', function ($user) use ($search) {
-                    $user->where('username', 'like', "%$search%");
+        try{
+            $search = $request->search;
+            $services = Service::where(function ($services) use ($search) {
+                $services->where('price', $search)
+                    ->orWhereHas('user', function ($user) use ($search) {
+                        $user->where('username', 'like', "%$search%");
+                    });
                 });
-            });
-        $pageTitle = '';
-        switch ($scope) {
-            case 'approved':
-                $pageTitle .= 'Approved ';
-                $services = $services->where('status', 1);
-                break;
-            case 'pending':
-                $pageTitle .= 'Pending ';
-                $services = $services->where('status', 0);
-                break;
-            case 'cancel':
-                $pageTitle .= 'Cancel ';
-                $services = $services->where('status', 2);
-                break;
-        }
-        $services = $services->latest()->paginate(getPaginate());
-        $pageTitle .= 'Service search by - ' . $search;
-        $emptyMessage = 'No data found';
-        return view('admin.service.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'services'));
+            $pageTitle = '';
+            switch ($scope) {
+                case 'approved':
+                    $pageTitle .= 'Approved ';
+                    $services = $services->where('status', 1);
+                    break;
+                case 'pending':
+                    $pageTitle .= 'Pending ';
+                    $services = $services->where('status', 0);
+                    break;
+                case 'cancel':
+                    $pageTitle .= 'Cancel ';
+                    $services = $services->where('status', 2);
+                    break;
+            }
+            $services = $services->latest()->paginate(getPaginate());
+            $pageTitle .= 'Service search by - ' . $search;
+            $emptyMessage = 'No data found';
+            return view('admin.service.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'services'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function destroy($id)
     {   
-        $this->deleteEntity(Service::class, 'service', $id);
-        $notify[] = ['success', 'Service has been Deleted Successfully.'];
-        return back()->withNotify($notify);
+        try{
+            $this->deleteEntity(Service::class, 'service', $id);
+            $notify[] = ['success', 'Service has been Deleted Successfully.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+      
     }
 
 }

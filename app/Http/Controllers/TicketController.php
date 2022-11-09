@@ -23,17 +23,23 @@ class TicketController extends Controller
 
     public function supportTicket()
     {
-        if (!Auth::user()) {
-            abort(404);
-        }
-
-
-        $user = auth()->user();
-
-        $tickets = SupportTicket::with(['status','priority'])->where('role_id', $user->last_role_activity)->where('user_id', $user->id)->get();
-
-        $pageTitle = "Support Tickets";
-        return view($this->activeTemplate . 'user.support.index', compact('tickets', 'pageTitle'));
+        try{
+            if (!Auth::user()) {
+                abort(404);
+            }
+    
+    
+            $user = auth()->user();
+    
+            $tickets = SupportTicket::with(['status','priority'])->where('role_id', $user->last_role_activity)->where('user_id', $user->id)->get();
+    
+            $pageTitle = "Support Tickets";
+            return view($this->activeTemplate . 'user.support.index', compact('tickets', 'pageTitle'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
 
@@ -54,17 +60,24 @@ class TicketController extends Controller
 
     public function openSupportTicket()
     {
-        if (!Auth::user()) {
-            abort(404);
-        }
-        $pageTitle = "Support Tickets";
-        $user = Auth::user();
-        return view($this->activeTemplate . 'user.support.create', compact('pageTitle', 'user'));
+        try{
+            if (!Auth::user()) {
+                abort(404);
+            }
+            $pageTitle = "Support Tickets";
+            $user = Auth::user();
+            return view($this->activeTemplate . 'user.support.create', compact('pageTitle', 'user'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
     public function storeSupportTicket(Request $request)
     {
-        $ticket = new SupportTicket();
+        try{
+            $ticket = new SupportTicket();
         $message = new SupportMessage();
 
         $files = $request->file('attachments');
@@ -139,52 +152,69 @@ class TicketController extends Controller
         }
         $notify[] = ['success', 'ticket created successfully!'];
         return redirect()->route('ticket')->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
 
     public function store(Request $request)
     {
+        try{
+            $user = auth()->user();
 
-        $user = auth()->user();
+            do {
+                $ticket_no = rand(1, 1000000000);
+                $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+            } while ($ticket_exists);
+    
+    
+    
+            $ticket =SupportTicket::create([
+                "user_id"=>$user->id,
+                "role_id"=>$user->last_role_activity,
+                "priority_id"=>$request->priority_id,
+                "status_id"=>SupportTicket::$Open,
+                "ticket_no"=>$ticket_no,
+                "subject"=>$request->subject,
+                "message"=>$request->message,
+            ]);
+    
+    
+            $notify[] = ['success', 'ticket created successfully!'];
+            return redirect()->route('ticket')->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
 
-        do {
-            $ticket_no = rand(1, 1000000000);
-            $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
-        } while ($ticket_exists);
-
-
-
-        $ticket =SupportTicket::create([
-            "user_id"=>$user->id,
-            "role_id"=>$user->last_role_activity,
-            "priority_id"=>$request->priority_id,
-            "status_id"=>SupportTicket::$Open,
-            "ticket_no"=>$ticket_no,
-            "subject"=>$request->subject,
-            "message"=>$request->message,
-        ]);
-
-
-        $notify[] = ['success', 'ticket created successfully!'];
-        return redirect()->route('ticket')->withNotify($notify);
+       
     }
 
 
     public function viewTicket($ticket)
     {
-        $pageTitle = "Support Tickets";
-        $userId = 0;
-        if (Auth::user()) {
-            $userId = Auth::id();
-        }
-        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
-        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
-        $user = auth()->user();
-        if ($user) {
-            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
-        } else {
-            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
-        }
+        try{
+            $pageTitle = "Support Tickets";
+            $userId = 0;
+            if (Auth::user()) {
+                $userId = Auth::id();
+            }
+            $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
+            $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
+            $user = auth()->user();
+            if ($user) {
+                return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+            } else {
+                return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+            }
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    
 
     }
 

@@ -13,10 +13,16 @@ class LanguageController extends Controller
 
     public function langManage($lang = false)
     {
-        $pageTitle = 'Language Manager';
-        $emptyMessage = 'No language has been added.';
-        $languages = Language::orderBy('is_default','desc')->get();
-        return view('admin.language.lang', compact('pageTitle', 'emptyMessage', 'languages'));
+        try{
+            $pageTitle = 'Language Manager';
+            $emptyMessage = 'No language has been added.';
+            $languages = Language::orderBy('is_default','desc')->get();
+            return view('admin.language.lang', compact('pageTitle', 'emptyMessage', 'languages'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+
     }
 
     public function langStore(Request $request)
@@ -88,19 +94,25 @@ class LanguageController extends Controller
 
     public function langEdit($id)
     {
-        $lang = Language::find($id);
-        $pageTitle = "Update " . $lang->name . " Keywords";
-        $json = file_get_contents(resource_path('lang/') . $lang->code . '.json');
-        $list_lang = Language::all();
-
-
-        if (empty($json)) {
-            $notify[] = ['error', 'File not found'];
-            return back()->withNotify($notify);
-        }
-        $json = json_decode($json);
-
-        return view('admin.language.edit_lang', compact('pageTitle', 'json', 'lang', 'list_lang'));
+        try{
+            $lang = Language::find($id);
+            $pageTitle = "Update " . $lang->name . " Keywords";
+            $json = file_get_contents(resource_path('lang/') . $lang->code . '.json');
+            $list_lang = Language::all();
+    
+    
+            if (empty($json)) {
+                $notify[] = ['error', 'File not found'];
+                return back()->withNotify($notify);
+            }
+            $json = json_decode($json);
+    
+            return view('admin.language.edit_lang', compact('pageTitle', 'json', 'lang', 'list_lang'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function langImport(Request $request)

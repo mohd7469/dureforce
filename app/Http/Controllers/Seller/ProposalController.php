@@ -68,14 +68,20 @@ class ProposalController extends Controller
     function createProposal($uuid)
     {
 
-        $job = Job::where('uuid', $uuid)->withAll()->first();
-        $skill_categories = SkillCategory::select('name', 'id')->get();
-        $delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
-        foreach ($skill_categories as $skillCat) {
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-        }
-        $pageTitle = "Proposal";
-        return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
+        try{
+            $job = Job::where('uuid', $uuid)->withAll()->first();
+            $skill_categories = SkillCategory::select('name', 'id')->get();
+            $delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
+            foreach ($skill_categories as $skillCat) {
+                $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+            }
+            $pageTitle = "Proposal";
+            return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+      
 
     }
 

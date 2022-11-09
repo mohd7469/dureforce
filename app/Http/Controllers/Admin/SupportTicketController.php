@@ -14,43 +14,73 @@ class SupportTicketController extends Controller
 {
     public function tickets()
     {
-        $pageTitle = 'Support Tickets';
-        $emptyMessage = 'No Data found.';
-        $items = SupportTicket::orderBy('id','desc')->with('user')->paginate(getPaginate());
-        return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        try{
+            $pageTitle = 'Support Tickets';
+            $emptyMessage = 'No Data found.';
+            $items = SupportTicket::orderBy('id','desc')->with('user')->paginate(getPaginate());
+            return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+   
     }
 
     public function pendingTicket()
     {
-        $pageTitle = 'Pending Tickets';
-        $emptyMessage = 'No Data found.';
-        $items = SupportTicket::whereIn('status', [0,2])->orderBy('priority', 'DESC')->orderBy('id','desc')->with('user')->paginate(getPaginate());
-        return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        try{
+            $pageTitle = 'Pending Tickets';
+            $emptyMessage = 'No Data found.';
+            $items = SupportTicket::whereIn('status', [0,2])->orderBy('priority', 'DESC')->orderBy('id','desc')->with('user')->paginate(getPaginate());
+            return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 
     public function closedTicket()
     {
-        $emptyMessage = 'No Data found.';
+        try{
+            $emptyMessage = 'No Data found.';
         $pageTitle = 'Closed Tickets';
         $items = SupportTicket::where('status',3)->orderBy('id','desc')->with('user')->paginate(getPaginate());
         return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function answeredTicket()
     {
-        $pageTitle = 'Answered Tickets';
+        try{
+            $pageTitle = 'Answered Tickets';
         $emptyMessage = 'No Data found.';
         $items = SupportTicket::orderBy('id','desc')->with('user')->where('status',1)->paginate(getPaginate());
         return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function ticketReply($id)
     {
-        $ticket = SupportTicket::with('user')->where('id', $id)->firstOrFail();
-        $pageTitle = 'Reply Ticket';
-        $messages = SupportMessage::with('ticket')->where('supportticket_id', $ticket->id)->orderBy('id','desc')->get();
-        return view('admin.support.reply', compact('ticket', 'messages', 'pageTitle'));
+        try{
+            $ticket = SupportTicket::with('user')->where('id', $id)->firstOrFail();
+            $pageTitle = 'Reply Ticket';
+            $messages = SupportMessage::with('ticket')->where('supportticket_id', $ticket->id)->orderBy('id','desc')->get();
+            return view('admin.support.reply', compact('ticket', 'messages', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
     public function ticketReplySend(Request $request, $id)
     {
@@ -126,32 +156,44 @@ class SupportTicketController extends Controller
 
     public function ticketDownload($ticket_id)
     {
-        $attachment = SupportAttachment::findOrFail(decrypt($ticket_id));
-        $file = $attachment->attachment;
-
-
-        $path = imagePath()['ticket']['path'];
-
-        $full_path = $path.'/' . $file;
-        $title = slug($attachment->supportMessage->ticket->subject).'-'.$file;
-        $mimetype = mime_content_type($full_path);
-        header('Content-Disposition: attachment; filename="' . $title);
-        header("Content-Type: " . $mimetype);
-        return readfile($full_path);
+        try{
+            $attachment = SupportAttachment::findOrFail(decrypt($ticket_id));
+            $file = $attachment->attachment;
+    
+    
+            $path = imagePath()['ticket']['path'];
+    
+            $full_path = $path.'/' . $file;
+            $title = slug($attachment->supportMessage->ticket->subject).'-'.$file;
+            $mimetype = mime_content_type($full_path);
+            header('Content-Disposition: attachment; filename="' . $title);
+            header("Content-Type: " . $mimetype);
+            return readfile($full_path);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
     public function ticketDelete(Request $request)
     {
-        $message = SupportMessage::findOrFail($request->message_id);
-        $path = imagePath()['ticket']['path'];
-        if ($message->attachments()->count() > 0) {
-            foreach ($message->attachments as $attachment) {
-                removeFile($path.'/'.$attachment->attachment);
-                $attachment->delete();
+        try{
+            $message = SupportMessage::findOrFail($request->message_id);
+            $path = imagePath()['ticket']['path'];
+            if ($message->attachments()->count() > 0) {
+                foreach ($message->attachments as $attachment) {
+                    removeFile($path.'/'.$attachment->attachment);
+                    $attachment->delete();
+                }
             }
-        }
-        $message->delete();
-        $notify[] = ['success', "Delete successfully"];
-        return back()->withNotify($notify);
+            $message->delete();
+            $notify[] = ['success', "Delete successfully"];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
 
     }
 

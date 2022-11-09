@@ -41,40 +41,53 @@ class SiteController extends Controller
 
     public function index()
     {
-        $pageTitle = "Home";
-        $emptyMessage = "No data found";
-        $services =[];
-        $services = Service::Active()->Featured()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
-            $builder->with(['tag' => function (BelongsTo $belongsTo) {
-                $belongsTo->select(['id', 'name']);
-            }]);
-        }])->get();
-
-        $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
-
-        $sellers = User::whereHas(
-            'roles', function($q){
-                $q->where('name', 'Freelancer');
-            }
-        )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
+        try{
+            $pageTitle = "Home";
+            $emptyMessage = "No data found";
+            $services =[];
+            $services = Service::Active()->Featured()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
+                $builder->with(['tag' => function (BelongsTo $belongsTo) {
+                    $belongsTo->select(['id', 'name']);
+                }]);
+            }])->get();
+    
+            $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
+    
+            $sellers = User::whereHas(
+                'roles', function($q){
+                    $q->where('name', 'Freelancer');
+                }
+            )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
+            return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function service()
     {
-        $pageTitle = "Service";
-        $emptyMessage = "No data found";
-        $services = Service::Active()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->inRandomOrder()->paginate(getPaginate());
-        return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+        try{
+            $pageTitle = "Service";
+            $emptyMessage = "No data found";
+            $services = Service::Active()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->inRandomOrder()->paginate(getPaginate());
+            return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
     }
 
     public function serviceDetails($slug, $id)
     {
-        $pageTitle = "Service details";
+        try{
+            $pageTitle = "Service details";
         $service = Service::Active()->whereHas('category', function ($q) {
             $q->where('status', 1);
         })->where('id', decrypt($id))->firstOrFail();
@@ -115,242 +128,302 @@ class SiteController extends Controller
         $comments = Comment::where('service_id', $service->id)->with('user', 'commentReply')->paginate(7);
         $reviews = ReviewRating::where('service_id', $service->id)->with('user', 'service')->paginate(7);
         return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service', 'otherServices', 'totalService', 'conversion', 'comments', 'reviews', 'serviceGetRating', 'reviewRataingAvg', 'workInprogress', 'attributes'));
-    }
+   
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+         }
 
     public function software()
     {
-        $pageTitle = "Software";
-        $emptyMessage = "No data found";
-        $softwares = Software::Active()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('tags', 'user')->latest()->paginate(getPaginate());
-        //return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
-
-        return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage'));
+        try{
+            $pageTitle = "Software";
+            $emptyMessage = "No data found";
+            $softwares = Software::Active()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('tags', 'user')->latest()->paginate(getPaginate());
+            //return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+    
+            return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function softwareDetails($slug, $id)
     {
-        $pageTitle = "Software Details";
-        $software = Software::Active()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('id', decrypt($id))->firstOrFail();
-
-        $otherServices = Software::Active()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('user_id', $software->user_id)->with('user')->limit(4)->orderBy('id', 'DESC')->get();
-
-        $totalService = Software::Active()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('user_id', $software->user_id)->count();
-
-        $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
-        
-        $activeUser = Auth::user();
-        $softwareGetRating = null;
-        $softwareUser = User::where('id', $software->user_id)->firstOrFail();
-        if ($activeUser) {
-            $softwareGetRating = Booking::where('user_id', $activeUser->id)->where('status', 3)->where('working_status', 1)->where('software_id', $software->id)->first();
-        }
-
-        $workInprogress = Booking::where('status', '!=', 0)->where('working_status', 4)->whereHas('service', function ($q) use ($software) {
-            $q->where('user_id', $software->user_id);
-        })->count();
-
-        $softwareSales = Booking::where('status', 3)->where('working_status', 1)->whereNotNull('software_id')->where('software_id', $software->id)->count();
-        $reviewRataingAvg = ReviewRating::whereHas('service', function ($q) use ($software) {
-            $q->where('user_id', $software->user_id);
-        })->orWhereHas('software', function ($q) use ($software) {
-            $q->where('user_id', $software->user_id);
-        })->avg('rating');
-
-        $comments = Comment::where('software_id', $software->id)->with('user', 'commentReply')->paginate(7);
-        $reviews = ReviewRating::where('software_id', $software->id)->with('user')->paginate(7);
-        return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'otherServices', 'totalService', 'comments', 'reviews', 'softwareGetRating', 'softwareSales', 'reviewRataingAvg', 'workInprogress', 'attributes'));
-    }
+        try{
+            $pageTitle = "Software Details";
+            $software = Software::Active()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('id', decrypt($id))->firstOrFail();
+    
+            $otherServices = Software::Active()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('user_id', $software->user_id)->with('user')->limit(4)->orderBy('id', 'DESC')->get();
+    
+            $totalService = Software::Active()->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('user_id', $software->user_id)->count();
+    
+            $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
+            
+            $activeUser = Auth::user();
+            $softwareGetRating = null;
+            $softwareUser = User::where('id', $software->user_id)->firstOrFail();
+            if ($activeUser) {
+                $softwareGetRating = Booking::where('user_id', $activeUser->id)->where('status', 3)->where('working_status', 1)->where('software_id', $software->id)->first();
+            }
+    
+            $workInprogress = Booking::where('status', '!=', 0)->where('working_status', 4)->whereHas('service', function ($q) use ($software) {
+                $q->where('user_id', $software->user_id);
+            })->count();
+    
+            $softwareSales = Booking::where('status', 3)->where('working_status', 1)->whereNotNull('software_id')->where('software_id', $software->id)->count();
+            $reviewRataingAvg = ReviewRating::whereHas('service', function ($q) use ($software) {
+                $q->where('user_id', $software->user_id);
+            })->orWhereHas('software', function ($q) use ($software) {
+                $q->where('user_id', $software->user_id);
+            })->avg('rating');
+    
+            $comments = Comment::where('software_id', $software->id)->with('user', 'commentReply')->paginate(7);
+            $reviews = ReviewRating::where('software_id', $software->id)->with('user')->paginate(7);
+            return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'otherServices', 'totalService', 'comments', 'reviews', 'softwareGetRating', 'softwareSales', 'reviewRataingAvg', 'workInprogress', 'attributes'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       }
 
     public function job()
     {
-        $pageTitle = "All Jobs";
-        $emptyMessage = "No data found";
-        $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate());
-        // return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
-        return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
+        try{
+            $pageTitle = "All Jobs";
+            $emptyMessage = "No data found";
+            $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate());
+            // return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
+            return view($this->activeTemplate . 'jobs.listing', compact('pageTitle', 'jobs', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function jobDeatils($slug, $id)
     {
-        $pageTitle = "Job Details";
-        $job = Job::where('status', 1)->where('id', decrypt($id))->firstOrFail();
-
-        $otherServices = Service::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('user_id', $job->user_id)->with('user', 'user.rank')->limit(4)->orderBy('id', 'DESC')->get();
-
-        $totalService = Service::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('user_id', $job->user_id)->count();
-
-        $workInprogress = Booking::where('status', '!=', 0)->where('working_status', 4)->whereHas('service', function ($q) use ($job) {
-            $q->where('user_id', $job->user_id);
-        })->count();
-
-        $reviewRataingAvg = ReviewRating::whereHas('service', function ($q) use ($job) {
-            $q->where('user_id', $job->user_id);
-        })->orWhereHas('software', function ($q) use ($job) {
-            $q->where('user_id', $job->user_id);
-        })->avg('rating');
-
-        $jobBidings = JobBiding::where('job_id', $job->id)->with('user')->inRandomOrder()->paginate(5);
-        $comments = Comment::where('job_id', $job->id)->with('user')->paginate(7);
-        return view($this->activeTemplate . 'job_details', compact('pageTitle', 'job', 'otherServices', 'comments', 'reviewRataingAvg', 'workInprogress', 'totalService', 'jobBidings'));
+        try{
+            $pageTitle = "Job Details";
+            $job = Job::where('status', 1)->where('id', decrypt($id))->firstOrFail();
+    
+            $otherServices = Service::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('user_id', $job->user_id)->with('user', 'user.rank')->limit(4)->orderBy('id', 'DESC')->get();
+    
+            $totalService = Service::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('user_id', $job->user_id)->count();
+    
+            $workInprogress = Booking::where('status', '!=', 0)->where('working_status', 4)->whereHas('service', function ($q) use ($job) {
+                $q->where('user_id', $job->user_id);
+            })->count();
+    
+            $reviewRataingAvg = ReviewRating::whereHas('service', function ($q) use ($job) {
+                $q->where('user_id', $job->user_id);
+            })->orWhereHas('software', function ($q) use ($job) {
+                $q->where('user_id', $job->user_id);
+            })->avg('rating');
+    
+            $jobBidings = JobBiding::where('job_id', $job->id)->with('user')->inRandomOrder()->paginate(5);
+            $comments = Comment::where('job_id', $job->id)->with('user')->paginate(7);
+            return view($this->activeTemplate . 'job_details', compact('pageTitle', 'job', 'otherServices', 'comments', 'reviewRataingAvg', 'workInprogress', 'totalService', 'jobBidings'));
+        
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
     }
 
     public function userProfile($username)
     {
-        $pageTitle = "User Profile";
-        $activeUser = Auth::user();
-        $user = User::where('username', $username)->with('rank')->firstOrFail();
-        $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->orWhereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->with('user');
-        $userReviews = $reviewCal->paginate(6);
-        $reviewCount = $reviewCal->count();
-        $reviewAvg = $reviewCal->avg('rating');
-
-        $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $userServices = Service::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->paginate(6);
-
-        $userSoftwares = Software::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->paginate(6);
-
-        $userJobs = Job::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank', 'jobBiding')->paginate(6);
-
-        $userCompanies = UserCompany::where('user_id', $user->id)->first();
-
-        $conversion = null;
-        if ($activeUser) {
-            $conversion = Conversation::where(function ($query) use ($activeUser, $user) {
-                $query->orWhere('sender_id', $activeUser->id)
-                    ->orWhere('receiver_id', $activeUser->id);
-            })->where(function ($query2) use ($activeUser, $user) {
-                $query2->orWhere('sender_id', $user->id)->orWhere('receiver_id', $user->id);
-            })->first();
-        }
-        return view($this->activeTemplate . 'profile', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'conversion', 'userReviews', 'userServices', 'userSoftwares', 'userJobs', 'userCompanies'));
-    }
+        try{
+            $pageTitle = "User Profile";
+            $activeUser = Auth::user();
+            $user = User::where('username', $username)->with('rank')->firstOrFail();
+            $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->orWhereHas('software', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->with('user');
+            $userReviews = $reviewCal->paginate(6);
+            $reviewCount = $reviewCal->count();
+            $reviewAvg = $reviewCal->avg('rating');
+    
+            $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $userServices = Service::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->paginate(6);
+    
+            $userSoftwares = Software::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->paginate(6);
+    
+            $userJobs = Job::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank', 'jobBiding')->paginate(6);
+    
+            $userCompanies = UserCompany::where('user_id', $user->id)->first();
+    
+            $conversion = null;
+            if ($activeUser) {
+                $conversion = Conversation::where(function ($query) use ($activeUser, $user) {
+                    $query->orWhere('sender_id', $activeUser->id)
+                        ->orWhere('receiver_id', $activeUser->id);
+                })->where(function ($query2) use ($activeUser, $user) {
+                    $query2->orWhere('sender_id', $user->id)->orWhere('receiver_id', $user->id);
+                })->first();
+            }
+            return view($this->activeTemplate . 'profile', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'conversion', 'userReviews', 'userServices', 'userSoftwares', 'userJobs', 'userCompanies'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     }
 
 
     public function userService($username)
     {
-        $pageTitle = "User Profile";
-        $activeUser = Auth::user();
-        $user = User::where('username', $username)->with('rank')->firstOrFail();
-        $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->orWhereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        });
-        $reviewCount = $reviewCal->count();
-        $reviewAvg = $reviewCal->avg('rating');
-
-        $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $userServices = Service::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->paginate(getPaginate());
-        return view($this->activeTemplate . 'user_service', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userServices'));
-    }
+        try{
+            $pageTitle = "User Profile";
+            $activeUser = Auth::user();
+            $user = User::where('username', $username)->with('rank')->firstOrFail();
+            $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->orWhereHas('software', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+            $reviewCount = $reviewCal->count();
+            $reviewAvg = $reviewCal->avg('rating');
+    
+            $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $userServices = Service::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->paginate(getPaginate());
+            return view($this->activeTemplate . 'user_service', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userServices'));
+      
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       }
 
 
     public function userSoftware($username)
     {
-        $pageTitle = "User Profile";
-        $activeUser = Auth::user();
-        $user = User::where('username', $username)->firstOrFail();
-        $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->orWhereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        });
-        $reviewCount = $reviewCal->count();
-        $reviewAvg = $reviewCal->avg('rating');
-
-        $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $userSoftwares = Software::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->paginate(getPaginate());
-        return view($this->activeTemplate . 'user_software', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userSoftwares'));
-    }
+        try{
+            $pageTitle = "User Profile";
+            $activeUser = Auth::user();
+            $user = User::where('username', $username)->firstOrFail();
+            $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->orWhereHas('software', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+            $reviewCount = $reviewCal->count();
+            $reviewAvg = $reviewCal->avg('rating');
+    
+            $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $userSoftwares = Software::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->paginate(getPaginate());
+            return view($this->activeTemplate . 'user_software', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userSoftwares'));
+        
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     }
 
 
     public function userJob($username)
     {
-        $pageTitle = "User Profile";
-        $activeUser = Auth::user();
-        $user = User::where('username', $username)->firstOrFail();
-        $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->orWhereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        });
-        $reviewCount = $reviewCal->count();
-        $reviewAvg = $reviewCal->avg('rating');
-
-        $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->count();
-
-        $userJobs = Job::where('user_id', $user->id)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->with('user', 'user.rank')->paginate(getPaginate());
-        return view($this->activeTemplate . 'user_job', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userJobs'));
-    }
+        try{
+            $pageTitle = "User Profile";
+            $activeUser = Auth::user();
+            $user = User::where('username', $username)->firstOrFail();
+            $reviewCal = ReviewRating::whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->orWhereHas('software', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            });
+            $reviewCount = $reviewCal->count();
+            $reviewAvg = $reviewCal->avg('rating');
+    
+            $workCompleteCount = Booking::where('status', 3)->where('working_status', 1)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $workPendingCount = Booking::where('status', 1)->where('working_status', 0)->whereHas('service', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count();
+    
+            $userJobs = Job::where('user_id', $user->id)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->with('user', 'user.rank')->paginate(getPaginate());
+            return view($this->activeTemplate . 'user_job', compact('pageTitle', 'user', 'reviewCount', 'reviewAvg', 'workCompleteCount', 'workPendingCount', 'workPendingCount', 'userJobs'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      }
 
     public function contact()
     {
-        $pageTitle = "Contact Us";
-        return view($this->activeTemplate . 'contact', compact('pageTitle'));
+        try{
+            $pageTitle = "Contact Us";
+            return view($this->activeTemplate . 'contact', compact('pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function contactSubmit(Request $request)
     {
 
-        $attachments = $request->file('attachments');
+        try{
+            $attachments = $request->file('attachments');
         $allowedExts = array('jpg', 'png', 'jpeg', 'pdf');
 
         $this->validate($request, [
@@ -390,84 +463,131 @@ class SiteController extends Controller
         $notify[] = ['success', 'ticket created successfully!'];
 
         return redirect()->route('ticket.view', [$ticket->ticket])->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function changeLanguage($lang = null)
     {
-        $language = Language::where('code', $lang)->first();
-        if (!$language) $lang = 'en';
-        session()->put('lang', $lang);
-        return redirect()->back();
+        try{
+            $language = Language::where('code', $lang)->first();
+            if (!$language) $lang = 'en';
+            session()->put('lang', $lang);
+            return redirect()->back();
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function blog()
     {
-        $blogs = Frontend::where('data_keys', 'blog.element')->paginate(getPaginate());
+        try{
+            $blogs = Frontend::where('data_keys', 'blog.element')->paginate(getPaginate());
         $pageTitle = "Blog Post";
         return view($this->activeTemplate . 'blog', compact('blogs', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function blogDetails($id, $slug)
     {
-        $fservices = Service::where('status', 1)->where('featured', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->paginate(getPaginate(4));
-        $blog = Frontend::where('id', $id)->where('data_keys', 'blog.element')->firstOrFail();
-        $pageTitle = "Blog Details";
-        return view($this->activeTemplate . 'blog_details', compact('blog', 'pageTitle', 'fservices'));
+        try{
+            $fservices = Service::where('status', 1)->where('featured', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->paginate(getPaginate(4));
+            $blog = Frontend::where('id', $id)->where('data_keys', 'blog.element')->firstOrFail();
+            $pageTitle = "Blog Details";
+            return view($this->activeTemplate . 'blog_details', compact('blog', 'pageTitle', 'fservices'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
 
     public function cookieAccept()
     {
-        session()->put('cookie_accepted', true);
+        try{
+            session()->put('cookie_accepted', true);
         $notify[] = ['success', 'Cookie accepted successfully'];
         return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function placeholderImage($size = null)
     {
-        $imgWidth = explode('x', $size)[0];
-        $imgHeight = explode('x', $size)[1];
-        $text = $imgWidth . '×' . $imgHeight;
-        $fontFile = realpath('assets/font') . DIRECTORY_SEPARATOR . 'RobotoMono-Regular.ttf';
-        $fontSize = round(($imgWidth - 50) / 8);
-        if ($fontSize <= 9) {
-            $fontSize = 9;
-        }
-        if ($imgHeight < 100 && $fontSize > 30) {
-            $fontSize = 30;
-        }
-
-        $image = imagecreatetruecolor($imgWidth, $imgHeight);
-        $colorFill = imagecolorallocate($image, 100, 100, 100);
-        $bgFill = imagecolorallocate($image, 175, 175, 175);
-        imagefill($image, 0, 0, $bgFill);
-        $textBox = imagettfbbox($fontSize, 0, $fontFile, $text);
-        $textWidth = abs($textBox[4] - $textBox[0]);
-        $textHeight = abs($textBox[5] - $textBox[1]);
-        $textX = ($imgWidth - $textWidth) / 2;
-        $textY = ($imgHeight + $textHeight) / 2;
-        header('Content-Type: image/jpeg');
-        imagettftext($image, $fontSize, 0, $textX, $textY, $colorFill, $fontFile, $text);
-        imagejpeg($image);
-        imagedestroy($image);
+        try{
+            $imgWidth = explode('x', $size)[0];
+            $imgHeight = explode('x', $size)[1];
+            $text = $imgWidth . '×' . $imgHeight;
+            $fontFile = realpath('assets/font') . DIRECTORY_SEPARATOR . 'RobotoMono-Regular.ttf';
+            $fontSize = round(($imgWidth - 50) / 8);
+            if ($fontSize <= 9) {
+                $fontSize = 9;
+            }
+            if ($imgHeight < 100 && $fontSize > 30) {
+                $fontSize = 30;
+            }
+    
+            $image = imagecreatetruecolor($imgWidth, $imgHeight);
+            $colorFill = imagecolorallocate($image, 100, 100, 100);
+            $bgFill = imagecolorallocate($image, 175, 175, 175);
+            imagefill($image, 0, 0, $bgFill);
+            $textBox = imagettfbbox($fontSize, 0, $fontFile, $text);
+            $textWidth = abs($textBox[4] - $textBox[0]);
+            $textHeight = abs($textBox[5] - $textBox[1]);
+            $textX = ($imgWidth - $textWidth) / 2;
+            $textY = ($imgHeight + $textHeight) / 2;
+            header('Content-Type: image/jpeg');
+            imagettftext($image, $fontSize, 0, $textX, $textY, $colorFill, $fontFile, $text);
+            imagejpeg($image);
+            imagedestroy($image);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function adclicked($id)
     {
-        $ads = Advertise::where('id', decrypt($id))->firstOrFail();
-        $ads->click += 1;
-        $ads->save();
-        return redirect($ads->redirect_url);
+        try{
+            $ads = Advertise::where('id', decrypt($id))->firstOrFail();
+            $ads->click += 1;
+            $ads->save();
+            return redirect($ads->redirect_url);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 
 
     public function footerMenu($slug, $id)
     {
-        $data = Frontend::where('id', $id)->where('data_keys', 'footer.element')->firstOrFail();
-        $pageTitle = $data->data_values->menu;
-        return view($this->activeTemplate . 'menu', compact('data', 'pageTitle'));
+        try{
+            $data = Frontend::where('id', $id)->where('data_keys', 'footer.element')->firstOrFail();
+            $pageTitle = $data->data_values->menu;
+            return view($this->activeTemplate . 'menu', compact('data', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
     }
 
 

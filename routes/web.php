@@ -40,6 +40,7 @@ Route::view('/password/reset-design', 'templates.basic.user.auth.passwords.email
 Route::view('/verify-design', 'auth.verify_design');
 
 
+
 // route for offer pages design
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
 Route::view('/offer-description', 'templates.basic.offer.offer_description');

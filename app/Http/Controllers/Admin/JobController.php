@@ -18,15 +18,22 @@ class JobController extends Controller
 
     public function index()
     {
-    	$pageTitle = "Manage All Job";
+        try{
+            $pageTitle = "Manage All Job";
     	$emptyMessage = "No data found";
     	$jobs = Job::latest()->withAll('user', 'category', 'subCategory','project_lengths')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function details($uuid)
     {
-    	$pageTitle = "Job Details";
+        try{
+            $pageTitle = "Job Details";
 
         $job = Job::where('uuid',$uuid)->withAll()->first();
         if(isset($job)){
@@ -42,156 +49,240 @@ class JobController extends Controller
         }
 
     	return view('admin.job.details', compact('pageTitle', 'job', 'data'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function pending()
     {
-    	$pageTitle = "Pending Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::where('status_id', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
-    	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        try{
+            $pageTitle = "Pending Job";
+            $emptyMessage = "No data found";
+            $jobs = Job::where('status_id', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+            return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    
     }
 
     public function approved()
     {
-    	$pageTitle = "Approved Job";
+        try{
+            $pageTitle = "Approved Job";
     	$emptyMessage = "No data found";
     	$jobs = Job::where('status_id', 2)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+    	
     }
 
     public function closed()
     {
-        $pageTitle = "Closed Job";
+        try{
+            $pageTitle = "Closed Job";
         $emptyMessage = "No data found";
         $jobs = Job::where('status_id', 3)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
         return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+           DB::rollback();
+          return view('errors.500');
+               }
+        
     }
 
     public function cancel()
     {
-    	$pageTitle = "Cancel Job";
+        try{
+            $pageTitle = "Cancel Job";
     	$emptyMessage = "No data found";
     	$jobs = Job::where('status_id', 10)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+             DB::rollback();
+            return view('errors.500');
+               }
+    	
     }
 
 
     public function approvedBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 2;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been approved'];
-        return redirect()->back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 2;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been approved'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function cancelBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 10;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been canceled'];
-        return redirect()->back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 10;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been canceled'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function closedBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 3;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been closed'];
-        return redirect()->back()->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 3;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been closed'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function detailApprovedBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 2;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been approved'];
-        // return redirect()->back()->withNotify($notify);
-    	return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 2;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been approved'];
+            // return redirect()->back()->withNotify($notify);
+            return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function detailCancelBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 10;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been canceled'];
-        // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 10;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been canceled'];
+            // return redirect()->back()->withNotify($notify);
+            return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function detailClosedBy(Request $request)
     {
-        $request->validate([
-            'id' => 'required|exists:jobs,id'
-        ]);
-        $job = Job::findOrFail($request->id);
-        $job->status_id = 3;
-        $job->created_at = Carbon::now();
-        $job->save();
-        $notify[] = ['success', 'Job has been closed'];
-        // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        try{
+            $request->validate([
+                'id' => 'required|exists:jobs,id'
+            ]);
+            $job = Job::findOrFail($request->id);
+            $job->status_id = 3;
+            $job->created_at = Carbon::now();
+            $job->save();
+            $notify[] = ['success', 'Job has been closed'];
+            // return redirect()->back()->withNotify($notify);
+            return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function jobCategory(Request $request)
     {
-        $category = Category::findOrFail($request->category);
-        $searchCategory = $category->id;
-        $pageTitle = "Job search by category - " . $category->name;
-        $emptyMessage = "No data found";
-        $jobs = Job::where('category_id', $category->id)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
-        return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs', 'searchCategory'));
+        try{
+            $category = Category::findOrFail($request->category);
+            $searchCategory = $category->id;
+            $pageTitle = "Job search by category - " . $category->name;
+            $emptyMessage = "No data found";
+            $jobs = Job::where('category_id', $category->id)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+            return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs', 'searchCategory'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function jobBiding($id)
     {
-        $pageTitle = "Job Biding List";
-        $emptyMessage = "No data found";
-        $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
-        return view('admin.job.job_biding', compact('pageTitle', 'emptyMessage', 'jobBidings'));
+        try{
+            $pageTitle = "Job Biding List";
+            $emptyMessage = "No data found";
+            $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
+            return view('admin.job.job_biding', compact('pageTitle', 'emptyMessage', 'jobBidings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function jobBidingDetails($id)
     {
-        $pageTitle = "Job Biding Details";
+        try{
+            $pageTitle = "Job Biding Details";
         $jobBidingDetails = JobBiding::where('id', $id)->firstOrFail();
         return view('admin.job.job_biding_details', compact('pageTitle', 'jobBidingDetails'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
     public function search(Request $request, $scope)
     {
-        $search = $request->search;
+        try{
+            $search = $request->search;
         $jobs = Job::where(function ($jobs) use ($search) {
             $jobs->where('amount', $search)
                 ->orWhereHas('user', function ($user) use ($search) {
@@ -221,13 +312,24 @@ class JobController extends Controller
         $pageTitle .= 'Job search by - ' . $search;
         $emptyMessage = 'No data found';
         return view('admin.job.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'jobs'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function destroy($id)
     {
-        $this->deleteEntity(Job::class,'job', $id);
-        $notify[] = ['success', 'Job has been deleted'];
-        return back()->withNotify($notify);
+        try{
+            $this->deleteEntity(Job::class,'job', $id);
+            $notify[] = ['success', 'Job has been deleted'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
 }

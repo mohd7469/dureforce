@@ -17,40 +17,70 @@ class HireEmployController extends Controller
 
     public function details($id)
     {
-        $pageTitle = "Hire Employees Details";
-        $emptyMessage = "No data found";
-        $booking = Booking::where('id', $id)->where('status', '!=', '0')->whereNotNull('job_biding_id')->firstOrFail();
-        return view('admin.hire.details', compact('pageTitle', 'emptyMessage', 'booking'));
+        try{
+            $pageTitle = "Hire Employees Details";
+            $emptyMessage = "No data found";
+            $booking = Booking::where('id', $id)->where('status', '!=', '0')->whereNotNull('job_biding_id')->firstOrFail();
+            return view('admin.hire.details', compact('pageTitle', 'emptyMessage', 'booking'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
     
     public function index()
     {
-    	$pageTitle = "Hire Employees list";
-    	$emptyMessage = "No data found";
-    	$bookings = Booking::where('status', '!=', '0')->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
-    	return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        try{
+            $pageTitle = "Hire Employees list";
+            $emptyMessage = "No data found";
+            $bookings = Booking::where('status', '!=', '0')->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
+            return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
     }
 
     public function completed()
     {
-    	$pageTitle = "Work completed  list";
+        try{
+            $pageTitle = "Work completed  list";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 1)->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
     	return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function delivered()
     {
-    	$pageTitle = "Work delivered list";
+        try{
+            $pageTitle = "Work delivered list";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 2)->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
     	return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function inprogress()
     {
-    	$pageTitle = "Work inprogress list";
+        try{
+            $pageTitle = "Work inprogress list";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 4)->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
     	return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function expired()
     {
@@ -62,23 +92,35 @@ class HireEmployController extends Controller
 
     public function dispute()
     {
-        $pageTitle = "Work dispute list";
-        $emptyMessage = "No data found";
-        $bookings = Booking::where('status', '!=', '0')->where('working_status', 6)->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
-        return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        try{
+            $pageTitle = "Work dispute list";
+            $emptyMessage = "No data found";
+            $bookings = Booking::where('status', '!=', '0')->where('working_status', 6)->whereNotNull('job_biding_id')->with('user', 'biding.user')->latest()->paginate(getPaginate());
+            return view('admin.hire.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function workFileDownload($id)
     {
-        $work = WorkDelivery::where('id',$id)->firstOrFail();
-        $file = $work->work_file;
-        $path = imagePath()['workFile']['path'];
-        $full_path = $path.'/'. $file;
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $mimetype = mime_content_type($full_path);
-        header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
-        header("Content-Type: " . $mimetype);
-        return readfile($full_path);
+        try{
+            $work = WorkDelivery::where('id',$id)->firstOrFail();
+            $file = $work->work_file;
+            $path = imagePath()['workFile']['path'];
+            $full_path = $path.'/'. $file;
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $mimetype = mime_content_type($full_path);
+            header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
+            header("Content-Type: " . $mimetype);
+            return readfile($full_path);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
@@ -163,41 +205,47 @@ class HireEmployController extends Controller
 
     public function search(Request $request, $scope)
     {
-        $search = $request->search;
-        $bookings = Booking::where('status', '!=', '0')->whereNotNull('job_biding_id')
-            ->whereHas('user', function($q) use ($search){
-                $q->where('username', 'like', "%$search%");
-            })
-            ->orWhereHas('biding.user', function($q) use ($search){
-                $q->where('username', 'like', "%$search%");
-            });
-
-        $pageTitle = '';
-        switch ($scope) {
-            case 'completed':
-                $pageTitle .= 'Completed ';
-                $bookings = $bookings->where('working_status', 1);
-                break;
-            case 'delivered':
-                $pageTitle .= 'Delivered ';
-                $bookings = $bookings->where('working_status', 2);
-                break;
-            case 'inprogress':
-                $pageTitle .= 'Inprogress ';
-                $bookings = $bookings->where('working_status', 4);
-                break;
-            case 'expired':
-                $pageTitle .= 'Expired ';
-                $bookings = $bookings->where('working_status', 5);
-                break;
-            case 'dispute':
-                $pageTitle .= 'Dispute ';
-                $bookings = $bookings->where('working_status', 6);
-                break;
-        }
-        $bookings = $bookings->latest()->paginate(getPaginate());
-        $pageTitle .= 'Hire Employs search by - ' . $search;
-        $emptyMessage = 'No data found';
-        return view('admin.hire.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'bookings'));
+        try{
+            $search = $request->search;
+            $bookings = Booking::where('status', '!=', '0')->whereNotNull('job_biding_id')
+                ->whereHas('user', function($q) use ($search){
+                    $q->where('username', 'like', "%$search%");
+                })
+                ->orWhereHas('biding.user', function($q) use ($search){
+                    $q->where('username', 'like', "%$search%");
+                });
+    
+            $pageTitle = '';
+            switch ($scope) {
+                case 'completed':
+                    $pageTitle .= 'Completed ';
+                    $bookings = $bookings->where('working_status', 1);
+                    break;
+                case 'delivered':
+                    $pageTitle .= 'Delivered ';
+                    $bookings = $bookings->where('working_status', 2);
+                    break;
+                case 'inprogress':
+                    $pageTitle .= 'Inprogress ';
+                    $bookings = $bookings->where('working_status', 4);
+                    break;
+                case 'expired':
+                    $pageTitle .= 'Expired ';
+                    $bookings = $bookings->where('working_status', 5);
+                    break;
+                case 'dispute':
+                    $pageTitle .= 'Dispute ';
+                    $bookings = $bookings->where('working_status', 6);
+                    break;
+            }
+            $bookings = $bookings->latest()->paginate(getPaginate());
+            $pageTitle .= 'Hire Employs search by - ' . $search;
+            $emptyMessage = 'No data found';
+            return view('admin.hire.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 }

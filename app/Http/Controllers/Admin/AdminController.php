@@ -25,6 +25,8 @@ class AdminController extends Controller
 
     public function dashboard()
     {
+        try{
+       
 
         $pageTitle = 'Dashboard';
 
@@ -137,14 +139,24 @@ class AdminController extends Controller
         $paymentWithdraw['total_withdraw_charge'] = Withdrawal::where('status',1)->sum('charge');
         $paymentWithdraw['total_withdraw_pending'] = Withdrawal::where('status',2)->count();
         return view('admin.dashboard', compact('pageTitle', 'widget', 'report', 'withdrawals','payment','paymentWithdraw','depositsMonth','withdrawalMonth','months','deposits', 'seoInfo'));
+    } catch (\Exception $exp) {
+        DB::rollback();
+        return view('errors.500');
+    }
     }
 
 
     public function profile()
     {
-        $pageTitle = 'Profile';
-        $admin = Auth::guard('admin')->user();
-        return view('admin.profile', compact('pageTitle', 'admin'));
+        try{
+            $pageTitle = 'Profile';
+            $admin = Auth::guard('admin')->user();
+            return view('admin.profile', compact('pageTitle', 'admin'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function profileUpdate(Request $request)
@@ -184,94 +196,142 @@ class AdminController extends Controller
 
     public function password()
     {
-        $pageTitle = 'Password Setting';
-        $admin = Auth::guard('admin')->user();
-        return view('admin.password', compact('pageTitle', 'admin'));
+        try{
+            $pageTitle = 'Password Setting';
+            $admin = Auth::guard('admin')->user();
+            return view('admin.password', compact('pageTitle', 'admin'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function passwordUpdate(Request $request)
     {
-        $this->validate($request, [
-            'old_password' => 'required',
-            'password' => 'required|min:5|confirmed',
-        ]);
-
-        $user = Auth::guard('admin')->user();
-        if (!Hash::check($request->old_password, $user->password)) {
-            $notify[] = ['error', 'Password do not match !!'];
-            return back()->withNotify($notify);
-        }
-        $user->show_password = encrypt($request->password);
-        $user->password = bcrypt($request->password);
-        $user->save();
-        $notify[] = ['success', 'Password changed successfully.'];
-        return redirect()->route('admin.password')->withNotify($notify);
+        try{
+            $this->validate($request, [
+                'old_password' => 'required',
+                'password' => 'required|min:5|confirmed',
+            ]);
+    
+            $user = Auth::guard('admin')->user();
+            if (!Hash::check($request->old_password, $user->password)) {
+                $notify[] = ['error', 'Password do not match !!'];
+                return back()->withNotify($notify);
+            }
+            $user->show_password = encrypt($request->password);
+            $user->password = bcrypt($request->password);
+            $user->save();
+            $notify[] = ['success', 'Password changed successfully.'];
+            return redirect()->route('admin.password')->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function notifications(){
-        $notifications = AdminNotification::orderBy('id','desc')->with('user')->paginate(getPaginate());
+        try{
+            $notifications = AdminNotification::orderBy('id','desc')->with('user')->paginate(getPaginate());
         $pageTitle = 'Notifications';
         return view('admin.notifications',compact('pageTitle','notifications'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
 
     public function notificationRead($id){
-        $notification = AdminNotification::findOrFail($id);
-        $notification->read_status = 1;
-        $notification->save();
-        return redirect($notification->click_url);
+        try{
+            $notification = AdminNotification::findOrFail($id);
+            $notification->read_status = 1;
+            $notification->save();
+            return redirect($notification->click_url);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+     
     }
 
     public function requestReport()
     {
-        $pageTitle = 'Your Listed Report & Request';
-        $arr['app_name'] = systemDetails()['name'];
-        $arr['app_url'] = env('APP_URL');
-        $arr['purchase_code'] = env('PURCHASE_CODE');
-        $url = "https://license.viserlab.com/issue/get?".http_build_query($arr);
-        $response = json_decode(curlContent($url));
-        if ($response->status == 'error') {
-            return redirect()->route('admin.dashboard')->withErrors($response->message);
-        }
-        $reports = $response->message[0];
-        return view('admin.reports',compact('reports','pageTitle'));
+        try{
+            $pageTitle = 'Your Listed Report & Request';
+            $arr['app_name'] = systemDetails()['name'];
+            $arr['app_url'] = env('APP_URL');
+            $arr['purchase_code'] = env('PURCHASE_CODE');
+            $url = "https://license.viserlab.com/issue/get?".http_build_query($arr);
+            $response = json_decode(curlContent($url));
+            if ($response->status == 'error') {
+                return redirect()->route('admin.dashboard')->withErrors($response->message);
+            }
+            $reports = $response->message[0];
+            return view('admin.reports',compact('reports','pageTitle'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+       
     }
 
     public function reportSubmit(Request $request)
     {
-        $request->validate([
-            'type'=>'required|in:bug,feature',
-            'message'=>'required',
-        ]);
-        $url = 'https://license.viserlab.com/issue/add';
-        $arr['app_name'] = systemDetails()['name'];
-        $arr['app_url'] = env('APP_URL');
-        $arr['purchase_code'] = env('PURCHASE_CODE');
-        $arr['req_type'] = $request->type;
-        $arr['message'] = $request->message;
-        $response = json_decode(curlPostContent($url,$arr));
-        if ($response->status == 'error') {
-            return back()->withErrors($response->message);
-        }
-        $notify[] = ['success',$response->message];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'type'=>'required|in:bug,feature',
+                'message'=>'required',
+            ]);
+            $url = 'https://license.viserlab.com/issue/add';
+            $arr['app_name'] = systemDetails()['name'];
+            $arr['app_url'] = env('APP_URL');
+            $arr['purchase_code'] = env('PURCHASE_CODE');
+            $arr['req_type'] = $request->type;
+            $arr['message'] = $request->message;
+            $response = json_decode(curlPostContent($url,$arr));
+            if ($response->status == 'error') {
+                return back()->withErrors($response->message);
+            }
+            $notify[] = ['success',$response->message];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+     
     }
 
     public function systemInfo(){
-        $laravelVersion = app()->version();
-        $serverDetails = $_SERVER;
-        $currentPHP = phpversion();
-        $timeZone = config('app.timezone');
-        $pageTitle = 'System Information';
-        return view('admin.info',compact('pageTitle', 'currentPHP', 'laravelVersion', 'serverDetails','timeZone'));
+        try{
+            $laravelVersion = app()->version();
+            $serverDetails = $_SERVER;
+            $currentPHP = phpversion();
+            $timeZone = config('app.timezone');
+            $pageTitle = 'System Information';
+            return view('admin.info',compact('pageTitle', 'currentPHP', 'laravelVersion', 'serverDetails','timeZone'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+      
     }
 
     public function readAll(){
-        AdminNotification::where('read_status',0)->update([
-            'read_status'=>1
-        ]);
-        $notify[] = ['success','Notifications read successfully'];
-        return back()->withNotify($notify);
+        try{
+            AdminNotification::where('read_status',0)->update([
+                'read_status'=>1
+            ]);
+            $notify[] = ['success','Notifications read successfully'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+     
     }
 
 

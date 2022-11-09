@@ -24,15 +24,21 @@ class SoftwareBuyController extends Controller
 
     public function softwareBuy($slug, $id)
     {
-        if(session()->has('coupon')){
-            session()->forget('coupon');
-        }
-        $pageTitle = "Software buy now";
-        $coupon = Coupon::where('status', 1)->get();
-        $software = Software::where('status', 1)->whereHas('category', function($q){
-            $q->where('status', 1);
-        })->where('id', decrypt($id))->firstOrFail();
-        return view($this->activeTemplate. 'software_buy', compact('pageTitle', 'software', 'coupon'));
+        try{
+            if(session()->has('coupon')){
+                session()->forget('coupon');
+            }
+            $pageTitle = "Software buy now";
+            $coupon = Coupon::where('status', 1)->get();
+            $software = Software::where('status', 1)->whereHas('category', function($q){
+                $q->where('status', 1);
+            })->where('id', decrypt($id))->firstOrFail();
+            return view($this->activeTemplate. 'software_buy', compact('pageTitle', 'software', 'coupon'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function applyCouponSoftware(Request $request)

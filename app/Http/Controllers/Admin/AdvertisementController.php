@@ -11,10 +11,16 @@ class AdvertisementController extends Controller
     
     public function index(Request $request)
     {
-        $pageTitle = "All Advertisements";
+        try{
+            $pageTitle = "All Advertisements";
         $emptyMessage = "No data found";
         $ads = Advertise::latest()->paginate(getPaginate());
         return view('admin.ads.index',compact('pageTitle','ads','emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function store(Request $request)
@@ -64,9 +70,15 @@ class AdvertisementController extends Controller
 
     public function edit($id)
     {
-        $pageTitle = "Update Advertisements";
-        $ads = Advertise::findOrFail($id);
-        return view('admin.ads.edit', compact('pageTitle', 'ads'));
+        try{
+            $pageTitle = "Update Advertisements";
+            $ads = Advertise::findOrFail($id);
+            return view('admin.ads.edit', compact('pageTitle', 'ads'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 

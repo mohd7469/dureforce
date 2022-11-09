@@ -21,6 +21,7 @@ class BidingOrderController extends Controller
     
     public function jobBiding($slug, $id)
     {
+        
         $user = Auth::user();
     	$pageTitle = "Job biding order";
     	$jobBiding = JobBiding::where('id', decrypt($id))->firstOrFail();

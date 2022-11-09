@@ -13,57 +13,81 @@ class FrontendController extends Controller
 
     public function templates()
     {
-        $pageTitle = 'Templates';
-        $temPaths = array_filter(glob('core/resources/views/templates/*'), 'is_dir');
-        foreach ($temPaths as $key => $temp) {
-            $arr = explode('/', $temp);
-            $tempname = end($arr);
-            $templates[$key]['name'] = $tempname;
-            $templates[$key]['image'] = asset($temp) . '/preview.jpg';
-        }
-        $extra_templates = json_decode(getTemplates(), true);
-        return view('admin.frontend.templates', compact('pageTitle', 'templates', 'extra_templates'));
+        try{
+            $pageTitle = 'Templates';
+            $temPaths = array_filter(glob('core/resources/views/templates/*'), 'is_dir');
+            foreach ($temPaths as $key => $temp) {
+                $arr = explode('/', $temp);
+                $tempname = end($arr);
+                $templates[$key]['name'] = $tempname;
+                $templates[$key]['image'] = asset($temp) . '/preview.jpg';
+            }
+            $extra_templates = json_decode(getTemplates(), true);
+            return view('admin.frontend.templates', compact('pageTitle', 'templates', 'extra_templates'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
 
     }
 
     public function templatesActive(Request $request)
     {
-        $general = GeneralSetting::first();
+        try{
+            $general = GeneralSetting::first();
 
-        $general->active_template = $request->name;
-        $general->save();
-
-        $notify[] = ['success', 'Updated successfully'];
-        return back()->withNotify($notify);
+            $general->active_template = $request->name;
+            $general->save();
+    
+            $notify[] = ['success', 'Updated successfully'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function seoEdit()
     {
-        $pageTitle = 'SEO Configuration';
-        $seo = Frontend::where('data_keys', 'seo.data')->first();
-        if (!$seo) {
-            $data_values = '{"keywords":["admin","blog"],"description":"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit","social_title":"WEBSITENAME","social_description":"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit","image":null}';
-            $data_values = json_decode($data_values, true);
-            $frontend = new Frontend();
-            $frontend->data_keys = 'seo.data';
-            $frontend->data_values = $data_values;
-            $frontend->save();
-        }
-        return view('admin.frontend.seo', compact('pageTitle', 'seo'));
+        try{
+            $pageTitle = 'SEO Configuration';
+            $seo = Frontend::where('data_keys', 'seo.data')->first();
+            if (!$seo) {
+                $data_values = '{"keywords":["admin","blog"],"description":"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit","social_title":"WEBSITENAME","social_description":"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit","image":null}';
+                $data_values = json_decode($data_values, true);
+                $frontend = new Frontend();
+                $frontend->data_keys = 'seo.data';
+                $frontend->data_values = $data_values;
+                $frontend->save();
+            }
+            return view('admin.frontend.seo', compact('pageTitle', 'seo'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function frontendSections($key)
     {
-        $section = @getPageSections()->$key;
-        if (!$section) {
-            return abort(404);
-        }
-        $content = Frontend::where('data_keys', $key . '.content')->orderBy('id', 'desc')->first();
-        $elements = Frontend::where('data_keys', $key . '.element')->orderBy('id')->orderBy('id', 'desc')->get();
-        $pageTitle = $section->name;
-        $emptyMessage = 'No item create yet.';
-        return view('admin.frontend.index', compact('section', 'content', 'elements', 'key', 'pageTitle', 'emptyMessage'));
+        try{
+            $section = @getPageSections()->$key;
+            if (!$section) {
+                return abort(404);
+            }
+            $content = Frontend::where('data_keys', $key . '.content')->orderBy('id', 'desc')->first();
+            $elements = Frontend::where('data_keys', $key . '.element')->orderBy('id')->orderBy('id', 'desc')->get();
+            $pageTitle = $section->name;
+            $emptyMessage = 'No item create yet.';
+            return view('admin.frontend.index', compact('section', 'content', 'elements', 'key', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
@@ -149,19 +173,25 @@ class FrontendController extends Controller
 
     public function frontendElement($key, $id = null)
     {
-        $section = @getPageSections()->$key;
-        if (!$section) {
-            return abort(404);
-        }
-
-        unset($section->element->modal);
-        $pageTitle = $section->name . ' Items';
-        if ($id) {
-            $data = Frontend::findOrFail($id);
-
-            return view('admin.frontend.element', compact('section', 'key', 'pageTitle', 'data'));
-        }
-        return view('admin.frontend.element', compact('section', 'key', 'pageTitle'));
+        try{
+            $section = @getPageSections()->$key;
+            if (!$section) {
+                return abort(404);
+            }
+    
+            unset($section->element->modal);
+            $pageTitle = $section->name . ' Items';
+            if ($id) {
+                $data = Frontend::findOrFail($id);
+    
+                return view('admin.frontend.element', compact('section', 'key', 'pageTitle', 'data'));
+            }
+            return view('admin.frontend.element', compact('section', 'key', 'pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
 

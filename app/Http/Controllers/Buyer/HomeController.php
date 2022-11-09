@@ -26,117 +26,177 @@ class HomeController extends Controller
 
     public function index()
     {
-    	$user = Auth::user();
-    	$pageTitle = "Buyer Dashboard";
-    	$emptyMessage = "No data found";
-    	$transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
-        $totaltransactions = Transaction::where('user_id', $user->id)->count();
-        $totalJob = Job::where('user_id', $user->id)->count();
-        $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->count();
-        $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->count();
-        $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->count();
-    	return view($this->activeTemplate . 'user.buyer.dashboard', compact('pageTitle', 'emptyMessage', 'transactions', 'totaltransactions', 'totalJob', 'serviceBookings', 'softwarePurchases', 'hireEmploys'));
-    }
+        try{
+            $user = Auth::user();
+            $pageTitle = "Buyer Dashboard";
+            $emptyMessage = "No data found";
+            $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
+            $totaltransactions = Transaction::where('user_id', $user->id)->count();
+            $totalJob = Job::where('user_id', $user->id)->count();
+            $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->count();
+            $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->count();
+            $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->count();
+            return view($this->activeTemplate . 'user.buyer.dashboard', compact('pageTitle', 'emptyMessage', 'transactions', 'totaltransactions', 'totalJob', 'serviceBookings', 'softwarePurchases', 'hireEmploys'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     }
 
     public function serviceBookingItem()
     {
-       $user = Auth::user();
-       $pageTitle = "Service booking list";
-       $emptyMessage = "No data found";
-       $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->latest()->paginate(getPaginate());
-       return view($this->activeTemplate . 'user.buyer.service_booking', compact('pageTitle', 'emptyMessage', 'serviceBookings'));
-    }
+        try{
+            $user = Auth::user();
+            $pageTitle = "Service booking list";
+            $emptyMessage = "No data found";
+            $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->latest()->paginate(getPaginate());
+            return view($this->activeTemplate . 'user.buyer.service_booking', compact('pageTitle', 'emptyMessage', 'serviceBookings'));
+       
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     }
 
     public function serviceBookingDetails($id)
     {
-        $user = Auth::user();
-        $pageTitle = "Service booking details";
-        $emptyMessage = "No data found";
-        $booking = Booking::where('user_id', $user->id)->where('id', decrypt($id))->whereNotNull('service_id')->firstOrFail();
-        $extraPrice = 0;
-        if($booking->extra_service)
-        {  
-            $extraArray = explode(",",$booking->extra_service);
-            foreach($extraArray as $value){
-                $extra = ExtraService::find($value);
-                $extraPrice += $extra->price;
+        try{
+            $user = Auth::user();
+            $pageTitle = "Service booking details";
+            $emptyMessage = "No data found";
+            $booking = Booking::where('user_id', $user->id)->where('id', decrypt($id))->whereNotNull('service_id')->firstOrFail();
+            $extraPrice = 0;
+            if($booking->extra_service)
+            {  
+                $extraArray = explode(",",$booking->extra_service);
+                foreach($extraArray as $value){
+                    $extra = ExtraService::find($value);
+                    $extraPrice += $extra->price;
+                }
             }
+            return view($this->activeTemplate . 'user.buyer.service_booking_details', compact('pageTitle', 'emptyMessage', 'booking', 'extraPrice'));
+      
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
         }
-        return view($this->activeTemplate . 'user.buyer.service_booking_details', compact('pageTitle', 'emptyMessage', 'booking', 'extraPrice'));
-    }
 
 
     public function softwarePurchases()
     {
-        $user = Auth::user();
-        $pageTitle = "Service purchases list";
-        $emptyMessage = "No data found";
-        $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->latest()->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.buyer.software_purchases', compact('pageTitle', 'emptyMessage', 'softwarePurchases'));
-    }
+        try{
+            $user = Auth::user();
+            $pageTitle = "Service purchases list";
+            $emptyMessage = "No data found";
+            $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->latest()->paginate(getPaginate());
+            return view($this->activeTemplate . 'user.buyer.software_purchases', compact('pageTitle', 'emptyMessage', 'softwarePurchases'));
+      
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      }
 
 
     public function buyerSoftwareFileDownload($id)
     {
-        $software = Software::where('id',decrypt($id))->firstOrFail();
-        $file = $software->upload_software;
-        $path = imagePath()['uploadSoftware']['path'];
-        $full_path = $path.'/'. $file;
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $mimetype = mime_content_type($full_path);
-        header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
-        header("Content-Type: " . $mimetype);
-        return readfile($full_path);
+        try{
+            $software = Software::where('id',decrypt($id))->firstOrFail();
+            $file = $software->upload_software;
+            $path = imagePath()['uploadSoftware']['path'];
+            $full_path = $path.'/'. $file;
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $mimetype = mime_content_type($full_path);
+            header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
+            header("Content-Type: " . $mimetype);
+            return readfile($full_path);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function buyerSoftwareDocumentFile($id)
     {
-        $software = Software::where('id',decrypt($id))->firstOrFail();
-        $file = $software->document_file;
-        $path = imagePath()['document']['path'];
-        $full_path = $path.'/'. $file;
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $mimetype = mime_content_type($full_path);
-        header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
-        header("Content-Type: " . $mimetype);
-        return readfile($full_path);
+        try{
+            $software = Software::where('id',decrypt($id))->firstOrFail();
+            $file = $software->document_file;
+            $path = imagePath()['document']['path'];
+            $full_path = $path.'/'. $file;
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $mimetype = mime_content_type($full_path);
+            header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
+            header("Content-Type: " . $mimetype);
+            return readfile($full_path);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
     }
 
     public function hireEmploy()
     {
-        $user = Auth::user();
-        $pageTitle = "Hire employ list";
-        $emptyMessage = "No data found";
-        $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->latest()->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.buyer.hire_employ', compact('pageTitle', 'emptyMessage', 'hireEmploys'));
+        try{
+            $user = Auth::user();
+            $pageTitle = "Hire employ list";
+            $emptyMessage = "No data found";
+            $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->latest()->paginate(getPaginate());
+            return view($this->activeTemplate . 'user.buyer.hire_employ', compact('pageTitle', 'emptyMessage', 'hireEmploys'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function hireEmployDetails($id)
     {
-        $user = Auth::user();
-        $pageTitle = "Hire employe details";
-        $emptyMessage = "No data found";
-        $booking = Booking::where('id', decrypt($id))->where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->first();
-        return view($this->activeTemplate . 'user.buyer.hire_employ_details', compact('pageTitle', 'emptyMessage', 'booking'));
+        try{
+            $user = Auth::user();
+            $pageTitle = "Hire employe details";
+            $emptyMessage = "No data found";
+            $booking = Booking::where('id', decrypt($id))->where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->first();
+            return view($this->activeTemplate . 'user.buyer.hire_employ_details', compact('pageTitle', 'emptyMessage', 'booking'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function serviceFavoriteItem()
     {
-        $user = Auth::user();
+        try{
+            $user = Auth::user();
         $pageTitle = "Service favorite list";
         $emptyMessage = "No data found";
         $favoriteServices = FavoriteItem::whereNotNull('service_id')->where('user_id', $user->id)->with('service')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.buyer.favorite_service', compact('pageTitle', 'emptyMessage', 'favoriteServices'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function softwareFavoriteItem()
     {
-        $user = Auth::user();
+        try{
+            $user = Auth::user();
         $pageTitle = "Software favorite list";
         $emptyMessage = "No data found";
         $favoriteSoftwares = FavoriteItem::whereNotNull('software_id')->where('user_id', $user->id)->with('software')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.buyer.favorite_software', compact('pageTitle', 'emptyMessage', 'favoriteSoftwares'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
        /*
@@ -144,87 +204,105 @@ class HomeController extends Controller
      */
     public function depositHistory()
     {
-        $pageTitle = 'Deposit History';
-        $emptyMessage = 'No history found.';
-        $logs = auth()->user()->deposits()->with(['gateway'])->orderBy('id','desc')->paginate(getPaginate());
-        return view($this->activeTemplate.'user.deposit_history', compact('pageTitle', 'emptyMessage', 'logs'));
+        try{
+            $pageTitle = 'Deposit History';
+            $emptyMessage = 'No history found.';
+            $logs = auth()->user()->deposits()->with(['gateway'])->orderBy('id','desc')->paginate(getPaginate());
+            return view($this->activeTemplate.'user.deposit_history', compact('pageTitle', 'emptyMessage', 'logs'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
 
     public function transactions()
     {
-        $user = Auth::user();
-        $pageTitle = "Transaction Log";
-        $emptyMessage = "No data found";
-        $transactions = Transaction::where('user_id', $user->id)->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.buyer.transactions', compact('pageTitle', 'emptyMessage', 'transactions')); 
+        try{
+            $user = Auth::user();
+            $pageTitle = "Transaction Log";
+            $emptyMessage = "No data found";
+            $transactions = Transaction::where('user_id', $user->id)->paginate(getPaginate());
+            return view($this->activeTemplate . 'user.buyer.transactions', compact('pageTitle', 'emptyMessage', 'transactions')); 
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
 
 
     public function workDeliveryApproved(Request $request)
     {
-        $request->validate([
-            'order_number' => 'required|exists:bookings,order_number',
-            'work_type' => 'required|in:jobBiding,service',
-        ]);
-        $general = GeneralSetting::first();
-        $user = Auth::user();
-        if($request->work_type == "service"){
-            $booking = Booking::where('order_number', $request->order_number)->whereNotNull('service_id')->where('user_id', $user->id)->first();
-            if(!$booking){
-                $notify[] = ['error', 'Invalid service booking'];
-                return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'order_number' => 'required|exists:bookings,order_number',
+                'work_type' => 'required|in:jobBiding,service',
+            ]);
+            $general = GeneralSetting::first();
+            $user = Auth::user();
+            if($request->work_type == "service"){
+                $booking = Booking::where('order_number', $request->order_number)->whereNotNull('service_id')->where('user_id', $user->id)->first();
+                if(!$booking){
+                    $notify[] = ['error', 'Invalid service booking'];
+                    return back()->withNotify($notify);
+                }
             }
-        }
-        elseif($request->work_type == "jobBiding"){
-            $booking = Booking::where('order_number', $request->order_number)->whereNotNull('job_biding_id')->where('user_id', $user->id)->first();
-            if(!$booking){
-                $notify[] = ['error', 'Invalid Job order'];
-                return back()->withNotify($notify);
+            elseif($request->work_type == "jobBiding"){
+                $booking = Booking::where('order_number', $request->order_number)->whereNotNull('job_biding_id')->where('user_id', $user->id)->first();
+                if(!$booking){
+                    $notify[] = ['error', 'Invalid Job order'];
+                    return back()->withNotify($notify);
+                }
             }
-        }
-        $booking->status = 3;
-        $booking->working_status = 1;
-        $booking->updated_at = Carbon::now();
-        $booking->status_updated_at = Carbon::now();
-        $booking->save();
-
-        $charge = ((($booking->amount + $booking->discount) / 100) * $general->charge);
-        $payableAmount = (($booking->amount + $booking->discount) - $charge);
-        if($booking->service_id){
-            $seller = User::where('id', $booking->service->user_id)->firstOrFail();
-            $seller->balance += $payableAmount;
-            $seller->income += $payableAmount;
-            $seller->save();
-            rankUser($seller->id);
-
-        }elseif($booking->job_biding_id){
-            $seller = User::where('id', $booking->biding->user_id)->firstOrFail();
-            $seller->balance += $payableAmount;
-            $seller->income += $payableAmount;
-            $seller->save();
-            rankUser($seller->id);
-        }
-        $transaction = new Transaction();
-        $transaction->user_id = $seller->id;
-        $transaction->amount = $payableAmount;
-        $transaction->charge = $charge;
-        $transaction->post_balance = $seller->balance;
-        $transaction->trx_type = '+';
-        $transaction->trx = $booking->order_number;
-        $transaction->details = "Payment for " . $booking->order_number;
-        $transaction->save();
-
-        notify($seller, 'PAYMENT_SELLER', [
-            'amount' => getAmount($payableAmount),
-            'currency' => $general->cur_text,
-            'order_number' => $booking->order_number,
-            'post_balance' => getAmount($seller->balance)
-        ]);
-
-        $notify[] = ['success', 'Work has been approved.'];
-        return back()->withNotify($notify);
+            $booking->status = 3;
+            $booking->working_status = 1;
+            $booking->updated_at = Carbon::now();
+            $booking->status_updated_at = Carbon::now();
+            $booking->save();
+    
+            $charge = ((($booking->amount + $booking->discount) / 100) * $general->charge);
+            $payableAmount = (($booking->amount + $booking->discount) - $charge);
+            if($booking->service_id){
+                $seller = User::where('id', $booking->service->user_id)->firstOrFail();
+                $seller->balance += $payableAmount;
+                $seller->income += $payableAmount;
+                $seller->save();
+                rankUser($seller->id);
+    
+            }elseif($booking->job_biding_id){
+                $seller = User::where('id', $booking->biding->user_id)->firstOrFail();
+                $seller->balance += $payableAmount;
+                $seller->income += $payableAmount;
+                $seller->save();
+                rankUser($seller->id);
+            }
+            $transaction = new Transaction();
+            $transaction->user_id = $seller->id;
+            $transaction->amount = $payableAmount;
+            $transaction->charge = $charge;
+            $transaction->post_balance = $seller->balance;
+            $transaction->trx_type = '+';
+            $transaction->trx = $booking->order_number;
+            $transaction->details = "Payment for " . $booking->order_number;
+            $transaction->save();
+    
+            notify($seller, 'PAYMENT_SELLER', [
+                'amount' => getAmount($payableAmount),
+                'currency' => $general->cur_text,
+                'order_number' => $booking->order_number,
+                'post_balance' => getAmount($seller->balance)
+            ]);
+    
+            $notify[] = ['success', 'Work has been approved.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
@@ -289,7 +367,8 @@ class HomeController extends Controller
 
         }
         catch (\Exception $e){
-            return "Some Technical Error";
+            return view('errors.500');
+
         }
 
 

@@ -17,10 +17,16 @@ class ServiceAttributeController extends Controller
     public function index()
     {
         //
-        $pageTitle = "Attributes ";
+        try{
+            $pageTitle = "Attributes ";
         $emptyMessage = "No data found";
         $attributes = Attribute::with('entityField')->latest()->paginate(getPaginate());
         return view('admin.attributes.index', compact('attributes', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
     /**
@@ -42,28 +48,34 @@ class ServiceAttributeController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'name'  => [
-                'required', 
-                Rule::unique('entity_attributes')
-                    ->where(function($query) use($request){
-                        return $query->where('name', $request->get('name'))
-                                    ->where('entity_field_id', $request->get('entity_field_id'));
-                    }),
-            ],
-            'type'  => 'required',
-            'entity_field_id' => 'required', 
-        ],[
-            'type.required' => 'Type is required',
-            'entity_field_id.required' => 'Title is required'
-        ]);
-
-
-        $attribute = new Attribute();
-        $attribute->status = $request->status === 'on' ? Attribute::ACTIVE : Attribute::IN_ACTIVE;
-        $attribute->fill($request->except('status'))->save();
-        $notify[] = ['success', 'Service Attribute has been created'];
-        return redirect()->back()->withNotify($notify);
+        try{
+            $request->validate([
+                'name'  => [
+                    'required', 
+                    Rule::unique('entity_attributes')
+                        ->where(function($query) use($request){
+                            return $query->where('name', $request->get('name'))
+                                        ->where('entity_field_id', $request->get('entity_field_id'));
+                        }),
+                ],
+                'type'  => 'required',
+                'entity_field_id' => 'required', 
+            ],[
+                'type.required' => 'Type is required',
+                'entity_field_id.required' => 'Title is required'
+            ]);
+    
+    
+            $attribute = new Attribute();
+            $attribute->status = $request->status === 'on' ? Attribute::ACTIVE : Attribute::IN_ACTIVE;
+            $attribute->fill($request->except('status'))->save();
+            $notify[] = ['success', 'Service Attribute has been created'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 
     /**
@@ -98,21 +110,27 @@ class ServiceAttributeController extends Controller
     public function update(Request $request)
     {
         //
-        $request->validate([
-            'name'  => 'required|max:50|unique:entity_attributes,id,' . $request->id,
-            'id'    => 'required|exists:entity_attributes,id',
-            'type'  => 'required',
-            'entity_field_id' => 'required'
-        ],[
-            'type.required' => 'Type is required',
-            'entity_field_id.required' => 'Title is required'
-        ]);
-
-        $attribute = Attribute::findOrFail($request->get('id'));
-        $attribute->status = $request->status === 'on' ? Attribute::ACTIVE : Attribute::IN_ACTIVE;
-        $attribute->fill($request->except('status'))->update();
-        $notify[] = ['success', 'Service Attribute has been updated'];
-        return redirect()->back()->withNotify($notify);
+        try{
+            $request->validate([
+                'name'  => 'required|max:50|unique:entity_attributes,id,' . $request->id,
+                'id'    => 'required|exists:entity_attributes,id',
+                'type'  => 'required',
+                'entity_field_id' => 'required'
+            ],[
+                'type.required' => 'Type is required',
+                'entity_field_id.required' => 'Title is required'
+            ]);
+    
+            $attribute = Attribute::findOrFail($request->get('id'));
+            $attribute->status = $request->status === 'on' ? Attribute::ACTIVE : Attribute::IN_ACTIVE;
+            $attribute->fill($request->except('status'))->update();
+            $notify[] = ['success', 'Service Attribute has been updated'];
+            return redirect()->back()->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+      
     }
 
     /**

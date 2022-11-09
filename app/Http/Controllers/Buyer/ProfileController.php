@@ -307,24 +307,30 @@ class ProfileController extends Controller
      */
     public function getUserProfile()
     {
+        try{
+            $pageTitle = 'Buyer Profile';
+            $user = User::WithBuyerAll()->find(auth()->user()->id);
+            $userCompanies=$user->company;
+            $user_payment_methods=$user->payments;
+            $basicProfile=$user->basicProfile;
+            $user_languages=$user->languages;
+            $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+            $language_levels   = LanguageLevel::select('id', 'name')->get();
+            $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
+            $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
+            return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return view('errors.500');
+        }
         
-        $pageTitle = 'Buyer Profile';
-        $user = User::WithBuyerAll()->find(auth()->user()->id);
-        $userCompanies=$user->company;
-        $user_payment_methods=$user->payments;
-        $basicProfile=$user->basicProfile;
-        $user_languages=$user->languages;
-        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels   = LanguageLevel::select('id', 'name')->get();
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
-        $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
-        return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
+        
 
     }
     public function buyerProfile(){
-      
-
-        $skills = Skills::select('id', 'name')->get();
+        try{
+            $skills = Skills::select('id', 'name')->get();
         $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
@@ -346,7 +352,13 @@ class ProfileController extends Controller
         
 
         return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories','user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
-    }
+
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+
+            }
     public function buyerprofilePasswordChange(Request $request){
 
         $validator = Validator::make($request->all(), [
@@ -641,12 +653,17 @@ class ProfileController extends Controller
     }
     public function buyerdestroy($id)
     {
-       
-        //
-        $userPayment = UserPayment::findOrFail($id);
-        $userPayment->delete();
-        $notify[] = ['success', 'Your Payment Method is Deleted.'];
-        return redirect()->route('buyer.basic.profile', ['profile' => 'step-3'])->withNotify($notify);
+        try{
+            $userPayment = UserPayment::findOrFail($id);
+            $userPayment->delete();
+            $notify[] = ['success', 'Your Payment Method is Deleted.'];
+            return redirect()->route('buyer.basic.profile', ['profile' => 'step-3'])->withNotify($notify);
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
+        
     }
 
 

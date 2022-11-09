@@ -14,10 +14,16 @@ class GeneralSettingController extends Controller
 {
     public function index()
     {
-        $general = GeneralSetting::first();
-        $pageTitle = 'General Setting';
-        $timezones = json_decode(file_get_contents(resource_path('views/admin/partials/timezone.json')));
-        return view('admin.setting.general_setting', compact('pageTitle', 'general','timezones'));
+        try{
+            $general = GeneralSetting::first();
+            $pageTitle = 'General Setting';
+            $timezones = json_decode(file_get_contents(resource_path('views/admin/partials/timezone.json')));
+            return view('admin.setting.general_setting', compact('pageTitle', 'general','timezones'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+ 
     }
 
     public function update(Request $request)
@@ -56,51 +62,69 @@ class GeneralSettingController extends Controller
 
     public function logoIcon()
     {
-        $pageTitle = 'Logo & Favicon';
-        return view('admin.setting.logo_icon', compact('pageTitle'));
+        try{
+            $pageTitle = 'Logo & Favicon';
+            return view('admin.setting.logo_icon', compact('pageTitle'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function logoIconUpdate(Request $request) 
     {
-        $request->validate([
-            'logo' => ['image',new FileTypeValidate(['jpg','jpeg','png'])],
-            'favicon' => ['image',new FileTypeValidate(['png'])],
-        ]);
-        if ($request->hasFile('logo')) {
-            try {
-                $path = imagePath()['logoIcon']['path'];
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
+        try{
+            $request->validate([
+                'logo' => ['image',new FileTypeValidate(['jpg','jpeg','png'])],
+                'favicon' => ['image',new FileTypeValidate(['png'])],
+            ]);
+            if ($request->hasFile('logo')) {
+                try {
+                    $path = imagePath()['logoIcon']['path'];
+                    if (!file_exists($path)) {
+                        mkdir($path, 0755, true);
+                    }
+                    Image::make($request->logo)->save($path . '/logo.png');
+                } catch (\Exception $exp) {
+                    $notify[] = ['error', 'Logo could not be uploaded.'];
+                    return back()->withNotify($notify);
                 }
-                Image::make($request->logo)->save($path . '/logo.png');
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Logo could not be uploaded.'];
-                return back()->withNotify($notify);
             }
-        }
-
-        if ($request->hasFile('favicon')) {
-            try {
-                $path = imagePath()['logoIcon']['path'];
-                if (!file_exists($path)) {
-                    mkdir($path, 0755, true);
+    
+            if ($request->hasFile('favicon')) {
+                try {
+                    $path = imagePath()['logoIcon']['path'];
+                    if (!file_exists($path)) {
+                        mkdir($path, 0755, true);
+                    }
+                    $size = explode('x', imagePath()['favicon']['size']);
+                    Image::make($request->favicon)->resize($size[0], $size[1])->save($path . '/favicon.png');
+                } catch (\Exception $exp) {
+                    $notify[] = ['error', 'Favicon could not be uploaded.'];
+                    return back()->withNotify($notify);
                 }
-                $size = explode('x', imagePath()['favicon']['size']);
-                Image::make($request->favicon)->resize($size[0], $size[1])->save($path . '/favicon.png');
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Favicon could not be uploaded.'];
-                return back()->withNotify($notify);
             }
-        }
-        $notify[] = ['success', 'Logo & favicon has been updated.'];
-        return back()->withNotify($notify);
+            $notify[] = ['success', 'Logo & favicon has been updated.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function customCss(){
-        $pageTitle = 'Custom CSS';
+        try{
+            $pageTitle = 'Custom CSS';
         $file = activeTemplate(true).'frontend/css/custom.css';
         $file_content = @file_get_contents($file);
         return view('admin.setting.custom_css',compact('pageTitle','file_content'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
@@ -122,24 +146,36 @@ class GeneralSettingController extends Controller
 
 
     public function cookie(){
-        $pageTitle = 'GDPR Cookie';
-        $cookie = Frontend::where('data_keys','cookie.data')->firstOrFail();
-        return view('admin.setting.cookie',compact('pageTitle','cookie'));
+        try{
+            $pageTitle = 'GDPR Cookie';
+            $cookie = Frontend::where('data_keys','cookie.data')->firstOrFail();
+            return view('admin.setting.cookie',compact('pageTitle','cookie'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function cookieSubmit(Request $request){
-        $request->validate([
-            'link'=>'required',
-            'description'=>'required',
-        ]);
-        $cookie = Frontend::where('data_keys','cookie.data')->firstOrFail();
-        $cookie->data_values = [
-            'link' => $request->link,
-            'description' => $request->description,
-            'status' => $request->status ? 1 : 0,
-        ];
-        $cookie->save();
-        $notify[] = ['success','Cookie policy updated successfully'];
-        return back()->withNotify($notify);
+        try{
+            $request->validate([
+                'link'=>'required',
+                'description'=>'required',
+            ]);
+            $cookie = Frontend::where('data_keys','cookie.data')->firstOrFail();
+            $cookie->data_values = [
+                'link' => $request->link,
+                'description' => $request->description,
+                'status' => $request->status ? 1 : 0,
+            ];
+            $cookie->save();
+            $notify[] = ['success','Cookie policy updated successfully'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 }

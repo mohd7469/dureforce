@@ -17,40 +17,64 @@ class ServiceBookingController extends Controller
     
     public function details($id)
     {
-    	$pageTitle = "Service Booking Details";
-    	$emptyMessage = "No data found";
-    	$booking = Booking::where('status', '!=', '0')->where('id', $id)->whereNotNull('service_id')->firstOrFail();
-    	$extraPrice = 0;
-        if($booking->extra_service){  
-            $extraArray = explode(",",$booking->extra_service);
-            foreach($extraArray as $value){
-                $extra = ExtraService::find($value);
-                $extraPrice += $extra->price;
+        try{
+            $pageTitle = "Service Booking Details";
+            $emptyMessage = "No data found";
+            $booking = Booking::where('status', '!=', '0')->where('id', $id)->whereNotNull('service_id')->firstOrFail();
+            $extraPrice = 0;
+            if($booking->extra_service){  
+                $extraArray = explode(",",$booking->extra_service);
+                foreach($extraArray as $value){
+                    $extra = ExtraService::find($value);
+                    $extraPrice += $extra->price;
+                }
             }
-        }
-    	return view('admin.booking.details', compact('pageTitle', 'booking', 'extraPrice'));
+            return view('admin.booking.details', compact('pageTitle', 'booking', 'extraPrice'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
     public function index()
     {
-    	$pageTitle = "Service Booking List";
+        try{
+            $pageTitle = "Service Booking List";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
 
     public function pending()
     {
-    	$pageTitle = "Service Bookings Pending List";
+        try{
+            $pageTitle = "Service Bookings Pending List";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 0)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function completed()
     {
-    	$pageTitle = "Service Bookings Complete List";
+        try{
+            $pageTitle = "Service Bookings Complete List";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 1)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function delivered()
     {
@@ -61,31 +85,55 @@ class ServiceBookingController extends Controller
     }
     public function inProgress()
     {
-    	$pageTitle = "Service Bookings In-progress List";
-    	$emptyMessage = "No data found";
-    	$bookings = Booking::where('status', '!=', '0')->where('working_status', 3)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
-    	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        try{
+            $pageTitle = "Service Bookings In-progress List";
+            $emptyMessage = "No data found";
+            $bookings = Booking::where('status', '!=', '0')->where('working_status', 3)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
+            return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    
     }
     public function dispute()
     {
-    	$pageTitle = "Service Bookings Dispute list";
+        try{
+            $pageTitle = "Service Bookings Dispute list";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 6)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function expired()
     {
-    	$pageTitle = "Service Bookings Expired List";
+        try{
+            $pageTitle = "Service Bookings Expired List";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 5)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
     public function cacnel()
     {
-    	$pageTitle = "Service Bookings Cancel List";
+        try{
+            $pageTitle = "Service Bookings Cancel List";
     	$emptyMessage = "No data found";
     	$bookings = Booking::where('status', '!=', '0')->where('working_status', 4)->whereNotNull('service_id')->with('user', 'service.user')->latest()->paginate(getPaginate());
     	return view('admin.booking.index', compact('pageTitle', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+    	
     }
 
 
@@ -167,7 +215,8 @@ class ServiceBookingController extends Controller
 
     public function search(Request $request, $scope)
     {
-        $search = $request->search;
+        try{
+            $search = $request->search;
         $bookings = Booking::where('status', '!=', '0')->whereNotNull('service_id')->where(function($q) use($search){
             $q->whereHas('user', function($q) use ($search){
                 $q->where('username', 'like', "%$search%");
@@ -209,20 +258,31 @@ class ServiceBookingController extends Controller
         $pageTitle .= 'Service Bookings search by - ' . $search;
         $emptyMessage = 'No data found';
         return view('admin.booking.index', compact('pageTitle', 'search', 'scope', 'emptyMessage', 'bookings'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
 
 
     public function workDeliveryDownload($id)
     {
-        $work = WorkDelivery::where('id',decrypt($id))->firstOrFail();
-        $file = $work->work_file;
-        $path = imagePath()['workFile']['path'];
-        $full_path = $path.'/'. $file;
-        $ext = pathinfo($file, PATHINFO_EXTENSION);
-        $mimetype = mime_content_type($full_path);
-        header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
-        header("Content-Type: " . $mimetype);
-        return readfile($full_path);
+        try{
+            $work = WorkDelivery::where('id',decrypt($id))->firstOrFail();
+            $file = $work->work_file;
+            $path = imagePath()['workFile']['path'];
+            $full_path = $path.'/'. $file;
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            $mimetype = mime_content_type($full_path);
+            header('Content-Disposition: softwareFile; filename="' . $file . '.' . $ext . '";');
+            header("Content-Type: " . $mimetype);
+            return readfile($full_path);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
     }
 }

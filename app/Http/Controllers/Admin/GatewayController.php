@@ -14,121 +14,139 @@ class GatewayController extends Controller
 {
     public function index()
     {
-        $pageTitle = 'Automatic Gateways';
+        try{
+            $pageTitle = 'Automatic Gateways';
         $emptyMessage = 'No gateway has been installed.';
         $gateways = Gateway::automatic()->with('currencies')->get();
         return view('admin.gateway.list', compact('pageTitle', 'emptyMessage', 'gateways'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function edit($alias)
     {
-        $gateway = Gateway::automatic()->with('currencies')->where('alias', $alias)->firstOrFail();
-        $pageTitle = 'Update Gateway : ' . $gateway->name;
-
-        $supportedCurrencies = collect(json_decode($gateway->supported_currencies))->except($gateway->currencies->pluck('currency'));
-
-        $parameters = collect(json_decode($gateway->gateway_parameters));
-        $global_parameters = null;
-        $hasCurrencies = false;
-        $currencyIdx = 1;
-
-        if ($gateway->currencies->count() > 0) {
-            $global_parameters = json_decode($gateway->currencies->first()->gateway_parameter);
-            $hasCurrencies = true;
-        }
-
-        return view('admin.gateway.edit', compact('pageTitle', 'gateway', 'supportedCurrencies', 'parameters', 'hasCurrencies', 'currencyIdx', 'global_parameters'));
+        try{
+            $gateway = Gateway::automatic()->with('currencies')->where('alias', $alias)->firstOrFail();
+            $pageTitle = 'Update Gateway : ' . $gateway->name;
+    
+            $supportedCurrencies = collect(json_decode($gateway->supported_currencies))->except($gateway->currencies->pluck('currency'));
+    
+            $parameters = collect(json_decode($gateway->gateway_parameters));
+            $global_parameters = null;
+            $hasCurrencies = false;
+            $currencyIdx = 1;
+    
+            if ($gateway->currencies->count() > 0) {
+                $global_parameters = json_decode($gateway->currencies->first()->gateway_parameter);
+                $hasCurrencies = true;
+            }
+    
+            return view('admin.gateway.edit', compact('pageTitle', 'gateway', 'supportedCurrencies', 'parameters', 'hasCurrencies', 'currencyIdx', 'global_parameters'));
+        
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
     }
 
 
     public function update(Request $request, $code)
     {
-
-        $gateway = Gateway::where('code',$code)->firstOrFail();
-        $this->gatewayValidator($request)->validate();
-        $this->gatewayCurrencyValidator($request, $gateway)->validate();
-
-        $parameters = collect(json_decode($gateway->gateway_parameters));
-
-        foreach ($parameters->where('global', true) as $key => $pram) {
-            $parameters[$key]->value = $request->global[$key];
-        }
-
-        $path = imagePath()['gateway']['path'];
-        $size = imagePath()['gateway']['size'];
-
-        $filename = $gateway->image;
-        if ($request->hasFile('image')) {
-            try {
-                $filename = uploadImage($request->image, $path, $size, $filename);
-            } catch (\Exception $exp) {
-                $notify[] = ['errors', 'Image could not be uploaded.'];
-                return back()->withNotify($notify);
+        try{
+            $gateway = Gateway::where('code',$code)->firstOrFail();
+            $this->gatewayValidator($request)->validate();
+            $this->gatewayCurrencyValidator($request, $gateway)->validate();
+    
+            $parameters = collect(json_decode($gateway->gateway_parameters));
+    
+            foreach ($parameters->where('global', true) as $key => $pram) {
+                $parameters[$key]->value = $request->global[$key];
             }
-        }
-        
-        $gateway->alias = $request->alias;
-        $gateway->gateway_parameters = json_encode($parameters);
-        $gateway->image = $filename;
-        $gateway->save();
-
-        $gateway_currencies = collect([]);
-
-        if ($request->has('currency')) {
-
-            foreach ($request->currency as $key => $currency) {
-                $currency_identifier = $this->currencyIdentifier($currency['name'], $gateway->name . ' ' . $currency['currency']);
-
-                $param = [];
-                foreach ($parameters->where('global', true) as $pkey => $pram) {
-                    $param[$pkey] = $pram->value;
+    
+            $path = imagePath()['gateway']['path'];
+            $size = imagePath()['gateway']['size'];
+    
+            $filename = $gateway->image;
+            if ($request->hasFile('image')) {
+                try {
+                    $filename = uploadImage($request->image, $path, $size, $filename);
+                } catch (\Exception $exp) {
+                    $notify[] = ['errors', 'Image could not be uploaded.'];
+                    return back()->withNotify($notify);
                 }
-
-                foreach ($parameters->where('global', false) as $param_key => $param_value) {
-                    $param[$param_key] = $currency['param'][$param_key];
-                }
-
-                $filename = null;
-                $existing_currency = $gateway->currencies()->where('currency', $currency['currency'])->first();
-                if ($existing_currency) {
-                    $filename = $existing_currency->image;
-                }
-                $uploaded_image = 'currency.' . $key . '.image';
-                if ($request->hasFile($uploaded_image)) {
-                    try {
-
-                        $filename = uploadImage($request->file($uploaded_image), $path, $size);
-                    } catch (\Exception $exp) {
-                        $notify[] = ['error', $currency_identifier . ' Image could not be uploaded.'];
-                        return back()->withNotify($notify);
+            }
+            
+            $gateway->alias = $request->alias;
+            $gateway->gateway_parameters = json_encode($parameters);
+            $gateway->image = $filename;
+            $gateway->save();
+    
+            $gateway_currencies = collect([]);
+    
+            if ($request->has('currency')) {
+    
+                foreach ($request->currency as $key => $currency) {
+                    $currency_identifier = $this->currencyIdentifier($currency['name'], $gateway->name . ' ' . $currency['currency']);
+    
+                    $param = [];
+                    foreach ($parameters->where('global', true) as $pkey => $pram) {
+                        $param[$pkey] = $pram->value;
                     }
+    
+                    foreach ($parameters->where('global', false) as $param_key => $param_value) {
+                        $param[$param_key] = $currency['param'][$param_key];
+                    }
+    
+                    $filename = null;
+                    $existing_currency = $gateway->currencies()->where('currency', $currency['currency'])->first();
+                    if ($existing_currency) {
+                        $filename = $existing_currency->image;
+                    }
+                    $uploaded_image = 'currency.' . $key . '.image';
+                    if ($request->hasFile($uploaded_image)) {
+                        try {
+    
+                            $filename = uploadImage($request->file($uploaded_image), $path, $size);
+                        } catch (\Exception $exp) {
+                            $notify[] = ['error', $currency_identifier . ' Image could not be uploaded.'];
+                            return back()->withNotify($notify);
+                        }
+                    }
+    
+                    $gateway_currency = new GatewayCurrency([
+                        'name' => $currency['name'],
+                        'gateway_alias' => $gateway->alias,
+                        'image' => $filename,
+                        'currency' => $currency['currency'],
+                        'min_amount' => $currency['min_amount'],
+                        'max_amount' => $currency['max_amount'],
+                        'fixed_charge' => $currency['fixed_charge'],
+                        'percent_charge' => $currency['percent_charge'],
+                        'rate' => $currency['rate'],
+                        'symbol' => $currency['symbol'],
+                        'gateway_parameter' => json_encode($param),
+                    ]);
+    
+    
+                    $gateway_currencies->push($gateway_currency);
                 }
-
-                $gateway_currency = new GatewayCurrency([
-                    'name' => $currency['name'],
-                    'gateway_alias' => $gateway->alias,
-                    'image' => $filename,
-                    'currency' => $currency['currency'],
-                    'min_amount' => $currency['min_amount'],
-                    'max_amount' => $currency['max_amount'],
-                    'fixed_charge' => $currency['fixed_charge'],
-                    'percent_charge' => $currency['percent_charge'],
-                    'rate' => $currency['rate'],
-                    'symbol' => $currency['symbol'],
-                    'gateway_parameter' => json_encode($param),
-                ]);
-
-
-                $gateway_currencies->push($gateway_currency);
             }
-        }
+    
+            $gateway->currencies()->delete();
+    
+            $gateway->currencies()->saveMany($gateway_currencies);
+    
+            $notify[] = ['success', $gateway->name . ' has been updated.'];
+            return redirect()->route('admin.gateway.automatic.edit', $gateway->alias)->withNotify($notify);
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
 
-        $gateway->currencies()->delete();
-
-        $gateway->currencies()->saveMany($gateway_currencies);
-
-        $notify[] = ['success', $gateway->name . ' has been updated.'];
-        return redirect()->route('admin.gateway.automatic.edit', $gateway->alias)->withNotify($notify);
+       
     }
 
     public function remove(Request $request, $code)

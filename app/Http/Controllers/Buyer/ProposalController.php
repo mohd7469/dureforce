@@ -85,6 +85,8 @@ class ProposalController extends Controller
             
 
         } catch (\Throwable $th) {
+            DB::rollback();
+            return view('errors.500');
 
         }
         
@@ -98,7 +100,7 @@ class ProposalController extends Controller
             $proposal->save();
             return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
         } catch (\Throwable $th) {
-            return "Some technical error occur";
+            return view('errors.500');
         }
 
     }
@@ -111,7 +113,7 @@ class ProposalController extends Controller
             $proposal->save();
             return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
         } catch (\Throwable $th) {
-            return "Some technical error occur";
+            return view('errors.500');
         }
 
     }
@@ -127,8 +129,7 @@ class ProposalController extends Controller
             return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job','short_listed_proposals'));
 
         } catch (\Throwable $th) {
-            return $th;
-            //  return "Some technical error occur";
+            return view('errors.500');
         }
 
     }
@@ -143,8 +144,8 @@ class ProposalController extends Controller
             return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','offer_letter'));
 
         } catch (\Throwable $th) {
-            return $th;
-            //  return "Some technical error occur";
+            //return $th;
+            return view('errors.500');
         }
 
     }
@@ -184,12 +185,17 @@ class ProposalController extends Controller
 
     public function jobPropsals($job_uuid)
     {
-
-        $job=Job::withAll()->where('uuid',$job_uuid)->first();
+        try{
+            $job=Job::withAll()->where('uuid',$job_uuid)->first();
         $proposals = $job->proposal->where('is_shortlisted',false);
         $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
 
         $pageTitle = "Job Proposals";
         return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job','short_listed_proposals'));
+        } catch (\Exception $exp) {
+                   DB::rollback();
+                   return view('errors.500');
+               }
+        
     }
 }

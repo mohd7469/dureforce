@@ -24,15 +24,21 @@ class BookingController extends Controller
     
     public function serviceBooking($slug, $id)
     {
-        if(session()->has('coupon')){
-            session()->forget('coupon');
-        }
-        $coupon = Coupon::where('status', 1)->get();
-    	$pageTitle = "Service Booking";
-    	$service = Service::where('status', 1)->whereHas('category', function($q){
-            $q->where('status', 1);
-        })->where('id', decrypt($id))->firstOrFail();
-        return view($this->activeTemplate. 'service_booking', compact('pageTitle', 'service', 'coupon'));
+        try{
+            if(session()->has('coupon')){
+                session()->forget('coupon');
+            }
+            $coupon = Coupon::where('status', 1)->get();
+            $pageTitle = "Service Booking";
+            $service = Service::where('status', 1)->whereHas('category', function($q){
+                $q->where('status', 1);
+            })->where('id', decrypt($id))->firstOrFail();
+            return view($this->activeTemplate. 'service_booking', compact('pageTitle', 'service', 'coupon'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+     
     }
 
 
@@ -65,29 +71,35 @@ class BookingController extends Controller
 
     public function serviceBooked(Request $request)
     {
-        $request->validate([
-            'serviceId' => 'required|exists:services,id',
-            'qty' => 'required|min:1|max:30',
-            'payment' => 'required|in:wallet,checkout'
-        ]);
-        $user = Auth::user();
-        $service = Service::where('status', 1)->where('id', $request->serviceId)->firstOrFail();
-        if($service->user_id == $user->id){
-            $notify[] = ["error","You can not be booked your self-service"];
-            return back()->withNotify($notify);
-        }
-        if($request->payment == "wallet"){
-            $this->orderWithWallet($service->id, $request->qty, $request->extraservice);
-            return back();
-        }
-        elseif($request->payment == "checkout"){
-            $this->orderWithCheckout($service->id, $request->qty, $request->extraservice);
-            return redirect()->route('user.payment.method');
-        }
-        else{
-            $notify[] = ["error","Something is wrong"];
-            return back()->withNotify($notify);
-        }
+        try{
+            $request->validate([
+                'serviceId' => 'required|exists:services,id',
+                'qty' => 'required|min:1|max:30',
+                'payment' => 'required|in:wallet,checkout'
+            ]);
+            $user = Auth::user();
+            $service = Service::where('status', 1)->where('id', $request->serviceId)->firstOrFail();
+            if($service->user_id == $user->id){
+                $notify[] = ["error","You can not be booked your self-service"];
+                return back()->withNotify($notify);
+            }
+            if($request->payment == "wallet"){
+                $this->orderWithWallet($service->id, $request->qty, $request->extraservice);
+                return back();
+            }
+            elseif($request->payment == "checkout"){
+                $this->orderWithCheckout($service->id, $request->qty, $request->extraservice);
+                return redirect()->route('user.payment.method');
+            }
+            else{
+                $notify[] = ["error","Something is wrong"];
+                return back()->withNotify($notify);
+            }
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     private function orderWithWallet($serviceId, $qty, $extraService){

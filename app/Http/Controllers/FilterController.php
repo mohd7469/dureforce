@@ -23,145 +23,175 @@ class FilterController extends Controller
 
     public function allServiceSearch(Request $request)
     {
-        $level = null;
-        $featuresData = null;
-        $pageTitle = "Service Filter Search";
-        $emptyMessage = "No data found";
-        $services = Service::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        });
-
-        if ($request->level) {
-            $value = $request->level;
-            $level = collect($value);
-            $services = $services->whereHas('user', function ($q) use ($value) {
-                $q->whereIn('rank_id', $value);
+        try{
+            $level = null;
+            $featuresData = null;
+            $pageTitle = "Service Filter Search";
+            $emptyMessage = "No data found";
+            $services = Service::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
             });
-        }
-        if ($request->feature) {
-            $featuresValue = $request->feature;
-            $featuresData = collect($featuresValue);
-            $services = $services->whereHas('featuresService', function ($q) use ($featuresValue) {
-                $q->whereIn('features_id', $featuresValue);
-            });
-        }
-        if ($request->price) {
-            $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
-            $newArray = explode("-", $rangeArr);
-            if (session()->has('range')) {
-                session()->forget('range');
+    
+            if ($request->level) {
+                $value = $request->level;
+                $level = collect($value);
+                $services = $services->whereHas('user', function ($q) use ($value) {
+                    $q->whereIn('rank_id', $value);
+                });
             }
-            session()->put('range', $newArray);
-            $services = $services->whereBetween('price', $newArray);
-        }
-        if ($request->tag_id) {
-            $services->whereHas("tags", function (Builder $builder) use ($request) {
-                $builder->where("tag_id", $request->tag_id)
-                    ->where("model_type", Tag::TAG_TYPE_SERVICE);
-            });
-        } else {
-
-            //    return redirect()->route('home');
-        }
-        $services = $services->with('user', 'user.rank')->paginate(getPaginate());
-        return view($this->activeTemplate . 'service', compact('services', 'level', 'pageTitle', 'emptyMessage', 'featuresData'));
+            if ($request->feature) {
+                $featuresValue = $request->feature;
+                $featuresData = collect($featuresValue);
+                $services = $services->whereHas('featuresService', function ($q) use ($featuresValue) {
+                    $q->whereIn('features_id', $featuresValue);
+                });
+            }
+            if ($request->price) {
+                $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+                $newArray = explode("-", $rangeArr);
+                if (session()->has('range')) {
+                    session()->forget('range');
+                }
+                session()->put('range', $newArray);
+                $services = $services->whereBetween('price', $newArray);
+            }
+            if ($request->tag_id) {
+                $services->whereHas("tags", function (Builder $builder) use ($request) {
+                    $builder->where("tag_id", $request->tag_id)
+                        ->where("model_type", Tag::TAG_TYPE_SERVICE);
+                });
+            } else {
+    
+                //    return redirect()->route('home');
+            }
+            $services = $services->with('user', 'user.rank')->paginate(getPaginate());
+            return view($this->activeTemplate . 'service', compact('services', 'level', 'pageTitle', 'emptyMessage', 'featuresData'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function serviceSearch(Request $request)
     {
-        $pageTitle = "Service search";
-        $emptyMessage = "No data found";
-        $search = $request->search;
-        $services = Service::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('title', 'LIKE', "%$search%")->with('user')->has('user')->paginate(getPaginate());
-        return view($this->activeTemplate . 'service', compact('services', 'pageTitle', 'emptyMessage', 'search'));
+        try{
+            $pageTitle = "Service search";
+            $emptyMessage = "No data found";
+            $search = $request->search;
+            $services = Service::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('title', 'LIKE', "%$search%")->with('user')->has('user')->paginate(getPaginate());
+            return view($this->activeTemplate . 'service', compact('services', 'pageTitle', 'emptyMessage', 'search'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function serviceDefault(Request $request)
     {
-        $request->validate([
-            'default' => 'required|in:default,priceHighToLow,priceLowToHigh,service,software,job',
-        ]);
-        $filterSearch = $request->default;
-        $pageTitle = "Service search";
-        $emptyMessage = "No data found";
-        if ($request->default == "default") {
-            return redirect()->route('home');
-        } elseif ($request->default == "priceHighToLow") {
-            $services = Service::where('status', 1)->whereHas('category', function ($q) {
-                $q->where('status', 1);
-            })->orderBy('price', 'DESC')->with('user')->paginate(getPaginate());
-        } elseif ($request->default == "priceLowToHigh") {
-            $services = Service::where('status', 1)->whereHas('category', function ($q) {
-                $q->where('status', 1);
-            })->orderBy('price', 'ASC')->with('user')->paginate(getPaginate());
-        } elseif ($request->default == "service") {
-            return redirect()->route('service');
-        } elseif ($request->default == "software") {
-            return redirect()->route('software');
-        } elseif ($request->default == "job") {
-            return redirect()->route('job');
-        }
-        return view($this->activeTemplate . 'home', compact('services', 'pageTitle', 'emptyMessage', 'filterSearch'));
+        try{
+            $request->validate([
+                'default' => 'required|in:default,priceHighToLow,priceLowToHigh,service,software,job',
+            ]);
+            $filterSearch = $request->default;
+            $pageTitle = "Service search";
+            $emptyMessage = "No data found";
+            if ($request->default == "default") {
+                return redirect()->route('home');
+            } elseif ($request->default == "priceHighToLow") {
+                $services = Service::where('status', 1)->whereHas('category', function ($q) {
+                    $q->where('status', 1);
+                })->orderBy('price', 'DESC')->with('user')->paginate(getPaginate());
+            } elseif ($request->default == "priceLowToHigh") {
+                $services = Service::where('status', 1)->whereHas('category', function ($q) {
+                    $q->where('status', 1);
+                })->orderBy('price', 'ASC')->with('user')->paginate(getPaginate());
+            } elseif ($request->default == "service") {
+                return redirect()->route('service');
+            } elseif ($request->default == "software") {
+                return redirect()->route('software');
+            } elseif ($request->default == "job") {
+                return redirect()->route('job');
+            }
+            return view($this->activeTemplate . 'home', compact('services', 'pageTitle', 'emptyMessage', 'filterSearch'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+   
     }
 
 
     public function serviceCategory(Request $request, $slug, $categoryId)
     {
-        
-        $level = null;
-        $featuresData = null;
-        $emptyMessage = "No data found";
-        $category = Category::where('status', 1)->where('id', $categoryId)->firstOrFail();
-        $pageTitle = $category->name;
-        $subCategorys = SubCategory::where('category_id', $category->id)->latest()->get();
-        $services = Service::where('status', 1)->where('category_id', $category->id);
-        if ($request->level) {
-            $value = $request->level;
-            $level = collect($value);
-            $services = $services->whereHas('user', function ($q) use ($value) {
-                $q->whereIn('rank_id', $value);
-            });
-        }
-        if ($request->feature) {
-            $featuresValue = $request->feature;
-            $featuresData = collect($featuresValue);
-            $services = $services->whereHas('featuresService', function ($q) use ($featuresValue) {
-                $q->whereIn('features_id', $featuresValue);
-            });
-        }
-        if ($request->price) {
-            $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
-            $newArray = explode("-", $rangeArr);
-            if (session()->has('range')) {
-                session()->forget('range');
+        try{
+            $level = null;
+            $featuresData = null;
+            $emptyMessage = "No data found";
+            $category = Category::where('status', 1)->where('id', $categoryId)->firstOrFail();
+            $pageTitle = $category->name;
+            $subCategorys = SubCategory::where('category_id', $category->id)->latest()->get();
+            $services = Service::where('status', 1)->where('category_id', $category->id);
+            if ($request->level) {
+                $value = $request->level;
+                $level = collect($value);
+                $services = $services->whereHas('user', function ($q) use ($value) {
+                    $q->whereIn('rank_id', $value);
+                });
             }
-            session()->put('range', $newArray);
-            $services = $services->whereBetween('price', $newArray);
-        }
-        $services = $services->with('user', 'user.rank')->has('user')->has('user.rank')->paginate(getPaginate());
-       
-        return view($this->activeTemplate . 'service_category', compact('services', 'pageTitle', 'emptyMessage', 'subCategorys', 'category', 'level', 'featuresData'));
-    }
+            if ($request->feature) {
+                $featuresValue = $request->feature;
+                $featuresData = collect($featuresValue);
+                $services = $services->whereHas('featuresService', function ($q) use ($featuresValue) {
+                    $q->whereIn('features_id', $featuresValue);
+                });
+            }
+            if ($request->price) {
+                $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+                $newArray = explode("-", $rangeArr);
+                if (session()->has('range')) {
+                    session()->forget('range');
+                }
+                session()->put('range', $newArray);
+                $services = $services->whereBetween('price', $newArray);
+            }
+            $services = $services->with('user', 'user.rank')->has('user')->has('user.rank')->paginate(getPaginate());
+           
+            return view($this->activeTemplate . 'service_category', compact('services', 'pageTitle', 'emptyMessage', 'subCategorys', 'category', 'level', 'featuresData'));
+      
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
+         }
 
     public function serviceSubCategory($slug, $subCategoryId)
     {
-    
-        $emptyMessage = "No data found";
-        $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
-        $pageTitle = $subCategorys->name;
-        $services = Service::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('sub_category_id', $subCategorys->id)->with('user', 'category')->paginate(getPaginate());
-        return view($this->activeTemplate . 'service', compact('services', 'pageTitle', 'emptyMessage'));
+        try{
+            $emptyMessage = "No data found";
+            $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
+            $pageTitle = $subCategorys->name;
+            $services = Service::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('sub_category_id', $subCategorys->id)->with('user', 'category')->paginate(getPaginate());
+            return view($this->activeTemplate . 'service', compact('services', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function softwareItemSearch(Request $request)
     {
-        $level = null;
+        try{
+            $level = null;
         $featuresData = null;
         $pageTitle = "Service Search";
         $emptyMessage = "No data found";
@@ -195,11 +225,17 @@ class FilterController extends Controller
         }
         $softwares = $softwares->with('user', 'user.rank')->has('user')->has('user.rank')->paginate(getPaginate());
         return view($this->activeTemplate . 'software', compact('softwares', 'level', 'pageTitle', 'emptyMessage', 'featuresData'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+        
     }
 
     public function softwareCategory(Request $request, $slug, $categoryId)
     {
-        $emptyMessage = "No data found";
+        try{
+            $emptyMessage = "No data found";
         $level = null;
         $featuresData = null;
         $category = Category::where('status', 1)->where('id', $categoryId)->firstOrFail();
@@ -233,63 +269,87 @@ class FilterController extends Controller
         }
         $softwares = $softwares->with('user', 'user.rank')->paginate(getPaginate());
         return view($this->activeTemplate . 'software_category', compact('softwares', 'pageTitle', 'emptyMessage', 'subCategorys', 'category', 'level', 'featuresData'));
-    }
+  
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+          }
 
     public function softwareSubCategory($slug, $subCategoryId)
     {
-        $emptyMessage = "No data found";
-        $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
-        $pageTitle = $subCategorys->name;
-        $softwares = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('sub_category_id', $subCategorys->id)->with('user')->paginate(getPaginate());
-        return view($this->activeTemplate . 'software', compact('softwares', 'pageTitle', 'emptyMessage'));
+        try{
+            $emptyMessage = "No data found";
+            $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
+            $pageTitle = $subCategorys->name;
+            $softwares = Job::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('sub_category_id', $subCategorys->id)->with('user')->paginate(getPaginate());
+            return view($this->activeTemplate . 'software', compact('softwares', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
     public function softwareSearch(Request $request)
     {
-        $pageTitle = "Software search";
-        $emptyMessage = "No data found";
-        $search = $request->search;
-        $softwares = Software::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('title', 'LIKE', "%$search%")->with('user')->paginate(getPaginate());
-        return view($this->activeTemplate . 'software', compact('softwares', 'pageTitle', 'emptyMessage', 'search'));
+        try{
+            $pageTitle = "Software search";
+            $emptyMessage = "No data found";
+            $search = $request->search;
+            $softwares = Software::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('title', 'LIKE', "%$search%")->with('user')->paginate(getPaginate());
+            return view($this->activeTemplate . 'software', compact('softwares', 'pageTitle', 'emptyMessage', 'search'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function jobItemSearch(Request $request)
     {
-        $level = null;
-        $pageTitle = "Job Search";
-        $emptyMessage = "No data found";
-        $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        });
-        if ($request->level) {
-            $value = $request->level;
-            $level = collect($value);
-            $jobs = $jobs->whereHas('user', function ($q) use ($value) {
-                $q->whereIn('rank_id', $value);
+        try{
+            $level = null;
+            $pageTitle = "Job Search";
+            $emptyMessage = "No data found";
+            $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
             });
-        }
-        if ($request->price) {
-            $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
-            $newArray = explode("-", $rangeArr);
-            if (session()->has('range')) {
-                session()->forget('range');
+            if ($request->level) {
+                $value = $request->level;
+                $level = collect($value);
+                $jobs = $jobs->whereHas('user', function ($q) use ($value) {
+                    $q->whereIn('rank_id', $value);
+                });
             }
-            session()->put('range', $newArray);
-            $jobs = $jobs->whereBetween('amount', $newArray);
-        } else {
-            return redirect()->route('job');
-        }
-        $jobs = $jobs->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate());
-        return view($this->activeTemplate . 'job', compact('jobs', 'level', 'pageTitle', 'emptyMessage'));
+            if ($request->price) {
+                $rangeArr = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+                $newArray = explode("-", $rangeArr);
+                if (session()->has('range')) {
+                    session()->forget('range');
+                }
+                session()->put('range', $newArray);
+                $jobs = $jobs->whereBetween('amount', $newArray);
+            } else {
+                return redirect()->route('job');
+            }
+            $jobs = $jobs->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate());
+            return view($this->activeTemplate . 'job', compact('jobs', 'level', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+      
     }
 
     public function jobCategory(Request $request, $slug, $categoryId)
     {
-        $emptyMessage = "No data found";
+        try{
+            $emptyMessage = "No data found";
         $level = null;
         $featuresData = null;
         $category = Category::where('status', 1)->where('id', $categoryId)->firstOrFail();
@@ -316,30 +376,47 @@ class FilterController extends Controller
         }
         $jobs = $jobs->with('user', 'user.rank', 'jobBiding')->paginate(getPaginate());
         return view($this->activeTemplate . 'job_category', compact('pageTitle', 'jobs', 'emptyMessage', 'subCategorys', 'category', 'level'));
-    }
+   
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+         }
 
 
     public function jobSubCategory($slug, $subCategoryId)
     {
-        $emptyMessage = "No data found";
-        $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
-        $pageTitle = $subCategorys->name;
-        $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('sub_category_id', $subCategorys->id)->with('user')->paginate(getPaginate());
-        return view($this->activeTemplate . 'job', compact('jobs', 'pageTitle', 'emptyMessage'));
+        try{
+            $emptyMessage = "No data found";
+            $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
+            $pageTitle = $subCategorys->name;
+            $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('sub_category_id', $subCategorys->id)->with('user')->paginate(getPaginate());
+            return view($this->activeTemplate . 'job', compact('jobs', 'pageTitle', 'emptyMessage'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
     public function jobSearch(Request $request)
     {
-        $pageTitle = "Job search";
-        $emptyMessage = "No data found";
-        $search = $request->search;
-        $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where('title', 'LIKE', "%$search%")->with('user')->paginate(getPaginate());
-        return view($this->activeTemplate . 'job', compact('jobs', 'pageTitle', 'emptyMessage', 'search'));
+        try{
+            $pageTitle = "Job search";
+            $emptyMessage = "No data found";
+            $search = $request->search;
+            $jobs = Job::where('status', 1)->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })->where('title', 'LIKE', "%$search%")->with('user')->paginate(getPaginate());
+            return view($this->activeTemplate . 'job', compact('jobs', 'pageTitle', 'emptyMessage', 'search'));
+        } catch (\Exception $exp) {
+               DB::rollback();
+                return view('errors.500');
+               }
+       
     }
 
 
