@@ -138,6 +138,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                                     <div
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
+                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))
@@ -165,11 +166,11 @@
                                        
                                     @else
                                        
-                                    <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
+                                    <!-- <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
-                                    </a>
+                                    </a> -->
                                     <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
@@ -236,6 +237,12 @@
     .dropdown-center-menu {
         background-color: #E2F1F1;
         margin-top: -20px;
+    }
+    .header-user-bell-icon{
+        padding-left: 10px;
+        margin-right: 10px;
+        color: #606975;
+        font-size: 20px;
     }
     /* Media Query for Mobile Devices */
     @media (max-width: 350px) {
