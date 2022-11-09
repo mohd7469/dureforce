@@ -647,8 +647,6 @@ class ProfileController extends Controller
         return redirect()->route('buyer.basic.profile', ['profile' => 'step-3'])->withNotify($notify);
     }
 
-
-
     public function offerSave(Request $request)
     {
        
@@ -769,6 +767,4 @@ class ProfileController extends Controller
             }
         }
     }
-   
-
 }

@@ -383,8 +383,8 @@ class ProfileController extends Controller
             $portfolio=UserPortFolio::create(
                 $request_data
             );
-
-            $portfolio->skills()->attach($request_data['skills']);
+            if($request->has('skills'))
+                $portfolio->skills()->attach($request_data['skills']);
 
             if ($request->hasFile('file')) {
                 $path = imagePath()['attachments']['path'];

@@ -489,8 +489,10 @@
                 });
 
                 $('#completion_date').on('focusout',function(){
-                    date=Date.parse($('#completion_date').val());
-                    if(isNaN(date))
+                    
+                    date=($('#completion_date').val());
+                    
+                    if(date == '')
                         displayAlertMessage("Wrong completion date");
                 });
 
