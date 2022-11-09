@@ -590,8 +590,8 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="is_working" id="exp_is_working"  onclick="checkDate($(this), $('.experience-end-date'))">
-                                        <label class="form-check-label" for="flexCheckChecked">
+                                        <input class="form-check-input" type="checkbox"  name="is_working" id="exp_is_working"  onclick="checkDate($(this), $('.experience-end-date'))">
+                                        <label class="form-check-label" >
                                             I’m currently working here
                                         </label>
                                     </div>
@@ -662,27 +662,7 @@
                                     
                                 </div>
 
-                                {{-- <div class="col-md-12">
-                                    <div>
-                                        <label class="mt-2"
-                                        >Education
-                                            <span
-                                                    class="imp"
-                                            >*</span
-                                            ></label
-                                        >
-                                        <input
-        
-                                                name="education"
-                                                id="edu_education"
-                                                value=""
-                                                type="text"
-                                                placeholder="E.g. University Of London"
-                                        />
-                                    </div>
-                                    
-                                </div> --}}
-
+                               
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6 ">
@@ -1052,6 +1032,7 @@
     {
         
         let form_data = new FormData(experience_form[0]);
+        console.log(form_data);
         let route=experience_form.attr('action');
         $.ajax({
             type:"POST",

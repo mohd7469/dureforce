@@ -111,6 +111,13 @@ class JobController extends Controller
 
         parse_str($request->data, $request_data);
         $user = Auth::user();
+        $custom_messages =[
+
+            'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
+            'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is fixed',
+            'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
+
+        ];
         $validator = Validator::make($request_data, [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
@@ -122,12 +129,15 @@ class JobController extends Controller
             'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
+            'hourly_start_range' =>'required_if:budget_type_id,'.BudgetType::$hourly,
+            'hourly_end_range' =>'required_if:budget_type_id,'.BudgetType::$hourly,
+            'fixed_amount' =>'required_if:budget_type_id,'.BudgetType::$fixed,
             'deliverables' => 'required|array',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
             'dod' => 'required|array',
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-        ]);
+        ],$custom_messages);
         if ($validator->fails()) {
 
             return response()->json(["error" => $validator->errors()]);

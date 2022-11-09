@@ -66,6 +66,8 @@ Route::view('/ticket-details', 'templates.basic.supports.ticket_details');
 //Seller Add Portfolio pages
 
 
+Route::get('hello', [\App\Http\Controllers\CommonProfileController::class,'hello'])->name('hello');
+
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 
 Route::view('/job-listing', 'templates.basic.offers.myjob');
