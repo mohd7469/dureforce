@@ -208,11 +208,10 @@ class ProfileController extends Controller
      */
     public function savePaymentMethod(Request $request)
     {
-    
         $rules = [
             'card_number'     => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date|after_or_equal:now',
-            'cvv_code'        => 'required|digits:3|integer',
+            'cvv_code'        => 'required|numeric|digits_between:3,4',
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
             'city_id'            => 'required|exists:world_cities,id',
@@ -401,11 +400,10 @@ class ProfileController extends Controller
     public function buyersavePaymentMethod(Request $request)
     {
 
-    
         $rules = [
             'card_number'     => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date|after_or_equal:now',
-            'cvv_code'        => 'required',
+            'cvv_code'        => 'required|numeric|digits_between:3,4',
             'name_on_card'    => 'required',
             'country_id'         => 'required|exists:world_countries,id',
             'city_id'            => 'required|exists:world_cities,id',

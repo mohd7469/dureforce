@@ -240,7 +240,7 @@ class ProfileController extends Controller
             'company_name'=> 'required',
             'country_id'  => 'required',
             'start_date'  => 'required|before:today',
-            'end_date'    => 'before:today|after_or_equal:experiences.*.start_date',
+            'end_date'    => 'before:today|after_or_equal:start_date',
         ]);
         
         if ($validator->fails())
@@ -248,7 +248,6 @@ class ProfileController extends Controller
             return response()->json(['validation_errors'=>$validator->errors()]);
         }
        
-   
 
         try {
             
@@ -275,6 +274,13 @@ class ProfileController extends Controller
      */
     public function addEducation(Request $request)
     {
+        $custom_messages =[
+
+            'start_date.required' => 'From date filed is required',
+            'start_date.before' => 'from date should be before today date',
+            'end_date.before' => 'Todate should be before today date',
+            'end_date.after_or_equal' => 'Todate should be after From date '
+        ];
         $validator = \Validator::make($request->all(), 
         [
             'school_name'   => 'required',
@@ -282,8 +288,8 @@ class ProfileController extends Controller
             'description'  => 'required',
             'degree_id'  => 'required',
             'start_date'  => 'required|before:today',
-            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
-        ]);
+            'end_date'    => 'before:today|after_or_equal:start_date',
+        ],$custom_messages);
         
         if ($validator->fails())
         {
@@ -313,16 +319,21 @@ class ProfileController extends Controller
      */
     public function editEducation(Request $request,$seller_education_id)
     {
+        $custom_messages =[
+            'start_date.required' => 'From date filed is required',
+            'start_date.before' => 'from date should be before today date',
+            'end_date.before' => 'Todate should be before today date',
+            'end_date.after_or_equal' => 'Todate should be after From date '
+        ];
         $validator = \Validator::make($request->all(), 
         [
             'school_name'   => 'required',
-            'education' => 'required',
             'field_of_study'=> 'required',
             'description'  => 'required',
             'degree_id'  => 'required',
             'start_date'  => 'required|before:today',
-            'end_date'    => 'before:today|after_or_equal:educations.*.start_date',
-        ]);
+            'end_date'    => 'before:today|after_or_equal:start_date',
+        ],$custom_messages);
         
         if ($validator->fails())
         {

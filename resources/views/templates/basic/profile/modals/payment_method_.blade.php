@@ -39,7 +39,7 @@
 
                                 <div class="col-md-6">
                                     <label class="mt-4">CVV * </label>
-                                    <input ype="text" name="cvv_code"
+                                    <input type="text" name="cvv_code"
                                     value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required  />
                                 </div>
                                 <div class="col-md-6">

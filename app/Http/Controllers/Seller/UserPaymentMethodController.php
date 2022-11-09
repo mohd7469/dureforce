@@ -41,11 +41,11 @@ class UserPaymentMethodController extends Controller
     public function store(Request $request)
     {
         //
-
+        dd("dfdsf");
         $request->validate([
-            'card_number'     => 'required',
-            'expiration_date' => 'required|date',
-            'cvv_code'        => 'required|min:3|max:5',
+            'card_number'     => 'required|numeric|digits_between:13,19',
+            'expiration_date' => 'required|date|after_or_equal:now',
+            'cvv_code'        => 'required|numeric|digits_between:3,4',
             'name_on_card'    => 'required',
             'country'         => 'required',
             'city'            => 'required',

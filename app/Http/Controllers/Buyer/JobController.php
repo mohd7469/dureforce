@@ -97,8 +97,11 @@ class JobController extends Controller
         $custom_messages =[
 
             'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
-            'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is fixed',
+            'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is hourly',
             'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
+            'hourly_start_range.gt' => 'Weekly range start field should be greater than zero',
+            'hourly_end_range.gte' => 'Weekly range end field value should be greater or equal to weekly start range',
+
 
         ];
         $validator = Validator::make($request_data, [
@@ -112,8 +115,8 @@ class JobController extends Controller
             'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
-            'hourly_start_range' =>'required_if:budget_type_id,'.BudgetType::$hourly,
-            'hourly_end_range' =>'required_if:budget_type_id,'.BudgetType::$hourly,
+            'hourly_start_range' =>'gt:0|required_if:budget_type_id,'.BudgetType::$hourly,
+            'hourly_end_range' =>'gte:hourly_start_range|required_if:budget_type_id,'.BudgetType::$hourly,
             'fixed_amount' =>'required_if:budget_type_id,'.BudgetType::$fixed,
             'deliverables' => 'required|array',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',

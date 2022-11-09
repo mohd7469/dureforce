@@ -42,7 +42,7 @@
 
                                 <div class="col-md-6">
                                     <label class="mt-4">CVV * </label>
-                                    <input ype="text" name="cvv_code" id="cvv_code" required  />
+                                    <input type="text" name="cvv_code" id="cvv_code" required  />
                                 </div>
                                   <div class="col-md-6">
                                     <label class="mt-4">Country <span class="imp">*</span></label>
