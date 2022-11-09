@@ -24,7 +24,7 @@
                                             <a href="{{ route('seller.jobs.listing') }}"
                                             @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
-                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('seller.jobs.listing') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Jobs')</span>
@@ -51,7 +51,7 @@
                                             <a href="#"
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
-                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="#"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
@@ -76,7 +76,7 @@
                                             <a href="{{ route('service') }}"
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
-                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('service') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Services')</span>
@@ -97,7 +97,7 @@
                                             <a href="{{ route('software') }}"
                                             @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
-                                        <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('software') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Softwares')</span>
@@ -233,7 +233,7 @@
     .nav-button{
         background-color: #fff;
     }
-    .dropdown-menu {
+    .dropdown-center-menu {
         background-color: #E2F1F1;
         margin-top: -20px;
     }
