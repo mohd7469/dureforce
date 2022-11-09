@@ -244,6 +244,32 @@
         color: #606975;
         font-size: 20px;
     }
+    /* .header-bottom-area .navbar-collapse .main-menu li {
+        position: relative;
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        padding-right: 30px;
+        color: #515151;
+    } */
+    .header-bottom-area .navbar-collapse .main-menu li a:hover, .header-bottom-area .navbar-collapse .main-menu li a.active {
+        color: #007F7F;
+    }
+    .py-2 {
+        padding-top: 0.7rem!important;
+        padding-bottom: 0.7rem!important;
+    }
+    .dropdown-menu__item .dropdown-menu__caption {
+        padding-left: 10px;
+        font-size: 13px;
+        color: #007F7F;
+        font-weight: 500;
+    }
+    /* li a:hover {
+        text-decoration: none;
+        color: #007F7F;
+    } */
     /* Media Query for Mobile Devices */
     @media (max-width: 350px) {
         .nav-button{
