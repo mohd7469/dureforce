@@ -167,8 +167,9 @@
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}"    class="standard-btn ">View Proposals ({{$job->proposal->count()}})</a>
+                                                    @if($job->status->id == \App\Models\Job::$Pending)
                                                     <a href="{{route('buyer.job.edit',$job->uuid)}}"  class="standard-btn-1">@lang('Edit Job')</a>
-
+                                                    @endif
 
 
                                                 </div>
