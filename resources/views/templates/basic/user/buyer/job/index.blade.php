@@ -40,21 +40,20 @@
                                         </td>
                                         
                                         <td data-label="@lang('Status')">
-                                                @if($job->status->slug == 'approved')
+                                                @if($job->status->id == \App\Models\Job::$Approved)
                                                     <span class="status-btn status-approved">@lang('Approved')</span>
                                                     
-                                                <!-- @elseif($job->status->slug == 'draft')
-                                                    <span class="status-btn status-draft">@lang('Draft')</span> -->
+                                                <!-- @elseif($job->status->id == \App\Models\Job::$Closed)
+                                                    <span class="status-btn status-draft">@lang('Closed')</span> -->
                                                 
-                                                @elseif($job->status->slug == 'pending')
+                                                @elseif($job->status->id == \App\Models\Job::$Pending)
                                                     <span class="status-btn status-pending">@lang('Pending')</span>
                                                     
-                                                @elseif($job->status->slug == 'closed')
-                                                    <span class="status-btn btn--warning">@lang('Closed')</span>
+                                                @elseif($job->status->id == \App\Models\Job::$Canceled)
+                                                    <span class="status-btn btn--warning">@lang('Canceled')</span>
                                                 
                                                 @else
-                                                    <button class="status-btn btn--danger">@lang('Canceled')</button>
-                                                    
+                                                    <button class="status-btn btn--danger">@lang('Canceled 2')</button>
                                                 @endif
 
                                         </td>
