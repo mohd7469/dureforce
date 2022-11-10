@@ -24,7 +24,6 @@ class PusherConfiguration extends ServiceProvider
     public function boot()
     {
         $pusher_credentials = getPusherCredentials();
-
         if ($pusher_credentials) {
             $config = array(
                 'app_id'       => $pusher_credentials->name,
@@ -32,8 +31,7 @@ class PusherConfiguration extends ServiceProvider
                 'secret'   => $pusher_credentials->password,
                 'options.cluster'   => $pusher_credentials->port,
             );
-
-            Config::set('connections.pusher', $config);
+            Config::set('broadcasting.connections.pusher', $config);
         }
     }
 }
