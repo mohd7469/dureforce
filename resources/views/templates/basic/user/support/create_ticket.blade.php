@@ -10,24 +10,24 @@
     <hr>
     
      <div class="card-body" >
-         <form  action="{{route('ticket.store')}}" method="POST" >
+         <form  action="{{route('ticket.store')}}" method="POST"  id="support_ticket_form" enctype="multipart/form-data">
              @csrf
         <div class="row">
 
         <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Full Name </label>
-            <input type="text" class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" placeholder="{{$user->first_name}} {{$user->last_name}}">
+            <input type="text" class="form-control"  disabled aria-describedby="emailHelp" placeholder="{{$user->first_name}} {{$user->last_name}}">
            
           </div>
 
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" disabled aria-describedby="emailHelp" placeholder="{{$user->email}}">
+            <input type="email" class="form-control"  disabled aria-describedby="emailHelp" placeholder="{{$user->email}}">
             
           </div>
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Subject </label>
-            <input type="text" class="form-control back" name="subject" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Subject">
+            <input type="text" class="form-control back" name="subject"  aria-describedby="emailHelp" placeholder="Subject">
            
           </div>
 
@@ -45,33 +45,38 @@
      </div>
 
         {{-- Required documents --}}
-        <div class="row">
-            <div class="col-xl-12 col-lg-12 form-group">
-                <label>Required Documents</label>
+        <div class="form-group">
+            <label>@lang('Required Documents')</label>
+         
+               <div id="dropzone">
+                  <div class="dropzone needsclick" id="demo-upload" action="#" >
+                     <div class="fallback">
+                           <input name="file" type="file" multiple />
+                     </div>
+                     <div>
+                           <div class="upload_icon">
+                              <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                              <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                           </div>
+                     </div>
+                     
+                     <div class="dz-message"> 
+                           @lang('Drag or Drop to Upload')  <br> 
+                           <span class="text text-primary ">
+                              @lang('Browse')  
+                              
+                           </span>
+                     </div>
 
-                    <div id="dropzone">
-                        <div class="dropzone needsclick dz-clickable" id="demo-upload" action="#">
+                  </div>
+               </div>
 
-                            <div>
-                                <div class="upload_icon_">
-                                    <img src="http://127.0.0.1:8000/assets/images/frontend/job/upload.svg" alt="">
-                                    <img src="http://127.0.0.1:8000/assets/images/frontend/job/arrow_up.svg" alt="" class="upload_inner_arrow_">
-                                </div>
-                            </div>
-
-                            <div class="dz-message ">
-                                Drag or Drop to Upload
-                                <span class="" style="color:#007F7F">
-                                    Browse
-
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
-        
-            </div>
-        </div>
+                <small>
+                    Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
+                    Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your job.
+                </small>
+      
+         </div>
         
         <small class="allow-text">Allowed File Extensions: .jpg, .jpeg, .png, .doc, .docx</small>
          {{-- Cover Letter --}}
@@ -80,7 +85,7 @@
             <textarea class="form-control cover-letter back" id="cover_letter" rows="20" cols="8" name="message" ></textarea>
          </div>
          <div class="comment-box">
-           <input type="submit" value="Submit" class="btn-postcoment">
+           <input type="submit" value="Submit" class="btn-postcoment" id="create-ticket-btn">
         </div>
          </form>
      </div>
@@ -96,17 +101,146 @@
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
-
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/support-ticket.js')}}"></script>
 
 @endpush
+
 @push('style')
 
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
 <style>
     .back{
         background: #ffffff;
     }
+    .dz-message {
+
+text-align: center !important;
+position: relative;
+left:5%
+}
+
+.upload_icon{
+position: absolute;
+left: 8%;
+right: 0%;
+top: 72%;
+bottom: 22%;
+text-align: center;
+
+}
+.upload_inner_arrow{
+
+position: absolute;
+top: 42.12%;
+bottom: 4.5%;
+right: 49.38%;
+text-align: center;
+}
+    .dropzone {
+    
+    background: white;
+    border-radius: 5px;
+    height: 121px;
+    border: 2px dashed #CBDFDF;
+    border-image: none;
+    min-height: 126px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+    .dropzone .dz-preview .dz-details {
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 2em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 150%;
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: -51px;
+    overflow: hidden;
+    width: 64px;
+    height: 63px;
+    position: relative;
+    display: list-item;
+    z-index: 10;
+    margin-left: 5px;
+    margin-top: -19px;
+    margin-bottom: 19px;
+}
+
+.dropzone .dz-preview .dz-details {
+    z-index: 20;
+    top:-7px !important;
+    left: 0;
+    opacity: 1 !important;
+    font-size: 11px !important;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 1em 1em;
+    text-align: center;
+    color: rgba(0,0,0,.9);
+    line-height: 135%;
+}
+
+.dropzone .dz-preview .dz-remove {
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    border: none;
+}
+.dropzone .dz-preview .dz-details .dz-size {
+    margin-bottom: 1em;
+    font-size: 14px;
+}
+.dropzone .dz-preview {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 5px;
+    min-height: 100px;
+}
+.dropzone .dz-preview .dz-success-mark, .dropzone .dz-preview .dz-error-mark {
+    pointer-events: none;
+    opacity: 0;
+    z-index: 391;
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin-left: -27px;
+    margin-top: -41px;
+
+}
+
+.dropzone .dz-preview .dz-progress {
+    opacity: 0;
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-image {
+    border-radius: 10px;
+    top: 20px;
+    background: #999;
+    background: linear-gradient(to bottom, #eee, #ddd);
+}
+.dropzone .dz-preview .dz-details .dz-filename:not(:hover) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.dropzone .dz-preview .dz-details .dz-filename {
+    white-space: nowrap;
+}
+
+.dropzone.dz-clickable * {
+    cursor: default;
+}
   .categories_type_container {
     background: #F9F9F9;
     border-bottom: 1px solid #e1e7ec;
