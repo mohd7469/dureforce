@@ -1,52 +1,9 @@
-@extends($activeTemplate.'layouts.master')
-@section('content')
+@extends('admin.layouts.app')
+@section('panel')
     <section class="all-sections">
-        <div class="container-fluid">
-                <div class="container">
-                    <!----Second Section Start---->
-                    <div class="second-section-con">
-                        <div class="all-s"> All Support Tickets</div>
-                        <a href="{{route('ticket.create')}}"  class="cnt-btn">Create New Ticket</a>
-                        <div class="f-container">
-                            <div name="Filters" id="Filters"></div>
+        <div class="">
+                <div class="">
 
-                            <ul class="filter-drop-dw">
-                                <li>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="check1" name="option2"
-                                               value="something">
-                                        <label class="form-check-label" for="check1">All</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="check2" name="option2"
-                                               value="something">
-                                        <label class="form-check-label" for="check2">Open (22)</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="check3" name="option2"
-                                               value="something">
-                                        <label class="form-check-label" for="check3">Closed (3)</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="check4" name="option2"
-                                               value="something">
-                                        <label class="form-check-label" for="check4">Onhold (0)</label>
-                                    </div>
-                                </li>
-                            </ul>
-
-
-                        </div>
-
-                    </div>
-                    <!---Second Section End----->
-                    <!----Table Section Start--->
                     <div class="table_container_s table-responsive-md">
 
                         <table class="table custm-b">
@@ -65,7 +22,7 @@
                             @foreach($tickets as $ticket)
                                 <tr>
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
-                                    <td><a href="{{route('ticket.view',$ticket->ticket_no)}}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
+                                    <td><a href="{{ route('admin.ticket.view', $ticket->ticket_no) }}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
                                     <td>{{$ticket->subject}}</td>
                                     <td>12</td>
 
@@ -99,8 +56,8 @@
                                 <?php } ?>
 
                                     <td data-label="@lang('Action')">
-                                        <a href="{{route('ticket.view',$ticket->ticket_no)}}" class="icon-btn  ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Details')">
-                                            <i style="color: red" class="las la-desktop"></i>
+                                        <a href="{{ route('admin.ticket.view', $ticket->ticket_no) }}" class="icon-btn  ml-1" data-toggle="tooltip" title="" data-original-title="@lang('Details')">
+                                            <i class="las la-desktop"></i>
                                         </a>
                                     </td>
 

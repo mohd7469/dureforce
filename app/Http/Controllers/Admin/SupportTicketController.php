@@ -9,6 +9,7 @@ use App\Models\SupportTicket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class SupportTicketController extends Controller
 {
@@ -18,6 +19,18 @@ class SupportTicketController extends Controller
         $emptyMessage = 'No Data found.';
         $items = SupportTicket::orderBy('id','desc')->with('user')->paginate(getPaginate());
         return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+    }
+    public function index()
+    {
+        if (!Auth::user()) {
+            abort(404);
+        }
+
+        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority'])->get();
+
+        $pageTitle = "Support Tickets";
+
+        return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function pendingTicket()
@@ -51,6 +64,18 @@ class SupportTicketController extends Controller
         $pageTitle = 'Reply Ticket';
         $messages = SupportMessage::with('ticket')->where('supportticket_id', $ticket->id)->orderBy('id','desc')->get();
         return view('admin.support.reply', compact('ticket', 'messages', 'pageTitle'));
+    }
+
+    public function show($ticket)
+    {
+        try {
+            $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments')->firstOrFail();
+            $pageTitle = "Support Ticket Details";
+            return view('admin.support.ticket_details', compact( 'pageTitle','support_ticket'));
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
     }
     public function ticketReplySend(Request $request, $id)
     {

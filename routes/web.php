@@ -442,11 +442,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::middleware('staffaccess:16')->group(function () {
             // Admin Support
-            Route::get('tickets', 'SupportTicketController@tickets')->name('ticket');
+//            Route::get('tickets', 'SupportTicketController@tickets')->name('ticket');
+            Route::get('tickets', 'SupportTicketController@index')->name('ticket');
             Route::get('tickets/pending', 'SupportTicketController@pendingTicket')->name('ticket.pending');
             Route::get('tickets/closed', 'SupportTicketController@closedTicket')->name('ticket.closed');
             Route::get('tickets/answered', 'SupportTicketController@answeredTicket')->name('ticket.answered');
-            Route::get('tickets/view/{id}', 'SupportTicketController@ticketReply')->name('ticket.view');
+//            Route::get('tickets/view/{id}', 'SupportTicketController@ticketReply')->name('ticket.view');
+            Route::get('tickets/view/{id}', 'SupportTicketController@show')->name('ticket.view');
             Route::post('ticket/reply/{id}', 'SupportTicketController@ticketReplySend')->name('ticket.reply');
             Route::get('ticket/download/{ticket}', 'SupportTicketController@ticketDownload')->name('ticket.download');
             Route::post('ticket/delete', 'SupportTicketController@ticketDelete')->name('ticket.delete');
