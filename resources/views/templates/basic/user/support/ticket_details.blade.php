@@ -5,28 +5,35 @@
 
 <div class="container">
     <div class="secondsb-con"> 
-        <p class="sbheading-c">All Support Tickets > #469253 > <strong>How to create a service</strong></p>
-        <a href="#" class="openbtn-s">Open</a>
-        <a href="#" class="highbtn-s">High</a>
+        <p class="sbheading-c">All Support Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
+        <a href="#" class="openbtn-s">{{$support_ticket->status->name}}</a>
+        <a href="#" class="highbtn-s">{{$support_ticket->priority->name}}</a>
         <a href="#" class="closeticket">Close Ticket</a>
-        <p class="datec-s">Posted Date :27 Oct 2022</p>
+        <p class="datec-s">Posted Date :{{$support_ticket->created_at}}</p>
     </div>
     <!---Users Online Section Start-->
-    @for ($i = 0; $i <=5; $i++) 
+   
     <div class="userlist">
         <div class="userv">
-            <div class="userprofile"><img src="/assets/images/job/profile-img.png" ></div>
-            <p class="username">Amna Kareem</p>
-            <p class="time-d"> 28 Oct 2022    7:22 AM </p>
+           
+            <div class="userprofile"><img src="{{$support_ticket->user->basicProfile ? $support_ticket->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
+            <p class="username">{{$support_ticket->user->full_name}}</p>
+            <p class="time-d"> {{$support_ticket->created_at}} </p>
        </div>
         <div class="userdetail">
-            Hello!
-                I’m unable to create a new service. The page is not working for me. I’m getting 404 error. Please see attachment.
+            {{$support_ticket->message}}
         </div>
-            <p class="font-attach">Attachments</p>
-            <span class="attachment-file"><img src="/assets/images/job/attached.svg"> Screenshot.jpg</span>
+            @if (count($support_ticket->attachments)>0)
+                <p class="font-attach">Attachments</p>
+                @foreach($support_ticket->attachments as $decumentUrl)
+                        <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
+                            <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                    @endforeach
+                {{-- <span class="attachment-file"><img src="/assets/images/job/attached.svg"> Screenshot.jpg</span> --}}
+            @endif
+            
     </div>
-@endfor
+
     <!---Users Online Section End-->
 
    
@@ -57,6 +64,11 @@
     background: #F9F9F9;
     border-bottom: 1px solid #e1e7ec;
     padding: 6px 0px 10px 0px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 50%;
 }
 .ul-margin li {
     font-weight: 600;

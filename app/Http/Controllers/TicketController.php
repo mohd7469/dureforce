@@ -237,8 +237,10 @@ class TicketController extends Controller
     public function show($ticket)
     {
         try {
+            $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments')->firstOrFail();
             $pageTitle = "Support Ticket Details";
-            return view($this->activeTemplate . 'user.support.ticket_details', compact( 'pageTitle'));
+            
+            return view($this->activeTemplate . 'user.support.ticket_details', compact( 'pageTitle','support_ticket'));
         } catch (\Exception $exp) {
             DB::rollback();
             return response()->json(["error" => $exp->getMessage()]);
