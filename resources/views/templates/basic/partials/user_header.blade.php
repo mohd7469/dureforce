@@ -115,14 +115,14 @@
 
                                     <li>
                                         <a href="{{ route('user.home') }}"
-                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('Seller')</a>
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
                                     </li>
 
                                 @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
                                     
                                     <li>
                                         <a href="{{ route('user.home') }}"
-                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('BUYER')</a>
+                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
                                     </li>
 
                                 @endif
