@@ -53,12 +53,7 @@
                      <div class="fallback">
                            <input name="file" type="file" multiple />
                      </div>
-                     <div>
-                           <div class="upload_icon">
-                              <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
-                              <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
-                           </div>
-                     </div>
+                    
                      
                      <div class="dz-message"> 
                            @lang('Drag or Drop to Upload')  <br> 
@@ -122,7 +117,7 @@ left:5%
 position: absolute;
 left: 8%;
 right: 0%;
-top: 72%;
+top: 77%;
 bottom: 22%;
 text-align: center;
 
@@ -130,7 +125,7 @@ text-align: center;
 .upload_inner_arrow{
 
 position: absolute;
-top: 42.12%;
+top: 40.12%;
 bottom: 4.5%;
 right: 49.38%;
 text-align: center;

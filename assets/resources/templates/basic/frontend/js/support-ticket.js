@@ -74,7 +74,7 @@ $(function() {
           thumbnailWidth: 60,
           maxFiles: 4,
           uploadMultiple:true,
-          maxFilesize: 3,
+          maxFilesize: 20,
           acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
           filesizeBase: 1000,
           addRemoveLinks: true,
