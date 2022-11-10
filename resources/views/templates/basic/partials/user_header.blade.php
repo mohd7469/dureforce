@@ -126,8 +126,8 @@
                                     </li>
 
                                 @endif
-                                <li><a href="{{ route('user.conversation.inbox') }}"
-                                        @if (request()->routeIs('user.conversation.inbox') || request()->routeIs('user.conversation.chat')) class="active" @endif>@lang('Messages')</a></li>
+                                <li><a href="{{ route('chat.inbox') }}"
+                                        @if (request()->routeIs('chat.inbox') || request()->routeIs('chat.inbox')) class="active" @endif>@lang('Messages')</a></li>
                                 <li><a href="{{ route('ticket') }}"
                                         @if (request()->routeIs('ticket')) class="active" @endif>@lang('Support')</a></li>
                             </ul>
@@ -191,11 +191,11 @@
                                         <span class="dropdown-menu__caption">@lang('2FA Security')</span>
                                     </a>
 
-                                    <a href="{{ route('chat.inbox') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-inbox"></i>
-                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>
-                                    </a>
+{{--                                    <a href="{{ route('chat.inbox') }}"--}}
+{{--                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">--}}
+{{--                                        <i class="dropdown-menu__icon las la-inbox"></i>--}}
+{{--                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>--}}
+{{--                                    </a>--}}
 
                                     <a href="{{ route('user.logout') }}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
