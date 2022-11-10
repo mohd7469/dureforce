@@ -114,7 +114,7 @@
                     message : '',
                     send_to_id : '',
                     module_type : 'App\\Models\\Job',
-                    module_id : 98,
+                    module_id : 96,
                 },
                 errors:[]
             }

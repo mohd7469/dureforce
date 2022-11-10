@@ -6207,7 +6207,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/chat/messages', {
         send_to_id: this.active_user.id,
-        job_id: 35
+        job_id: 96
       }).then(function (response) {
         _this2.messages = response.data.messages;
       });
@@ -6437,7 +6437,7 @@ __webpack_require__.r(__webpack_exports__);
         message: '',
         send_to_id: '',
         module_type: 'App\\Models\\Job',
-        module_id: 98
+        module_id: 96
       },
       errors: []
     };
