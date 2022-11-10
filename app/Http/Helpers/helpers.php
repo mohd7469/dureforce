@@ -10,6 +10,7 @@ use App\Models\GeneralSetting;
 use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
+use App\Models\SystemCredential;
 use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
@@ -1161,6 +1162,16 @@ function getMailCredentials()
     try {
         $system_mail_config = SystemMailConfiguration::where('is_active', true)->first();
         return $system_mail_config;
+    } catch (\Exception $exp) {
+        return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
+function getPusherCredentials()
+{
+    try {
+        $system_pusher_config = SystemCredential::where('is_active', true)->where('type', 'pusher')->first();
+        return $system_pusher_config;
     } catch (\Exception $exp) {
         return response()->json(["error" => $exp->getMessage()]);
     }
