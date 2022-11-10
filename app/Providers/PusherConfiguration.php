@@ -26,12 +26,15 @@ class PusherConfiguration extends ServiceProvider
         $pusher_credentials = getPusherCredentials();
         if ($pusher_credentials) {
             $config = array(
+                'driver' => 'pusher',
                 'app_id'       => $pusher_credentials->name,
                 'key'       => $pusher_credentials->host,
                 'secret'   => $pusher_credentials->password,
-                'options.cluster'   => $pusher_credentials->port,
             );
             Config::set('broadcasting.connections.pusher', $config);
+            Config::set('broadcasting.default', 'pusher');
+            Config::set('broadcasting.connections.pusher.options.cluster', $pusher_credentials->port);
+
         }
     }
 }
