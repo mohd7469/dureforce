@@ -40,10 +40,12 @@ class TicketController extends Controller
     public function create(Request $request)
     {
         try {
+
             $pageTitle = "Create Support Ticket";
             $user = auth()->user();
             $priorities = Status::where('type',Status::$Priority)->get();
             return view($this->activeTemplate . 'user.support.create_ticket', compact('user', 'pageTitle','priorities'));
+
         } catch (\Exception $exp) {
             DB::rollback();
             return response()->json(["error" => $exp->getMessage()]);
@@ -145,6 +147,9 @@ class TicketController extends Controller
     public function store(Request $request)
     {
 
+        
+        $request_data = [];
+        parse_str($request->data, $request_data);
         $user = auth()->user();
 
         do {
@@ -152,21 +157,45 @@ class TicketController extends Controller
             $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
         } while ($ticket_exists);
 
-
-
         $ticket =SupportTicket::create([
             "user_id"=>$user->id,
             "role_id"=>$user->last_role_activity,
-            "priority_id"=>$request->priority_id,
+            "priority_id"=>$request_data['priority_id'],
             "status_id"=>SupportTicket::$Open,
             "ticket_no"=>$ticket_no,
-            "subject"=>$request->subject,
-            "message"=>$request->message,
+            "subject"=>$request_data['subject'],
+            "message"=>$request_data['message'],
         ]);
+        if ($request->hasFile('file')) {
 
+            foreach ($request->file as $file) {
+                $path = imagePath()['attachments']['path'];
+                try {
+                    
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $uploaded_name = $file->getClientOriginalName();
+                
+                    $ticket->attachments()->create([
 
+                        'name' => $filename,
+                        'uploaded_name' => $uploaded_name,
+                        'url'           => $url,
+                        'type' =>$file_extension,
+                        'is_published' =>1
+
+                    ]);
+
+                } catch (\Exception $exp) {
+                    $notify[] = ['error', 'Document could not be uploaded.'];
+                    return back()->withNotify($notify);
+                }
+
+            }
+        }
         $notify[] = ['success', 'ticket created successfully!'];
-        return redirect()->route('ticket')->withNotify($notify);
+        return response()->json(['redirect' => route('ticket')]);
     }
 
 
