@@ -374,6 +374,9 @@ button.standard-btn-sm-exp{
     font-size: 14px;
     line-height: 26px;
     word-wrap: break-word;
+    border-top: 1px solid #C4C4C4;
+    padding-top: 10px;
+
 }
 .editprofileheader{
     background: #EDEDED;
@@ -529,7 +532,6 @@ li.my-custom-css {
         font-weight: 400;
         background-color: #7f007f;
         color: #fff;
-        margin-left: 83px;
     }
 }
 
