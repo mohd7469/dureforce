@@ -20,14 +20,17 @@
                                     <img class="thumbnail" src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                                     <h4 class="my-3 text-center">{{$user->full_name}}</h4>
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
-                                    <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
-                                    <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
-                                    {{--                                  edit profile modal--}}
-                                    <div class="d-flex mt-5">
-                                        <button type="button" class="standard-btn-sm-edit text-center " data-bs-toggle="modal" data-bs-target="#editprofile">
-                                            Edit Profile
-                                        </button>
+                                    <div class="text-center">
+                                        <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
+                                        <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
+                                        {{--                                  edit profile modal--}}
+                                        <div class="d-flex mt-5">
+                                            <button type="button" class="standard-btn-sm-edit text-center " data-bs-toggle="modal" data-bs-target="#editprofile" style="margin-top: -27px;margin-bottom: 17px;">
+                                                Edit Profile
+                                            </button>
+                                        </div>
                                     </div>
+                                    
 
                                     <div class="article">
                                     <p>Bacon ipsum dolor amet sirloin jowl turducken pork loin pig pork belly, chuck cupim tongue beef doner tri-tip pancetta spare ribs porchetta.
@@ -70,6 +73,7 @@
                                             </div>
                                         </div>
                                        <div class="col-xl-12 mb-4">
+                                        <strong>Core Skills & Expertise</strong>
                                         <div class="tags-container">
                                             @foreach ($user->skills as $item)
                                                 <a href="#" class=" grey_badge  custom_badge badge-secondary">{{$item->name}}</a>
@@ -123,7 +127,7 @@
                                                         <button class="tab-button active" id="home-tab" data-bs-toggle="tab" data-bs-target="#cmplt" type="button" role="tab" aria-controls="home" aria-selected="true">Completed</button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="tab-button" id="profile-tab" data-bs-toggle="tab" data-bs-target="#inpro" type="button" role="tab" aria-controls="profile" aria-selected="false">Inprogress</button>
+                                                        <button class="tab-button" id="profile-tab" data-bs-toggle="tab" data-bs-target="#inpro" type="button" role="tab" aria-controls="profile" aria-selected="false">in progress</button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -815,6 +819,7 @@
         </div>
 
 @endsection
+
 @push('script-lib')
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>

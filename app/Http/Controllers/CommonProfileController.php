@@ -197,9 +197,20 @@ class CommonProfileController extends Controller
         $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $skills=$user->skills;
+        $basicProfile=$user->basicProfile;
+        $user_languages=$user->languages;
+        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->get();
+
         $user_experience = $user->experiences;
         $user_education  = $user->education;
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education'));
+        $user_portfolios = $user->portfolios; 
+        $categories = Category::select('id', 'name')->get();
+        $degrees = Degree::select('id', 'title')->get();
+
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages'));
     }
     
     /**
