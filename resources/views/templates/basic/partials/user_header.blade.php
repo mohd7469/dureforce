@@ -12,7 +12,80 @@
                         <a class="site-logo site-title" href="{{ route('home') }}"><img
                             src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
                             alt="{{ __($general->sitename) }}"></a>
-                        <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button>
+                        <!-- <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button> -->
+                        <!-- mobile view icons -->
+                        <div class="dropdown mobile-view-dropdown">
+                                <button class="bg-white mobile-view-button" type="button" data-bs-toggle="dropdown" data-display="static"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <div
+                                        class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
+                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
+                                        <div class="header-user-thumb">
+                                            <a href="JavaScript:Void(0);">
+                                                @if(isset(auth()->user()->basicProfile->profile_picture))
+                                                <img
+                                                    src="{{ auth()->user()->basicProfile->profile_picture}}" height="400" width="400"
+                                                    alt="client">
+                                                @else
+                                                <img
+                                                    src="{{ getImage('assets/images/user/profile/' . auth()->user()->image, '400x400') }}"
+                                                    alt="client">
+                                                @endif    
+                                            </a>
+                                        </div>
+                                        <!-- <div class="header-user-content">
+                                            <span>{{ auth()->user()->username }}</span>
+                                        </div> -->
+                                        <span class="header-user-icon"><i class="las la-chevron-circle-down"></i></span>
+                                    </div>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right mobile-dropdown-menu-right">
+
+                                    {{-- @todo make policies or gates when have free time. --}}
+
+                                    @if (auth()->user()->type == App\Models\User::PROJECT_MANAGER)
+                                       
+                                    @else
+                                       
+                                    <!-- <a href="{{ route('user.basic.profile', ['view' => 'step-1']) }}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-user-circle"></i>
+                                        <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
+                                    </a> -->
+                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-user-circle"></i>
+                                        <span class="dropdown-menu__caption">@lang('View Profile')</span>
+                                        {{-- seller profile  --}}
+                                    </a>
+                                        
+                                    @endif
+
+                                    <a href="{{ route('user.change.password') }}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-key"></i>
+                                        <span class="dropdown-menu__caption">@lang('Change Password')</span>
+                                    </a>
+                                    <a href="{{ route('user.twofactor') }}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-lock"></i>
+                                        <span class="dropdown-menu__caption">@lang('2FA Security')</span>
+                                    </a>
+
+{{--                                    <a href="{{ route('chat.inbox') }}"--}}
+{{--                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">--}}
+{{--                                        <i class="dropdown-menu__icon las la-inbox"></i>--}}
+{{--                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>--}}
+{{--                                    </a>--}}
+
+                                    <a href="{{ route('user.logout') }}"
+                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                        <i class="dropdown-menu__icon las la-sign-out-alt"></i>
+                                        <span class="dropdown-menu__caption">@lang('Logout')</span>
+                                    </a>
+                                </div>
+                            </div>
+                        <!-- end mobile view icons -->
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li>
@@ -130,6 +203,22 @@
                                         @if (request()->routeIs('chat.inbox') || request()->routeIs('chat.inbox')) class="active" @endif>@lang('Messages')</a></li>
                                 <li><a href="{{ route('ticket') }}"
                                         @if (request()->routeIs('ticket')) class="active" @endif>@lang('Support')</a></li>
+
+                                <!-- category dropdown in mobile view -->
+                                <li class="nav-item dropdown nav-list-item">
+                                    <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Category <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    @foreach(\App\Models\Category::all() as $category)
+                                        <li class="nav-item active">
+                                            <a href="service/?category_id={{$category->id}}&category_name={{$category->name}}">{{__($category->name)}}</a>
+                                        </li>
+                                    @endforeach
+                                    </ul>
+                                </li>
+                                <!-- end category dropdown in mobile view -->
+
                             </ul>
                            
 
@@ -244,6 +333,9 @@
         color: #606975;
         font-size: 20px;
     }
+    .mobile-view-dropdown{
+        display: none;
+    }
     /* .header-bottom-area .navbar-collapse .main-menu li {
         position: relative;
         font-family: 'Mulish';
@@ -284,6 +376,9 @@
             max-width: 70%;
             height: auto;
         }
+        .mobile-view-dropdown{
+            display: contents;
+        }
         .navbar {
             position: relative;
             display: contents;
@@ -311,9 +406,15 @@
             background-color: #E2F1F1;
             margin-top: 0px;
             box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
+        .mobile-dropdown-menu-right{
+            margin-left: 180px !important;
         }
     }
     @media (min-width: 351px) and (max-width: 430px) {
+        .mobile-view-button{
+            margin-left: 20px !important;
+        }
         .nav-button{
             background-color: #f9f9f9;
             display: contents;
@@ -325,6 +426,9 @@
         img {
             max-width: 80%;
             height: auto;
+        }
+        .mobile-view-dropdown{
+            display: contents;
         }
         .navbar {
             position: relative;
@@ -353,9 +457,15 @@
             background-color: #E2F1F1;
             margin-top: 0px;
             box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
+        .mobile-dropdown-menu-right{
+            margin-left: 180px !important;
         }
     }
     @media (min-width: 431px) and (max-width: 575px) {
+        .mobile-view-button{
+            margin-left: 32px !important;
+        }
         .nav-button{
             background-color: #f9f9f9;
             display: contents;
@@ -367,6 +477,9 @@
         img {
             max-width: 80%;
             height: auto;
+        }
+        .mobile-view-dropdown{
+            display: contents;
         }
         .navbar {
             position: relative;
@@ -395,10 +508,16 @@
             background-color: #E2F1F1;
             margin-top: 0px;
             box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
+        .mobile-dropdown-menu-right{
+            margin-left: 180px !important;
         }
     }          
     /* Media Query for low resolution  Tablets, Ipads */
     @media (min-width: 576px) and (max-width: 767px) {
+        .mobile-view-button{
+            margin-left: 135px !important;
+        }
         .nav-button{
             background-color: #f9f9f9;
             display: contents;
@@ -410,6 +529,9 @@
         img {
             max-width: 80%;
             height: auto;
+        }
+        .mobile-view-dropdown{
+            display: contents;
         }
         .navbar {
             position: relative;
@@ -472,9 +594,15 @@
             margin-top: 0px;
             box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
         }
+        .mobile-dropdown-menu-right{
+            margin-left: 180px !important;
+        }
     }
     /* Media Query for Tablets Ipads portrait mode */
     @media (min-width: 768px) and (max-width: 1023px){
+        .mobile-view-button{
+            margin-left: 255px !important;
+        }
         .nav-button{
             background-color: #f9f9f9;
             display: contents;
@@ -485,6 +613,9 @@
         }
         .collapse:not(.show) {
             display: none !important;
+        }
+        .mobile-view-dropdown{
+            display: contents;
         }
         .navbar {
             position: relative;
@@ -534,6 +665,9 @@
             background-color: #E2F1F1;
             margin-top: 0px;
             box-shadow: 7px 5px 30px 0px rgb(72 73 121 / 15%);
+        }
+        .mobile-dropdown-menu-right{
+            margin-left: 180px !important;
         }
     }
     @media (min-width: 1025px){
