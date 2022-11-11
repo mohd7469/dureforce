@@ -47,7 +47,7 @@
     <p class="comment-f">Comment</p>
     <form>
         <textarea  placeholder="Add Comment" class="comment-box"></textarea>
-        <input type="submit" value="Post Comment" class="btn-postcoment">
+        <input type="submit" value="Post Comment" name="comment" class="btn-postcoment">
         <a href="#" class="btn-atach-m">Attach</a>
     </form>    
 </div>

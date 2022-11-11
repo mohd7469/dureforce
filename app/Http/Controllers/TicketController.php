@@ -198,6 +198,50 @@ class TicketController extends Controller
         return response()->json(['redirect' => route('ticket')]);
     }
 
+    public function storeComment(Request $request,$ticket_no)
+    {
+
+        $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+
+        $user = auth()->user();
+
+        $message =SupportMessage::create([
+            "user_id"=>$user->id,
+            "support_ticket_id"=>$support_ticket->id,
+            "message"=>$request['message'],
+        ]);
+//        if ($request->hasFile('file')) {
+//
+//            foreach ($request->file as $file) {
+//                $path = imagePath()['attachments']['path'];
+//                try {
+//
+//                    $filename = uploadAttachments($file, $path);
+//                    $file_extension = getFileExtension($file);
+//                    $url = $path . '/' . $filename;
+//                    $uploaded_name = $file->getClientOriginalName();
+//
+//                    $ticket->attachments()->create([
+//
+//                        'name' => $filename,
+//                        'uploaded_name' => $uploaded_name,
+//                        'url'           => $url,
+//                        'type' =>$file_extension,
+//                        'is_published' =>1
+//
+//                    ]);
+//
+//                } catch (\Exception $exp) {
+//                    $notify[] = ['error', 'Document could not be uploaded.'];
+//                    return back()->withNotify($notify);
+//                }
+//
+//            }
+//        }
+        $notify[] = ['success', 'ticket created successfully!'];
+        return redirect()->route('ticket.view',$ticket_no);
+    }
+
 
     public function viewTicket($ticket)
     {
@@ -237,9 +281,8 @@ class TicketController extends Controller
     public function show($ticket)
     {
         try {
-            $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments')->firstOrFail();
+            $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments','supportMessage.user.basicProfile')->firstOrFail();
             $pageTitle = "Support Ticket Details";
-            
             return view($this->activeTemplate . 'user.support.ticket_details', compact( 'pageTitle','support_ticket'));
         } catch (\Exception $exp) {
             DB::rollback();

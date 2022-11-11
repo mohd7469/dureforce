@@ -26,7 +26,7 @@ class SupportTicket extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->with('basicProfile');
     }
 
     public function supportMessage(){

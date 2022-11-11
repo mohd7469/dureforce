@@ -34,6 +34,35 @@
             
     </div>
 
+
+
+
+
+    @isset($support_ticket->supportMessage)
+    @foreach($support_ticket->supportMessage as $support_message)
+        <div class="userlist">
+            <div class="userv">
+
+                <div class="userprofile"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
+                <p class="username">{{$support_message->user->full_name}}</p>
+                <p class="time-d"> {{$support_message->created_at}} </p>
+            </div>
+            <div class="userdetail">
+                {{$support_message->message}}
+            </div>
+{{--            @if (count($support_message->attachments)>0)--}}
+{{--                <p class="font-attach">Attachments</p>--}}
+{{--                @foreach($support_message->attachments as $decumentUrl)--}}
+{{--                    <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">--}}
+{{--                        <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>--}}
+{{--                @endforeach--}}
+{{--                --}}{{-- <span class="attachment-file"><img src="/assets/images/job/attached.svg"> Screenshot.jpg</span> --}}
+{{--            @endif--}}
+
+        </div>
+    @endforeach
+@endisset
+
     <!---Users Online Section End-->
 
    
@@ -45,9 +74,10 @@
 <!---Comments Box-->
 <div class="comment-box">
     <p class="comment-f">Comment</p>
-    <form>
-        <textarea  placeholder="Add Comment" class="comment-box"></textarea>
-        <input type="submit" value="Post Comment" class="btn-postcoment">
+    <form action="{{route('ticket.comment.store',$support_ticket->ticket_no)}}" method="POST">
+        @csrf
+        <textarea  placeholder="Add Comment" name="message" class="comment-box"></textarea>
+        <input type="submit"  class="btn-postcoment">
         <a href="#" class="btn-atach-m">Attach</a>
     </form>    
 </div>
