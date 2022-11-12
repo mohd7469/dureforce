@@ -210,34 +210,35 @@ class TicketController extends Controller
             "support_ticket_id"=>$support_ticket->id,
             "message"=>$request['message'],
         ]);
-//        if ($request->hasFile('file')) {
-//
-//            foreach ($request->file as $file) {
-//                $path = imagePath()['attachments']['path'];
-//                try {
-//
-//                    $filename = uploadAttachments($file, $path);
-//                    $file_extension = getFileExtension($file);
-//                    $url = $path . '/' . $filename;
-//                    $uploaded_name = $file->getClientOriginalName();
-//
-//                    $ticket->attachments()->create([
-//
-//                        'name' => $filename,
-//                        'uploaded_name' => $uploaded_name,
-//                        'url'           => $url,
-//                        'type' =>$file_extension,
-//                        'is_published' =>1
-//
-//                    ]);
-//
-//                } catch (\Exception $exp) {
-//                    $notify[] = ['error', 'Document could not be uploaded.'];
-//                    return back()->withNotify($notify);
-//                }
-//
-//            }
-//        }
+       if ($request->hasFile('comment_attachment')) {
+
+          
+               $path = imagePath()['attachments']['path'];
+               try {
+
+                   $file=$request->comment_attachment;
+                   $filename = uploadAttachments($file, $path);
+                   $file_extension = getFileExtension($file);
+                   $url = $path . '/' . $filename;
+                   $uploaded_name = $file->getClientOriginalName();
+
+                   $message->attachments()->create([
+
+                       'name' => $filename,
+                       'uploaded_name' => $uploaded_name,
+                       'url'           => $url,
+                       'type' =>$file_extension,
+                       'is_published' =>1
+
+                   ]);
+
+               } catch (\Exception $exp) {
+                   $notify[] = ['error', 'Document could not be uploaded.'];
+                   return back()->withNotify($notify);
+               }
+
+           
+       }
         $notify[] = ['success', 'ticket created successfully!'];
         return redirect()->route('ticket.view',$ticket_no);
     }
@@ -293,6 +294,7 @@ class TicketController extends Controller
 
     public function replyTicket(Request $request, $id)
     {
+       
         $userId = 0;
         if (Auth::user()) {
             $userId = Auth::id();
