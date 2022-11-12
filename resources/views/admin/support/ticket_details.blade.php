@@ -32,13 +32,16 @@
                     {{-- <span class="attachment-file"><img src="/assets/images/job/attached.svg"> Screenshot.jpg</span> --}}
                 @endif
 
+
+
+
                 @isset($support_ticket->supportMessage)
                     @foreach($support_ticket->supportMessage as $support_message)
 
                         @if($support_message->admin_id != null)
-                            <div class="userv">
+                            <div class="userv" style="margin-top: 12px;">
 
-                                <div class="userprofile"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
+                                <div class="userprofile" style="margin-left: 2px;"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
                                 <p class="username">Dureforce Support</p>
                                 <p class="time-d"> {{$support_message->created_at}} </p>
                             </div>

@@ -36,9 +36,9 @@
         @foreach($support_ticket->supportMessage as $support_message)
 
             @if($support_message->admin_id != null)
-                <div class="userv">
+                <div class="userv" style="margin-top: 12px;" >
 
-                    <div class="userprofile"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
+                    <div class="userprofile" style="margin-left: 2px;"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
                     <p class="username">Dureforce Support</p>
                     <p class="time-d"> {{$support_message->created_at}} </p>
                 </div>
@@ -54,9 +54,9 @@
                 @endif
 
                 @else
-                    <div class="userv">
+                    <div class="userv" style="margin-top: 12px;">
 
-                        <div class="userprofile"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
+                        <div class="userprofile" style="margin-left: 2px;"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                         <p class="username">{{$support_message->user->full_name}}</p>
                         <p class="time-d"> {{$support_message->created_at}} </p>
                     </div>
