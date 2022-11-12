@@ -77,12 +77,6 @@
     </div>
 
     <!---Users Online Section End-->
-
-   
-
-   
-
-
      
 <!---Comments Box-->
 <div class="comment-box">

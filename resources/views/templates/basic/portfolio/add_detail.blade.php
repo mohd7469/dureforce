@@ -58,7 +58,7 @@
 
                     
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                        <p class="skills-s">Skills and Deliverables (Optional)</p>
+                        <label class="skills-s">Skills and Deliverables (Optional)</label>
                         
                         <div class="input-group mb-1 select2_element">
 
@@ -87,23 +87,7 @@
 
                 </div>
 
-                {{-- <div class="row pb-5">
-                    
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
-                        
-                        <div class="col-md-7">
-                            <label>Suggested Skills</label>
-                            <ul class="skills-listing">
-                            <li>ui design +</li>
-                            <li>research +</li>
-                            <li>data analytics +</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div> --}}
-                
-
+            
 
                 <div class="row pb-3">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
