@@ -203,7 +203,6 @@ class CommonProfileController extends Controller
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $countries = Country::select('id', 'name')->get();
-
         $user_experience = $user->experiences;
         $user_education  = $user->education;
         $user_portfolios = $user->portfolios; 
