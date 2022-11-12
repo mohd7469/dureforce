@@ -34,11 +34,12 @@
 
         @isset($support_ticket->supportMessage)
         @foreach($support_ticket->supportMessage as $support_message)
-            
+
+            @if($support_message->admin_id != null)
                 <div class="userv">
 
-                    <div class="userprofile"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
-                    <p class="username">{{$support_message->user->full_name}}</p>
+                    <div class="userprofile"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
+                    <p class="username">Dureforce Support</p>
                     <p class="time-d"> {{$support_message->created_at}} </p>
                 </div>
                 <div class="userdetail">
@@ -52,7 +53,24 @@
                     @endforeach
                 @endif
 
-            
+                @else
+                    <div class="userv">
+
+                        <div class="userprofile"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
+                        <p class="username">{{$support_message->user->full_name}}</p>
+                        <p class="time-d"> {{$support_message->created_at}} </p>
+                    </div>
+                    <div class="userdetail">
+                        {{$support_message->message}}
+                    </div>
+                    @if (count($support_message->attachments)>0)
+                        <p class="font-attach">Attachments</p>
+                        @foreach($support_message->attachments as $decumentUrl)
+                            <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
+                                <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                        @endforeach
+                    @endif
+                @endif
         @endforeach
     @endisset
             
