@@ -24,7 +24,7 @@ class CreateSupportMessages extends Migration
 
             $table->foreign('support_ticket_id')->references('id')->on('support_tickets')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
 
         });
     }

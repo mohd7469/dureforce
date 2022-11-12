@@ -22,9 +22,6 @@ class SupportTicketController extends Controller
     }
     public function index()
     {
-        if (!Auth::user()) {
-            abort(404);
-        }
 
         $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority'])->get();
 
@@ -57,6 +54,51 @@ class SupportTicketController extends Controller
         return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
     }
 
+
+    public function storeComment(Request $request,$ticket_no)
+    {
+        $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+
+        $user = auth()->guard('admin')->user();
+
+
+        $message =SupportMessage::create([
+            "admin_id"=>$user->id,
+            "support_ticket_id"=>$support_ticket->id,
+            "message"=>$request['message'],
+        ]);
+        if ($request->hasFile('comment_attachment')) {
+
+
+            $path = imagePath()['attachments']['path'];
+            try {
+
+                $file=$request->comment_attachment;
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                $uploaded_name = $file->getClientOriginalName();
+
+                $message->attachments()->create([
+
+                    'name' => $filename,
+                    'uploaded_name' => $uploaded_name,
+                    'url'           => $url,
+                    'type' =>$file_extension,
+                    'is_published' =>1
+
+                ]);
+
+            } catch (\Exception $exp) {
+                $notify[] = ['error', 'Document could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+
+
+        }
+        $notify[] = ['success', 'Comment added successfully!'];
+        return redirect()->route('admin.ticket.view',$ticket_no);
+    }
 
     public function ticketReply($id)
     {
