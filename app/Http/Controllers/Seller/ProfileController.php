@@ -17,6 +17,7 @@ use App\Models\UserEducation;
 use App\Models\UserExperiences;
 use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
+use Illuminate\Support\Facades\Config;
 use Khsing\World\Models\Country;
 
 class ProfileController extends Controller
@@ -196,7 +197,7 @@ class ProfileController extends Controller
             'description' => 'required',
             'company_name'=> 'required',
             'country_id'  => 'required',
-            'start_date'  => 'required|before:today',
+            'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
             'end_date'    => 'before:today|after_or_equal:start_date',
         ]);
         
@@ -239,7 +240,7 @@ class ProfileController extends Controller
             'description' => 'required',
             'company_name'=> 'required',
             'country_id'  => 'required',
-            'start_date'  => 'required|before:today',
+            'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
             'end_date'    => 'before:today|after_or_equal:start_date',
         ]);
         
@@ -278,6 +279,7 @@ class ProfileController extends Controller
 
             'start_date.required' => 'From date filed is required',
             'start_date.before' => 'From date should be before today date',
+            'start_date.after' => 'From date must be a date after 01/01/1900',
             'end_date.before' => 'To date should be before today date',
             'end_date.after' => 'To date should be after From date '
         ];
@@ -287,7 +289,7 @@ class ProfileController extends Controller
             'field_of_study'=> 'required',
             'description'  => 'required',
             'degree_id'  => 'required',
-            'start_date'  => 'required|before:today',
+            'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),
             'end_date'    => 'before:today|after:start_date',
         ],$custom_messages);
         
@@ -322,6 +324,7 @@ class ProfileController extends Controller
         $custom_messages =[
             'start_date.required' => 'From date filed is required',
             'start_date.before' => 'From date should be before today date',
+            'start_date.after' => 'From date must be a date after 01/01/1900',
             'end_date.before' => 'To date should be before today date',
             'end_date.after' => 'To date should be after From date '
         ];
@@ -331,7 +334,7 @@ class ProfileController extends Controller
             'field_of_study'=> 'required',
             'description'  => 'required',
             'degree_id'  => 'required',
-            'start_date'  => 'required|before:today',
+            'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
             'end_date'    => 'before:today|after:start_date',
         ],$custom_messages);
         
@@ -431,7 +434,7 @@ class ProfileController extends Controller
         
         $rules = [
             'name' => 'required',
-            'completion_date' => 'required|date|before:today',
+            'completion_date' => 'required|date|before:today|after:' . Config('settings.minimum_system_start_date'),
             'skills' => 'nullable|array|max:15',
             'skills.*' =>'exists:skills,id',
             'project_url' => 'nullable',
