@@ -20,7 +20,7 @@
                                 {{-- <div class="col-md-12">
                                     <label class="mt-4">Company Logo </label>
                                     <div class="profile-img">
-                                        <input type="file" name="company_logo" id="img-upload"
+                                        <input type="file" name="company_logo" id="img-upload"p
                                             accept="image/png, image/gif, image/jpeg" class="imgInp"
                                             onchange="previewCompanyFile(this)"/>
                                             <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">

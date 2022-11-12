@@ -767,4 +767,15 @@ class ProfileController extends Controller
             }
         }
     }
+
+    public function updateProfilePicture(Request $request)
+    {
+        $path = imagePath()['attachments']['path'];
+        $file = $request->company_logo;
+        $filename = uploadAttachments($file, $path);
+        $file_extension = getFileExtension($file);
+        $url = $path . '/' . $filename;
+        auth()->user()->company()->update(['logo' => $url]);
+        return redirect()->route('buyer.basic.profile',['profile' => 'step-1']);
+    }
 }
