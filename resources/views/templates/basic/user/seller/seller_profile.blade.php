@@ -82,10 +82,13 @@
                                         </div>
                                        </div>
                                       <div class="col-xl-12 mt-8">
-                                          <h5 class="title">Languages</h5>
-                                          @foreach ($user->languages as $item)
-                                            <span><b>{{getLanaguageName($item->language_id)}}:{{getProficiencyLevelName($item->language_level_id)}}</b></span> <span></span><br>
-                                         @endforeach
+                                          <strong class="title">Languages</strong>
+                                          <div class="pt-1">
+                                            @foreach ($user->languages as $item)
+                                            <b>{{getLanaguageName($item->language_id)}}</b>:{{getProficiencyLevelName($item->language_level_id)}}<br>
+                                            @endforeach
+                                          </div>
+                                          
                                       </div>
 
                                 </div>
