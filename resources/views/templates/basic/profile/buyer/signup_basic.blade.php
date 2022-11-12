@@ -308,14 +308,17 @@
             let idxDot = file.name.lastIndexOf(".") + 1;
             let extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
             if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+
                 if (file) {
                     let reader = new FileReader();
                     reader.onload = function() {
                         $("#preview-img-company").attr("src", reader.result);
                         $("#preview-img-company-edit").attr("src", reader.result);
+
                     }
                     reader.readAsDataURL(file);
                 }
+            $('#image_change').submit();
             } else {
                 alert("Only jpg/jpeg, png files are allowed!");
                 return false;

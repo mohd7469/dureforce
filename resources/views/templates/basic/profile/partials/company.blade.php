@@ -125,7 +125,7 @@ z-index: 1;
     
     <!----== Client Info Section Start ==----->
     <div class="client-info-section">
-        <p class="cp-basic">Company Details</p>
+        <p class="cp-basic">Company Details 2</p>
         <div style="float:right">
             <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#companyModal">
                 Edit 
@@ -137,11 +137,15 @@ z-index: 1;
       <!----== Client Info Section Start ==----->
         
       <div class="cp-profile_c_main">
-        <div class="profile-img-buyer col-md-12" action="" style="background-color: transparent;">
-            <input type="file" name="company_logo" id="img-upload-company" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after" onchange="return previewCompanyFile(this);" title="">
-            <img class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
-            <div class="cp-profile-h">{{$basicProfile->designation}}</div>
-        </div>
+        <form action="{{route('buyer.profile.update.picture')}}" method="post" enctype="multipart/form-data" id="image_change">
+            @csrf
+            <div class="profile-img-buyer col-md-12" style="background-color: transparent;">
+                <input type="file" name="company_logo" id="img-upload" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after " onchange="previewCompanyFile(this)" autocomplete="on">
+                <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
+                
+            </div>
+        </form>
+        
         {{-- <div class="h-img">
             <img class="cp-prfileimg rounded-c" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
             

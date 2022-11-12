@@ -237,7 +237,6 @@
 
 
         function previewCompanyFile(input) {
-
             let file = input.files[0];
             let idxDot = file.name.lastIndexOf(".") + 1;
             let extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
