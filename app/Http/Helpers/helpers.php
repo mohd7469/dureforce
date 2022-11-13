@@ -1319,3 +1319,26 @@ function getYearMonthDays($timestamp){
     return $month_name.' '. $day.', '. $year;
 
 }
+
+
+function getRedisData($model,$key){
+    $redis_data =  json_decode(Redis::get($key));
+    if ($redis_data){
+        return $redis_data;
+    }
+    else{
+        $model_data = $model::all();
+        Redis::set($key, json_encode($model_data));
+        return $model_data;
+    }
+}
+function storeRedisData($model,$key){
+    $model_data = $model::all();
+    if ($model_data){
+        Redis::set($key, json_encode($model_data));
+        return true;
+    }
+    else{
+        return false;
+    }
+}

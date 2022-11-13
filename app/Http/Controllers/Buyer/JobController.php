@@ -28,6 +28,7 @@ use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
@@ -45,6 +46,8 @@ class JobController extends Controller
         $data = [];
 
         $data['countries'] = World::Countries();
+        Redis::set('countries',json_encode($data));
+
 
         $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
 
