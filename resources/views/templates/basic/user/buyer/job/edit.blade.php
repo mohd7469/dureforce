@@ -242,7 +242,7 @@
                                         
                                         <div style="display:inline;display:none" id="skills_heading">
                                             <h4 class="" style="display:inline">Job Attributes* </h4>
-                                            <small>(Atlease one skill is required)</small>
+                                            <small>(At least one skill is required)</small>
                                         </div>
                                         
                                         <div id="form_attributes">

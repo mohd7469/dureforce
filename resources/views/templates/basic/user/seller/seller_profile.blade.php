@@ -939,7 +939,7 @@
     function displayAlertMessage(message)
     {
         iziToast.error({
-        message: message,
+        message: message.toString().replace(',',' and '),
         position: "topRight",
         });
     }
@@ -958,7 +958,9 @@
                 }
             });  
     }
-
+    function setMinDateJob(parent, element) {
+        element.attr('min', parent.val());
+    }
     function removerow(row_id)
     {
         var div_to_remove=row_id;
