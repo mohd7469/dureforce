@@ -146,8 +146,9 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-
-        
+        // $request->validate([
+        //     'subject' => 'required',
+        //     // 'priority_id' => 'required'
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = auth()->user();
@@ -200,7 +201,9 @@ class TicketController extends Controller
 
     public function storeComment(Request $request,$ticket_no)
     {
-
+        $request->validate([
+            'message' => 'required'
+        ]);
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->user();
