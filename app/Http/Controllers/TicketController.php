@@ -30,7 +30,7 @@ class TicketController extends Controller
 
         $user = auth()->user();
 
-        $tickets = SupportTicket::with(['status','priority'])->where('role_id', $user->last_role_activity)->where('user_id', $user->id)->get();
+        $tickets = SupportTicket::with(['status','priority','supportMessage'])->where('role_id', $user->last_role_activity)->where('user_id', $user->id)->get();
 
         $pageTitle = "Support Tickets";
         return view($this->activeTemplate . 'user.support.index', compact('tickets', 'pageTitle'));

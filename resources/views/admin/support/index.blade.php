@@ -24,7 +24,7 @@
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
                                     <td><a href="{{ route('admin.ticket.view', $ticket->ticket_no) }}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
                                     <td>{{$ticket->subject}}</td>
-                                    <td>12</td>
+                                    <td>{{$ticket->supportMessage->count()}}</td>
 
 
                                     <?php if ($ticket->status->id == \App\Models\SupportTicket::$OnHold){  ?>
