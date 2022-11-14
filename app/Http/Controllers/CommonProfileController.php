@@ -191,25 +191,31 @@ class CommonProfileController extends Controller
      *
      * @return void
      */
-    public function getUserProfile()
+    public function getUserProfile($id=null)
     {
-        $pageTitle = 'Seller Profile';
-        $user = auth()->user();
-        $user = User::withAll()->find($user->id);
-        $skills=$user->skills;
-        $basicProfile=$user->basicProfile;
-        $user_languages=$user->languages;
-        $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
-        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
-        $countries = Country::select('id', 'name')->get();
-        $user_experience = $user->experiences;
-        $user_education  = $user->education;
-        $user_portfolios = $user->portfolios; 
-        $categories = Category::select('id', 'name')->get();
-        $degrees = Degree::select('id', 'title')->get();
+        try {
+            $pageTitle = 'Seller Profile';
+            $user_id = $id == null ? auth()->user()->uuid :$id;
+            $user = User::withAll()->where('uuid',$user_id)->firstOrFail();
+            $skills=Skills::select('id','name')->get();
+            $userskills=$user->skills;
+            $basicProfile=$user->basicProfile;
+            $user_languages=$user->languages;
+            $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+            $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+            $language_levels = LanguageLevel::select('id', 'name')->get();
+            $countries = Country::select('id', 'name')->get();
+            $user_experience = $user->experiences;
+            $user_education  = $user->education;
+            $user_portfolios = $user->portfolios; 
+            $categories = Category::select('id', 'name')->get();
+            $degrees = Degree::select('id', 'title')->get();
 
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages'));
+            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages'));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        
     }
     
     /**
