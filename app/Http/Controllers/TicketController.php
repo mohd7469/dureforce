@@ -149,6 +149,7 @@ class TicketController extends Controller
         // $request->validate([
         //     'subject' => 'required',
         //     // 'priority_id' => 'required'
+        // ]);
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = auth()->user();
