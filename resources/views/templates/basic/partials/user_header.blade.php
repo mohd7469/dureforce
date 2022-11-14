@@ -98,6 +98,7 @@
                                             @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('seller.jobs.listing') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Jobs')</span>
@@ -114,6 +115,24 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
+                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                            <a href="{{ route('seller.jobs.listing') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('All Jobs')</span>
+                                            </a>
+                                            <a href="{{route('buyer.job.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Manage Jobs')</span>
+                                            </a>
+                                            <a href="{{route('buyer.job.create')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Create Jobs')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
+                                            </a>
+                                        @endif
                                         </div>
                                     </div>
                                 </li>
@@ -125,6 +144,7 @@
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="#"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
@@ -137,6 +157,20 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Active Proposals')</span>
                                             </a>
+                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('All Proposals')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Invite Sellers')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Shortlisted Sellers')</span>
+                                            </a>
+                                        @endif
                                         </div>
                                     </div>    
                                 </li>
@@ -150,14 +184,25 @@
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('service') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Services')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{ route('user.service.create') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create a Service')</span>
                                             </a>
+                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                            <a href="{{ route('service') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Search Services')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Booked Services')</span>
+                                            </a>
+                                        @endif
                                         </div>
                                     </div>    
                                 </li>
@@ -171,14 +216,25 @@
                                             @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('software') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Softwares')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{route('user.software.create')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create a Software')</span>
                                             </a>
+                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                            <a href="{{ route('software') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Search Softwares')</span>
+                                            </a>
+                                            <a href="#"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Booked Softwares')</span>
+                                            </a>
+                                        @endif    
                                         </div>
                                     </div>
                                 </li>
