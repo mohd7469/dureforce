@@ -23,7 +23,7 @@ class SupportTicketController extends Controller
     public function index()
     {
 
-        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority','supportMessage'])->get();
 
         $pageTitle = "Support Tickets";
 
@@ -57,6 +57,9 @@ class SupportTicketController extends Controller
 
     public function storeComment(Request $request,$ticket_no)
     {
+        $request->validate([
+            'message' => 'required'
+        ]);
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->guard('admin')->user();
