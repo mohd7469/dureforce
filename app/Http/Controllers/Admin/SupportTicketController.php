@@ -57,6 +57,9 @@ class SupportTicketController extends Controller
 
     public function storeComment(Request $request,$ticket_no)
     {
+        $request->validate([
+            'message' => 'required'
+        ]);
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->guard('admin')->user();
