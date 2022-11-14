@@ -28,30 +28,30 @@
 
 
                                     <?php if ($ticket->status->id == \App\Models\SupportTicket::$OnHold){  ?>
-                                    <td><span class=" btn-sta status-on-hold">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta status-on-hold">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
 
                                     <?php }
                                     elseif ($ticket->status->id == \App\Models\SupportTicket::$Closed){  ?>
-                                    <td><span class="btn-sta status-closed">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta status-closed">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
 
                                     <?php }
                                     else{ ?>
-                                    <td><span class="btn-sta status-open">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta status-open">{{isset($ticket->status)? $ticket->status->name:''}}</span></td>
 
                                     <?php } ?>
 
 
 
                                     <?php if ($ticket->priority->id == \App\Models\Status::$High){  ?>
-                                    <td><span class="btn-sta priority-high-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta priority-high-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
 
                                 <?php }
                                     elseif ($ticket->priority->id == \App\Models\Status::$Low){ ?>
-                                    <td><span class="btn-sta priority-low-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta priority-low-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
 
                                 <?php }
                                     else{ ?>
-                                    <td><span class="btn-sta priority-medium-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
+                                    <td><span class="btn btn-sm btn-sta priority-medium-color">{{isset($ticket->priority)? $ticket->priority->name:''}}</span></td>
 
                                 <?php } ?>
 
@@ -196,7 +196,7 @@
             font-size: 14px;
             line-height: 18px;
             padding-top: 4px;
-            padding-left: 20px;
+            padding-left: 22px;
             position: sticky;
 
         }
