@@ -6,8 +6,8 @@
         <div class="container">
             <div class="secondsb-con">
                 <p class="sbheading-c">All Support Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
-                <a href="#" class="openbtn-s">{{$support_ticket->status->name}}</a>
-                <a href="#" class="highbtn-s">{{$support_ticket->priority->name}}</a>
+                <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
+                <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
 
                 <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at}}</p>
             </div>
