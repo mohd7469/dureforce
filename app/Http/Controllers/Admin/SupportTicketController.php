@@ -57,7 +57,9 @@ class SupportTicketController extends Controller
     {
         $request->validate([
             'message' => 'required'
-        ]);
+        ],
+            ['message.required'=>"Comment field is required"]
+        );
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->guard('admin')->user();

@@ -26,13 +26,13 @@
             
           </div>
           <div class="form-group col-md-6">
-            <label for="exampleInputEmail1">Subject </label>
+            <label for="exampleInputEmail1">Subject*</label>
             <input type="text" class="form-control back" name="subject"  aria-describedby="emailHelp" placeholder="Subject">
            
           </div>
 
           <div class="form-group col-md-6">
-            <label for="exampleInputEmail1">Priority</label>
+            <label for="exampleInputEmail1">Priority*</label>
             <select class="form-select form-select-sm form-control back" name="priority_id" aria-label=".form-select-sm example">
                 <option>Priority</option>
                 @foreach($priorities as $priority)
@@ -76,7 +76,7 @@
         <small class="allow-text">Allowed File Extensions: .jpg, .jpeg, .png, .doc, .docx</small>
          {{-- Cover Letter --}}
          <div class="form-group">
-            <label for="cover_letter">Message</label>
+            <label for="cover_letter">Message*</label>
             <textarea class="form-control cover-letter back" id="cover_letter" rows="20" cols="8" name="message" ></textarea>
          </div>
          <div class="comment-box">
