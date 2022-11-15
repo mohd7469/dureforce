@@ -18,7 +18,7 @@
 
                     <div class="userprofile"><img src="{{$support_ticket->user->basicProfile ? $support_ticket->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                     <p class="username">{{$support_ticket->user->full_name}}</p>
-                    <p class="time-d"> {{$support_ticket->created_at}} </p>
+                    <p class="time-d"> {{$support_ticket->created_at->format('d M Y')}}}} </p>
                 </div>
                 <div class="userdetail">
                     {{$support_ticket->message}}
@@ -43,7 +43,7 @@
 
                                 <div class="userprofile" style="margin-left: 2px;"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
                                 <p class="username">Dureforce Support</p>
-                                <p class="time-d"> {{$support_message->created_at}} </p>
+                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}}}} </p>
                             </div>
                             <div class="userdetail">
                                 {{$support_message->message}}
@@ -61,7 +61,7 @@
 
                                 <div class="userprofile" style="margin-left: 2px;"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                                 <p class="username">{{$support_message->user->full_name}}</p>
-                                <p class="time-d"> {{$support_message->created_at}} </p>
+                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}}}} </p>
                             </div>
                             <div class="userdetail">
                                 {{$support_message->message}}
