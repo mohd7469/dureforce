@@ -63,7 +63,7 @@
             {
                 axios.post('/chat/messages', {  
                     send_to_id: this.active_user.id,  
-                    job_id: 96  
+                    job_id: 96 
                 })  
 
                 .then( response => {

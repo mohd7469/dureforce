@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::name('chat.')->prefix('chat')->group(function () {
     Route::middleware(['verified'])->group(function () { 
-
+        Route::get('propsal/message/{propsal_id}',[\App\Http\Controllers\Chat\ChatController::class,'savePropsalMessage'])->name('propsal.message');
         Route::get('/user', 'CommonProfileController@userChat')->name('inbox');
         Route::get('/get_users', [\App\Http\Controllers\Chat\ChatController::class,'getUsers'])->name('users');
         Route::post('/messages', [\App\Http\Controllers\Chat\ChatController::class,'getUserChat'])->name('messges');

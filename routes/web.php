@@ -445,9 +445,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             // Admin Support
 //            Route::get('tickets', 'SupportTicketController@tickets')->name('ticket');
             Route::get('tickets', 'SupportTicketController@index')->name('ticket');
-            Route::get('tickets/pending', 'SupportTicketController@pendingTicket')->name('ticket.pending');
+            Route::get('tickets/pending', 'SupportTicketController@openTickets')->name('ticket.pending');
             Route::get('tickets/closed', 'SupportTicketController@closedTicket')->name('ticket.closed');
-            Route::get('tickets/answered', 'SupportTicketController@answeredTicket')->name('ticket.answered');
+            Route::get('tickets/answered', 'SupportTicketController@onHoldTicket')->name('ticket.answered');
 //            Route::get('tickets/view/{id}', 'SupportTicketController@ticketReply')->name('ticket.view');
             Route::post('store-ticket-comment/{ticket_no}', 'SupportTicketController@storeComment')->name('ticket.comment.store');
             Route::get('tickets/view/{id}', 'SupportTicketController@show')->name('ticket.view');

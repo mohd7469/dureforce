@@ -74,6 +74,7 @@
 
             </div>
         </div>
+        <!-- buttons -->
         <div>
             
             <div class="row background">
