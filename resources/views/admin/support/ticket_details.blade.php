@@ -43,7 +43,7 @@
 
                                 <div class="userprofile" style="margin-left: 2px;"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
                                 <p class="username">Dureforce Support</p>
-                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}}}} </p>
+                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}} </p>
                             </div>
                             <div class="userdetail">
                                 {{$support_message->message}}
