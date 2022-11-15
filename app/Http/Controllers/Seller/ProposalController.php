@@ -11,6 +11,7 @@ use App\Models\JobType;
 use App\Models\Milestone;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
+use App\Models\Role;
 use App\Models\SkillCategory;
 use App\Models\Skills;
 use App\Models\User;
@@ -94,7 +95,6 @@ class ProposalController extends Controller
         $request_data = [];
         parse_str($request->data, $request_data);
 
-
         try {
             DB::beginTransaction();
             $proposal = $job->proposal()->create([
@@ -131,34 +131,35 @@ class ProposalController extends Controller
                 $proposal->amount_receive = $request_data['hourly_bid_rate'] * 0.80;
 
             }
-
             $proposal->save();
 
-                        if ($request->hasFile('file')) {
+           
+           
+            if ($request->hasFile('file')) {
 
-                            foreach ($request->file as $file) {
-                                $path = imagePath()['attachments']['path'];
-                                try {
-                                    $filename = uploadAttachments($file, $path);
+                foreach ($request->file as $file) {
+                    $path = imagePath()['attachments']['path'];
+                    try {
+                        $filename = uploadAttachments($file, $path);
 
-                                    $file_extension = getFileExtension($file);
-                                    $url = $path . '/' . $filename;
-                                    $proposal_attachment = new ProposalAttachment;
-                                    $proposal_attachment->name = $filename;
-                                    $proposal_attachment->uploaded_name = $file->getClientOriginalName();
-                                    $proposal_attachment->url = $url;
-                                    $proposal_attachment->type = $file_extension;
-                                    $proposal_attachment->is_published = "Active";
-                                    $proposal_attachment->proposal_id = $proposal->id;
-                                    $proposal_attachment->save();
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        $proposal_attachment = new ProposalAttachment;
+                        $proposal_attachment->name = $filename;
+                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
+                        $proposal_attachment->url = $url;
+                        $proposal_attachment->type = $file_extension;
+                        $proposal_attachment->is_published = "Active";
+                        $proposal_attachment->proposal_id = $proposal->id;
+                        $proposal_attachment->save();
 
-                                } catch (\Exception $exp) {
-                                    $notify[] = ['error', 'Document could not be uploaded.'];
-                                    return back()->withNotify($notify);
-                                }
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Document could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
 
-                            }
-                        }
+                }
+            }
 
             DB::commit();
 
