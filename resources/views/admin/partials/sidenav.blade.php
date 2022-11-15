@@ -687,7 +687,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 <li class="sidebar-menu-item {{ menuActive('admin.ticket.pending') }} ">
                                     <a href="{{ route('admin.ticket.pending') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Pending Ticket')</span>
+                                        <span class="menu-title">@lang('Open Ticket')</span>
                                         @if ($pending_ticket_count)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $pending_ticket_count }}</span>
@@ -703,7 +703,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 <li class="sidebar-menu-item {{ menuActive('admin.ticket.answered') }} ">
                                     <a href="{{ route('admin.ticket.answered') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Answered Ticket')</span>
+                                        <span class="menu-title">@lang('On Hold Ticket')</span>
                                     </a>
                                 </li>
                             </ul>

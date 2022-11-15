@@ -30,28 +30,26 @@ class SupportTicketController extends Controller
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
-    public function pendingTicket()
+    public function openTickets()
     {
-        $pageTitle = 'Pending Tickets';
-        $emptyMessage = 'No Data found.';
-        $items = SupportTicket::whereIn('status', [0,2])->orderBy('priority', 'DESC')->orderBy('id','desc')->with('user')->paginate(getPaginate());
-        return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Open)->with(['status','priority','supportMessage'])->get();
+        $pageTitle = "Support Tickets";
+        return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function closedTicket()
     {
-        $emptyMessage = 'No Data found.';
-        $pageTitle = 'Closed Tickets';
-        $items = SupportTicket::where('status',3)->orderBy('id','desc')->with('user')->paginate(getPaginate());
-        return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Closed)->with(['status','priority','supportMessage'])->get();
+        $pageTitle = "Support Tickets";
+        return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
-    public function answeredTicket()
+    public function onHoldTicket()
     {
-        $pageTitle = 'Answered Tickets';
-        $emptyMessage = 'No Data found.';
-        $items = SupportTicket::orderBy('id','desc')->with('user')->where('status',1)->paginate(getPaginate());
-        return view('admin.support.tickets', compact('items', 'pageTitle','emptyMessage'));
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$OnHold)->with(['status','priority','supportMessage'])->get();
+        $pageTitle = "Support Tickets";
+        return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
 
