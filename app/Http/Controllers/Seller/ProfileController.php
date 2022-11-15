@@ -212,7 +212,7 @@ class ProfileController extends Controller
             
             $user = auth()->user();        
             $user->experiences()->create(
-                $request->only(['job_title','description','company_name','country_id','start_date','end_date'])
+                $request->only(['job_title','description','company_name','country_id','start_date','end_date','is_working'])
             );
            
             return response()->json(["success" => "User Experience Added Successfully"], 200);
@@ -254,7 +254,7 @@ class ProfileController extends Controller
             
             $user = auth()->user();        
             UserExperiences::find($seller_experience_id)->update(
-                $request->only(['job_title','description','company_name','country_id','start_date','end_date'])
+                $request->only(['job_title','description','company_name','country_id','start_date','end_date','is_working'])
             );
            
             return response()->json(["success" => "User Experience Updated Successfully"], 200);
@@ -301,7 +301,7 @@ class ProfileController extends Controller
         $user = auth()->user();        
 
         try {
-            $user->education()->create($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date'));
+            $user->education()->create($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date','is_enrolled'));
             return response()->json(["success" => "User Education Added Successfully"], 200);
 
         } catch (\Exception $exp) {
@@ -346,10 +346,13 @@ class ProfileController extends Controller
         $user = auth()->user();        
 
         try {
-            UserEducation::where('id',$seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date','is_enrolled'));
+
+            UserEducation::find($seller_education_id)->update($request->only('school_name','education','field_of_study','description','degree_id','start_date','end_date','is_enrolled'));
+            
             return response()->json(["success" => "User Education Updated Successfully"], 200);
 
         } catch (\Exception $exp) {
+
             return response()->json(['error' => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
