@@ -18,7 +18,7 @@
 
                     <div class="userprofile"><img src="{{$support_ticket->user->basicProfile ? $support_ticket->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                     <p class="username">{{$support_ticket->user->full_name}}</p>
-                    <p class="time-d"> {{$support_ticket->created_at->format('d M Y')}}}} </p>
+                    <p class="time-d"> {{$support_ticket->created_at->format('d M Y')}} </p>
                 </div>
                 <div class="userdetail">
                     {{$support_ticket->message}}
