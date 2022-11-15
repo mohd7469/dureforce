@@ -23,6 +23,7 @@ class PusherConfiguration extends ServiceProvider
      */
     public function boot()
     {
+
          $pusher_credentials = getPusherCredentials();
          if ($pusher_credentials) {
              $config = array(
@@ -36,5 +37,6 @@ class PusherConfiguration extends ServiceProvider
              Config::set('broadcasting.connections.pusher.options.cluster', $pusher_credentials->port);
 
          }
+
     }
 }
