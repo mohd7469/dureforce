@@ -42,10 +42,10 @@ class UserEducation extends Model
 
     protected static function boot()
     {
-          
         parent::boot();
         static::saving(function ($model)  {
             $model->is_enrolled =   $model->is_enrolled  == 'on' ? 1: 0;
+
         });
 
     }

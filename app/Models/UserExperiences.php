@@ -37,7 +37,7 @@ class UserExperiences extends Model
           
           parent::boot();
           static::saving(function ($model)  {
-              $model->is_working =   $model->is_working  == 'on' ? 1: 0;
+              $model->is_working =  $model->is_working  == 'on' ? 1: 0;
           });
   
   
