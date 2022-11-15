@@ -48,6 +48,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::get('remove-shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'removeShortlist'] )->name('proposal.remove.shortlist');
                 Route::get('shortlisted-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'shortlistedProposals'] )->name('proposal.shortlisted');
                 Route::get('all-proposal/{uuid}',     [\App\Http\Controllers\Buyer\ProposalController::class,'jobPropsals'] )->name('job.all.proposals');
+                Route::get('all-offer/{uuid}',     [\App\Http\Controllers\Buyer\OfferController::class,'jobOffers'] )->name('job.all.offers');
                 Route::get('invite-freelancer/{uuid}',[\App\Http\Controllers\Buyer\JobController::class,'inviteFreelancer'] )->name('job.invite.freelancer');
                 Route::post('save-invitation/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'saveInvitation'] )->name('job.save.invite.freelancer');
                 Route::get('invited-freelancer/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'invitedFreelancer'] )->name('job.invited.freelancer');

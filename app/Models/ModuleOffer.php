@@ -16,5 +16,9 @@ class ModuleOffer extends Model
     {
         return $this->hasMany(ModuleOfferMilestone::class, 'module_offer_id');
     }
+    public function moduleOffer()
+    {
+        return $this->belongsTo(Job::class);
+    }
 
 }

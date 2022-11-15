@@ -116,7 +116,7 @@
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
                                         @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                            <a href="{{ route('seller.jobs.listing') }}"
+                                            <a href="#"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Jobs')</span>
                                             </a>

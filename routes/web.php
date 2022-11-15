@@ -23,7 +23,7 @@ Route::middleware('verified')->group(function () {
     Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
     Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
     Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
-    Route::get('/user-profile', 'CommonProfileController@getUserProfile')->name('seller.profile');
+    Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
 
 
 });

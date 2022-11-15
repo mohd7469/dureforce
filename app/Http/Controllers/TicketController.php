@@ -146,8 +146,10 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-
-        
+        // $request->validate([
+        //     'subject' => 'required',
+        //     // 'priority_id' => 'required'
+        // ]);
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = auth()->user();
@@ -200,7 +202,9 @@ class TicketController extends Controller
 
     public function storeComment(Request $request,$ticket_no)
     {
-
+        $request->validate([
+            'message' => 'required'
+        ]);
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->user();
@@ -210,34 +214,35 @@ class TicketController extends Controller
             "support_ticket_id"=>$support_ticket->id,
             "message"=>$request['message'],
         ]);
+       
        if ($request->hasFile('comment_attachment')) {
+        try {
+                foreach ($request->file('comment_attachment') as $file) {
+                    $path = imagePath()['attachments']['path'];
+            
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $uploaded_name = $file->getClientOriginalName();
 
-          
-               $path = imagePath()['attachments']['path'];
-               try {
+                    $message->attachments()->create([
 
-                   $file=$request->comment_attachment;
-                   $filename = uploadAttachments($file, $path);
-                   $file_extension = getFileExtension($file);
-                   $url = $path . '/' . $filename;
-                   $uploaded_name = $file->getClientOriginalName();
+                        'name' => $filename,
+                        'uploaded_name' => $uploaded_name,
+                        'url'           => $url,
+                        'type' =>$file_extension,
+                        'is_published' =>1
 
-                   $message->attachments()->create([
+                    ]);
 
-                       'name' => $filename,
-                       'uploaded_name' => $uploaded_name,
-                       'url'           => $url,
-                       'type' =>$file_extension,
-                       'is_published' =>1
-
-                   ]);
-
-               } catch (\Exception $exp) {
-                   $notify[] = ['error', 'Document could not be uploaded.'];
-                   return back()->withNotify($notify);
-               }
-
-           
+                 }
+            }
+        catch (\Exception $exp) {
+            $notify[] = ['error', 'Document could not be uploaded.'];
+            return back()->withNotify($notify);
+        }
+        
+                          
        }
         $notify[] = ['success', 'ticket created successfully!'];
         return redirect()->route('ticket.view',$ticket_no);

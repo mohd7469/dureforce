@@ -48,7 +48,7 @@
                                                     </div>
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input" name="attachments[]" id="inputAttachments"
-                                                            aria-describedby="inputGroupFileAddon01" required="">
+                                                            aria-describedby="inputGroupFileAddon01" required="" >
                                                         <label class="custom-file-label" for="inputGroupFile01">@lang('Choose file')</label>
                                                     </div>
                                                 </div>
