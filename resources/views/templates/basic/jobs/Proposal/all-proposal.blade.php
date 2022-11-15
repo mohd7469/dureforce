@@ -1,7 +1,7 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
 
-<section class="all-sections pt-3">
+<div class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
    @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
       <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
@@ -332,8 +332,9 @@
                                             @endforeach
                                         </div>
                                 </div>
-
+</
                         </div>
+                    
                         <div class="tab-pane" id="Messaged">
                             <p class="card-text text-center">
                             <div class="d-flex align-items-center justify-content-center ">
@@ -347,6 +348,7 @@
                 <!-- Tabs content -->                                            
       </div>
    </div>
+
 </section>
 
 
