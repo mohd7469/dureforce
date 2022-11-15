@@ -7,6 +7,7 @@ use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
 use App\Models\Job;
+use App\Models\Proposal;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,5 +43,21 @@ class ChatController extends Controller
        event(new MessageDeleteEvent($chat_message_id, $chat_message_id->user));
 
         return response()->json(['message' => 'message Deleted Successfully']);
+    }
+
+    public function savePropsalMessage($propsal_id)
+    {
+        $proposal=Proposal::with('job')->where('uuid',$propsal_id)->first();
+        $job=$proposal->job;
+        $job->messages()->updateOrCreate(
+            ['proposal_id' =>  $proposal->id],
+            [
+            'sender_id' => auth()->user()->id,
+            'send_to_id' => $job->user_id,
+            'message'   => $proposal->cover_letter,
+            'role'      =>  strtolower(Role::$FreelancerName) 
+            ]
+        );
+        return redirect()->route('chat.inbox');
     }
 }
