@@ -23,7 +23,7 @@ class SupportTicketController extends Controller
     public function index()
     {
 
-        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority','supportMessage'])->get();
 
         $pageTitle = "Support Tickets";
 
@@ -57,6 +57,9 @@ class SupportTicketController extends Controller
 
     public function storeComment(Request $request,$ticket_no)
     {
+        $request->validate([
+            'message' => 'required'
+        ]);
         $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
 
         $user = auth()->guard('admin')->user();
@@ -69,30 +72,31 @@ class SupportTicketController extends Controller
         ]);
         if ($request->hasFile('comment_attachment')) {
 
-
-            $path = imagePath()['attachments']['path'];
             try {
+                foreach ($request->file('comment_attachment') as $file) {
+                    $path = imagePath()['attachments']['path'];
+            
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $uploaded_name = $file->getClientOriginalName();
 
-                $file=$request->comment_attachment;
-                $filename = uploadAttachments($file, $path);
-                $file_extension = getFileExtension($file);
-                $url = $path . '/' . $filename;
-                $uploaded_name = $file->getClientOriginalName();
+                    $message->attachments()->create([
 
-                $message->attachments()->create([
+                        'name' => $filename,
+                        'uploaded_name' => $uploaded_name,
+                        'url'           => $url,
+                        'type' =>$file_extension,
+                        'is_published' =>1
 
-                    'name' => $filename,
-                    'uploaded_name' => $uploaded_name,
-                    'url'           => $url,
-                    'type' =>$file_extension,
-                    'is_published' =>1
+                    ]);
 
-                ]);
-
-            } catch (\Exception $exp) {
-                $notify[] = ['error', 'Document could not be uploaded.'];
-                return back()->withNotify($notify);
+                 }
             }
+        catch (\Exception $exp) {
+            $notify[] = ['error', 'Document could not be uploaded.'];
+            return back()->withNotify($notify);
+        }
 
 
         }

@@ -6,8 +6,8 @@
         <div class="container">
             <div class="secondsb-con">
                 <p class="sbheading-c">All Support Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
-                <a href="#" class="openbtn-s">{{$support_ticket->status->name}}</a>
-                <a href="#" class="highbtn-s">{{$support_ticket->priority->name}}</a>
+                <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
+                <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
 
                 <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at}}</p>
             </div>
@@ -57,9 +57,9 @@
                             @endif
 
                         @else
-                            <div class="userv">
+                            <div class="userv" style="margin-top: 12px;">
 
-                                <div class="userprofile"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
+                                <div class="userprofile" style="margin-left: 2px;"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                                 <p class="username">{{$support_message->user->full_name}}</p>
                                 <p class="time-d"> {{$support_message->created_at}} </p>
                             </div>
@@ -94,9 +94,10 @@
                     @csrf
                     <textarea  placeholder="Add Comment" name="message" class="comment-box"></textarea>
                     <label for="comment_file" class="btn-atach-m">Attach</label>
-                    <input type="file" name="comment_attachment" id="comment_file" style="display: none;visibility:none" onchange="writeFileName(this.value)">
-                    <div id="file_name_div">
-
+                    <input type="file" name="comment_attachment" id="comment_file" style="display: none;visibility:none" onchange="writeFileName()">
+                    <div >
+                        <ul class="list-group" id="file_name_div">
+                        </ul>
                     </div>
                     <input type="submit"  class="btn-postcoment">
 
@@ -112,11 +113,38 @@
 @push('script')
 
     <script>
-
-        function writeFileName(image)
+        $(document).ready(function() {
+            
+            $(document).on('click', '.delete-btn', function(e) {
+                filename=jQuery(this).attr("id");
+                $('#file_detail_'+filename).remove();
+                var original_file_name=$(this).attr("data-id");
+                const dt = new DataTransfer();
+                var number_of_files=$('#comment_file').get(0).files.length;
+                for (let index = 0; index < number_of_files; index++) {
+                    file=$('#comment_file').get(0).files[index];
+                    if(file.name!=original_file_name)
+                    {
+                        dt.items.add(file);
+                    }
+                }
+                $('#comment_file').get(0).files=dt.files;
+            });
+          
+        });
+        
+        function writeFileName()
         {
-            $('#file_name_div').html(image.replace(/^.*\\/,""));
+            $('#file_name_div').empty();
+            var number_of_files=$('#comment_file').get(0).files.length;
+            var form= new FormData();
+            for (let index = 0; index < number_of_files; index++) {
+                file=$('#comment_file').get(0).files[index];
+                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/\./g,'_')+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+            }
+            
         }
+        
     </script>
 
 @endpush
