@@ -115,7 +115,7 @@
                                                 <div class="row btns-s">
 
                                                     <a href="{{route('buyer.proposal.shortlist',$proposal->id)}}" class="btn-products-s">Shortlist</a>
-                                                    <a href="#" class="btn-products-s">Message</a>
+                                                    <a href="{{route('chat.inbox')}}" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     <a href="#" class="btn-products-s phire">Hire</a>
                                                 </div>
