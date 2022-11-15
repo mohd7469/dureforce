@@ -9,7 +9,7 @@
                 <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
                 <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
 
-                <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at}}</p>
+                <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at->format('d M Y')}}</p>
             </div>
             <!---Users Online Section Start-->
 
