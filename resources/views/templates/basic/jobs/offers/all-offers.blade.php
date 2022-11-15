@@ -156,17 +156,19 @@
                                                     <div class="service_subtitle2 mt-20 heading-text">
                                                         <h2> Attachments</h2>
                                                         <div class="row">
-                                                            
-                                                            {{-- @foreach($short_listed_proposals->attachment as $document) --}}
-                                                            
-                                                            <ul class="skills-listing col-lg-4 col-md-4">
-
-                                                                {{-- <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a> --}}
+                                                           
+                                                             @foreach($short_listed_proposals as $document) 
+                                                              @foreach($document->attachment as $upload)
+                                                              
+                                                              <ul class="skills-listing col-lg-4 col-md-4">
+                                                                <a href="{{$upload->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$upload->uploaded_name}} </a>
 
 
                                                             </ul>
+                                                              @endforeach
+                                                    
 
-                                                        {{-- @endforeach --}}
+                                                         @endforeach 
                                                         </div>
 
                                                     </div>
