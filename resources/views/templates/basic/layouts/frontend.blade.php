@@ -54,7 +54,12 @@
 {{-- End Preloader --}}
 
 @if(!\Route::is('verification.notice') )
+    @guest
     @include($activeTemplate.'partials.header')
+    @endguest
+    @auth
+    @include($activeTemplate.'partials.user_header')
+    @endauth
 @endif
 @yield('content')
 @include($activeTemplate.'partials.footer')
