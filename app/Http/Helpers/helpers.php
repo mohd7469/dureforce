@@ -935,6 +935,11 @@ function showDateTime($date, $format = 'Y-m-d h:i A')
     return Carbon::parse($date)->translatedFormat($format);
 }
 
+function systemDateTimeFormat($date)
+{
+    return $date->format('d M Y h:i:A');
+}
+
 //moveable
 function sendGeneralEmail($email, $subject, $message, $receiver_name = '')
 {

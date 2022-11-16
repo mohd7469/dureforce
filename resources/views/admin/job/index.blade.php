@@ -63,25 +63,25 @@
                                 @if($job->status->id == 2)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                     <br>
-                                    {{diffforhumans($job->created_at)}}
+                                    {{systemDateTimeFormat($job->created_at)}}
                                 @elseif($job->status->id == 3)
                                     <span class="font-weight-normal badge--warning">@lang('Closed')</span>
                                      <br>
-                                    {{diffforhumans($job->created_at)}}
+                                    {{systemDateTimeFormat($job->created_at)}}
                                 @elseif($job->status->id == 10)
                                     <span class="font-weight-normal badge--danger">@lang('Canceled')</span>
                                      <br>
-                                    {{diffforhumans($job->created_at)}}
+                                    {{systemDateTimeFormat($job->created_at)}}
                                 @elseif($job->status->id == 1)
                                     <span class="font-weight-normal badge--primary">@lang('Pending')</span>
                                      <br>
-                                    {{diffforhumans($job->created_at)}}
+                                    {{systemDateTimeFormat($job->created_at)}}
                                 @endif
                             </td>
 
                             <td data-label="@lang('Last Update')">
                                 @if(isset($job->created_at))
-                                <span>{{showDateTime($job->created_at)}}</span>
+                                <span>{{systemDateTimeFormat($job->created_at)}}</span>
                                 <br>
                                  {{diffforhumans($job->created_at)}}
                                  @else
