@@ -9,7 +9,7 @@
                 <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
                 <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
 
-                <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at->format('d M Y')}}</p>
+                <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at->format('d M Y h:i:A')}}</p>
             </div>
             <!---Users Online Section Start-->
 
@@ -18,7 +18,7 @@
 
                     <div class="userprofile"><img src="{{$support_ticket->user->basicProfile ? $support_ticket->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                     <p class="username">{{$support_ticket->user->full_name}}</p>
-                    <p class="time-d"> {{$support_ticket->created_at->format('d M Y')}} </p>
+                    <p class="time-d"> {{$support_ticket->created_at->format('d M Y h:i:A')}} </p>
                 </div>
                 <div class="userdetail">
                     {{$support_ticket->message}}
@@ -43,7 +43,7 @@
 
                                 <div class="userprofile" style="margin-left: 2px;"><img src="{{ asset('assets/images/logoIcon/favicon.png') }}"></div>
                                 <p class="username">Dureforce Support</p>
-                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}} </p>
+                                <p class="time-d"> {{$support_message->created_at->format('d M Y h:i:A')}} </p>
                             </div>
                             <div class="userdetail">
                                 {{$support_message->message}}
@@ -61,7 +61,7 @@
 
                                 <div class="userprofile" style="margin-left: 2px;"><img src="{{$support_message->user->basicProfile ? $support_message->user->basicProfile->profile_picture : '/assets/images/job/profile-img.png'}}" ></div>
                                 <p class="username">{{$support_message->user->full_name}}</p>
-                                <p class="time-d"> {{$support_message->created_at->format('d M Y')}}}} </p>
+                                <p class="time-d"> {{$support_message->created_at->format('d M Y h:i:A')}} </p>
                             </div>
                             <div class="userdetail">
                                 {{$support_message->message}}
