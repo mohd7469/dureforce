@@ -8,8 +8,8 @@
                 <small>{{formattedDate(active_user.created_at)}}</small> 
             </span>
             <span class="float-right align-header">
-                <button class="btn-job">View Job</button>
-                <button class="btn-propsal">View Proposal</button>
+                <!-- <button class="btn-job">View Job</button>
+                <button class="btn-propsal">View Proposal</button> -->
             </span>
         </div>
         

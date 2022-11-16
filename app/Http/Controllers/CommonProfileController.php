@@ -309,7 +309,8 @@ class CommonProfileController extends Controller
     public function userChat()
     {
         $pageTitle='Chat Container';
-        return Inertia::render('Chat/ChatContainerComponent',['pageTitle' =>$pageTitle]);
+        $pusher_credentials=getPusherCredentials();
+        return Inertia::render('Chat/ChatContainerComponent',['pageTitle' =>$pageTitle , 'pusher_credentials' =>$pusher_credentials]);
     }
     public function hello()
     {
