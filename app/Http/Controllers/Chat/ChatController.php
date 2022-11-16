@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Chat;
 
 use App\Events\MessageDeleteEvent;
+use App\Events\MessageEditedEvent;
 use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
@@ -33,7 +34,12 @@ class ChatController extends Controller
     {
         $request->request->add(['sender_id' => auth()->user()->id,'role' => strtolower(getLastLoginRoleName())]);
         $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
-        event(new NewMessageEvent($message, $message->user));
+        if(!$message->wasRecentlyCreated && $message->wasChanged()){
+            event(new MessageEditedEvent($message, $message->user));
+
+        }
+        else
+            event(new NewMessageEvent($message, $message->user));
         return response()->json(['message' => 'message successfully added']);
     }
 
