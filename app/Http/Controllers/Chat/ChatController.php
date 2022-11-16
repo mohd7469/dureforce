@@ -40,6 +40,7 @@ class ChatController extends Controller
         }
         else
             event(new NewMessageEvent($message, $message->user));
+            
         return response()->json(['message' => 'message successfully added']);
     }
 

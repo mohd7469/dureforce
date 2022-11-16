@@ -42,6 +42,7 @@
               messages: [],  
               active_user: {}  ,
               pusher_obj:{},
+              channel:{},
             };  
         },  
         methods: {  
@@ -76,16 +77,19 @@
             },
             userPuserChannel()
             {
-                var channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
-                console.log(channel);
-                    channel.bind('new-message', (data)=> {
+               
+                if(!_.isEmpty(this.channel))
+                    this.channel.unbind();
+                this.channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
+                
+                this.channel.bind('new-message', (data)=> {
                         console.log(data.message);
-                        this.messages.push(data.message)    ;
+                        this.messages.push(data.message)  ;
                     });
-                    channel.bind('delete-message', (data)=> {
+                    this.channel.bind('delete-message', (data)=> {
                         this.messages.splice(this.messages.findIndex(a => a.id === data.message.id) , 1)
                     });
-                    channel.bind('edited-message', (data)=> {
+                    this.channel.bind('edited-message', (data)=> {
                         console.log(data.message);
                         this.messages[(this.messages.findIndex(a => a.id === data.message.id))].message=data.message.message;
                     });
