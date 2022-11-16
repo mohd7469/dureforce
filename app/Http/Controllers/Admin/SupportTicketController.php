@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
+use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
@@ -117,12 +118,25 @@ class SupportTicketController extends Controller
         try {
             $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments')->firstOrFail();
             $pageTitle = "Support Ticket Details";
-            return view('admin.support.ticket_details', compact( 'pageTitle','support_ticket'));
+            $statuses = Status::where('type','App\Models\SupportTicket')->get();
+            $priorties = Status::where('type','priority')->get();
+            return view('admin.support.ticket_details', compact( 'pageTitle','support_ticket','statuses','priorties'));
         } catch (\Exception $exp) {
             DB::rollback();
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
+
+    public function changeSattus(Request $request,$status_id)
+    {
+        dd($request->all());
+    }
+
+    public function changePriority(Request $request, $priority_id)
+    {
+        dd($request->all());
+    }
+
     public function ticketReplySend(Request $request, $id)
     {
         $ticket = SupportTicket::with('user')->where('id', $id)->firstOrFail();

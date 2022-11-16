@@ -106,6 +106,108 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
+                @if (in_array('7', $staffAccess))
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
+                            <i class="menu-icon las la-tasks"></i>
+                            <span class="menu-title">@lang('Manage Job')</span>
+                            @if ($jobPending > 0)
+                                <span class="menu-badge pill bg--primary ml-auto">
+                                    <i class="fa fa-exclamation"></i>
+                                </span>
+                            @endif
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.job*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.job.index') }} ">
+                                    <a href="{{ route('admin.job.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All')</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-menu-item {{ menuActive('admin.job.pending') }} ">
+                                    <a href="{{ route('admin.job.pending') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Pending')</span>
+                                        <!-- @if ($jobPending)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
+                                        @endif -->
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-menu-item {{ menuActive('admin.job.approved') }} ">
+                                    <a href="{{ route('admin.job.approved') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Approved')</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-menu-item {{ menuActive('admin.job.closed') }} ">
+                                    <a href="{{ route('admin.job.closed') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Closed')</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-menu-item {{ menuActive('admin.job.cancel') }} ">
+                                    <a href="{{ route('admin.job.cancel') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Cancel')</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+                @if (in_array('16', $staffAccess))
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.ticket*', 3) }}">
+                            <i class="menu-icon la la-ticket"></i>
+                            <span class="menu-title">@lang('Support Ticket') </span>
+                            @if (0 < $pending_ticket_count)
+                                <span class="menu-badge pill bg--primary ml-auto">
+                                    <i class="fa fa-exclamation"></i>
+                                </span>
+                            @endif
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.ticket*', 2) }} ">
+                            <ul>
+
+                                <li class="sidebar-menu-item {{ menuActive('admin.ticket') }} ">
+                                    <a href="{{ route('admin.ticket') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Ticket')</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.pending') }} ">
+                                    <a href="{{ route('admin.ticket.pending') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Open Ticket')</span>
+                                        @if ($pending_ticket_count)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $pending_ticket_count }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.closed') }} ">
+                                    <a href="{{ route('admin.ticket.closed') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Closed Ticket')</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.answered') }} ">
+                                    <a href="{{ route('admin.ticket.answered') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('On Hold Ticket')</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
 
                 @if (in_array('2', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
@@ -368,62 +470,6 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('7', $staffAccess))
-                    <li class="sidebar-menu-item sidebar-dropdown">
-                        <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
-                            <i class="menu-icon las la-tasks"></i>
-                            <span class="menu-title">@lang('Manage Job')</span>
-                            @if ($jobPending > 0)
-                                <span class="menu-badge pill bg--primary ml-auto">
-                                    <i class="fa fa-exclamation"></i>
-                                </span>
-                            @endif
-                        </a>
-                        <div class="sidebar-submenu {{ menuActive('admin.job*', 2) }} ">
-                            <ul>
-                                <li class="sidebar-menu-item {{ menuActive('admin.job.index') }} ">
-                                    <a href="{{ route('admin.job.index') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('All')</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidebar-menu-item {{ menuActive('admin.job.pending') }} ">
-                                    <a href="{{ route('admin.job.pending') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Pending')</span>
-                                        <!-- @if ($jobPending)
-                                            <span
-                                                class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
-                                        @endif -->
-                                    </a>
-                                </li>
-
-                                <li class="sidebar-menu-item {{ menuActive('admin.job.approved') }} ">
-                                    <a href="{{ route('admin.job.approved') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Approved')</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidebar-menu-item {{ menuActive('admin.job.closed') }} ">
-                                    <a href="{{ route('admin.job.closed') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Closed')</span>
-                                    </a>
-                                </li>
-
-                                <li class="sidebar-menu-item {{ menuActive('admin.job.cancel') }} ">
-                                    <a href="{{ route('admin.job.cancel') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Cancel')</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
-
                 @if (in_array('34', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.staff*', 3) }}">
@@ -656,54 +702,6 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.withdraw.log') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Withdrawals Log')</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
-
-
-                @if (in_array('16', $staffAccess))
-                    <li class="sidebar-menu-item sidebar-dropdown">
-                        <a href="javascript:void(0)" class="{{ menuActive('admin.ticket*', 3) }}">
-                            <i class="menu-icon la la-ticket"></i>
-                            <span class="menu-title">@lang('Support Ticket') </span>
-                            @if (0 < $pending_ticket_count)
-                                <span class="menu-badge pill bg--primary ml-auto">
-                                    <i class="fa fa-exclamation"></i>
-                                </span>
-                            @endif
-                        </a>
-                        <div class="sidebar-submenu {{ menuActive('admin.ticket*', 2) }} ">
-                            <ul>
-
-                                <li class="sidebar-menu-item {{ menuActive('admin.ticket') }} ">
-                                    <a href="{{ route('admin.ticket') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('All Ticket')</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.pending') }} ">
-                                    <a href="{{ route('admin.ticket.pending') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Open Ticket')</span>
-                                        @if ($pending_ticket_count)
-                                            <span
-                                                class="menu-badge pill bg--primary ml-auto">{{ $pending_ticket_count }}</span>
-                                        @endif
-                                    </a>
-                                </li>
-                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.closed') }} ">
-                                    <a href="{{ route('admin.ticket.closed') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Closed Ticket')</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-menu-item {{ menuActive('admin.ticket.answered') }} ">
-                                    <a href="{{ route('admin.ticket.answered') }}" class="nav-link">
-                                        <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('On Hold Ticket')</span>
                                     </a>
                                 </li>
                             </ul>
