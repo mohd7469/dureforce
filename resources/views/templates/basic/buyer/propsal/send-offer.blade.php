@@ -169,7 +169,8 @@
     </div>
     <hr>
     <!-- description of work -->
-    <h6 class="color-green">Description</h6>
+    <h6 class="color-green">Description*</h6>
+    
     <div>
         <h6 class="mt-4">Description of Work</h6>
         

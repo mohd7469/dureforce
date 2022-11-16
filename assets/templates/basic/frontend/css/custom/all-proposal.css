@@ -497,7 +497,7 @@ p.plocation:before {
     background: red;
     position: absolute;
     left: 0px !important;
-    top: 4px !important; 
+    top: 2px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
 }
