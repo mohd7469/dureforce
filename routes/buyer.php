@@ -9,8 +9,23 @@ use Illuminate\Support\Facades\Route;
 Route::name('buyer.')->prefix('buyer')->group(function () {
     
     Route::middleware(['verified','is-client'])->group(function () {
-        
-        
+
+        Route::name('basic.')->prefix('buyer')->group(function () {
+            Route::middleware(['verified','is-client'])->group(function () {
+                Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile');
+                Route::post('/profle/password/change', 'Buyer\ProfileController@buyerprofilePasswordChange')->name('profile.password.change');
+                Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
+                Route::post('/user-profile', 'Buyer\ProfileController@buyersaveUserBasics')->name('profile.save');
+                Route::post('/save-payment-methods', 'Buyer\ProfileController@buyersavePaymentMethod')->name('profile.save.payment.methods');
+                // Route::post('/save-company', 'Buyer\ProfileController@saveCompany')->name('profile.save.company');
+                Route::post('/experience/save', 'Profile\ProfileController@store')->name('profile.experience.save');
+                Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
+                Route::post('/save-company', 'Buyer\ProfileController@buyersaveCompany')->name('profile.save.company');
+                Route::delete('/buyer-payment-destroy/{id}', 'Buyer\ProfileController@buyerdestroy')->name('profile.payment.destroy');
+
+            });
+        });
+
         Route::namespace('Buyer')->group(function () {
 
             //profile
@@ -40,6 +55,11 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
+
+
+
+
+
                 // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
                 Route::get('send-offer/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'offerSend'] )->name('send.offer');
 
@@ -64,3 +84,4 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
 });
 Route::get('/delete-user/{email}',[HomeController::class,'deleteUser']);
+

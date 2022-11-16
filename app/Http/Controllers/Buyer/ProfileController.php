@@ -35,7 +35,7 @@ use Khsing\World\Models\City;
 
 class ProfileController extends Controller
 {
-    
+
     /**
      * __construct
      *
@@ -45,25 +45,24 @@ class ProfileController extends Controller
     {
         $this->activeTemplate = activeTemplate();
     }
+
     /**
      * saveCompany
      *
-     * @param  mixed $request
+     * @param mixed $request
      * @return void
      */
     public function saveCompany(Request $request)
     {
-        
+
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-             'vat' => 'required|string|min:4|max:15',
-             'url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'vat' => 'required|string|min:4|max:15',
+            'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
 
-
-          
 
         ];
 
@@ -92,36 +91,37 @@ class ProfileController extends Controller
                     // $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
                 }
 
-                if(empty($filename)) {
+                if (empty($filename)) {
                     $url = $user->company->logo ?? '';
                 }
 
                 $user->company()->delete();
 
                 $user->company()->save(new UserCompany([
-                    'name'         => $request->get('name'),
-                    'number'        => $request->get('phone'),
-                    'logo'         => $url,
-                    'email'        => $request->get('email'),
-                    'country_id'     => $request->get('country_id'),
-                    'vat'          => $request->get('vat'),
-                    'website'          => $request->get('url'),
+                    'name' => $request->get('name'),
+                    'number' => $request->get('phone'),
+                    'logo' => $url,
+                    'email' => $request->get('email'),
+                    'country_id' => $request->get('country_id'),
+                    'vat' => $request->get('vat'),
+                    'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')
                 ]));
-                
+
                 DB::commit();
-                return response()->json(['success'=> 'User Company Updated Successfully']);
+                return response()->json(['success' => 'User Company Updated Successfully']);
 
             } catch (\Throwable $th) {
                 DB::rollback();
                 return response()->json(['error' => $th->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Company .'];
                 return back()->withNotify($notify);
-                
+
             }
         }
     }
+
     /**
      * saveUserBasics
      *
@@ -184,8 +184,7 @@ class ProfileController extends Controller
                 $user->save();
 
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]); 
-
+                return response()->json(["success" => "User Basics Updated Successfully", 'redirect_url' => route('user.basic.profile', ['view' => 'step-1'])]);
 
 
             } catch (\Throwable $exception) {
@@ -199,48 +198,46 @@ class ProfileController extends Controller
             }
         }
     }
-    
+
     /**
      * savePaymentMethod
      *
-     * @param  mixed $request
+     * @param mixed $request
      * @return void
      */
     public function savePaymentMethod(Request $request)
     {
         $rules = [
-            'card_number'     => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date|after_or_equal:now',
-            'cvv_code'        => 'required|numeric|digits_between:3,4',
-            'name_on_card'    => 'required',
-            'country_id'         => 'required|exists:world_countries,id',
-            'city_id'            => 'required|exists:world_cities,id',
-            'address'  => 'required',
+            'cvv_code' => 'required|numeric|digits_between:3,4',
+            'name_on_card' => 'required',
+            'country_id' => 'required|exists:world_countries,id',
+            'city_id' => 'required|exists:world_cities,id',
+            'address' => 'required',
         ];
 
-        $messages =[
-            'card_number.required'     => 'Card Number is required',
+        $messages = [
+            'card_number.required' => 'Card Number is required',
             'expiration_date.required' => 'Expiration Date is required',
-            'cvv_code.required'        => 'CVV Code is required',
-            'name_on_card.required'    => 'Name on Card is required',
-            'street_address.required'  => 'Street Address is required',
-            'country_id'               => 'Country is required',
-            'city_id'                  => 'City is required',
+            'cvv_code.required' => 'CVV Code is required',
+            'name_on_card.required' => 'Name on Card is required',
+            'street_address.required' => 'Street Address is required',
+            'country_id' => 'Country is required',
+            'city_id' => 'City is required',
 
         ];
 
-        $validator = Validator::make($request->all(), $rules,$messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            
+
             return response()->json(["validation_errors" => $validator->errors()]);
-        } 
-        else 
-        {
+        } else {
             try {
 
                 DB::beginTransaction();
-                if($request->update_payment_id){
+                if ($request->update_payment_id) {
 
 
                     $userPayment = UserPayment::find($request->update_payment_id);
@@ -257,37 +254,36 @@ class ProfileController extends Controller
                     $userPayment->is_active = 1;
                     $userPayment->save();
                     DB::commit();
-               
-             
+
+
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
-                    
-                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
+
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('user.basic.profile', ['view' => 'step-1'])]);
 
 
-                }
-                else {
-                    $userPayment=UserPayment::create([
+                } else {
+                    $userPayment = UserPayment::create([
                         'card_number' => $request->card_number,
-                        'expiration_date'=>$request->expiration_date,
-                        'cvv_code'=>$request->cvv_code,
-                        'name_on_card'=>$request->name_on_card,
-                        'country_id'=>$request->country_id,
-                        'city_id'=>$request->city_id,
-                        'address'=>$request->address,
-                        'user_id'=>auth()->id(),
+                        'expiration_date' => $request->expiration_date,
+                        'cvv_code' => $request->cvv_code,
+                        'name_on_card' => $request->name_on_card,
+                        'country_id' => $request->country_id,
+                        'city_id' => $request->city_id,
+                        'address' => $request->address,
+                        'user_id' => auth()->id(),
                         'is_primary' => 1,
-                        'is_active'  =>1
+                        'is_active' => 1
                     ]);
                     DB::commit();
-    
-                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('user.basic.profile',[ 'view' => 'step-1'])]);
-    
+
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('user.basic.profile', ['view' => 'step-1'])]);
+
                 }
-                if(! empty($request->payment_id)) {
+                if (!empty($request->payment_id)) {
                     $userPayment = UserPayment::findOrFail($request->payment_id);
                     $userPayment->delete();
                 }
-                
+
             } catch (\Throwable $th) {
 
                 DB::rollback();
@@ -306,22 +302,24 @@ class ProfileController extends Controller
      */
     public function getUserProfile()
     {
-        
+
         $pageTitle = 'Buyer Profile';
         $user = User::WithBuyerAll()->find(auth()->user()->id);
-        $userCompanies=$user->company;
-        $user_payment_methods=$user->payments;
-        $basicProfile=$user->basicProfile;
-        $user_languages=$user->languages;
+        $userCompanies = $user->company;
+        $user_payment_methods = $user->payments;
+        $basicProfile = $user->basicProfile;
+        $user_languages = $user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels   = LanguageLevel::select('id', 'name')->get();
+        $language_levels = LanguageLevel::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
-        return view('templates/basic/profile/view_signup_basic',compact('countries','pageTitle','user','userCompanies','user_payment_methods','basicProfile','cities','user_languages','languages','language_levels'));
+        return view('templates/basic/profile/view_signup_basic', compact('countries', 'pageTitle', 'user', 'userCompanies', 'user_payment_methods', 'basicProfile', 'cities', 'user_languages', 'languages', 'language_levels'));
 
     }
-    public function buyerProfile(){
-      
+
+    public function buyerProfile()
+    {
+
 
         $skills = Skills::select('id', 'name')->get();
         $user = auth()->user();
@@ -338,15 +336,17 @@ class ProfileController extends Controller
         $userskills = $user->skills ? $user->skills : new UserSkill();
         $user_languages = $user->languages ? $user->languages : [];
 
-        $user_languages_ = WorldLanguage::whereIn('id',$user_languages->pluck('language_id')->toArray())->get();
-        $user_languages_level_ = LanguageLevel::whereIn('id',$user_languages->pluck('language_level_id')->toArray())->get();
+        $user_languages_ = WorldLanguage::whereIn('id', $user_languages->pluck('language_id')->toArray())->get();
+        $user_languages_level_ = LanguageLevel::whereIn('id', $user_languages->pluck('language_level_id')->toArray())->get();
         $user_country_ = Country::where('id', $user->company->country_id)->first();
         $user_loc_ = Country::where('id', $user->company->country_id)->first();
-        
 
-        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories','user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills','usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_','user_country_'));
+
+        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills', 'usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_', 'user_country_'));
     }
-    public function buyerprofilePasswordChange(Request $request){
+
+    public function buyerprofilePasswordChange(Request $request)
+    {
 
         $validator = Validator::make($request->all(), [
             'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
@@ -359,29 +359,24 @@ class ProfileController extends Controller
                 },
             ],
         ]);
-        
-        if($validator->fails()) {
+
+        if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
-        }
-        else {
+        } else {
 
 
             try {
-                if (Hash::check($request->old_password, Auth::user()->password)) { 
+                if (Hash::check($request->old_password, Auth::user()->password)) {
                     Auth::user()->fill([
-                     'password' => Hash::make($request->new_password)
-                     ])->save();
-                 
-                   
+                        'password' => Hash::make($request->new_password)
+                    ])->save();
 
-                     return response()->json(['success'=> 'User Password Updated Successfully','redirect_url' =>route('buyer.basic.profile')]);
-                     
 
-                 
-                 }
+                    return response()->json(['success' => 'User Password Updated Successfully', 'redirect_url' => route('buyer.basic.profile')]);
 
-                
-               
+
+                }
+
 
             } catch (\Throwable $exception) {
 
@@ -393,46 +388,44 @@ class ProfileController extends Controller
 
             }
         }
-        
-        
+
+
     }
- 
+
     public function buyersavePaymentMethod(Request $request)
     {
 
         $rules = [
-            'card_number'     => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19',
             'expiration_date' => 'required|date|after_or_equal:now',
-            'cvv_code'        => 'required|numeric|digits_between:3,4',
-            'name_on_card'    => 'required',
-            'country_id'         => 'required|exists:world_countries,id',
-            'city_id'            => 'required|exists:world_cities,id',
-            'address'  => 'required',
+            'cvv_code' => 'required|numeric|digits_between:3,4',
+            'name_on_card' => 'required',
+            'country_id' => 'required|exists:world_countries,id',
+            'city_id' => 'required|exists:world_cities,id',
+            'address' => 'required',
         ];
 
-        $messages =[
-            'card_number.required'     => 'Card Number is required',
+        $messages = [
+            'card_number.required' => 'Card Number is required',
             'expiration_date.required' => 'Expiration Date is required',
-            'cvv_code.required'        => 'CVV Code is required',
-            'name_on_card.required'    => 'Name on Card is required',
-            'street_address.required'  => 'Street Address is required',
-            'country_id'               => 'Country is required',
-            'city_id'                  => 'City is required',
+            'cvv_code.required' => 'CVV Code is required',
+            'name_on_card.required' => 'Name on Card is required',
+            'street_address.required' => 'Street Address is required',
+            'country_id' => 'Country is required',
+            'city_id' => 'City is required',
 
         ];
 
-        $validator = Validator::make($request->all(), $rules,$messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            
+
             return response()->json(["validation_errors" => $validator->errors()]);
-        } 
-        else 
-        {
+        } else {
             try {
 
                 DB::beginTransaction();
-                if($request->update_payment_id){
+                if ($request->update_payment_id) {
                     $userPayment = UserPayment::find($request->update_payment_id);
 
                     $userPayment->card_number = $request->card_number;
@@ -447,42 +440,41 @@ class ProfileController extends Controller
                     $userPayment->is_active = 1;
                     $userPayment->save();
                     DB::commit();
-                    
-             
+
+
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
 
-                    
+
                     // return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-3'])]);
-                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-1'])]);
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.basic.profile', ['profile' => 'step-1'])]);
 
                     // return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-1'])->withNotify($notify);
 
 
-                }
-                else {
-                    $userPayment=UserPayment::create([
+                } else {
+                    $userPayment = UserPayment::create([
                         'card_number' => $request->card_number,
-                        'expiration_date'=>$request->expiration_date,
-                        'cvv_code'=>$request->cvv_code,
-                        'name_on_card'=>$request->name_on_card,
-                        'country_id'=>$request->country_id,
-                        'city_id'=>$request->city_id,
-                        'address'=>$request->address,
-                        'user_id'=>auth()->id(),
+                        'expiration_date' => $request->expiration_date,
+                        'cvv_code' => $request->cvv_code,
+                        'name_on_card' => $request->name_on_card,
+                        'country_id' => $request->country_id,
+                        'city_id' => $request->city_id,
+                        'address' => $request->address,
+                        'user_id' => auth()->id(),
                         'is_primary' => 1,
-                        'is_active'  =>1
+                        'is_active' => 1
                     ]);
-                    
+
                     DB::commit();
-    
-                    return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-1'])]);
-    
+
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.basic.profile', ['profile' => 'step-1'])]);
+
                 }
-                if(! empty($request->payment_id)) {
+                if (!empty($request->payment_id)) {
                     $userPayment = UserPayment::findOrFail($request->payment_id);
                     $userPayment->delete();
                 }
-                
+
             } catch (\Throwable $th) {
 
                 DB::rollback();
@@ -493,9 +485,10 @@ class ProfileController extends Controller
             }
         }
     }
+
     public function buyersaveUserBasics(Request $request)
     {
-    
+
         $request_data = $request->all();
 
         $rules = [
@@ -522,25 +515,24 @@ class ProfileController extends Controller
                 DB::beginTransaction();
 
                 $user = auth()->user();
-                if($request->email){
-                    $user1 = User::find( auth()->user()->id);
+                if ($request->email) {
+                    $user1 = User::find(auth()->user()->id);
                     $user1->email = $request->email;
                     $user1->country_id = $request->country_id;
                     $user1->save();
                 }
 
-                
+
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
-                    
+
                     [
                         'city_id' => $request_data['city_id'],
                         'designation' => $request_data['designation'],
                         'about' => $request_data['about'],
                         'phone_number' => $request_data['phone_number'],
-                        
-                        
-                    
+
+
                     ]);
                 $user->languages()->delete();
                 $user->languages()->createMany($request_data['languages']);
@@ -561,8 +553,7 @@ class ProfileController extends Controller
                 $user->save();
 
                 DB::commit();
-                return response()->json(["success" => "User Basics Updated Successfully" ,'redirect_url' =>route('user.basic.profile',[ 'profile' => 'step-1'])]); 
-
+                return response()->json(["success" => "User Basics Updated Successfully", 'redirect_url' => route('user.basic.profile', ['profile' => 'step-1'])]);
 
 
             } catch (\Throwable $exception) {
@@ -576,17 +567,16 @@ class ProfileController extends Controller
             }
         }
     }
+
     public function buyersaveCompany(Request $request)
     {
-       
+
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             // 'phone' => ['required', new PhoneNumberValidate],
-             'vat' => 'required|string|min:4|max:15'
-           
+            'vat' => 'required|string|min:4|max:15'
 
-          
 
         ];
 
@@ -607,39 +597,40 @@ class ProfileController extends Controller
                     $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
                 }
 
-                if(empty($filename)) {
+                if (empty($filename)) {
                     $filename = $user->company->logo ?? '';
                 }
 
                 $user->company()->delete();
 
                 $user->company()->save(new UserCompany([
-                    'name'         => $request->get('name'),
-                    'number'        => $request->get('phone'),
-                    'logo'         => $filename,
-                    'email'        => $request->get('email'),
-                    'country_id'     => $request->get('country_id'),
-                    'vat'          => $request->get('vat'),
-                    'website'          => $request->get('url'),
+                    'name' => $request->get('name'),
+                    'number' => $request->get('phone'),
+                    'logo' => $filename,
+                    'email' => $request->get('email'),
+                    'country_id' => $request->get('country_id'),
+                    'vat' => $request->get('vat'),
+                    'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')
                 ]));
-                
+
                 DB::commit();
-                return response()->json(['success'=> 'User Company Updated Successfully']);
+                return response()->json(['success' => 'User Company Updated Successfully']);
 
             } catch (\Throwable $th) {
                 DB::rollback();
                 return response()->json(['error' => $th->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Company .'];
                 return back()->withNotify($notify);
-                
+
             }
         }
     }
+
     public function buyerdestroy($id)
     {
-       
+
         //
         $userPayment = UserPayment::findOrFail($id);
         $userPayment->delete();
@@ -652,71 +643,69 @@ class ProfileController extends Controller
         $request_data = $request->all();
         $job = Job::findOrFail($request->job_id);
 
-         if($request->milestone[0]['descr'] == null && $request->milestone[0]['due_date'] == null) {
+        if ($request->milestone[0]['descr'] == null && $request->milestone[0]['due_date'] == null) {
 
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
-                  'offer_ammount' => 'required',
-                  'description' => 'required',
+                'offer_ammount' => 'required',
+                'description' => 'required',
                 //   'deposit_fund' => 'required',
-                  'description' => 'required',
-                  'accept_privacy_policy' => 'required',
-      
-              ];
-              $messages =[
-                //   'deposit_fund.required'     => 'Diposit fund checbox required',
-              ];
+                'description' => 'required',
+                'accept_privacy_policy' => 'required',
 
-         }
-         else if($request->offer_ammount == 0){
+            ];
+            $messages = [
+                //   'deposit_fund.required'     => 'Diposit fund checbox required',
+            ];
+
+        } else if ($request->offer_ammount == 0) {
 
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
-                  //'offer_ammount' => 'required',
-                  //'deposit_fund' => 'required',
-                  'description' => 'required',
-                  'accept_privacy_policy' => 'required',
-                  'milestone' => 'required|array',
-                  'milestone.*.descr' => 'required',
-                  'milestone.*.due_date' => 'required|date|after_or_equal:now',
-                  'milestone.*.desposit_amout' => 'required',
-      
-              ];
-              
-              $messages =[
-                  'deposit_fund.required'     => 'Diposit fund checbox required',
-                  'milestone.*.due_date' => 'Date formate is not correct',
-      
-              ];
-             
-         }
-         else {
+                //'offer_ammount' => 'required',
+                //'deposit_fund' => 'required',
+                'description' => 'required',
+                'accept_privacy_policy' => 'required',
+                'milestone' => 'required|array',
+                'milestone.*.descr' => 'required',
+                'milestone.*.due_date' => 'required|date|after_or_equal:now',
+                'milestone.*.desposit_amout' => 'required',
+
+            ];
+
+            $messages = [
+                'deposit_fund.required' => 'Diposit fund checbox required',
+                'milestone.*.due_date' => 'Date formate is not correct',
+
+            ];
+
+        } else {
             $rules = [
                 //  'attachment ' => 'image|mimes:jpeg,png,jpg|max:2048',
                 //   'offer_ammount' => 'required',
-                  //'deposit_fund' => 'required',
-                  'description' => 'required',
-                  'accept_privacy_policy' => 'required',
-                  'milestone' => 'required|array',
-                  'milestone.*.descr' => 'required',
-                  'milestone.*.due_date' => 'required|date|after_or_equal:now',
-                  'milestone.*.desposit_amout' => 'required',
-      
-              ];
-              
-              $messages =[
+                //'deposit_fund' => 'required',
+                'description' => 'required',
+                'accept_privacy_policy' => 'required',
+                'milestone' => 'required|array',
+                'milestone.*.descr' => 'required',
+                'milestone.*.due_date' => 'required|date|after_or_equal:now',
+                'milestone.*.desposit_amout' => 'required',
+
+            ];
+
+            $messages = [
                 //   'deposit_fund.required'     => 'Diposit fund checbox required',
-                  'milestone.*.due_date' => 'Date formate is not correct',
-      
-              ];
-         }
+                'milestone.*.due_date' => 'Date formate is not correct',
+
+            ];
+        }
 
 
         $validator = Validator::make($request_data, $rules, $messages);
         if ($validator->fails()) {
             return redirect()->back()
-            ->withErrors($validator) ->withInput();
-           // return response()->json(["validation_errors" => $validator->errors()]);
+                ->withErrors($validator)->withInput();
+            // return response()->json(["validation_errors" => $validator->errors()]);
         } else {
             try {
 
@@ -728,25 +717,24 @@ class ProfileController extends Controller
                 $module_offer->contract_title = $request->contract_title;
                 $module_offer->start_date = $request->start_date;
                 $module_offer->rate_per_hour = $request->rate_per_hour;
-                
+
                 $job = Job::find($request->job_id);
                 $job->moduleOffer()->save($module_offer);
 
-                if (($request->milestone))
-                {
+                if (($request->milestone)) {
 
-                  $ModuleOfferMilestones =  $request->milestone;
-                  foreach($ModuleOfferMilestones as $ModuleOfferMilestone) {
-                    ModuleOfferMilestone::updateOrCreate([
-                        'module_offer_id'   => $module_offer->id,
-                    ],[
-                        'due_date' => $ModuleOfferMilestone['due_date'],
-                        'is_paid' => false,
-                        'amount'=> $ModuleOfferMilestone['desposit_amout'],
-                        'description'=> $ModuleOfferMilestone['descr'],
+                    $ModuleOfferMilestones = $request->milestone;
+                    foreach ($ModuleOfferMilestones as $ModuleOfferMilestone) {
+                        ModuleOfferMilestone::updateOrCreate([
+                            'module_offer_id' => $module_offer->id,
+                        ], [
+                            'due_date' => $ModuleOfferMilestone['due_date'],
+                            'is_paid' => false,
+                            'amount' => $ModuleOfferMilestone['desposit_amout'],
+                            'description' => $ModuleOfferMilestone['descr'],
 
-                    ]);
-                }
+                        ]);
+                    }
                 }
 
 
@@ -754,9 +742,7 @@ class ProfileController extends Controller
                 $notify[] = ['success', 'Offer Successfully saved!'];
                 // return redirect()->back()->withNotify($notify);
                 //return redirect()->route('buyer.job.all.offers')->withNotify($notify);
-                return redirect('buyer/all-offer/'.$job->uuid)->withNotify($notify);
-
-
+                return redirect('buyer/all-offer/' . $job->uuid)->withNotify($notify);
 
 
             } catch (\Throwable $exception) {
@@ -779,6 +765,6 @@ class ProfileController extends Controller
         $file_extension = getFileExtension($file);
         $url = $path . '/' . $filename;
         auth()->user()->company()->update(['logo' => $url]);
-        return redirect()->route('buyer.basic.profile',['profile' => 'step-1']);
+        return redirect()->route('buyer.basic.profile', ['profile' => 'step-1']);
     }
 }
