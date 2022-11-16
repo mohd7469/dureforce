@@ -29,6 +29,9 @@
    import Messages from "./MessageContainerComponent.vue";
     
     export default {
+        props: {
+         pusher_credentials: Object,
+        },
         components: {
             ChatUsers,
             Messages,
@@ -68,11 +71,13 @@
 
                 .then( response => {
                     this.messages=response.data.messages;
+                   
                 }) ;
             },
             userPuserChannel()
             {
                 var channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
+                console.log(channel);
                     channel.bind('new-message', (data)=> {
                         console.log(data.message);
                         this.messages.push(data.message)    ;
@@ -82,14 +87,16 @@
                     });
                     channel.bind('edited-message', (data)=> {
                         console.log(data.message);
-                        this.messages.push(data.message)    ;
+                        this.messages[(this.messages.findIndex(a => a.id === data.message.id))].message=data.message.message;
                     });
             }
         },
         mounted() {
-            this.pusher_obj = new Pusher('4afebaf3067764a250af', {
-                cluster: 'us3'
+            console.log(this.pusher_credentials.host);
+            this.pusher_obj = new Pusher(this.pusher_credentials.host, {
+                cluster: this.pusher_credentials.port
             });
+          
         },
         created(){
             this.getUSers();

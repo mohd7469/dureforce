@@ -14,6 +14,5 @@ Route::name('chat.')->prefix('chat')->group(function () {
         Route::post('/messages', [\App\Http\Controllers\Chat\ChatController::class,'getUserChat'])->name('messges');
         Route::post('save/message', [\App\Http\Controllers\Chat\ChatController::class,'saveMessage'])->name('message.save');
         Route::delete('delete/message/{chat_message_id}', [\App\Http\Controllers\Chat\ChatController::class,'deleteMessage'])->name('message.save');
-
     });
 });
