@@ -56841,7 +56841,7 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("span", { staticClass: "float-right align-header" }),
     ]),
     _vm._v(" "),
     _c(
@@ -57103,18 +57103,7 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "float-right align-header" }, [
-      _c("button", { staticClass: "btn-job" }, [_vm._v("View Job")]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn-propsal" }, [_vm._v("View Proposal")]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
