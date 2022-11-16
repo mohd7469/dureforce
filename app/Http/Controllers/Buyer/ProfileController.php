@@ -649,8 +649,8 @@ class ProfileController extends Controller
 
     public function offerSave(Request $request)
     {
-       
         $request_data = $request->all();
+        $job = Job::findOrFail($request->job_id);
 
          if($request->milestone[0]['descr'] == null && $request->milestone[0]['due_date'] == null) {
 
@@ -752,7 +752,10 @@ class ProfileController extends Controller
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                return redirect()->back()->withNotify($notify);
+                // return redirect()->back()->withNotify($notify);
+                //return redirect()->route('buyer.job.all.offers')->withNotify($notify);
+                return redirect('buyer/all-offer/'.$job->uuid)->withNotify($notify);
+
 
 
 
