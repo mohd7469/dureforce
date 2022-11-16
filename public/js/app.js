@@ -6175,6 +6175,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    pusher_credentials: Object
+  },
   components: {
     ChatUsers: _ChatUsersComponent_vue__WEBPACK_IMPORTED_MODULE_0__.default,
     Messages: _MessageContainerComponent_vue__WEBPACK_IMPORTED_MODULE_1__.default
@@ -6216,6 +6219,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var channel = this.pusher_obj.subscribe('user-' + this.active_user.id + '-message-channel');
+      console.log(channel);
       channel.bind('new-message', function (data) {
         console.log(data.message);
 
@@ -6228,14 +6232,16 @@ __webpack_require__.r(__webpack_exports__);
       });
       channel.bind('edited-message', function (data) {
         console.log(data.message);
-
-        _this3.messages.push(data.message);
+        _this3.messages[_this3.messages.findIndex(function (a) {
+          return a.id === data.message.id;
+        })].message = data.message.message;
       });
     }
   },
   mounted: function mounted() {
-    this.pusher_obj = new Pusher('4afebaf3067764a250af', {
-      cluster: 'us3'
+    console.log(this.pusher_credentials.host);
+    this.pusher_obj = new Pusher(this.pusher_credentials.host, {
+      cluster: this.pusher_credentials.port
     });
   },
   created: function created() {
