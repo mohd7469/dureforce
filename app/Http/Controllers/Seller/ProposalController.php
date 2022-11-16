@@ -183,7 +183,7 @@ class ProposalController extends Controller
             'start_hour_limit.required_with' => 'Enter min hours field value or make empty max hours field',
             'end_hour_limit.required_with' => 'Enter max hours field value or make empty min hours field',
             'start_hour_limit.min' => 'Min hours field value must be greater than 0',
-            'end_hour_limit.gt' => 'Max hours field value must be greater than min hours field'
+            'end_hour_limit.gt' => 'Max hours field value must be greater than min hours field',
 
         ];
 
@@ -196,7 +196,7 @@ class ProposalController extends Controller
                 'amount_receive' => 'required',
                 'start_hour_limit' => 'required_with:end_hour_limit|numeric|min:1',
                 'end_hour_limit' => 'required_with:start_hour_limit|numeric|gt:start_hour_limit',
-                'cover_letter' => 'string'
+                'cover_letter' => 'required|string|min:20'
             ];
 
 
@@ -212,7 +212,7 @@ class ProposalController extends Controller
                     'milestones.*.amount' => 'string|required',
                     'total_project_price' => 'required',
                     'amount_receive' => 'required',
-                    'cover_letter' => 'string|min:20'
+                    'cover_letter' => 'required|string|min:20'
                 ];
             } elseif ($request_data['bid_type'] == 'by_project') {
                 $rules = [
@@ -222,7 +222,7 @@ class ProposalController extends Controller
                     'project_start_date' => 'required|date|after_or_equal:now',
                     'total_project_price' => 'required',
                     'amount_receive' => 'required',
-                    'cover_letter' => 'string|min:20'
+                    'cover_letter' => 'required|string|min:20'
 
                 ];
             }

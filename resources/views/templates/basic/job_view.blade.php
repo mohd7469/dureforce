@@ -42,7 +42,7 @@
 
                                                         <div class="col-md-5 col-lg-5 col-xl-5 col-sm-12 col-xs-12 float-right" >
                                                             <div class="float-right">
-                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn"> {{$job->status ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
+                                                                <p class="job_staus" style="display: inline">Job Status: <span class="status_btn" style="width: 80px;"> {{$job->status ? $job->status->name : '' }} </span> Posted on :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</p>
                                                                 
                                                             </div>
                                                             
