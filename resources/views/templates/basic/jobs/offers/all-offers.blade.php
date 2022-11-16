@@ -13,7 +13,7 @@
                                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">Offers</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{count($short_listed_proposals)}})</a>
+                                <a class="nav-link disabled" data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{count($short_listed_proposals)}})</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Post Hires (2)</a>
@@ -363,6 +363,7 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    
     .nav-link.active {
         background: -o-linear-gradient(left, #1c6a6a 0%, #1c6a6a 100%) !important;
         background: linear-gradient(to right, #1c6a6a 0%, #1c6a6a 100%) !important;
@@ -701,6 +702,7 @@ a.btn-products-s {
     padding: 7px 10px !important;
 }
 }
+
 </style>
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
 
