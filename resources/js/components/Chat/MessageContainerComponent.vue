@@ -115,7 +115,7 @@
                     message : '',
                     send_to_id : '',
                     module_type : 'App\\Models\\Job',
-                    module_id : 96,
+                    module_id : '',
                 },
                 errors:[]
             }
@@ -131,7 +131,8 @@
             sendMessage(){
                 
                 if(this.message_form.message !=' '){
-                    this.message_form.send_to_id=this.active_user.id;
+                    this.message_form.send_to_id=this.active_user.send_to_user.id;
+                    this.message_form.module_id=this.active_user.module_id;
                     axios.post('../chat/save/message',this.message_form)
                     .then(res=>{
                         this.$emit('newMessage');
