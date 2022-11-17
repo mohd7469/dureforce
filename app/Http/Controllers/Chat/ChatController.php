@@ -35,9 +35,6 @@ class ChatController extends Controller
                 return $item;
             });
             
-           
-            // dd($users->toArray());
-
         }
 
         return response()->json(['users'=> $users]);
@@ -72,7 +69,8 @@ class ChatController extends Controller
                 
             return response()->json(['message' => 'message successfully added']);
         } catch (\Throwable $th) {
-            //throw $th;
+            return response()->json(['error' => 'Failled to send message']);
+
         }
         
     }
