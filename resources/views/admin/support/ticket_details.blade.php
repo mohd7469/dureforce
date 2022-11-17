@@ -5,11 +5,57 @@
 
         <div class="container">
             <div class="secondsb-con">
-                <p class="sbheading-c">All Support Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
-                <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
-                <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
-
-                <p class="datec-s"><strong>Posted Date :</strong> {{systemDateTimeFormat($support_ticket->created_at)}}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="sbheading-c">All Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
+                        <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
+                        <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
+                    </div>
+                    <div class="col-md-3">
+                        <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at->format("d M Y")}}</p>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownStatusButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Status
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownStatusButton">
+                            @foreach ($statuses as $status)
+                                @if( $support_ticket->status->id != $status->id)
+                                <form action="{{route('admin.ticket.status.change',$support_ticket->ticket_no)}}"
+                                    method="post" role="form">
+                                    @csrf
+                                    <input type="hidden" name="status_id" value="{{ $status->id }}">
+                                    <input type="hidden" name="priority_id" value="{{ $support_ticket->id }}">
+                                    <button class="dropdown-item" type="submit">{{ $status->name }}</button>
+                                </form>
+                                @endif
+                            @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle float-right" type="button" id="dropdownPriorityButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Periority
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownPriorityButton">
+                            @foreach ($priorties as $priority)
+                                @if( $support_ticket->priority->id != $priority->id)
+                                <form action="{{route('admin.ticket.priority.change',$support_ticket->ticket_no)}}"
+                                    method="post" role="form">
+                                    @csrf
+                                    <input type="hidden" name="status_id" value="{{ $priority->id }}">
+                                    <input type="hidden" name="priority_id" value="{{ $support_ticket->id }}">
+                                    <button class="dropdown-item" type="submit">{{ $priority->name }}</button>
+                                </form>
+                                @endif
+                            @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             <!---Users Online Section Start-->
 
@@ -187,7 +233,7 @@
 
         p.sbheading-c {
             font-weight: 500;
-            font-size: 20px;
+            font-size: 17px;
             line-height: 25px;
             color: #007F7F;
             float: left;
@@ -259,15 +305,15 @@
             color: #fff;
         }
         p.datec-s {
-            float: right;
+            /* float: right; */
             font-family: 'Mulish';
             font-style: normal;
             font-weight: 500;
             font-size: 14px;
             line-height: 18px;
             color: #000000;
-            padding-top: 12px;
-            margin-right: 1%;
+            padding-top: 6px;
+            /* margin-right: 1%; */
         }
         .userlist {
             width: 100%;

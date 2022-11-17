@@ -450,6 +450,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('tickets/answered', 'SupportTicketController@onHoldTicket')->name('ticket.answered');
 //            Route::get('tickets/view/{id}', 'SupportTicketController@ticketReply')->name('ticket.view');
             Route::post('store-ticket-comment/{ticket_no}', 'SupportTicketController@storeComment')->name('ticket.comment.store');
+            Route::post('ticket-status-change/{ticket_no}', 'SupportTicketController@changeSattus')->name('ticket.status.change');
+            Route::post('ticket-priority-change/{ticket_no}', 'SupportTicketController@changePriority')->name('ticket.priority.change');
+
             Route::get('tickets/view/{id}', 'SupportTicketController@show')->name('ticket.view');
             Route::post('ticket/reply/{id}', 'SupportTicketController@ticketReplySend')->name('ticket.reply');
             Route::get('ticket/download/{ticket}', 'SupportTicketController@ticketDownload')->name('ticket.download');
