@@ -767,4 +767,7 @@ class ProfileController extends Controller
         auth()->user()->company()->update(['logo' => $url]);
         return redirect()->route('buyer.basic.profile', ['profile' => 'step-1']);
     }
+    public function getpassword(){
+        return view( 'templates/basic.profile.partials.new_password');
+}
 }
