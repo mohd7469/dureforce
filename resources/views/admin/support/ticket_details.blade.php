@@ -37,7 +37,7 @@
                     <div class="col-md-2">
                         <div class="dropdown">
                             <button class="btn btn-outline-secondary dropdown-toggle float-right" type="button" id="dropdownPriorityButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Periority
+                                Priority
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownPriorityButton">
                             @foreach ($priorties as $priority)

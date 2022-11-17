@@ -171,8 +171,7 @@ class ProposalController extends Controller
         }
     }
 
-
-    public
+    
     function validatePropsal(Request $request)
     {
         $request_data = [];
