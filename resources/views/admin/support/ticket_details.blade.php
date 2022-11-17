@@ -22,10 +22,12 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownStatusButton">
                             @foreach ($statuses as $status)
                                 @if( $support_ticket->status->id != $status->id)
-                                <form action="{{route('admin.ticket.status.change',$status->id)}}"
+                                <form action="{{route('admin.ticket.status.change',$support_ticket->ticket_no)}}"
                                     method="post" role="form">
-                                    <input type="hidden" name="ticket_id" value="{{ $support_ticket->id }}">
-                                    <button class="dropdown-item" type="submit" href="{{route('admin.ticket.status.change',$status->id)}}">{{ $status->name }}</button>
+                                    @csrf
+                                    <input type="hidden" name="status_id" value="{{ $status->id }}">
+                                    <input type="hidden" name="priority_id" value="{{ $support_ticket->id }}">
+                                    <button class="dropdown-item" type="submit">{{ $status->name }}</button>
                                 </form>
                                 @endif
                             @endforeach
@@ -40,10 +42,12 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownPriorityButton">
                             @foreach ($priorties as $priority)
                                 @if( $support_ticket->priority->id != $priority->id)
-                                <form action="{{route('admin.ticket.priority.change',$priority->id)}}"
+                                <form action="{{route('admin.ticket.priority.change',$support_ticket->ticket_no)}}"
                                     method="post" role="form">
-                                    <input type="hidden" name="ticket_id" value="{{ $support_ticket->id }}">
-                                    <button class="dropdown-item" type="submit" href="{{route('admin.ticket.priority.change',$priority->id)}}">{{ $priority->name }}</button>
+                                    @csrf
+                                    <input type="hidden" name="status_id" value="{{ $priority->id }}">
+                                    <input type="hidden" name="priority_id" value="{{ $support_ticket->id }}">
+                                    <button class="dropdown-item" type="submit">{{ $priority->name }}</button>
                                 </form>
                                 @endif
                             @endforeach

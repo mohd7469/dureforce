@@ -127,14 +127,24 @@ class SupportTicketController extends Controller
         }
     }
 
-    public function changeSattus(Request $request,$status_id)
+    public function changeSattus(Request $request,$ticket_no)
     {
-        dd($request->all());
+        $ticket = SupportTicket::findOrFail($request->priority_id);
+        $ticket->status_id = $request->status_id;
+        $ticket->updated_at = Carbon::now();
+        $ticket->save();
+        $notify[] = ['success', 'Status has been changed'];
+        return redirect('admin/tickets/view/'.$ticket_no)->withNotify($notify);
     }
 
-    public function changePriority(Request $request, $priority_id)
+    public function changePriority(Request $request, $ticket_no)
     {
-        dd($request->all());
+        $ticket = SupportTicket::findOrFail($request->priority_id);
+        $ticket->priority_id = $request->status_id;
+        $ticket->updated_at = Carbon::now();
+        $ticket->save();
+        $notify[] = ['success', 'Priority has been changed'];
+        return redirect('admin/tickets/view/'.$ticket_no)->withNotify($notify);
     }
 
     public function ticketReplySend(Request $request, $id)
