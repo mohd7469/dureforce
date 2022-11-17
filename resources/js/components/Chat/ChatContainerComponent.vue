@@ -66,8 +66,8 @@
             getActiveUserChat()
             {
                 axios.post('/chat/messages', {  
-                    send_to_id: this.active_user.id,  
-                    job_id: 96 
+                    send_to_id: this.active_user.send_to_user.id,  
+                    job_id: this.active_user.module_id
                 })  
 
                 .then( response => {
@@ -80,7 +80,7 @@
                
                 if(!_.isEmpty(this.channel))
                     this.channel.unbind();
-                this.channel = this.pusher_obj.subscribe('user-'+this.active_user.id+'-message-channel');
+                this.channel = this.pusher_obj.subscribe('user-'+this.active_user.send_to_user.id+this.active_user.module_id+'-message-channel');
                 
                 this.channel.bind('new-message', (data)=> {
                         console.log(data.message);

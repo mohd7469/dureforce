@@ -6210,8 +6210,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.post('/chat/messages', {
-        send_to_id: this.active_user.id,
-        job_id: 96
+        send_to_id: this.active_user.send_to_user.id,
+        job_id: this.active_user.module_id
       }).then(function (response) {
         _this2.messages = response.data.messages;
       });
@@ -6220,7 +6220,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (!_.isEmpty(this.channel)) this.channel.unbind();
-      this.channel = this.pusher_obj.subscribe('user-' + this.active_user.id + '-message-channel');
+      this.channel = this.pusher_obj.subscribe('user-' + this.active_user.send_to_user.id + this.active_user.module_id + '-message-channel');
       this.channel.bind('new-message', function (data) {
         console.log(data.message);
 
@@ -6445,7 +6445,7 @@ __webpack_require__.r(__webpack_exports__);
         message: '',
         send_to_id: '',
         module_type: 'App\\Models\\Job',
-        module_id: 96
+        module_id: ''
       },
       errors: []
     };
@@ -6459,7 +6459,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.message_form.message != ' ') {
-        this.message_form.send_to_id = this.active_user.id;
+        this.message_form.send_to_id = this.active_user.send_to_user.id;
+        this.message_form.module_id = this.active_user.module_id;
         axios.post('../chat/save/message', this.message_form).then(function (res) {
           _this.$emit('newMessage');
         })["catch"](function (error) {
@@ -56715,7 +56716,8 @@ var render = function () {
         },
         [
           _c("div", { staticClass: "col-md-2" }, [
-            user.basic_profile && user.basic_profile.profile_picture != null
+            user.send_to_user.basic_profile &&
+            user.send_to_user.basic_profile.profile_picture != null
               ? _c("img", {
                   staticClass: "img-circle img-responsive",
                   staticStyle: {
@@ -56725,7 +56727,7 @@ var render = function () {
                   },
                   attrs: {
                     alt: "User Pic",
-                    src: user.basic_profile.profile_picture,
+                    src: user.send_to_user.basic_profile.profile_picture,
                     id: "profile-image1",
                   },
                 })
@@ -56748,20 +56750,24 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 " }, [
             _c("b", { staticClass: "user-font-size" }, [
-              _vm._v(_vm._s(user.first_name) + " " + _vm._s(user.last_name)),
+              _vm._v(
+                _vm._s(user.send_to_user.first_name) +
+                  " " +
+                  _vm._s(user.send_to_user.last_name)
+              ),
             ]),
             _c("br"),
             _vm._v(" "),
-            user.basic_profile
+            user.send_to_user.basic_profile
               ? _c("span", { staticClass: "user-font-size" }, [
-                  _vm._v(_vm._s(user.basic_profile.designation)),
+                  _vm._v(_vm._s(user.send_to_user.basic_profile.designation)),
                 ])
               : _vm._e(),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 " }, [
             _c("span", { staticClass: "user-font-size" }, [
-              _vm._v(_vm._s(_vm.formattedDate(user.created_at))),
+              _vm._v(_vm._s(_vm.formattedDate(user.send_to_user.created_at))),
             ]),
           ]),
         ]

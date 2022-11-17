@@ -15,17 +15,18 @@ class MessageEditedEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $message,$user;
+    protected $message,$user,$job;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message,$user)
+    public function __construct($message,$user,$job)
     {
         $this->user=$user;
         $this->message=$message;
+        $this->job=$job;
     }
 
     /**
@@ -35,7 +36,7 @@ class MessageEditedEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return 'user-'.$this->user->id.'-message-channel';
+        return 'user-'.$this->user->id.$this->job->id.'-message-channel';
     }
 
     public function broadcastAs()

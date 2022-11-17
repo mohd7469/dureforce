@@ -4,20 +4,20 @@
         
         <div class="row border-bottom" v-for="user of users" @click="changeUser(user)">
             <div class="col-md-2" >
-                <img alt="User Pic" v-if="user.basic_profile && user.basic_profile.profile_picture!=null" :src="user.basic_profile.profile_picture" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
+                <img alt="User Pic" v-if="user.send_to_user.basic_profile && user.send_to_user.basic_profile.profile_picture!=null" :src="user.send_to_user.basic_profile.profile_picture" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 <img alt="User Pic" v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 
                 <span class="online_icon"></span>
             </div>
 
             <div class="col-md-6 ">
-                <b class="user-font-size">{{user.first_name}} {{user.last_name}}</b></br>
-                <span class="user-font-size" v-if="user.basic_profile">{{user.basic_profile.designation}}</span>
+                <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b></br>
+                <span class="user-font-size" v-if="user.send_to_user.basic_profile">{{user.send_to_user.basic_profile.designation}}</span>
                 
             </div>
 
             <div class="col-md-4 ">
-                <span class="user-font-size">{{formattedDate(user.created_at)}}</span>
+                <span class="user-font-size">{{formattedDate(user.send_to_user.created_at)}}</span>
             </div>
 
         </div>
