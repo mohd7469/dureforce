@@ -84,17 +84,10 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
                                     </a>
-                                    @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                     <a href="#"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
                                     </a>
-                                    @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                    <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
-                                        <span class="dropdown-menu__caption">@lang('Deposit Funds')</span>
-                                    </a>
-                                    @endif
                                     <a href="#"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
@@ -128,7 +121,6 @@
                                             @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('seller.jobs.listing') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Jobs')</span>
@@ -145,24 +137,6 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
-                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('All Jobs')</span>
-                                            </a>
-                                            <a href="{{route('buyer.job.index')}}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Manage Jobs')</span>
-                                            </a>
-                                            <a href="{{route('buyer.job.create')}}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Create Jobs')</span>
-                                            </a>
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
-                                            </a>
-                                        @endif
                                         </div>
                                     </div>
                                 </li>
@@ -174,7 +148,6 @@
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="#"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
@@ -187,20 +160,6 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Active Proposals')</span>
                                             </a>
-                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('All Proposals')</span>
-                                            </a>
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Invite Sellers')</span>
-                                            </a>
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Shortlisted Sellers')</span>
-                                            </a>
-                                        @endif
                                         </div>
                                     </div>    
                                 </li>
@@ -214,7 +173,6 @@
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('service') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Services')</span>
@@ -223,16 +181,6 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create a Service')</span>
                                             </a>
-                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                            <a href="{{ route('service') }}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Search Services')</span>
-                                            </a>
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Booked Services')</span>
-                                            </a>
-                                        @endif
                                         </div>
                                     </div>    
                                 </li>
@@ -246,7 +194,6 @@
                                             @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                             <a href="{{ route('software') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Softwares')</span>
@@ -255,36 +202,15 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create a Software')</span>
                                             </a>
-                                        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                            <a href="{{ route('software') }}"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Search Softwares')</span>
-                                            </a>
-                                            <a href="#"
-                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Booked Softwares')</span>
-                                            </a>
-                                        @endif    
                                         </div>
                                     </div>
                                 </li>
                                 
-                                
-                                @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+                                <li>
+                                    <a href="{{ route('user.home') }}"
+                                        @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
+                                </li>
 
-                                    <li>
-                                        <a href="{{ route('user.home') }}"
-                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
-                                    </li>
-
-                                @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                    
-                                    <li>
-                                        <a href="{{ route('user.home') }}"
-                                            @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
-                                    </li>
-
-                                @endif
                                 <li><a href="{{ route('chat.inbox') }}"
                                         @if (request()->routeIs('chat.inbox') || request()->routeIs('chat.inbox')) class="active" @endif>@lang('Messages')</a></li>
                                 <li><a href="{{ route('ticket') }}"
@@ -346,12 +272,6 @@
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                     </a> -->
-                                    <!-- <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-user-circle"></i>
-                                        <span class="dropdown-menu__caption">@lang('View Profile')</span>
-                                        {{-- seller profile  --}}
-                                    </a> -->
                                         
                                     @endif
                                     <!-- right navbar -->
@@ -377,17 +297,10 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
                                     </a>
-                                    @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
                                     <a href="#"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
                                     </a>
-                                    @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
-                                    <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
-                                        <span class="dropdown-menu__caption">@lang('Deposit Funds')</span>
-                                    </a>
-                                    @endif
                                     <a href="#"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
@@ -407,27 +320,11 @@
                                     </a>
                                     <!-- end right navbar -->
 
-                                    <!-- <a href="{{ route('user.change.password') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-key"></i>
-                                        <span class="dropdown-menu__caption">@lang('Change Password')</span>
-                                    </a>
+                                    <!--
                                     <a href="{{ route('user.twofactor') }}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-lock"></i>
                                         <span class="dropdown-menu__caption">@lang('2FA Security')</span>
-                                    </a> -->
-
-{{--                                    <a href="{{ route('chat.inbox') }}"--}}
-{{--                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">--}}
-{{--                                        <i class="dropdown-menu__icon las la-inbox"></i>--}}
-{{--                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>--}}
-{{--                                    </a>--}}
-
-                                    <!-- <a href="{{ route('user.logout') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-sign-out-alt"></i>
-                                        <span class="dropdown-menu__caption">@lang('Logout')</span>
                                     </a> -->
                                 </div>
                             </div>

@@ -58,7 +58,11 @@
     @include($activeTemplate.'partials.header')
     @endguest
     @auth
-    @include($activeTemplate.'partials.user_header')
+        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+            @include($activeTemplate.'partials.seller_user_header')
+        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+            @include($activeTemplate.'partials.client_user_header')
+        @endif
     @endauth
 @endif
 @yield('content')
