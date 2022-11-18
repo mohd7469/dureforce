@@ -4,6 +4,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
 Route::name('seller.')->group(function () {
     
     Route::middleware(['verified','is-freelancer'])->group(function () {
@@ -24,6 +25,11 @@ Route::name('seller.')->group(function () {
                 Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
                 Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
+                Route::get('/password-security', [\App\Http\Controllers\Seller\ProfileController::class,'getpassword'])->name('password.security');
+                Route::post('/seller/password/change', [\App\Http\Controllers\Seller\ProfileController::class,'sellerprofilePasswordChange'])->name('seller.password.change');
+              
+                
+              
 
             });
 

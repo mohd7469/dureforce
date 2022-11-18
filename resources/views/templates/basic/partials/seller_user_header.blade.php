@@ -286,8 +286,8 @@
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('My Profile')</span>
                                     </a>
-                                    <a href="{{ route('user.change.password') }}"
-                                        class="d-flex align-items-center px-3 profile_py-2">
+                                    <a href="{{ route('seller.profile.password.security') }}"
+                                        class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
                                     <a href="#"
