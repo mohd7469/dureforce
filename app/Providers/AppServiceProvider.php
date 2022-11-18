@@ -75,7 +75,11 @@ class AppServiceProvider extends ServiceProvider
                 'pending_withdraw_count'    => Withdrawal::all()->count(),
                 'servicePending'    => Service::all()->count(),
                 'softwarePending'    => Software::all()->count(),
-                'jobPending'    => Job::all()->count(),
+                'jobPending'    => Job::where('status_id', 1)->count(),
+                'jobApproved'    => Job::where('status_id', 2)->count(),
+                'jobClosed'    => Job::where('status_id', 3)->count(),
+                'jobCanceled'    => Job::onlyTrashed()->count(),
+
             ]);
         });
 
