@@ -650,4 +650,52 @@ class ProfileController extends Controller
         auth()->user()->company()->update(['logo' => $url]);
         return redirect()->route('buyer.basic.profile', ['profile' => 'step-1']);
     }
+    public function getpassword(){
+        return view( 'templates/basic.profile.partials.new_password');
+}
+    public function sellerprofilePasswordChange(Request $request){
+       
+        $validator = Validator::make($request->all(), [
+            'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:8',
+            'old_password' => [
+                'required', function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail('Old Password didn\'t match');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+
+
+            try {
+                if (Hash::check($request->old_password, Auth::user()->password)) {
+                    Auth::user()->fill([
+                        'password' => Hash::make($request->new_password)
+                    ])->save();
+
+
+                    return response()->json(['success' => 'Seller Password Updated Successfully', 'redirect_url' => route('buyer.basic.password.security')]);
+
+
+                }
+
+
+            } catch (\Throwable $exception) {
+
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+                
+
+
+            }
+        }
+
+    }
 }
