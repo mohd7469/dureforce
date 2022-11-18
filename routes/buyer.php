@@ -57,9 +57,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
-
-
-
+                Route::post('offer/save/', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
 
 
                 // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');

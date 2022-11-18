@@ -10,7 +10,6 @@ Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
 
-Route::post('/offer/save/', 'Buyer\ProfileController@offerSave')->name('offer.save');
 
 
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');

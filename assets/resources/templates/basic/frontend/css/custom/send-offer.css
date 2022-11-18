@@ -132,10 +132,7 @@ h6{
 .fs-15px{
     font-size: 15px;
 }
-.btn-outline-green:hover{
-    background-color: 007F7F;
-    color: white;
-}
+
 .text-end{
     text-align: end;
 }

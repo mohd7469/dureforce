@@ -63,17 +63,15 @@
 </div>
 <!-- Payment cards -->
 <!-- Form -->
-<form method="POST" action="{{route('offer.save')}}">
+<form method="POST" action="{{route('buyer.offer.save')}}" id="offer_form">
   @csrf
   <div class="mt-4">
       <input type="hidden" name="job_id" value="{{$offer_letter->module_id}}" />
       <input type="hidden" name="contract_title" value="{{$offer_letter->user->job_title}}">
       <input type="hidden" name="start_date" value="{{$offer_letter->project_start_date}}">
       <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
+      <input type="hidden" value="by_project" name="offer_send_type">
 
-      
-        
-    
 </div>
 <!-- form -->
 
@@ -94,7 +92,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
                   {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="change_1()"> --}}
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="change_1()">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="change_1()" checked>
 
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
               </div>
@@ -110,17 +108,18 @@
       
     </div>
     <hr>
-    <div style="display: none" id="amount">
-    <div class="form-row">
-      <div class="col-lg-3 col-md-6 col-sm-12">
-        <h6 class="color-green mt-3">Pay by Fixed Price</h6>
-       <div class="d-flex">
-        <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end {{ $errors->has('offer_ammount') ? ' is-invalid' : '' }}"  value=""  placeholder="00.00" min="0">
-        <span class="ml-2 per-hour"></span>
-       </div>
-       <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
-      </div>
-      
+    <div  id="amount">
+     
+        <div class="form-row">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <h6 class="color-green mt-3">Pay by Fixed Price</h6>
+          <div class="d-flex">
+            <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end "  value="">
+            <span class="ml-2 per-hour"></span>
+          </div>
+          <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
+          </div>
+        
     </div>
     </div>
     <hr>
@@ -135,7 +134,7 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Milestone Description</h6></label>
-            <input type="text" name="milestone[0][descr]" class="form-control"  value="{{ old('milestone.0.descr') }}"  id="milestone.0.descr" placeholder="" >
+            <input type="text" name="milestone[0][description]" class="form-control"  value="{{ old('milestone.0.description') }}"  id="milestone.0.description" placeholder="" >
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
@@ -144,7 +143,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="milestone[0][desposit_amout]" class="form-control text-end" placeholder="00.00" min="0">
+            <input type="number" name="milestone[0][desposit_amount]" class="form-control text-end" placeholder="00.00" min="0">
           </div>
         </div>
     </div>
@@ -169,71 +168,35 @@
     </div>
     <hr>
     <!-- description of work -->
-    <h6 class="color-green">Description*</h6>
+    
     
     <div>
-        <h6 class="mt-4">Description of Work</h6>
-        
-
-    
-    <textarea  class="p-3 border-grey text-area-responsive {{ $errors->has('description') ? ' is-invalid' : '' }}"   value="{{ old('description') }}"
-    id="w3review" name="description" rows="5" cols="65">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime iusto voluptates similique quas dolore, reprehenderit at illum! Assumenda sit quia culpa error, modi ea, aliquam cumque obcaecati repudiandae ex hic?</textarea>
-
-
+      <h6 class="color-green">Description*</h6>
+        <textarea class="form-control p-3 border-grey text-area-responsive" value="{{ old('description') }}" id="w3review" name="description" rows="5" cols="65"></textarea>
     <div>
+
     <br>
-    {{-- <input name="attachment" class="btn-outline-green" type="file"/>
-      <i class="fa fa-paperclip" aria-hidden="true"></i> --}}
-      <button class="btn-outline-green disabled"><i class="fa fa-paperclip" aria-hidden="true"></i>
-        Upload File</button>
-      </button> 
+
+      <label class="btn-outline-green" for="offer_files"><i class="fa fa-paperclip" aria-hidden="true"></i>
+        Upload File</label>
+      <input type="file" name="uploaded_files[]" id="offer_files" style="display: none;visibility:none" onchange="writeFileName()" multiple>
       
     </div>
-    <h6 class="my-4">Attachments</h6>
-    <div class="d-flex flex-column">
-    <!-- attachment one -->
-    <div class="d-flex">
-    <div>
-    <i class="fa fa-paperclip  icon-class" aria-hidden="true"></i>
-    </div>
-    <h6 class="mx-2 fs-16px">FlowChart.pdf</h6>
-    <span class="clip-ui">
-    <i class="fa fa-trash-o icon-class" aria-hidden="true"></i>
-    </div>
-
-
-    <!-- attachment one -->
-    <!-- attachment two-->
-    <div class="d-flex mt-1 ">
-    <div>
-        <i class="fa fa-paperclip  icon-class" aria-hidden="true"></i>
-    </div>
-    <h6 class="mx-2 fs-16px">Requiremnts.doc</h6>
-    <span class="clip-ui">
-    <i class="fa fa-trash-o icon-class" aria-hidden="true"></i>
-    </div>
-    <!-- attachment two -->
-    <!-- attachment three -->
-    <div class="d-flex mt-1">
-        <div>
-        <i class="fa fa-paperclip  icon-class" aria-hidden="true"></i>
-        </div>
-        <h6 class="mx-2 fs-16px">Diagram.jpg</h6>
-        <span class="clip-ui">
-        <i class="fa fa-trash-o icon-class" aria-hidden="true"></i>
-        </div> 
-        <!-- attachment three --> 
-    </div>
     
+    <div>
+      <h6 class="my-4 color-green ">Attachments</h6>
+      <ul class="list-group" id="file_name_div">
+          
+      </ul>
     </div>
-    </div>
+
     <!-- description of work -->
     </div>
     <!-- description  -->
     <!-- policy section -->
-    <div class="d-flex justify-content-between align-items-center responsive-check my-3 offer-letter-alignment ">
+    <div class="d-flex justify-content-between align-items-center responsive-check my-3 ">
         <div class="form-check">
-            <input name="accept_privacy_policy" type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input name="accept_privacy_policy" type="checkbox" class="form-check-input " id="exampleCheck1">
             <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span>and <span>Privacy Policy</span></label>
         </div>
         <div class="d-flex align-items-center">
@@ -258,13 +221,7 @@
 
 @endsection
 @push('style')
-<style>
-.disabled {
-  pointer-events: none;
-  cursor: default;
-}
-</style>
-    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
 @endpush
 @push('script')
 <script type="text/javascript">
@@ -272,7 +229,7 @@
     $("#add").click(function(){
         ++i;
         // $("#dynamicTable").append('<tr><td><input type="text" name="milestone['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="milestone['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="milestone['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][descr]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amout]" class="form-control text-end" placeholder="00.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][description]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amount]" class="form-control text-end" placeholder="00.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
 
     });
     $(document).on('click', '.remove-tr', function(){  
@@ -282,9 +239,103 @@
     $( document ).ready(function() {
 
       $("#offer_ammount").val('0'); 
-    });
-  
 
+      $('#offer_form').submit(function (event) {
+        
+        event.preventDefault();
+        form_data= $(this).serialize();
+        submitOffer(form_data);
+      });
+      $(document).on('click', '.delete-btn', function(e) {
+
+          filename=jQuery(this).attr("id");
+          $('#file_detail_'+filename).remove();
+          var original_file_name=$(this).attr("data-id");
+          const dt = new DataTransfer();
+          var number_of_files=$('#offer_files').get(0).files.length;
+          for (let index = 0; index < number_of_files; index++) {
+              file=$('#offer_files').get(0).files[index];
+              if(file.name!=original_file_name)
+              {
+                  dt.items.add(file);
+              }
+          }
+          $('#offer_files').get(0).files=dt.files;
+        });
+    });
+    function calculateMilestoneAmountSum()
+    {
+        var total_amount=0;
+        $(".milestones_amount").each(function() {
+          var milestone_amount=$(this).val();
+          total_amount=total_amount+parseFloat(milestone_amount);
+        });
+        $('#total_milestones_amount').val(total_amount);
+        $('#milestones_amount_receive').val(financial(total_amount*0.80));
+        $('#system_fee').html('$'+financial(total_amount*0.20));
+    }
+    
+    function submitOffer(data)
+    {
+        var action_url=$("#offer_form").attr('action');
+        var token= $('input[name=_token]').val();
+
+        $.ajax({
+            type:"POST",
+            url:action_url,
+            data: {data : data,_token:token},
+            success:function(data){
+                var html = '';
+                console.log(data);
+                if(data.error){
+                    
+                  displayErrorMessage(data.error);
+
+                }
+                else{
+                  window.location.replace(data.redirect);              
+                }
+            }
+        });  
+    }
+    function displayAlertMessage(message)
+{
+  
+    iziToast.error({
+      message: message,
+      position: "topRight",
+    });
+
+}
+
+function displayErrorMessage(validation_errors)
+{
+    $('input,select,textarea').removeClass('error-field');
+    for (var error in validation_errors) { 
+        var error_message=validation_errors[error];
+
+        $('[name="'+error+'"]').addClass('error-field');
+        $('[id="'+error+'"]').addClass('error-field');
+
+        $('#'+error).next().addClass('error-field');
+
+        displayAlertMessage(error_message);
+
+      
+    }
+
+}
+    function writeFileName()
+    {
+        $('#file_name_div').empty();
+        var number_of_files=$('#offer_files').get(0).files.length;
+        var form= new FormData();
+        for (let index = 0; index < number_of_files; index++) {
+            file=$('#offer_files').get(0).files[index];
+            $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/\./g,'_')+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+        }
+        
+    }
 
     function change() {
         var decider = document.getElementById('switch');
@@ -295,6 +346,7 @@
           $("#amount").hide();
         }
     }
+
     function change_1() {
         var decider = document.getElementById('switch');
         if(decider.checked){
