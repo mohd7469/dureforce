@@ -152,6 +152,11 @@ class Job extends Model
         return $this->morphMany(ChatMessage::class, 'module')->with('user');
     }
 
+    public function chatUsers()
+    {
+        return $this->morphMany(ModuleChatUser::class, 'module');
+    }
+
     public function task_skill()
     {
         return $this->morphMany(TaskSkill::class, 'task_skill');
