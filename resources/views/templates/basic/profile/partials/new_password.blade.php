@@ -5,7 +5,7 @@
    <section class="all-sections pt-3">
     <div class="container">
        <div class="">
-          <article class="main-section">
+          <article class="main-section" id="job_form_data">
               <div class="row">
                 <div class="password-info-section">
                     <p class="cp-basic">Password & Security</p>
@@ -33,7 +33,7 @@
                          
                         </form>
                         <div>
-                            <button  onclick="submiSecurityForm()" type="button" class="btn btn-primary cstm-edit" >
+                            <button  onclick="submitPasswordForm()" type="button" class="btn btn-primary cstm-edit" >
                                 Save
                             </button>
                         </div>
@@ -73,31 +73,6 @@
    @endsection
 
 <script language="javascript" type="text/javascript">
-    function submiSecurityForm() {
-       $.ajax({
-        url: "{{ route('buyer.basic.profile.password.change') }}",
-        type: 'post',
-        dataType: 'json',
-        data: $('#securityFrom').serialize(),
-        success: function(response) {
-            console.log(response)
-            if (response.success) {
-                notify('success', response.success);
-                location.reload();
-             }
-            else if(response.validation_errors){
-                 displayErrorMessage(response.validation_errors);
-            }
-            else {
-
-                console.log(response.errors);
-                errorMessages(response.errors);
-            }
-
-        }
-        
-    });
-    }
     function displayErrorMessage(validation_errors)
         {
             $('input,select,textarea').removeClass('error-field');
@@ -114,6 +89,47 @@
             
             }
         }
+        function displaySuccessMessage()
+        {
+        $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
+        }
+
+    function submitPasswordForm() {
+       $.ajax({
+        url: "{{ route('buyer.basic.profile.password.change') }}",
+        type: 'post',
+        dataType: 'json',
+        data: $('#securityFrom').serialize(),
+        success: function(response) {
+            console.log(response)
+            if (response.success) {
+                notify('success', response.success);
+                location.reload();
+             }
+            else if(response.validation_errors){
+
+                 displayErrorMessage(response.validation_errors);
+            }
+            else {
+
+                console.log(response.errors);
+                errorMessages(response.errors);
+            }
+
+        }
+        
+    });
+    }
+    function displayAlertMessage(message)
+{
+  
+    iziToast.error({
+      message: message,
+      position: "topRight",
+    });
+
+}
+
 </script>
 
 
@@ -307,6 +323,7 @@ form.password-cs input {
     </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+
     $(document).ready(function(){
       $("#hide").click(function(){
         $("#info-edit-password ").hide();
