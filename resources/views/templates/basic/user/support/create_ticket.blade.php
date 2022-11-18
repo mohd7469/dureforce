@@ -34,7 +34,7 @@
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Priority*</label>
             <select class="form-select form-select-sm form-control back" name="priority_id" aria-label=".form-select-sm example">
-                <option>Priority</option>
+                <option>Select Priority</option>
                 @foreach($priorities as $priority)
                 <option value="{{$priority->id}}">{{$priority->name}}</option>
                 @endforeach
