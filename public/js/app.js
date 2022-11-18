@@ -56836,16 +56836,18 @@ var render = function () {
       _c("span", { staticClass: "float-sm-left" }, [
         _c("b", [
           _vm._v(
-            _vm._s(_vm.active_user.first_name) +
+            _vm._s(_vm.active_user.send_to_user.first_name) +
               " " +
-              _vm._s(_vm.active_user.last_name) +
+              _vm._s(_vm.active_user.send_to_user.last_name) +
               " "
           ),
         ]),
         _vm._v(" "),
-        _c("small", [
-          _vm._v(_vm._s(_vm.formattedDate(_vm.active_user.created_at))),
-        ]),
+        _vm.active_user.created_at
+          ? _c("small", [
+              _vm._v(_vm._s(_vm.formattedDate(_vm.active_user.created_at))),
+            ])
+          : _vm._e(),
       ]),
       _vm._v(" "),
       _c("span", { staticClass: "float-right align-header" }),

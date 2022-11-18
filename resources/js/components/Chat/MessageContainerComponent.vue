@@ -4,8 +4,8 @@
         
         <div class="card-header">
             <span class="float-sm-left">
-                <b>{{active_user.first_name}} {{active_user.last_name}} </b> 
-                <small>{{formattedDate(active_user.created_at)}}</small> 
+                <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
+                <small v-if="active_user.created_at">{{formattedDate(active_user.created_at)}}</small> 
             </span>
             <span class="float-right align-header">
                 <!-- <button class="btn-job">View Job</button>
