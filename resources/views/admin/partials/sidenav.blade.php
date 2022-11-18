@@ -196,12 +196,20 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.ticket.closed') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Closed Ticket')</span>
+                                        @if ($close_ticket_count)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $close_ticket_count }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item {{ menuActive('admin.ticket.answered') }} ">
                                     <a href="{{ route('admin.ticket.answered') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('On Hold Ticket')</span>
+                                        @if ($onhold_ticket_count)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $onhold_ticket_count }}</span>
+                                        @endif
                                     </a>
                                 </li>
                             </ul>

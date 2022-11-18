@@ -209,7 +209,7 @@
             position: absolute;
             content: '';
             border-radius: 50%;
-            left: 12px;
+            left: 9px;
             top: 9px;
         }
 
