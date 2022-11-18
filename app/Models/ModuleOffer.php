@@ -12,6 +12,16 @@ class ModuleOffer extends Model
     protected $table="module_offers";
     protected $guarded = [];
 
+
+    public const  Fix_Payment_Offer_Type = [
+        'BY_PROJECT' => 'by_project' ,
+        'BY_MILESTONE' =>'by_milestone'  
+    ];
+
+    public const PAYMENT_TYPE = [
+        'FIXED' => 'Fixed',
+        'HOURLY' =>'Hourly'  
+    ];
     public function moduleMilestones()
     {
         return $this->hasMany(ModuleOfferMilestone::class, 'module_offer_id');
@@ -19,6 +29,9 @@ class ModuleOffer extends Model
     public function moduleOffer()
     {
         return $this->belongsTo(Job::class);
+    }
+    public function attachments(){
+        return $this->morphMany(Attachment::class,'section');
     }
 
 }

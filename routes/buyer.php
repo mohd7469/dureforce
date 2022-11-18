@@ -57,8 +57,8 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
-                Route::post('offer/save/', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
-
+                Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
+                Route::get('job-offer-send-response', [\App\Http\Controllers\Buyer\OfferController::class,'offerSuccessfullySubmitted'])->name('offer.success.alert');
 
                 // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
                 Route::get('send-offer/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'offerSend'] )->name('send.offer');
@@ -72,7 +72,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::get('invite-freelancer/{uuid}',[\App\Http\Controllers\Buyer\JobController::class,'inviteFreelancer'] )->name('job.invite.freelancer');
                 Route::post('save-invitation/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'saveInvitation'] )->name('job.save.invite.freelancer');
                 Route::get('invited-freelancer/{uuid}',[\App\Http\Controllers\Buyer\InviteFreelancerController::class,'invitedFreelancer'] )->name('job.invited.freelancer');
-//
+                //
                 Route::get('/job/attachment',[\App\Http\Controllers\Buyer\JobController::class,'downnloadAttach'] )->name('job.download');
 
             });

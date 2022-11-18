@@ -64,4 +64,9 @@ class Proposal extends Model
         return $this->hasMany(ProposalAttachment::class);
     }
 
+    public function offer()
+    {
+        return $this->hasOne(ModuleOffer::class,'proposal_id');
+    }
+
 }

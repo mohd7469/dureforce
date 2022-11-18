@@ -138,9 +138,9 @@ class ProposalController extends Controller
     {
 
         try {
-            $offer_letter = Proposal::withAll()->where('uuid',$job_uuid)->first();
+            $propsal_to_send_offer = Proposal::withAll()->where('uuid',$job_uuid)->first();
             $pageTitle = "Send Offer";
-            return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','offer_letter'));
+            return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','propsal_to_send_offer'));
 
         } catch (\Throwable $th) {
             return $th;
