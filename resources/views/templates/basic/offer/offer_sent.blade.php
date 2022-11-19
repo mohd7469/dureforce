@@ -56,9 +56,8 @@
                        
                       </div>
                       <div class="btncntainer">
-                          <a href="#" class="btngojobs">Go to my jobs</a>
+                          <a href="{{route('buyer.job.index')}}" class="btngojobs">Go to my jobs</a>
                       </div>
-                     
                     </div>
                   </div>
             </div>
