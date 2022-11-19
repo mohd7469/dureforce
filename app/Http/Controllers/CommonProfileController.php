@@ -226,7 +226,6 @@ class CommonProfileController extends Controller
      */
     public function editUserBasics(Request $request)
     {
-        dd($request->language_level_id);
         $request_data = $request->all();
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
