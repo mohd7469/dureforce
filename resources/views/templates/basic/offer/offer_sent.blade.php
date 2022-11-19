@@ -9,10 +9,10 @@
                     <img src="/assets/images/job/f-icon.png" alt="icon">
                  
                       <div class="mt-4">
-                        <p class="text-dark-heading">Offer Sent to Dumitru Gi</p>
+                        <p class="text-dark-heading">Offer Has Been Sent</p>
                       </div>
                       <div class="mb-2 mt-1">
-                        <p class="text-dark">We’ll notify you when Dumitru G
+                        <p class="text-dark">We’ll notify you freelancer will respond
                           respond to your offer. </p>
                       </div>
                     

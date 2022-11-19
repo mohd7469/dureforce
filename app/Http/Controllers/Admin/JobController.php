@@ -72,7 +72,7 @@ class JobController extends Controller
     {
     	$pageTitle = "Cancel Job";
     	$emptyMessage = "No data found";
-    	$jobs = Job::onlyTrashed()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+    	$jobs = Job::where('status_id', 10)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
     	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
@@ -225,10 +225,6 @@ class JobController extends Controller
 
     public function destroy($id)
     {
-        $job = Job::findOrFail($id);
-        $job->status_id = 10;
-        $job->created_at = Carbon::now();
-        $job->save();
         $this->deleteEntity(Job::class,'job', $id);
         $notify[] = ['success', 'Job has been deleted'];
         return back()->withNotify($notify);

@@ -78,7 +78,7 @@ class AppServiceProvider extends ServiceProvider
                 'jobPending'    => Job::where('status_id', 1)->count(),
                 'jobApproved'    => Job::where('status_id', 2)->count(),
                 'jobClosed'    => Job::where('status_id', 3)->count(),
-                'jobCanceled'    => Job::onlyTrashed()->count(),
+                'jobCanceled'    => Job::where('status_id', 10)->count(),
 
             ]);
         });

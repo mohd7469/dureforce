@@ -101,7 +101,7 @@ class OfferController extends Controller
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                return response()->json(["redirect" => route('buyer.offer.success.alert')]);
+                return response()->json(["redirect" => route('buyer.offer.sent')]);
             } catch (\Throwable $exception) {
 
                 DB::rollback();
