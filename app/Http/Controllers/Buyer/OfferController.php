@@ -25,22 +25,20 @@ class OfferController extends Controller
     public function sendOffer(Request $request)
     {
         $request_data = $request->all();
-        $job = Job::findOrFail($request->job_id);
-
         $rules=[
             'uploaded_files ' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required',
             'accept_privacy_policy' => 'required',
         ];
 
-        if ($request->offer_send_type=='by_project') {
-            $rules ['offer_ammount' ]= 'required|numeric|min:1';
-        } else if ($request->offer_send_type == 'by_milestone') {
+        if ($request_data['fix_payment_offer_type']==ModuleOffer::Fix_Payment_Offer_Type['BY_PROJECT']) {
+            $rules ['offer_ammount' ] = 'required|numeric|min:1';
+        } else if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
 
             $rules['milestone'] = 'required|array';
             $rules['milestone.*.description'] = 'required';
             $rules['milestone.*.due_date'] = 'required|date|after_or_equal:now';
-            $rules['milestone.*.desposit_amount'] = 'required';
+            $rules['milestone.*.deposit_amount'] = 'required|min:1';
         } 
         $validator = Validator::make($request_data, $rules);
        
@@ -49,51 +47,74 @@ class OfferController extends Controller
             return response()->json(["error" => $validator->errors()]);
 
         } else {
+           
+            DB::beginTransaction();
             try {
-                DB::beginTransaction();
                 $module_offer = new ModuleOffer;
-                $module_offer->offer_amount = $request->offer_ammount;
-                $module_offer->description_of_work = $request->description;
-                $module_offer->contract_title = $request->contract_title;
-                $module_offer->start_date = $request->start_date;
-                $module_offer->rate_per_hour = $request->rate_per_hour;
+                $module_offer->offer_amount = $request_data['offer_ammount'];
+                $module_offer->description_of_work = $request_data['description'];
+                $module_offer->contract_title = $request_data['contract_title'];
+                $module_offer->payment_type = ModuleOffer::PAYMENT_TYPE['FIXED'];
+                $module_offer->proposal_id = $request_data['proposal_id'];
 
-                $job = Job::find($request->job_id);
+
+                $job = Job::find($request_data['job_id']);
                 $job->moduleOffer()->save($module_offer);
 
-                if (($request->milestone)) {
+                if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
 
-                    $ModuleOfferMilestones = $request->milestone;
+                    $ModuleOfferMilestones = $request_data['milestone'];
+                    $offered_amount=0;
                     foreach ($ModuleOfferMilestones as $ModuleOfferMilestone) {
-                        ModuleOfferMilestone::updateOrCreate([
-                            'module_offer_id' => $module_offer->id,
-                        ], [
-                            'due_date' => $ModuleOfferMilestone['due_date'],
-                            'is_paid' => false,
-                            'amount' => $ModuleOfferMilestone['desposit_amout'],
-                            'description' => $ModuleOfferMilestone['descr'],
+                        $offered_amount+=$ModuleOfferMilestone['deposit_amount'];
+                        $ModuleOfferMilestone['is_paid']=false;
+                        $ModuleOfferMilestone['module_offer_id']=$module_offer->id;
 
-                        ]);
+                        ModuleOfferMilestone::create($ModuleOfferMilestone);
                     }
-                }
+                    $module_offer->offer_amount = $offered_amount;
+                    $module_offer->save();
 
+                }
+                if(isset($request_data['uploaded_files'])){
+                    foreach ($request_data['uploaded_files'] as $file) 
+                    {
+
+                        $path = imagePath()['attachments']['path'];
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        $uploaded_name = $file->getClientOriginalName();
+                        $module_offer->attachments()->create([
+    
+                            'name' => $filename,
+                            'uploaded_name' => $uploaded_name,
+                            'url'           => $url,
+                            'type' =>$file_extension,
+                            'is_published' =>1
+    
+                        ]);
+    
+                     }
+                }
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                // return redirect()->back()->withNotify($notify);
-                //return redirect()->route('buyer.job.all.offers')->withNotify($notify);
-                return redirect('buyer/all-offer/' . $job->uuid)->withNotify($notify);
-
-
+                return response()->json(["redirect" => route('buyer.offer.success.alert')]);
             } catch (\Throwable $exception) {
 
                 DB::rollback();
                 return response()->json(['error' => $exception->getMessage()]);
-                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                $notify[] = ['errors', 'Failled To Send Offer .'];
                 return back()->withNotify($notify);
 
 
             }
         }
+    }
+
+    public function offerSuccessfullySubmitted(){
+        return "Successfully Submitted !";
     }
 }

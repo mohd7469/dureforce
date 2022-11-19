@@ -19,15 +19,15 @@
         <div class="card-body p-0 d-flex align-items-center">
          
             <div class="image-div">
-                <img class="card-img-top image-ui" src="{{ !empty($offer_letter->user->basicProfile->profile_picture)? $offer_letter->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                <img class="card-img-top image-ui" src="{{ !empty($propsal_to_send_offer->user->basicProfile->profile_picture)? $propsal_to_send_offer->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
                 <span class="logged-in">●</span>
 
               </div>
                <div>
-                <h4 class="card-title color-purple">{{$offer_letter->user->full_name}}</h4>
-              <h6>{{$offer_letter->user->job_title}}</h6>
+                <h4 class="card-title color-purple">{{$propsal_to_send_offer->user->full_name}}</h4>
+              <h6>{{$propsal_to_send_offer->user->job_title}}</h6>
                 <div class="d-flex justify-content-between responsive-card-section mt-2">
-                  <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$offer_letter->user->location }}</p>
+                  <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$propsal_to_send_offer->user->location }}</p>
                   <!-- <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>1:20PM Local time</p> -->
                 </div>
                </div>
@@ -63,14 +63,17 @@
 </div>
 <!-- Payment cards -->
 <!-- Form -->
-<form method="POST" action="{{route('buyer.offer.save')}}" id="offer_form">
+<form  id="offer_form" enctype="multipart/form-data">
   @csrf
   <div class="mt-4">
-      <input type="hidden" name="job_id" value="{{$offer_letter->module_id}}" />
-      <input type="hidden" name="contract_title" value="{{$offer_letter->user->job_title}}">
-      <input type="hidden" name="start_date" value="{{$offer_letter->project_start_date}}">
-      <input type="hidden" name="rate_per_hour" value="{{$offer_letter->hourly_bid_rate}}">
-      <input type="hidden" value="by_project" name="offer_send_type">
+      <input type="hidden" name="job_id" value="{{$propsal_to_send_offer->module_id}}" />
+      <input type="hidden" name="proposal_id" value="{{$propsal_to_send_offer->id}}" />
+      <input type="hidden" name="contract_title" value="{{$propsal_to_send_offer->user->job_title}}">
+      <input type="hidden" name="start_date" value="{{$propsal_to_send_offer->project_start_date}}">
+      <input type="hidden" name="rate_per_hour" value="{{$propsal_to_send_offer->hourly_bid_rate}}">
+      <input type="hidden" value="by_project" name="fix_payment_offer_type" id="fix_payment_offer_type">
+      <input type="hidden" value="Fixed" name="payment_type">
+
 
 </div>
 <!-- form -->
@@ -83,7 +86,7 @@
 </div>
 <!-- Weekly Limit  -->
 <div class="mt-3">
-  <input type="hidden" id="switch" onclick="change()">
+  <input type="hidden" id="switch" onclick="byMilestone()">
 
     <h6 class="color-green">Deposit funds into Escrow</h6>
     <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
@@ -91,15 +94,15 @@
           <div class="form-row">
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
-                  {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="change_1()"> --}}
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="change_1()" checked>
+                  {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="byProject()"> --}}
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="byProject()" checked>
 
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <div class="form-check">
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund"  onclick="change()">
+                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund"  onclick="byMilestone()">
                   <label class="form-check-label fs-14px" for="exampleCheck1">Deposit a lesser amount to cover the first milestone</label>
               </div>
             </div>
@@ -114,7 +117,7 @@
           <div class="col-lg-3 col-md-6 col-sm-12">
             <h6 class="color-green mt-3">Pay by Fixed Price</h6>
           <div class="d-flex">
-            <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end "  value="">
+            <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
             <span class="ml-2 per-hour"></span>
           </div>
           <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
@@ -134,7 +137,7 @@
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Milestone Description</h6></label>
-            <input type="text" name="milestone[0][description]" class="form-control"  value="{{ old('milestone.0.description') }}"  id="milestone.0.description" placeholder="" >
+            <input type="text" name="milestone[0][description]" class="form-control"  value=""  id="milestone.0.description" placeholder="" >
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Due Date (Optional)</h6></label>
@@ -143,7 +146,7 @@
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
             <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="milestone[0][desposit_amount]" class="form-control text-end" placeholder="00.00" min="0">
+            <input type="number" name="milestone[0][deposit_amount]" class="form-control text-end"  min="0">
           </div>
         </div>
     </div>
@@ -172,13 +175,11 @@
     
     <div>
       <h6 class="color-green">Description*</h6>
-        <textarea class="form-control p-3 border-grey text-area-responsive" value="{{ old('description') }}" id="w3review" name="description" rows="5" cols="65"></textarea>
+        <textarea class=" p-3 border-grey text-area-responsive" value="" id="description" name="description" rows="3" ></textarea>
+    </div>
+
     <div>
-
-    <br>
-
-      <label class="btn-outline-green" for="offer_files"><i class="fa fa-paperclip" aria-hidden="true"></i>
-        Upload File</label>
+      <label class="btn-outline-green" for="offer_files"><i class="fa fa-paperclip" aria-hidden="true"></i>Upload File</label>
       <input type="file" name="uploaded_files[]" id="offer_files" style="display: none;visibility:none" onchange="writeFileName()" multiple>
       
     </div>
@@ -188,9 +189,6 @@
       <ul class="list-group" id="file_name_div">
           
       </ul>
-    </div>
-
-    <!-- description of work -->
     </div>
     <!-- description  -->
     <!-- policy section -->
@@ -225,13 +223,13 @@
 @endpush
 @push('script')
 <script type="text/javascript">
-    var i = 0;
+    var index = 0;
     $("#add").click(function(){
-        ++i;
-        // $("#dynamicTable").append('<tr><td><input type="text" name="milestone['+i+'][name]" placeholder="Enter your Name" class="form-control" /></td><td><input type="text" name="milestone['+i+'][qty]" placeholder="Enter your Qty" class="form-control" /></td><td><input type="text" name="milestone['+i+'][price]" placeholder="Enter your Price" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Remove</button></td></tr>');
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+i+'][description]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+i+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+i+'][desposit_amount]" class="form-control text-end" placeholder="00.00"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i class="fa fa-trash"></i></button></div></div>');
+        ++index;
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+index+'][description]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+index+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+index+'][deposit_amount]" class="form-control text-end" ></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i style="color:red" class="fa fa-trash"></i></button></div></div>');
 
     });
+
     $(document).on('click', '.remove-tr', function(){  
          $(this).parents('.row-line').remove();
     }); 
@@ -243,8 +241,7 @@
       $('#offer_form').submit(function (event) {
         
         event.preventDefault();
-        form_data= $(this).serialize();
-        submitOffer(form_data);
+        submitOffer();
       });
       $(document).on('click', '.delete-btn', function(e) {
 
@@ -275,15 +272,22 @@
         $('#system_fee').html('$'+financial(total_amount*0.20));
     }
     
-    function submitOffer(data)
+    function submitOffer()
     {
-        var action_url=$("#offer_form").attr('action');
-        var token= $('input[name=_token]').val();
 
+        var offer_form=$('#offer_form');
+        let form_data = new FormData(offer_form[0]);
+        form_data.append('offer_files', $('#offer_files')[0].files);
         $.ajax({
             type:"POST",
-            url:action_url,
-            data: {data : data,_token:token},
+            headers: {
+              'X-CSRF-TOKEN': $('input[name=_token]').val()
+            },
+            url:"{{ route('buyer.offer.save') }}",
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,
+            enctype: 'multipart/form-data',
+            data: form_data,
             success:function(data){
                 var html = '';
                 console.log(data);
@@ -298,33 +302,35 @@
             }
         });  
     }
+
     function displayAlertMessage(message)
-{
+    {
   
-    iziToast.error({
-      message: message,
-      position: "topRight",
-    });
+      iziToast.error({
+        message: message,
+        position: "topRight",
+      });
 
-}
-
-function displayErrorMessage(validation_errors)
-{
-    $('input,select,textarea').removeClass('error-field');
-    for (var error in validation_errors) { 
-        var error_message=validation_errors[error];
-
-        $('[name="'+error+'"]').addClass('error-field');
-        $('[id="'+error+'"]').addClass('error-field');
-
-        $('#'+error).next().addClass('error-field');
-
-        displayAlertMessage(error_message);
-
-      
     }
 
-}
+    function displayErrorMessage(validation_errors)
+    {
+      $('input,select,textarea').removeClass('error-field');
+      for (var error in validation_errors) { 
+          var error_message=validation_errors[error];
+
+          $('[name="'+error+'"]').addClass('error-field');
+          $('[id="'+error+'"]').addClass('error-field');
+
+          $('#'+error).next().addClass('error-field');
+
+          displayAlertMessage(error_message);
+
+        
+      }
+
+    }
+
     function writeFileName()
     {
         $('#file_name_div').empty();
@@ -337,23 +343,26 @@ function displayErrorMessage(validation_errors)
         
     }
 
-    function change() {
+    function byMilestone() {
         var decider = document.getElementById('switch');
         if(decider.checked){
             alert('check');
         } else {
           $("#milestone").show();
+          $('#fix_payment_offer_type').val('by_milestone');
           $("#amount").hide();
         }
     }
 
-    function change_1() {
+    function byProject() {
         var decider = document.getElementById('switch');
         if(decider.checked){
             alert('check');
         } else {
           $("#milestone").hide();
           $("#amount").show();
+          $('#fix_payment_offer_type').val('by_project');
+
         }
     }
 
