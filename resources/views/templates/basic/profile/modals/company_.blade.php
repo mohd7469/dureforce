@@ -34,7 +34,7 @@
                                 <div class="row">
                                     
                                 <div class="col-md-6">
-                                    <label class="mt-4">Phone</label>
+                                    <label class="mt-4">Phone *</label>
                                     <input type="number" name="phone" value="{{ old('number', @$user->company->number) }}"
                                         placeholder="3948203"  />
                                 </div>
@@ -74,7 +74,7 @@
                                 </div>
                                
                                 <div class="col-md-6">
-                                    <label class="mt-4">VAT ID </label>
+                                    <label class="mt-4">VAT ID *</label>
                                     <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
                                         placeholder="3948203"  />
                                 </div>

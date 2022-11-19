@@ -45,7 +45,7 @@
                                        </p>
 
                                        <div>
-                                          <a href="#" role="button" class="btn btn-outline-primary btn-border" >View job posting</a>
+                                          <a href="#" role="button" class="standard-btn" >View job posting</a>
                                        </div>
                                     </div>
 

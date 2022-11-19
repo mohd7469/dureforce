@@ -12,7 +12,7 @@
                             <th>@lang('Buyer')</th>
                             <th>@lang('Category / SubCategory')</th>
                             <th>@lang('Budget')</th>
-                            <th>@lang('Delivery Time11')</th>
+                            <th>@lang('Delivery Time')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
                             <th>@lang('Action')</th>

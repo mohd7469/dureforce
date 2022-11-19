@@ -6,12 +6,12 @@
         <div class="container">
             <div class="secondsb-con">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <p class="sbheading-c">All Tickets > {{$support_ticket->ticket_no}} > <strong>{{$support_ticket->subject}}</strong></p>
                         <a href="#" class="btn btn-sm openbtn-s">{{$support_ticket->status->name}}</a>
                         <a href="#" class="btn btn-sm highbtn-s">{{$support_ticket->priority->name}}</a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2 posted-date">
                         <p class="datec-s"><strong>Posted Date :</strong> {{$support_ticket->created_at->format("d M Y")}}</p>
                     </div>
                     <div class="col-md-1">
@@ -197,6 +197,9 @@
 
 @push('style')
     <style>
+        .posted-date{
+            padding-left: 0px !important;
+        }
         .categories_type_container {
             background: #F9F9F9;
             border-bottom: 1px solid #e1e7ec;
@@ -282,7 +285,7 @@
             height: 10px;
             border-radius: 50%;
             background: #ADE7AD;
-            left: 16px;
+            left: 8px;
             top: 8px;
             content: '';
             position: absolute;

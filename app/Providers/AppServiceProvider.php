@@ -68,12 +68,18 @@ class AppServiceProvider extends ServiceProvider
                 'banned_users_count'           => User::where('is_active', 0)->count(),
                 'email_unverified_users_count' => User::where('email_verified_at', null)->count(),
                 'sms_unverified_users_count'   => User::where('sms_verified_at', null)->count(),
-                'pending_ticket_count'         => SupportTicket::all()->count(),
+                'pending_ticket_count'         => SupportTicket::where('status_id',SupportTicket::$Open)->count(),
+                'close_ticket_count'         => SupportTicket::where('status_id',SupportTicket::$Closed)->count(),
+                'onhold_ticket_count'         => SupportTicket::where('status_id',SupportTicket::$OnHold)->count(),
                 'pending_deposits_count'    => Deposit::all()->count(),
                 'pending_withdraw_count'    => Withdrawal::all()->count(),
                 'servicePending'    => Service::all()->count(),
                 'softwarePending'    => Software::all()->count(),
-                'jobPending'    => Job::all()->count(),
+                'jobPending'    => Job::where('status_id', 1)->count(),
+                'jobApproved'    => Job::where('status_id', 2)->count(),
+                'jobClosed'    => Job::where('status_id', 3)->count(),
+                'jobCanceled'    => Job::onlyTrashed()->count(),
+
             ]);
         });
 

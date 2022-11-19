@@ -7,7 +7,7 @@
                         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="fas fa-bars"></span>
+                            <span class="fas fa-bars mobile-bars"></span>
                         </button>
                         <a class="site-logo site-title" href="{{ route('home') }}"><img
                             src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
@@ -19,6 +19,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                                     <div
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
+                                        <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
                                         <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
@@ -206,10 +207,10 @@
                                     </div>
                                 </li>
                                 
-                                <li>
+                                <!-- <li>
                                     <a href="{{ route('user.home') }}"
                                         @if (request()->routeIs('user.home')) class="active" @endif>@lang('DASHBOARD')</a>
-                                </li>
+                                </li> -->
 
                                 <li><a href="{{ route('chat.inbox') }}"
                                         @if (request()->routeIs('chat.inbox') || request()->routeIs('chat.inbox')) class="active" @endif>@lang('Messages')</a></li>
@@ -239,6 +240,7 @@
                                     aria-haspopup="true" aria-expanded="false">
                                     <div
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
+                                        <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
                                         <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
@@ -275,13 +277,13 @@
                                         
                                     @endif
                                     <!-- right navbar -->
-                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Account')</strong>
+                                    <strong class="profile_dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder profile_px-3 py-2">@lang('My Account')</strong>
                                     <a href="{{ route('user.home') }}"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('My Dashboard')</span>
                                     </a>
                                     <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('My Profile')</span>
                                     </a>
                                     <a href="{{ route('seller.profile.password.security') }}"
@@ -289,33 +291,33 @@
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
                                     <a href="#"
-                                        class=" d-flex align-items-center px-3 py-2">
+                                        class=" d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
                                     </a>
-                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Finance')</strong>
+                                    <strong class="profile_dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder profile_px-3 py-2">@lang('My Finance')</strong>
                                     <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
                                     </a>
                                     <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
                                     </a>
                                     <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
                                     </a>
                                     <a href="#"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Transaction History')</span>
                                     </a>
-                                    <h5 class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center"></h5>
+                                    <h5 class="profile_dropdown-menu__item dropdown-menu__caption d-flex align-items-center"></h5>
                                     <a href="{{ route('ticket') }}"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Support')</span>
                                     </a>
                                     <a href="{{ route('user.logout') }}"
-                                        class="d-flex align-items-center px-3 py-2">
+                                        class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Logout')</span>
                                     </a>
                                     <!-- end right navbar -->
@@ -355,9 +357,28 @@
     </div>
 </header>
 <style>
+    .mobile-bars{
+        color: #7F007F !important;
+    }
     .profile-navbar{
         background-color: #007f7f !important;
         color: #e6eeee !important;
+    }
+    .profile_px-3 {
+        padding-left: 0rem!important;
+    }
+    .profile_py-2 {
+        padding-top: 0.5rem!important;
+        padding-bottom: 0.5rem!important;
+        font-size: 15px;
+    }
+    .profile_dropdown-menu__item {
+        border-bottom: 1px solid #028C8C;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .dropdown-menu.dropdown-menu--sm {
+        min-width: 13rem;
     }
     .nav-button{
         background-color: #fff;
@@ -370,7 +391,7 @@
         padding-left: 10px;
         margin-right: 10px;
         color: #606975;
-        font-size: 20px;
+        font-size: 22px;
     }
     .mobile-view-dropdown{
         display: none;

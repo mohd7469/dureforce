@@ -130,10 +130,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.job.pending') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Pending')</span>
-                                        <!-- @if ($jobPending)
+                                        @if ($jobPending)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
-                                        @endif -->
+                                        @endif
                                     </a>
                                 </li>
 
@@ -141,6 +141,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.job.approved') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Approved')</span>
+                                        @if ($jobApproved)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $jobApproved }}</span>
+                                        @endif
                                     </a>
                                 </li>
 
@@ -148,6 +152,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.job.closed') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Closed')</span>
+                                        @if ($jobClosed)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $jobClosed }}</span>
+                                        @endif
                                     </a>
                                 </li>
 
@@ -155,6 +163,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.job.cancel') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Cancel')</span>
+                                        @if ($jobCanceled)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $jobCanceled }}</span>
+                                        @endif
                                     </a>
                                 </li>
                             </ul>
@@ -196,12 +208,20 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.ticket.closed') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Closed Ticket')</span>
+                                        @if ($close_ticket_count)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $close_ticket_count }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item {{ menuActive('admin.ticket.answered') }} ">
                                     <a href="{{ route('admin.ticket.answered') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('On Hold Ticket')</span>
+                                        @if ($onhold_ticket_count)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $onhold_ticket_count }}</span>
+                                        @endif
                                     </a>
                                 </li>
                             </ul>
