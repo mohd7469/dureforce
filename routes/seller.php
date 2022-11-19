@@ -36,7 +36,7 @@ Route::name('seller.')->group(function () {
             // profile completed  routes
             Route::middleware('is-profile-completed')->group(function () {
 
-                Route::get('/jobs-listing-old/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
+                // Route::get('/jobs-listing-old/{category?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
                 Route::get('/jobs-listing/{category?}', [\App\Http\Controllers\Seller\JobController::class,'indexNew'] )->name('jobs.listing');
                 Route::get('/save-job/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveJob'] )->name('jobs.save.listing');
                 Route::get('/save-single-job-view/{uuid}', [\App\Http\Controllers\Seller\JobController::class,'saveSingleJobView'] )->name('jobs.save.single.view.listing');
