@@ -120,7 +120,7 @@
             <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
             <span class="ml-2 per-hour"></span>
           </div>
-          <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p>
+          <!-- <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p> -->
           </div>
         
     </div>

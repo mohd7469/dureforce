@@ -193,6 +193,8 @@ class ProfileController extends Controller
      */
     public function addExperience(Request $request)
     {
+        print_r($request->all());
+        exit;
         $validator = \Validator::make($request->all(), 
         [
             'job_title'   => 'required',
