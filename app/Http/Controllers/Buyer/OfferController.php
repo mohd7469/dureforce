@@ -16,7 +16,7 @@ class OfferController extends Controller
     {
        
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $offers = $job::with('moduleOffer')->first();
+        $offers = $job::with('moduleOffer')->where('uuid',$job_uuid)->first();
         $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
     
         $pageTitle = "Job Offers";
