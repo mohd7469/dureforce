@@ -117,7 +117,14 @@
                                                     <a href="{{route('buyer.proposal.shortlist',$proposal->id)}}" class="btn-products-s">Shortlist</a>
                                                     <a href="{{route('chat.propsal.message',$proposal->uuid)}}" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
-                                                    <a href="#" class="btn-products-s phire">Hire</a>
+                                                    @if ($proposal->offer)
+                                                        <a href="#" class="btn-products-s">View Offer</a>
+
+                                                    @else
+                                                        <a href="{{route('buyer.send.offer',$proposal->uuid)}}" class="btn-products-s">Send Offer</a>
+
+
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -270,6 +277,7 @@
                                                 <div class="col-md-4">
                                                     <div class="row btns-s">
                                                         <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
+                                                        <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
 
                                                         @if ($short_listed_proposal->offer)
                                                             <a href="#" class="btn-products-s">View Offer</a>
@@ -280,8 +288,7 @@
                                                             
                                                         @endif
                                                         
-                                                        <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
-                                                        <a href="#" class="btn-products-s phire">Hire</a>
+{{--                                                        <a href="#" class="btn-products-s phire">Hire</a>--}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -342,8 +349,9 @@
                                         </div>
                                 </div>
 </
+
                         </div>
-                    
+
                         <div class="tab-pane" id="Messaged">
                             <p class="card-text text-center">
                             <div class="d-flex align-items-center justify-content-center ">
