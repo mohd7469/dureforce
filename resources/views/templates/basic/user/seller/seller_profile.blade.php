@@ -24,11 +24,14 @@
                                         <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
                                         <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
                                         {{--                                  edit profile modal--}}
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <div class="d-flex mt-5">
+                                            
                                             <button type="button" class="standard-btn-sm-edit text-center " data-bs-toggle="modal" data-bs-target="#editprofile" style="margin-top: -27px;margin-bottom: 17px;">
                                                 Edit Profile
                                             </button>
                                         </div>
+                                        @endif
                                     </div>
                                     
 
@@ -221,9 +224,11 @@
                                     <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
-                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience" id="add-exp-btn">
-                                                Add Experience
-                                            </button>
+                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addexperience" id="add-exp-btn">
+                                                    Add Experience
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row mt-2">
@@ -242,10 +247,11 @@
                                                 <br>
                                                 
                                             </div>
-                                                
-                                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
-                                                <i class="fa fa-edit" onclick="editExperience({{$experience}})"></i>
-                                            </div>
+                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
+                                                    <i class="fa fa-edit" onclick="editExperience({{$experience}})"></i>
+                                                </div>
+                                            @endif
                                             
                                         @endforeach
                                       
@@ -258,11 +264,13 @@
                                 <div class="row section-heading-border justify-content-center align-items-center">
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My PortFolios</b></div>
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <a href="{{route('seller.profile.portfolio')}}">
                                             <button  role="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal"  >
                                                 Add Portfolio
                                             </button>
                                         </a>
+                                        @endif
                                         
                                     </div>
                                 </div>
@@ -296,9 +304,11 @@
                                     <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Education & Certificates</b></div>
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                             <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addeducation" id="add-edu-btn">
                                                 Add Education & Certificates
                                             </button>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -312,10 +322,11 @@
                                                 <p class="short-text">{{$education_obj->school_name}}</p><br/>
                                                 <p class="short-text">{{getDegreeSession($education_obj)}}</p><br/>
                                             </div>
-
+                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                             <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 ">
                                                 <i class="fa fa-edit" onclick="editEducation({{$education_obj}})"></i>
                                             </div>
+                                            @endif
                                         @endforeach
                                                                                
                                     </div>
@@ -348,7 +359,11 @@
                 <div class="modal-content">
 
                     <div class="modal-header editprofileheader">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+
+                        @endif
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body modal-body-profile">

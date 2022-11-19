@@ -288,7 +288,7 @@
 
                             <div class="col-xl-6 col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Country') </label>
+                                    <label class="form-control-label font-weight-bold">@lang('Location') </label>
                                     <select name="country" class="form-control">
                                         @foreach($countries as $key => $country)
                                             <option value="{{ $key }}" @if($country->id == @$user->country_id ) selected @endif>{{ __($country->name) }}</option>

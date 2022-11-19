@@ -22,8 +22,8 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::post('/education/save', 'Profile\ProfileController@storeEducation')->name('education.save');
                 Route::post('/save-company', 'Buyer\ProfileController@buyersaveCompany')->name('profile.save.company');
                 Route::delete('/buyer-payment-destroy/{id}', 'Buyer\ProfileController@buyerdestroy')->name('profile.payment.destroy');
-                Route::get('/password-security','Buyer\ProfileController@getpassword')->name('password.security');
-                Route::post('/seller/password/change', 'Buyer\ProfileController@sellerprofilePasswordChange')->name('seller.password.change');
+                
+             
 
             });
         });

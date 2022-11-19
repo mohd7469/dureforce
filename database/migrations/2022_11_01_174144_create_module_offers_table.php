@@ -15,6 +15,7 @@ class CreateModuleOffersTable extends Migration
     {
         Schema::create('module_offers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('proposal_id')->index('proposal_id')->nullable();
             $table->morphs('module');
             $table->integer('offer_amount')->nullable();
             $table->string('contract_title')->nullable();
