@@ -11,7 +11,7 @@ Route::get('/clear', function () {
 });
 
 
-
+Route::get('/jobs-listing-old', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
