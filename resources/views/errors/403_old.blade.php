@@ -21,7 +21,7 @@
         <div class="col-lg-7 text-center">
           <img src="{{ asset('assets/errors/images/error-403.png') }}" alt="@lang('image')">
 {{--          <h2 class="title"><b>@lang('404')</b> @lang('Page not found')</h2>--}}
-         <p>You don not have access this url,The server understands the request, but it can't fulfill the request because of client-side issues</p>
+{{--          <p>@lang('page you are looking for doesn\'t exit or an other error occured') <br> @lang('or temporarily unavailable.')</p>--}}
           <a href="{{ route('home') }}" class="cmn-btn mt-4">@lang('Go to Home')</a>
         </div>
       </div>
