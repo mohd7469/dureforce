@@ -58,6 +58,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 });
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
+                Route::get('job-offer-sent', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
                 Route::get('job-offer-send-response', [\App\Http\Controllers\Buyer\OfferController::class,'offerSuccessfullySubmitted'])->name('offer.success.alert');
 
                 // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
