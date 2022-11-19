@@ -113,6 +113,10 @@ class OfferController extends Controller
             }
         }
     }
+    public function offerSent()
+    {
+        return view('templates.basic.offer.offer_sent');
+    }
 
     public function offerSuccessfullySubmitted(){
         return "Successfully Submitted !";
