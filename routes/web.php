@@ -96,7 +96,7 @@ Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
 });
 
 // User Support Ticket
-Route::middleware('is-profile-completed')->group(function () {
+Route::middleware(['verified'])->group(function () {
 Route::prefix('ticket')->group(function () {
     Route::get('/', 'TicketController@supportTicket')->name('ticket');
     Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
