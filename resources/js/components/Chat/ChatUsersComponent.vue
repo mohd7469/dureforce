@@ -1,6 +1,6 @@
 <template>
     
-    <div class="col-md-4 border-right-custom div-diemension">
+    <div class="col-md-4 border-right-custom div-diemension ">
         
         <div class="row border-bottom" v-for="user of users" @click="changeUser(user)">
             <div class="col-md-2" >
@@ -12,7 +12,7 @@
 
             <div class="col-md-6 ">
                 <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b></br>
-                <span class="user-font-size" v-if="user.send_to_user.basic_profile">{{user.send_to_user.basic_profile.designation}}</span>
+                <span class="user-font-size" v-if="user.job">{{user.job.title}}</span>
                 
             </div>
 

@@ -68,7 +68,7 @@
   <div class="mt-4">
       <input type="hidden" name="job_id" value="{{$propsal_to_send_offer->module_id}}" />
       <input type="hidden" name="proposal_id" value="{{$propsal_to_send_offer->id}}" />
-      <input type="hidden" name="contract_title" value="{{$propsal_to_send_offer->user->job_title}}">
+      <input type="hidden" name="contract_title" value="{{$propsal_to_send_offer->job->job_title}}">
       <input type="hidden" name="start_date" value="{{$propsal_to_send_offer->project_start_date}}">
       <input type="hidden" name="rate_per_hour" value="{{$propsal_to_send_offer->hourly_bid_rate}}">
       <input type="hidden" value="by_project" name="fix_payment_offer_type" id="fix_payment_offer_type">
