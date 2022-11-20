@@ -193,12 +193,11 @@ class ProfileController extends Controller
      */
     public function addExperience(Request $request)
     {
-        print_r($request->all());
-        exit;
+        
         $validator = \Validator::make($request->all(), 
         [
             'job_title'   => 'required',
-            'description' => 'required',
+            'description' => 'required|min:10',
             'company_name'=> 'required',
             'country_id'  => 'required',
             'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
@@ -241,7 +240,7 @@ class ProfileController extends Controller
         $validator = \Validator::make($request->all(), 
         [
             'job_title'   => 'required',
-            'description' => 'required',
+            'description' => 'required|min:10',
             'company_name'=> 'required',
             'country_id'  => 'required',
             'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
@@ -291,7 +290,7 @@ class ProfileController extends Controller
         [
             'school_name'   => 'required',
             'field_of_study'=> 'required',
-            'description'  => 'required',
+            'description' => 'required|min:10',
             'degree_id'  => 'required',
             'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),
             'end_date'    => 'before:today|after:start_date',
@@ -336,7 +335,7 @@ class ProfileController extends Controller
         [
             'school_name'   => 'required',
             'field_of_study'=> 'required',
-            'description'  => 'required',
+            'description' => 'required|min:10',
             'degree_id'  => 'required',
             'start_date'  => 'required|before:today|after:' . Config('settings.minimum_system_start_date'),            
             'end_date'    => 'before:today|after:start_date',

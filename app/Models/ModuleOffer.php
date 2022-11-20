@@ -26,9 +26,9 @@ class ModuleOffer extends Model
     {
         return $this->hasMany(ModuleOfferMilestone::class, 'module_offer_id');
     }
-    public function moduleOffer()
+    public function proposal()
     {
-        return $this->belongsTo(Job::class);
+        return $this->belongsTo(Proposal::class);
     }
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');
