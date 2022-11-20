@@ -110,7 +110,7 @@ class OfferController extends Controller
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                return response()->json(["redirect" => route('buyer.offer.sent')]);
+                return response()->json(["redirect" => route('buyer.offer.sent',$module_offer->id)]);
             } catch (\Throwable $exception) {
 
                 DB::rollback();
@@ -122,9 +122,10 @@ class OfferController extends Controller
             }
         }
     }
-    public function offerSent()
+    public function offerSent($offer_id)
     {
-        return view('templates.basic.offer.offer_sent');
+        $offer=ModuleOffer::with('module.user')->find($offer_id);
+        return view('templates.basic.offer.offer_sent',compact('offer'));
     }
 
     public function offerSuccessfullySubmitted(){

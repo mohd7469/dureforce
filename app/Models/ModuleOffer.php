@@ -33,5 +33,9 @@ class ModuleOffer extends Model
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');
     }
+    public function module()
+    {
+        return $this->morphTo();
+    }
 
 }
