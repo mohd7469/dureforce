@@ -35,8 +35,8 @@
                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
 {{--                                @elseif (auth()->user() AND in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))--}}
-                                <li><a href="{{ route('seller.jobs.listing') }}"
-                                       @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a></li>
+                                <li><a href="{{ route('jobs.listing.old') }}"
+                                       @if (request()->routeIs('jobs.listing.old')) class="active" @endif>@lang('Job')</a></li>
 {{--                                @endif--}}
                                 <li><a href="{{ route('blog') }}"
                                        @if (request()->routeIs('blog') || request()->routeIs('blog.details')) class="active" @endif>@lang('Blog')</a>
