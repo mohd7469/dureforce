@@ -24,7 +24,7 @@ class SupportTicketController extends Controller
     public function index()
     {
 
-        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->with(['status','priority','supportMessage'])->orderBy('id','desc')->get();
 
         $pageTitle = "Support Tickets";
 
