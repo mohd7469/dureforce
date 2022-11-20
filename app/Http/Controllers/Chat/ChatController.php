@@ -23,12 +23,12 @@ class ChatController extends Controller
         if(getLastLoginRoleName() ==Role::$ClientName)
         {
             $user_job_ids=Job::has('messages')->where('user_id',$user_id)->get()->pluck('id')->toArray();
-            $users=ModuleChatUser::with('send_to_user')->whereIn('module_id',$user_job_ids)->get();
+            $users=ModuleChatUser::with('send_to_user')->with('job')->whereIn('module_id',$user_job_ids)->get();
 
         }
         else
         {
-            $users=ModuleChatUser::with('user')->where('sender_id',$user_id)->get();
+            $users=ModuleChatUser::with('user')->with('job')->where('sender_id',$user_id)->get();
             $users = $users->map(function ($item) {
                 
                  $item->send_to_user = $item->user; 
