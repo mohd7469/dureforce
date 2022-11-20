@@ -15,8 +15,8 @@ class OfferController extends Controller
     public function jobOffers($job_uuid)
     {
        
-        $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $offers = $job::with('moduleOffer')->where('uuid',$job_uuid)->first();
+        $job=Job::with('moduleOffer.attachments')->with('proposal')->where('uuid',$job_uuid)->first();
+        $offers = $job->moduleOffer;
         $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
     
         $pageTitle = "Job Offers";
@@ -70,7 +70,16 @@ class OfferController extends Controller
                         $ModuleOfferMilestone['is_paid']=false;
                         $ModuleOfferMilestone['module_offer_id']=$module_offer->id;
 
-                        ModuleOfferMilestone::create($ModuleOfferMilestone);
+                        ModuleOfferMilestone::create(
+                            [
+                                'description' =>$ModuleOfferMilestone['description'],
+                                'module_offer_id' => $ModuleOfferMilestone['module_offer_id'],
+                                'due_date' => $ModuleOfferMilestone['due_date'],
+                                'amount'   => $ModuleOfferMilestone['deposit_amount'],
+                                'is_paid'  =>$ModuleOfferMilestone['is_paid']
+
+                            ]
+                        );
                     }
                     $module_offer->offer_amount = $offered_amount;
                     $module_offer->save();
@@ -101,7 +110,7 @@ class OfferController extends Controller
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                return response()->json(["redirect" => route('buyer.offer.sent')]);
+                return response()->json(["redirect" => route('buyer.offer.sent',$module_offer->id)]);
             } catch (\Throwable $exception) {
 
                 DB::rollback();
@@ -113,9 +122,10 @@ class OfferController extends Controller
             }
         }
     }
-    public function offerSent()
+    public function offerSent($offer_id)
     {
-        return view('templates.basic.offer.offer_sent');
+        $offer=ModuleOffer::with('module.user')->find($offer_id);
+        return view('templates.basic.offer.offer_sent',compact('offer'));
     }
 
     public function offerSuccessfullySubmitted(){

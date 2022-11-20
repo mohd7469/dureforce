@@ -41,7 +41,6 @@ Route::view('/verify-design', 'auth.verify_design');
 
 // route for offer pages design
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
-Route::view('/offer-description', 'templates.basic.offer.offer_description');
 Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');

@@ -17,4 +17,9 @@ class ModuleChatUser extends Model
     {
         return $this->belongsTo(User::class, 'sender_id')->with('basicProfile');
     }
+    public function job()
+    {
+        return $this->belongsTo(Job::class, 'module_id');
+
+    }
 }

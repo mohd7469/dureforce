@@ -86,9 +86,12 @@
                     @keyup.enter="sendMessage()"
                 >
                 </div>
-                <div class="col-md-1 align-self-center">
-                    <i class="fas fa-paperclip" ></i>
-                    <i class="fas fa-location-arrow" @click="sendMessage()"></i>
+                <div class="col-md-1  actions">
+                    <div class="align-center">
+                        <i class="fas fa-paperclip action_item" ></i>
+                        <i class="fas fa-location-arrow action_item" @click="sendMessage()"></i>
+                    </div>
+                    
                     
                 </div>
             </div>
@@ -176,6 +179,17 @@
 
 
 <style scoped>
+.actions{
+    background-color: #309797;
+}
+.action_item{
+    
+    padding: 3px;
+}
+.align-center{
+    align-items: center;
+    margin-top: 12px;
+}
 .icon_send {
     background-color: transparent;
     color: darkgray;
@@ -242,10 +256,9 @@
     }
     
     .msg_card_body{
-        overflow-y: auto;
+        overflow-y: none;
         min-height: 570px;
         max-height: 570px;
-
     }
     
     .type_msg{
@@ -271,6 +284,7 @@
     
     }
     .user_img_msg{
+        min-width: 40px;
         height: 40px;
         width: 40px;
         border:1.5px solid #f5f6fa;

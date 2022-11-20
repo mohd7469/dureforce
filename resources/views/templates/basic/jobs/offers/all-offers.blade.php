@@ -13,10 +13,10 @@
                                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">Offers</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{count($short_listed_proposals)}})</a>
+                                <a class="nav-link " data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{0}})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Post Hires (2)</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Post Hires (0)</a>
                             </li>
                         </ul>
                     </div>
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                                     <!--Bio Profile Section Start-->
-                                    @foreach ($offers->moduleOffer as $offer)
+                                    @foreach ($offers as $offer)
                                     
                                     <div class="" >
                                         
@@ -74,20 +74,20 @@
                                             <div class="col-md-3">
                                                 <div class="row borderleftc">
                                                     <div class="col-md-4">
-                                                        <img alt="User Pic" src="{{ !empty($job->user->user_basic->profile_picture)? $job->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
+                                                        <img alt="User Pic" src="{{ !empty($offer->proposal->user_basic->profile_picture)? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
                                                     <div class="col-md-8">
 
                                                         <h4 class="pname-c">
 
-                                                            {{$offer->contract_title}}
+                                                            {{$offer->proposal->user->fullname}}
 
                                                         </h4>
 
-                                                        <p class="pdesination-c"> {{$job->user->job_title}} </p>
+                                                        <p class="pdesination-c"> {{$offer->proposal->user->job_title}} </p>
 
-                                                        <p class="plocation"><span style="margin-right: 60px;">{{$job->user->location }}</span></p>
+                                                        <p class="plocation"><span style="margin-right: 60px;">{{$offer->proposal->user->location }}</span></p>
 
 
                                                     </div>
@@ -98,9 +98,14 @@
                                             <div class="col-md-5">
                                                 <div class="row btns-per">
                                                     <div class="col-md-4">
-                                                        <p class="rateperh">Rate Per Hour</p>
-
+                                                        @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
+                                                            <p class="rateperh">Rate Per Hour</p>
                                                             <p class="perhourprice">${{$offer->rate_per_hour}} / Per Hour</p>
+                                                        @else
+                                                            <p class="rateperh">Offer Amount</p>
+                                                            <p class="perhourprice">${{$offer->offer_amount}} </p>
+                                                        @endif
+                                                        
 
                                                     </div>
                                                     <div class="col-md-4">
@@ -118,8 +123,8 @@
 
                                                     {{-- <a href="" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a> --}}
-                                                    <a href="" class="btn-products-s">View Profile</a>
-                                                    <a href="" class="btn-products-s phire">View Offer</a>
+                                                    <a href="{{route('seller.profile',$offer->proposal->user->uuid)}}" class="btn-products-s">View Profile</a>
+                                                    <a href="{{route('buyer.offer.detail')}}" class="btn-products-s phire">View Offer</a>
                                                     {{-- <a href="#" class="btn-products-s phire">Hire</a> --}}
                                                 </div>
                                             </div>
@@ -151,24 +156,23 @@
                                                @endforeach
                                             </div >
                                             {{-- @isset($proposal->attachment) --}}
+                                            @if (count($offer->attachments)>0)
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
                                                         <h2> Attachments</h2>
                                                         <div class="row">
                                                            
-                                                             @foreach($short_listed_proposals as $document) 
-                                                              @foreach($document->attachment as $upload)
+                                                             @foreach($offer->attachments as $document) 
                                                               
                                                               <ul class="skills-listing col-lg-4 col-md-4">
-                                                                <a href="{{$upload->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$upload->uploaded_name}} </a>
+                                                                <a href="{{$document->url}}" class="btn btn-large "><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
 
 
                                                             </ul>
                                                               @endforeach
                                                     
 
-                                                         @endforeach 
                                                         </div>
 
                                                     </div>
@@ -176,6 +180,8 @@
 
                                             </div>
                                             {{-- @endisset --}}
+                                            @endif
+                                            
                                         </div>
                                         <hr>
                                     </div>
@@ -185,166 +191,17 @@
                         </div>
                         <div class="tab-pane" id="Shortlisted">
 
-                                <div class="card-text text-center">
-                                    <div class="row card-text">
-                                        <div class="col-12"></div>
-                                        <div class="col-md-2">
-                                            <h2 class="prosals-h">Shortlisted Proposals</h2>
-                                        </div>
-                                        <div class="col-md-10 sorting-mbl">
-                                            <div class="row">
-                                                <!--Sorting Section Start-->
-                                                <div class="col-md-4">
-                                                    <div id="custom-search-input">
-                                                        <div class="input-group">
-                                                            <input type="text" class="search-query form-control" placeholder="Search" />
-                                                            <span class="input-group-btn">
-                                                            <button type="button" disabled>
-                                                                <span class="fa fa-search"></span>
-                                                            </button>
-                                                        </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <select name="Best match" id="bestmatch">
-                                                        <option>Best match</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                    </select>
-                                                </div>
-                                                <!--Sorting Section End-->
-                                                <div class="col-md-4">
-                                                    <select name="Filters" id="Filters">
-                                                        <option>Filters</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Bio Profile Section Start-->
-                                    @foreach ($short_listed_proposals as $short_listed_proposal)
-                                        <div class="" >
-                                            <div class="row biorow">
-                                                <div class="col-md-3">
-                                                    <div class="row borderleftc">
-                                                        <div class="col-md-4">
-                                                             <img alt="User Pic" src="{{ !empty($short_listed_proposal->user->user_basic->profile_picture)? $short_listed_proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
-                                                        </div>
-
-                                                        <div class="col-md-8">
-
-                                                            <h4 class="pname-c">
-
-                                                                {{$short_listed_proposal->user->full_name}}
-
-                                                            </h4>
-
-                                                            <p class="pdesination-c"> {{$short_listed_proposal->user->job_title}} </p>
-
-                                                            <p class="plocation"><span style="margin-right: 60px;">{{$short_listed_proposal->user->location }}</span></p>
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <div class="row btns-per">
-                                                        <div class="col-md-4">
-                                                            <p class="rateperh">Rate Per Hour</p>
-
-                                                            <p class="perhourprice">${{$short_listed_proposal->user->rate_per_hour}} / Per Hour</p>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="rateperh">Total Earnings</p>
-                                                            <p class="perhourprice">$120k + earned</p>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <p class="rateperh">Job Success Rate</p>
-                                                            <p class="perhourprice">90%</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="row btns-s">
-                                                        <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
-                                                        <a href="{{route('buyer.send.offer',$short_listed_proposal->uuid)}}" class="btn-products-s">Send Offer</a>
-                                                        <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
-                                                        <a href="#" class="btn-products-s phire">Hire</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--===  Bio Profile Section End ===-->
-                                            <!--Product Description Start-->
-                                            <div class="row p_desription" style="text-align: left;">
-                                                <div class="col-md-12">
-                                                    @isset($short_listed_proposal->cover_letter)
-                                                        <p> <strong>Cover Letter -  </strong> {{$short_listed_proposal->cover_letter}}</p>
-                                                    @endisset
-                                                </div>
-                                            </div>
-                                            <!--Product Description End-->
-                                            <!--Skills Section Start-->
-                                            <div class="row skills-c">
-                                                <div class="col-md-6 col-lg-6" style="text-align: left;">
-
-                                                    <h2>Has {{count($short_listed_proposal->user->skills)}} relevant skills to your job</h2>
-
-                                                    @foreach($short_listed_proposal->user->skills as $skill)
-
-                                                        <ul class="skills-listing">
-
-                                                            <li>{{$skill->name}} </li>
-
-                                                        </ul>
-
-                                                    @endforeach
-                                                </div >
-                                                @isset($short_listed_proposal->attachment)
-                                                    <div class="col-md-6 col-lg-6">
-                                                        <div class="attachment">
-                                                            <div class="service_subtitle2 mt-20 heading-text">
-
-
-                                                                <h2> Attachments</h2>
-                                                                <div class="row">
-                                                                    @foreach($short_listed_proposal->attachment as $document)
-                                                                        <ul class="skills-listing col-lg-4 col-md-4">
-
-                                                                            <a href="{{$document->url}}" class="btn btn-large pull-right atta"><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
-
-
-                                                                        </ul>
-
-                                                                    @endforeach
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                            @endisset
-                                                <!--Skills Section End-->
-                                            </div>
-                                            <hr>
-                                            @endforeach
-                                        </div>
+                            <p class="card-text text-center">
+                                <div class="d-flex align-items-center justify-content-center ">
+                                    <h3 class="display-1 fw-bold">Coming Soon</h3>
                                 </div>
+                                </p>
 
                         </div>
                         <div class="tab-pane" id="Messaged">
                             <p class="card-text text-center">
                             <div class="d-flex align-items-center justify-content-center ">
-                                <h3 class="display-1 fw-bold">Messaged Data Not Found</h3>
+                                <h3 class="display-1 fw-bold">Coming Soon</h3>
                             </div>
                             </p>
                         </div>

@@ -9,10 +9,10 @@
                     <img src="/assets/images/job/f-icon.png" alt="icon">
                  
                       <div class="mt-4">
-                        <p class="text-dark-heading">Offer Has Been Sent</p>
+                        <p class="text-dark-heading">Offer Has Been Sent To {{$offer->module->user->fullname}}</p>
                       </div>
                       <div class="mb-2 mt-1">
-                        <p class="text-dark">We’ll notify you freelancer will respond
+                        <p class="text-dark">We’ll notify you when {{$offer->module->user->fullname}} will respond
                           respond to your offer. </p>
                       </div>
                     
@@ -26,7 +26,7 @@
 
                       
                       <h4 class="heading">
-                        Are you done Hiring for the job "UX Designer?"
+                        Are you done Hiring for the job "{{$offer->module->title}}?"
                       </h4>
                       <div class="p-3">
                         <div class="form-check mt-2">
