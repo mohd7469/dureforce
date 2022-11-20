@@ -13,7 +13,19 @@ Route::get('/clear', function () {
 
 Route::get('/jobs-listing-old', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
+// ---------------------------------------------------------------------------------------------------------------
+// latest routes dont change them
+Route::middleware('verified')->group(function () {
 
+    Route::get('/user', 'CommonProfileController@profile')->name('user.basic.profile');
+    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
+    Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
+    Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
+    Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
+    Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
+
+
+});
 
 // --------------------------------------------------------------------------------------------------------------
 
@@ -29,6 +41,7 @@ Route::view('/verify-design', 'auth.verify_design');
 
 // route for offer pages design
 Route::view('/withdraw-offer', 'templates.basic.offer.withdraw_offer');
+Route::view('/offer-description', 'templates.basic.offer.offer_description');
 Route::view('/offer-sent', 'templates.basic.offer.offer_sent');
 // freelancer design
 Route::view('/selection-design', 'auth.user_selection_design');
@@ -80,22 +93,6 @@ Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
     Route::post('coinbase-commerce', 'CoinbaseCommerce\ProcessController@ipn')->name('CoinbaseCommerce');
     Route::get('mollie', 'Mollie\ProcessController@ipn')->name('Mollie');
     Route::post('cashmaal', 'Cashmaal\ProcessController@ipn')->name('Cashmaal');
-});
-
-// User Support Ticket
-Route::middleware(['verified'])->group(function () {
-Route::prefix('ticket')->group(function () {
-    Route::get('/', 'TicketController@supportTicket')->name('ticket');
-    Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
-//    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
-    Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
-    Route::post('/store-ticket', 'TicketController@store')->name('ticket.store');
-    Route::post('/store-ticket-comment/{ticket_no}', 'TicketController@storeComment')->name('ticket.comment.store');
-//    Route::get('/view/{ticket}', 'TicketController@show')->name('ticket.view');
-    Route::get('/view-ticket/{ticket}', 'TicketController@show')->name('ticket.view');
-    Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
-    Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
-});
 });
 
 

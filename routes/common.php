@@ -3,14 +3,17 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware('verified')->group(function () {
-
-    Route::get('/user', 'CommonProfileController@profile')->name('user.basic.profile');
-    Route::post('/user-profile-update', 'CommonProfileController@editUserBasics')->name('user.profile.basics.edit');
-    Route::post('/user-profile', 'CommonProfileController@saveUserBasics')->name('user.profile.basics.save');
-    Route::get('/profile-basics-data', 'CommonProfileController@getProfileData')->name('profile.basics.data');
-    Route::get('/get-cities', 'CommonProfileController@getCities')->name('get-cities');
-    Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
-
-
+Route::middleware(['verified'])->group(function () {
+    Route::prefix('ticket')->group(function () {
+        Route::get('/', 'TicketController@supportTicket')->name('ticket');
+        Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
+//    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
+        Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
+        Route::post('/store-ticket', 'TicketController@store')->name('ticket.store');
+        Route::post('/store-ticket-comment/{ticket_no}', 'TicketController@storeComment')->name('ticket.comment.store');
+//    Route::get('/view/{ticket}', 'TicketController@show')->name('ticket.view');
+        Route::get('/view-ticket/{ticket}', 'TicketController@show')->name('ticket.view');
+        Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
+        Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
+    });
 });
