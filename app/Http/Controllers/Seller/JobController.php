@@ -26,7 +26,7 @@ class JobController extends Controller
     public function index($category = null)
     {
     
-        $jobs = Job::where('status_id',1)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->get();
+        $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->get();
         
         $categories = Category::with('subCategory')->get();
         if($category == null){
