@@ -71,7 +71,7 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('My Profile')</span>
                                     </a>
-                                    <a href="{{ route('user.change.password') }}"
+                                    <a href="{{ route('buyer.basic.profile', ['profile' => 'step-5']) }}"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
@@ -364,7 +364,7 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('My Profile')</span>
                                     </a>
-                                    <a href="{{ route('user.change.password') }}"
+                                    <a href="{{ route('buyer.basic.profile', ['profile' => 'step-5']) }}"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
