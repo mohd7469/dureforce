@@ -112,10 +112,10 @@
 }
 .profile h5{
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     margin-bottom: 12px;
-    margin-left: 23px
+    margin-left: 15px
 }
 
 .profile button{
@@ -356,10 +356,11 @@ button.standard-btn-sm-exp{
 }
 .profile .profile-data span{
     margin-left: 1rem;
-    margin-top: -0.45rem;
+    margin-top: 0px;
+    margin-bottom: 8px;
     color: #007F7F;
     font-weight: 600;
-    font-size: 18px;
+    font-size: 16px;
 
 }
 .moretext {
