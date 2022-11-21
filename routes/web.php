@@ -49,6 +49,10 @@ Route::view('/freelancer-profile-design', 'templates.basic.profile.partials.prof
 // Offer page design design
 Route::view('/offers', 'templates.basic.offers.view-offer');
 
+//varification code pages
+Route::view('/verification', 'templates.basic.verification.identity_verification');
+Route::view('/code-verification', 'templates.basic.verification.code_verification');
+
 
 
 
