@@ -2,8 +2,8 @@
     
     <div class="col-md-8 remove-space">
         
-        <div class="card-header">
-            <span class="float-sm-left">
+        <div class="card-header ">
+            <span class="float-sm-left header-title">
                 <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
                 <small v-if="active_user.created_at">{{formattedDate(active_user.created_at)}}</small> 
             </span>
@@ -75,20 +75,29 @@
             </div>
         </div>
         <!-- buttons -->
-        <div>
+        <div class="empty-space-margin">
             
             <div class="row background">
                 
-                <div class="col-md-11">
+                <div class="col-md-10">
                     <input type="text"  class="no-border" 
                     placeholder="Write Your Message" 
                     v-model="message_form.message"
                     @keyup.enter="sendMessage()"
                 >
                 </div>
-                <div class="col-md-1 align-self-center">
-                    <i class="fas fa-paperclip" ></i>
-                    <i class="fas fa-location-arrow" @click="sendMessage()"></i>
+                <div class="col-md-2  ">
+                    <div class=" row ">
+                        <div class="col-md-6 actions">
+                            <i class="fas fa-paperclip action_item" ></i>
+
+                        </div>
+                        <div class="col-md-6 action_send">
+                            <i class="fas fa-location-arrow action_item " @click="sendMessage()"></i>
+
+                        </div>
+                    </div>
+                    
                     
                 </div>
             </div>
@@ -176,6 +185,47 @@
 
 
 <style scoped>
+
+.card-header:first-child {
+    border-radius: 0px !important;
+    min-height: 20px;
+    height: 55px;
+    margin-right: -5px;
+}
+
+.header-title{
+    margin-top: 5px;
+}
+.actions{
+    background-color: #fce8fc;
+    border-radius: 56%;
+    width: 30px;
+    height: 30px;
+    margin-top: 7px;
+    margin-left: 35px;
+}
+.action_send{
+    background-color: #fce8fc;
+    border-radius: 56%;
+    width: 30px;
+    height: 30px;
+    margin-top: 7px;
+    margin-left: 15px;
+}
+.empty-space-margin{
+    margin-right: -6px;
+}
+.action_item{
+    
+    padding: 16px;
+    position: relative;
+    margin-left: -21px;
+    margin-top: -8px;
+}
+.action_item:hover {
+    border-radius: 56%;
+    background-color: #f4c2c2;
+  }
 .icon_send {
     background-color: transparent;
     color: darkgray;
@@ -242,10 +292,9 @@
     }
     
     .msg_card_body{
-        overflow-y: auto;
+        overflow-y: none;
         min-height: 570px;
         max-height: 570px;
-
     }
     
     .type_msg{
@@ -271,6 +320,7 @@
     
     }
     .user_img_msg{
+        min-width: 40px;
         height: 40px;
         width: 40px;
         border:1.5px solid #f5f6fa;

@@ -496,10 +496,10 @@ p.plocation:before {
     height: 20px;
     background: red;
     position: absolute;
-    left: 0px !important;
-    top: 2px !important; 
+    top: 1px !important; 
     content: '';
     background: url(/assets/images/job/location-icon.png) no-repeat;
+    margin-left: 22px;
 }
 
 @media only screen and (max-width:1190px){
