@@ -87,7 +87,7 @@
                             <div class="col-lg-7 col-md-7 col-sm-7 col-7 " style="font-size: 12px;">
                                 <ul>
                                     <li> @for($j=0; $j<5; $j++)<i
-                                                class="fa fa-solid fa-star button-review-color"></i>@endfor</li>
+                                                class="fa fa-solid fa-star button-review-color" style="margin-left: 0.5px!important;"></i>@endfor</li>
                                     <li class="button-review-color" style="font-weight: 600;">4.98 of 32 reviews</li>
                                     <li><i class="fas fa-badge-check"></i><span>Payment Verified</span></li>
                                 </ul>
