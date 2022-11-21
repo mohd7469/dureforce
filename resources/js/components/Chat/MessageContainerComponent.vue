@@ -2,8 +2,8 @@
     
     <div class="col-md-8 remove-space">
         
-        <div class="card-header">
-            <span class="float-sm-left">
+        <div class="card-header ">
+            <span class="float-sm-left header-title">
                 <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
                 <small v-if="active_user.created_at">{{formattedDate(active_user.created_at)}}</small> 
             </span>
@@ -75,21 +75,27 @@
             </div>
         </div>
         <!-- buttons -->
-        <div>
+        <div class="empty-space-margin">
             
             <div class="row background">
                 
-                <div class="col-md-11">
+                <div class="col-md-10">
                     <input type="text"  class="no-border" 
                     placeholder="Write Your Message" 
                     v-model="message_form.message"
                     @keyup.enter="sendMessage()"
                 >
                 </div>
-                <div class="col-md-1  actions">
-                    <div class="align-center">
-                        <i class="fas fa-paperclip action_item" ></i>
-                        <i class="fas fa-location-arrow action_item" @click="sendMessage()"></i>
+                <div class="col-md-2  ">
+                    <div class=" row ">
+                        <div class="col-md-6 actions">
+                            <i class="fas fa-paperclip action_item" ></i>
+
+                        </div>
+                        <div class="col-md-6 action_send">
+                            <i class="fas fa-location-arrow action_item " @click="sendMessage()"></i>
+
+                        </div>
                     </div>
                     
                     
@@ -179,17 +185,47 @@
 
 
 <style scoped>
+
+.card-header:first-child {
+    border-radius: 0px !important;
+    min-height: 20px;
+    height: 55px;
+    margin-right: -5px;
+}
+
+.header-title{
+    margin-top: 5px;
+}
 .actions{
-    background-color: #309797;
+    background-color: #fce8fc;
+    border-radius: 56%;
+    width: 30px;
+    height: 30px;
+    margin-top: 7px;
+    margin-left: 35px;
+}
+.action_send{
+    background-color: #fce8fc;
+    border-radius: 56%;
+    width: 30px;
+    height: 30px;
+    margin-top: 7px;
+    margin-left: 15px;
+}
+.empty-space-margin{
+    margin-right: -6px;
 }
 .action_item{
     
-    padding: 3px;
+    padding: 16px;
+    position: relative;
+    margin-left: -21px;
+    margin-top: -8px;
 }
-.align-center{
-    align-items: center;
-    margin-top: 12px;
-}
+.action_item:hover {
+    border-radius: 56%;
+    background-color: #f4c2c2;
+  }
 .icon_send {
     background-color: transparent;
     color: darkgray;
