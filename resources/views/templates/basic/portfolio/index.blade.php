@@ -262,6 +262,32 @@
                     background: url(/assets/images/job/edit-1.png) no-repeat;  
                     background-size: 26px;
                 }
+                ul.sidebar-nav li.active a{
+                    color: black;
+                }
+                ul.sidebar-nav li.active:after{
+                    background: url(/assets/images/job/Vector.png) no-repeat !important;
+                    
+                    
+                }
+
+                ul.sidebar-nav li.active:nth-child(1) a {
+                    background: url(/assets/images/job/edit.png) no-repeat !important;
+                    background-size: 25px !important;
+                    background-position: left center !important;  
+                }
+
+                ul.sidebar-nav li.active:nth-child(2) a {
+                    background: url(/assets/images/job/book.png) no-repeat !important;
+                    background-size: 25px !important;
+                    background-position: left center !important;  
+                }
+
+                ul.sidebar-nav li.active:nth-child(3) a {
+                    background: url(/assets/images/job/left-tick.png) no-repeat !important;
+                    background-size: 25px !important;
+                    background-position: left center !important;  
+                }
                 ul.sidebar-nav li:nth-child(2) a {
                     background: url(/assets/images/job/details.png) no-repeat !important;
                     background-size: 25px !important;
