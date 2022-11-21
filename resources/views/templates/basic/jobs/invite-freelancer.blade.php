@@ -436,10 +436,6 @@
             display: inline-block;
         }
 
-        p.plocation:before {
-            left: -24px;
-        }
-
         .row.btns-s {
             position: relative;
             left: 0px;
@@ -577,7 +573,7 @@
             font-size: 12px !important;
             line-height: 23px;
             color: #7F007F;
-            margin-top: 16px;
+            margin-top: 0px !important;
         }
 
         p.pdesination-c {
@@ -638,6 +634,8 @@
         top: 8px !important;
         content: '';
         background: url(/assets/images/job/location-icon.png) no-repeat;
+        margin-left: 0px !important;
+
     }
 
     @media only screen and (max-width: 320px) {
