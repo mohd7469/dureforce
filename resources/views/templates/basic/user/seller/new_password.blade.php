@@ -104,7 +104,7 @@
             console.log(response)
             if (response.success) {
                 notify('success', response.success);
-                location.reload();
+                window.location = response.redirect_url;
              }
             else if(response.validation_errors){
 
