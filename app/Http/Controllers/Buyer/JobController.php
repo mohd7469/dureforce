@@ -104,26 +104,37 @@ class JobController extends Controller
 
 
         ];
-        $validator = Validator::make($request_data, [
+        $rules= [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'project_stage_id' => 'exists:project_stages,id',
-            'expected_start_date' => 'required|after_or_equal:now',
+            'expected_start_date' => 'required||after_or_equal:'.Carbon::now()->format('d-m-Y'),
             'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
-            'hourly_start_range' =>'gt:0|required_if:budget_type_id,'.BudgetType::$hourly,
-            'hourly_end_range' =>'gte:hourly_start_range|required_if:budget_type_id,'.BudgetType::$hourly,
-            'fixed_amount' =>'required_if:budget_type_id,'.BudgetType::$fixed,
             'deliverables' => 'required|array',
             'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
             'dod' => 'required|array',
             'skills' => 'required|array',
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-        ],$custom_messages);
+        ];
+
+        if($request_data['budget_type_id']==BudgetType::$hourly)
+        {
+            $rules['hourly_start_range'] ='gt:0|required:budget_type_id,'.BudgetType::$hourly;
+            $rules['hourly_end_range'] ='gte:hourly_start_range|required:budget_type_id,'.BudgetType::$hourly;
+        }
+        elseif($request_data['budget_type_id']==BudgetType::$fixed){
+            $rules['fixed_amount'] ='required:budget_type_id,'.BudgetType::$fixed;
+        }
+        else
+        {
+
+        }
+        $validator = Validator::make($request_data,$rules,$custom_messages);
         if ($validator->fails()) {
 
             return response()->json(["error" => $validator->errors()]);

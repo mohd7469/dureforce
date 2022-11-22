@@ -56896,7 +56896,7 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "msg_cotainer" }, [
                     _c("div", [
-                      _vm.active_user.id != message.sender_id
+                      _vm.active_user.send_to_user.id != message.sender_id
                         ? _c(
                             "div",
                             { staticClass: "dropdown icon" },
@@ -56974,7 +56974,7 @@ var render = function () {
                 [
                   _c("div", { staticClass: "msg_cotainer_send" }, [
                     _c("div", [
-                      _vm.active_user.id != message.sender_id
+                      _vm.active_user.send_to_user.id != message.sender_id
                         ? _c(
                             "div",
                             { staticClass: "dropdown icon_send" },
