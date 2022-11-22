@@ -293,8 +293,12 @@
     
     .msg_card_body{
         overflow-y: scroll;
+        overflow-x: hidden;
         min-height: 570px;
         max-height: 570px;
+    }
+    .msg_card_body::-webkit-scrollbar{
+        display: none;
     }
     
     .type_msg{
