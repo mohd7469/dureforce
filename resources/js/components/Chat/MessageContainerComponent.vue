@@ -292,7 +292,7 @@
     }
     
     .msg_card_body{
-        overflow-y: none;
+        overflow-y: scroll;
         min-height: 570px;
         max-height: 570px;
     }
