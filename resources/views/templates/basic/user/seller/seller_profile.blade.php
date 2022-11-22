@@ -263,7 +263,7 @@
                                 
                                 <div class="row section-heading-border justify-content-center align-items-center" style="
                                     margin-bottom: 23px;">
-                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My PortFolios</b></div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Portfolio</b></div>
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <a href="{{route('seller.profile.portfolio')}}">
