@@ -460,7 +460,7 @@ class ProfileController extends Controller
         return view( 'templates.basic.user.seller.new_password');
 }
 public function sellerprofilePasswordChange(Request $request){
-       
+
     $validator = Validator::make($request->all(), [
         'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
         'password_confirmation' => 'min:8',
@@ -485,7 +485,7 @@ public function sellerprofilePasswordChange(Request $request){
                 ])->save();
 
 
-                return response()->json(['success' => 'Seller Password Updated Successfully', 'redirect_url' => route('seller.profile.password.security')]);
+                return response()->json(['success' => 'Seller Password Updated Successfully', 'redirect_url' => route('user.home')]);
 
 
             }

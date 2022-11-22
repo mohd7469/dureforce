@@ -372,7 +372,7 @@ class ProfileController extends Controller
                     ])->save();
 
 
-                    return response()->json(['success' => 'User Password Updated Successfully', 'redirect_url' => route('buyer.basic.profile')]);
+                    return response()->json(['success' => 'User Password Updated Successfully', 'redirect_url' => route('buyer.basic.profile', ['profile' => 'step-5']) ]);
 
 
                 }
