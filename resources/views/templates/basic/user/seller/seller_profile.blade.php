@@ -42,37 +42,37 @@
                                     <p id="book" class="moretext">
                                         Brisket ball tip cow sirloin. Chuck porchetta kielbasa pork chop doner sirloin, bacon beef brisket ball tip short ribs.
                                     </p>
-                                    <div class="sep-solid"></div>
                                     </div>
                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
-                                            <div class="col-6 col-xl-6">
+                                            <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
                                                 <h5>Rate</h5>
-                                                <span>${{$user->rate_per_hour}} / hr</span>
+                                                <span class="profile-span-date">${{$user->rate_per_hour}} / hr</span>
                                             </div>
                                             <div class="col-6 border-right col-xl-6"><h5>Experience
                                                 </h5>
-                                                <span>5 Years</span>
+                                                <span class="profile-span-date">5 Years</span>
                                             </div>
-
+                                            <div class="sep-solid"></div>
                                             <!-- Force next columns to break to new line -->
                                             <div class="w-100"></div>
-                                            <div class="col-6 col-xl-6">
+                                            <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
                                                 <h5>Total Jobs</h5>
-                                                <span>172</span>
+                                                <span class="profile-span-date">172</span>
                                             </div>
                                             <div class="col-6 col-xl-6">
                                                 <h5>Total Hours</h5>
-                                                <span>$729</span>
+                                                <span class="profile-span-date">$729</span>
                                             </div>
+                                            <div class="sep-solid"></div>
                                             <div class="w-100"></div>
-                                            <div class="col-6 border-right col-xl-6">
+                                            <div class="col-6 border-right col-xl-6" style="border-right: 1px solid #c5e0e0;">
                                                 <h5>Success Rate</h5>
-                                                <span>97%</span>
+                                                <span class="profile-span-date">97%</span>
                                             </div>
                                             <div class="col-6 border-right col-xl-6">
                                                 <h5>Rating
                                                 </h5>
-                                                <span>4/5</span>
+                                                <span class="profile-span-date">4/5</span>
                                             </div>
                                         </div>
                                        <div class="col-xl-12 mb-4">
@@ -261,7 +261,8 @@
 
                             <div class="tab-pane container fade" id="set">
                                 
-                                <div class="row section-heading-border justify-content-center align-items-center">
+                                <div class="row section-heading-border justify-content-center align-items-center" style="
+                                    margin-bottom: 23px;">
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My PortFolios</b></div>
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
@@ -837,7 +838,6 @@
         </div>
 
 @endsection
-
 @push('script-lib')
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>

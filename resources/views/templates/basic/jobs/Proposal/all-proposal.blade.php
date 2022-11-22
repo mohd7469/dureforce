@@ -75,7 +75,7 @@
                                                         <img alt="User Pic" src="{{ !empty($proposal->user->user_basic->profile_picture)? $proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
-                                                    <div class="col-md-8" >
+                                                    <div class="col-md-8" style="text-align:left">
 
                                                         <h4 class="pname-c">
 
@@ -238,7 +238,7 @@
                                                              <img alt="User Pic" src="{{ !empty($short_listed_proposal->user->user_basic->profile_picture)? $short_listed_proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                         </div>
 
-                                                        <div class="col-md-8 text-center" style="margin-left:-20px;margin-top:-9px">
+                                                        <div class="col-md-8" style="text-align:left">
 
                                                             <h4 class="pname-c">
 
@@ -509,19 +509,19 @@ p.perhourprice {
 .borderleftc:after{
     display: none;
 }
-/*.plocation {*/
-/*    font-weight: 600;*/
-/*    font-size: 14px;*/
-/*    position: relative;*/
-/*    padding-left: 0px;*/
-/*    margin-top: 2px;*/
-/*    margin-bottom: 40px !important;*/
-/*    margin-top: 16px;*/
-/*    display: inline-block;*/
-/*}*/
-/*p.plocation:before{*/
-/*    left: -24px;*/
-/*}*/
+.plocation {
+   font-weight: 600;
+   font-size: 14px;
+   position: relative;
+   padding-left: 0px;
+   margin-top: 2px;
+   margin-bottom: 40px !important;
+   margin-top: 16px;
+   display: inline-block;
+}
+p.plocation:before{
+   left: -24px;
+}
 .row.btns-s {
     position: relative;
     left: 0px;
@@ -688,25 +688,26 @@ select#bestmatch {
     top: 0px;
 }
 
-/*.plocation {*/
-/*    font-weight: 600;*/
-/*    font-size: 12px !important;*/
-/*    line-height: 18px;*/
-/*    color: #000000;*/
-/*    position: relative;*/
-/*    padding-left: 20px !important;*/
-/*    margin-top: 12px !important;*/
-/*}*/
-/*p.plocation:before {*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    background: red;*/
-/*    position: absolute;*/
-/*    left: 0px !important;*/
-/*    top: 4px !important; */
-/*    content: '';*/
-/*    background: url(/assets/images/job/location-icon.png) no-repeat;*/
-/*}*/
+.plocation {
+   font-weight: 600;
+   font-size: 12px !important;
+   line-height: 18px;
+   color: #000000;
+   position: relative;
+   padding-left: 20px !important;
+   margin-top: 12px !important;
+}
+p.plocation:before {
+   width: 20px;
+   height: 20px;
+   background: red;
+   position: absolute;
+   left: 0px !important;
+   top: 4px !important;
+   content: '';
+   background: url(/assets/images/job/location-icon.png) no-repeat;
+   margin-left: 0px !important;
+}
 }
 @media only screen and (max-width:320px){
 a.btn-products-s {

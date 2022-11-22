@@ -27,51 +27,51 @@
  <section class="container">
  <div>
             <div>
-                <div class="categories_type_container">
-                    <div class="header-short-menu mt-3">
-                <div class="container-fluid">
-                    <div class="row justify-content-left align-items-left flex-start">
-                        <div class="nav-prev arrow" style="display: none;"></div>
-                        <div class="col-lg-1 t-sbh">Sub Categories: </div>
-                        
-                        <div class="col-lg-11 sub-nav">
-                            <ul class="text-center  listing-nav-in">
-                                @isset($subcategories)
-                                <li class="nav-item active-c">
-                                    All
-                                 </li>
-                                    @foreach($subcategories as $subcategorie)
-                                        <li class="nav-item">
-                                           {{$subcategorie->name}}
-                                        </li>
-                                    @endforeach
-                                @endisset
-                           </ul>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                </div>
+{{--                <div class="categories_type_container">--}}
+{{--                    <div class="header-short-menu mt-3">--}}
+{{--                <div class="container-fluid">--}}
+{{--                    <div class="row justify-content-left align-items-left flex-start">--}}
+{{--                        <div class="nav-prev arrow" style="display: none;"></div>--}}
+{{--                        <div class="col-lg-1 t-sbh">Sub Categories: </div>--}}
+{{--                        --}}
+{{--                        <div class="col-lg-11 sub-nav">--}}
+{{--                            <ul class="text-center  listing-nav-in">--}}
+{{--                                @isset($subcategories)--}}
+{{--                                <li class="nav-item active-c">--}}
+{{--                                    All--}}
+{{--                                 </li>--}}
+{{--                                    @foreach($subcategories as $subcategorie)--}}
+{{--                                        <li class="nav-item">--}}
+{{--                                           {{$subcategorie->name}}--}}
+{{--                                        </li>--}}
+{{--                                    @endforeach--}}
+{{--                                @endisset--}}
+{{--                           </ul>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                </div>--}}
+{{--                </div>--}}
             </div>
-        <div class="row container listing-jb-container">
-            <div class="isub-head-con">
-                <div class="isub-heading"> {{$Categorytitle->name  ?? ''}} Jobs</div>
-                <div class="right-con-isub">
-                    <span class="isub-filter">Filter</span>
-                   <div id="custom-search-input">
-                        <div class="input-group col-md-12">
-                            <input type="text" class="form-control input-lg"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-info btn-lg" type="button">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="row ">
+{{--            <div class="isub-head-con">--}}
+{{--                <div class="isub-heading"> {{$Categorytitle->name  ?? ''}} Jobs</div>--}}
+{{--                <div class="right-con-isub">--}}
+{{--                    <span class="isub-filter">Filter</span>--}}
+{{--                   <div id="custom-search-input">--}}
+{{--                        <div class="input-group col-md-12">--}}
+{{--                            <input type="text" class="form-control input-lg" placeholder="Search job"/>--}}
+{{--                            <span class="input-group-btn">--}}
+{{--                                <button class="btn btn-info btn-lg" type="button">--}}
+{{--                                    <i class="glyphicon glyphicon-search"></i>--}}
+{{--                                </button>--}}
+{{--                            </span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             @foreach($jobs as $job)
-                <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-4 " style="width: 19rem;">
+                <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-5 " style="width: 19rem;">
                     <a href="{{route('seller.job.jobview',$job->uuid)}}">
                     <div class="card-body">
                         <h5 class="card-title "><strong>{{$job->title}}</strong></h5>
@@ -87,7 +87,7 @@
                             <div class="col-lg-7 col-md-7 col-sm-7 col-7 " style="font-size: 12px;">
                                 <ul>
                                     <li> @for($j=0; $j<5; $j++)<i
-                                                class="fa fa-solid fa-star button-review-color"></i>@endfor</li>
+                                                class="fa fa-solid fa-star button-review-color" style="margin-left: 0.5px!important;"></i>@endfor</li>
                                     <li class="button-review-color" style="font-weight: 600;">4.98 of 32 reviews</li>
                                     <li><i class="fas fa-badge-check"></i><span>Payment Verified</span></li>
                                 </ul>
