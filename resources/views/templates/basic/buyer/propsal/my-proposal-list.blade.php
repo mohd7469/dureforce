@@ -36,21 +36,25 @@
                                 <div class="card-text">
                                     <div class="card">
                                         <div class="card-header">
-                                            <span class="card-heading">Offers (2)</span>
+                                            <span class="card-heading">Offers ({{count($offers)}})</span>
                                         </div>
+                                        @foreach($offers as $offer)
+                                            @isset($offer)
                                         <div class="card-body">
-                                            <span class="card-main-headind">WP Plugin Designer</span>
+                                            <span class="card-main-headind">{{$offer->title}}</span>
                                             <div class="row">
                                                 <div class="col-md-2">
-                                                    <p class="card-sub-headind">Received Oct 6, 2022</p>
+                                                    <p class="card-sub-headind">Received {{getYearMonthDays($offer->created_at)}}</p>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <span class="day-time">5 days ago</span>
+                                                    <span class="day-time">{{getDaysHoursMinutesSeconds($offer->created_at)}}</span>
                                                 </div>
                                             </div>
 
 
                                         </div>
+                                            @endisset
+                                            @endforeach
                                     </div>
                                 </div>
 
