@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
 {
@@ -143,13 +144,26 @@ class TicketController extends Controller
         return redirect()->route('ticket')->withNotify($notify);
     }
 
+    public function  validateTicket(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $validator = Validator::make($request_data,[
+            'subject' => 'required',
+            'priority_id' => 'required',
+            'message'     => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        } else
+            return response()->json(["validated" => "Ticket Data Is Valid"]);
+    }
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'subject' => 'required',
-        //     // 'priority_id' => 'required'
-        // ]);
         $request_data = [];
         parse_str($request->data, $request_data);
         $user = auth()->user();
