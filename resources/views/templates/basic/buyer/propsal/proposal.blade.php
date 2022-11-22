@@ -78,7 +78,7 @@
                                             designer.<br>
 
                                             <button class="btn-sm view-pfoile-btn mt-3 mb-3 ">
-                                                View Profile
+                                               <a href="{{route('seller.profile',$user->uuid)}}">View Profile</a>
                                             </button>
 
                                         </div>
