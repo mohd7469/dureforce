@@ -52,37 +52,67 @@
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                     </a> -->
-                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                    <!-- <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('View Profile')</span>
                                         {{-- seller profile  --}}
-                                    </a>
+                                    </a> -->
                                         
                                     @endif
 
-                                    <a href="{{ route('user.change.password') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-key"></i>
-                                        <span class="dropdown-menu__caption">@lang('Change Password')</span>
+                                    <!-- right navbar -->
+                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Account')</strong>
+                                    <a href="{{ route('user.home') }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('My Dashboard')</span>
                                     </a>
-                                    <a href="{{ route('user.twofactor') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-lock"></i>
-                                        <span class="dropdown-menu__caption">@lang('2FA Security')</span>
+                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('My Profile')</span>
                                     </a>
-
-{{--                                    <a href="{{ route('chat.inbox') }}"--}}
-{{--                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">--}}
-{{--                                        <i class="dropdown-menu__icon las la-inbox"></i>--}}
-{{--                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>--}}
-{{--                                    </a>--}}
-
+                                    <a href="{{ route('buyer.basic.profile', ['profile' => 'step-5']) }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Password & Security')</span>
+                                    </a>
+                                    <a href="#"
+                                        class=" d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
+                                    </a>
+                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Finance')</strong>
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
+                                    </a>
+                                    @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
+                                    </a>
+                                    @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Deposit Funds')</span>
+                                    </a>
+                                    @endif
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
+                                    </a>
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Transaction History')</span>
+                                    </a>
+                                    <h5 class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center"></h5>
+                                    <a href="{{ route('ticket') }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Support')</span>
+                                    </a>
                                     <a href="{{ route('user.logout') }}"
-                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                        <i class="dropdown-menu__icon las la-sign-out-alt"></i>
+                                        class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Logout')</span>
                                     </a>
+                                    <!-- end right navbar -->
                                 </div>
                             </div>
                         <!-- end mobile view icons -->
@@ -303,7 +333,7 @@
                                         <span class="header-user-icon"><i class="las la-chevron-circle-down"></i></span>
                                     </div>
                                 </button>
-                                <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
+                                <div class="dropdown-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right profile-navbar">
 
                                     {{-- @todo make policies or gates when have free time. --}}
 
@@ -316,16 +346,68 @@
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('Edit Profile')</span>
                                     </a> -->
-                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                    <!-- <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-user-circle"></i>
                                         <span class="dropdown-menu__caption">@lang('View Profile')</span>
                                         {{-- seller profile  --}}
-                                    </a>
+                                    </a> -->
                                         
                                     @endif
+                                    <!-- right navbar -->
+                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Account')</strong>
+                                    <a href="{{ route('user.home') }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('My Dashboard')</span>
+                                    </a>
+                                    <a href="{{ getLastLoginRoleId()== App\Models\Role::$Freelancer ? route('seller.profile.view') : route('buyer.basic.profile', ['profile' => 'step-1'])}}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('My Profile')</span>
+                                    </a>
+                                    <a href="{{ route('buyer.basic.profile', ['profile' => 'step-5']) }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Password & Security')</span>
+                                    </a>
+                                    <a href="#"
+                                        class=" d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
+                                    </a>
+                                    <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Finance')</strong>
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
+                                    </a>
+                                    @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
+                                    </a>
+                                    @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Deposit Funds')</span>
+                                    </a>
+                                    @endif
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
+                                    </a>
+                                    <a href="#"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Transaction History')</span>
+                                    </a>
+                                    <h5 class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center"></h5>
+                                    <a href="{{ route('ticket') }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Support')</span>
+                                    </a>
+                                    <a href="{{ route('user.logout') }}"
+                                        class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">@lang('Logout')</span>
+                                    </a>
+                                    <!-- end right navbar -->
 
-                                    <a href="{{ route('user.change.password') }}"
+                                    <!-- <a href="{{ route('user.change.password') }}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-key"></i>
                                         <span class="dropdown-menu__caption">@lang('Change Password')</span>
@@ -334,7 +416,7 @@
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-lock"></i>
                                         <span class="dropdown-menu__caption">@lang('2FA Security')</span>
-                                    </a>
+                                    </a> -->
 
 {{--                                    <a href="{{ route('chat.inbox') }}"--}}
 {{--                                        class="dropdown-menu__item d-flex align-items-center px-3 py-2">--}}
@@ -342,11 +424,11 @@
 {{--                                        <span class="dropdown-menu__caption">@lang('Inbox')</span>--}}
 {{--                                    </a>--}}
 
-                                    <a href="{{ route('user.logout') }}"
+                                    <!-- <a href="{{ route('user.logout') }}"
                                         class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                         <i class="dropdown-menu__icon las la-sign-out-alt"></i>
                                         <span class="dropdown-menu__caption">@lang('Logout')</span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -355,7 +437,7 @@
             </div>
         </div>
 
-        {{-- <div class="header-short-menu">
+        <div class="header-short-menu">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -372,10 +454,14 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 </header>
 <style>
+    .profile-navbar{
+        background-color: #007f7f !important;
+        color: #e6eeee !important;
+    }
     .nav-button{
         background-color: #fff;
     }

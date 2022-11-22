@@ -29,7 +29,7 @@
                     <div class="msg_cotainer">
                         <div>
                             
-                            <div class="dropdown icon" v-if="active_user.id!=message.sender_id">
+                            <div class="dropdown icon" v-if="active_user.send_to_user.id!=message.sender_id">
                                 <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
                                 
                                 <ul class="dropdown-menu">
@@ -50,7 +50,7 @@
 
                         <div>
                             
-                            <div class="dropdown icon_send" v-if="active_user.id!=message.sender_id">
+                            <div class="dropdown icon_send" v-if="active_user.send_to_user.id!=message.sender_id">
                                 
                                 <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
                                 
