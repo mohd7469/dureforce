@@ -132,7 +132,7 @@
 
 
 
-
+        @if($support_ticket->status_id != \App\Models\SupportTicket::$Closed)
             <!---Comments Box-->
             <div class="comment-box">
                 <p class="comment-f">Comment</p>
@@ -149,6 +149,13 @@
 
                 </form>
             </div>
+            @else
+                <div class="comment-box">
+
+                        <label for="comment_file" class="btn-atach-m-2">Ticket is closed</label>
+
+                </div>
+            @endif
 
         </div>
 
@@ -471,6 +478,24 @@
             padding-top: 6px;
             padding-left: 25px;
             background: url(/assets/images/job/attached.svg) no-repeat;
+            background-position: 20px 12px;
+            margin-top:20px;
+        }
+        .btn-atach-m-2 {
+            border: 2px solid #007F7F;
+            border-radius: 5px;
+            width: 140px;
+            height: 41px;
+            text-align: center;
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 24px;
+            text-align: center;
+            color: #007F7F;
+            padding-top: 6px;
+            /*padding-left: 25px;*/
             background-position: 20px 12px;
             margin-top:20px;
         }
