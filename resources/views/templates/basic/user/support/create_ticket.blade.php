@@ -13,7 +13,7 @@
          <form  action="{{route('ticket.store')}}" method="POST"  id="support_ticket_form" enctype="multipart/form-data">
              @csrf
         <div class="row">
-
+        <input type="hidden" value="{{route('ticket.validate')}}" id="ticket_validate">
         <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Full Name </label>
             <input type="text" class="form-control"  disabled aria-describedby="emailHelp" placeholder="{{$user->first_name}} {{$user->last_name}}">
@@ -34,7 +34,7 @@
           <div class="form-group col-md-6">
             <label for="exampleInputEmail1">Priority*</label>
             <select class="form-select form-select-sm form-control back" name="priority_id" aria-label=".form-select-sm example">
-                <option>Select Priority</option>
+                <option value="">Select Priority</option>
                 @foreach($priorities as $priority)
                 <option value="{{$priority->id}}">{{$priority->name}}</option>
                 @endforeach
