@@ -4,21 +4,21 @@
     <ul class="process-tabs">
         <li>
             <a href="{{url('/verification')}}">
-            <span class="tb-number">1</span>
-            <p class="tb-description">Identity Verification</p>
-            </a>
-        </li>
-        <li  class="active-c">
-            <a href="{{url('/code-verification')}}">
-            <span class="tb-number">2</span>
-            <p class="tb-description">Code Verification</p>
-            </a>
+                <span class="tb-number">1</span>
+                <p class="tb-description">Identity Verification</p>
+                </a>
         </li>
         <li>
+            <a href="{{url('/code-verification')}}">
+                <span class="tb-number">2</span>
+                <p class="tb-description">Code Verification</p>
+                </a>
+        </li>
+        <li  class="active-c">
             <a href="{{url('/address-verification')}}">
-            <span class="tb-number">3</span>
-            <p class="tb-description">Address Verification</p>
-            </a>
+                <span class="tb-number">3</span>
+                <p class="tb-description">Address Verification</p>
+                </a>
         </li>
     </ul>
 </div>
@@ -26,7 +26,7 @@
 <div class="btm-container-tabs">
 <form>
 
-<p class="tabs-heading">Code Verification</p>
+<p class="tabs-heading">Address Verification</p>
 <span class="hresis">Here is a list of some proof of address examples that are acceptable</span>
 <ul class="cars-listing">
    <li> 1-  Valid Driver's License</li>
@@ -37,15 +37,21 @@
    <li> 6-  College Enrollment Papers</li>
    <li> 7-  Insurance policy or bill</li>
 </ul>
-<div class="code-verification">
-    <p class="lable-c">Key Code Number</p>
-    <input type="text" placeholder="B8CF7YHS" class="code-click"> 
+<div class="documentype">
+    <p class="lable-c">Document Type</p>
+    <select name="country" id="country">>
+        <option>Pakistan</option>
+        <option>India</option>
+        <option>China</option>
+        <option>Tokyo</option>
+        <option>Paris</option>
+    </select>
 </div>
 {{-- <div class="form-group cstm-c">
     <input type="checkbox" id="css">
     <label for="css">File size must be between 10KB and 5000 KB in PDF, DOC</a></label>
   </div> --}}
-  <input type="submit" value="Continue" id="continue-btn">
+  <input type="submit" value="Review & Submit" id="continue-btn">
 </div>
 
 </form>
@@ -80,27 +86,13 @@ select#country {
     height: 37px;
     padding-left: 15px;
 }
-.code-verification {
+.documentype {
     margin-top: 56px;
 }
-.code-verification select {
+.documentype select {
     margin-bottom: 40px;
 }
-input.code-click {
-    height: 75px;
-    background: #F5F5F5;
-    border: 1px solid #CBDFDF;
-    border-radius: 4px;
-    text-align: center;
-    font-family: 'Mulish';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 30px;
-    line-height: 38px;
-    text-align: center;
-    color: #808285;
-    padding-top: 12px;
-}
+
 
  /*********/   
 .btm-maincontainer {
@@ -223,19 +215,6 @@ ul.tabs-form li:nth-child(7), ul.tabs-form li:nth-child(8){
     width: 100%;
     margin-left: 0px !important;
 }
-.active-c span.tb-number {
-    background: #007F7F;
-    color: #fff;
-}
-.active-c p.tb-description {
-    color: #007F7F;
-}
-
-
-
-
-
-
 
 .form-group {
   display: block;
@@ -310,9 +289,14 @@ input#continue-btn {
     color: #fff;
     float: right;
     padding-top: 7px;
-    margin-top:40px;
 }
-
+.active-c span.tb-number {
+    background: #007F7F;
+    color: #fff;
+}
+.active-c p.tb-description {
+    color: #007F7F;
+}
 
 /********Responsive********/
 @media only screen and (max-width:1024px){
