@@ -2,17 +2,24 @@
 @section('content')
 <div class="identity-container-m">
     <ul class="process-tabs">
-        <li>
-            <span class="tb-number">1</span>
-            <p class="tb-description">Identity Verification</p>
+        <li  class="active-c">
+            <a href="{{url('/verification')}}">
+                <span class="tb-number">1</span>
+                <p class="tb-description">Identity Verification</p>
+                </a>
         </li>
         <li>
-            <span class="tb-number">2</span>
-            <p class="tb-description">Code Verification</p>
+            <a href="{{url('/code-verification')}}">
+                <span class="tb-number">2</span>
+                <p class="tb-description">Code Verification</p>
+                </a>
         </li>
         <li>
-            <span class="tb-number">3</span>
-            <p class="tb-description">Address Verification</p>
+            
+            <a href="{{url('/address-verification')}}">
+                <span class="tb-number">3</span>
+                <p class="tb-description">Address Verification</p>
+                </a>
         </li>
     </ul>
 </div>
@@ -271,7 +278,13 @@ color: #000000;
     border-bottom: 1px solid #e1e7ec;
     background: #f3f7f7;
 }
-
+.active-c span.tb-number {
+    background: #007F7F;
+    color: #fff;
+}
+.active-c p.tb-description {
+    color: #007F7F;
+}
 
 .form-group label:before {
     content: '';
@@ -312,6 +325,13 @@ input#continue-btn {
     color: #fff;
     float: right;
     padding-top: 7px;
+}
+.active-c span.tb-number {
+    background: #007F7F;
+    color: #fff;
+}
+.active-c p.tb-description {
+    color: #007F7F;
 }
 
 
