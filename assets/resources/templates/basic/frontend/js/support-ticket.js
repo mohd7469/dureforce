@@ -104,15 +104,36 @@ $(function() {
             $("#support_ticket_form").submit(function (event) {
                 form_data= $(this).serialize();
                 event.preventDefault();
-                event.stopPropagation(); 
-                if(myDropzone.getQueuedFiles().length>0){
-                    myDropzone.processQueue();
-                  }
-                  else
-                  {
-                    submitTicketForm(form_data);
-                  }
-            
+                event.stopPropagation();
+
+                var validate_url=$('#ticket_validate').val();
+                $.ajax({
+                    type:"POST",
+                    url:validate_url,
+                    data: {data : form_data,_token:token},
+                    success:function(data){
+                        if(data.validated){
+                          
+  
+                            if(myDropzone.getQueuedFiles().length>0){
+                              myDropzone.processQueue();
+                            }
+                            else
+                            {
+                       
+
+                              submitTicketForm(form_data);
+                            }
+  
+                        }
+                        else{
+                          displayErrorMessage(data.error);
+  
+                        }
+                    }
+                });
+
+
             }); 
     
           },

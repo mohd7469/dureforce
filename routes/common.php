@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['verified'])->group(function () {
     Route::prefix('ticket')->group(function () {
         Route::get('/', 'TicketController@supportTicket')->name('ticket');
+        Route::post('/ticket-validation', 'TicketController@validateTicket')->name('ticket.validate');
         Route::get('/new', 'TicketController@openSupportTicket')->name('ticket.open');
 //    Route::post('/create', 'TicketController@storeSupportTicket')->name('ticket.store');
         Route::get('/create-ticket', 'TicketController@create')->name('ticket.create');
