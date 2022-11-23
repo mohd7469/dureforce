@@ -74,7 +74,7 @@
                                                     <div class="col-md-4">
                                                     <img alt="User Pic" src="{{ !empty($freelancer->user_basic->profile_picture)? $freelancer->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-8" style="text-align:left">
                                                         <h4 class="pname-c"> 
                                                         {{$freelancer->first_name}} {{ $freelancer->last_name }}
                                                             </h4>
