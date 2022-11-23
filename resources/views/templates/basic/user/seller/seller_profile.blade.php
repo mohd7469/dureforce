@@ -139,7 +139,8 @@
                                             </div>
                                            <div class="tab-content">
                                                 <div class="tab-pane active show" id="cmplt">
-                                                   <div class="row">
+                                                   <h3>Coming Soon</h3>
+                                                    {{-- <div class="row">
                                                        <div class="col-xl-10 card-text-tab">
                                                            <h4 >Elementor Custom Form Action (HTTP Get).</h4>
                                                            <h5 >Great work!!! Super Fast delivery</h5>
@@ -183,10 +184,11 @@
                                                        <div class="col-xl-2 card-text-tab">
                                                            <p>3 days ago</p>
                                                        </div>
-                                                   </div>
+                                                   </div> --}}
                                                 </div>
                                                 <div class="tab-pane" id="inpro">
-                                                    <div class="row">
+                                                    <h3>Coming Soon</h3>
+                                                    {{-- <div class="row">
                                                         <div class="col-xl-10 card-text-tab">
                                                             <h4 >Elementor Custom Form Action (HTTP Post).</h4>
                                                             <h5 >Great work!!! Super Fast delivery</h5>
@@ -212,7 +214,7 @@
                                                             </ul>
                                                             <span><i class='fas fa-flag-usa'></i> Bekir C.</span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                            </div>
                                     </div>
@@ -263,7 +265,7 @@
                                 
                                 <div class="row section-heading-border justify-content-center align-items-center" style="
                                     margin-bottom: 23px;">
-                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My PortFolios</b></div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Portfolio</b></div>
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <a href="{{route('seller.profile.portfolio')}}">
@@ -335,8 +337,9 @@
 
                             </div>
                             <div class="tab-pane container fade" id="tes">
-                                <div class="row">
-                                <div class="quote">
+                                <h3>Coming Soon</h3>
+                                {{-- <div class="row"> --}}
+                                {{-- <div class="quote">
                                         <blockquote class="blockquote">
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
@@ -344,7 +347,7 @@
                                 <p class="cite"><b>Simon King</b> <br>
                                     Director Marketing, Global Solutions Ltd</p>
                                 </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

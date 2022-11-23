@@ -278,7 +278,7 @@
                                                     <div class="row btns-s">
                                                         <a href="{{route('buyer.proposal.remove.shortlist',$short_listed_proposal->id)}}" class="btn-products-s">Remove</a>
                                                         <a href="{{route('buyer.proposal.show',$short_listed_proposal->uuid)}}" class="btn-products-s">View Proposal</a>
-
+                                                        <a href="{{route('chat.propsal.message',$short_listed_proposal->uuid)}}" class="btn-products-s">Message</a>
                                                         @if ($short_listed_proposal->offer)
                                                             <a href="#" class="btn-products-s">View Offer</a>
 
