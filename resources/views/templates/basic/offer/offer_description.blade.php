@@ -12,12 +12,12 @@
 
         <div class="offerleftc">
             <div class="offer-profilecon">
-                <div class="offer-left"><img src="/assets/images/job/profile-img.png" alt="img"></div>
+                <div class="offer-left"><img src="{{ $offer->sendToUser->user_basic->profile_picture ? $offer->sendToUser->user_basic->profile_picture:  '/assets/images/job/profile-img.png' }}" alt="img" style="border-radius: 50%;height:100px;width:100px"></div>
                 <div class="offerrightc">
-                <h4 class="offer-pname">John Deo</h4>
-                <p class="offer-pdesti">Destination Destination </p>
+                <h4 class="offer-pname"> {{$offer->sendToUser->fullname}}</h4>
+                <p class="offer-pdesti">{{$offer->sendToUser->job_title}}</p>
                 <ul class="offer-location">
-                    <li>Location</li>
+                    <li>{{$offer->sendToUser->location }}</li>
                     <li>Time -o- clock</li>
                 </ul>
                 </div>
@@ -31,22 +31,10 @@
     <!---Description Container Start -->
         <div class="offer-description">
             <div class="offer-d-left">
-                <p class="offer-title"> Offer description</p>
-                <p class="offer-detail">Looking for a Full stack developer to build a brochure site that will be built on wordpress</p>
+                <p class="offer-title">{{$offer->contract_title}}</p>
+                <p class="offer-detail">{{$offer->description_of_work}}</p>
             </div>
-            <div class="offer-d-right">
-                <div>
-                    <h4 class="abt-title">About the Talent</h4>
-                <div class="offer-pimg"><img src="/assets/images/job/profile-img.png" alt="img"></div>
-                <div class="offer-status">
-                   
-                    <p class="offer-status-name">Dumitru G</p>
-                    <p>Full Stack Developer</p>
-                    <p>London, UK</p>
-                    <p>1:20 PM local time</p>
-                </div>
-                </div>
-            </div>
+            
         </div>
          <!---Description Container Start -->
 
@@ -56,33 +44,44 @@
 
             <ul class="offer-cnt-info">
                 <li>
-                    <p>Status</p>
-                    <p>Pending expire on September 8. 2022</p>
+                    <p>{{$offer->status->name}}</p>
+                <p>{{$offer->status->name}} expire on {{getFormattedDate($offer->expire_at,'d-m-Y')}}</p>
                 </li>
                 <li>
                     <p>Offer Made by</p>
-                    <p>Martin Collins</p>
+                    <p>{{$offer->sendByUser->full_name}}</p>
                 </li>
                 <li>
                     <p>Job Category</p>
-                    <p>Full stack developer</p>
+                    <p>{{$offer->module->category->name}}</p>
                 </li>
                 <li>
                     <p>Offer Expires</p>
-                    <p>September 8 ,2022</p>
+                    <p>{{getFormattedDate($offer->expire_at,'d-m-Y')}}</p>
                 </li>
                 <li>
                     <p>Offer Date</p>
-                    <p>September1,2022</p>
+                    <p>{{getFormattedDate($offer->created_at,'d-m-Y')}}</p>
                 </li>
                 <li>
                     <p>Start Date</p>
                     <p>September 1 , 2022</p>
                 </li>
-                <li>
-                    <p>Hourly Rate</p>
-                    <p>$30.00/hr</p>
-                </li>
+                @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
+                    <li>
+                        <p>Hourly Rate</p>
+                        <p>$30.00/hr</p>
+                    </li>
+                @else
+                
+                    <li>
+                        <p>Offer Amount</p>
+                        <p>${{$offer->offer_amount}}</p>
+                    </li>
+                    
+                @endif
+            
+                
                 <li>
                     <p>Weekly Limit</p>
                     <p>40hrs/week</p>

@@ -118,11 +118,9 @@
                                                     <a href="{{route('chat.propsal.message',$proposal->uuid)}}" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     @if ($proposal->offer)
-                                                        <a href="#" class="btn-products-s">View Offer</a>
-
+                                                        <a href="{{route('buyer.offer.detail',$proposal->offer->uuid)}}" class="btn-products-s">View Offer</a>
                                                     @else
                                                         <a href="{{route('buyer.send.offer',$proposal->uuid)}}" class="btn-products-s">Send Offer</a>
-
 
                                                     @endif
                                                 </div>

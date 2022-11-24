@@ -6441,6 +6441,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -12020,7 +12032,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card-header[data-v-478330f7]:first-child {\r\n    border-radius: 0px !important;\r\n    min-height: 20px;\r\n    height: 55px;\r\n    margin-right: -5px;\n}\n.header-title[data-v-478330f7]{\r\n    margin-top: 5px;\n}\n.actions[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 35px;\n}\n.action_send[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 15px;\n}\n.empty-space-margin[data-v-478330f7]{\r\n    margin-right: -6px;\n}\n.action_item[data-v-478330f7]{\r\n    \r\n    padding: 16px;\r\n    position: relative;\r\n    margin-left: -21px;\r\n    margin-top: -8px;\n}\n.action_item[data-v-478330f7]:hover {\r\n    border-radius: 56%;\r\n    background-color: #f4c2c2;\n}\n.icon_send[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    left: -7px;\r\n    top: -15px;\n}\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    right: 2px;\r\n    top: -15px;\n}\n.mt-custom[data-v-478330f7]{\r\n        margin-top: 40px;\n}\n.btn-propsal[data-v-478330f7]{\r\n\r\n            width: 117px;\r\n            height: 30px;\r\n            left: 1147px;\r\n            top: 86px;\r\n            background: #007F7F;\r\n            border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\r\n        width: 94px;\r\n        height: 30px;\r\n        left: 1043px;\r\n        top: 86px;\r\n        border: 2px solid #007F7F;\r\n        border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\r\n        padding-left: 0px;\r\n        padding-right: 0px;\n}\n.message-body[data-v-478330f7]{\r\n        height: 400px;\n}\n.align-header[data-v-478330f7]{\r\n        margin-top: -4px;\n}\n.no-border[data-v-478330f7]{\r\n        border: none;\n}\n.background[data-v-478330f7]{\r\n        border-top: 1px solid #CBDFDF;\r\n        margin-left: 0px;\r\n        margin-right: 0px;\n}\n.msg_card_body[data-v-478330f7]{\r\n        overflow-y: scroll;\r\n        overflow-x: hidden;\r\n        min-height: 570px;\r\n        max-height: 570px;\n}\n.msg_card_body[data-v-478330f7]::-webkit-scrollbar{\r\n        display: none;\n}\n.type_msg[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3) !important;\r\n        border:0 !important;\r\n        color:white !important;\r\n        height: 60px !important;\r\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]:focus{\r\n         box-shadow:none !important;\r\n         outline:0px !important;\n}\n.active[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3);\n}\n.user_img[data-v-478330f7]{\r\n        height: 70px;\r\n        width: 70px;\r\n        border:1.5px solid #f5f6fa;\n}\n.user_img_msg[data-v-478330f7]{\r\n        min-width: 40px;\r\n        height: 40px;\r\n        width: 40px;\r\n        border:1.5px solid #f5f6fa;\n}\n.img_cont[data-v-478330f7]{\r\n        position: relative;\r\n        height: 70px;\r\n        width: 70px;\n}\n.img_cont_msg[data-v-478330f7]{\r\n        height: 40px;\r\n        width: 40px;\n}\n.online_icon[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    right: 0px;\r\n    top: -20px;\n}\n.user_info[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 15px;\n}\n.user_info span[data-v-478330f7]{\r\n    font-size: 20px;\r\n    color: white;\n}\n.user_info p[data-v-478330f7]{\r\nfont-size: 10px;\r\ncolor: rgba(255,255,255,0.6);\n}\n.msg_cotainer[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    min-width: 85px;\n}\n.msg_cotainer_send[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-right: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    right: 0px;\r\n    min-width: 85px;\n}\n.msg_time[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -23px;\r\n    font-size: 10px;\n}\n.user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -15px;\r\n    top: -22px;\r\n    font-size: 10px;\n}\n.sender_user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: -22px;\n}\n.msg_time_send[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: 41px;\n}\n.msg_head[data-v-478330f7]{\r\n    position: relative;\n}\r\n\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.icon_position[data-v-478330f7]{\r\n    margin-top: 12px\r\n    ;\n}\n.card-header[data-v-478330f7]:first-child {\r\n    border-radius: 0px !important;\r\n    min-height: 20px;\r\n    height: 55px;\r\n    margin-right: -5px;\n}\n.header-title[data-v-478330f7]{\r\n    margin-top: 5px;\n}\n.actions[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 35px;\n}\n.action_send[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 15px;\n}\n.empty-space-margin[data-v-478330f7]{\r\n    margin-right: -6px;\n}\n.action_item[data-v-478330f7]{\r\n    \r\n    padding: 16px;\r\n    position: relative;\r\n    margin-left: -21px;\r\n    margin-top: -8px;\n}\n.action_item[data-v-478330f7]:hover {\r\n    border-radius: 56%;\r\n    background-color: #f4c2c2;\n}\n.icon_send[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    left: -7px;\r\n    top: -15px;\n}\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    right: 2px;\r\n    top: -15px;\n}\n.mt-custom[data-v-478330f7]{\r\n        margin-top: 40px;\n}\n.btn-propsal[data-v-478330f7]{\r\n\r\n            width: 117px;\r\n            height: 30px;\r\n            left: 1147px;\r\n            top: 86px;\r\n            background: #007F7F;\r\n            border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\r\n        width: 94px;\r\n        height: 30px;\r\n        left: 1043px;\r\n        top: 86px;\r\n        border: 2px solid #007F7F;\r\n        border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\r\n        padding-left: 0px;\r\n        padding-right: 0px;\n}\n.message-body[data-v-478330f7]{\r\n        height: 400px;\n}\n.align-header[data-v-478330f7]{\r\n        margin-top: -4px;\n}\n.no-border[data-v-478330f7]{\r\n        border: none;\n}\n.background[data-v-478330f7]{\r\n        border-top: 1px solid #CBDFDF;\r\n        margin-left: 0px;\r\n        margin-right: 0px;\n}\n.msg_card_body[data-v-478330f7]{\r\n        overflow-y: scroll;\r\n        overflow-x: hidden;\r\n        min-height: 570px;\r\n        max-height: 570px;\n}\n.msg_card_body[data-v-478330f7]::-webkit-scrollbar{\r\n        display: none;\n}\n.type_msg[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3) !important;\r\n        border:0 !important;\r\n        color:white !important;\r\n        height: 60px !important;\r\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]:focus{\r\n         box-shadow:none !important;\r\n         outline:0px !important;\n}\n.active[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3);\n}\n.user_img[data-v-478330f7]{\r\n        height: 70px;\r\n        width: 70px;\r\n        border:1.5px solid #f5f6fa;\n}\n.user_img_msg[data-v-478330f7]{\r\n        min-width: 40px;\r\n        height: 40px;\r\n        width: 40px;\r\n        border:1.5px solid #f5f6fa;\n}\n.img_cont[data-v-478330f7]{\r\n        position: relative;\r\n        height: 70px;\r\n        width: 70px;\n}\n.img_cont_msg[data-v-478330f7]{\r\n        height: 40px;\r\n        width: 40px;\n}\n.online_icon[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    right: 0px;\r\n    top: -20px;\n}\n.user_info[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 15px;\n}\n.user_info span[data-v-478330f7]{\r\n    font-size: 20px;\r\n    color: white;\n}\n.user_info p[data-v-478330f7]{\r\nfont-size: 10px;\r\ncolor: rgba(255,255,255,0.6);\n}\n.msg_cotainer[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    min-width: 85px;\n}\n.msg_cotainer_send[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-right: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    right: 0px;\r\n    min-width: 85px;\n}\n.msg_time[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -23px;\r\n    font-size: 10px;\n}\n.user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -15px;\r\n    top: -22px;\r\n    font-size: 10px;\n}\n.sender_user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: -22px;\n}\n.msg_time_send[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: 41px;\n}\n.msg_head[data-v-478330f7]{\r\n    position: relative;\n}\r\n\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -56842,24 +56854,32 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-8 remove-space" }, [
     _c("div", { staticClass: "card-header " }, [
-      _c("span", { staticClass: "float-sm-left header-title" }, [
-        _c("b", [
-          _vm._v(
-            _vm._s(_vm.active_user.send_to_user.first_name) +
-              " " +
-              _vm._s(_vm.active_user.send_to_user.last_name) +
-              " "
-          ),
+      _c("div", { staticClass: "row align-items-center align-self-center" }, [
+        _c("div", { staticClass: "col-md-3" }, [
+          _c("span", { staticClass: "float-sm-left header-title" }, [
+            _c("b", [
+              _vm._v(
+                _vm._s(_vm.active_user.send_to_user.first_name) +
+                  " " +
+                  _vm._s(_vm.active_user.send_to_user.last_name) +
+                  " "
+              ),
+            ]),
+            _vm._v(" "),
+            _vm.active_user.send_to_user.created_at
+              ? _c("small", [
+                  _vm._v(
+                    _vm._s(
+                      _vm.formattedDate(_vm.active_user.send_to_user.created_at)
+                    )
+                  ),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(0),
+          ]),
         ]),
-        _vm._v(" "),
-        _vm.active_user.created_at
-          ? _c("small", [
-              _vm._v(_vm._s(_vm.formattedDate(_vm.active_user.created_at))),
-            ])
-          : _vm._e(),
       ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "float-right align-header" }),
     ]),
     _vm._v(" "),
     _c(
@@ -56897,55 +56917,50 @@ var render = function () {
                   _c("div", { staticClass: "msg_cotainer" }, [
                     _c("div", [
                       _vm.active_user.send_to_user.id != message.sender_id
-                        ? _c(
-                            "div",
-                            { staticClass: "dropdown icon" },
-                            [
-                              _c("font-awesome-icon", {
-                                staticClass: "dropdown-toggle",
-                                attrs: {
-                                  icon: "fa-solid fa-caret-down",
-                                  "data-bs-toggle": "dropdown",
-                                  "aria-expanded": "false",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("ul", { staticClass: "dropdown-menu" }, [
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.editMessage(message)
-                                        },
+                        ? _c("div", { staticClass: "dropdown icon" }, [
+                            _c("i", {
+                              staticClass: "dropdown-toggle",
+                              attrs: {
+                                icon: "fa-solid fa-caret-down",
+                                "data-bs-toggle": "dropdown",
+                                "aria-expanded": "false",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("ul", { staticClass: "dropdown-menu" }, [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.editMessage(message)
                                       },
                                     },
-                                    [_vm._v("Edit")]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.deleteMessage(message.id)
-                                        },
-                                      },
-                                    },
-                                    [_vm._v("Delete")]
-                                  ),
-                                ]),
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
                               ]),
-                            ],
-                            1
-                          )
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.deleteMessage(message.id)
+                                      },
+                                    },
+                                  },
+                                  [_vm._v("Delete")]
+                                ),
+                              ]),
+                            ]),
+                          ])
                         : _vm._e(),
                       _vm._v(
                         "\n                        " +
@@ -56975,55 +56990,50 @@ var render = function () {
                   _c("div", { staticClass: "msg_cotainer_send" }, [
                     _c("div", [
                       _vm.active_user.send_to_user.id != message.sender_id
-                        ? _c(
-                            "div",
-                            { staticClass: "dropdown icon_send" },
-                            [
-                              _c("font-awesome-icon", {
-                                staticClass: "dropdown-toggle",
-                                attrs: {
-                                  icon: "fa-solid fa-caret-down",
-                                  "data-bs-toggle": "dropdown",
-                                  "aria-expanded": "false",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("ul", { staticClass: "dropdown-menu" }, [
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.editMessage(message)
-                                        },
+                        ? _c("div", { staticClass: "dropdown icon_send" }, [
+                            _c("i", {
+                              staticClass: "dropdown-toggle",
+                              attrs: {
+                                icon: "fa-solid fa-caret-down",
+                                "data-bs-toggle": "dropdown",
+                                "aria-expanded": "false",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("ul", { staticClass: "dropdown-menu" }, [
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.editMessage(message)
                                       },
                                     },
-                                    [_vm._v("Edit")]
-                                  ),
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.deleteMessage(message.id)
-                                        },
-                                      },
-                                    },
-                                    [_vm._v("Delete")]
-                                  ),
-                                ]),
+                                  },
+                                  [_vm._v("Edit")]
+                                ),
                               ]),
-                            ],
-                            1
-                          )
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.deleteMessage(message.id)
+                                      },
+                                    },
+                                  },
+                                  [_vm._v("Delete")]
+                                ),
+                              ]),
+                            ]),
+                          ])
                         : _vm._e(),
                       _vm._v(
                         "\n                        " +
@@ -57107,7 +57117,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-2  " }, [
           _c("div", { staticClass: " row " }, [
-            _vm._m(0),
+            _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 action_send" }, [
               _c("i", {
@@ -57126,6 +57136,35 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "small",
+      { staticClass: " float-left dropdown icon icon_position" },
+      [
+        _c("i", {
+          staticClass: " las la-chevron-circle-down fa-lg",
+          attrs: { "data-bs-toggle": "dropdown", "aria-expanded": "false" },
+        }),
+        _vm._v(" "),
+        _c("ul", { staticClass: "dropdown-menu" }, [
+          _c("li", [
+            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+              _vm._v("View Proposal"),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+              _vm._v("View Job"),
+            ]),
+          ]),
+        ]),
+      ]
+    )
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
