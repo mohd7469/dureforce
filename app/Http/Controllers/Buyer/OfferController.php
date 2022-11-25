@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\ModuleOffer;
 use App\Models\ModuleOfferMilestone;
+use App\Models\Proposal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Stmt\TryCatch;
 
 class OfferController extends Controller
 {
@@ -50,14 +52,15 @@ class OfferController extends Controller
            
             DB::beginTransaction();
             try {
+                $proposal=Proposal::with('user')->find($request_data['proposal_id']);
                 $module_offer = new ModuleOffer;
                 $module_offer->offer_amount = $request_data['offer_ammount'];
                 $module_offer->description_of_work = $request_data['description'];
                 $module_offer->contract_title = $request_data['contract_title'];
                 $module_offer->payment_type = ModuleOffer::PAYMENT_TYPE['FIXED'];
                 $module_offer->proposal_id = $request_data['proposal_id'];
-
-
+                $module_offer->offer_send_to_id=$proposal->user->id;
+               
                 $job = Job::find($request_data['job_id']);
                 $job->moduleOffer()->save($module_offer);
 
@@ -130,5 +133,20 @@ class OfferController extends Controller
 
     public function offerSuccessfullySubmitted(){
         return "Successfully Submitted !";
+    }
+
+    public function offerDetail($id)
+    {
+        try {
+
+            $offer=ModuleOffer::withAll()->where('uuid',$id)->first();
+            $pageTitle = "Offer Detail";
+            return view('templates.basic.offer.offer_description',compact('offer'));
+            
+        } catch (\Throwable $th) {
+           return redirect()->back()->withErrors(['Error' => "Failled To Fetch Offer"]);
+        }
+       
+
     }
 }

@@ -3,14 +3,26 @@
     <div class="col-md-8 remove-space">
         
         <div class="card-header ">
-            <span class="float-sm-left header-title">
-                <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
-                <small v-if="active_user.created_at">{{formattedDate(active_user.created_at)}}</small> 
-            </span>
-            <span class="float-right align-header">
-                <!-- <button class="btn-job">View Job</button>
-                <button class="btn-propsal">View Proposal</button> -->
-            </span>
+            <div class="row align-items-center align-self-center">
+                <div class="col-md-3">
+                    <span class="float-sm-left header-title">
+                        <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
+                        <small v-if="active_user.send_to_user.created_at">{{formattedDate(active_user.send_to_user.created_at)}}</small> 
+                        <small class=" float-left dropdown icon icon_position" >
+                            <i class=" las la-chevron-circle-down fa-lg" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" >View Proposal</a></li>
+                                <li><a class="dropdown-item" href="#" >View Job</a></li>
+
+                            </ul>
+                        </small>
+                    </span>
+                </div>
+              
+            </div>
+            
+            
+            
         </div>
         
         <div class="card-body msg_card_body" v-chat-scroll>
@@ -30,7 +42,7 @@
                         <div>
                             
                             <div class="dropdown icon" v-if="active_user.send_to_user.id!=message.sender_id">
-                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
@@ -52,7 +64,7 @@
                             
                             <div class="dropdown icon_send" v-if="active_user.send_to_user.id!=message.sender_id">
                                 
-                                <font-awesome-icon class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" />
+                                <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
@@ -186,6 +198,10 @@
 
 <style scoped>
 
+.icon_position{
+    margin-top: 12px
+    ;
+}
 .card-header:first-child {
     border-radius: 0px !important;
     min-height: 20px;

@@ -59,7 +59,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
                 Route::get('job-offer-sent/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
-                Route::view('/offer-description', 'templates.basic.offer.offer_description')->name('offer.detail');
+                Route::get('/offer-description/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerDetail'])->name('offer.detail');
                 
                 Route::get('job-offer-send-response', [\App\Http\Controllers\Buyer\OfferController::class,'offerSuccessfullySubmitted'])->name('offer.success.alert');
 
