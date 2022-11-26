@@ -604,6 +604,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('/follow/{id}', 'HomeController@follow')->name('follow');
                 Route::get('transactions', 'HomeController@transactions')->name('seller.transactions');
 
+                
                 //Service
                 Route::get('/service/index', 'ServiceController@index')->name('service.index');
                 Route::get('/service/create/{id?}', 'ServiceController@create')->name('service.create');
