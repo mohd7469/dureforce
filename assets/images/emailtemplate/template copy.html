@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Email Template</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@800&display=swap');
+    *{
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+    }
+    .body_container{
+        width: 600px;
+        margin: 0px auto;
+        display: block;
+    }
+.header_container {
+    display: inline-flex;
+    width: 100%;
+    margin-top: 20px;
+    border-bottom: 1px solid #CBDFDF;
+    padding-bottom: 15px;
+}
+ul.main_navigation_c {
+    float: right;
+    display: inline-flex;
+    margin-top: 6px;
+}
+ul.main_navigation_c li {
+    margin-left: 8%;
+    list-style: none;
+}
+ul.main_navigation_c li a{
+    font-family: 'Mulish', sans-serif;
+}
+ul.main_navigation_c li a {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #515151;
+    position: relative;
+}
+ul.main_navigation_c li a::before{
+    height: 13px;
+    width: 2px;
+    background: #000000;
+    position: absolute;
+    content: '';
+    left: -9px;
+    top: 3px;
+}
+ul.main_navigation_c li:first-child a::before{
+    display: none;
+}
+
+/*************/
+
+.second_container {
+    background: rgba(239, 248, 248, 0.86) url(background.png) no-repeat;
+    border: 1px solid rgba(203, 223, 223, 0.32);
+    border-radius: 8px;
+    padding-bottom: 220px;
+    background-size: 80%;
+    background-position: center center;
+    margin: 24px 0px 24px 0px;
+    position: relative;
+    width: 100%;
+
+}
+.second_container:before {
+    width: 100%;
+    height: 100%;
+    content: '';
+    /* background: red; */
+    position: absolute;
+    /* opacity: 0.2; */
+    background: rgba(239, 248, 248, 0.86);
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+span.cong_img {
+    width: 156px;
+    margin: 20px auto 0px;
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+.heading-cong {
+    width: 100%;
+    font-family: 'Mulish', sans-serif;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 35px;
+    text-align: center;
+    color: #007F7F;
+    margin: 65px 0px 30px 0px;
+    position: relative;
+    z-index: 2;
+}
+.description-c{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #000000;
+    font-family: 'Mulish', sans-serif;
+    position: relative;
+    z-index: 2;
+}
+.infotext {
+    background: #EFF8F8;
+    border-radius: 8px;
+    padding: 24px 24px 8px 24px;
+    width: 100%;
+    display: inline-block;
+}
+
+.infotext p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    width: 100%;
+    display: inline-block;
+    font-family: 'Mulish', sans-serif;
+    margin-bottom: 16px;
+}
+</style>
+</head>
+<body class="body_container">
+    <header>
+        <div class="header_container">
+            <a href="#" class="logo_container"><img src="logo.svg" alt="Logo"></a>
+            <ul class="main_navigation_c">
+                <li><a href="#">Jobs</a></li>
+                <li><a href="#">Proposals</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Softwares</a></li>
+                <li><a href="#">Messages</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="second_container">
+          <span class="cong_img"><img src="cong.png" alt="congrts"></span> 
+          <h1 class="heading-cong">Congrats! You have been <br />
+            invited to submit a proposal!</h1>
+         <p class="description-c">Read more about the job below and <br /> submit a proposal if you are interested.</p>
+         
+    </div>
+
+    <div class="infotext">
+        <p>Hello!</p>
+        <p>I'd like to invite you to take a look at the Job I've posted. Please submit a proposal if you're available and interested.</p>
+        <p>Martin C.</p>
+    </div>
+</body>    

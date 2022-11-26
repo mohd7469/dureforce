@@ -53,7 +53,8 @@ Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/verification', 'templates.basic.verification.identity_verification');
 Route::view('/code-verification', 'templates.basic.verification.code_verification');
 Route::view('/address-verification', 'templates.basic.verification.address_verification');
-
+//Email verification page
+Route::view('/email-verification', 'email-template.job.email_template');
 
 
 
