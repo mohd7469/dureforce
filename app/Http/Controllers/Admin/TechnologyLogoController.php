@@ -16,7 +16,7 @@ class TechnologyLogoController extends Controller
 
     public function index()
     {
-    	$pageTitle = "Manage All Banner";
+    	$pageTitle = "Manage All Technology Logo";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Technology Logo')->latest()->paginate(getPaginate());
     	return view('admin.technology_logo.index', compact('pageTitle', 'emptyMessage', 'banners'));
@@ -24,7 +24,7 @@ class TechnologyLogoController extends Controller
 
     public function bannerCreate()
     {
-    	$pageTitle = "Create Banner";
+    	$pageTitle = "Create Technology Logo";
     	return view('admin.technology_logo.create', compact('pageTitle'));
     }
 
@@ -62,14 +62,14 @@ class TechnologyLogoController extends Controller
 
     public function details($id)
     {
-    	$pageTitle = "Banner Details";
+    	$pageTitle = "Technology Logo Details";
         $banner = Banner::where('id',$id)->withAll()->first();
     	return view('admin.technology_logo.details', compact('pageTitle', 'banner'));
     }
 
     public function inActive()
     {
-    	$pageTitle = "Pending Banner";
+    	$pageTitle = "InActive Technology Logo";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->latest()->paginate(getPaginate());
     	return view('admin.technology_logo.index', compact('pageTitle', 'emptyMessage', 'banners'));
@@ -77,7 +77,7 @@ class TechnologyLogoController extends Controller
 
     public function active()
     {
-    	$pageTitle = "Approved Banner";
+    	$pageTitle = "Active Technology Logo";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->latest()->paginate(getPaginate());
     	return view('admin.technology_logo.index', compact('pageTitle', 'emptyMessage', 'banners'));
@@ -92,7 +92,7 @@ class TechnologyLogoController extends Controller
         $banner->is_active = 1;
         $banner->created_at = Carbon::now();
         $banner->save();
-        $notify[] = ['success', 'Banner has been Activated'];
+        $notify[] = ['success', 'Technology Logo has been Activated'];
         return redirect()->back()->withNotify($notify);
     }
 
@@ -105,7 +105,7 @@ class TechnologyLogoController extends Controller
         $banner->is_active = 0;
         $banner->created_at = Carbon::now();
         $banner->save();
-        $notify[] = ['success', 'Banner has been inActive'];
+        $notify[] = ['success', 'Technology Logo has been inActive'];
         return redirect()->back()->withNotify($notify);
     }
 }

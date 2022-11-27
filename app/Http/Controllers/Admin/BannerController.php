@@ -69,7 +69,7 @@ class BannerController extends Controller
 
     public function inActive()
     {
-    	$pageTitle = "Pending Banner";
+    	$pageTitle = "InActive Banner";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Background')->where('is_active', 0)->latest()->paginate(getPaginate());
     	return view('admin.banner.inActive', compact('pageTitle', 'emptyMessage', 'banners'));
@@ -77,7 +77,7 @@ class BannerController extends Controller
 
     public function active()
     {
-    	$pageTitle = "Approved Banner";
+    	$pageTitle = "Active Banner";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Background')->where('is_active', 1)->latest()->paginate(getPaginate());
     	return view('admin.banner.active', compact('pageTitle', 'emptyMessage', 'banners'));
