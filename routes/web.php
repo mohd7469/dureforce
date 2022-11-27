@@ -263,6 +263,32 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('job/{scope}/search', 'JobController@search')->name('job.search');
             Route::post('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
         });
+        // background banner
+        Route::middleware('staffaccess:33')->group(function () {
+            //Manage banner
+            Route::get('banner/index', 'BannerController@index')->name('banner.index');
+            Route::get('banner/create', 'BannerController@bannerCreate')->name('banner.create');
+            Route::post('banner/store', 'BannerController@store')->name('banner.store');
+            Route::get('banner/inActive', 'BannerController@inActive')->name('banner.inActive');
+            Route::get('banner/active', 'BannerController@active')->name('banner.active');
+            Route::post('banner/inactiveBy', 'BannerController@inactiveBy')->name('banner.inactiveBy');
+            Route::post('banner/activeBy', 'BannerController@activeBy')->name('banner.activeBy');
+            Route::get('banner/details/{uuid}', 'BannerController@details')->name('banner.details');
+ 
+        });
+        // background technology logo
+        Route::middleware('staffaccess:34')->group(function () {
+            //Manage technology logo
+            Route::get('techlogo/index', 'TechnologyLogoController@index')->name('techlogo.index');
+            Route::get('techlogo/create', 'TechnologyLogoController@bannerCreate')->name('techlogo.create');
+            Route::post('techlogo/store', 'TechnologyLogoController@store')->name('techlogo.store');
+            Route::get('techlogo/inActive', 'TechnologyLogoController@inActive')->name('techlogo.inActive');
+            Route::get('techlogo/active', 'TechnologyLogoController@active')->name('techlogo.active');
+            Route::post('techlogo/inactiveBy', 'TechnologyLogoController@inactiveBy')->name('techlogo.inactiveBy');
+            Route::post('techlogo/activeBy', 'TechnologyLogoController@activeBy')->name('techlogo.activeBy');
+            Route::get('techlogo/details/{uuid}', 'TechnologyLogoController@details')->name('techlogo.details');
+ 
+        });
 
         Route::middleware('staffaccess:34')->group(function () {
             // Manage Staff
