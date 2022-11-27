@@ -20,7 +20,7 @@
          
             <div class="image-div">
                 <img class="card-img-top image-ui" src="{{ !empty($propsal_to_send_offer->user->basicProfile->profile_picture)? $propsal_to_send_offer->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
-                <span class="logged-in">●</span>
+                {{-- <span class="logged-in">●</span> --}}
 
               </div>
                <div>
