@@ -59,10 +59,10 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['categorys'] = Category::where('status', 1)->orderby('id', 'DESC')->inRandomOrder()->get();
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
-        $viewShare['fservices'] = Service::where('status', 1)->where('featured', 1)->whereHas('category', function($q){
-            $q->where('status', 1);
-        })->paginate(4);
-        view()->share($viewShare);
+//        $viewShare['fservices'] = Service::where('status', 1)->where('featured', 1)->whereHas('category', function($q){
+//            $q->where('status', 1);
+//        })->paginate(4);
+//        view()->share($viewShare);
         
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
