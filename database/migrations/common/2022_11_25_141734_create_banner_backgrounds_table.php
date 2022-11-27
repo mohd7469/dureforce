@@ -15,6 +15,8 @@ class CreateBannerBackgroundsTable extends Migration
     {
         Schema::create('banner_backgrounds', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('category_id')->index()->nullable();
+            $table->unsignedBigInteger('sub_category_id')->index()->nullable();
             $table->enum('document_type',['Background','Technology Logo','Logo'])->nullable();
             $table->string('subject')->index()->nullable();
             $table->string('name')->index()->nullable();
@@ -24,6 +26,11 @@ class CreateBannerBackgroundsTable extends Migration
             $table->boolean('is_active')->default(true);
             $table->timestamps();
             $table->softDeletes();
+
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
+
         });
     }
 
