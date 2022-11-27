@@ -40,8 +40,6 @@ function displayErrorMessage(validation_errors)
         $('#'+error).next().addClass('error-field');
 
         displayAlertMessage(error_message);
-
-      
     }
 
 }
@@ -53,13 +51,13 @@ function displaySuccessMessage()
 
 function displayInfoAlertMessage(message)
 {
-        iziToast.info({
-            class:"wait",
-            message: message,
-            position: "center",
-            timeOut: 50000,
-            extendedTimeOut: 0
-        });
+      iziToast.info({
+          class:"wait",
+          message: message,
+          position: "center",
+          timeOut: 50000,
+          extendedTimeOut: 0
+      });
 }
 
 $(function() {
