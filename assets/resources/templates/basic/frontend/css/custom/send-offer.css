@@ -64,8 +64,14 @@ h6{
     font-size: 55px;
   }
 .icon-class{
+    background: url(/assets/images/job/location-icon.png);
+    background-size: 13px;
     margin-right: 7px;
-    color: #007F7F;
+    color: transparent;
+    width: 16px;
+    height: 20px;
+    /* background: repeat; */
+    background-repeat: no-repeat;
 }
 .card{
     white-space: nowrap;
