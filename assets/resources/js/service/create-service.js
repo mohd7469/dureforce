@@ -4,7 +4,7 @@ let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
-
+"use strict";
 $(document).ready(function () {
   loadActiveTab();
   loadSelect2();
@@ -13,7 +13,9 @@ $(document).ready(function () {
   overviewFormValidation();
   pricingFormValidation();
   requirementFormValidation();
-
+    $('#service_features').select2({
+      tags: true
+    });
   if (action != "edit") {
     if (selector.val() == "1") {
       back.attr("style", "display:none !important");
