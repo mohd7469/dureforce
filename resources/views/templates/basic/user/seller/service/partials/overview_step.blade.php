@@ -83,78 +83,40 @@
                                 <i class="fa fa-info-circle"></i>
                     </span>
 
-                    <p class="include_error"></p>
-                    @if (!empty($service))
-                    <div class="col-xl-12 col-lg-12 form-group mt-2 d-flex flex-wrap back">
-                    @foreach ($features as $feature)
-                    <div class="form-group px-2 ">
-                    <label class="container1 ">{{ __($feature->name) }}
-                    <input id="include" value="{{ $feature->id }}" name="features[]" type="checkbox" @foreach ($service->featuresService as $value) {{ $feature->id == $value->id ? 'checked' : '' }} @endforeach
-                                                                                    >
-                    <span class="checkmark"></span>
-                    </label>
+                    <div class="input-group mb-3">
+                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="service_features[]" id="service_features" >
+                            {{-- @foreach($data['deliverables'] as $item)
+                                <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                            @endforeach --}}
+                            <option value="">Select Feature</option>
+                            <option value="1">Support</option>
+                            <option value="2">Consultancy</option>
+                            <option value="3">Infrastructure Management</option>
+                            <option value="4">Software Development</option>
 
-                </div>
 
-                            @endforeach
-                            </div>
-                            @else
-                            <div class="col-xl-12 col-lg-12 form-group mt-2 d-flex flex-wrap back">
-                            @foreach ($features as $feature)
-                            <div class="form-group px-2 pl-2">
-                            <!-- <label for="privacy" class="d-flex">
-                            <input  id="include" value="{{ $feature->id }}"  class="checkbox-review" name="features[]" type="checkbox" />
-                                <span class="lbl-review review-check mb-3">{{ __($feature->name) }}</span>
-                            </label> -->
-                            <label class="container1">{{ __($feature->name) }}
-                                <input id="include" value="{{ $feature->id }}" name="features[]" type="checkbox">
-                                <span class="checkmark"></span>
-                                </label>
-                            </div>
 
-                            @endforeach
-                            </div>
-                            @endif
+                        </select>
+                    </div>
+                          
 
 
 
                 </div>
-                <!-- <div class="col-xl-4 col-lg-6 form-group service-feat pt-4">
 
-                    <select name="features[]" id="include" class="form-control ">
-
-                        <option selected="" disabled="">@lang('Select Features')</option>
-                        @if (!empty($service))
-                            @foreach ($features as $feature)
-                                <option
-                                    @foreach ($service->featuresService as $value) {{ $feature->id == $value->id ? 'selected' : '' }} @endforeach
-                                    value="{{ $feature->id }}">
-                                    {{ __($feature->name) }}
-                                </option>
-                            @endforeach
-                        @else
-                            @foreach ($features as $feature)
-                                <option multiple value="{{ $feature->id }}">
-                                    {{ __($feature->name) }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div> -->
+              
+                
                 <br>
-                <div class="col-xl-12 col-lg-12">
-                    <h3>
-                        Service Attributes
-                    </h3>
-                    <br />
-                </div>
-                <br>
+                <input type="checkbox" name="skills[]" style="display: none">
 
-                @if (empty($service))
-                    @include($activeTemplate . 'user.seller.shared.attributes')
-                @else
-                    @include($activeTemplate . 'user.seller.shared.attributes_edit_service', ['model' => $service])
-                @endif
+            
+                <div style="display:inline;display:none" id="skills_heading">
+                    <h4 class="" style="display:inline">Job Attributes* </h4>
+                    <small>(At least one skill is required)</small>
+                </div>
+                <div id="form_attributes" class="col-xl-12 col-lg-12 pt-1" >
+                    
+                </div>
 
             </div>
             <hr />
@@ -171,4 +133,7 @@
         </div>
     </div>
 </form>
-
+<script>
+    let action = '';
+    
+</script>

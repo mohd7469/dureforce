@@ -53,7 +53,8 @@ Route::view('/offers', 'templates.basic.offers.view-offer');
 Route::view('/verification', 'templates.basic.verification.identity_verification');
 Route::view('/code-verification', 'templates.basic.verification.code_verification');
 Route::view('/address-verification', 'templates.basic.verification.address_verification');
-
+//Email verification page
+Route::view('/email-verification', 'email-template.job.email_template');
 
 
 
@@ -603,6 +604,7 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::get('/follow/{id}', 'HomeController@follow')->name('follow');
                 Route::get('transactions', 'HomeController@transactions')->name('seller.transactions');
 
+                
                 //Service
                 Route::get('/service/index', 'ServiceController@index')->name('service.index');
                 Route::get('/service/create/{id?}', 'ServiceController@create')->name('service.create');
