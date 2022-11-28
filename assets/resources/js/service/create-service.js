@@ -329,8 +329,8 @@ function overviewFormValidation() {
         });
       }
     }
-
-    if ($("input[name='features[]']:checked").length < 1) {
+    if ($('#service_features :selected').length<=0) {
+      
       e.preventDefault();
       $(".include_error").after(
         '<span class="error text-danger">This field is required</span>'

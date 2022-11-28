@@ -34,77 +34,67 @@
                     <div id="error"></div>
                     {{-- <small>@lang('Tag and enter press')</small> --}}
                 </div>
-
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
-                    <label>@lang('Category')*</label>
-                    <select class="form-control bg--gray" name="category_id" id="category">
-
-                        <option selected="" disabled="" >@lang('Select Category')</option>
-                        @if (!empty($service))
-                            @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
-                                <option value="{{ $category->id }}" @if ($category->id == $service->category_id) selected @endif>
-                                    {{ __($category->name) }}</option>
-                            @endforeach
-                        @else
-                            @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
-                                <option value="{{ __($category->id) }}">
-                                    {{ __($category->name) }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
-                    <label for="subCategorys">@lang('Sub-Category*')</label>
-                    <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category">
-                        <option selected="" disabled="" >@lang('Sub Category')</option>
-                        @if (!empty($service))
-                            @foreach (\App\Models\Category::find($service->category_id)->subCategory as $sub)
-                                <option @if ($sub->id == $service->sub_category_id) selected @endif value="{{ $sub->id }}">
-                                    {{ $sub->name }}</option>
-                            @endforeach
-                        @endif
-
-                    </select>
-                </div>
-                <div class="col-xl-12 col-lg-12 position-relative">
-
-                    <label class="d-inline-block mx-1">@lang('Include Feature')*</label>
-                    <span title="  Support : Provide customer service and resolve various issues online
-
-                                    Consultancy : Provide consultancy or advice with particular service
-
-                                    Training : Provide customer training related to particular service
-
-                                    Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
-
-                                    Software Development : Provide key aspects of software development (programming , testing , deployment and  support">
-                                <i class="fa fa-info-circle"></i>
-                    </span>
-
-                    <div class="input-group mb-3">
-                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="service_features[]" id="service_features" >
-                            {{-- @foreach($data['deliverables'] as $item)
-                                <option value="{{__($item->id)}}">{{__($item->name)}}</option>
-                            @endforeach --}}
-                            <option value="">Select Feature</option>
-                            <option value="1">Support</option>
-                            <option value="2">Consultancy</option>
-                            <option value="3">Infrastructure Management</option>
-                            <option value="4">Software Development</option>
-
-
-
+                <div class="row">
+                    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+                        <label>@lang('Category')*</label>
+                        <select class="form-control bg--gray" name="category_id" id="category">
+    
+                            <option selected="" disabled="" >@lang('Select Category')</option>
+                            @if (!empty($service))
+                                @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
+                                    <option value="{{ $category->id }}" @if ($category->id == $service->category_id) selected @endif>
+                                        {{ __($category->name) }}</option>
+                                @endforeach
+                            @else
+                                @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
+                                    <option value="{{ __($category->id) }}">
+                                        {{ __($category->name) }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
-                          
-
-
+    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+                        <label for="subCategorys">@lang('Sub-Category*')</label>
+                        <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category">
+                            <option selected="" disabled="" >@lang('Sub Category')</option>
+                            @if (!empty($service))
+                                @foreach (\App\Models\Category::find($service->category_id)->subCategory as $sub)
+                                    <option @if ($sub->id == $service->sub_category_id) selected @endif value="{{ $sub->id }}">
+                                        {{ $sub->name }}</option>
+                                @endforeach
+                            @endif
+    
+                        </select>
+                    </div>
+    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+    
+                        <label class="d-inline-block ">@lang('Include Feature')*</label>
+                        <span title="Support : Provide customer service and resolve various issues online
+    
+                                        Consultancy : Provide consultancy or advice with particular service
+    
+                                        Training : Provide customer training related to particular service
+    
+                                        Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
+    
+                                        Software Development : Provide key aspects of software development (programming , testing , deployment and  support">
+                                    <i class="fa fa-info-circle"></i>
+                        </span>
+    
+                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
+                            @foreach($features as  $item)
+                                <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                            @endforeach
+                            
+    
+                        </select>
+                    </div>
 
                 </div>
-
-              
                 
                 <br>
                 <input type="checkbox" name="skills[]" style="display: none">
@@ -123,10 +113,11 @@
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6 text-right">
-                    <button type="submit"
-                        class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                AND
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                CONTINUE')</button>
+                    <button class="btn service-cancel-btn  m-3">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE AND CONTINUE')</button>
                 </div>
             </div>
 

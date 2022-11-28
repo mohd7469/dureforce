@@ -32,7 +32,13 @@
                     <a class="btn service--btns btn-secondary float-left  mt-20 w-100" href="?view=step-3">@lang('BACK')</a>
                 </div>
                 <div class="col-md-6 text-right">
+                    <button class="btn service-cancel-btn  m-3">
+                        Cancel
+                    </button>
 
+                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                       Preview Service
+                    </button> 
                     <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
                         AND
                         CONTINUE')</button>

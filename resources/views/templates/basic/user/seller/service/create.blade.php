@@ -37,6 +37,34 @@
 
 @push('style')
     <style>
+        .create-service-main .service--btns {
+            background-color: #f8fafa;
+            border-radius: 5px;
+            border: 1px solid #7f007f;
+            color: #7f007f;
+            width: 145px !important;
+            margin-right: 16px !important;
+        }
+        .service-cancel-btn{
+            
+            height: 18px;
+            left: 1009px;
+            font-family: 'Mulish';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #7F007F;
+            background-color: transparent;
+            padding: 10px 4px;
+
+        }
+
+        .custom--card .card-body .card-form-wrapper input {
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            padding: 4px 15px !important;
+        }
         .select2Tag input {
             background-color: transparent !important;
             padding: 0 !important;

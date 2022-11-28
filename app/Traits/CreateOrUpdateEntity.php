@@ -20,10 +20,10 @@ use Razorpay\Api\Entity;
 
 trait CreateOrUpdateEntity {
 
-    public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
+    public function saveOverviewbackup($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
          DB::transaction(function () use ($request, $model, $modelId, $type) {
-            $model->status = Service::PENDING;
+            $model->status_id = Service::STATUSES['PENDING'];
             $model->fill($request->except(['_token']))->save();
 
             $attributes = collect($request->get('attrs'))->map(function ($attrId) use ($model, $type) {
@@ -39,6 +39,57 @@ trait CreateOrUpdateEntity {
                     ]);
                 }
             })->all();
+
+            $detail = Attribute::SERVICE ? $this->getDetails($model->serviceDetail) : $this->getDetails($model->softwareDetail);
+
+            if(! empty($modelId)) {
+                if($type == Attribute::SERVICE) {
+                    $model->featuresService()->detach();
+                    $model->serviceDetail()->delete();
+                    $model->serviceAttributes()->delete();
+                } else {
+                    $model->featuresSoftware()->detach();
+                    $model->softwareDetail()->delete();
+                    $model->softwareAttributes()->delete();
+                }
+            }
+
+            if($type == Attribute::SERVICE) {
+                $model->featuresService()->attach($request->features);
+                $model->serviceAttributes()->saveMany($attributes);
+    
+                $model->serviceDetail()->create([
+                    'entity_fields' => decodeOrEncodeFields($request->entity_field, false),
+                    'client_requirements' => $detail['requirements'],
+                    'max_no_projects'     => $detail['max_no_projects'],
+                    'copyright_notice'    => $detail['copyright_notice'],
+                    'privacy_notice'      => $detail['privacy_notice']
+                ]);
+            } else {
+                $model->featuresSoftware()->attach($request->features);
+                $model->softwareAttributes()->saveMany($attributes);
+    
+                $model->softwareDetail()->create([
+                    'entity_fields' => decodeOrEncodeFields($request->entity_field, false),
+                    'client_requirements' => $detail['requirements'],
+                    'max_no_projects'     => $detail['max_no_projects'],
+                    'copyright_notice'    => $detail['copyright_notice'],
+                    'privacy_notice'      => $detail['privacy_notice']
+                ]);
+            }
+
+        });
+
+        return true;
+    }
+    public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
+    {
+         DB::transaction(function () use ($request, $model, $modelId, $type) {
+            $model->status_id = Service::STATUSES['PENDING'];
+            dd($request->all());
+
+            $model->fill($request->except(['_token','skills','tag']))->save();
+            
 
             $detail = Attribute::SERVICE ? $this->getDetails($model->serviceDetail) : $this->getDetails($model->softwareDetail);
 

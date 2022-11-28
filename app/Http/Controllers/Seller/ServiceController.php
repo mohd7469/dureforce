@@ -85,7 +85,7 @@ class ServiceController extends Controller
     }
 
 
-    public function storeOverview(OverviewRequest $request)
+    public function storeOverview(Request $request)
     {
         $serviceId = $request->get('service_id');
 

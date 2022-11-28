@@ -23,32 +23,31 @@ class Service extends Model
     const PENDING = 0;
     const APPROVED = 1;
 
+    public const STATUSES = [
+        'DRAFT'  =>  17,
+        'PENDING'  =>  18,
+        'APPROVED' =>  19,
+        'CANCELLED' =>  20,
+        'UNDER_REVIEW' =>  21
+    ];
+
     protected $casts = [
         'tag' => 'object'
     ];
 
     protected $fillable = [
-        'title',
-        'featured',
         'user_id',
-        'price',
-        'image',
-        'favorite',
-        'rating',
-        'likes',
-        'dislike',
-        'delivery_time',
-        'tag',
-        'description',
-        'banner_detail',
-        'banner_heading',
-        'lead_image',
-        'status',
+        'status_id',
         'category_id',
         'sub_category_id',
-        'technology_logos',
-        'creation_status',
-        'deliverables'
+        'title',
+        'description',
+        'rate_per_hour',
+        'estimated_delivery_time',
+        'requirement_for_client',
+        'number_of_simultaneous_projects',
+        'is_terms_accepted',
+        'is_privacy_accepted',
     ];
 
     public function featuresService()
@@ -78,7 +77,7 @@ class Service extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id')->where('status_id', Category::ACTIVE);
     }
 
     public function subCategory()
@@ -104,7 +103,7 @@ class Service extends Model
 
     public function tags()
     {
-        return $this->hasMany(TagsAssociate::class, 'model_id');
+        return $this->morphMany(ModuleTag::class, 'module');
     }
 
     public function logos()
@@ -134,22 +133,22 @@ class Service extends Model
 
     public function scopeFeatured($query)
     {
-        return $query->where('featured', self::FEATURED);
+        return $query->where('status_id', self::FEATURED);
     }
 
     public function scopeNotFeatured($query)
     {
-        return $query->where('featured', self::NOT_FEATURED);
+        return $query->where('status_id', self::NOT_FEATURED);
     }
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE);
+        return $query->where('status_id', self::ACTIVE);
     }
 
     public function scopeInActive($query)
     {
-        return $query->where('status', self::IN_ACTIVE);
+        return $query->where('status_id', self::IN_ACTIVE);
     }
 
     public function _decoded_deliverables()
