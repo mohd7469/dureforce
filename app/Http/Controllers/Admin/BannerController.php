@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
+use App\Models\Category;
 use Carbon\Carbon;
 use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
@@ -18,23 +19,25 @@ class BannerController extends Controller
     {
     	$pageTitle = "Manage All Banner";
     	$emptyMessage = "No data found";
-    	$banners = Banner::where('document_type', 'Background')->latest()->paginate(getPaginate());
+    	$banners = Banner::where('document_type', 'Background')->withAll()->latest()->paginate(getPaginate());
     	return view('admin.banner.index', compact('pageTitle', 'emptyMessage', 'banners'));
     }
 
     public function bannerCreate()
     {
     	$pageTitle = "Create Banner";
-    	return view('admin.banner.create', compact('pageTitle'));
+        $categories = Category::select('id', 'name')->get();
+    	return view('admin.banner.create', compact('pageTitle','categories'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
+            'category' => 'required',
+            'sub_category' => 'required',
             'subject' => 'required',
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
         ]);
-        $user = Auth::guard('admin')->user();
         $banner  = new Banner;
         if ($request->hasFile('image')) {
             try {
@@ -49,6 +52,8 @@ class BannerController extends Controller
                 return back()->withNotify($notify);
             }
         }
+        $banner->category_id = $request->category;
+        $banner->sub_category_id = $request->sub_category;
         $banner->document_type = 'Background';
         $banner->subject = $request->subject;
         $banner->name = $filename;

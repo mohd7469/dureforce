@@ -15,6 +15,7 @@
                         <thead>
                         <tr>
                             <th>@lang('Subject')</th>
+                            <th>@lang('Category / SubCategory')</th>
                             <th>@lang('Backgroung Technology Logo')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
@@ -29,8 +30,19 @@
                                     <span class="name">{{__(str_limit($banner->subject, 20))}}</span>
                                 </div>
                             </td>
-                            <td data-label="@lang('Buyer')">
-                                <img src="{{ isset($banner->url) ? ($banner->url) : asset('assets\images\default.png')}}" alt="@lang('Technology logo Image')" class="b-radius--10" height="50" width="50">
+                            <td data-label="@lang('Category / SubCategory')">
+                                <span class="font-weight-bold">{{__($banner->category->name)}}</span>
+                                <br>
+                                @if($banner->sub_category_id)
+                                    <span>{{__($banner->subCategory->name)}}</span>
+                                @else
+                                    <span>@lang('N/A')</span>
+                                @endif
+                            </td>
+                            <td data-label="@lang('Image')">
+                                <a class="bannerModal" id="image_url" data-url="{{$banner->url}}" >
+                                    <img src="{{ isset($banner->url) ? ($banner->url) : asset('assets\images\default.png')}}" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" >
+                                </a>
                             </td>
                             <td data-label="@lang('Status')">
                                 @if($banner->is_active == 1)
@@ -63,7 +75,7 @@
                                     <i class="las la-check"></i>
                                     </button>
                                 @endif
-                                <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a>
+                                <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
                             </td>
                         </tr>
                         @empty
@@ -81,7 +93,34 @@
     </div>
 </div>
 
-<div class="modal fade" id="techlogoinactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- The Modal -->
+<div class="container">
+    <div
+            class="modal fade"
+            id="bannerModal"
+            tabindex="-1"
+            aria-labelledby="emailVerifyLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img alt="User Pic" src="" id="profile-image-invite"
+                                             class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -107,7 +146,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="techlogoactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="activeBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -150,5 +189,17 @@
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
     });
+
+    $('.bannerModal').on('click', function () {
+            var url = $(this).data('url');
+            console.log(url);
+            if(url != null){
+                $("#profile-image-invite").attr('src',url);
+            }else{
+                $("#profile-image-invite").attr('src','/assets/images/default.png');
+            }
+            $('#bannerModal').modal('show');
+    });
+
 </script>
 @endpush

@@ -13,6 +13,8 @@ class Banner extends Model
     protected $table = 'banner_backgrounds';
     public static $attachment_path = "attachments";
     protected $fillable = [
+        "category_id",
+        "sub_category_id",
         "document_type",
         "subject",
         'uploaded_name',
@@ -22,7 +24,21 @@ class Banner extends Model
         "is_active"
     ];
     const UPDATED_AT = null;
+
+    public static function scopeWithAll($query){
+
+        return $query->with('category')->with('subCategory');
+
+    }
     
+    public function category()
+    {
+    	return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+    }
+    public function subCategory()
+    {
+    	return $this->belongsTo(SubCategory::class, 'sub_category_id');
+    }
     public function scopeActive($query)
     {
         return $query->where('is_active',1);
