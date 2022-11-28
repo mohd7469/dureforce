@@ -17,7 +17,7 @@ class="review-form"
             <div class="row ">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>@lang('Maximum number of simultaneous projects')*</label>
-                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->serviceDetail->max_no_projects}}">
+                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->number_of_simultaneous_projects}}">
                 </div>
 
                 <br>
@@ -29,7 +29,7 @@ class="review-form"
                 <h4 class="hdng-create">Terms of Service</h4><p id="copy"></p>
                 <br>
                 <label for="">
-                    <input type="checkbox" name="copyright_notice"  class="checkbox-review" id="copyright_notice" {{ @$service->serviceDetail->copyright_notice ? 'checked' : '' }}>
+                    <input type="checkbox" name="copyright_notice"  class="checkbox-review" id="copyright_notice" {{ @$service->is_terms_accepted ? 'checked' : '' }}>
                     <span class="lbl-review review-check mb-3">I understand and agree to the DureForce <a href="#">Terms of Service</a>, including the
                         <a href="#">User Agreement</a> and <a href="#">Privacy Policy.</a></span>
 
@@ -37,7 +37,7 @@ class="review-form"
 
                 <h4 class="hdng-create">Privacy Notice</h4>   <p id="copy1"></p>
                 <label for="privacy" class="d-flex">
-                    <input type="checkbox" name="privacy_notice" class="checkbox-review" id="privacy_notice" {{ @$service->serviceDetail->privacy_notice ? 'checked' : '' }}>
+                    <input type="checkbox" name="privacy_notice" class="checkbox-review" id="privacy_notice" {{ @$service->is_privacy_accepted ? 'checked' : '' }}>
                     <span class="lbl-review review-check mb-3" >By submitting this project and activating it, I understand that it will
                     appear in DureForce search results visible to the general public and will show up in search engine
                     results, even if my profile visibility is set to Private or DureForce Users Only.</span>
@@ -70,7 +70,7 @@ class="review-form"
                      </button> 
                    
                     <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE')</button>
-                </div>
+                </div>  
             </div>
 
         </div>

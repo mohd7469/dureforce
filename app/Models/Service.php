@@ -72,12 +72,12 @@ class Service extends Model
 
     public function serviceSteps()
     {
-        return $this->hasMany(ServiceStep::class);
+        return $this->hasMany(ServiceProjectStep::class,'service_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status_id', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
     }
 
     public function subCategory()
@@ -189,6 +189,15 @@ class Service extends Model
     public function task_skill()
     {
         return $this->morphMany(TaskSkill::class, 'module_id');
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'service_skills','service_id','skills_id');
+    }
+    public function features()
+    {
+        return $this->morphToMany(Features::class, 'module','module_features');
+
     }
     public function proposal()
     {

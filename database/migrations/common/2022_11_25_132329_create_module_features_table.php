@@ -16,8 +16,8 @@ class CreateModuleFeaturesTable extends Migration
         Schema::create('module_features', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->morphs('module');
-            $table->unsignedBigInteger('feature_id')->index()->nullable();
-            $table->foreign('feature_id')->references('id')->on('features')->onDelete('cascade');
+            $table->unsignedBigInteger('features_id')->index()->nullable();
+            $table->foreign('features_id')->references('id')->on('features')->onDelete('cascade');
         });
     }
 

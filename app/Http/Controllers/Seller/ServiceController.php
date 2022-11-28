@@ -61,16 +61,16 @@ class ServiceController extends Controller
 
         $service = null;
 
-        if (! empty($id) || $id > 0) {
-            $service = Service::with('serviceDetail', 'serviceSteps', 'serviceAttributes','extraService', 'category', 'subCategory')->findOrFail($id);
+        if ($id) {
+            $service = Service::with('serviceSteps', 'serviceAttributes','extraService', 'category', 'subCategory')->findOrFail($id);
 
             $completedOverview = $service->serviceAttributes()->count() > 0 ? 'completed' : '';
             $completedPricing = $service->price > 0 ? 'completed' : '';
             $completedImage = !empty($service->image) ? 'completed' : '';
-            $completedRequirements = !empty($service->serviceDetail->client_requirements) ? 'completed' : '';
-            $completedReview = !empty($service->serviceDetail->max_no_projects) ? 'completed' : '';
+            // $completedRequirements = !empty($service->serviceDetail->client_requirements) ? 'completed' : '';
+            // $completedReview = !empty($service->serviceDetail->max_no_projects) ? 'completed' : '';
+            $completedRequirements= $completedReview='';
         }
-
         return view($this->activeTemplate . 'user.seller.service.create', compact(
             'pageTitle',
             'features',

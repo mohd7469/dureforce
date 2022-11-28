@@ -4,7 +4,7 @@ $extraService = collect([]);
 
 if (!empty($service)) {
     $extraService = App\Models\ExtraService::where('service_id', $service->id)->get();
-    $serviceSteps = App\Models\ServiceStep::where('service_id', $service->id)->get();
+    $serviceSteps = $service->serviceSteps;
 }
 @endphp
 
