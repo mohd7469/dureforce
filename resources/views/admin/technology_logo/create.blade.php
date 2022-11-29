@@ -74,7 +74,7 @@
     {
         $.ajax({
             type:"GET",
-            url:"{{route('user.category')}}",
+            url:"{{route('admin.techlogo.category')}}",
             data: {category : category},
             success:function(data){
                 var html = '';
