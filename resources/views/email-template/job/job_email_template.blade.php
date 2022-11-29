@@ -1,13 +1,6 @@
 @extends('layout_email.main')
 @section('content')
-<div style="box-sizing: border-box; background: #EFF8F8;  border-radius: 8px; padding: 24px 24px 8px 24px;  width: 100%;  display: inline-block;">
-    <p style=" font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-    display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Hello!</p>
-    <p  style="box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-    display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;"> I'd like to invite you to take a look at the Job I've posted. Please submit a proposal if you're available and interested.</p>
-    <p  style=" box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-    display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Martin C.</p>
-</div>
+
 
 <div class="user_email_container">
     <div class="userimg"><img src="/assets/images/emailtemplate/user-c.svg"> C.  has sent you the following offer, </div>
