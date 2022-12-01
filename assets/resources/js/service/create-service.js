@@ -4,6 +4,7 @@ let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
+let add_on_service_row_number=1;
 "use strict";
 $(document).ready(function () {
   loadActiveTab();
@@ -28,6 +29,7 @@ $(document).ready(function () {
 
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
+    add_on_service_row_number+=1;
   });
 
   $(document).on(
@@ -103,12 +105,12 @@ function addSteps() {
   <div class="col-xl-12 col-lg-12 form-group" >
              <label for="">Step Name</label>
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control" required />
+                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control"  />
                 </div>
                 <div>
                 <label for="discription">Step Description</label>
                 <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
-                    required></textarea>
+                    ></textarea>
                 <br />
                 <br />
             </div>
@@ -675,26 +677,36 @@ function validateAddOnRows(element, e) {
       .after('<span class="error text-danger">This field is required.</span>');
   }
 }
-
+function deleteAddOnRow(row_id){
+  $(row_id).remove();
+  add_on_service_row_number-=1;
+}
 function addOnServiceRow() {
-  return `<div class="row add-ons" id="add-on-service-row">
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Starting From Price</label>
-      <input type="number" class="form-control add_on_price" name="add_on_price[]"
-          placeholder="E.g. $100" id="add_on_price" step=".01" >
-  </div>
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Estimated Lead Time</label>
-      <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-              placeholder="Enter Hours">
-      </div>
-</div>  
-  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-  <button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-  </div>
-</div>
-`;
+  return `<div class="row add-ons" id="add-on-row-id-`+add_on_service_row_number+`">
+
+            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
+              <label>Title</label>
+              <input type="text" class="form-control add-on-title" name="service_add_ons[`+add_on_service_row_number+`][title]" id="service_add_ons.`+add_on_service_row_number+`.title" placeholder="Title" id="add_on_price" step="any" >
+            </div>
+
+            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
+                <label>Per Hour Rate</label>
+                <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]" id="service_add_ons.`+add_on_service_row_number+`.rate_per_hour" 
+                    placeholder="per hour rate" id="add_on_price" step="any" >
+            </div>
+          
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
+              <label>Estimated Delivery Time</label>
+              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"  id="service_add_ons.`+add_on_service_row_number+`.estimated_delivery_time" placeholder="Enter Number of Hours">
+              
+          </div>  
+          
+          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#add-on-row-id-`+add_on_service_row_number+`')">
+            <button  type="button" class="btn btn-danger" ><i class="fa fa-trash"></i></button>
+          </div>
+
+        </div>
+      `;
 }
 $(document).on("click", "#removeRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);

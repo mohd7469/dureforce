@@ -35,10 +35,10 @@ if (!empty($service)) {
                     <div class="form-group select2Tag">
                         <label class="d-inline-block">@lang('Deliverables')*</label>
                         <span title="No.of Revision (no.)
-free number field
-source code
-Unit test project
-Deployment ">
+                            free number field
+                            source code
+                            Unit test project
+                            Deployment ">
                         <i class="fa fa-info-circle"></i></span>
                         <select class="form-control select2 deliverables" data-placeholder="Enter Deliverables" name="deliverables[]" id="deliverables"
                             multiple="multiple">
@@ -71,20 +71,20 @@ Deployment ">
                         <div class="row add-ons">
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>Title</label>
-                                <input type="text" name="extra_title[]" placeholder="Title" id="extra_title" class="form-control add-on-title"
+                                <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title"
                                      />
                             </div>
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang('Per Hour Rate')</label>
-                                <input type="number" class="form-control add_on_price" step="any"  name="add_on_price[]"
-                                    placeholder="@lang('Per hour rate')" id="add_on_price" step=".01" >
+                                <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
+                                    placeholder="@lang('Per hour rate')" id="add_on_price"  >
 
 
                             </div>
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang(' Estimated Delivery Time ')</label>
-                                    <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+                                    <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
                                         placeholder="@lang('Enter Hours')" >
                             </div>
                         </div>
