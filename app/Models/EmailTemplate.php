@@ -14,4 +14,7 @@ class EmailTemplate extends Model
         'shortcodes' => 'object'
     ];
 
+    public function attachments(){
+        return $this->morphMany(Attachment::class,'section');
+    }
 }
