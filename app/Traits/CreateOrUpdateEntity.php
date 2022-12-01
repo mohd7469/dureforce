@@ -14,6 +14,7 @@ use App\Models\ServiceStep;
 use App\Models\Software;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareStep;
+use App\Models\Tag;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Razorpay\Api\Entity;
@@ -95,9 +96,15 @@ trait CreateOrUpdateEntity {
                 $model->skills()->detach();
                 $model->tags()->detach();
             }
-
+            
             if($type == Attribute::SERVICE) {
-                // $model->featuresService()->attach($request->features);
+                
+                $tags=collect($request->tag)->map(function ($tag)  {
+                    $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
+                    return $tag->id;
+                });
+
+                $model->tags()->attach($tags);
                 $model->skills()->attach($request->skills);
                 $model->features()->attach($request->features);
 

@@ -7,6 +7,12 @@ let front = $(".front");
 let add_on_service_row_number=1;
 "use strict";
 $(document).ready(function () {
+  var service_id=$('#service_id').val();
+  if (service_id) {
+    var category_id=$('#category').val();
+    var sub_category_id=$('#sub-category').val();
+    fetchSkills(category_id,sub_category_id,false);
+  }
   loadActiveTab();
   loadSelect2();
   baannerForm();
@@ -342,120 +348,16 @@ function overviewFormValidation() {
         position: "topRight",
       });
     }
+    if($("input:checkbox[name='skills[]']:checked").length <= 0){
+      iziToast.error({
+        message: "Atleaset one skill is required",
+        position: "topRight",
+      });
+     }
     var err = false;
 
-    $(".attribute-selector").each(function () {
-      let parent = $(this).parent().next().closest(".attributes");
-      let parentRadio = $(this).parent().next().closest(".attributes-radio");
+   
 
-      if (
-        $(this).find('option[value=""]').prop("selected") &&
-        $(this).val() == ""
-      ) {
-        $(this).after(
-          '<span class="error text-danger">*Please select type</span>'
-        );
-        e.preventDefault();
-        err = true;
-      }
-
-      if (
-        parent.length > 0 &&
-        $(this).val() == "0" &&
-        parent.find(".back").find($("input[type='checkbox'].attrs-back"))
-          .length > 0
-      ) {
-        if (
-          parent
-            .find(".back")
-            .find($("input[type='checkbox'].attrs-back:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parent.length > 0 &&
-        $(this).val() == "1" &&
-        parent.find(".front").find($("input[type='checkbox'].attrs-front"))
-          .length > 0
-      ) {
-        if (
-          parent
-            .find(".front")
-            .find($("input[type='checkbox'].attrs-front:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parentRadio.length > 0 &&
-        $(this).val() == "0" &&
-        parentRadio
-          .find(".back")
-          .find($("input[type='radio'].attrs-radio-back")).length > 0
-      ) {
-        if (
-          parentRadio
-            .find(".back")
-            .find($("input[type='radio'].attrs-radio-back:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parentRadio.length > 0 &&
-        $(this).val() == "1" &&
-        parentRadio
-          .find(".front")
-          .find($("input[type='radio'].attrs-radio-front")).length > 0
-      ) {
-        if (
-          parentRadio
-            .find(".front")
-            .find($("input[type='radio'].attrs-radio-front:checked")).length <=
-          0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-    });
-
-    $(".simple-selector").each(function () {
-      if (
-        $(this).find('option[value=""]').prop("selected") &&
-        $(this).val() == ""
-      ) {
-        $(this).after(
-          '<span class="error text-danger">*Please select type</span>'
-        );
-        e.preventDefault();
-      }
-    });
-
-    if (err === true) {
-      $("#err").after(
-        '<span class="error text-danger">*All Attributes fields are required</span>'
-      );
-    }
   });
 }
 function baannerForm() {
@@ -576,6 +478,13 @@ function reviewForm() {
     }
   });
 }
+function showValidationError(error){
+  iziToast.error({
+    message: error,
+    position: "topRight",
+  });
+}
+
 function pricingFormValidation() {
   $(".user-pricing-form").submit(function (e) {
     var new_delivery = $("#delivery").val();
@@ -587,15 +496,17 @@ function pricingFormValidation() {
       if ($("#deliverables :selected").length < 1) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Maximum 5 deliverables required</span>'
+          '<span class="error text-danger">Atleaset 3 deliverables required</span>'
         );
+        showValidationError('Atleaset 3 deliverables required');
       }
 
-      if ($("#deliverables :selected").length > 5) {
+      if ($("#deliverables :selected").length > 3) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Cannot select more than 5</span>'
+          '<span class="error text-danger">Cannot select more than 3</span>'
         );
+        showValidationError('Cannot select more than 3');
       }
     }
 
@@ -604,12 +515,14 @@ function pricingFormValidation() {
       $("#delivery").after(
         '<span class="error text-danger mt-1">This field is required</span>'
       );
+      showValidationError('estimated delivery time field is required');
     }
     if ($.trim(new_price) < 5) {
       e.preventDefault();
       $("#price").after(
         '<span class="error text-danger mt-1">Minimum rate should be 5$</span>'
       );
+      showValidationError('Minimum rate should be 5$');
     }
 
     $(".add-ons").each(function () {
@@ -630,6 +543,7 @@ function pricingFormValidation() {
         $(this).after(
           '<span class="error text-danger">This field is required</span>'
         );
+        showValidationError('step name field is required');
       }
     });
 
@@ -639,6 +553,7 @@ function pricingFormValidation() {
         $(this).after(
           '<span class="error text-danger">This field is required</span>'
         );
+        showValidationError('step description field is required');
       }
     });
   });
@@ -708,13 +623,13 @@ function addOnServiceRow() {
         </div>
       `;
 }
-$(document).on("click", "#removeRow", function () {
-  let is_confirm = confirm(`Are you sure you want to remove field ?`);
-  if (is_confirm) {
-    $(this).closest("#add-on-service-row").remove();
-  }
-});
 
+$(document).on("click", "#removeRow", function () {
+    let is_confirm = confirm(`Are you sure you want to remove field ?`);
+    if (is_confirm) {
+      $(this).closest("#add-on-service-row").remove();
+    }
+});
 
 function addOnServiceRowcustom() {
   return `<div class="row add-ons" id="add-on-customservice-row">
@@ -736,6 +651,7 @@ function addOnServiceRowcustom() {
 </div>
 `;
 }
+
 $(document).on("click", "#removecustomRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
   if (is_confirm) {

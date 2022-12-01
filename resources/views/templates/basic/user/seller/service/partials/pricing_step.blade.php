@@ -32,7 +32,7 @@ if (!empty($service)) {
                     >
                 </div>
                 <div class=" col-lg-4">
-                    <div class="form-group select2Tag">
+                    <div class="form-group">
                         <label class="d-inline-block">@lang('Deliverables')*</label>
                         <span title="No.of Revision (no.)
                             free number field
@@ -40,16 +40,14 @@ if (!empty($service)) {
                             Unit test project
                             Deployment ">
                         <i class="fa fa-info-circle"></i></span>
-                        <select class="form-control select2 deliverables" data-placeholder="Enter Deliverables" name="deliverables[]" id="deliverables"
-                            multiple="multiple">
-                            {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
-
-                            @if (!empty($service) && !empty($service->_decoded_deliverables()))
-                                @foreach ($service->_decoded_deliverables() as $delivery)
-                                    <option selected="true"> {{ $delivery }}</option>
-                                @endforeach
-                            @endif
-                        </select><span class="del_error"></span>
+                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables">
+                            
+                            @foreach($deliverables as  $item)
+                                <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                            @endforeach
+                        
+                        </select>
+                        <span class="del_error"></span>
                     </div>
                     <br />
                     <br />

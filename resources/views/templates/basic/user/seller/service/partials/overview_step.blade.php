@@ -3,7 +3,13 @@
     <div class="card-body">
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
-                <input type="hidden" value="{{ $service->id ?? '' }}" name="service_id">
+                <input type="hidden" value="{{ $service->id ?? '' }}" name="service_id" id="service_id">
+                @if ($service)
+                    <input type="hidden" value="{{ $service->skills ? implode(',',$service->skills->pluck('id')->toArray()) : '' }}" name="service_skills" id="service_skills_id">
+                @else
+                    <input type="hidden" value="" name="service_skills" id="service_skills_id">
+                @endif
+
                 <div class="col-xl-12 col-lg-12 form-group">
                     <label>@lang('Title')*</label>
                     <input type="text" name="title" id="title_over" maxlength="255" value="{{ old('title', @$service->title) }}"
@@ -20,13 +26,13 @@
                 <div class="col-xl-4 col-lg-4 form-group select2Tag">
                     <label>@lang('Service Tags')*</label>
 
-                    <select data-placeholder="Tag1, Tag2, Tag3" class="select2 tags" id="tags" name="tag[]"
+                    <select data-placeholder="Please Select Tags" class="select2 tags" id="tags" name="tag[]"
                         multiple="multiple" >
                         {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
 
-                        @if (!empty($service->tag))
-                            @foreach ($service->tag as $tag)
-                                <option selected="true" > {{ $tag }}</option>
+                        @if (!empty($service->tags))
+                            @foreach ($service->tags as $tag)
+                                <option selected="true" > {{ $tag->name }}</option>
                             @endforeach
                         @endif
 
@@ -86,9 +92,16 @@
                         </span>
     
                         <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
-                            @foreach($features as  $item)
-                                <option value="{{__($item->id)}}">{{__($item->name)}}</option>
-                            @endforeach
+                            @if (!empty($service))
+                                @foreach ($features as  $item )
+                                    <option value="{{ $item->id }}" @if(in_array($item->id,$service->features->pluck('id')->toArray())) selected @endif>
+                                        {{ __($item->name) }}</option>
+                                @endforeach
+                            @else
+                                @foreach($features as  $item)
+                                    <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                @endforeach
+                            @endif
                             
     
                         </select>

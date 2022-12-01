@@ -103,7 +103,8 @@ class Service extends Model
 
     public function tags()
     {
-        return $this->morphMany(ModuleTag::class, 'module');
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+        
     }
 
     public function logos()
