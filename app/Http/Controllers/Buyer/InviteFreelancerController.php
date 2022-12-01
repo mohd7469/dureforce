@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Notifications\SendNotificationsMail;
 use App\Models\InviteFreelancer;
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class InviteFreelancerController extends Controller
@@ -31,12 +34,22 @@ class InviteFreelancerController extends Controller
         try {
             DB::beginTransaction();
 
-            InviteFreelancer::create([
+           $invitation=  InviteFreelancer::create([
                 "user_id"=>$request['user_id'],
                 "job_id"=>$job_id,
                 "message"=>$request['message'],
             ]);
-            DB::commit();
+//            DB::commit();
+            $job = Job::find($job_id);
+            $user_email = User::find($request['user_id'])->pluck('email')->first();
+
+            $data['invitation'] = $invitation;
+            $data['job'] = $job;
+
+            Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
+dd(true);
+
+
             return response()->json(["success" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {

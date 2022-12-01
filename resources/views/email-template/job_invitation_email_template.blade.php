@@ -1,12 +1,12 @@
 @extends('layout_email.main')
 @section('content')
     <div style="box-sizing: border-box; background: #EFF8F8;  border-radius: 8px; padding: 24px 24px 8px 24px;  width: 100%;  display: inline-block;">
-        <p style=" font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Hello!</p>
+{{--        <p style=" font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
+{{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Hello!</p>--}}
         <p  style="box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;"> I'd like to invite you to take a look at the Job I've posted. Please submit a proposal if you're available and interested.</p>
-        <p  style=" box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Martin C.</p>
+        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">{{$email_data->message}}</p>
+{{--        <p  style=" box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
+{{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Martin C.</p>--}}
     </div>
 <div style="padding:0px 25px">
     <h2 style=" box-sizing: border-box; font-weight: 600; font-size: 16px; line-height: 20px; color: #007F7F; font-family: 'Mulish', sans-serif; margin-top: 27px;" >Usability Testing</h2>
