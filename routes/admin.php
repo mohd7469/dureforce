@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\ServiceAttributeController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -179,6 +180,21 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('banner/category', 'BannerController@category')->name('banner.category');
  
         });
+        //Email template
+        
+        //   Route::middleware('staffaccess:35')->group(function () {
+            //Manage banner
+            Route::get('email/index', 'EmailController@index')->name('email.index');
+            Route::get('email/create', 'EmailController@emailCreate')->name('email.create');
+            // Route::post('banner/store', 'BannerController@store')->name('banner.store');
+            // Route::get('banner/inActive', 'BannerController@inActive')->name('banner.inActive');
+            // Route::get('banner/active', 'BannerController@active')->name('banner.active');
+            // Route::post('banner/inactiveBy', 'BannerController@inactiveBy')->name('banner.inactiveBy');
+            // Route::post('banner/activeBy', 'BannerController@activeBy')->name('banner.activeBy');
+            // Route::get('banner/details/{uuid}', 'BannerController@details')->name('banner.details');
+            // Route::get('banner/category', 'BannerController@category')->name('banner.category');
+ 
+        //  });
         // background technology logo
         Route::middleware('staffaccess:34')->group(function () {
             //Manage technology logo
@@ -193,6 +209,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('techlogo/category', 'TechnologyLogoController@category')->name('techlogo.category');
  
         });
+        
 
         Route::middleware('staffaccess:34')->group(function () {
             // Manage Staff
