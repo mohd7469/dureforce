@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\SubCategory;
 use Carbon\Carbon;
 use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +71,16 @@ class BannerController extends Controller
     	$pageTitle = "Banner Details";
         $banner = Banner::where('id',$id)->withAll()->first();
     	return view('admin.banner.details', compact('pageTitle', 'banner'));
+    }
+
+    public function category(Request $request)
+    {
+        $sub_category = SubCategory::where('category_id', $request->category)->get();
+        if ($sub_category->isEmpty()) {
+            return response()->json(['error' => "Sub category not available under this category"]);
+        } else {
+            return response()->json($sub_category);
+        }
     }
 
     public function inActive()

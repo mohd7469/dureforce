@@ -65,13 +65,13 @@
                             </td>
                             <td data-label="@lang('Action')">
                                 @if($banner->is_active == 1)
-                                    <button class="icon-btn btn--danger ml-1 inactive" id="techlogoinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$banner->id}}">
+                                    <button class="icon-btn btn--danger ml-1 techlogoinactive inactive" id="techlogoinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$banner->id}}">
                                         <i class="las la-times"></i>
                                     </button>
                                 @endif
 
                                 @if($banner->is_active == 0)
-                                    <button class="icon-btn btn--success ml-1 active" id="techlogoactive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$banner->id}}">
+                                    <button class="icon-btn btn--success ml-1 techlogoactive active" id="techlogoactive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$banner->id}}">
                                     <i class="las la-check"></i>
                                     </button>
                                 @endif
@@ -178,13 +178,13 @@
 @push('script')
 <script>
     'use strict';
-    $('#techlogoinactive').on('click', function () {
+    $('.techlogoinactive').on('click', function () {
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
     });
 
-    $('#techlogoactive').on('click', function () {
+    $('.techlogoactive').on('click', function () {
         var modal = $('#activeBy');
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
