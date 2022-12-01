@@ -8,10 +8,13 @@ class EmailTemplate extends Model
 {
     protected $guarded = ['id'];
 
-    protected $table = 'email_sms_templates';
+    protected $table = 'email_templates';
 
     protected $casts = [
         'shortcodes' => 'object'
     ];
 
+    public function attachments(){
+        return $this->morphMany(Attachment::class,'section');
+    }
 }
