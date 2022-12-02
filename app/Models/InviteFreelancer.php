@@ -11,6 +11,8 @@ class InviteFreelancer extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public static $EMAIL_TEMPLATE="job_invitation_email_template";
+
     protected $fillable = [
 
         "uuid",

@@ -204,6 +204,7 @@
 
 @push('style')
     <style>
+        
         .posted-date{
             padding-left: 0px !important;
         }
@@ -341,6 +342,8 @@
             border-radius: 50%;
             position: relative;
         }
+  
+        
         p.username {
             font-family: 'Mulish';
             font-style: normal;
@@ -513,6 +516,10 @@
             right: 0px;
         }
 
+         .userprofile img {
+            height: 55px;
+            width: 55px;
+        }
         @media only screen and (max-width:767px){
             .userlist {
                 padding: 36px 24px 26px 24px;
