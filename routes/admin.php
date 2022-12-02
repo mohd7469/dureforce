@@ -186,13 +186,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             //Manage banner
             Route::get('email/index', 'EmailController@index')->name('email.index');
             Route::get('email/create', 'EmailController@emailCreate')->name('email.create');
-            // Route::post('banner/store', 'BannerController@store')->name('banner.store');
-            // Route::get('banner/inActive', 'BannerController@inActive')->name('banner.inActive');
-            // Route::get('banner/active', 'BannerController@active')->name('banner.active');
-            // Route::post('banner/inactiveBy', 'BannerController@inactiveBy')->name('banner.inactiveBy');
-            // Route::post('banner/activeBy', 'BannerController@activeBy')->name('banner.activeBy');
-            // Route::get('banner/details/{uuid}', 'BannerController@details')->name('banner.details');
-            // Route::get('banner/category', 'BannerController@category')->name('banner.category');
+            Route::post('email/store', 'EmailController@store')->name('email.store');
+            
+            Route::get('email/edit/{id}', 'EmailController@editdetails')->name('email.edit');
+            Route::post('email/update/{id}', 'EmailController@emailupdate')->name('email.update');
+            Route::get('/email/delete/{id}', 'EmailController@delete')->name('email.delete');
+          
  
         //  });
         // background technology logo

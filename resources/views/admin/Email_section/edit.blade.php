@@ -6,18 +6,19 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('admin.email.store')}}" method="POST"
+                    <form action="{{route('admin.email.update',$email->id)}}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
                             {{-- Category --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label>@lang('Type')*</label>
+                                
                                 <select class="form-control" name="type" id="type" >
                                     <option selected="" disabled="">@lang('Select Type')</option>
                                     {{-- @foreach($categories as $category) --}}
-                                        <option value="invitation">Invitation</option>
-                                        <option value="offer">Offer</option>
+                                        <option value="invitation" {{ ($email->type == 'invitation' ?'selected':'' )}}>Invitation</option>
+                                        <option value="offer"{{ ($email->type == 'offer' ?'selected':'' )}}>Offer</option>
                                     {{-- @endforeach --}}
                                 </select>
                             </div>
@@ -25,7 +26,7 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Title')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="title" >
+                                    <input class="form-control" type="text" name="title" value="{{$email->title}}" >
                                 </div>
                             </div>
                         </div>
@@ -43,7 +44,7 @@
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Description')<span class="text-danger">*</span></label>
-                                    <textarea rows="5" class="form-control border-radius-5" name="description"></textarea>
+                                    <textarea rows="5" class="form-control border-radius-5" name="description">{{$email->description}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +52,7 @@
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Footer Title')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="footer_title" >
+                                    <input class="form-control" type="text" name="footer_title" value="{{$email->footer_title}}">
                                 </div>
                             </div>
                         </div>
@@ -59,7 +60,7 @@
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-bold">@lang('Footer Description')<span class="text-danger">*</span></label>
-                                    <textarea rows="5" class="form-control border-radius-5" name="footer_description"></textarea>
+                                    <textarea rows="5" class="form-control border-radius-5" name="footer_description">{{$email->footer_description}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -75,7 +76,7 @@
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn--primary btn-block btn-lg ctsmbtn" style="width: 200px; float: right;">@lang('Save')
+                                    <button type="submit" class="btn btn--primary btn-block btn-lg ctsmbtn" style="width: 200px; float: right;">@lang('Update')
                                     </button>
                                 </div>
                             </div>

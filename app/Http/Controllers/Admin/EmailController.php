@@ -4,20 +4,99 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Rules\FileTypeValidate;
+use Illuminate\Support\Facades\Auth;
+use App\Models\EmailTemplate;
 
 class EmailController extends Controller
 {
     public function index()
     {
     	$pageTitle = "Manage All Email";
-    	$emptyMessage = "No data found";
-    	//$banners = Banner::where('document_type', 'Background')->withAll()->latest()->paginate(getPaginate());
-    	return view('admin.Email_section.index', compact('pageTitle', 'emptyMessage'));
+    	//$emptyMessage = "No data found";
+        $email_test = EmailTemplate::latest()->paginate(getPaginate());
+         
+    	return view('admin.email_section.index', compact('pageTitle','email_test'));
     }
     public function emailCreate()
     {
     	$pageTitle = "Create Email";
         // $categories = Category::select('id', 'name')->get();
-    	return view('admin.Email_section.create', compact('pageTitle'));
+    	return view('admin.email_section.create', compact('pageTitle'));
+    }
+
+    public function store(Request $request)
+    {
+        //dd($request->all());
+        $this->validate($request, [
+            'type' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'footer_title' => 'required',
+            'footer_description' => 'required',
+            
+            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
+        ]);
+        $email  = new EmailTemplate();
+        // if ($request->hasFile('url')) {
+        //     try {
+        //         $path = imagePath()['attachments']['path'];
+        //         $file = $request->url;
+        //         $file_original_name = $file->getClientOriginalName();
+        //         $filename = uploadAttachments($file, $path);
+        //         $file_extension = getFileExtension($file);
+        //         $url = $path . '/' . $filename;
+        //     } catch (\Exception $exp) {
+        //         $notify[] = ['error', 'Image could not be uploaded.'];
+        //         return back()->withNotify($notify);
+        //     }
+        // }
+        $email->type = $request->type;
+        $email->title = $request->title;
+        $email->description = $request->description;
+        $email->footer_title = $request->footer_title;
+        $email->footer_title = $request->footer_title;
+        $email->footer_description = $request->footer_description;
+        // $banner->uploaded_name  = $file_original_name;
+        //$email->url = $request->url;
+        // $banner->type = $file_extension;
+        $email->save();
+        $notify[] = ['success', 'Your Email Detail has been Created.'];
+        return redirect()->route('admin.email.index')->withNotify($notify);
+    }
+    public function editdetails($id){
+        $email = EmailTemplate::findOrFail($id);
+        $pageTitle = "Manage All Email";
+        $emptyMessage = 'No shortcode available';
+        return view('admin.email_section.edit', compact('pageTitle', 'email','emptyMessage'));
+    }
+    public function delete($id)
+    {
+        $email = EmailTemplate::find($id);
+       
+        $email->delete();
+        $notify[] = ['success', 'Email Detail deleted successfully'];
+        return back()->withNotify($notify);
+    }
+    public function emailupdate(Request $request, $id){
+        
+        
+        $email = EmailTemplate::findOrFail($id);
+      
+        $email->type = $request->type;
+        $email->title = $request->title;
+        $email->description = $request->description;
+        $email->footer_title = $request->footer_title;
+        $email->footer_title = $request->footer_title;
+        $email->footer_description = $request->footer_description;
+        // $banner->uploaded_name  = $file_original_name;
+        //$email->url = $request->url;
+        // $banner->type = $file_extension;
+        $email->save();
+        
+
+        $notify[] = ['success', 'email detail has been updated'];
+        return redirect()->route('admin.email.index')->withNotify($notify);
     }
 }

@@ -1,5 +1,17 @@
 @extends('admin.layouts.app')
 @section('panel')
+
+<style>
+.icon-btn i {
+    font-size: 22px;
+}
+.editbtn-c {
+    width: 35px;
+    height: 35px;
+    /* background: red; */
+    display: inline-block;
+}
+</style>
 <div class="row">
     <div class="col-lg-12">
         <a href="{{ route('admin.email.create') }}" class="btn btn-primary btn-sm float-right">Create Email</a>
@@ -14,76 +26,72 @@
                     <table class="table table--light style--two">
                         <thead>
                         <tr>
-                            <th>@lang('Subject')</th>
-                            <th>@lang('Category / SubCategory')</th>
-                            <th>@lang('Backgroung Banner')</th>
-                            <th>@lang('Status')</th>
-                            <th>@lang('Last Update')</th>
+                            <th>@lang('Type')</th>
+                            <th>@lang('Title')</th>
+                            <th>@lang('Description')</th>
+                            <th>@lang('Footer Title')</th>
+                            <th>@lang('Footer Description')</th>
+                            <th>@lang('Email image')</th>
                             <th>@lang('Action')</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {{-- @forelse($banners as $banner) --}}
+                            {{-- {{dd($emails)}} --}}
+                            
+                        @foreach($email_test as $email)
                         <tr>
-                            {{-- <td data-label="@lang('Title')">
+                            <td data-label="@lang('Type')">
                                 <div class="user">
-                                    <span class="name">{{__(str_limit($banner->subject, 20))}}</span>
+                                    <span class="name">{{($email->type)}}</span>
                                 </div>
-                            </td> --}}
-                            {{-- <td data-label="@lang('Category / SubCategory')">
-                                <span class="font-weight-bold">{{__($banner->category->name)}}</span>
-                                <br>
-                                @if($banner->sub_category_id)
-                                    <span>{{__($banner->subCategory->name)}}</span>
-                                @else
-                                    <span>@lang('N/A')</span>
-                                @endif
-                            </td> --}}
-                            {{-- <td data-label="@lang('Image')">
-                                <a class="bannerModal" id="image_url" data-url="{{$banner->url}}" >
-                                    <img src="{{ isset($banner->url) ? ($banner->url) : asset('assets\images\default.png')}}" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" >
-                                </a>
-                            </td> --}}
-                            {{-- <td data-label="@lang('Status')">
-                                @if($banner->is_active == 1)
-                                    <span class="font-weight-normal badge--success">@lang('Active')</span>
-                                @elseif($banner->is_active == 0)
-                                    <span class="font-weight-normal badge--danger">@lang('InActice')</span>
-                                @endif
-                            </td> --}}
-                            {{-- <td data-label="@lang('Last Update')">
-                                @if(isset($banner->created_at))
-                                    <span>{{systemDateTimeFormat($banner->created_at)}}</span>
-                                    <br>
-                                    {{diffforhumans($banner->created_at)}}
-                                    @else
-                                    <span>{{showDateTime($banner->updated_at)}}</span>
-                                    <br>
-                                    {{diffforhumans($banner->updated_at)}}
-                                 @endif
-                                
-                            </td> --}}
-                            {{-- <td data-label="@lang('Action')">
-                                @if($banner->is_active == 1)
-                                    <button class="icon-btn btn--danger ml-1 bannerinactive inactive" id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$banner->id}}">
-                                        <i class="las la-times"></i>
-                                    </button>
-                                @endif
-
-                                @if($banner->is_active == 0)
-                                    <button class="icon-btn btn--success ml-1 banneractive active" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$banner->id}}">
-                                    <i class="las la-check"></i>
-                                    </button>
-                                @endif
+                            </td>
+                            <td data-label="@lang('Title')">
+                                <div class="user">
+                                    <span class="name">{{($email->title)}}</span>
+                                </div>
+                            </td>
+                            <td data-label="@lang('Description')">
+                                <div class="user">
+                                    <span class="name">{{($email->description)}}</span>
+                                </div>
+                            </td>
+                            <td data-label="@lang('Footer Title')">
+                                <div class="user">
+                                    <span class="name">{{($email->footer_title)}}</span>
+                                </div>
+                            </td>
+                            <td data-label="@lang('Footer Description')">
+                                <div class="user">
+                                    <span class="name">{{($email->footer_description)}}</span>
+                                </div>
+                            </td>
+                            <td data-label="@lang('Footer Description')">
+                                <div class="user">
+                                    <span class="name">img</span>
+                                </div>
+                            </td>
+                            
+                            <td data-label="@lang('Action')">
+                               
+                                    <a  href="{{route('admin.email.edit', $email->id)}}" class="icon-btn btn--success ml-1 bannerinactive inactive editbtn-c" id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="">
+                                        <i class="las la-edit"></i>
+                                    </a>
+                               
+                                    
+                               
+                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 banneractive active editbtn-c" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="">
+                                        <i class="las la-trash"></i>
+                                    </a>
+                              
              
-                                <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                            </td> --}}
+                               
+                            </td>
                         </tr>
                         {{-- @empty --}}
-                            <tr>
+                            {{-- <tr>
                                 <td class="text-muted text-center" colspan="100%">{{ __($emptyMessage) }}</td>
-                            </tr>
-                        {{-- @endforelse --}}
+                            </tr> --}}
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -121,57 +129,9 @@
     </div>
 </div>
 
-<div class="modal fade" id="inactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('inactive Confirmation')</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            
-            <form action="{{ route('admin.banner.inactiveBy') }}" method="POST">
-                @csrf
-                @method('POST')
-                <input type="hidden" name="id">
-                <div class="modal-body">
-                    <p>@lang('Are you sure to inactive this Banner post?')</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="activeBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('active Confirmation')</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-            </div>
-            
-            <form action="{{ route('admin.banner.activeBy') }}" method="POST">
-                @csrf
-                @method('POST')
-                <input type="hidden" name="id">
-                <div class="modal-body">
-                    <p>@lang('Are you sure to active this Banner post?')</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
-                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
+
 @endsection
 
 
@@ -201,6 +161,7 @@
             }
             $('#bannerModal').modal('show');
     });
+
 
 </script>
 @endpush
