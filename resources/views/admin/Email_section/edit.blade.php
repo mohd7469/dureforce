@@ -68,7 +68,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-control-label  font-weight-bold">@lang('Upload Image EmailTemplate') <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="file" name="url" style="height:50px;">
+                                    <input class="form-control" type="file" name="url[]" style="height:50px;">
                                 </div>
                             </div>
                         </div>

@@ -62,6 +62,7 @@ class EmailController extends Controller
         //$email->url = $request->url;
         // $banner->type = $file_extension;
         $email->save();
+
         if ($request->hasFile('url')) {
             
             try {
@@ -130,6 +131,48 @@ class EmailController extends Controller
         //$email->url = $request->url;
         // $banner->type = $file_extension;
         $email->save();
+
+
+        if ($request->hasFile('url')) {
+
+            
+            try {
+                    foreach ($request->file('url') as $file) {
+                        
+                        $path = imagePath()['attachments']['path'];
+                        
+                
+                        $filename = uploadAttachments($file, $path);
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        $uploaded_name = $file->getClientOriginalName();
+                        $email->attachments()->update(['url' => $url]);
+    
+                        // $email->attachments()->create([
+                           
+    
+                        //     'name' => $filename,
+                        //     'uploaded_name' => $uploaded_name,
+                        //     'url'           => $url,
+                        //     'type' =>$file_extension,
+                        //     'is_published' =>1
+    
+                        // ]);
+                        
+    
+                     }
+                     
+                }
+               
+            catch (\Exception $exp) {
+                $notify[] = ['error', 'Document could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+            
+                              
+           }
+    
+
         
 
         $notify[] = ['success', 'email detail has been updated'];
