@@ -148,16 +148,16 @@ class EmailController extends Controller
                         $uploaded_name = $file->getClientOriginalName();
                         $email->attachments()->update(['url' => $url]);
     
-                        // $email->attachments()->create([
+                        $email->attachments()->update([
                            
     
-                        //     'name' => $filename,
-                        //     'uploaded_name' => $uploaded_name,
-                        //     'url'           => $url,
-                        //     'type' =>$file_extension,
-                        //     'is_published' =>1
+                            'name' => $filename,
+                            'uploaded_name' => $uploaded_name,
+                            'url'           => $url,
+                            'type' =>$file_extension,
+                            'is_published' =>1
     
-                        // ]);
+                        ]);
                         
     
                      }

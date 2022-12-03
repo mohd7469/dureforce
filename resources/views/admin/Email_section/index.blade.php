@@ -65,10 +65,15 @@
                                     <span class="name">{{($email->footer_description)}}</span>
                                 </div>
                             </td>
-                            <td data-label="@lang('Footer Description')">
-                                <div class="user">
-                                    <span class="name">img</span>
-                                </div>
+                          {{-- @dd($email->attachments->name) --}}
+                            <td data-label="@lang('Image')">
+                                @foreach ($email->attachments as $object)
+                                
+                                <a class="bannerModal" id="image_url" data-url="{{$object->url}}" >
+                                    <img src="{{ isset($object->url) ? ($object->url) : asset('assets\images\default.png')}}" alt="@lang('Email Image')" class="b-radius--10" height="50" width="50" >
+                                </a>
+                                @endforeach
+                                
                             </td>
                             
                             <td data-label="@lang('Action')">
