@@ -121,4 +121,107 @@
         let route = "{{ route('user.category') }}";
     </script>
     <script src="{{ asset('/assets/resources/js/service/create-service.js') }}"></script>
+    <script>
+
+        function fetchSubCategories(category)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('user.category')}}",
+                data: {category : category},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>${data.error}</option>`;
+                        $(".mySubCatgry").html(html);
+                    }
+                    else{
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                        $.each(data, function(index, item) {
+                            html += `<option value="${item.id}">${item.name}</option>`;
+                            $(".mySubCatgry").html(html);
+                        });
+                    }
+                }
+            });  
+        }
+
+        function fetchSkills(category,sub_category=''){
+            
+            $.ajax({
+                type:"GET",
+                url:"{{route('job.skills')}}",
+                data: {category_id : category,sub_category_id:sub_category},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                    
+                    }
+                    else{
+                        loadSkills(data);
+                        console.log(data);
+                    
+                    }
+                }
+            });  
+
+        }
+
+
+        const genRand = (len) => {
+        return Math.random().toString(36).substring(2,len+2);
+        }
+
+                                    
+        function loadSkills(data)
+        {
+            $('#skills_heading').show();
+            // if(jQuery.isEmptyObject(data))
+                $('#form_attributes').empty();
+            for (var main_category in data) { //heading main
+                
+                var all_sub_categories=data[main_category];
+                var main_category_id=genRand(5);
+            
+                $('#form_attributes').append(' <div class="row pt-1"  id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+                for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+                    var skills=all_sub_categories[sub_category_enum];
+                    var sub_category_id=genRand(5);
+
+                    $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pb-3 ml-2"><div class="card custom-card  pt-3" style="padding-left: 23px;background-color:#F8FAFA"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                    for (var skill_index in skills) {
+                        
+                        var skill_id=skills[skill_index].id;
+                        var skill_name=skills[skill_index].name;
+                        $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+                    }
+                    
+                }
+                $('#'+main_category_id).append('<div/></div>');
+            }
+            $('#form_attributes').append('</div>');
+
+
+        }
+
+        $('#sub-category').on('change', function(){
+
+            var sub_category = $(this).val();
+            $('input[name="skills"]').prop('checked', $(this).is(':checked'));
+            var category = $('#category').find(":selected").val();
+            fetchSkills(category,sub_category);
+
+        });
+
+        $('#category').on('change', function(){
+            var category = $(this).val();
+            fetchSkills(category);
+        });
+
+    </script>
 @endpush

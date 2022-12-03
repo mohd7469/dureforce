@@ -15,6 +15,7 @@ use App\Models\Rank;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Job;
+use App\Models\Banner;
 use App\Models\Withdrawal;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -79,6 +80,10 @@ class AppServiceProvider extends ServiceProvider
                 'jobApproved'    => Job::where('status_id', 2)->count(),
                 'jobClosed'    => Job::where('status_id', 3)->count(),
                 'jobCanceled'    => Job::where('status_id', 10)->count(),
+                'bannerActive'    => Banner::where('document_type', 'Background')->where('is_active', 1)->count(),
+                'bannerInactive'    => Banner::where('document_type', 'Background')->where('is_active', 0)->count(),
+                'technologyLogoActive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->count(),
+                'technologyLogoInactive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
 
             ]);
         });

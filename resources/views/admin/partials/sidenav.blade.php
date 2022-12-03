@@ -780,6 +780,154 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
 
                 <li class="sidebar__menu-header">@lang('Settings')</li>
 
+                <!-- background Banner -->
+                @if (in_array('32', $staffAccess))
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Background Banner')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                            <ul>
+                                <!-- <li class="sidebar-menu-item {{ menuActive('admin.banner.create') }} ">
+                                    <a href="{{ route('admin.banner.create') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Create Banner')</span>
+                                    </a>
+                                </li> -->
+                                <li class="sidebar-menu-item {{ menuActive('admin.banner.index') }} ">
+                                    <a href="{{ route('admin.banner.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Banner')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.banner.active']) }} ">
+                                    <a href="{{ route('admin.banner.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Banner')</span>
+                                        @if ($bannerActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $bannerActive }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.banner.inActive']) }} ">
+                                    <a href="{{ route('admin.banner.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Banner')</span>
+                                        @if ($bannerInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $bannerInactive }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                <!-- Email template -->
+                <li class="sidebar__menu-header">@lang('Email Template')</li>
+
+               
+                {{-- @if (in_array('34', $staffAccess)) --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Email image settings')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                            <ul>
+                                <!-- <li class="sidebar-menu-item {{ menuActive('admin.email.create') }} ">
+                                    <a href="{{ route('admin.email.create') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Create Email Detail')</span>
+                                    </a>
+                                </li> -->
+                                <li class="sidebar-menu-item {{ menuActive('admin.email.index') }} ">
+                                    <a href="{{ route('admin.email.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Email Details')</span>
+                                    </a>
+                                </li>
+                                {{-- <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.banner.active']) }} ">
+                                    <a href="{{ route('admin.banner.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Banner')</span>
+                                        @if ($bannerActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $bannerActive }}</span>
+                                        @endif
+                                    </a>
+                                </li> --}}
+                                {{-- <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.banner.inActive']) }} ">
+                                    <a href="{{ route('admin.banner.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Banner')</span>
+                                        @if ($bannerInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $bannerInactive }}</span>
+                                        @endif
+                                    </a>
+                                </li> --}}
+                            </ul>
+                        </div>
+                    </li>
+                {{-- @endif --}}
+                <!-- End email template -->
+                
+                <!-- Technology logo -->
+                @if (in_array('33', $staffAccess))
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.techlogo*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Technology Logo')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.techlogo*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.techlogo.index') }} ">
+                                    <a href="{{ route('admin.techlogo.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Logo')</span>
+                                    </a>
+                                </li>
+                                <!-- <li class="sidebar-menu-item {{ menuActive('admin.techlogo.create') }} ">
+                                    <a href="{{ route('admin.techlogo.create') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Create Logo')</span>
+                                    </a>
+                                </li> -->
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.techlogo.active']) }} ">
+                                    <a href="{{ route('admin.techlogo.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Logo')</span>
+                                        @if ($technologyLogoActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $technologyLogoActive }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.techlogo.inActive']) }} ">
+                                    <a href="{{ route('admin.techlogo.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Logo')</span>
+                                        @if ($technologyLogoInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $technologyLogoInactive }}</span>
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+                <!-- End Technology logo -->
+
                 @if (in_array('19', $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.index') }}">
                         <a href="{{ route('admin.setting.index') }}" class="nav-link">
@@ -941,8 +1089,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </div>
                     </li>
                 @endif
-
-
+                
                 <li class="sidebar__menu-header">@lang('Extra')</li>
 
                 @if (in_array('29', $staffAccess))

@@ -23,6 +23,7 @@ class Tag extends Model
     public const TAG_TYPE_BLOG = 3;
     protected $keyType = 'integer';
 
+    protected $table="tags";
     /**
      * @var array
      */

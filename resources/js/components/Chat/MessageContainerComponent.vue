@@ -3,21 +3,26 @@
     <div class="col-md-8 remove-space">
         
         <div class="card-header ">
-            <div class="row align-items-center align-self-center">
-                <div class="col-md-3">
+            <div class="row d-flex justify-content-between">
+                
+                <div class="mw-100">
                     <span class="float-sm-left header-title">
                         <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
-                        <small v-if="active_user.send_to_user.created_at">{{formattedDate(active_user.send_to_user.created_at)}}</small> 
-                        <small class=" float-left dropdown icon icon_position" >
-                            <i class=" las la-chevron-circle-down fa-lg" data-bs-toggle="dropdown" aria-expanded="false"></i>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" >View Proposal</a></li>
-                                <li><a class="dropdown-item" href="#" >View Job</a></li>
+                        <small v-if="active_user.send_to_user.created_at">{{formattedDate(active_user.send_to_user.created_at)}}
+                        </small> 
 
-                            </ul>
-                        </small>
+                        
                     </span>
+                    <small class="dropdown icon icon_position" >
+                        <i class=" las la-chevron-circle-down fa-lg" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" >View Proposal</a></li>
+                            <li><a class="dropdown-item" href="#" >View Job</a></li>
+                        </ul>
+                    </small>
                 </div>
+               
+                
               
             </div>
             
@@ -197,7 +202,16 @@
 
 
 <style scoped>
-
+.icon {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: initial !important;
+    right: 2px;
+    top: -15px;
+}
 .icon_position{
     margin-top: 12px
     ;
