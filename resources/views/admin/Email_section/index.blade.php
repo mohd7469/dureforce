@@ -77,9 +77,9 @@
                                         <i class="las la-edit"></i>
                                     </a>
                                
-                                    
+                                    {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a> --}}
                                
-                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 banneractive active editbtn-c" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="">
+                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 banneractive active editbtn-c delete" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a>
                               
@@ -139,6 +139,19 @@
 @push('script')
 <script>
     'use strict';
+    var deleteLinks = document.querySelectorAll('.delete');
+
+for (var i = 0; i < deleteLinks.length; i++) {
+    deleteLinks[i].addEventListener('click', function(event) {
+        event.preventDefault();
+
+        var choice = confirm(this.getAttribute('data-confirm'));
+
+        if (choice) {
+            window.location.href = this.getAttribute('href');
+        }
+    });
+}
     $('.bannerinactive').on('click', function () {
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
