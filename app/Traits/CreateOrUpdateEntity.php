@@ -7,9 +7,11 @@ use App\Models\Attribute;
 use App\Models\EntityLogo;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
+use App\Models\ModuleBanner;
 use App\Models\OptionalImage;
 use App\Models\Service;
 use App\Models\ServiceAttribute;
+use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
 use App\Models\Software;
 use App\Models\SoftwareAttribute;
@@ -125,7 +127,8 @@ trait CreateOrUpdateEntity {
         return true;
     }
 
-    public function savePricing($request, $model, $type = Attribute::SERVICE) : bool
+
+    public function savePricingBackup($request, $model, $type = Attribute::SERVICE) : bool
     {
 
         DB::transaction(function () use ($request, $model, $type) {
@@ -211,86 +214,128 @@ trait CreateOrUpdateEntity {
         return true;
     }
 
-
-    public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
-    {   
-        $imagePath=imagePath();
-        $path =$imagePath [$imageStorePath]['path'];
-        $size = $imagePath[$imageStorePath]['size'];
-        $filename = '';
-        $filenameLeadImage = '';
-
-        // @todo fix this 
-        if(! empty($request->type)) {
-            $file = $request->selected_image == "1" ? "dure_banner_2.jpeg" : "dure_banner_1.jpeg";
-            try {
-                $filename = $file;
-            } catch (\Exception $exp) {
-                return false;
-            }
-        }
-
-        
-        if ($request->hasFile('image')) {
-            $file = $request->image;
-            try {
-                $filename = uploadImage($file, $path, $size);
-            } catch (\Exception $exp) {
-              error($exp);
-              return false;
-            }
-        }
-
-        if($request->hasFile('lead_image')) {
-            $file = $request->lead_image;
-            try {
-                $filenameLeadImage = uploadImage($file, $path, $size);
-            } catch (\Exception $e) {
-                error($e);
-                return false;
-            }
-        }
-
-        DB::transaction(function () use ($request, $filename, $model, $optionalImageStorePath, $type, $filenameLeadImage) {
-  
-
+    public function savePricing($request, $model, $type = Attribute::SERVICE) : bool
+    {
+        DB::transaction(function () use ($request, $model, $type) {
+            
             if($type == Attribute::SERVICE) {
                 $model->update([
-                    'banner_detail' => !empty($request->type) ? $request->banner_detail : '',
-                    'banner_heading' => !empty($request->type)? $request->banner_heading : '',
-                    'lead_image'     => $filenameLeadImage ?: $model->lead_image,
-                    'status'         => Service::PENDING,
-                    'technology_logos' => decodeOrEncodeFields($request->technology_logos, false),
-                    'image' => $filename ?: $model->image
+                    'rate_per_hour'         => $request->price,
+                    'estimated_delivery_time' => $request->delivery_time
                 ]);
-
-                $logos = [];
-                $model->logos()->delete();
-                collect($request->logo_id)->map(function($item) use(&$logos) {
-                    $logos[] = new EntityLogo([
-                        'type'    => 'SERVICE',
-                        'logo_id' => $item
-                    ]);
-                });
-                $model->logos()->saveMany($logos);
-
             } else {
                 $model->update([
-                    'banner_detail' => !empty($request->type) ? $request->banner_detail : '',
-                    'banner_heading' => !empty($request->type) ? $request->banner_heading : '',
-                    'lead_image'     => $filenameLeadImage ?: $model->lead_image,
-                    'image' => $filename ?: $model->image,
-                    'status'         => Service::PENDING,
-                    'technology_logos' => decodeOrEncodeFields($request->technology_logos, false),
-                    'demo_url' => $request->demo_url,
+                    'amount'         => $request->amount,
+                    'status'        => Service::PENDING,
+                    'deliverables'  => !empty($request->deliverables) ? decodeOrEncodeFields($request->deliverables, false) : null,
+                    'delivery_time' => $request->delivery_time
                 ]);
             }
-             
-            if ($request->optional_image) {
-                $optionalImage = array_filter($request->optional_image);
-                $this->optionalImageStore($request, $optionalImage, $model->id, $optionalImageStorePath);
+
+            if($type == Attribute::SERVICE) {
+              $model->serviceSteps()->delete();
+              $model->addOns()->delete();
+              $model->deliverable()->sync($request->deliverables);
+
+            } else {
+              $model->softwareSteps()->delete();
+              $model->extraSoftware()->delete();
+
             }
+
+            if (!empty($request->steps)) {
+                $steps = [];
+                foreach ($request->get('steps') as $key => $value) {
+                    if($type == Attribute::SERVICE) {
+                        $steps[] = new ServiceProjectStep([
+                            'name' => $value,
+                            'description' => $request->get('description')[$key]
+                        ]);
+                    } else {
+                        $steps[] = new SoftwareStep([
+                            'name' => $value,
+                            'description' => $request->get('description')[$key]
+                        ]);
+                    }
+                }
+                if($type == Attribute::SERVICE) {
+                    $model->serviceSteps()->saveMany($steps);
+                } else {
+                    $model->softwareSteps()->saveMany($steps);
+                }
+            }
+
+            if (!empty($request->service_add_ons)) {
+                $model->addOns()->createMany($request->service_add_ons);
+            }
+
         });
+        return true;
+    }
+
+    public function uploadBanner($model,$file,$banner_type){
+        $banner=null;
+        $path = imagePath()['attachments']['path'];
+
+        $model->banner()->delete();
+        $filename = uploadAttachments($file, $path);
+        $file_extension = getFileExtension($file);
+        $url = $path . '/' . $filename;
+        $uploaded_name = $file->getClientOriginalName();
+        $banner=$model->banner()->create([
+            'banner_type' => $banner_type,
+            'name' => $filename,
+            'uploaded_name' => $uploaded_name,
+            'url'           => $url,
+            'type' =>$file_extension,    
+        ]);
+        return $banner;
+        
+    }
+    
+    public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
+    {   
+        if(($request->type)) {
+            try {
+
+                if($request->type == ModuleBanner::$Static){
+                    if($request->hasFile('image')){
+                        $model->banner()->delete();
+                        $banner=$this->uploadBanner($model,$request->image,$request->type);
+                        $banner->save();
+
+                    }
+                }
+                elseif($request->type == ModuleBanner::$Dynamic)
+                {
+                    if($request->hasFile('dynamic_banner_image')){
+                        $model->banner()->delete();
+                        $banner=$this->uploadBanner($model,$request->dynamic_banner_image,$request->type);
+                        $banner->banner_background_id   = $request->banner_background_id;
+                        $banner->banner_heading  =  $request->banner_heading;
+                        $banner->banner_introduction = $request->banner_introduction;
+                        $banner->save();
+
+                    }
+                    elseif($model->banner){
+                        $model->banner()->update([
+                            'banner_background_id' => $request->banner_background_id,
+                            'banner_heading'  => $request->banner_heading,
+                            'banner_introduction' => $request->banner_introduction
+                        ]);
+                    }
+                   
+                }
+                else
+                {
+                    // $model->banner->video_url='';
+                }
+
+            } catch (\Exception $exp) {
+                dd($exp->getMessage());
+                return false;
+            }
+        }
 
         return true;
     }

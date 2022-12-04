@@ -14,7 +14,7 @@ class ServiceObserver
     {   
 
         $service->user_id = auth()->id();    
-        $service->status_id = Service::STATUSES['PENDING'];
+        $service->status_id = Service::STATUSES['DRAFT'];
         $service->rate_per_hour  = $service->rate_per_hour ?: 0;
     }
 

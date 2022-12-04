@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
+class ModuleBanner extends Model
+{
+    use HasFactory;
+
+    protected $guarded = ['id'];
+    protected $table = "module_banners";
+
+    public static $Static  = 'Static'  ;
+    public static $Dynamic = 'Dynamic' ;
+    public static $Video   = 'Video'   ;
+    
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+        });
+
+    }
+    public function module(){
+
+    }
+}

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModuleFeaturesTable extends Migration
+class CreateBannerTechnologyLogoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateModuleFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('module_features', function (Blueprint $table) {
+        Schema::create('banner_logos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->morphs('module');
+            $table->unsignedBigInteger('banner_background_id')->index()->nullable();
             $table->timestamps();
-            $table->unsignedBigInteger('features_id')->index()->nullable();
-            $table->foreign('features_id')->references('id')->on('features')->onDelete('cascade');
+            $table->foreign('banner_background_id')->references('id')->on('banner_backgrounds')->onDelete('cascade');
         });
     }
 
@@ -29,6 +30,6 @@ class CreateModuleFeaturesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_features');
+        Schema::dropIfExists('banner_logos');
     }
 }

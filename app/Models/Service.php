@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\ServiceObserver;
 use App\Observers\TagsObserver;
+use Database\Seeders\ModuleSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -77,7 +78,7 @@ class Service extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subCategory()
@@ -85,9 +86,14 @@ class Service extends Model
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
 
-    public function extraService()
+    public function deliverable()
     {
-        return $this->hasMany(ExtraService::class, 'service_id');
+        return $this->belongsToMany(Deliverable::class, 'service_deliverables');
+    }
+
+    public function addOns()
+    {
+        return $this->hasMany(AddOnService::class, 'service_id');
     }
 
     public function optionalImage()
@@ -95,7 +101,11 @@ class Service extends Model
         return $this->hasMany(OptionalImage::class, 'service_id');
     }
 
+    public function banner()
+    {
+        return $this->morphOne(ModuleBanner::class,'module');
 
+    }
     public function reviewCount()
     {
         return $this->hasMany(ReviewRating::class, 'service_id');

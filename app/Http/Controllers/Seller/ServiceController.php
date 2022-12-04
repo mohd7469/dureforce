@@ -62,7 +62,7 @@ class ServiceController extends Controller
         $service = null;
 
         if ($id) {
-            $service = Service::with('serviceSteps', 'serviceAttributes','extraService', 'category', 'subCategory')->findOrFail($id);
+            $service = Service::with('serviceSteps', 'serviceAttributes','addOns', 'category', 'subCategory')->findOrFail($id);
 
             $completedOverview = $service->serviceAttributes()->count() > 0 ? 'completed' : '';
             $completedPricing = $service->price > 0 ? 'completed' : '';
@@ -130,6 +130,11 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($serviceId);
 
+        if(!$service->rate_per_hour) {
+            $notify[] = ['error', 'Please complete the service pricing first.'];
+            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
+        }
+        
         $result = $this->saveBanner($request, $service, Attribute::SERVICE, 'service', 'optionalService');
 
         if(!$result) {
@@ -137,10 +142,7 @@ class ServiceController extends Controller
             return redirect()->back()->withNotify($notify);
         }
 
-        if($service->price == 0) {
-            $notify[] = ['error', 'Please complete the service pricing first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
-        }
+        
 
         $notify[] = ['success', 'Service Banner Saved Successfully.'];
         return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-4'])->withNotify($notify);

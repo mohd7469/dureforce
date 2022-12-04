@@ -4,10 +4,12 @@ let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
-let add_on_service_row_number=1;
+let add_on_service_row_number='';
+
 "use strict";
 $(document).ready(function () {
   var service_id=$('#service_id').val();
+  add_on_service_row_number=parseInt($('#number_of_add_on_services').val());
   if (service_id) {
     var category_id=$('#category').val();
     var sub_category_id=$('#sub-category').val();
@@ -406,26 +408,26 @@ function baannerForm() {
           position: "topRight",
         });
       }
-      if ($('input:radio[name="selected_image"]:checked').length < 1) {
+      if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
         e.preventDefault();
         $("#banner_err").after(
           '<span class="error text-danger">This field is required</span>'
         );
         iziToast.error({
-          message: "Select Image is required",
+          message: "Background Image is required",
           position: "topRight",
         });
       }
 
       if($('input:checkbox[name="logo_id[]"]:checked').length <= 0) {
-        e.preventDefault();
-        $('.logo-div').insertAfter(
-        '<span class="error text-danger">Minimum 1 logos can be selected</span>'
-        )
-        iziToast.error({
-          message: "Minimum 1 logos can be selected",
-          position: "topRight",
-        });
+       // e.preventDefault();
+        // $('.logo-div').insertAfter(
+        // '<span class="error text-danger">Minimum 1 logos can be selected</span>'
+        // )
+        // iziToast.error({
+        //   message: "Minimum 1 logos can be selected",
+        //   position: "topRight",
+        // });
       }
       if($('input:checkbox[name="logo_id[]"]:checked').length > 3) {
           e.preventDefault();
@@ -526,15 +528,9 @@ function pricingFormValidation() {
     }
 
     $(".add-ons").each(function () {
-      if ($(this).find(".add-on-title").val() != "") {
+      
         validateAddOnRows($(this), e);
-      }
-      if ($(this).find(".add_on_price").val() != "") {
-        validateAddOnRows($(this), e);
-      }
-      if ($(this).find(".add-on-delivery").val() != "") {
-        validateAddOnRows($(this), e);
-      }
+      
     });
 
     $(".step").each(function () {
@@ -601,18 +597,18 @@ function addOnServiceRow() {
 
             <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
               <label>Title</label>
-              <input type="text" class="form-control add-on-title" name="service_add_ons[`+add_on_service_row_number+`][title]" id="service_add_ons.`+add_on_service_row_number+`.title" placeholder="Title" id="add_on_price" step="any" >
+              <input type="text" class="form-control add-on-title" name="service_add_ons[`+add_on_service_row_number+`][title]"  placeholder="Title"  step="any" >
             </div>
 
             <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
                 <label>Per Hour Rate</label>
-                <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]" id="service_add_ons.`+add_on_service_row_number+`.rate_per_hour" 
+                <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]"  
                     placeholder="per hour rate" id="add_on_price" step="any" >
             </div>
           
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
               <label>Estimated Delivery Time</label>
-              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"  id="service_add_ons.`+add_on_service_row_number+`.estimated_delivery_time" placeholder="Enter Number of Hours">
+              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours">
               
           </div>  
           
@@ -631,26 +627,26 @@ $(document).on("click", "#removeRow", function () {
     }
 });
 
-function addOnServiceRowcustom() {
-  return `<div class="row add-ons" id="add-on-customservice-row">
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Starting From Price</label>
-      <input type="number" class="form-control add_on_price" name="add_on_price[]"
-          placeholder="E.g. $100" id="add_on_price" step=".01" >
-  </div>
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Estimated Lead Time</label>
-      <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-              placeholder="Enter Hours">
-      </div>
-</div>  
-  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-  <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-  </div>
-</div>
-`;
-}
+// function addOnServiceRowcustom() {
+//   return `<div class="row add-ons" id="add-on-customservice-row">
+//   <div class="col-xl-4 col-lg-4 form-group">
+//       <label>Starting From Price</label>
+//       <input type="number" class="form-control add_on_price" name="add_on_price[]"
+//           placeholder="E.g. $100" id="add_on_price" step="any" >
+//   </div>
+//   <div class="col-xl-4 col-lg-4 form-group">
+//       <label>Estimated Lead Time</label>
+//       <div class="input-group mb-3">
+//           <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+//               placeholder="Enter Hours">
+//       </div>
+// </div>  
+//   <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+//   <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+//   </div>
+// </div>
+// `;
+// }
 
 $(document).on("click", "#removecustomRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
