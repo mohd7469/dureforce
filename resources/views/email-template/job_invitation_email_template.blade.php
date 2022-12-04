@@ -4,7 +4,7 @@
 {{--        <p style=" font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
 {{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Hello!</p>--}}
         <p  style="box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">{{$email_data->message}}</p>
+        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">{{$email_data['invitation']['message']}}</p>
 {{--        <p  style=" box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
 {{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Martin C.</p>--}}
     </div>

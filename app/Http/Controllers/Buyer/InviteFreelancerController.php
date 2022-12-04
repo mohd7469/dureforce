@@ -47,10 +47,8 @@ class InviteFreelancerController extends Controller
             $data['job'] = $job;
 
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
-dd(true);
 
-
-            return response()->json(["success" => "Successfully Saved"]);
+            return response()->json(["success" => "Invitation sent Successfully"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
