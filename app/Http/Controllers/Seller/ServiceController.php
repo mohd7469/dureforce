@@ -159,15 +159,18 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($serviceId);
 
-        if(empty($service->image)) {
+        if($service->banner) {
+            $this->saveRequirements($request, $service, Attribute::SERVICE);
+            $notify[] = ['success', 'Service Requirements Saved Successfully.'];
+            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-5'])->withNotify($notify);
+        }
+        else
+        {
             $notify[] = ['error', 'Please complete the service banners first.'];
             return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-3'])->withNotify($notify);
         }
 
-        $this->saveRequirements($request, $service, Attribute::SERVICE);
-
-        $notify[] = ['success', 'Service Requirements Saved Successfully.'];
-        return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-5'])->withNotify($notify);
+        
     }
 
     public function storeReview(ReviewRequest $request)
@@ -181,15 +184,20 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($request->get('service_id'));
 
-        if(empty($service->image) && $service->price == 0) {
+        if($service->banner && $service->rate_per_hour != 0) {
+
+            $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
+            $this->ServiceAddConfirmationMail($service);
+            $notify[] = ['success', 'Service Review Saved Successfully.'];
+            return redirect()->route('user.service.index')->withNotify($notify);
+                       
+        }
+        else{
             $notify[] = ['error', 'Please complete the previous steps first.'];
             return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-1'])->withNotify($notify);
         }
 
-        $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
-        $this->ServiceAddConfirmationMail($service);
-        $notify[] = ['success', 'Service Review Saved Successfully.'];
-        return redirect()->route('user.service.index')->withNotify($notify);
+        
       
     }
 

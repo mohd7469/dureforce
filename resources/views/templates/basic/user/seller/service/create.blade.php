@@ -37,6 +37,10 @@
 
 @push('style')
     <style>
+        .error{
+            margin-top: -20px !important;
+            margin-bottom: 5px !important;
+        }
         .create-service-main .service--btns {
             background-color: #f8fafa;
             border-radius: 5px;

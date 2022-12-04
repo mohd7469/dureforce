@@ -343,11 +343,9 @@ trait CreateOrUpdateEntity {
     public function saveRequirements($request, $model, $type = Attribute::SERVICE): bool
     {
         DB::transaction(function () use ($request, $model, $type) {
-            $model->status = Service::PENDING;
-            $model->update();
             if($type == Attribute::SERVICE) {
-                $model->serviceDetail()->update([
-                    'client_requirements' => $request->client_requirements
+                $model->update([
+                    'requirement_for_client' => $request->client_requirements
                 ]);
             } else {
                 $model->softwareDetail()->update([
@@ -364,16 +362,13 @@ trait CreateOrUpdateEntity {
         DB::transaction(function () use ($request, $model, $notificationText, $notificationUrl, $type) {
 
             if($type == Attribute::SERVICE) {
-                $model->serviceDetail()->update([
-                    'max_no_projects' => $request->max_no_projects,
-                    'copyright_notice' => $request->copyright_notice == "on" ? true : false,
-                    'privacy_notice' => $request->privacy_notice == "on" ? true : false
-                ]);
-    
                 $model->update([
-                    'creation_status' => Service::SERIVCE_CREATION_COMPLETED,
+                    'number_of_simultaneous_projects' => $request->max_no_projects,
+                    'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
+                    'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
                     'status'          => Service::PENDING
                 ]);
+
             } else {
                 $model->softwareDetail()->update([
                     'max_no_projects' => $request->max_no_projects,

@@ -79,7 +79,7 @@
                                     <div class="row flex-wrap d-flex">
                                         @foreach ($banner_backgrounds as $item)
                                             <div class="col-md-3">
-                                                <img src="{{$item->url}}" alt="" style="border: 1px solid black;">
+                                                <img src="{{$item->url}}" alt="" style="border: 1px solid black;height:144px;width:100%;">
                                                 <input type="radio" value="{{$item->id}}" name="banner_background_id" id="dynamic_image_1" class="col-1 bg-radio" {{selectedBackgroundImage($service,$item->id)}}>
                                             </div>
                                         @endforeach
@@ -149,7 +149,15 @@
                             <div class="px-4">
                                 <label class="logo-div">@lang('Technology Logos (Select only 3)') *</label>
                                     <ul class="logo-ul">
-                                                           
+                                        <div class="row">
+                                            @foreach ($banner_logos as $item)
+                                                <div class="col-md-3">
+                                                    <img src="{{$item->url}}" alt="" style="border: 1px solid black;height: 141px;width: 59%;border-radius: 68%;">
+                                                    <input type="checkbox" value="{{$item->id}}" name="technology_logos[]" id="dynamic_image_1" class="col-1 bg-radio" {{selectedBackgroundImage($service,$item->id)}}>
+                                                </div>
+                                            @endforeach         
+                                        </div>
+                                            
                                     </ul>
                                 <br />
                             </div>

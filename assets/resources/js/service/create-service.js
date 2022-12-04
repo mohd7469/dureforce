@@ -451,10 +451,10 @@ function reviewForm() {
     if ($.trim(max_no_projects) < 1) {
       e.preventDefault();
       $("#max_no_projects").after(
-        '<span class="error text-danger">Should be greater than 0</span>'
+        '<span class="error text-danger">Max no of simultaneous projects should be greater than 0</span>'
       );
       iziToast.error({
-        message: "Max no. of Project is required",
+        message: "Max no of simultaneous projects field is required",
         position: "topRight",
       });
     }
@@ -464,7 +464,7 @@ function reviewForm() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "checkbox is required",
+        message: "Terms of Service is required",
         position: "topRight",
       });
     }
@@ -474,7 +474,7 @@ function reviewForm() {
         ' <span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "checkbox is required",
+        message: "Privancy Notice field is required",
         position: "topRight",
       });
     }
@@ -666,7 +666,7 @@ function requirementFormValidation() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Title is required",
+        message: "Description field is required",
         position: "topRight",
       });
     }
