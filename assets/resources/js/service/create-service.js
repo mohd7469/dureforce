@@ -4,8 +4,17 @@ let addOncustomServiceContainer = $("#add-service-custom-container");
 let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
+let add_on_service_row_number='';
+
 "use strict";
 $(document).ready(function () {
+  var service_id=$('#service_id').val();
+  add_on_service_row_number=parseInt($('#number_of_add_on_services').val());
+  if (service_id) {
+    var category_id=$('#category').val();
+    var sub_category_id=$('#sub-category').val();
+    fetchSkills(category_id,sub_category_id,false);
+  }
   loadActiveTab();
   loadSelect2();
   baannerForm();
@@ -28,6 +37,7 @@ $(document).ready(function () {
 
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
+    add_on_service_row_number+=1;
   });
 
   $(document).on(
@@ -103,12 +113,12 @@ function addSteps() {
   <div class="col-xl-12 col-lg-12 form-group" >
              <label for="">Step Name</label>
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control" required />
+                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control"  />
                 </div>
                 <div>
                 <label for="discription">Step Description</label>
                 <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
-                    required></textarea>
+                    ></textarea>
                 <br />
                 <br />
             </div>
@@ -329,8 +339,8 @@ function overviewFormValidation() {
         });
       }
     }
-
-    if ($("input[name='features[]']:checked").length < 1) {
+    if ($('#service_features :selected').length<=0) {
+      
       e.preventDefault();
       $(".include_error").after(
         '<span class="error text-danger">This field is required</span>'
@@ -340,120 +350,16 @@ function overviewFormValidation() {
         position: "topRight",
       });
     }
+    if($("input:checkbox[name='skills[]']:checked").length <= 0){
+      iziToast.error({
+        message: "Atleaset one skill is required",
+        position: "topRight",
+      });
+     }
     var err = false;
 
-    $(".attribute-selector").each(function () {
-      let parent = $(this).parent().next().closest(".attributes");
-      let parentRadio = $(this).parent().next().closest(".attributes-radio");
+   
 
-      if (
-        $(this).find('option[value=""]').prop("selected") &&
-        $(this).val() == ""
-      ) {
-        $(this).after(
-          '<span class="error text-danger">*Please select type</span>'
-        );
-        e.preventDefault();
-        err = true;
-      }
-
-      if (
-        parent.length > 0 &&
-        $(this).val() == "0" &&
-        parent.find(".back").find($("input[type='checkbox'].attrs-back"))
-          .length > 0
-      ) {
-        if (
-          parent
-            .find(".back")
-            .find($("input[type='checkbox'].attrs-back:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parent.length > 0 &&
-        $(this).val() == "1" &&
-        parent.find(".front").find($("input[type='checkbox'].attrs-front"))
-          .length > 0
-      ) {
-        if (
-          parent
-            .find(".front")
-            .find($("input[type='checkbox'].attrs-front:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parentRadio.length > 0 &&
-        $(this).val() == "0" &&
-        parentRadio
-          .find(".back")
-          .find($("input[type='radio'].attrs-radio-back")).length > 0
-      ) {
-        if (
-          parentRadio
-            .find(".back")
-            .find($("input[type='radio'].attrs-radio-back:checked")).length <= 0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-
-      if (
-        parentRadio.length > 0 &&
-        $(this).val() == "1" &&
-        parentRadio
-          .find(".front")
-          .find($("input[type='radio'].attrs-radio-front")).length > 0
-      ) {
-        if (
-          parentRadio
-            .find(".front")
-            .find($("input[type='radio'].attrs-radio-front:checked")).length <=
-          0
-        ) {
-          $(this).after(
-            '<span class="error text-danger">*Please select attributes</span>'
-          );
-          e.preventDefault();
-          err = true;
-        }
-      }
-    });
-
-    $(".simple-selector").each(function () {
-      if (
-        $(this).find('option[value=""]').prop("selected") &&
-        $(this).val() == ""
-      ) {
-        $(this).after(
-          '<span class="error text-danger">*Please select type</span>'
-        );
-        e.preventDefault();
-      }
-    });
-
-    if (err === true) {
-      $("#err").after(
-        '<span class="error text-danger">*All Attributes fields are required</span>'
-      );
-    }
   });
 }
 function baannerForm() {
@@ -502,26 +408,26 @@ function baannerForm() {
           position: "topRight",
         });
       }
-      if ($('input:radio[name="selected_image"]:checked').length < 1) {
+      if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
         e.preventDefault();
         $("#banner_err").after(
           '<span class="error text-danger">This field is required</span>'
         );
         iziToast.error({
-          message: "Select Image is required",
+          message: "Background Image is required",
           position: "topRight",
         });
       }
 
       if($('input:checkbox[name="logo_id[]"]:checked').length <= 0) {
-        e.preventDefault();
-        $('.logo-div').insertAfter(
-        '<span class="error text-danger">Minimum 1 logos can be selected</span>'
-        )
-        iziToast.error({
-          message: "Minimum 1 logos can be selected",
-          position: "topRight",
-        });
+       // e.preventDefault();
+        // $('.logo-div').insertAfter(
+        // '<span class="error text-danger">Minimum 1 logos can be selected</span>'
+        // )
+        // iziToast.error({
+        //   message: "Minimum 1 logos can be selected",
+        //   position: "topRight",
+        // });
       }
       if($('input:checkbox[name="logo_id[]"]:checked').length > 3) {
           e.preventDefault();
@@ -545,10 +451,10 @@ function reviewForm() {
     if ($.trim(max_no_projects) < 1) {
       e.preventDefault();
       $("#max_no_projects").after(
-        '<span class="error text-danger">Should be greater than 0</span>'
+        '<span class="error text-danger">Max no of simultaneous projects should be greater than 0</span>'
       );
       iziToast.error({
-        message: "Max no. of Project is required",
+        message: "Max no of simultaneous projects field is required",
         position: "topRight",
       });
     }
@@ -558,7 +464,7 @@ function reviewForm() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "checkbox is required",
+        message: "Terms of Service is required",
         position: "topRight",
       });
     }
@@ -568,12 +474,19 @@ function reviewForm() {
         ' <span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "checkbox is required",
+        message: "Privancy Notice field is required",
         position: "topRight",
       });
     }
   });
 }
+function showValidationError(error){
+  iziToast.error({
+    message: error,
+    position: "topRight",
+  });
+}
+
 function pricingFormValidation() {
   $(".user-pricing-form").submit(function (e) {
     var new_delivery = $("#delivery").val();
@@ -585,15 +498,17 @@ function pricingFormValidation() {
       if ($("#deliverables :selected").length < 1) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Maximum 5 deliverables required</span>'
+          '<span class="error text-danger">Atleaset 3 deliverables required</span>'
         );
+        showValidationError('Atleaset 3 deliverables required');
       }
 
-      if ($("#deliverables :selected").length > 5) {
+      if ($("#deliverables :selected").length > 3) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Cannot select more than 5</span>'
+          '<span class="error text-danger">Cannot select more than 3</span>'
         );
+        showValidationError('Cannot select more than 3');
       }
     }
 
@@ -602,24 +517,20 @@ function pricingFormValidation() {
       $("#delivery").after(
         '<span class="error text-danger mt-1">This field is required</span>'
       );
+      showValidationError('estimated delivery time field is required');
     }
     if ($.trim(new_price) < 5) {
       e.preventDefault();
       $("#price").after(
         '<span class="error text-danger mt-1">Minimum rate should be 5$</span>'
       );
+      showValidationError('Minimum rate should be 5$');
     }
 
     $(".add-ons").each(function () {
-      if ($(this).find(".add-on-title").val() != "") {
+      
         validateAddOnRows($(this), e);
-      }
-      if ($(this).find(".add_on_price").val() != "") {
-        validateAddOnRows($(this), e);
-      }
-      if ($(this).find(".add-on-delivery").val() != "") {
-        validateAddOnRows($(this), e);
-      }
+      
     });
 
     $(".step").each(function () {
@@ -628,6 +539,7 @@ function pricingFormValidation() {
         $(this).after(
           '<span class="error text-danger">This field is required</span>'
         );
+        showValidationError('step name field is required');
       }
     });
 
@@ -637,6 +549,7 @@ function pricingFormValidation() {
         $(this).after(
           '<span class="error text-danger">This field is required</span>'
         );
+        showValidationError('step description field is required');
       }
     });
   });
@@ -675,55 +588,66 @@ function validateAddOnRows(element, e) {
       .after('<span class="error text-danger">This field is required.</span>');
   }
 }
-
-function addOnServiceRow() {
-  return `<div class="row add-ons" id="add-on-service-row">
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Starting From Price</label>
-      <input type="number" class="form-control add_on_price" name="add_on_price[]"
-          placeholder="E.g. $100" id="add_on_price" step=".01" >
-  </div>
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Estimated Lead Time</label>
-      <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-              placeholder="Enter Hours">
-      </div>
-</div>  
-  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-  <button id="removeRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-  </div>
-</div>
-`;
+function deleteAddOnRow(row_id){
+  $(row_id).remove();
+  add_on_service_row_number-=1;
 }
+function addOnServiceRow() {
+  return `<div class="row add-ons" id="add-on-row-id-`+add_on_service_row_number+`">
+
+            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
+              <label>Title</label>
+              <input type="text" class="form-control add-on-title" name="service_add_ons[`+add_on_service_row_number+`][title]"  placeholder="Title"  step="any" >
+            </div>
+
+            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
+                <label>Per Hour Rate</label>
+                <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]"  
+                    placeholder="per hour rate" id="add_on_price" step="any" >
+            </div>
+          
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
+              <label>Estimated Delivery Time</label>
+              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours">
+              
+          </div>  
+          
+          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#add-on-row-id-`+add_on_service_row_number+`')">
+            <button  type="button" class="btn btn-danger" ><i class="fa fa-trash"></i></button>
+          </div>
+
+        </div>
+      `;
+}
+
 $(document).on("click", "#removeRow", function () {
-  let is_confirm = confirm(`Are you sure you want to remove field ?`);
-  if (is_confirm) {
-    $(this).closest("#add-on-service-row").remove();
-  }
+    let is_confirm = confirm(`Are you sure you want to remove field ?`);
+    if (is_confirm) {
+      $(this).closest("#add-on-service-row").remove();
+    }
 });
 
+// function addOnServiceRowcustom() {
+//   return `<div class="row add-ons" id="add-on-customservice-row">
+//   <div class="col-xl-4 col-lg-4 form-group">
+//       <label>Starting From Price</label>
+//       <input type="number" class="form-control add_on_price" name="add_on_price[]"
+//           placeholder="E.g. $100" id="add_on_price" step="any" >
+//   </div>
+//   <div class="col-xl-4 col-lg-4 form-group">
+//       <label>Estimated Lead Time</label>
+//       <div class="input-group mb-3">
+//           <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
+//               placeholder="Enter Hours">
+//       </div>
+// </div>  
+//   <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+//   <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+//   </div>
+// </div>
+// `;
+// }
 
-function addOnServiceRowcustom() {
-  return `<div class="row add-ons" id="add-on-customservice-row">
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Starting From Price</label>
-      <input type="number" class="form-control add_on_price" name="add_on_price[]"
-          placeholder="E.g. $100" id="add_on_price" step=".01" >
-  </div>
-  <div class="col-xl-4 col-lg-4 form-group">
-      <label>Estimated Lead Time</label>
-      <div class="input-group mb-3">
-          <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-              placeholder="Enter Hours">
-      </div>
-</div>  
-  <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-  <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-  </div>
-</div>
-`;
-}
 $(document).on("click", "#removecustomRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
   if (is_confirm) {
@@ -742,7 +666,7 @@ function requirementFormValidation() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Title is required",
+        message: "Description field is required",
         position: "topRight",
       });
     }

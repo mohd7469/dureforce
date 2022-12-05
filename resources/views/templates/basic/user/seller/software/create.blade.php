@@ -17,6 +17,7 @@
         color: #7f007f;
         width: 100px !important;
     }
+
     .hdng-create{
         color: #007F7F;
         font-size: 18px;

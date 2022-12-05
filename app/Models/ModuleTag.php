@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceProjectStep extends Model
+class ModuleTag extends Model
 {
-    protected $table="service_project_steps";
-    protected $guarded = ['id'];
     use HasFactory;
+    public function module()
+    {
+        return $this->morphTo();
+    }
 }

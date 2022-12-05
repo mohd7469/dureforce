@@ -17,7 +17,7 @@ class="review-form"
             <div class="row ">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>@lang('Maximum number of simultaneous projects')*</label>
-                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->serviceDetail->max_no_projects}}">
+                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->number_of_simultaneous_projects}}">
                 </div>
 
                 <br>
@@ -26,43 +26,59 @@ class="review-form"
                     that posting these materials does not infringe on any third party's rights. You also acknowledge
                     that you understand your project will be reviewed and evaluated by DureForce to ensure it meets
                     DureForce's requirements.</p>
-                <h4 class="hdng-create">Terms of Service</h4><p id="copy"></p>
+                <h4 class="hdng-create">Terms of Service</h4>
                 <br>
                 <label for="">
-                    <input type="checkbox" name="copyright_notice"  class="checkbox-review" id="copyright_notice" {{ @$service->serviceDetail->copyright_notice ? 'checked' : '' }}>
+                    <input type="checkbox" name="copyright_notice"  class="checkbox-review" id="copyright_notice" {{ @$service->is_terms_accepted ? 'checked' : '' }}>
                     <span class="lbl-review review-check mb-3">I understand and agree to the DureForce <a href="#">Terms of Service</a>, including the
-                        <a href="#">User Agreement</a> and <a href="#">Privacy Policy.</a></span>
+                        <a href="#">User Agreement</a> and <a href="#">Privacy Policy.</a>
+                    
+                    
+                    </span><br>
 
                 </label>
+                <span id="copy"></span>
 
-                <h4 class="hdng-create">Privacy Notice</h4>   <p id="copy1"></p>
+                <h4 class="hdng-create">Privacy Notice</h4>   
                 <label for="privacy" class="d-flex">
-                    <input type="checkbox" name="privacy_notice" class="checkbox-review" id="privacy_notice" {{ @$service->serviceDetail->privacy_notice ? 'checked' : '' }}>
+                    <input type="checkbox" name="privacy_notice" class="checkbox-review" id="privacy_notice" {{ @$service->is_privacy_accepted ? 'checked' : '' }}>
                     <span class="lbl-review review-check mb-3" >By submitting this project and activating it, I understand that it will
                     appear in DureForce search results visible to the general public and will show up in search engine
-                    results, even if my profile visibility is set to Private or DureForce Users Only.</span>
+                    results, even if my profile visibility is set to Private or DureForce Users Only.
+                
+
+                </span>
                 </label>
+                <span id="copy1"></span>
 
                 </div>
                 <br>
                 <hr/>
             <div class="row">
-                <div class="col-md-6 ">
+                <div class="col-md-4 ">
                     <a class="btn service--btns btn-secondary float-left  mt-20 w-100"
                         href="?view=step-4">@lang('BACK')</a>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-8 text-right">
 
                     {{-- <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
                         CANCEL 
+                    </button>--}}
+
+                    <button class="btn service-cancel-btn  m-3">
+                        Cancel
                     </button>
 
                     <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
-                        PREVIEW 
-                    </button> --}}
+                       Preview Service
+                    </button> 
 
+                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                        Save Project
+                     </button> 
+                   
                     <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE')</button>
-                </div>
+                </div>  
             </div>
 
         </div>

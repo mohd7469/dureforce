@@ -16,12 +16,13 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-xl-12 col-lg-12 form-group">
-                    {{-- <label>@lang('Description')*</label> --}}
+                    <label>@lang('Description')*</label> 
                     <textarea class="form-control bg--gray " placeholder="Do you have preferred styles for your illustration. Please share 3 examples."
-                        name="client_requirements" id="req">{{ old('Tell Your Requirements', @$service->serviceDetail->client_requirements) }}</textarea>
+                        name="client_requirements" id="req">{{ old('Tell Your Requirements', @$service->requirement_for_client) }}</textarea>
                 </div>
 
             </div>
+           
             <br/>
             <br/>
             <br/>
@@ -32,7 +33,13 @@
                     <a class="btn service--btns btn-secondary float-left  mt-20 w-100" href="?view=step-3">@lang('BACK')</a>
                 </div>
                 <div class="col-md-6 text-right">
+                    <button class="btn service-cancel-btn  m-3">
+                        Cancel
+                    </button>
 
+                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                       Preview Service
+                    </button> 
                     <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
                         AND
                         CONTINUE')</button>

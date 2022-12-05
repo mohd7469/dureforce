@@ -61,16 +61,16 @@ class ServiceController extends Controller
 
         $service = null;
 
-        if (! empty($id) || $id > 0) {
-            $service = Service::with('serviceDetail', 'serviceSteps', 'serviceAttributes','extraService', 'category', 'subCategory')->findOrFail($id);
+        if ($id) {
+            $service = Service::with('serviceSteps', 'serviceAttributes','addOns', 'category', 'subCategory')->findOrFail($id);
 
             $completedOverview = $service->serviceAttributes()->count() > 0 ? 'completed' : '';
             $completedPricing = $service->price > 0 ? 'completed' : '';
             $completedImage = !empty($service->image) ? 'completed' : '';
-            $completedRequirements = !empty($service->serviceDetail->client_requirements) ? 'completed' : '';
-            $completedReview = !empty($service->serviceDetail->max_no_projects) ? 'completed' : '';
+            // $completedRequirements = !empty($service->serviceDetail->client_requirements) ? 'completed' : '';
+            // $completedReview = !empty($service->serviceDetail->max_no_projects) ? 'completed' : '';
+            $completedRequirements= $completedReview='';
         }
-
         return view($this->activeTemplate . 'user.seller.service.create', compact(
             'pageTitle',
             'features',
@@ -85,7 +85,7 @@ class ServiceController extends Controller
     }
 
 
-    public function storeOverview(OverviewRequest $request)
+    public function storeOverview(Request $request)
     {
         $serviceId = $request->get('service_id');
 
@@ -130,6 +130,11 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($serviceId);
 
+        if(!$service->rate_per_hour) {
+            $notify[] = ['error', 'Please complete the service pricing first.'];
+            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
+        }
+        
         $result = $this->saveBanner($request, $service, Attribute::SERVICE, 'service', 'optionalService');
 
         if(!$result) {
@@ -137,10 +142,7 @@ class ServiceController extends Controller
             return redirect()->back()->withNotify($notify);
         }
 
-        if($service->price == 0) {
-            $notify[] = ['error', 'Please complete the service pricing first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
-        }
+        
 
         $notify[] = ['success', 'Service Banner Saved Successfully.'];
         return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-4'])->withNotify($notify);
@@ -157,15 +159,18 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($serviceId);
 
-        if(empty($service->image)) {
+        if($service->banner) {
+            $this->saveRequirements($request, $service, Attribute::SERVICE);
+            $notify[] = ['success', 'Service Requirements Saved Successfully.'];
+            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-5'])->withNotify($notify);
+        }
+        else
+        {
             $notify[] = ['error', 'Please complete the service banners first.'];
             return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-3'])->withNotify($notify);
         }
 
-        $this->saveRequirements($request, $service, Attribute::SERVICE);
-
-        $notify[] = ['success', 'Service Requirements Saved Successfully.'];
-        return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-5'])->withNotify($notify);
+        
     }
 
     public function storeReview(ReviewRequest $request)
@@ -179,15 +184,20 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($request->get('service_id'));
 
-        if(empty($service->image) && $service->price == 0) {
+        if($service->banner && $service->rate_per_hour != 0) {
+
+            $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
+            $this->ServiceAddConfirmationMail($service);
+            $notify[] = ['success', 'Service Review Saved Successfully.'];
+            return redirect()->route('user.service.index')->withNotify($notify);
+                       
+        }
+        else{
             $notify[] = ['error', 'Please complete the previous steps first.'];
             return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-1'])->withNotify($notify);
         }
 
-        $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
-        $this->ServiceAddConfirmationMail($service);
-        $notify[] = ['success', 'Service Review Saved Successfully.'];
-        return redirect()->route('user.service.index')->withNotify($notify);
+        
       
     }
 
