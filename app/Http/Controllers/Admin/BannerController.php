@@ -37,7 +37,7 @@ class BannerController extends Controller
             'category' => 'required',
             'sub_category' => 'required',
             'subject' => 'required',
-            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
+            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
         $banner  = new Banner;
         if ($request->hasFile('image')) {

@@ -38,7 +38,7 @@
                                                             <!--</div>-->
                                                         </td>
                                                         <td data-label="@lang('Category')">
-                                                            {{ __($service->category->name) }}</td>
+                                                            {{ __($service->category ? $service->category->name : '') }}</td>
                                                         <td data-label="@lang('Amount')">{{ showAmount($service->price) }}
                                                             {{ $general->cur_text }}</td>
                                                         <td data-label="@lang('Delivery Time')">

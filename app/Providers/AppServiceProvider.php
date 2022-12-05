@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\AdminNotification;
+use App\Models\BannerBackground;
 use App\Models\Deposit;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
@@ -10,12 +11,12 @@ use App\Models\Language;
 use App\Models\SupportTicket;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\Features;
 use App\Models\Rank;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Job;
-use App\Models\Banner;
 use App\Models\Withdrawal;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -59,10 +60,16 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['categorys'] = Category::where('status', 1)->orderby('id', 'DESC')->inRandomOrder()->get();
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
-//        $viewShare['fservices'] = Service::where('status', 1)->where('featured', 1)->whereHas('category', function($q){
-//            $q->where('status', 1);
-//        })->paginate(4);
+        $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['banner_backgrounds'] = BannerBackground::background()->latest()->get();
+        $viewShare['banner_logos'] = BannerBackground::logos()->latest()->get();
+
+        $viewShare['fservices'] = Service::where('status_id', 1)->whereHas('category', function($q){
+            $q->where('status_id', 1);
+        })->paginate(4);
+
         view()->share($viewShare);
+
         
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
@@ -80,10 +87,6 @@ class AppServiceProvider extends ServiceProvider
                 'jobApproved'    => Job::where('status_id', 2)->count(),
                 'jobClosed'    => Job::where('status_id', 3)->count(),
                 'jobCanceled'    => Job::where('status_id', 10)->count(),
-                'bannerActive'    => Banner::where('document_type', 'Background')->where('is_active', 1)->count(),
-                'bannerInactive'    => Banner::where('document_type', 'Background')->where('is_active', 0)->count(),
-                'technologyLogoActive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->count(),
-                'technologyLogoInactive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
 
             ]);
         });

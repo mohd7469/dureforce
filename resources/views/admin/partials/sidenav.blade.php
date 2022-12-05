@@ -806,7 +806,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.banner.active') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Active Banner')</span>
-                                        @if ($bannerActive)
+                                        @if ($bannerActive=false)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $bannerActive }}</span>
                                         @endif
@@ -817,7 +817,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.banner.inActive') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('InActive Banner')</span>
-                                        @if ($bannerInactive)
+                                        @if ($bannerInactive=false)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $bannerInactive }}</span>
                                         @endif
@@ -854,7 +854,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.techlogo.active') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Active Logo')</span>
-                                        @if ($technologyLogoActive)
+                                        @if ($technologyLogoActive=false)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $technologyLogoActive }}</span>
                                         @endif
@@ -865,7 +865,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.techlogo.inActive') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('InActive Logo')</span>
-                                        @if ($technologyLogoInactive)
+                                        @if ($technologyLogoInactive=false)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $technologyLogoInactive }}</span>
                                         @endif
