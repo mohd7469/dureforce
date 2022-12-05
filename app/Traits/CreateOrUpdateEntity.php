@@ -308,6 +308,7 @@ trait CreateOrUpdateEntity {
                 }
                 elseif($request->type == ModuleBanner::$Dynamic)
                 {
+
                     if($request->hasFile('dynamic_banner_image')){
                         $model->banner()->delete();
                         $banner=$this->uploadBanner($model,$request->dynamic_banner_image,$request->type);
@@ -315,6 +316,7 @@ trait CreateOrUpdateEntity {
                         $banner->banner_heading  =  $request->banner_heading;
                         $banner->banner_introduction = $request->banner_introduction;
                         $banner->save();
+                        
 
                     }
                     elseif($model->banner){
@@ -323,6 +325,16 @@ trait CreateOrUpdateEntity {
                             'banner_heading'  => $request->banner_heading,
                             'banner_introduction' => $request->banner_introduction
                         ]);
+                        
+                    }
+                    else{
+
+                    }
+
+                    if($request->has('technology_logos')){
+                        if($model->technologyLogos)
+                            $model->technologyLogos()->delete();
+                        addTechnologyLogos($model,$request->technology_logos);
                     }
                    
                 }

@@ -223,6 +223,20 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
 
 }
 
+function addTechnologyLogos($model,$logos){
+    $banner=$model->banner;
+    $model->technologyLogos()->createMany(
+        collect($logos)->map(function($item) use ($banner){
+          
+            $banner_logo=
+            [
+                'module_banner_id' => $banner->id,
+                'banner_background_id' => $item
+            ];
+            return $banner_logo;
+        })->toArray()
+    );
+}
 function getBannerType($model){
     if($model){
         if($model->banner){
@@ -269,6 +283,16 @@ function selectedBackgroundImage($model,$banner_background_id){
     if($model){
         if($model->banner){
             return $model->banner->banner_background_id == $banner_background_id ? 'checked' : '';
+        }
+    }
+    return '';
+}
+
+function selectedLogoImage($model,$banner_background_id){
+    if($model){
+        if($model->technologyLogos){
+            $logos=$model->technologyLogos()->pluck('banner_background_id')->toArray();
+            return  in_array($banner_background_id,$logos) ? 'checked' : '';
         }
     }
     return '';

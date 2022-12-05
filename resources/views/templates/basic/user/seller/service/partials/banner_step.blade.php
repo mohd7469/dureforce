@@ -153,7 +153,7 @@
                                             @foreach ($banner_logos as $item)
                                                 <div class="col-md-3">
                                                     <img src="{{$item->url}}" alt="" style="border: 1px solid black;height: 141px;width: 59%;border-radius: 68%;">
-                                                    <input type="checkbox" value="{{$item->id}}" name="technology_logos[]" id="dynamic_image_1" class="col-1 bg-radio" {{selectedBackgroundImage($service,$item->id)}}>
+                                                    <input type="checkbox" value="{{$item->id}}" name="technology_logos[]" id="dynamic_image_1" class="col-1 bg-radio" {{selectedLogoImage($service,$item->id)}}>
                                                 </div>
                                             @endforeach         
                                         </div>

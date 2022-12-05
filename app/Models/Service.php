@@ -117,6 +117,10 @@ class Service extends Model
         
     }
 
+    public function technologyLogos(){
+        
+        return $this->morphMany(BannerLogo::class,'module');
+    }
     public function logos()
     {
         $relation = $this->hasMany(EntityLogo::class, 'type_id');
