@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('panel')
+
     <div class="row mb-none-30">
         <div class="col-xl-12 col-lg-7 col-md-7">
 
@@ -15,10 +16,11 @@
                                 <label>@lang('Type')*</label>
                                 <select class="form-control" name="type" id="type" >
                                     <option selected="" disabled="">@lang('Select Type')</option>
-                                    {{-- @foreach($categories as $category) --}}
-                                        <option value="invitation">Invitation</option>
-                                        <option value="offer">Offer</option>
-                                    {{-- @endforeach --}}
+                                    @foreach($email_template_types as $key => $email_template_type)
+                                      <option value="{{$key}}">{{$email_template_type}}</option>
+                                
+                                          
+                                    @endforeach
                                 </select>
                             </div>
 
