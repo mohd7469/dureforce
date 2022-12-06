@@ -16,6 +16,7 @@ use App\Models\Features;
 use App\Models\Rank;
 use App\Models\Service;
 use App\Models\Software;
+use App\Models\Banner;
 use App\Models\Job;
 use App\Models\Withdrawal;
 use Illuminate\Support\ServiceProvider;
@@ -74,6 +75,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('admin.partials.sidenav', function ($view) {
             $view->with([
                 'banned_users_count'           => User::where('is_active', 0)->count(),
+                'active_users_count'           => User::where('is_active', 1)->count(),
                 'email_unverified_users_count' => User::where('email_verified_at', null)->count(),
                 'sms_unverified_users_count'   => User::where('sms_verified_at', null)->count(),
                 'pending_ticket_count'         => SupportTicket::where('status_id',SupportTicket::$Open)->count(),
@@ -87,6 +89,10 @@ class AppServiceProvider extends ServiceProvider
                 'jobApproved'    => Job::where('status_id', 2)->count(),
                 'jobClosed'    => Job::where('status_id', 3)->count(),
                 'jobCanceled'    => Job::where('status_id', 10)->count(),
+                'bannerActive'    => Banner::where('document_type', 'Background')->where('is_active', 1)->count(),
+                'bannerInactive'    => Banner::where('document_type', 'Background')->where('is_active', 0)->count(),
+                'technologyLogoActive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->count(),
+                'technologyLogoInactive'    => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
 
             ]);
         });
