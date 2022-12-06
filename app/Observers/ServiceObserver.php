@@ -12,12 +12,10 @@ class ServiceObserver
 
     public function creating($service)
     {   
-        $general = GeneralSetting::first();
 
         $service->user_id = auth()->id();    
-        $service->status = $general->approval_post == 1 ? 1 : 0;
-        $service->price  = $service->price ?: 0;
-        $service->updated_at = Carbon::now();        
+        $service->status_id = Service::STATUSES['DRAFT'];
+        $service->rate_per_hour  = $service->rate_per_hour ?: 0;
     }
 
     public function updating($service)

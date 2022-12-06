@@ -357,7 +357,7 @@
                     
                     var skill_id=skills[skill_index].id;
                     var skill_name=skills[skill_index].name;
-                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[]" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
 
 
                 }

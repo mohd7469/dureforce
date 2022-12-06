@@ -19,6 +19,7 @@ use App\Models\Degree;
 use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
+use App\Models\ModuleBanner;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -215,11 +216,97 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
     } catch (ServiceException $e) {
+       
         error($e);
     }
     return $filename;
 
 }
+
+function addTechnologyLogos($model,$logos){
+    $banner=$model->banner;
+    $model->technologyLogos()->createMany(
+        collect($logos)->map(function($item) use ($banner){
+          
+            $banner_logo=
+            [
+                'module_banner_id' => $banner->id,
+                'banner_background_id' => $item
+            ];
+            return $banner_logo;
+        })->toArray()
+    );
+}
+function getBannerType($model){
+    if($model){
+        if($model->banner){
+            return $model->banner->banner_type;
+        }
+    }
+    return ModuleBanner::$Static;
+} 
+
+function isStaticBanner($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Static ? 'block' : 'none';
+        }
+    }
+    return 'block';
+}
+function bannerTypeStatic($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Static ? true : false;
+        }
+    }
+    return false;
+}
+
+function bannerTypeDynamic($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? true : false;
+        }
+    }
+    return false;
+}
+function getFile($model){
+    if($model){
+        if($model->banner){
+            return  $model->banner->url;
+        }
+    }
+    return '';
+}
+function selectedBackgroundImage($model,$banner_background_id){
+    if($model){
+        if($model->banner){
+            return $model->banner->banner_background_id == $banner_background_id ? 'checked' : '';
+        }
+    }
+    return '';
+}
+
+function selectedLogoImage($model,$banner_background_id){
+    if($model){
+        if($model->technologyLogos){
+            $logos=$model->technologyLogos()->pluck('banner_background_id')->toArray();
+            return  in_array($banner_background_id,$logos) ? 'checked' : '';
+        }
+    }
+    return '';
+}
+
+function isDynamicBanner($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? 'block' : 'none';
+        }
+    }
+    return 'none';
+}
+
 
 
 function makeDirectory($path)

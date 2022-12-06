@@ -4,7 +4,7 @@
 {{--        <p style=" font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
 {{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Hello!</p>--}}
         <p  style="box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;
-        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">{{$email_data->message}}</p>
+        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">{{$email_data['invitation']['message']}}</p>
 {{--        <p  style=" box-sizing: border-box; font-weight: 400;   font-size: 14px; line-height: 18px; color: #000000; width: 100%;--}}
 {{--        display: inline-block;  font-family: 'Mulish', sans-serif; margin-bottom: 16px;">Martin C.</p>--}}
     </div>
@@ -41,9 +41,9 @@
 </p>
 
 <p style="box-sizing: border-box; font-family: 'Mulish', sans-serif;  font-size: 14px; line-height: 21px;
-color: #000000; margin-bottom: 13px; border-top: 1px solid #CBDFDF; padding-top: 25px;">Clients prefer when freelancers respond to invitations within 24 hours.</p>
+color: #000000; margin-bottom: 13px; border-top: 1px solid #CBDFDF; padding-top: 25px;">{{$email_data['email_template']['footer_title']}}</p>
 <p style="box-sizing: border-box; font-family: 'Mulish', sans-serif;  font-size: 14px; line-height: 21px;
-color: #000000; margin-bottom: 24px; width: 88%;">Responding promptly to all invitations also improves your job responsiveness score on your profile.</p>
+color: #000000; margin-bottom: 24px; width: 88%;">{{$email_data['email_template']['footer_description']}}</p>
 <p style="box-sizing: border-box; font-family: 'Mulish', sans-serif;  font-size: 14px; line-height: 21px;
 color: #000000; margin-bottom: 27px; width: 88%; border-top: 1px solid #CBDFDF; padding-top: 24px;">We send this email occasionally. <br />
 Feel free to update your <a href="#" style="color: #007F7F;">email preferences</a> or <a href="#" style="color: #007F7F;">unsubscribe</a> from these emails at any time.

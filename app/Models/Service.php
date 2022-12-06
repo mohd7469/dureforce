@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\ServiceObserver;
 use App\Observers\TagsObserver;
+use Database\Seeders\ModuleSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,32 +24,31 @@ class Service extends Model
     const PENDING = 0;
     const APPROVED = 1;
 
+    public const STATUSES = [
+        'DRAFT'  =>  17,
+        'PENDING'  =>  18,
+        'APPROVED' =>  19,
+        'CANCELLED' =>  20,
+        'UNDER_REVIEW' =>  21
+    ];
+
     protected $casts = [
         'tag' => 'object'
     ];
 
     protected $fillable = [
-        'title',
-        'featured',
         'user_id',
-        'price',
-        'image',
-        'favorite',
-        'rating',
-        'likes',
-        'dislike',
-        'delivery_time',
-        'tag',
-        'description',
-        'banner_detail',
-        'banner_heading',
-        'lead_image',
-        'status',
+        'status_id',
         'category_id',
         'sub_category_id',
-        'technology_logos',
-        'creation_status',
-        'deliverables'
+        'title',
+        'description',
+        'rate_per_hour',
+        'estimated_delivery_time',
+        'requirement_for_client',
+        'number_of_simultaneous_projects',
+        'is_terms_accepted',
+        'is_privacy_accepted',
     ];
 
     public function featuresService()
@@ -73,12 +73,12 @@ class Service extends Model
 
     public function serviceSteps()
     {
-        return $this->hasMany(ServiceStep::class);
+        return $this->hasMany(ServiceProjectStep::class,'service_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subCategory()
@@ -86,9 +86,14 @@ class Service extends Model
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
 
-    public function extraService()
+    public function deliverable()
     {
-        return $this->hasMany(ExtraService::class, 'service_id');
+        return $this->belongsToMany(Deliverable::class, 'service_deliverables');
+    }
+
+    public function addOns()
+    {
+        return $this->hasMany(AddOnService::class, 'service_id');
     }
 
     public function optionalImage()
@@ -96,7 +101,11 @@ class Service extends Model
         return $this->hasMany(OptionalImage::class, 'service_id');
     }
 
+    public function banner()
+    {
+        return $this->morphOne(ModuleBanner::class,'module');
 
+    }
     public function reviewCount()
     {
         return $this->hasMany(ReviewRating::class, 'service_id');
@@ -104,9 +113,14 @@ class Service extends Model
 
     public function tags()
     {
-        return $this->hasMany(TagsAssociate::class, 'model_id');
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+        
     }
 
+    public function technologyLogos(){
+        
+        return $this->morphMany(BannerLogo::class,'module');
+    }
     public function logos()
     {
         $relation = $this->hasMany(EntityLogo::class, 'type_id');
@@ -134,22 +148,22 @@ class Service extends Model
 
     public function scopeFeatured($query)
     {
-        return $query->where('featured', self::FEATURED);
+        return $query->where('status_id', self::FEATURED);
     }
 
     public function scopeNotFeatured($query)
     {
-        return $query->where('featured', self::NOT_FEATURED);
+        return $query->where('status_id', self::NOT_FEATURED);
     }
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE);
+        return $query->where('status_id', self::ACTIVE);
     }
 
     public function scopeInActive($query)
     {
-        return $query->where('status', self::IN_ACTIVE);
+        return $query->where('status_id', self::IN_ACTIVE);
     }
 
     public function _decoded_deliverables()
@@ -190,6 +204,15 @@ class Service extends Model
     public function task_skill()
     {
         return $this->morphMany(TaskSkill::class, 'module_id');
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'service_skills','service_id','skills_id');
+    }
+    public function features()
+    {
+        return $this->morphToMany(Features::class, 'module','module_features');
+
     }
     public function proposal()
     {

@@ -20,6 +20,7 @@ class EmailTemplateTable extends Migration
             $table->longText('description')->nullable();
             $table->string('footer_title')->nullable();
             $table->string('footer_description')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
