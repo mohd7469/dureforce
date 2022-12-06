@@ -9,6 +9,7 @@ use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EmailTemplate;
 
+
 class EmailController extends Controller
 {
     public function index()
@@ -16,14 +17,17 @@ class EmailController extends Controller
     	$pageTitle = "Manage All Email";
     	//$emptyMessage = "No data found";
         $email_test = EmailTemplate::latest()->paginate(getPaginate());
-         
-    	return view('admin.email_section.index', compact('pageTitle','email_test'));
+       $email_template_types = EmailTemplate:: EmailTemplate;
+      
+       
+        return view('admin.email_section.index', compact('pageTitle','email_test','email_template_types'));
     }
     public function emailCreate()
     {
     	$pageTitle = "Create Email";
         // $categories = Category::select('id', 'name')->get();
-    	return view('admin.email_section.create', compact('pageTitle'));
+        $email_template_types = EmailTemplate:: EmailTemplate;
+    	return view('admin.email_section.create', compact('pageTitle','email_template_types'));
     }
 
     public function store(Request $request)
@@ -177,5 +181,27 @@ class EmailController extends Controller
 
         $notify[] = ['success', 'email detail has been updated'];
         return redirect()->route('admin.email.index')->withNotify($notify);
+    }
+
+    public function activeBy(Request $request)
+    {
+        
+        $banner = EmailTemplate::findOrFail($request->id);
+        $banner->is_active = 1;
+        $banner->created_at = Carbon::now();
+        $banner->save();
+        $notify[] = ['success', 'Email Template has been Activated'];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function inActiveBy(Request $request)
+    {
+       
+        $banner = EmailTemplate::findOrFail($request->id);
+        $banner->is_active = 0;
+        $banner->created_at = Carbon::now();
+        $banner->save();
+        $notify[] = ['success', 'Email Template has been inActive'];
+        return redirect()->back()->withNotify($notify);
     }
 }
