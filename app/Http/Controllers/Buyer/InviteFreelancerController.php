@@ -7,6 +7,7 @@ use App\Mail\Notifications\SendNotificationsMail;
 use App\Models\InviteFreelancer;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -41,16 +42,18 @@ class InviteFreelancerController extends Controller
             ]);
 //            DB::commit();
             $job = Job::find($job_id);
-            $user_email = User::find($request['user_id'])->pluck('email')->first();
+
+            $user_email = User::where('id',$request['user_id'])->pluck('email')->first();
+            $email_template = EmailTemplate::where('is_active',1)->where('type','invitation')->first();
 
             $data['invitation'] = $invitation;
             $data['job'] = $job;
+            $data['email_template'] = $email_template;
+
 
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
-dd(true);
 
-
-            return response()->json(["success" => "Successfully Saved"]);
+            return response()->json(["success" => "Invitation sent Successfully"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
