@@ -89,14 +89,14 @@
                                     </a>
                                     <td data-label="@lang('Action')">
                                         @if($email->is_active == 1)
-                                            <button class="icon-btn btn--danger ml-1 bannerinactive inactive" id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
-                                                <i class="las la-times"></i>
+                                            <button class="icon-btn btn--success  ml-1 bannerinactive active" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
+                                                <i class="las la-check "></i>
                                             </button>
                                         @endif
         
                                         @if($email->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive active" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
-                                            <i class="las la-check"></i>
+                                            <button class="icon-btn btn--danger ml-1 banneractive inactive " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
+                                            <i class="las la-times"></i>
                                             </button>
                                         @endif
                                         <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->

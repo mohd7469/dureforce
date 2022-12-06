@@ -42,6 +42,17 @@ class EmailController extends Controller
             
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
         ]);
+        $emailSections= EmailTemplate::where('is_active', 1)->where('type', $request->type)->get();
+        if ($emailSections) {
+            foreach($emailSections as $emailSection){
+                $emailSection->is_active = 0;
+                $emailSection->save();
+
+            }
+         
+        }
+
+
         $email  = new EmailTemplate();
         // if ($request->hasFile('url')) {
         //     try {
