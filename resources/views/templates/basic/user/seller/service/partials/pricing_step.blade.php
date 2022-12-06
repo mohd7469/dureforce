@@ -3,6 +3,7 @@ $serviceSteps = collect([]);
 $extraService = collect([]);
 
 if (!empty($service)) {
+    
     $extraService = $service->addOns;
     $serviceSteps = $service->serviceSteps;
 }
@@ -71,7 +72,7 @@ if (!empty($service)) {
                 <h4 class="hdng-create col-12">Add On Service</h4>
                 <br />
 
-                @if($extraService)
+                @if(count($extraService)>0)
 
                     @foreach ($extraService as $exKey => $extra)
                         <div id="add-service-container">
