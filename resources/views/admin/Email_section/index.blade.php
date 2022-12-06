@@ -11,6 +11,13 @@
     /* background: red; */
     display: inline-block;
 }
+.tickbtn {
+    padding: 5.5px 7px;
+    position: relative;
+    right: 49px;
+}
+
+
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -33,6 +40,7 @@
                             <th>@lang('Footer Description')</th>
                             <th>@lang('Email image')</th>
                             <th>@lang('Action')</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -78,24 +86,24 @@
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.email.edit', $email->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.email.edit', $email->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
                                     {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a> --}}
                                
-                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a>
                                     <td data-label="@lang('Action')">
                                         @if($email->is_active == 1)
-                                            <button class="icon-btn btn--success  ml-1 bannerinactive active" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
+                                            <button class="icon-btn btn--success  ml-1 bannerinactive active tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
                                         @if($email->is_active == 0)
-                                            <button class="icon-btn btn--danger ml-1 banneractive inactive " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
+                                            <button class="icon-btn btn--danger ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
