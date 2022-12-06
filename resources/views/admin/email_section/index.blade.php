@@ -11,6 +11,13 @@
     /* background: red; */
     display: inline-block;
 }
+.tickbtn {
+    padding: 5.5px 7px;
+    position: relative;
+    right: 49px;
+}
+
+
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -33,6 +40,7 @@
                             <th>@lang('Footer Description')</th>
                             <th>@lang('Email image')</th>
                             <th>@lang('Action')</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -78,15 +86,29 @@
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.email.edit', $email->id)}}" class="icon-btn btn--success ml-1 bannerinactive inactive editbtn-c" id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.email.edit', $email->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
                                     {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a> --}}
                                
-                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 banneractive active editbtn-c delete" id="banneractive" data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a>
+                                    <td data-label="@lang('Action')">
+                                        @if($email->is_active == 1)
+                                            <button class="icon-btn btn--success  ml-1 bannerinactive active tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
+                                                <i class="las la-check "></i>
+                                            </button>
+                                        @endif
+        
+                                        @if($email->is_active == 0)
+                                            <button class="icon-btn btn--danger ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
+                                            <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
+                                    </td>
                               
              
                                
@@ -134,7 +156,57 @@
     </div>
 </div>
 
+<div class="modal fade" id="inactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('inactive Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.email.inactive') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to inactive this Technology Logo post?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="activeBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('active Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.email.active') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to active this Technology Logo post?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 @endsection
@@ -158,6 +230,7 @@ for (var i = 0; i < deleteLinks.length; i++) {
     });
 }
     $('.bannerinactive').on('click', function () {
+        
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
