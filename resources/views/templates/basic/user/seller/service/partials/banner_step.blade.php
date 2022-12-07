@@ -1,3 +1,14 @@
+
+@php
+$banner_backgrounds = collect([]);
+$banner_logos = collect([]);
+
+if (!empty($service)) {
+    
+    $banner_backgrounds= getImagesByCategory($service,'background');
+    $banner_logos= getImagesByCategory($service,'logo');
+}
+@endphp
 <form role="form" id="banner-form" action="{{ route('user.service.store.banner') }}"  class="banner-form"  method="POST"
     enctype="multipart/form-data">
     @csrf
@@ -150,9 +161,11 @@
                                 <label class="logo-div">@lang('Technology Logos (Select only 3)') *</label>
                                     <ul class="logo-ul">
                                         <div class="row">
+                                            
                                             @foreach ($banner_logos as $item)
-                                                <div class="col-md-3">
-                                                    <img src="{{$item->url}}" alt="" style="border: 1px solid black;height: 141px;width: 59%;border-radius: 68%;">
+                                                <div class="col-md-2 col-lg-2 col-sm-4 col-xs-6">
+                                                    <img src="{{$item->url}}" alt="" style="border: 1px solid black;height: 80px;
+                                                    width: 51%;border-radius: 68%;">
                                                     <input type="checkbox" value="{{$item->id}}" name="technology_logos[]" id="dynamic_image_1" class="col-1 bg-radio" {{selectedLogoImage($service,$item->id)}}>
                                                 </div>
                                             @endforeach         

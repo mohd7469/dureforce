@@ -62,9 +62,7 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
-        $viewShare['banner_backgrounds'] = BannerBackground::background()->latest()->get();
-        $viewShare['banner_logos'] = BannerBackground::logos()->latest()->get();
-
+        
         $viewShare['fservices'] = Service::where('status_id', 1)->whereHas('category', function($q){
             $q->where('status_id', 1);
         })->paginate(4);

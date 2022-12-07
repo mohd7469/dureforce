@@ -344,7 +344,6 @@ trait CreateOrUpdateEntity {
                 }
 
             } catch (\Exception $exp) {
-                dd($exp->getMessage());
                 return false;
             }
         }
@@ -378,8 +377,9 @@ trait CreateOrUpdateEntity {
                     'number_of_simultaneous_projects' => $request->max_no_projects,
                     'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
                     'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
-                    'status'          => Service::PENDING
+                    'status_id'          => Service::STATUSES['PENDING']
                 ]);
+                $model->save();
 
             } else {
                 $model->softwareDetail()->update([
