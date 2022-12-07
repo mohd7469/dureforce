@@ -22,7 +22,7 @@
                     <ul class="list-group">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Username')
-                            <span class="font-weight-bold">{{__($service->user->username)}}</span>
+                            <span class="font-weight-bold">{{ $service->user->username ?? ''}}</span>
                         </li>
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -35,7 +35,7 @@
 
                          <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Balance')
-                            <span class="font-weight-bold">{{getAmount($service->user->balance)}}  {{__($general->cur_text)}}</span>
+                            <span class="font-weight-bold">{{getAmount($service->user->balance ?? 0)}}  {{__($general->cur_text)}}</span>
                         </li>
                     </ul>
                 </div>
@@ -72,7 +72,7 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Category')
-                                  <span>{{__($service->category->name)}}</span>
+                                  <span>{{__($service->category->name ?? '')}}</span>
                                 </li>
                                 @if(!empty($service->sub_category_id))
                                     <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
@@ -107,9 +107,9 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Status')
-                                    @if($service->status == 1)
+                                    @if($service->status_id == 1)
                                         <span class="font-weight-normal badge--success badge--sm">@lang('Approved')</span>
-                                    @elseif($service->status == 2)
+                                    @elseif($service->status_id == 2)
                                         <span class="font-weight-normal badge--danger badge--sm">@lang('Cancel')</span>
                                     @else
                                         <span class="font-weight-normal badge--primary badge--sm">@lang('Pending')</span>
@@ -159,51 +159,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 mt-2">
-                    <div class="card border--dark">
-                        <h5 class="card-header bg--dark">@lang('Tag')</h5>
-                        <div class="card-body">
-                            <ul>
-                                @foreach($service->tag as $value)
-                                    <li class="font-weight-bold">{{$loop->iteration}}. {{__($value)}}</li>
-                                @endforeach 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+
             </div>
 
-            @if($service->extraService->count() != 0)
-                <div class="row mb-30">
-                    <div class="col-lg-12">
-                        <div class="card border--dark">
-                            <h5 class="card-header bg--dark">@lang('Extra Service')</h5>
-                            <div class="card-body">
-                                <div class="table-responsive--md  table-responsive">
-                                    <table class="table table--light style--two">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">@lang('Title')</th>
-                                                <th scope="col">@lang('Price')</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($service->extraService  as $extra_service)
-                                                <tr>
-                                                    <td data-label="@lang('Title')">
-                                                        {{$extra_service->title}}
-                                                    </td>
-                                                    <td data-label="@lang('Price')">{{getAmount($extra_service->price)}} {{$general->cur_text}}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
+       
 
             <div class="row mb-30">
                 <div class="col-lg-12">
