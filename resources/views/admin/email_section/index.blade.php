@@ -73,14 +73,13 @@
                                     <span class="name">{{($email->footer_description)}}</span>
                                 </div>
                             </td>
-                          {{-- @dd($email->attachments->name) --}}
+
                             <td data-label="@lang('Image')">
-                                @foreach ($email->attachments as $object)
-                                
-                                <a class="bannerModal" id="image_url" data-url="{{$object->url}}" >
-                                    <img src="{{ isset($object->url) ? ($object->url) : asset('assets\images\default.png')}}" alt="@lang('Email Image')" class="b-radius--10" height="50" width="50" >
+                                @isset ($email->attachments)
+                                <a class="bannerModal" id="image_url" data-url="{{ $email->attachments->url}}" >
+                                    <img src="{{ $email->attachments->url}}" alt="@lang('Email Image')" class="b-radius--10" height="50" width="50" >
                                 </a>
-                                @endforeach
+                                @endisset
                                 
                             </td>
                             
