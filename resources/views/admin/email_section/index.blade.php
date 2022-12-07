@@ -39,6 +39,7 @@
                             <th>@lang('Footer Title')</th>
                             <th>@lang('Footer Description')</th>
                             <th>@lang('Email image')</th>
+                            <th>@lang('Status')</th>
                             <th>@lang('Action')</th>
                             <th></th>
                         </tr>
@@ -82,6 +83,13 @@
                                 @endisset
                                 
                             </td>
+                            <td data-label="@lang('Status')">
+                                @if($email->is_active == 1)
+                                    <span class="font-weight-normal badge--success">@lang('Active')</span>
+                                @elseif($email->is_active == 0)
+                                    <span class="font-weight-normal badge--danger">@lang('InActice')</span>
+                                @endif
+                            </td>
                             
                             <td data-label="@lang('Action')">
                                
@@ -96,13 +104,13 @@
                                     </a>
                                     <td data-label="@lang('Action')">
                                         @if($email->is_active == 1)
-                                            <button class="icon-btn btn--success  ml-1 bannerinactive active tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$email->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
                                         @if($email->is_active == 0)
-                                            <button class="icon-btn btn--danger ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$email->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
