@@ -377,7 +377,7 @@ trait CreateOrUpdateEntity {
                     'number_of_simultaneous_projects' => $request->max_no_projects,
                     'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
                     'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
-                    'status_id'          => Service::STATUSES['PENDING']
+                    'status_id'  => $request->action == 'save_project' ? Service::STATUSES['DRAFT']:Service::STATUSES['PENDING']
                 ]);
                 $model->save();
 

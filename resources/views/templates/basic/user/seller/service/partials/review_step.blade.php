@@ -66,18 +66,18 @@ class="review-form"
                     </button>--}}
 
                     <button class="btn service-cancel-btn  m-3">
-                        Cancel
+                        @lang('Cancel')
                     </button>
 
                     <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
-                       Preview Service
+                        @lang('Preview Service')
                     </button> 
 
-                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
-                        Save Project
+                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                        @lang('Save Project')
                      </button> 
                    
-                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE')</button>
+                    <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="submit_for_review">@lang('Submit For Review')</button>
                 </div>  
             </div>
 

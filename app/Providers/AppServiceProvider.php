@@ -17,6 +17,7 @@ use App\Models\Rank;
 use App\Models\Service;
 use App\Models\Software;
 use App\Models\Job;
+use App\Models\Tag;
 use App\Models\Withdrawal;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -61,6 +62,8 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['tags'] = Tag::latest()->get();
+
         
         $viewShare['fservices'] = Service::where('status_id', 1)->whereHas('category', function($q){
             $q->where('status_id', 1);
