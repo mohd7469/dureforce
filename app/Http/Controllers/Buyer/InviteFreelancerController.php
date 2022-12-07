@@ -44,11 +44,17 @@ class InviteFreelancerController extends Controller
             $job = Job::find($job_id);
 
             $user_email = User::where('id',$request['user_id'])->pluck('email')->first();
-            $email_template = EmailTemplate::where('is_active',1)->where('type','invitation')->first();
+            $email_template = EmailTemplate::where('is_active',1)->where('type','invitation')->with('attachments')->first();
+
+            //$email_template->attachments->url;
 
             $data['invitation'] = $invitation;
             $data['job'] = $job;
             $data['email_template'] = $email_template;
+
+            //dd($data['email_template']->attachments->url);
+
+
 
 
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));

@@ -21,6 +21,6 @@ class EmailTemplate extends Model
     ];
 
     public function attachments(){
-        return $this->morphMany(Attachment::class,'section');
+        return $this->morphOne(Attachment::class,'section');
     }
 }
