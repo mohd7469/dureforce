@@ -124,4 +124,10 @@ class BannerController extends Controller
         $notify[] = ['success', 'Banner has been inActive'];
         return redirect()->back()->withNotify($notify);
     }
+    public function destroy($id)
+    {
+        $this->deleteEntity(Banner::class,'job', $id);
+        $notify[] = ['success', 'Job has been deleted'];
+        return back()->withNotify($notify);
+    }
 }
