@@ -110,7 +110,10 @@ class Service extends Model
     {
         return $this->hasMany(ReviewRating::class, 'service_id');
     }
-
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'module','module_tags');

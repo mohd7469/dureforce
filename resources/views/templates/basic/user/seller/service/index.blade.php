@@ -39,24 +39,15 @@
                                                         </td>
                                                         <td data-label="@lang('Category')">
                                                             {{ __($service->category ? $service->category->name : '') }}</td>
-                                                        <td data-label="@lang('Amount')">{{ showAmount($service->price) }}
+                                                        <td data-label="@lang('Amount')">{{ showAmount($service->rate_per_hour) }}
                                                             {{ $general->cur_text }}</td>
                                                         <td data-label="@lang('Delivery Time')">
-                                                            {{ $service->delivery_time }} @lang('Days')</td>
+                                                            {{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }} </td>
                                                         <td data-label="@lang('Status')">
-                                                            @if ($service->status == 1)
-                                                                <span class="badge badge--success">@lang('Approved')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @elseif($service->status == 2)
-                                                                <span class="badge badge--danger">@lang('Cancel')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @else
-                                                                <span class="badge badge--primary">@lang('Pending')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @endif
+                                                            <span class="badge badge--success">@lang($service->status ? $service->status->name : '')</span>
+                                                            <br>
+                                                            {{ diffforhumans($service->created_at) }}
+                                                            
                                                         </td>
                                                         <td data-label="@lang('Last Update')">
                                                             {{ showDateTime($service->updated_at) }}

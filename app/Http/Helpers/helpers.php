@@ -15,6 +15,7 @@ use App\Models\SystemMailConfiguration;
 use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
+use App\Models\BannerBackground;
 use App\Models\Degree;
 use App\Models\Job;
 use App\Models\Language;
@@ -279,6 +280,27 @@ function getFile($model){
     }
     return '';
 }
+function getImagesByCategory($service, $type='logo'){
+    
+    $query=BannerBackground::query();
+    if($type == 'logo'){
+        $query= $query->logos();
+    }
+    else{
+        $query= $query->background();
+    }
+
+    if($service->category_id){
+        $query= $query->where('category_id',$service->category_id);
+    }
+
+    if($service->sub_category_id){
+        $query= $query->where('sub_category_id',$service->sub_category_id);
+    }
+
+    return $query->latest()->get();
+}
+
 function selectedBackgroundImage($model,$banner_background_id){
     if($model){
         if($model->banner){

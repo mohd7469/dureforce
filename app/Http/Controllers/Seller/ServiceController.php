@@ -51,7 +51,7 @@ class ServiceController extends Controller
         $pageTitle = "Create service";
         $completedOverview = '';
         $completedPricing = '';
-        $completedImage = '';
+        $completedBanner = '';
         $completedRequirements = '';
         $completedReview = '';
 
@@ -63,13 +63,11 @@ class ServiceController extends Controller
 
         if ($id) {
             $service = Service::with('serviceSteps', 'serviceAttributes','addOns', 'category', 'subCategory')->findOrFail($id);
-
-            $completedOverview = $service->serviceAttributes()->count() > 0 ? 'completed' : '';
-            $completedPricing = $service->price > 0 ? 'completed' : '';
-            $completedImage = !empty($service->image) ? 'completed' : '';
-            // $completedRequirements = !empty($service->serviceDetail->client_requirements) ? 'completed' : '';
-            // $completedReview = !empty($service->serviceDetail->max_no_projects) ? 'completed' : '';
-            $completedRequirements= $completedReview='';
+            $completedOverview = $service->skills()->count() > 0 ? 'completed' : '';
+            $completedPricing = $service->rate_per_hour > 0 ? 'completed' : '';
+            $completedBanner = $service->banner ? 'completed' : '';
+            $completedRequirements = $service->requirement_for_client ? 'completed' : '';
+            $completedReview = !empty($service->number_of_simultaneous_projects)   ? 'completed' : '';
         }
         return view($this->activeTemplate . 'user.seller.service.create', compact(
             'pageTitle',
@@ -77,7 +75,7 @@ class ServiceController extends Controller
             'attributes',
             'completedOverview',
             'completedPricing',
-            'completedImage',
+            'completedBanner',
             'completedRequirements',
             'completedReview',
             'service'
@@ -124,7 +122,7 @@ class ServiceController extends Controller
         $serviceId = $request->get('service_id');
 
         if(empty($serviceId)) {
-            $notify[] = ['error', 'Recently Created Service is missing.'];
+            $notify[] = ['error', 'Recently Created Service Is Missing'];
             return redirect()->back()->withNotify($notify);
         }
 
@@ -238,13 +236,7 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         $service = Service::findOrFail($id);
-
-        $service->featuresService()->detach();
-        $service->serviceDetail()->delete();
-        $service->serviceSteps()->delete();
-        $service->serviceAttributes()->delete();
-
-        $this->deleteEntity(Service::class, 'service', $id);
+        $service->delete();
         $notify[] = ['success', 'Service has been Deleted Successfully.'];
         return back()->withNotify($notify);
     }
