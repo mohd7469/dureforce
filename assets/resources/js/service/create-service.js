@@ -356,6 +356,7 @@ function overviewFormValidation() {
         position: "topRight",
       });
      }
+     
     var err = false;
 
    
@@ -387,7 +388,8 @@ function baannerForm() {
       } else {
         return true;
       }
-    } else if ($("#pages div#banner1").css("display") == "none") {
+    } 
+    else if ($("#pages div#banner1").css("display") == "none") {
       if ($.trim(banner_heading).length < 1) {
         e.preventDefault();
         $("#banner_heading").after(
@@ -419,23 +421,19 @@ function baannerForm() {
         });
       }
 
-      if($('input:checkbox[name="logo_id[]"]:checked').length <= 0) {
-       // e.preventDefault();
-        // $('.logo-div').insertAfter(
-        // '<span class="error text-danger">Minimum 1 logos can be selected</span>'
-        // )
-        // iziToast.error({
-        //   message: "Minimum 1 logos can be selected",
-        //   position: "topRight",
-        // });
-      }
-      if($('input:checkbox[name="logo_id[]"]:checked').length > 3) {
+      
+      if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
+        iziToast.error({
+          message: "Technology Logos are required",
+          position: "topRight",
+        });
+       }
+      
+      if($('input:checkbox[name="technology_logos[]"]:checked').length != 3) {
           e.preventDefault();
-          $('.logo-div').insertAfter(
-          '<span class="error text-danger">Maximum 3 logos can be selected</span>'
-          )
+          
           iziToast.error({
-            message: "Maximum 3 logos can be selected",
+            message: "3 Logos should be selected",
             position: "topRight",
           });
       }
