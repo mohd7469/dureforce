@@ -556,37 +556,8 @@ function pricingFormValidation() {
 }
 
 function validateAddOnRows(element, e) {
-  if (
-    element.find(".add-on-title").val() < 1 &&
-    element.find(".add-on-title") != ""
-  ) {
-    e.preventDefault();
-    element
-      .find(".add-on-title")
-      .after('<span class="error text-danger">This field is required</span>');
-  }
+ 
 
-  if (
-    element.find(".add_on_price").val() < 1 &&
-    element.find(".add_on_price") != ""
-  ) {
-    e.preventDefault();
-    element
-      .find(".add_on_price")
-      .after(
-        '<span class="error text-danger">Minimum rate should be greater than 0</span>'
-      );
-  }
-
-  if (
-    element.find(".add-on-delivery").val() < 1 &&
-    element.find(".add-on-delivery") != ""
-  ) {
-    e.preventDefault();
-    element
-      .find(".add-on-delivery")
-      .after('<span class="error text-danger">This field is required.</span>');
-  }
 }
 function deleteAddOnRow(row_id){
   $(row_id).remove();

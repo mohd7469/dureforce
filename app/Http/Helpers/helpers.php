@@ -337,7 +337,6 @@ function makeDirectory($path)
     return mkdir($path, 0755, true);
 }
 
-
 function removeFile($path)
 {
     try {
@@ -365,7 +364,6 @@ function removeFile($path)
     }
 }
 
-
 function activeTemplate($asset = false)
 {
     $general = GeneralSetting::first(['active_template']);
@@ -389,13 +387,11 @@ function activeTemplateName()
     return $template;
 }
 
-
 function loadReCaptcha()
 {
     $reCaptcha = Extension::where('act', 'google-recaptcha2')->where('status', 1)->first();
     return $reCaptcha ? $reCaptcha->generateScript() : '';
 }
-
 
 function loadAnalytics()
 {
@@ -408,7 +404,6 @@ function loadTawkto()
     $tawkto = Extension::where('act', 'tawk-chat')->where('status', 1)->first();
     return $tawkto ? $tawkto->generateScript() : '';
 }
-
 
 function loadFbComment()
 {
@@ -436,7 +431,6 @@ function loadCustomCaptcha($height = 46, $width = '100%', $bgcolor = '#003', $te
     return $ret;
 }
 
-
 function captchaVerify($code, $secret)
 {
     $captcha = Extension::where('act', 'custom-captcha')->where('status', 1)->first();
@@ -458,7 +452,6 @@ function getTrx($length = 12)
     return $randomString;
 }
 
-
 function getAmount($amount, $length = 0)
 {
     if (0 < $length) {
@@ -468,7 +461,6 @@ function getAmount($amount, $length = 0)
     }
     return $amount + 0;
 }
-
 
 function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = false)
 {
@@ -485,7 +477,6 @@ function showAmount($amount, $decimal = 2, $separate = true, $exceptZeros = fals
     }
     return $printAmount;
 }
-
 
 function removeElement($array, $value)
 {
@@ -528,18 +519,15 @@ function curlPostContent($url, $arr = null)
     return $result;
 }
 
-
 function inputTitle($text)
 {
     return ucfirst(preg_replace("/[^A-Za-z0-9 ]/", ' ', $text));
 }
 
-
 function titleToKey($text)
 {
     return strtolower(str_replace(' ', '_', $text));
 }
-
 
 function str_limit($title = null, $length = 10)
 {
@@ -657,6 +645,17 @@ function siteName()
     return $title;
 }
 
+function isSelectedTag($tag_id,$service_tags){
+    $service_tags=$service_tags->pluck('id')->toArray();
+    if(in_array($tag_id,$service_tags)){
+        
+        return "selected";
+    }
+    else{
+        return '';
+    }
+
+}
 
 //moveable
 function getTemplates()
