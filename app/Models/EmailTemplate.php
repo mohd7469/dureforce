@@ -13,6 +13,12 @@ class EmailTemplate extends Model
     protected $casts = [
         'shortcodes' => 'object'
     ];
+    public const EmailTemplate =[
+
+        'invitation' =>  "invitation",
+        'offer' =>   "offer"
+        
+    ];
 
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');

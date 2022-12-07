@@ -189,6 +189,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('email/store', 'EmailController@store')->name('email.store');
             
             Route::get('email/edit/{id}', 'EmailController@editdetails')->name('email.edit');
+            Route::post('email/inactiveBy', 'EmailController@inActiveBy')->name('email.inactive');
+            Route::post('email/activeBy', 'EmailController@activeBy')->name('email.active');
             Route::post('email/update/{id}', 'EmailController@emailupdate')->name('email.update');
             Route::get('/email/delete/{id}', 'EmailController@delete')->name('email.delete');
           
