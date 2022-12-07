@@ -32,7 +32,7 @@
                                     <span class="font-weight-bold">{{ isset($service->user->fullname) ? $service->user->fullname : ''; }}</span>
                                     <br>
                                     <span class="small">
-                                    <a href="{{ route('admin.users.detail', $service->user_id) }}"><span>@</span>{{ isset($service->user->username) ? $service->user->username : ''; }}</a>
+                                    <a href="#"><span>@</span>{{ isset($service->user->username) ? $service->user->username : ''; }}</a>
                                     </span>
                                 </td>
                                 <td data-label="@lang('Category / SubCategory')">
@@ -67,15 +67,15 @@
                                 </td>
 
                                 <td data-label="@lang('Status')">
-                                    @if($service->status == 1)
+                                    @if($service->status_id == 1)
                                         <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
-                                    @elseif($service->status == 2)
+                                    @elseif($service->status_id == 2)
                                         <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
-                                    @elseif($service->status == 0)
+                                    @elseif($service->status_id == 0)
                                         <span class="font-weight-normal badge--primary">@lang('Pending')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
@@ -90,7 +90,7 @@
 
                                 <td data-label="@lang('Action')" colspan="2">
                                  
-                                    @if($service->status == 0)
+                                    @if($service->status_id == 0)
                                         <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
                                             <i class="las la-check"></i>
                                         </button>

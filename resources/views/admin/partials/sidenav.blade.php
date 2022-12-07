@@ -479,6 +479,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.service.approved') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Approved')</span>
+                                        @if ($serviceApprove)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $serviceApprove }}</span>
+                                        @endif
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item {{ menuActive('admin.service.cancel') }} ">
