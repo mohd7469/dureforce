@@ -27,15 +27,23 @@
 
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Status')
-                                <span class="badge badge-pill bg--success">@lang('Active')</span>
-                         
-                                <span class="badge badge-pill bg--danger">@lang('Banned')</span>
+                            @if($service->status_id == 19)
+                                <span class="badge badge-pill bg--success">@lang('Approved')</span>
+                            @elseif($service->status_id == 20)
+                                <span class="badge badge-pill bg--danger">@lang('Canceled')</span>
+                            @elseif($service->status_id == 17)
+                                <span class="badge badge-pill bg--warning">@lang('Draft')</span>
+                            @elseif($service->status_id == 21)
+                                <span class="badge badge-pill bg--info">@lang('Under Review')</span>
+                            @else
+                                <span class="badge badge-pill bg--primary">@lang('Pending')</span>
+                            @endif
                            
                         </li>
 
                          <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Balance')
-                            <span class="font-weight-bold">{{getAmount($service->user->balance ?? 0)}}  {{__($general->cur_text)}}</span>
+                            <span class="font-weight-bold">{{ showAmount($service->rate_per_hour) }} {{ $general->cur_text }}</span>
                         </li>
                     </ul>
                 </div>
@@ -88,7 +96,7 @@
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Delivery Time')
-                                    <span>{{$service->delivery_time}} @lang('Days')</span>
+                                    <span>{{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }}</span>
                                 </li>
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
@@ -107,23 +115,27 @@
                             <ul class="list-group">
                                 <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Status')
-                                    @if($service->status_id == 1)
+                                    @if($service->status_id == 19)
                                         <span class="font-weight-normal badge--success badge--sm">@lang('Approved')</span>
-                                    @elseif($service->status_id == 2)
-                                        <span class="font-weight-normal badge--danger badge--sm">@lang('Cancel')</span>
+                                    @elseif($service->status_id == 20)
+                                        <span class="font-weight-normal badge--danger badge--sm">@lang('Canceled')</span>
+                                    @elseif($service->status_id == 17)
+                                        <span class="font-weight-normal badge--warning badge--sm">@lang('Draft')</span>
+                                    @elseif($service->status_id == 21)
+                                        <span class="font-weight-normal badge--info badge--sm">@lang('Under Review')</span>
                                     @else
                                         <span class="font-weight-normal badge--primary badge--sm">@lang('Pending')</span>
                                     @endif
                                 </li>
                               
-                                <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+                                <!-- <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Featured Item')
                                     @if($service->featured == 0)
                                         <span class="font-weight-normal badge--warning badge--sm">@lang('Not Include')</span>
                                     @else
                                         <span class="font-weight-normal badge--primary badge--sm">@lang('Include')</span>
                                     @endif
-                                </li>
+                                </li> -->
 
                                  <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                   @lang('Rating')

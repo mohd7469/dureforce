@@ -117,10 +117,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('service/pending', 'ServiceController@pending')->name('service.pending');
             Route::get('service/approved', 'ServiceController@approved')->name('service.approved');
             Route::get('service/cancel', 'ServiceController@cancel')->name('service.cancel');
+            Route::get('service/draft', 'ServiceController@draft')->name('service.draft');
+            Route::get('service/underReview', 'ServiceController@underReview')->name('service.underReview');
             Route::post('service/featured/include', 'ServiceController@featuredInclude')->name('service.featured.include');
             Route::post('service/featured/remove', 'ServiceController@featuredNotInclude')->name('service.featured.remove');
             Route::post('service/approvedBy', 'ServiceController@approvedBy')->name('service.approvedBy');
+            Route::post('service/pendingBy', 'ServiceController@pendingBy')->name('service.pendingBy');
             Route::post('service/cancelBy', 'ServiceController@cancelBy')->name('service.cancelBy');
+            Route::post('service/draftBy', 'ServiceController@draftBy')->name('service.draftBy');
+            Route::post('service/underReviewBy', 'ServiceController@underReviewBy')->name('service.underReviewBy');
+
             Route::get('service/category', 'ServiceController@serviceCategory')->name('service.category');
             Route::get('service/{scope}/search', 'ServiceController@search')->name('service.search');
             Route::post('service/destroy/{id}', 'ServiceController@destroy')->name('service.destroy');
