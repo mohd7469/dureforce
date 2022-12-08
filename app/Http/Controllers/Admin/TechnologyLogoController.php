@@ -125,4 +125,10 @@ class TechnologyLogoController extends Controller
         $notify[] = ['success', 'Technology Logo has been inActive'];
         return redirect()->back()->withNotify($notify);
     }
+    public function destroy($id)
+    {
+        $this->deleteEntity(Banner::class,'job', $id);
+        $notify[] = ['success', 'Job has been deleted'];
+        return back()->withNotify($notify);
+    }
 }

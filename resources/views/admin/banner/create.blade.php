@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Subject')<span class="text-danger">*</span></label>
+                                    <label class="form-control-label">@lang('Subject')<span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" name="subject" >
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label  font-weight-bold">@lang('Upload Banner') <span class="text-danger">*</span></label>
+                                    <label class="form-control-label ">@lang('Upload Banner') <span class="text-danger">*</span></label>
                                     <input class="form-control" type="file" name="image" style="height:50px;">
                                 </div>
                             </div>

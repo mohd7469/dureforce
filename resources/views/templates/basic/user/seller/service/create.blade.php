@@ -227,12 +227,13 @@
             selected_skills=selected_skills.map(Number);
             console.log(selected_skills);
             $('#form_attributes').empty();
+            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4>');
             for (var main_category in data) { //heading main
                 
                 var all_sub_categories=data[main_category];
                 var main_category_id=genRand(5);
             
-                $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+                $('#form_attributes').append('<div class="row mt-3 mb-3" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
                 for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                     var skills=all_sub_categories[sub_category_enum];

@@ -33,21 +33,21 @@ class ServiceController extends Controller
     {
     	$pageTitle = "Manage Pending Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 0)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 0)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
     public function approved()
     {
     	$pageTitle = "Manage Approved Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 1)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 1)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
     public function cancel()
     {
     	$pageTitle = "Manage Cancel Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 3)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 3)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
 
@@ -131,15 +131,15 @@ class ServiceController extends Controller
         switch ($scope) {
             case 'approved':
                 $pageTitle .= 'Approved ';
-                $services = $services->where('status', 1);
+                $services = $services->where('status_id', 1);
                 break;
             case 'pending':
                 $pageTitle .= 'Pending ';
-                $services = $services->where('status', 0);
+                $services = $services->where('status_id', 0);
                 break;
             case 'cancel':
                 $pageTitle .= 'Cancel ';
-                $services = $services->where('status', 2);
+                $services = $services->where('status_id', 2);
                 break;
         }
         $services = $services->latest()->paginate(getPaginate());

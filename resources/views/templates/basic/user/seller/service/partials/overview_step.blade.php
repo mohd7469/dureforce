@@ -1,3 +1,5 @@
+
+
 <form role="form" class="user-profile-form" action="{{ route('user.service.store.overview') }}" method="POST">
     @csrf
     <div class="card-body">
@@ -30,10 +32,15 @@
                         multiple="multiple" >
                         {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
 
-                        @if (!empty($service->tags))
-                            @foreach ($service->tags as $tag)
-                                <option selected="true" > {{ $tag->name }}</option>
+                        @if ($service && count($service->tags)>0)
+                            @foreach ($tags as $tag)
+                                <option {{isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
                             @endforeach
+                        @else
+                            @foreach ($tags as $tag)
+                                <option > {{ $tag->name }}</option>
+                            @endforeach
+                        
                         @endif
 
                     </select>

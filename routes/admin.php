@@ -178,6 +178,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('banner/activeBy', 'BannerController@activeBy')->name('banner.activeBy');
             Route::get('banner/details/{uuid}', 'BannerController@details')->name('banner.details');
             Route::get('banner/category', 'BannerController@category')->name('banner.category');
+            Route::post('banner/destroy/{id}', 'BannerController@destroy')->name('banner.destroy');
  
         });
         //Email template
@@ -208,6 +209,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('techlogo/activeBy', 'TechnologyLogoController@activeBy')->name('techlogo.activeBy');
             Route::get('techlogo/details/{uuid}', 'TechnologyLogoController@details')->name('techlogo.details');
             Route::get('techlogo/category', 'TechnologyLogoController@category')->name('techlogo.category');
+            Route::post('techlogo/destroy/{id}', 'TechnologyLogoController@destroy')->name('techlogo.destroy');
  
         });
         

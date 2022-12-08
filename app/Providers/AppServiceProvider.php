@@ -18,6 +18,7 @@ use App\Models\Service;
 use App\Models\Software;
 use App\Models\Banner;
 use App\Models\Job;
+use App\Models\Tag;
 use App\Models\Withdrawal;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
@@ -62,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['tags'] = Tag::latest()->get();
+
         
         $viewShare['fservices'] = Service::where('status_id', 1)->whereHas('category', function($q){
             $q->where('status_id', 1);
@@ -81,7 +84,8 @@ class AppServiceProvider extends ServiceProvider
                 'onhold_ticket_count'         => SupportTicket::where('status_id',SupportTicket::$OnHold)->count(),
                 'pending_deposits_count'    => Deposit::all()->count(),
                 'pending_withdraw_count'    => Withdrawal::all()->count(),
-                'servicePending'    => Service::all()->count(),
+                'servicePending'    => Service::where('status_id', 0)->count(),
+                'serviceApprove'    => Service::where('status_id', 1)->count(),
                 'softwarePending'    => Software::all()->count(),
                 'jobPending'    => Job::where('status_id', 1)->count(),
                 'jobApproved'    => Job::where('status_id', 2)->count(),

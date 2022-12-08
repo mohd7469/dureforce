@@ -20,6 +20,7 @@
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
                             <th>@lang('Action')</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -66,7 +67,7 @@
                             <td data-label="@lang('Action')">
                                 @if($banner->is_active == 1)
                                     <button class="icon-btn btn--danger ml-1 bannerinactive inactive" id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$banner->id}}">
-                                        <i class="las la-times"></i>
+                                        <i class="las la-check"></i>
                                     </button>
                                 @endif
 
@@ -75,7 +76,13 @@
                                     <i class="las la-check"></i>
                                     </button>
                                 @endif
-             
+                                <td>
+                                    <form action="{{route('admin.banner.destroy', [$banner->id])}}" method="POST" >
+                                        @csrf
+                                        <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1"  type="submit">Delete</button>
+                                    </form>
+                                </td>
+                                
                                 <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
                             </td>
                         </tr>
