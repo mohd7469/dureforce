@@ -21,12 +21,12 @@ class="review-form"
                 </div>
 
                 <br>
-                <h4 class="hdng-create">Copyright Notice</h4>
+                <h4 class="hdng-create">@lang('Copyright Notice')</h4>
                 <p class="lbl-review">By submitting your project, you declare that you either own or have rights to the material posted and
                     that posting these materials does not infringe on any third party's rights. You also acknowledge
                     that you understand your project will be reviewed and evaluated by DureForce to ensure it meets
                     DureForce's requirements.</p>
-                <h4 class="hdng-create">Terms of Service</h4>
+                <h4 class="hdng-create">@lang('Terms of Service')*</h4>
                 <br>
                 <label for="">
                     <input type="checkbox" name="copyright_notice"  class="checkbox-review" id="copyright_notice" {{ @$service->is_terms_accepted ? 'checked' : '' }}>
@@ -39,7 +39,7 @@ class="review-form"
                 </label>
                 <span id="copy"></span>
 
-                <h4 class="hdng-create">Privacy Notice</h4>   
+                <h4 class="hdng-create">@lang('Privacy Notice')*</h4>   
                 <label for="privacy" class="d-flex">
                     <input type="checkbox" name="privacy_notice" class="checkbox-review" id="privacy_notice" {{ @$service->is_privacy_accepted ? 'checked' : '' }}>
                     <span class="lbl-review review-check mb-3" >By submitting this project and activating it, I understand that it will
