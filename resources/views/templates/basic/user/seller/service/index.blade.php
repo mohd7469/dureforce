@@ -44,7 +44,7 @@
                                                         <td data-label="@lang('Delivery Time')">
                                                             {{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }} </td>
                                                         <td data-label="@lang('Status')">
-                                                            <span class="badge badge--success">@lang($service->status ? $service->status->name : '')</span>
+                                                            <span class="badge {{$service->status->color}}">@lang($service->status ? $service->status->name : '')</span>
                                                             <br>
                                                             {{ diffforhumans($service->created_at) }}
                                                             
