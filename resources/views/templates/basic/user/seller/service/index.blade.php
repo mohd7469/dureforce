@@ -57,12 +57,15 @@
                                                         <td data-label="Views">0</td>
                                                         <td data-label="Actions">
                                                             <div style="display: flex">
-                                                                    <form action="{{ route('user.service.create', [$service->id]) }}"
-                                                                            method="get">
-                                                                        @csrf
-                                                                        <button class="btn--action" type="submit"><i
-                                                                                    class="fa fa-edit"></i></button>
-                                                                    </form>
+                                                                <a href="#" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
+                                                                
+                                                                <form action="{{ route('user.service.create', [$service->id]) }}"
+                                                                        method="get">
+                                                                    @csrf
+                                                                    <button class="btn--action" type="submit"><i
+                                                                                class="fa fa-edit"></i></button>
+                                                                </form>
+
                                                                 <form
                                                                     action="{{ route('user.service.destroy', [$service->id]) }}"
                                                                     method="POST">
@@ -72,6 +75,7 @@
                                                                         type="submit"><i
                                                                             class="fa fa-trash-alt"></i></button>
                                                                 </form>
+
                                                             </div>
                                                         </td>
                                                     </tr>
