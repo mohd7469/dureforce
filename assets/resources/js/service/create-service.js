@@ -291,7 +291,7 @@ function overviewFormValidation() {
         '<span class="error text-danger">This field is required / atleast 3 tags</span>'
       );
       iziToast.error({
-        message: "Tags are required",
+        message: "Atleast 3 Tags are required",
         position: "topRight",
       });
     }
