@@ -45,7 +45,15 @@ class ServiceController extends Controller
         $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate());
         return view($this->activeTemplate . 'user.seller.service.index', compact('pageTitle', 'services', 'emptyMessage'));
     }
-
+    public function show($uuid){
+       
+        $pageTitle = "Service details";
+        $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
+        $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
+        
+        return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service','selected_skills'));
+    
+    }
     public function create($id = null)
     {
         $pageTitle = "Create service";
@@ -62,7 +70,7 @@ class ServiceController extends Controller
         $service = null;
 
         if ($id) {
-            $service = Service::with('serviceSteps', 'serviceAttributes','addOns', 'category', 'subCategory')->findOrFail($id);
+            $service = Service::with('serviceSteps','addOns', 'category', 'subCategory')->findOrFail($id);
             $completedOverview = $service->skills()->count() > 0 ? 'completed' : '';
             $completedPricing = $service->rate_per_hour > 0 ? 'completed' : '';
             $completedBanner = $service->banner ? 'completed' : '';

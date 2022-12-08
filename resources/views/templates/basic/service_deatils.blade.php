@@ -18,6 +18,11 @@
           content="{{ getAzureImage('service/' . $service->image, imagePath()['service']['size']) }}" />
 @endsection
 @section('content')
+
+<input type="hidden" value="{{$service->category_id}}" id="category_id">
+<input type="hidden" {{$service->sub_category_id}} id="sub_category_id">
+<input type="hidden" value="{{$selected_skills}}" name="job_skills" id="job_skills" >
+
     <section class="all-sections pt-3">
         <div class="container-fluid p-max-sm-0">
             <div class="sections-wrapper d-flex flex-wrap justify-content-center">
@@ -37,10 +42,10 @@
                                                     <div class="left mb20">
                                                         <h3 class="title">{{ __($service->title) }}</h3>
                                                         <div class="item-details-tag">
-                                                            <ul class="tags-wrapper">
+                                                            <ul class="tags-wrapper mt-3 ">
                                                             <!--<li class="caption">@lang('Tags')</li>-->
-                                                                @foreach ($service->tag as $tags)
-                                                                    <li><a href="javascript:void(0)">{{ __($tags) }}</a>
+                                                                @foreach ($service->tags as $tags)
+                                                                    <li><a href="javascript:void(0)">{{ __($tags->name) }}</a>
                                                                     </li>
                                                                 @endforeach
                                                             </ul>
@@ -68,11 +73,11 @@
                                                         </div>
                                                     </div>
                                                     {{-- slider area --}}
-                                                    @include($activeTemplate . 'partials._banner', [
+                                                    {{-- @include($activeTemplate . 'partials._banner', [
                                                         'model' => $service,
                                                         'folder' => 'service',
                                                         'optionalFolder' => 'optionalService',
-                                                    ])
+                                                    ]) --}}
                                                     {{-- slider area --}}
                                                     {{-- <div thumbsSlider="" class="item-small-slider mt-20"> --}}
                                                     {{-- <div class="swiper-wrapper"> --}}
@@ -86,7 +91,7 @@
                                                     {{-- @endforeach --}}
                                                     {{-- </div> --}}
                                                     {{-- </div> --}}
-                                                    <div class="item-details-content">
+                                                    <div class="row item-details-content">
                                                         <div class="service_subtitle1 mt-20">{{ $pageTitle }}</div>
                                                         <div class="service_subtitle2">
                                                             Description
@@ -95,46 +100,19 @@
                                                         <div class="product-desc-content">
                                                             {!! $service->description !!}
                                                         </div>
+                                                        
                                                         <div class="service_subtitle2">
                                                             Attributes
                                                         </div>
+                                                        <div id="form_attributes">
+                                                       
+                                                        </div>
+
                                                         <div class="sep-solid"></div>
                                                         <div class="mt-10">
-                                                            @foreach ($attributes as $key => $attr)
-                                                                @php
-                                                                    $check = "";
-                                                                    if(! empty($service->serviceDetail->entity_fields)) {
-                                                                        if(array_key_exists($key, $service->serviceDetail->entity_fields)) {
-                                                                            $check = $service->serviceDetail->entity_fields[$key];
-                                                                        }
-                                                                    }
-                                                                @endphp
-
-                                                                <h4 class="mt-20"> {{ __($attr->name ) }} </h4>
-
-                                                                @if ($attr->field_type != true)
-                                                                    @foreach ($attr->attributes as $keyBack => $back)
-                                                                        @if ($back->type == 0)
-                                                                            @foreach ($service->serviceAttributes as $val)
-                                                                                @if( $back->id == $val->attribute_id)
-                                                                                    <span class="attr"> {{ $back->name }} </span>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        @endif
-                                                                    @endforeach
-
-                                                                    @foreach ($attr->attributes as $keyFront => $front)
-                                                                        @if ($front->type == 1)
-                                                                            @foreach ($service->serviceAttributes as $val)
-                                                                                @if( $front->id == $val->attribute_id)
-                                                                                    <span class="attr">  {{ $front->name }} </span>
-                                                                                @endif
-                                                                            @endforeach
-
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endif
-                                                            @endforeach
+                                                            {{-- @foreach ($attributes as $key => $attr)
+                                                                
+                                                            @endforeach --}}
                                                         </div>
                                                         <!-- foreach ($service->serviceAttributes as $val)
                                                             {$val->attribute->name}
@@ -146,7 +124,6 @@
                                                         <div class="simpletext">
                                                             @if ($service->serviceSteps->isNotEmpty())
                                                                 @foreach ($service->serviceSteps as $serviceKey => $item)
-
                                                                     <h5> {{ $item->name }} </h5>
                                                                     {{ $item->description }}
 
@@ -170,13 +147,13 @@
                                                         </ul>
 
                                                         <ul class="service-table">
-                                                            @if ($service->extraService->isNotEmpty())
-                                                                @foreach ($service->extraService as $extra)
+                                                            @if ($service->addOns->isNotEmpty())
+                                                                @foreach ($service->addOns as $extra)
                                                                     <li>
                                                                         <div style="width: 30%;">{{ __($extra->title) }}</div>
-                                                                        <div style="width: 18%;">{{ __($general->cur_sym) }}{{ showAmount($extra->price) }}</div>
-                                                                        <div style="width: 18%;">{{ $extra->delivery }} Days</div>
-                                                                        <div style="width: 18%;"><a href="{{ route('user.service.booking', [slug($service->title), encrypt($service->id)]) }}" class="standard-btn">@lang('Add')</a>
+                                                                        <div style="width: 18%;">{{ __($general->cur_sym) }}{{ showAmount($extra->rate_per_hour) }}</div>
+                                                                        <div style="width: 18%;">{{ $extra->estimated_delivery_time }} Days</div>
+                                                                        <div style="width: 18%;"><a href="#" class="standard-btn">@lang('Add')</a>
                                                                         </div>
                                                                     </li>
                                                                 @endforeach
@@ -194,18 +171,15 @@
                                                         <div class="profile-widget-author pb-20">
                                                             <div class="left">
                                                                 <div class="thumb">
-                                                                    <img src="{{ !empty($service->user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $service->user->image, 'profile_image'): getImage('assets/images/default.png') }}"
+                                                                    <img src="{{ !empty($service->user->basicProfile->profile_picture)? $service->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}"
                                                                          alt="{{ __($service->user->username) }}">
                                                                 </div>
                                                                 <div class="content mt-15">
                                                                     <h4 class="name">
-                                                                        {{ __(@$service->user->designation) }}
-                                                                    </h4>
-                                                                    <h4 class="name">
-                                                                        Architect/Consultant
+                                                                        {{ __(@$service->user->basicProfile->designation) }}
                                                                     </h4>
                                                                     <span class="designation">
-                                                                        {{ __(@$service->user->country_code) }}
+                                                                        {{ __(@$service->user->location) }}
                                                                         - 5:20pm local time</span>
                                                                 </div>
                                                             </div>
@@ -232,7 +206,7 @@
                                                         </div>
                                                     </div>
 
-                                                    @if ($reviews->isNotEmpty())
+                                                    {{-- @if ($reviews->isNotEmpty())
                                                         <div class="service_subtitle3 mt-20">Reviews & Testimonials
                                                         <span>
                                                             @if (intval($service->rating) == 1)
@@ -294,8 +268,8 @@
                                                                     <span>{{ showDateTime($review->created_at, 'd M Y') }}</span>
                                                                 </p>
                                                             </div>
-                                                    @endforeach
-                                                @endif
+                                                        @endforeach
+                                                    @endif --}}
                                                 </div>
 
                                             </div>
@@ -308,7 +282,7 @@
 
                                                 <ul class="sidebar-title1">
                                                     <li><span>@lang('Price')</span>
-                                                        <span>${{ showAmount($service->price) }}/hr</span>
+                                                        <span>${{ showAmount($service->rate_per_hour) }}/hr</span>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
@@ -317,14 +291,14 @@
                                                     </li>
                                                 </ul>
 
-                                                <ul class="sidebar-list">
-                                                    <li><span>@lang('Number of Revisions')</span>
-                                                        <span>10</span>
+                                                <ul class="sidebar-title2">
+                                                    <li><span>@lang('Number of Simultaneous Projects')</span>
+                                                        <span>{{$service->number_of_simultaneous_projects}}</span>
                                                     </li>
-                                                    @if (!empty($service->_decoded_deliverables()))
-                                                        @foreach ($service->_decoded_deliverables() as $delivery)
-                                                            <li><span> {{ $delivery }}</span>
-                                                        <span><i class="fa fa-regular fa fa-check"
+                                                    @if ($service && count($service->deliverable)>0)
+                                                        @foreach ($service->deliverable as $delivery)
+                                                            <li><span> {{ $delivery->name }}</span>
+                                                                <span><i class="fa fa-regular fa fa-check"
                                                                  style="color: #4c9d97;font-size: 18px;"></i></span>
                                                             </li>
                                                         @endforeach
@@ -345,7 +319,7 @@
                                     </div>
                                 </div>
 
-                                @if ($otherServices->isNotEmpty())
+                                @if ($service && count($service->addOns)>0)
                                     <div class="item-bottom-area pt-50">
                                         <div class="row justify-content-center">
                                             <!--<div class="col-xl-12">-->
@@ -356,7 +330,7 @@
                                                     <h2 class="section-title">@lang('Related Services')</h2>
                                                 </div>
                                                 <div class="item-card-wrapper border-0 p-0 grid-view">
-                                                    @foreach ($otherServices as $other)
+                                                    @foreach ($service->addOns as $other)
                                                         <div class="item-card">
                                                             <div class="item-card-thumb">
                                                                 <img src="{{ getAzureImage('service/' . $other->image, imagePath()['service']['size']) }}"
@@ -373,12 +347,12 @@
                                                                     <div class="item-details-tag">
                                                                         <ul class="tags-wrapper">
                                                                         <!--<li class="caption">@lang('Tags')</li>-->
-                                                                            @foreach ($other->tag as $tags)
-                                                                                <li>
-                                                                                    <a
-                                                                                            href="javascript:void(0)">{{ __($tags) }}</a>
-                                                                                </li>
-                                                                            @endforeach
+                                                                            {{-- @foreach ($other->tag as $tags) --}}
+                                                                                {{-- <li> --}}
+                                                                                    {{-- <a --}}
+                                                                                            {{-- href="javascript:void(0)">{{ __($tags) }}</a> --}}
+                                                                                {{-- </li> --}}
+                                                                            {{-- @endforeach --}}
                                                                         </ul>
                                                                     </div>
                                                                     <div class="left">
@@ -388,10 +362,9 @@
                                                                             </div>-->
                                                                         <div class="author-content">
                                                                             <h5 class="name"><a
-                                                                                        href="{{ route('profile', $other->user->username) }}">by
-                                                                                    {{ __($other->user->username) }}</a>
-                                                                                <span
-                                                                                        class="level-text">{{ __(@$other->user->rank->level) }}</span>
+                                                                                {{-- href="{{ route('profile', $other->user->username) }}">by --}}
+                                                                                    {{-- {{ __($other->user->username) }}</a> --}}
+                                                                                {{-- <span class="level-text">{{ __(@$other->user->rank->level) }}</span> --}}
                                                                             </h5>
                                                                             <br>
                                                                             <h5 class="name">Delivered
@@ -472,6 +445,7 @@
 @push('script')
 <script>
     $(document).ready(function() {
+        fetchSkills();
         $("#readless").hide();
         var maxLength = 700;
         $(".show-read-more").each(function() {
@@ -505,9 +479,68 @@
                     '<a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>');
         });
     });
-</script>
-<script>
-    'use strict';
+    const genRand = (len) => {
+        return Math.random().toString(36).substring(2,len+2);
+    }
+    function populateSkills(data)
+    {
+        var selected_skills=$('#job_skills').val();
+        console.log(selected_skills);
+        selected_skills=(selected_skills.split(','));
+        selected_skills=selected_skills.map(Number);
+
+        for (var main_category in data) { //heading main
+            
+            var all_sub_categories=data[main_category];
+            var main_category_id=genRand(5);
+            var remove =true;
+            $('#form_attributes').append('<div class="row custom_cards_s" id="'+main_category_id+'"><h4 class="d-heading">'+main_category+'</h4>');
+            for (var sub_category_enum in all_sub_categories) { //front end backend 
+
+                var skills=all_sub_categories[sub_category_enum];
+                var sub_category_id=genRand(5);
+                var sub_skills=skills.map(a => a.id);
+                if(selected_skills.some(r => sub_skills.includes(r))){
+                    remove=false
+                    $('#'+main_category_id).append('<div class="col-md-6 mt-2 mb-2"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="form-group admin-row row" id="'+sub_category_id+'" style="display: inline">');
+                    
+                        for (var skill_index in skills) {
+                        
+                        var skill_id=skills[skill_index].id;
+                        var skill_name=skills[skill_index].name;
+                        if( selected_skills.includes(skill_id)){
+                            $('#'+sub_category_id).append('<p class="card-text ad-job-detail" style="display:inline">'+skill_name+'</p>');
+                        }
+                    }
+                }
+                
+            }
+            $('#'+main_category_id).append('</div>');
+            if(remove)
+                $('#'+main_category_id).remove();
+        }
+        $('#form_attributes').append('</div>');
+
+    }
+
+    function fetchSkills() {
+        var category_id    = $('#category_id').val();
+        var sub_catgory_id = $('#sub_category_id').val();
+        $.ajax({
+            type:"GET",
+            url:'/job-skills',
+            data: {category_id : category_id,sub_category_id:sub_catgory_id},
+            success:function(data){
+                var html = '';
+                if(data.error){
+                
+                }
+                else{
+                    populateSkills(data);            
+                }
+            }
+        });  
+    }
     var swiper = new Swiper(".item-small-slider", {
         spaceBetween: 30,
         slidesPerView: 4,
@@ -528,37 +561,5 @@
         },
     });
 
-    $('.commentMore').on('click', function() {
-        var link = $(this).data('link');
-        var page = $(this).data('page');
-        var href = link + page;
-        var commentCount = {{ $comments->total() }};
-        $.get(href, function(response) {
-            var html = $(response).find("#commentShow").html();
-            $("#commentShow").append(html);
-            var loadMoreCount = 7 * page;
-            if (loadMoreCount > commentCount) {
-                $('.commentMore').hide()
-            }
-        });
-        $(this).data('page', (parseInt(page) + 1));
-
-    });
-
-    $('.reviewMore').on('click', function() {
-        var link = $(this).data('link');
-        var page = $(this).data('page');
-        var href = link + page;
-        var reviewCount = {{ $reviews->total() }};
-        $.get(href, function(response) {
-            var html = $(response).find("#reviewShow").html();
-            $("#reviewShow").append(html);
-            var loadMoreCount = 7 * page;
-            if (loadMoreCount > reviewCount) {
-                $('.reviewMore').hide()
-            }
-        });
-        $(this).data('page', (parseInt(page) + 1));
-    });
 </script>
 @endpush
