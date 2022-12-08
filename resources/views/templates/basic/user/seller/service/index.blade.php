@@ -43,11 +43,34 @@
                                                             {{ $general->cur_text }}</td>
                                                         <td data-label="@lang('Delivery Time')">
                                                             {{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }} </td>
-                                                        <td data-label="@lang('Status')">
+                                                        <!-- <td data-label="@lang('Status')">
                                                             <span class="badge {{$service->status->color}}">@lang($service->status ? $service->status->name : '')</span>
                                                             <br>
                                                             {{ diffforhumans($service->created_at) }}
                                                             
+                                                        </td> -->
+                                                        <td data-label="@lang('Status')">
+                                                            @if($service->status_id == 19)
+                                                                <span class="badge badge--success">@lang('Approved')</span>
+                                                                <br>
+                                                                {{diffforhumans($service->created_at)}}
+                                                            @elseif($service->status_id == 20)
+                                                                <span class="badge badge--danger">@lang('Canceled')</span>
+                                                                <br>
+                                                                {{diffforhumans($service->created_at)}}
+                                                            @elseif($service->status_id == 18)
+                                                                <span class="badge badge--primary">@lang('Pending')</span>
+                                                                <br>
+                                                                {{diffforhumans($service->created_at)}}
+                                                            @elseif($service->status_id == 17)
+                                                                <span class="badge badge--warning">@lang('Draft')</span>
+                                                                <br>
+                                                                {{diffforhumans($service->created_at)}}
+                                                            @elseif($service->status_id == 21)
+                                                                <span class="badge badge--info">@lang('Under Review')</span>
+                                                                <br>
+                                                                {{diffforhumans($service->created_at)}}
+                                                            @endif
                                                         </td>
                                                         <td data-label="@lang('Last Update')">
                                                             {{ showDateTime($service->updated_at) }}
