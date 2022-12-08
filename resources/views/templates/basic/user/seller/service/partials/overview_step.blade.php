@@ -32,7 +32,7 @@
                         multiple="multiple" >
                         {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
 
-                        @if (count($service->tags)>0)
+                        @if ($service && count($service->tags)>0)
                             @foreach ($tags as $tag)
                                 <option {{isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
                             @endforeach
