@@ -198,9 +198,28 @@ class EmailController extends Controller
     {
         
         $banner = EmailTemplate::findOrFail($request->id);
-        $banner->is_active = 1;
-        $banner->created_at = Carbon::now();
-        $banner->save();
+        $emailSections= EmailTemplate::where('is_active', 1)->where('type', $banner->type)->get();
+        if ($emailSections) {
+            foreach($emailSections as $emailSection){
+                $emailSection->is_active = 0;
+                $emailSection->save();
+
+            }
+         
+        }
+        if($banner->type == 'invitation' && $banner->id == $request->id){
+            $banner->is_active = 1;
+            $banner->created_at = Carbon::now();
+            $banner->save();
+            
+        }
+
+        if($banner->type == 'offer' && $banner->id == $request->id){
+            $banner->is_active = 1;
+            $banner->created_at = Carbon::now();
+            $banner->save();
+        }
+        
         $notify[] = ['success', 'Email Template has been Activated'];
         return redirect()->back()->withNotify($notify);
     }
