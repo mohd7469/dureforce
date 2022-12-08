@@ -39,8 +39,8 @@ class EmailController extends Controller
             'description' => 'required',
             'footer_title' => 'required',
             'footer_description' => 'required',
-            
-            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png'])]
+             //'image' => 'required'
+             'image' => ['nullable','required','image',new FileTypeValidate(['jpg','jpeg','png'])]
         ]);
         $emailSections= EmailTemplate::where('is_active', 1)->where('type', $request->type)->get();
         if ($emailSections) {
