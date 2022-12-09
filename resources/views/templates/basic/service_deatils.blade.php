@@ -73,11 +73,11 @@
                                                         </div>
                                                     </div>
                                                     {{-- slider area --}}
-                                                    {{-- @include($activeTemplate . 'partials._banner', [
+                                                    @include($activeTemplate . 'partials._banner', [
                                                         'model' => $service,
                                                         'folder' => 'service',
                                                         'optionalFolder' => 'optionalService',
-                                                    ]) --}}
+                                                    ])
                                                     {{-- slider area --}}
                                                     {{-- <div thumbsSlider="" class="item-small-slider mt-20"> --}}
                                                     {{-- <div class="swiper-wrapper"> --}}
@@ -206,70 +206,7 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- @if ($reviews->isNotEmpty())
-                                                        <div class="service_subtitle3 mt-20">Reviews & Testimonials
-                                                        <span>
-                                                            @if (intval($service->rating) == 1)
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                            @elseif(intval($service->rating) == 2)
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                            @elseif(intval($service->rating) == 3)
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                            @elseif(intval($service->rating) == 4)
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                            @elseif(intval($service->rating) == 5)
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                                <i class="fa fa-regular fa fa-star text--warning"></i>
-                                                            @endif
-
-                                                            {{ showAmount($service->rating) }} ({{ $service->reviewCount->count() }} Reviews)</span>
-
-                                                        </div>
-                                                        @foreach ($reviews as $review)
-                                                            <div class="test_container">
-                                                                <div class="thumb">
-                                                                    <img src="{{ !empty($review->user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $review->user->image, 'profile_image'): getImage('assets/images/default.png') }}"
-                                                                         alt="@lang('client')">
-                                                                    <span>{{ @$review->user->fullname }}</span>
-                                                                </div>
-                                                                <p class="mt-10">{{ __($review->review) }}</p>
-                                                                <p class="mt-2"><span class="mr-15">
-                                                                            @if (intval($review->rating) == 1)
-                                                                            <i class="las la-star"></i>
-                                                                        @elseif(intval($review->rating) == 2)
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                        @elseif(intval($review->rating) == 3)
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                        @elseif(intval($review->rating) == 4)
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                        @elseif(intval($review->rating) == 5)
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                            <i class="las la-star"></i>
-                                                                        @endif
-                                                                        </span>
-                                                                    <span>{{ showDateTime($review->created_at, 'd M Y') }}</span>
-                                                                </p>
-                                                            </div>
-                                                        @endforeach
-                                                    @endif --}}
+                                                   
                                                 </div>
 
                                             </div>
