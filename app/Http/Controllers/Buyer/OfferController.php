@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Notifications\SendNotificationsMail;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\ModuleOffer;
+use App\Models\User;
+use App\Models\EmailTemplate;
 use App\Models\ModuleOfferMilestone;
 use App\Models\Proposal;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -128,7 +132,18 @@ class OfferController extends Controller
     public function offerSent($offer_id)
     {
         $offer=ModuleOffer::with('module.user')->find($offer_id);
+        $user_email = User::where('id',$offer->offer_send_to_id )->pluck('email')->first();
+        $email_template = EmailTemplate::where('is_active',1)->where('type','offer')->with('attachments')->first();
+
+        $data['offer'] = $offer;
+        $data['email_template'] = $email_template;
+
+        Mail::to($user_email)->send(new SendNotificationsMail($data,ModuleOffer::$EMAIL_TEMPLATE));
+        $notify[] = ['success', 'Offer sent Successfully'];
         return view('templates.basic.offer.offer_sent',compact('offer'));
+        // $notify[] = ['success', 'Offer sent Successfully'];
+        // return back()->withNotify($notify);
+        // return response()->json(["success" => "Offer sent Successfully"]);
     }
 
     public function offerSuccessfullySubmitted(){
