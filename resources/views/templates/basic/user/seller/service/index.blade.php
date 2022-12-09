@@ -77,7 +77,7 @@
                                                             <br>
                                                             {{ diffforhumans($service->updated_at) }}
                                                         </td>
-                                                        <td data-label="Views">0</td>
+                                                        <td data-label="Views">{{$service->views}}</td>
                                                         <td data-label="Actions">
                                                             <div style="display: flex">
                                                                 @if ($service->uuid)
