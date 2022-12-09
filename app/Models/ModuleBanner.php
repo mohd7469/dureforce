@@ -29,4 +29,8 @@ class ModuleBanner extends Model
     public function module(){
 
     }
+
+    public function background(){
+        return $this->belongsTo(BannerBackground::class,'banner_background_id', 'id');
+    }
 }

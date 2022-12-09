@@ -89,8 +89,7 @@ class Service extends Model
 
     public function banner()
     {
-        return $this->morphOne(ModuleBanner::class,'module');
-
+        return $this->morphOne(ModuleBanner::class,'module')->with('background');
     }
     public function reviewCount()
     {
@@ -103,15 +102,12 @@ class Service extends Model
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'module','module_tags');
-        
     }
 
     public function technologyLogos(){
-        
-        return $this->morphMany(BannerLogo::class,'module');
+        return $this->morphMany(BannerLogo::class,'module')->with('background');
     }
   
-    
     public function scopeUserServiceInProgress($query)
     {
         $query->where([
