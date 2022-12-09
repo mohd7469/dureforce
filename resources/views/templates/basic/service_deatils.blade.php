@@ -73,11 +73,14 @@
                                                         </div>
                                                     </div>
                                                     {{-- slider area --}}
-                                                    @include($activeTemplate . 'partials._banner', [
-                                                        'model' => $service,
-                                                        'folder' => 'service',
-                                                        'optionalFolder' => 'optionalService',
-                                                    ])
+                                                    @if ($service->banner)
+                                                        @include($activeTemplate . 'partials._banner', [
+                                                            'model' => $service,
+                                                            'folder' => 'service',
+                                                            'optionalFolder' => 'optionalService',
+                                                        ])
+                                                    @endif
+                                                    
                                                     {{-- slider area --}}
                                                     {{-- <div thumbsSlider="" class="item-small-slider mt-20"> --}}
                                                     {{-- <div class="swiper-wrapper"> --}}

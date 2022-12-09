@@ -67,7 +67,7 @@ if (!empty($service)) {
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                        <input type="file" name="image" value="{{getFile($service)}}"  accept=".png,  .jpg, .jpeg" id="dynamic_banner_image"
+                                        <input type="file" name="image" value="{{getFile($service)}}"  accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" id="dynamic_banner_image"
                                             onchange="readURL(this)">
 
                                     </label>
@@ -151,7 +151,7 @@ if (!empty($service)) {
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                         <input type="file" name="dynamic_banner_image"  value="{{getFile($service)}}" onchange="previewMultiple(event);readURL(this)" id="lead_image">
+                                         <input type="file" name="dynamic_banner_image"  value="{{getFile($service)}}" onchange="previewMultiple(event);readURL(this)" id="lead_image" accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" />
                                     </label>
                                 <br />
                             </div>
@@ -290,6 +290,7 @@ if (!empty($service)) {
             e.preventDefault();
             return false;
         }
+        
         return true;
     }
 </script>
