@@ -38,6 +38,8 @@ class CreateJobsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->boolean('is_active')->default(true)->nullable();
+            $table->integer('views')->default(0)->nullable();
+            $table->timestamp('last_viewed')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
