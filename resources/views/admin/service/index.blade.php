@@ -26,8 +26,7 @@
                             <tr @if($loop->odd) class="table-light" @endif>
                                 <td data-label="@lang('Title')">
                                     <div class="user">
-                                        <div class="thumb"><img src="{{ getAzureImage('service/'.$service->image,'590x300')}}" alt="@lang('image')"></div>
-                                        <span class="name">{{__(str_limit($service->title, 10))}}</span>
+                                        <span class="name">{{__(str_limit($service->title, 15))}}</span>
                                     </div>
                                 </td>
                                 <td data-label="@lang('Seller')">
@@ -86,7 +85,7 @@
                                         <br>
                                         {{diffforhumans($service->created_at)}}
                                     @elseif($service->status_id == 21)
-                                        <span class="font-weight-normal badge--info">@lang('Under Review')</span>
+                                        <span class="font-weight-normal badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}    
                                     @endif
