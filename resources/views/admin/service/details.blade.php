@@ -51,27 +51,6 @@
         </div>
 
         <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 mt-10">
-            @if($service->optionalImage->count() != 0)
-                <div class="row mb-30">
-                    <div class="col-lg-12">
-                        <div class="card border--dark">
-                            <h5 class="card-header bg--dark">@lang('Optional Image')</h5>
-                            <div class="card-body">
-                                 <div class="row my-2">
-                                    @foreach($service->optionalImage as $optional)
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <a href="{{ getImage('assets/images/optionalService/'. $optional->image)}}" target="_blank">
-                                                <img src="{{ getImage('assets/images/optionalService/'. $optional->image)}}" class="b-radius--10 w-80 ml-2 my-3" alt="@lang('Optional Image')">
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-
             <div class="row mb-30">
                 <div class="col-lg-6 mt-2">
                     <div class="card border--dark">
@@ -156,25 +135,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="row mb-30">
-                <div class="col-lg-6 mt-2">
-                    <div class="card border--dark">
-                        <h5 class="card-header bg--dark">@lang('Features')</h5>
-                        <div class="card-body">
-                            <ul>
-                                @foreach($service->featuresService as $features)
-                                    <li class="font-weight-bold">{{$loop->iteration}}. {{__($features->name)}}</li>
-                                @endforeach 
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-       
 
             <div class="row mb-30">
                 <div class="col-lg-12">
