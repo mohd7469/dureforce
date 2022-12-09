@@ -38,6 +38,7 @@ class Service extends Model
     ];
 
     protected $fillable = [
+        'uuid',
         'user_id',
         'status_id',
         'category_id',
@@ -52,24 +53,13 @@ class Service extends Model
         'is_privacy_accepted',
     ];
 
-    public function featuresService()
-    {
-        return $this->belongsToMany(Features::class, 'features_services', 'service_id', 'features_id');
+    public function scopeWithAll($query){
+        $query->with('user')->with('serviceSteps')->with('category')->with('subCategory')->with('deliverable')->with('addOns')->with('status')->with('tags')->with('features')->with('skills');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function serviceAttributes()
-    {
-        return $this->hasMany(ServiceAttribute::class, 'service_id');
-    }
-
-    public function serviceDetail()
-    {
-        return $this->hasOne(ServiceDetail::class);
     }
 
     public function serviceSteps()
@@ -97,11 +87,6 @@ class Service extends Model
         return $this->hasMany(AddOnService::class, 'service_id');
     }
 
-    public function optionalImage()
-    {
-        return $this->hasMany(OptionalImage::class, 'service_id');
-    }
-
     public function banner()
     {
         return $this->morphOne(ModuleBanner::class,'module');
@@ -125,14 +110,8 @@ class Service extends Model
         
         return $this->morphMany(BannerLogo::class,'module');
     }
-    public function logos()
-    {
-        $relation = $this->hasMany(EntityLogo::class, 'type_id');
-        $relation->getQuery()->where('type', 'SERVICE');
-        return $relation;
-    }
+  
     
-
     public function scopeUserServiceInProgress($query)
     {
         $query->where([
@@ -148,7 +127,6 @@ class Service extends Model
             'creation_status' => Service::SERIVCE_CREATION_COMPLETED
         ]);
     }
-
 
     public function scopeFeatured($query)
     {
@@ -170,32 +148,12 @@ class Service extends Model
         return $query->where('status_id', self::IN_ACTIVE);
     }
 
-    public function _decoded_deliverables()
-    {
-        return json_decode($this->deliverables);
-    }
-
-
-//    public function associatedTags()
-//    {
-//        return $this->belongsToMany('services', 'tags-associates', 'model_id', 'tag_id')
-//            ->withPivot(['id', 'name']);
-//    }
-
     public static function boot()
     {
         parent::boot();
         self::observe(TagsObserver::class);
         self::observe(ServiceObserver::class);
     }
-
-//    public function withTags(){
-//
-//        'tags' => function (HasMany $builder) {
-//            $builder->with(['tag' => function (BelongsTo $belongsTo) {
-//                $belongsTo->select(['id', 'name']);
-//            }]
-//    }
 
     public function reviews()
     {

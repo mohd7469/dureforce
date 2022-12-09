@@ -13,10 +13,12 @@
                                 <th>@lang('Category / SubCategory')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Delivery Time')</th>
-                                <th>@lang('Featured Item')</th>
+                                <!-- <th>@lang('Featured Item')</th> -->
                                 <th>@lang('Status')</th>
                                 <th>@lang('Last Update')</th>
                                 <th>@lang('Action')</th>
+                                <th colspan="2"></th>
+
                             </tr>
                             </thead>
                             <tbody>
@@ -45,14 +47,14 @@
                                     @endif
                                 </td>
                                 <td data-label="@lang('Amount')">
-                                   <span class="font-weight-bold">{{ $general->cur_sym }}{{ getAmount($service->price) }}</span>
+                                   <span class="font-weight-bold">{{ showAmount($service->rate_per_hour) }} {{ $general->cur_text }}</span>
                                 </td>
 
                                  <td data-label="@lang('Delivery Time')">
-                                   <span class="font-weight-bold">{{($service->delivery_time)}} @lang('Days')</span>
+                                   <span class="font-weight-bold">{{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }}</span>
                                 </td>
 
-                                <td data-label="@lang('Featured Item')">
+                                <!-- <td data-label="@lang('Featured Item')">
                                      @if($service->featured == 1)
                                         <span class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
                                         <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude" data-toggle="tooltip" title="" data-original-title="@lang('Not Include')" data-id="{{ $service->id }}">
@@ -64,21 +66,29 @@
                                             <i class="las la-arrow-alt-circle-right"></i>
                                         </a>
                                     @endif
-                                </td>
+                                </td> -->
 
                                 <td data-label="@lang('Status')">
-                                    @if($service->status_id == 1)
+                                    @if($service->status_id == 19)
                                         <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
-                                    @elseif($service->status_id == 2)
-                                        <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
+                                    @elseif($service->status_id == 20)
+                                        <span class="font-weight-normal badge--danger">@lang('Canceled')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
-                                    @elseif($service->status_id == 0)
+                                    @elseif($service->status_id == 18)
                                         <span class="font-weight-normal badge--primary">@lang('Pending')</span>
                                         <br>
                                         {{diffforhumans($service->created_at)}}
+                                    @elseif($service->status_id == 17)
+                                        <span class="font-weight-normal badge--warning">@lang('Draft')</span>
+                                        <br>
+                                        {{diffforhumans($service->created_at)}}
+                                    @elseif($service->status_id == 21)
+                                        <span class="font-weight-normal badge--info">@lang('Under Review')</span>
+                                        <br>
+                                        {{diffforhumans($service->created_at)}}    
                                     @endif
                                 </td>
 
@@ -90,17 +100,82 @@
 
                                 <td data-label="@lang('Action')" colspan="2">
                                  
-                                    @if($service->status_id == 0)
+                                    @if($service->status_id == 18)
                                         <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
                                             <i class="las la-check"></i>
                                         </button>
-
+                                        <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Drafted')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Under Review')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$service->id}}">
+                                            <i class="las la-times"></i>
+                                        </button>
+                                    @endif
+                                    @if($service->status_id == 19)
+                                        <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Drafted')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Under Review')">
+                                            <i class="las la-check"></i>
+                                        </button>
                                         <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$service->id}}">
                                             <i class="las la-times"></i>
                                         </button>
                                     @endif
 
-                                    <div>
+                                    @if($service->status_id == 17)
+                                        <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Under Review')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$service->id}}">
+                                            <i class="las la-times"></i>
+                                        </button>
+                                    @endif
+
+                                    @if($service->status_id == 20)
+                                        <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Drafted')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Under Review')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                    @endif
+
+                                    @if($service->status_id == 21)
+                                        <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Drafted')">
+                                            <i class="las la-check"></i>
+                                        </button>
+                                        <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$service->id}}">
+                                            <i class="las la-times"></i>
+                                        </button>
+                                    @endif
+
+                                </td>
+                                <td>
                                
                                     <div style="display: flex">
                                         <a style="font-size: 17px" href="{{route('admin.service.details', $service->id)}}" class="icon-btn ml-2" data-toggle="tooltip" title="" data-original-title="@lang('Details')">
@@ -237,6 +312,84 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="pendingBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.service.pendingBy') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to pending this service?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="draftBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.service.draftBy') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to draft this service?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="underReviewBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            
+            <form action="{{ route('admin.service.underReviewBy') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <p>@lang('Are you sure to under review this service?')</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                    <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 
@@ -284,6 +437,24 @@
 
     $('.cancel').on('click', function () {
         var modal = $('#cancelBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.drafted').on('click', function () {
+        var modal = $('#draftBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.pending').on('click', function () {
+        var modal = $('#pendingBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.underreview').on('click', function () {
+        var modal = $('#underReviewBy');
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
     });
