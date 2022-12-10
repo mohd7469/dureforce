@@ -69,9 +69,9 @@ class="review-form"
                         @lang('Cancel')
                     </button>
 
-                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
                         @lang('Preview Service')
-                    </button> 
+                    </button> </a>
 
                     <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
                         @lang('Save Project')

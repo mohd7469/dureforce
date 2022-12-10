@@ -255,6 +255,14 @@ function isStaticBanner($model){
     }
     return 'block';
 }
+function previewServiceRoute($service){
+    if($service){
+        if($service->uuid){
+            return route('seller.service.view',$service->uuid);
+        }
+    }
+    return '#';
+}
 function bannerTypeStatic($model){
     if($model){
         if($model->banner){
