@@ -109,7 +109,7 @@ Route::namespace('Gateway')->prefix('ipn')->name('ipn.')->group(function () {
 | Start User Area
 |--------------------------------------------------------------------------
 */
-
+Route::view('/seller-dashboard', 'templates.basic.user.seller.seller_dashboard');
 
 Route::name('user.')->prefix('user')->group(function () {
     Route::middleware('verified')->group(function () {

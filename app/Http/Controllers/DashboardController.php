@@ -28,18 +28,19 @@ class DashboardController extends Controller
  
         if( getLastLoginRoleId() == Role::$Freelancer )
         {
-            $totalService = Service::where('user_id', $user->id)->count();
-            $totalSoftware = Software::where('user_id', $user->id)->count();
-            $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->where('status', '!=', '0')->whereNotNull('service_id')->count();
-            $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->where('status', '!=', '0')->whereNotNull('software_id')->count();
-            $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
-            return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
+            // $totalService = Service::where('user_id', $user->id)->count();
+            // $totalSoftware = Software::where('user_id', $user->id)->count();
+            // $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
+            //     $q->where('user_id', $user->id);
+            // })->where('status', '!=', '0')->whereNotNull('service_id')->count();
+            // $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
+            //     $q->where('user_id', $user->id);
+            // })->where('status', '!=', '0')->whereNotNull('software_id')->count();
+            // $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
+            // return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
+            return view('templates.basic.user.seller.seller_dashboard', compact('pageTitle', 'transactions', 'emptyMessage'));
 
-           
+            
         }    
         elseif ( getLastLoginRoleId() == Role::$Client ) 
         {
