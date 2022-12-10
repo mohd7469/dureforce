@@ -37,9 +37,9 @@
                         Cancel
                     </button>
 
-                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
                        Preview Service
-                    </button> 
+                    </button> </a>
                     <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
                         AND
                         CONTINUE')</button>
