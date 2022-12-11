@@ -40,10 +40,22 @@
                     </div>
                     <div class="jobs_ins_list">
                         <span class="h_jobs_s">Jobs</span>
-                        <ul class="jbs_nav_s">
+                        <!-- <ul class="jbs_nav_s">
                             <li class="active_bar"><a href="#">Jobs by Services</a></li>
                             <li><a href="#">Jobs by Software</a></li>
                             <li><a href="#">Jobs by Custom</a></li>
+                        </ul> -->
+
+                        <ul class="nav nav-tabs card-header-tabs jbs_nav_s" data-bs-tabs="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Jobs_by_Services">Jobs by Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Software">Jobs by Software</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Custom">Jobs by Custom</a>
+                            </li>
                         </ul>
                        
                         <div class="f-container">
@@ -78,17 +90,148 @@
                 
                         
                         </div>
-
-
                         <div class="search_con_cs">
                             <form>
                                 <input type="search" placeholder="Search" class="search_input">
                                 <input type="button" value="s" class="search_btnc">
                             </form>
-                            </div>
+                        </div>
 
                     </div>
-                    <div class="table-section pt-60">
+                    <!-- tab section -->
+                    <form class="card-body tab-content">
+                        <div class="tab-pane active" id="Jobs_by_Services">
+                            <p class="card-text text-center">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <div class="table-section">
+                                    <div class="row justify-content-center">
+                                        <div class="col-xl-12">
+                                            <div class="table-area">
+                                                <table class="custom-table-new mt-15">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>@lang('Title')</th>
+                                                            <th>@lang('Category')</th>
+                                                            <th>@lang('Rate/hour')</th>
+                                                            <th>@lang('Delivery Time')</th>
+                                                            <th>@lang('Status')</th>
+                                                            <th>@lang('Last Update')</th>
+                                                            <th>@lang('Views')</th>
+                                                            <th>@lang('Actions')</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @forelse($services as $service)
+                                                            <tr>
+                                                                <td data-label="@lang('Title')" class="text-start">
+                                                                    <!--<div class="author-info">
+                                                                        <div class="thumb">
+                                                                            <img src="{{ getAzureImage('service/' . $service->image, '590x300') }}"
+                                                                                alt="@lang('Service Image')">
+                                                                        </div>-->
+                                                                        <div class="content">
+                                                                            {{ __(str_limit($service->title, 30)) }}</div>
+                                                                    <!--</div>-->
+                                                                </td>
+                                                                <td data-label="@lang('Category')">
+                                                                    {{ __($service->category ? $service->category->name : '') }}</td>
+                                                                <td data-label="@lang('Amount')">{{ showAmount($service->rate_per_hour) }}
+                                                                    {{ $general->cur_text }}</td>
+                                                                <td data-label="@lang('Delivery Time')">
+                                                                    {{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }} </td>
+                                                                <!-- <td data-label="@lang('Status')">
+                                                                    <span class="badge {{$service->status->color}}">@lang($service->status ? $service->status->name : '')</span>
+                                                                    <br>
+                                                                    {{ diffforhumans($service->created_at) }}
+                                                                    
+                                                                </td> -->
+                                                                <td data-label="@lang('Status')">
+                                                                    @if($service->status_id == 19)
+                                                                        <span class="badge badge--success">@lang('Approved')</span>
+                                                                        <br>
+                                                                        {{diffforhumans($service->created_at)}}
+                                                                    @elseif($service->status_id == 20)
+                                                                        <span class="badge badge--danger">@lang('Canceled')</span>
+                                                                        <br>
+                                                                        {{diffforhumans($service->created_at)}}
+                                                                    @elseif($service->status_id == 18)
+                                                                        <span class="badge badge--primary">@lang('Pending')</span>
+                                                                        <br>
+                                                                        {{diffforhumans($service->created_at)}}
+                                                                    @elseif($service->status_id == 17)
+                                                                        <span class="badge badge--warning">@lang('Draft')</span>
+                                                                        <br>
+                                                                        {{diffforhumans($service->created_at)}}
+                                                                    @elseif($service->status_id == 21)
+                                                                        <span class="badge badge--info">@lang('Under Review')</span>
+                                                                        <br>
+                                                                        {{diffforhumans($service->created_at)}}
+                                                                    @endif
+                                                                </td>
+                                                                <td data-label="@lang('Last Update')">
+                                                                    {{ showDateTime($service->updated_at) }}
+                                                                    <br>
+                                                                    {{ diffforhumans($service->updated_at) }}
+                                                                </td>
+                                                                <td data-label="Views">{{$service->views}}</td>
+                                                                <td data-label="Actions">
+                                                                    <div style="display: flex">
+                                                                        @if ($service->uuid)
+                                                                            <a href="{{route('seller.service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
+                                                                        @endif
+                                                                        
+                                                                        <form action="{{ route('user.service.create', [$service->id]) }}"
+                                                                                method="get">
+                                                                            @csrf
+                                                                            <button class="btn--action" type="submit"><i
+                                                                                        class="fa fa-edit"></i></button>
+                                                                        </form>
+
+                                                                        <form
+                                                                            action="{{ route('user.service.destroy', [$service->id]) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <button class="btn--action del"
+                                                                                onclick="return confirm('Are you sure you want to delete.')"
+                                                                                type="submit"><i
+                                                                                    class="fa fa-trash-alt"></i></button>
+                                                                        </form>
+
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @empty
+                                                            <tr>
+                                                                <td colspan="100%">{{ __($emptyMessage) }}</td>
+                                                            </tr>
+                                                        @endforelse
+                                                    </tbody>
+                                                </table>
+                                                {{ $services->links() }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="Jobs_by_Software">
+                            <p class="card-text text-center">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <h6 class="display-6 fw-bold">Coming Soon!</h6>
+                            </div>
+                            </p>
+                        </div>
+                        <div class="tab-pane" id="Jobs_by_Custom">
+                            <p class="card-text text-center">
+                            <div class="d-flex align-items-center justify-content-center ">
+                                <h6 class="display-6 fw-bold">Coming Soon!</h6>
+                            </div>
+                            </p>
+                        </div>
+                    </form>
+                    <!-- end tab section -->
+                    <!-- <div class="table-section pt-60">
                         <div class="row justify-content-center">
                             <div class="col-xl-12">
                                 <div class="table-area">
@@ -136,7 +279,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    
                 </div>
             </div>
         </div>

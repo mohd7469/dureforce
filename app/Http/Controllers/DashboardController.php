@@ -28,6 +28,7 @@ class DashboardController extends Controller
  
         if( getLastLoginRoleId() == Role::$Freelancer )
         {
+            $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate());
             // $totalService = Service::where('user_id', $user->id)->count();
             // $totalSoftware = Software::where('user_id', $user->id)->count();
             // $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
@@ -38,7 +39,7 @@ class DashboardController extends Controller
             // })->where('status', '!=', '0')->whereNotNull('software_id')->count();
             // $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
             // return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
-            return view('templates.basic.user.seller.seller_dashboard', compact('pageTitle', 'transactions', 'emptyMessage'));
+            return view('templates.basic.user.seller.seller_dashboard', compact('pageTitle', 'transactions', 'emptyMessage','services'));
 
             
         }    
