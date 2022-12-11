@@ -50,31 +50,18 @@ trait AppliesQueryParams
             });
 
             $query->when($request->get('prices'), function (Builder $query, $prices) {
-
                 $prices = ArrayHelper::stringToArray($prices);
-
-//                dd(explode("-", $prices));
-                return $query->where('price', '<', $prices[1])
-                    ->where('price', '>', $prices[0]);
+                return $query->whereBetween('rate_per_hour',$prices);
             });
 
             $query->when($request->get('delivery_time'), function (Builder $query, $deliveryTime) {
-
                 $deliveryTime = ArrayHelper::stringToArray($deliveryTime);
-
-//                dd(explode("-", $prices));
-                return $query->where('delivery_time', '>', $deliveryTime[1])
-                    ->where('delivery_time', '<', $deliveryTime[0]);
+                return $query->whereBetween('estimated_delivery_time', $deliveryTime);
             });
 
-
             $query->when($request->get('rating'), function (Builder $query, $rating) {
-
                 $rating = ArrayHelper::stringToArray($rating);
-//                dd($rating);
-//                dd(explode("-", $prices));
-                return $query->where('rating', '>=', $rating[0])
-                    ->where('rating', '<=', $rating [1]);
+                return ;
             });
         };
     }

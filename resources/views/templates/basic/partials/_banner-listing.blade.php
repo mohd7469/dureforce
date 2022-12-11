@@ -9,7 +9,7 @@ if ($folder == 'service') {
 }
 @endphp
 {{-- I Don't know where to move css so i inlined it. secondly used if else to render default image if one is not present --}}
-@if (empty($model->image))
+@if (!$model->banner)
  
     <div class="banner-header">
         <div>
@@ -17,11 +17,11 @@ if ($folder == 'service') {
 
                 <div class=" col-12 px-0 " 
                 style="height: 200px;width:628px"> 
-                    <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}" >
+                <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) :'#'}}" >
 
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
-                            style="height: 159px;width:314px;">
+                            style="height: 159px;width:346px;">
                 
                     </a>
                 </div>
@@ -34,9 +34,10 @@ if ($folder == 'service') {
     style="height: 200px;width:628px"
     >
 
-        <a href="{{ route($url, [slug($model->title), encrypt($model->id)]) }}">
+        <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) : '#'}}" >
+
             <img alt="{{ $model->title }}"
-            onerror="this.src='placeholder-image/920x468'"  src="{{ getAzureImage('service/' . $model->image, imagePath()['optionalService']['size']) }}" style="height: 159px;width:314px;">
+            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" style="height: 159px;width:346px;">
         </a>
       
         
