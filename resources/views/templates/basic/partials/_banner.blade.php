@@ -49,7 +49,7 @@
 <div class="detail-banner" >
 <a >
         <img alt="{{$model->title }}"
-             src='{{ $model->banner->url }}' style="max-height:400px;max-width:1041px;min-height:400px;min-width:1041px">
+             src='{{ $model->banner->url }}' style="max-height:440px;max-width:1041px;min-height:440px;min-width:1041px">
     </a>
 </div>
 @endif

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Seller\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,9 +52,7 @@ Route::name('seller.')->group(function () {
 
                 });
 
-                Route::name('service.')->group(function () {
-                    Route::get('/service/details/{uuid}', [ServiceController::class,'show'])->name('view');
-                });
+                
 
             });
 

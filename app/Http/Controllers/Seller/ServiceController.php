@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\serviceaddonMail;
-
+use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
@@ -49,9 +49,10 @@ class ServiceController extends Controller
        
         $pageTitle = "Service details";
         $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
+        $related_services = Service::withAll()->where('category_id', $service->category_id)->where('sub_category_id', $service->sub_category_id)->where('id','<>',$service->id)->latest()->limit(4)->get();
         $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
         
-        return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service','selected_skills'));
+        return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service','selected_skills','related_services'));
     
     }
     public function create($id = null)
@@ -127,6 +128,7 @@ class ServiceController extends Controller
 
     public function storeBanner(Request $request)
     {
+       
         $serviceId = $request->get('service_id');
 
         if(empty($serviceId)) {

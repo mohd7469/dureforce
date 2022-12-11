@@ -258,7 +258,7 @@ function isStaticBanner($model){
 function previewServiceRoute($service){
     if($service){
         if($service->uuid){
-            return route('seller.service.view',$service->uuid);
+            return route('service.view',$service->uuid);
         }
     }
     return '#';

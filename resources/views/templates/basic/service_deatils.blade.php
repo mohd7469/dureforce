@@ -112,14 +112,6 @@
                                                         </div>
 
                                                         <div class="sep-solid"></div>
-                                                        <div class="mt-10">
-                                                            {{-- @foreach ($attributes as $key => $attr)
-                                                                
-                                                            @endforeach --}}
-                                                        </div>
-                                                        <!-- foreach ($service->serviceAttributes as $val)
-                                                            {$val->attribute->name}
-                                                        endforeach -->
                                                         <div class="service_subtitle2 mt-20">
                                                             Steps
                                                         </div>
@@ -166,10 +158,12 @@
                                                 </div>
 
                                                 <div class="item-details-thumb-area2">
+                                                    
                                                     <div class="service_subtitle3">
                                                         About {{ __($service->user->username) }}
                                                         <span><i class="fa fa-regular fa fa-star"></i> 4.5 ({{ $service->reviewCount->count() }} Reviews)</span>
                                                     </div>
+                                                    
                                                     <div class="profile-widget-header">
                                                         <div class="profile-widget-author pb-20">
                                                             <div class="left">
@@ -187,29 +181,25 @@
                                                                 </div>
                                                             </div>
                                                             <div class="right btn-area mb-10">
-                                                                <a href="{{ route('profile', $service->user->username) }}"
+                                                                <a href="{{ route('seller.profile', $service->user->uuid) }}"
                                                                    class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                <a href="{{ route('profile', $service->user->username) }}"
+                                                                <a href="{{  route('seller.profile', $service->user->uuid) }}"
                                                                    class="standard-btn">@lang('View Portfolio')</a>
                                                             </div>
                                                         </div>
                                                         <div class="profile-widget-author-meta mb-10-none">
-                                                        <!--<div class="location mb-10">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                    <span>{{ __(@$service->user->address->country) }}</span>
-                                                                </div>-->
+                                                        
                                                             <div class="location mb-10" id="aboutme">
                                                                 <p class="show-read-more">
-                                                                    {{ __(@$service->user->about_me) }}</p>
+                                                                    {{ __(@$service->user->basicProfile->about) }}</p>
                                                             </div>
-                                                            <!--<a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>-->
+                                                            <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
                                                             <a href="javascript:void(0)" id="readless"
                                                                class="standard-btn-sm">Read less</a>
                                                         </div>
                                                     </div>
-
-                                                   
+                                                    
                                                 </div>
 
                                             </div>
@@ -246,9 +236,14 @@
                                                 </ul>
 
                                                 <div class="widget-btn- mt-20">
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                       data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
+                                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                        <a href="{{ route('user.service.create', [$service->id])}}"
+                                                         class="standard-btn mr-15">@lang('Edit Service')</a>
+                                                    @else
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                        data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
                                                         Developer')</a>
+                                                    @endif
 
                                                     <a href="javascript:void(0)" data-bs-toggle="modal"
                                                        data-bs-target="#depoModal"
@@ -259,80 +254,31 @@
                                     </div>
                                 </div>
 
-                                @if ($service && count($service->addOns)>0)
-                                    <div class="item-bottom-area pt-50">
-                                        <div class="row justify-content-center">
-                                            <!--<div class="col-xl-12">-->
-                                            <div class="col-xl-11">
-                                                <div class="section-header">
-                                                <!--<h2 class="section-title">@lang('Other services by')
-                                                {{ __($service->user->username) }}</h2>-->
-                                                    <h2 class="section-title">@lang('Related Services')</h2>
-                                                </div>
-                                                <div class="item-card-wrapper border-0 p-0 grid-view">
-                                                    @foreach ($service->addOns as $other)
-                                                        <div class="item-card">
-                                                            <div class="item-card-thumb">
-                                                                <img src="{{ getAzureImage('service/' . $other->image, imagePath()['service']['size']) }}"
-                                                                     alt="@lang('service-banner')">
-                                                                @if ($other->featured == 1)
-                                                                    <div class="item-level">@lang('Featured')</div>
-                                                                @endif
-                                                            </div>
-                                                            <div class="item-card-content">
-                                                                <div class="item-card-content-top">
-                                                                    <h3 class="item-card-title"><a
-                                                                                href="{{ route('service.details', [slug($other->title), encrypt($other->id)]) }}">{{ __($other->title) }}</a>
-                                                                    </h3>
-                                                                    <div class="item-details-tag">
-                                                                        <ul class="tags-wrapper">
-                                                                        <!--<li class="caption">@lang('Tags')</li>-->
-                                                                            {{-- @foreach ($other->tag as $tags) --}}
-                                                                                {{-- <li> --}}
-                                                                                    {{-- <a --}}
-                                                                                            {{-- href="javascript:void(0)">{{ __($tags) }}</a> --}}
-                                                                                {{-- </li> --}}
-                                                                            {{-- @endforeach --}}
-                                                                        </ul>
-                                                                    </div>
-                                                                    <div class="left">
-                                                                    <!--<div class="author-thumb">
-                                                                                <img src="{{ !empty($other->user->image)? userDefaultImage(imagePath()['profile']['user']['path'] . '/' . $other->user->image, 'profile_image'): getImage('assets/images/default.png') }}"
-                                                                                    alt="@lang('author')">
-                                                                            </div>-->
-                                                                        <div class="author-content">
-                                                                            <h5 class="name"><a
-                                                                                {{-- href="{{ route('profile', $other->user->username) }}">by --}}
-                                                                                    {{-- {{ __($other->user->username) }}</a> --}}
-                                                                                {{-- <span class="level-text">{{ __(@$other->user->rank->level) }}</span> --}}
-                                                                            </h5>
-                                                                            <br>
-                                                                            <h5 class="name">Delivered
-                                                                                in {{ __($other->delivery_time) }}
-                                                                                days</h5>
-                                                                        <!--<div class="ratings">
-                                                                                    <i class="fas fa-star"></i>
-                                                                                    <span
-                                                                                        class="rating me-2">{{ __(getAmount($other->rating, 2)) }}</span>
-                                                                                </div>-->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="right">
-                                                                        <div class="item-amount-"
-                                                                             style="float: right;background-color: #630573;padding: 10px;color: #fff;border-radius: 5px;">
-                                                                            <span>{{ __($general->cur_sym) }}{{ showAmount($other->price) }}
-                                                                                <br>per hour</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
+                                @if ($related_services && (getLastLoginRoleId()==App\Models\Role::$Client))
+                                    
+                                    
+                                    <div class="row justify-content-center">
+                                        <!--<div class="col-xl-12">-->
+                                        <div class="col-xl-12" >
+                                            
+                                            <div class="section-header">
+                                                <h2 class="section-title">@lang('Related Services')</h2>
                                             </div>
+
+                                            <div class="item-card-wrapper border-0  grid-view" style="padding: 12px">
+                                                @forelse($related_services as $realted_service)
+                                                    @include($activeTemplate . 'components.services.tile', ['service' => $realted_service])
+                                                @empty
+                                                    <div class="empty-message-box bg--gray">
+                                                        <div class="icon"><i class="las la-frown"></i></div>
+                                                        <p class="caption">{{ __($emptyMessage) }}</p>
+                                                    </div>
+                                                @endforelse
+                                            </div>
+                                            
                                         </div>
                                     </div>
+                                    
                                 @endif
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Seller\ServiceController;
 
 
 Route::middleware(['verified'])->group(function () {
@@ -17,4 +18,9 @@ Route::middleware(['verified'])->group(function () {
         Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
         Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
     });
+    Route::name('service.')->group(function () {
+        Route::get('/service/details/{uuid}', [ServiceController::class,'show'])->name('view');
+    });
+    Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
+    
 });
