@@ -14,7 +14,9 @@ use App\Models\Proposal;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Auth;
 
 class OfferController extends Controller
 {
@@ -131,19 +133,18 @@ class OfferController extends Controller
     }
     public function offerSent($offer_id)
     {
-        $offer=ModuleOffer::with('module.user')->find($offer_id);
-        $user_email = User::where('id',$offer->offer_send_to_id )->pluck('email')->first();
-        $email_template = EmailTemplate::where('is_active',1)->where('type','offer')->with('attachments')->first();
-
+        $offer=ModuleOffer::with('module.user','module.user.user_basic')->find($offer_id);
+        $user_email = User::where('id',$offer->offer_send_to_id )->first();
+        $email_template = EmailTemplate::where('is_active',1)->where('type','offer')->with('attachments')->first();     
         $data['offer'] = $offer;
         $data['email_template'] = $email_template;
+        $data['offer_send_to'] = $user_email;
 
-        Mail::to($user_email)->send(new SendNotificationsMail($data,ModuleOffer::$EMAIL_TEMPLATE));
+        Mail::to($user_email->email)->send(new SendNotificationsMail($data,ModuleOffer::$EMAIL_TEMPLATE));
         $notify[] = ['success', 'Offer sent Successfully'];
         return view('templates.basic.offer.offer_sent',compact('offer'));
         // $notify[] = ['success', 'Offer sent Successfully'];
         // return back()->withNotify($notify);
-        // return response()->json(["success" => "Offer sent Successfully"]);
     }
 
     public function offerSuccessfullySubmitted(){

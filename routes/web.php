@@ -225,7 +225,9 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
         Route::get('deposit/preview', 'Gateway\PaymentController@depositPreview')->name('deposit.preview');
         Route::get('deposit/confirm', 'Gateway\PaymentController@depositConfirm')->name('deposit.confirm');
-        Route::get('deposit/manual', 'Gateway\PaymentController@manualDepositConfirm')->name('deposit.manual.confirm');
+        Route::get('deposit/manu
+        
+        al', 'Gateway\PaymentController@manualDepositConfirm')->name('deposit.manual.confirm');
         Route::post('deposit/manual', 'Gateway\PaymentController@manualDepositUpdate')->name('deposit.manual.update');
 
         Route::namespace('Buyer')->prefix('buyer')->group(function () {
