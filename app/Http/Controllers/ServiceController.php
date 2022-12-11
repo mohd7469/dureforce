@@ -17,16 +17,9 @@ class ServiceController extends BaseController
         
         $pageTitle = "Service";
         $emptyMessage = "No data found";
-        $services = Service::where('status', 1)
-            ->whereHas('category', function ($q) {
-                $q->where('status', 1);
-            })
+        $services = Service::where('status_id', Service::STATUSES['APPROVED'])
             ->where($this->applyFilters($request))
-            ->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
-                $builder->with(['tag' => function (BelongsTo $belongsTo) {
-                    $belongsTo->select(['id', 'name']);
-                }]);
-            }])
+            ->with(['user', 'user.basicProfile' ])
             ->inRandomOrder()->paginate(getPaginate())->withQueryString();
         return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
     }

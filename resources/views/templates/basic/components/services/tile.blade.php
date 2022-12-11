@@ -6,18 +6,16 @@
     </div>
     <div class="item-card-content  mt-2">
         <div>
-            <h3 class="item-card-title"><a
-                    href="{{ route('service.details', [slug($service->title), encrypt($service->id)]) }}">{{ __($service->title) }}</a>
+            <h3 class="" style="color:teal">
+                <a href="{{$service->uuid ?route('service.view',[$service->uuid]) : '#'}}" class="" style=""><i class="fa fa-eye"></i></a>
             </h3>
 
             {{-- Tag content --}}
             <div class="tags-container">
-
                 @foreach ($service->tags as $tag)
-
-                    <a href="tags/{{ $tag->tag->id }}"
-                       class=" grey_badge  custom_badge badge-secondary">{{ $tag->tag->name }}</a>
-
+                    <a href="tags/{{ $tag->id }}"
+                       class=" grey_badge  custom_badge badge-secondary">{{ $tag->name }}
+                    </a>
                 @endforeach
             </div>
 
@@ -25,13 +23,13 @@
                 <div class="author_detail col-12 col-md-8">
                     <span class="author text-capitalize">by
                         <a href="{{ route('profile', $service->user->username ?? '') }}">
-                            {{ __($service->user->username ?? '-') }} </a></span>
-                    <span class="delivery">Delivered in 4 days</span>
+                            {{ __($service->user->username ?? '-') }} </a></span><br>
+                    <span class="delivery">{{"Delivery Time ".$service->estimated_delivery_time}}</span>
                 </div>
                 <div class="col-12 col-md-4 ">
-                    <span class="rates">x`
+                    <span class="rates">
                         <span
-                            class="value">{{ __($general->cur_sym) }}{{ __(showAmount($service->price)) }}</span>
+                            class="value">{{ __($general->cur_sym) }}{{ __(showAmount($service->rate_per_hour)) }}</span>
                         <small>per hour</small></span>
                 </div>
             </div>

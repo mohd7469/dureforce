@@ -48,30 +48,13 @@
                                                             <br>
                                                             {{ diffforhumans($service->created_at) }}
                                                             
-                                                        </td> -->
+                                                        </td> Status -->
                                                         <td data-label="@lang('Status')">
-                                                            @if($service->status_id == 19)
-                                                                <span class="badge badge--success">@lang('Approved')</span>
-                                                                <br>
-                                                                {{diffforhumans($service->created_at)}}
-                                                            @elseif($service->status_id == 20)
-                                                                <span class="badge badge--danger">@lang('Canceled')</span>
-                                                                <br>
-                                                                {{diffforhumans($service->created_at)}}
-                                                            @elseif($service->status_id == 18)
-                                                                <span class="badge badge--primary">@lang('Pending')</span>
-                                                                <br>
-                                                                {{diffforhumans($service->created_at)}}
-                                                            @elseif($service->status_id == 17)
-                                                                <span class="badge badge--warning">@lang('Draft')</span>
-                                                                <br>
-                                                                {{diffforhumans($service->created_at)}}
-                                                            @elseif($service->status_id == 21)
-                                                                <span class="badge badge--info">@lang('Under Review')</span>
-                                                                <br>
-                                                                {{diffforhumans($service->created_at)}}
-                                                            @endif
+                                                            <span class="badge {{$service->status->color}}">{{$service->status->name}}</span>
+                                                            <br>
+                                                            {{diffforhumans($service->created_at)}}
                                                         </td>
+
                                                         <td data-label="@lang('Last Update')">
                                                             {{ showDateTime($service->updated_at) }}
                                                             <br>
@@ -81,7 +64,7 @@
                                                         <td data-label="Actions">
                                                             <div style="display: flex">
                                                                 @if ($service->uuid)
-                                                                    <a href="{{route('seller.service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
+                                                                    <a href="{{route('service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
                                                                 @endif
                                                                 
                                                                 <form action="{{ route('user.service.create', [$service->id]) }}"
