@@ -56,6 +56,7 @@ Route::view('/address-verification', 'templates.basic.verification.address_verif
 //Email verification page
 Route::view('/email-verification', 'email-template.job.email_template');
 Route::view('/job-email-verification', 'email-template.job.job_email_template');
+Route::view('/job-email', 'templates.basic.job_email');
 
 
 
