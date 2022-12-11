@@ -52,11 +52,13 @@ Route::name('seller.')->group(function () {
 
                 });
 
-                
+                Route::name('service.')->group(function () {
+                    Route::get('/service/details/{uuid}', [ServiceController::class,'show'])->name('view');
+                });
 
             });
 
-            
+
 
         });
     });
