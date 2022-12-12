@@ -17,19 +17,19 @@
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Sales (Services)</p>
-                                <p class="card_d_p">$3425.00</p>
+                                <p class="card_d_p">$1234.00</p>
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Sales (Software)</p>
-                                <p class="card_d_p">$1489.00</p>
+                                <p class="card_d_p">$1234.00</p>
                                 
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
 
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Withdrawn</p>
-                                <p class="card_d_p">$515.00</p>
+                                <p class="card_d_p">$1234.00</p>
                                 
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
