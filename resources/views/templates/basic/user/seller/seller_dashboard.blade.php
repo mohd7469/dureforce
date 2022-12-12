@@ -177,7 +177,7 @@
                                                                 <td data-label="Actions">
                                                                     <div style="display: flex">
                                                                         @if ($service->uuid)
-                                                                            <a href="{{route('seller.service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
+                                                                            <a href="{{route('service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
                                                                         @endif
                                                                         
                                                                         <form action="{{ route('user.service.create', [$service->id]) }}"
