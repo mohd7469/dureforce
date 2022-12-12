@@ -11,6 +11,7 @@ class ModuleOffer extends Model
 {
     use HasFactory;
     protected $table="module_offers";
+    public static $EMAIL_TEMPLATE="offer_sent";
     protected $guarded = ['id'];
 
 
