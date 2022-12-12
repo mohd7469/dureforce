@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Models\AdminNotification;
 use App\Models\Attribute;
-use App\Models\EntityLogo;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
 use App\Models\ModuleBanner;
@@ -13,13 +12,10 @@ use App\Models\Service;
 use App\Models\ServiceAttribute;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
-use App\Models\Software;
+use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
-use App\Models\SoftwareStep;
 use App\Models\Tag;
 use DB;
-use Illuminate\Database\Eloquent\Model;
-use Razorpay\Api\Entity;
 
 trait CreateOrUpdateEntity {
 

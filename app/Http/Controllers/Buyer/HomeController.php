@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Transaction;
-use App\Models\FavoriteItem;
 use App\Models\Booking;
-use App\Models\User;
-use App\Models\Job;
-use Carbon\Carbon;
 use App\Models\ExtraService;
-use App\Models\Software;
-use App\Models\WorkDelivery;
+use App\Models\FavoriteItem;
 use App\Models\GeneralSetting;
+use App\Models\Job;
+use App\Models\Software\Software;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\WorkDelivery;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Software;
 use App\Models\Category;
+use App\Models\Software\Software;
 use App\Traits\DeleteEntity;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class SoftwareController extends Controller
 {

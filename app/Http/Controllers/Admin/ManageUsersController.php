@@ -2,22 +2,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Country;
 use App\Models\Deposit;
 use App\Models\EmailLog;
 use App\Models\Gateway;
 use App\Models\GeneralSetting;
+use App\Models\Job;
+use App\Models\Service;
+use App\Models\Software\Software;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Service;
-use App\Models\Software;
-use App\Models\Job;
-use App\Models\Country;
-use App\Models\Booking;
-use App\Models\UserLogin;
-use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
-use Illuminate\Http\Request;
+use App\Models\WithdrawMethod;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 

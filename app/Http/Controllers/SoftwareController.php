@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Software;
+use App\Models\Software\Software;
 use Illuminate\Http\Request;
 
 class SoftwareController extends BaseController

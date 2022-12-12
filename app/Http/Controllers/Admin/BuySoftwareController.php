@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Software;
 use App\Models\Booking;
+use App\Models\Software\Software;
+use Illuminate\Http\Request;
 
 class BuySoftwareController extends Controller
 {

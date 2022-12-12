@@ -5,20 +5,16 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\OverviewRequest;
-use App\Http\Requests\PricingRequest;
 use App\Http\Requests\ReviewRequest;
-use Illuminate\Http\Request;
-use App\Models\Software;
-use App\Models\Features;
-use App\Models\OptionalImage;
 use App\Models\Attribute;
 use App\Models\EntityField;
+use App\Models\Features;
+use App\Models\OptionalImage;
+use App\Models\Software\Software;
 use App\Traits\CreateOrUpdateEntity;
 use App\Traits\DeleteEntity;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Razorpay\Api\Entity;
 
 class SoftwareController extends Controller
 {

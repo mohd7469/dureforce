@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Job;
+use App\Models\Service;
+use App\Models\Software\Software;
+use App\Models\SubCategory;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use App\Models\Service;
-use App\Models\Software;
-use App\Models\Category;
-use App\Models\SubCategory;
-use App\Models\Job;
-use App\Models\Rank;
-use App\Models\Features;
 use Session;
 
 class FilterController extends Controller

@@ -1,7 +1,25 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Software;
 
+use App\Models\Category;
+use App\Models\DeliveryMode;
+use App\Models\EntityLogo;
+use App\Models\ExtraSoftware;
+use App\Models\Features;
+use App\Models\Milestone;
+use App\Models\OptionalImage;
+use App\Models\Proposal;
+use App\Models\ProposalAttachment;
+use App\Models\Review;
+use App\Models\ReviewRating;
+use App\Models\SoftwareAttribute;
+use App\Models\SoftwareDetail;
+use App\Models\SubCategory;
+use App\Models\Tag;
+use App\Models\TagsAssociate;
+use App\Models\TaskDocument;
+use App\Models\User;
 use App\Observers\SoftwareObserver;
 use App\Observers\TagsObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

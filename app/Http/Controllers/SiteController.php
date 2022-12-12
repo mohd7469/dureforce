@@ -3,33 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
-use App\Models\Frontend;
-use App\Models\Language;
-use App\Models\Service;
+use App\Models\Advertise;
+use App\Models\Booking;
+use App\Models\Comment;
+use App\Models\Conversation;
 use App\Models\EntityField;
-use App\Models\SupportAttachment;
+use App\Models\Frontend;
+use App\Models\Job;
+use App\Models\JobBiding;
+use App\Models\Language;
+use App\Models\ReviewRating;
+use App\Models\Service;
+use App\Models\Software\Software;
+use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
-use App\Models\Conversation;
-use App\Models\Software;
-use App\Models\Subscriber;
-use App\Models\UserCompany;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Validator;
-use App\Models\Booking;
-use App\Models\JobBiding;
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Comment;
-use App\Models\Advertise;
-use App\Models\ReviewRating;
-use App\Models\Job;
-use App\Models\Rank;
-use App\Models\Features;
+use App\Models\UserCompany;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 
 class SiteController extends Controller

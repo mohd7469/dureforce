@@ -3,28 +3,27 @@
 namespace App\Providers;
 
 use App\Models\AdminNotification;
-use App\Models\BannerBackground;
-use App\Models\Deposit;
-use App\Models\Frontend;
-use App\Models\GeneralSetting;
-use App\Models\Language;
-use App\Models\SupportTicket;
-use App\Models\User;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\Deposit;
 use App\Models\Features;
+use App\Models\Frontend;
+use App\Models\GeneralSetting;
+use App\Models\Job;
+use App\Models\Language;
 use App\Models\Rank;
 use App\Models\Service;
-use App\Models\Software;
-use App\Models\Banner;
-use App\Models\Job;
+use App\Models\Software\Software;
+use App\Models\SupportTicket;
 use App\Models\Tag;
+use App\Models\User;
 use App\Models\Withdrawal;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
- 
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {

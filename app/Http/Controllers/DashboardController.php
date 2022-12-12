@@ -6,11 +6,9 @@ use App\Models\Booking;
 use App\Models\Job;
 use App\Models\Role;
 use App\Models\Service;
-use App\Models\Software;
 use App\Models\Transaction;
-use App\Models\Withdrawal;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+
 class DashboardController extends Controller
 {
     
