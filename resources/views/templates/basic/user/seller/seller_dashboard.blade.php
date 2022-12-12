@@ -382,6 +382,7 @@ li.active_bar {
     display: inline-block;
     width: 100%;
     padding: 43px 20px;
+    padding-bottom: 0px;
 }
 
 ul.jbs_nav_s li a {
