@@ -1,4 +1,4 @@
-<div class="col-xl-3 col-lg-3 mb-30" style="padding-right:0px">
+<div class="col-xl-2 col-lg-2 mb-30" style="padding-right:0px">
         <div class="dashboard-sidebar">
             <button type="button" class="dashboard-sidebar-close"><i class="fas fa-times"></i></button>
             <div class="dashboard-sidebar-inner">
