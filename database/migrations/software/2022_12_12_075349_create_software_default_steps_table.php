@@ -17,6 +17,7 @@ class CreateSoftwareDefaultStepsTable extends Migration
             $table->bigIncrements('id');
             $table->text('title')->nullable();
             $table->longText('description')->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

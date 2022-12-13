@@ -43,12 +43,13 @@ class DashboardController extends Controller
         }    
         elseif ( getLastLoginRoleId() == Role::$Client ) 
         {
-            $totaltransactions = Transaction::where('user_id', $user->id)->count();
-            $totalJob = Job::where('user_id', $user->id)->count();
-            $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->count();
-            $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->count();
-            $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->count();
-            return view($this->activeTemplate . 'user.buyer.dashboard', compact('pageTitle', 'emptyMessage', 'transactions', 'totaltransactions', 'totalJob', 'serviceBookings', 'softwarePurchases', 'hireEmploys'));
+            $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
+            // $totaltransactions = Transaction::where('user_id', $user->id)->count();
+            // $totalJob = Job::where('user_id', $user->id)->count();
+            // $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->count();
+            // $softwarePurchases = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('software_id')->count();
+            // $hireEmploys = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('job_biding_id')->count();
+            return view($this->activeTemplate . 'user.buyer.dashboard', compact('pageTitle', 'emptyMessage', 'transactions', 'jobs'));
         }
         else
         {
