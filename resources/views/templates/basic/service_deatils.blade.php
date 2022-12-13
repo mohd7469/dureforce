@@ -148,7 +148,7 @@
                                                                         <div style="width: 30%;">{{ __($extra->title) }}</div>
                                                                         <div style="width: 18%;">{{ __($general->cur_sym) }}{{ showAmount($extra->rate_per_hour) }}</div>
                                                                         <div style="width: 18%;">{{ $extra->estimated_delivery_time }} Days</div>
-                                                                        <div style="width: 18%;"><a href="#" class="standard-btn">@lang('Add')</a>
+                                                                        <div style="width: 18%;">
                                                                         </div>
                                                                     </li>
                                                                 @endforeach
@@ -194,9 +194,9 @@
                                                                 <p class="show-read-more">
                                                                     {{ __(@$service->user->basicProfile->about) }}</p>
                                                             </div>
-                                                            <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
+                                                            {{-- <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
                                                             <a href="javascript:void(0)" id="readless"
-                                                               class="standard-btn-sm">Read less</a>
+                                                               class="standard-btn-sm">Read less</a> --}}
                                                         </div>
                                                     </div>
                                                     
@@ -380,7 +380,7 @@
             var all_sub_categories=data[main_category];
             var main_category_id=genRand(5);
             var remove =true;
-            $('#form_attributes').append('<div class="row custom_cards_s" id="'+main_category_id+'"><h4 class="d-heading">'+main_category+'</h4>');
+            $('#form_attributes').append('<div class="row custom_cards_s" id="'+main_category_id+'"><h4 class="d-heading"><b>'+main_category+'</b></h4>');
             for (var sub_category_enum in all_sub_categories) { //front end backend 
 
                 var skills=all_sub_categories[sub_category_enum];
@@ -388,7 +388,7 @@
                 var sub_skills=skills.map(a => a.id);
                 if(selected_skills.some(r => sub_skills.includes(r))){
                     remove=false
-                    $('#'+main_category_id).append('<div class="col-md-6 mt-2 mb-2"><div class="card" ><div class="card-body"><h5 class="card-title">'+sub_category_enum+'</h5><div class="form-group admin-row row" id="'+sub_category_id+'" style="display: inline">');
+                    $('#'+main_category_id).append('<div class="col-md-6 mt-2 mb-2"><div class="card" ><div class="card-body"><h5 class="card-title"><b>'+sub_category_enum+'</b></h5><div class="form-group admin-row row" id="'+sub_category_id+'" style="display: inline">');
                     
                         for (var skill_index in skills) {
                         

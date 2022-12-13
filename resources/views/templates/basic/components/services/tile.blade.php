@@ -6,6 +6,13 @@
     </div>
     <div class="item-card-content  mt-2">
         <div>
+            <div class="col-md-12" style="margin: -4px;margin-top: -24px;">
+                <h3>
+                    <b>
+                        {{$service->title}}
+                    </b>
+                </h3>
+            </div>
             <h3 class="" style="color:teal">
                 <a href="{{$service->uuid ?route('service.view',[$service->uuid]) : '#'}}" class="" style=""><i class="fa fa-eye"></i></a>
             </h3>
