@@ -106,13 +106,7 @@ trait CreateOrUpdateEntity {
                 $model->skills()->attach($request->skills);
                 $model->features()->attach($request->features);
 
-                // $model->serviceDetail()->create([
-                //     'entity_fields' => decodeOrEncodeFields($request->entity_field, false),
-                //     'client_requirements' => $detail['requirements'],
-                //     'max_no_projects'     => $detail['max_no_projects'],
-                //     'copyright_notice'    => $detail['copyright_notice'],
-                //     'privacy_notice'      => $detail['privacy_notice']
-                // ]);
+             
             } else {
                 
             }

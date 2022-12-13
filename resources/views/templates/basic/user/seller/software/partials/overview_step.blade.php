@@ -21,12 +21,19 @@
                 <div class="col-xl-4 col-lg-4 form-group select2Tag">
                     <label>@lang('Software Tags')*</label>
 
-                    <select data-placeholder="Tag1, Tag2, Tag3" class="form-control select2 tags" id="tags" name="tag[]"
-                        multiple="multiple"   >
-                        @if (!empty($software->tag))
-                            @foreach ($software->tag as $tag)
-                                <option selected="true"> {{ $tag }}</option>
+                    <select data-placeholder="Please Select Tags" class="select2 tags" id="tags" name="tag[]"
+                        multiple="multiple" >
+                        {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
+
+                        @if ($software && count($software->tags)>0)
+                            @foreach ($tags as $tag)
+                                <option {{isSelectedTag($tag->id,$software->tags)}} > {{ $tag->name }}</option>
                             @endforeach
+                        @else
+                            @foreach ($tags as $tag)
+                                <option > {{ $tag->name }}</option>
+                            @endforeach
+                        
                         @endif
 
                     </select>

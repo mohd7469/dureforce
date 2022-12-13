@@ -54,16 +54,16 @@
                             @include($activeTemplate . 'user.seller.software.partials.overview_step')
                         </div>
                         <div class=" panel panel-primary setup-content" id="step-2">
-                            {{-- @include($activeTemplate . 'user.seller.software.partials.pricing_step') --}}
+                            @include($activeTemplate . 'user.seller.software.partials.pricing_step')
                         </div>
                         <div class="panel panel-primary setup-content" id="step-3">
-                            {{-- @include($activeTemplate . 'user.seller.software.partials.banner_step') --}}
+                            @include($activeTemplate . 'user.seller.software.partials.banner_step')
                         </div>
                         <div class="panel panel-primary setup-content" id="step-4">
-                            {{-- @include($activeTemplate . 'user.seller.software.partials.requirement_step') --}}
+                            @include($activeTemplate . 'user.seller.software.partials.requirement_step')
                         </div>
                         <div class="panel panel-primary setup-content" id="step-5">
-                            {{-- @include($activeTemplate . 'user.seller.software.partials.review_step') --}}
+                            @include($activeTemplate . 'user.seller.software.partials.review_step')
                         </div>
                     </div>
                 </div>

@@ -32,7 +32,7 @@ class CreateSoftwareTable extends Migration
             $table->boolean('is_privacy_accepted')->nullable()->default(false);
             $table->boolean('is_active')->default(true)->nullable();
             $table->integer('views')->default(0)->nullable();
-            $table->timestamp('last_viewed')->nullable()->after('views');
+            $table->timestamp('last_viewed')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
