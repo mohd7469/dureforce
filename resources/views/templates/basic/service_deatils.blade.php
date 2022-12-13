@@ -148,7 +148,8 @@
                                                                         <div style="width: 30%;">{{ __($extra->title) }}</div>
                                                                         <div style="width: 18%;">{{ __($general->cur_sym) }}{{ showAmount($extra->rate_per_hour) }}</div>
                                                                         <div style="width: 18%;">{{ $extra->estimated_delivery_time }} Days</div>
-                                                                        <div style="width: 18%;"><a href="#" class="standard-btn">@lang('Add')</a>
+                                                                        <div style="width: 18%;">
+                                                                            {{-- <a href="#" class="standard-btn">@lang('Add')</a> --}}
                                                                         </div>
                                                                     </li>
                                                                 @endforeach
@@ -194,9 +195,9 @@
                                                                 <p class="show-read-more">
                                                                     {{ __(@$service->user->basicProfile->about) }}</p>
                                                             </div>
-                                                            <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
-                                                            <a href="javascript:void(0)" id="readless"
-                                                               class="standard-btn-sm">Read less</a>
+                                                            {{-- <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a> --}}
+                                                            {{-- <a href="javascript:void(0)" id="readless" --}}
+                                                               {{-- class="standard-btn-sm">Read less</a> --}}
                                                         </div>
                                                     </div>
                                                     

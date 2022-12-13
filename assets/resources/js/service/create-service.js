@@ -25,15 +25,15 @@ $(document).ready(function () {
     $('#service_features').select2({
       tags: true
     });
-  if (action != "edit") {
-    if (selector.val() == "1") {
-      back.attr("style", "display:none !important");
-      front.show();
-    } else {
-      front.attr("style", "display:none !important");
-      back.show();
-    }
-  }
+  // if (action != "edit") {
+  //   if (selector.val() == "1") {
+  //     back.attr("style", "display:none !important");
+  //     front.show();
+  //   } else {
+  //     front.attr("style", "display:none !important");
+  //     back.show();
+  //   }
+  // }
 
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
