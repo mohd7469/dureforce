@@ -2,10 +2,10 @@
 @section('content')
 <section class="all-sections ptb-60 zero_top_padding" >
     <div class="container-fluid">
-        <div class="section-wrapper">
-            <div class="row  mb-30-none">
+
+            <div class="row   mb-30-none">
                 @include($activeTemplate . 'partials.buyer_sidebar')
-                <div class="col-xl-9 col-lg-12 mb-30 page_div">
+                <div class="col-xl-10 col-lg-10 col-md-10 mb-30 page_div">
                     <div class="dashboard-sidebar-open" ><i class="las la-bars"></i> @lang('Menu')</div>
                     <form class="user-profile-form" action="{{route('buyer.job.store')}}" method="POST" enctype="multipart/form-data" id="job_form_data">
                         @csrf
@@ -14,7 +14,7 @@
                                 <h3 class="card-title mt-1">
                                     {{__($pageTitle)}}
                                 </h3>
-                                
+
                             </div>
 
                             <div class="card-body">
@@ -51,7 +51,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row">
                                             {{-- Description --}}
                                             <div class="col-xl-6 col-lg-6 form-group">
@@ -62,7 +62,7 @@
                                             {{-- Required documents --}}
                                             <div class="col-xl-6 col-lg-6 form-group">
                                                 <label>@lang('Required Documents')</label>
-                                            
+
                                                     <div id="dropzone">
                                                         <div class="dropzone needsclick" id="demo-upload" action="#" >
                                                             <div class="fallback">
@@ -74,9 +74,9 @@
                                                                     <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
                                                                 </div>
                                                             </div>
-                                                            
-                                                            <div class="dz-message "> 
-                                                                @lang('Drag or Drop to Upload')   
+
+                                                            <div class="dz-message ">
+                                                                @lang('Drag or Drop to Upload')
                                                                 <span class="text text-primary ">
                                                                     @lang('Browse')  
                                                                     
@@ -85,11 +85,11 @@
 
                                                         </div>
                                                     </div>
-                                        
+
                                             </div>
 
                                         </div>
-                                        
+
                                         <div class="row">
 
                                             {{-- Category --}}
@@ -135,10 +135,10 @@
                                                         @endforeach
                                                 </select>
                                             </div>
-                                            
+
                                             {{-- Weekly Range start --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
-                                                
+
                                                 <label>@lang('Weekly Range(Starting)')*</label>
                                                 <input type="number" step="any" class="form-control" name="hourly_start_range" value="" placeholder="" >
 
@@ -146,14 +146,14 @@
 
                                             {{-- Weekly Range end --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
-                                                
+
                                                 <label>@lang('Weekly Range(Ending)')*</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" class="form-control" step="any" name="hourly_end_range" value="" placeholder="" >
                                                 </div>
 
                                             </div>
-                                               
+
 
                                             {{-- budget amount --}}
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group hide" id="budget_amount">
@@ -177,7 +177,7 @@
                                                         @foreach($data['deliverables'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                                         @endforeach
-                                                        
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -190,9 +190,9 @@
                                                         @foreach($data['dods'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
-                                                        
+
                                                     </select>
-                                                    
+
                                                 </div>
                                         </div>
 
@@ -231,7 +231,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <input type="hidden" value="{{route('buyer.job.validate')}}" id="job_validate_url">
                                         <input type="checkbox" name="skills[]" style="display: none">
                                         <div style="display:inline;display:none" id="skills_heading">
@@ -239,17 +239,19 @@
                                             <small>(At least one skill is required)</small>
                                         </div>
                                         <div id="form_attributes" class="pt-1" >
-                                            
+
                                         </div>
 
-                                       
+
                                         {{-- Create Job Button --}}
-                                        
+
                                         <div id="outer" class="text-right">
                                             <div class="inner">
-                                                <button type="button" class="pl-4  submit-btn mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
+                                                <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
                                             </div>
-                                            
+                                            <div class="inner">
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -259,7 +261,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+
     </div>
 </section>
 @endsection
@@ -287,7 +289,7 @@
 
 <script>
 
-    
+
     function fetchSubCategories(category)
     {
         $.ajax({
@@ -297,12 +299,12 @@
             success:function(data){
                 var html = '';
                 if(data.error){
-                    $("#subCategorys").empty(); 
+                    $("#subCategorys").empty();
                     html += `<option value="" selected disabled>${data.error}</option>`;
                     $(".mySubCatgry").html(html);
                 }
                 else{
-                    $("#subCategorys").empty(); 
+                    $("#subCategorys").empty();
                     html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
                     $.each(data, function(index, item) {
                         html += `<option value="${item.id}">${item.name}</option>`;
@@ -310,7 +312,7 @@
                     });
                 }
             }
-        });  
+        });
     }
 
     function fetchSkills(category,sub_category=''){
@@ -321,48 +323,48 @@
             success:function(data){
                 var html = '';
                 if(data.error){
-                
+
                 }
                 else{
                     loadSkills(data);
                     console.log(data);
-                
+
                 }
             }
-        });  
+        });
 
     }
 
     const genRand = (len) => {
     return Math.random().toString(36).substring(2,len+2);
     }
-                                    
+
     function loadSkills(data)
     {
         $('#skills_heading').show();
         // if(jQuery.isEmptyObject(data))
             $('#form_attributes').empty();
         for (var main_category in data) { //heading main
-            
+
             var all_sub_categories=data[main_category];
             var main_category_id=genRand(5);
-        
+
             $('#form_attributes').append(' <div class="row pt-1"  id="'+main_category_id+'"><h5>'+main_category+'</h5>');
-            for (var sub_category_enum in all_sub_categories) { //front end backend 
+            for (var sub_category_enum in all_sub_categories) { //front end backend
 
                 var skills=all_sub_categories[sub_category_enum];
                 var sub_category_id=genRand(5);
 
                 $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pb-3 ml-2"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
                 for (var skill_index in skills) {
-                    
+
                     var skill_id=skills[skill_index].id;
                     var skill_name=skills[skill_index].name;
                     $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[] 0" id="'+skill_id+'" value="'+skill_id+'"> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
 
 
                 }
-                
+
             }
             $('#'+main_category_id).append('<div/></div>');
         }
@@ -373,8 +375,8 @@
     Dropzone.autoDiscover = false;
     "use strict";
     $(document).ready(function() {
-     
-        
+
+
         $('.select2').select2({
             tags: true
         });
@@ -388,19 +390,19 @@
             new nicEditor({fullPanel : true}).panelInstance('nicEditor'+index,{hasPanel : true});
         });
     });
-    
+
     $(document).on("change",".custom-file-input",function(){
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
     });
 
-    
+
     $('#budget_type_id').on('change', function(){
         var budget_type = $(this).val();
         switchBudgetFileds(budget_type);
     });
-  
-    
+
+
     $('#subCategorys').on('change', function(){
         var sub_category = $(this).val();
         $('input[name="skills"]').prop('checked', $(this).is(':checked'));
@@ -414,8 +416,8 @@
 
         fetchSubCategories(category);
         fetchSkills(category);
-        
-         
+
+
     });
 
 
