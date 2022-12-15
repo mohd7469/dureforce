@@ -11,6 +11,8 @@ Route::name('seller.')->group(function () {
         
         Route::namespace('Seller')->prefix('seller')->group(function () {
 
+            Route::get('/offer-view/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'OfferView'] )->name('offer.view');
+
             //profile without middleware of profile complte
             Route::name('profile.')->prefix('profile')->group(function () {
 
