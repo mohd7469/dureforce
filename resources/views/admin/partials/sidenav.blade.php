@@ -1042,7 +1042,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
                         <i class="menu-icon la la-mobile"></i>
-                        <span class="menu-title">@lang('Software Detail settings')</span>
+                        <span class="menu-title">@lang('software default module')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1055,7 +1055,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             <li class="sidebar-menu-item {{ menuActive('admin.soft.index') }} ">
                                 <a href="{{ route('admin.soft.index') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('All Software Details')</span>
+                                    <span class="menu-title">@lang('Software Default Steps')</span>
                                 </a>
                             </li>
                             

@@ -82,13 +82,13 @@
                                     </a>
                                     <td data-label="@lang('Action')">
                                         @if($soft->is_active == 1)
-                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('active')" data-id="{{$soft->id}}">
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$soft->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
                                         @if($soft->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$soft->id}}">
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$soft->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif

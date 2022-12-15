@@ -15,7 +15,7 @@ class SoftwareDefaultStepController extends Controller
     public function index()
     {
         
-    	$pageTitle = "Manage Software Details";
+    	$pageTitle = "Software Default Steps";
     	//$emptyMessage = "No data found";
         $softwares = SoftwareDefaultStep::latest()->paginate(getPaginate());
        
@@ -61,7 +61,12 @@ class SoftwareDefaultStepController extends Controller
         return view('admin.software_section.edit', compact('pageTitle', 'soft','emptyMessage'));
     }
     public function softupdate(Request $request, $id){
-        
+        $this->validate($request, [
+           
+            'title' => 'required',
+            'description' => 'required',
+            
+        ]);
         
         $soft = SoftwareDefaultStep::findOrFail($id);
       
