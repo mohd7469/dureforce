@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\ServiceAttribute;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
+use App\Models\Software\SoftwareDefaultStep;
 use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareProvidingStep;
@@ -199,7 +200,14 @@ trait CreateOrUpdateEntity {
         });
         return true;
     }
-
+    public function isManualTitle($tile){
+        $module=SoftwareDefaultStep::where('title',$tile)->first();
+        if($module)
+        {
+            return false;
+        }
+        return true;
+    }
     public function savePricing($request, $model, $type = Attribute::SERVICE) : bool
     {
         DB::transaction(function () use ($request, $model, $type) {
@@ -228,6 +236,7 @@ trait CreateOrUpdateEntity {
                     {
                         $modules[] = new SoftwareStep([
                             'name' => $value,
+                            'is_manual_title' => $this->isManualTitle($value),
                             'description' => $request->get('module_description')[$key],
                             'start_price' => $request->get('module_price')[$key],
                             'estimated_lead_time' => $request->get('module_delivery')[$key],

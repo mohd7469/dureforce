@@ -1,10 +1,10 @@
 @php
     $softwareSteps = collect([]);
-    $extraSoftware = collect([]);
+    $software_modules = collect([]);
 
     if (!empty($software)) {
-        $extraSoftware = collect();
-        $softwareSteps = \App\Models\Software\softwareStep::where('software_id', $software->id)->get();
+        $software_modules = \App\Models\Software\softwareStep::where('software_id', $software->id)->get();
+        $softwareSteps = \App\Models\SoftwareProvidingStep::where('software_id', $software->id)->get();
     }
 @endphp
 <form role="form" action="{{ route('user.software.store.pricing') }}" class="user-pricing-form" method="POST"
@@ -15,7 +15,7 @@
             <div class="row justify-content-center">
                 
                 <input type="hidden" name="software_id" value="{{ $software->id ?? '' }}">
-                <input type="hidden" name="number_of_software_modules" value="{{ count($extraSoftware) }}" id="number_of_software_modules">
+                <input type="hidden" name="number_of_software_modules" value="{{ count($software_modules) }}" id="number_of_software_modules">
                 
                 <div class="col-lg-4 ">
                     <label>@lang('Starting From Price (Base Software)')</label>
@@ -71,19 +71,23 @@
                
                 <div class="col-xl-12 col-lg-12 mt-1">
                     <input type="hidden" value="{{$software_module_titles->toJson()}}" id="modules">
-                    @if (!isset($extraSoftware) || $extraSoftware->isEmpty())
+                    @if (!isset($software_modules) || $software_modules->isEmpty())
                         
                         <div id="add-service-container">
                             <div class="row software-module mt-2" id="software-module-row-0">
                                 
                                 <div class="col-md-12 col-lg-12  col-sm-12 col-xs-12 mt-2">
-                                    <label for="">Module Title*</label>
+                                    
+                                    <label for="">Module Title*<small class="text text-primary ml-2 swap" >(switch to add manual title) </small></label>
                                     <select name="module_title[]" id="" class="form-control module-title" >
+                                        
                                         <option value=""> Select Module Title</option>
                                         @foreach ($software_module_titles as $item)
                                             <option value="{{$item->title}}" data-description="{{$item->description}}">{{$item->title}}</option>
                                         @endforeach
+
                                     </select>
+
                                 </div>
                                
                                 <div class="col-md-12 col-lg-12  col-sm-12 col-xs-12 mt-2">
@@ -115,22 +119,26 @@
                             </div>
                         </div>
 
-                       
                     @else
-                        @foreach ($extraSoftware as $exKey => $extra)
+                        @foreach ($software_modules as $exKey => $module)
                             
                             <div id="add-service-container">
                                 
                                 <div class="row software-module" id="add-on-service-row-{{ $exKey }}">
                                     
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 form-group">
-                                        <label>Title *</label>
-                                        <select name="module_title[]" id="" class="form-control module-title">
-                                            <option value=""> Select Module Title</option>
-                                            @foreach ($software_module_titles as $item)
-                                                <option value="{{$item->title}}">{{$item->title}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Module Title* <small class="text text-primary ml-2 swap" >({{$module->is_manual_title ? 'switch to select title' : 'switch to add manual title'}} ) </small></label>
+                                        @if ($module->is_manual_title)
+                                            <input type="text" name="module_title[]" id="" value="{{$module->name}}" class="form-control module-title" >
+                                        @else
+                                            <select name="module_title[]" id="" class="form-control module-title">
+                                                <option value=""> Select Module Title</option>
+                                                @foreach ($software_module_titles as $item)
+                                                    <option value="{{$item->title}}" {{$module->name==$item->title ? 'selected' : '' }}>{{$item->title}}</option>
+                                                @endforeach
+                                            </select>
+                                        @endif
+                                        
                                     </div>
 
                                     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mt-2">
@@ -138,30 +146,32 @@
                                         <label for="discription" >Module Description</label>
                                         <textarea type="text" name="module_description[]" id="discription"
                                                 placeholder="This is a short description." class="form-control module-description"
-                                        ></textarea>
+                                                
+                                        >{{$module->description}}</textarea>
                                     
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-4 form-group">
+                                    <div class="col-md-6 col-xl-6 col-lg-6 col-sm-12 form-group">
                                         <label>@lang('Per Hour Rate')*</label>
                                         <input type="number" class="form-control module_price"
-                                               value="{{ floatval($extra->price) ?: 'Enter add on price' }}"
+                                               value="{{ floatval($module->start_price) ?: 'Enter add on price' }}"
                                                name="module_rate[]" placeholder="@lang('Per hour rate')"
                                                step="any">
                                     </div>
 
-                                    <div class="col-xl-3 col-lg-3 form-group">
+                                    <div class="{{$exKey>0 ?'col-xl-5 col-lg-5 col-md-5 col-sm-11' : 'col-md-6 col-xl-6 col-lg-6'}} form-group">
                                         <label>@lang(' Delivery Days ')*</label>
                                         <input type="number" class="form-control module-delivery"
-                                               value="{{ $extra->delivery ?: 'Enter delivery' }}"
+                                               value="{{ $module->estimated_lead_time ?: 'Enter delivery' }}"
                                                name="module_delivery_days[]" min="1" placeholder="@lang('Enter Days')">
                                     </div>
-
-                                    <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-                                        <button type="button" class="btn btn-danger"
-                                                onclick="removeAddOnRow($('#add-on-service-row-{{ $exKey }}'))"><i
-                                                    class="fa fa-trash"></i></button>
-                                    </div>
+                                    @if($exKey>0)
+                                        <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="removeAddOnRow($('#add-on-service-row-{{ $exKey }}'))"><i
+                                                        class="fa fa-trash"></i></button>
+                                        </div>
+                                    @endif
 
                                 </div>
 

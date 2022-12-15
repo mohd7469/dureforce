@@ -20,6 +20,7 @@ class CreateSoftwareStepsTable extends Migration
             $table->text('description')->nullable();
             $table->decimal('start_price', 28,2)->default(0)->nullable();
             $table->integer('estimated_lead_time')->nullable();
+            $table->boolean('is_manual_title')->default(false);
             $table->timestamps();
             $table->softDeletes();
 

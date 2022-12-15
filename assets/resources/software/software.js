@@ -6,7 +6,10 @@ let back = $(".back");
 let front = $(".front");
 let add_on_service_row_number='';
 let modules=[];
-
+let manual_title_field='<input type="text" name="module_title[]" id="" class="form-control module-title" >';
+let manual_title_label="(switch to add manual title)";
+let select_module_title_label="(switch to select title)";
+let select_module_title='';
 
 "use strict";
 $(document).ready(function () {
@@ -14,7 +17,7 @@ $(document).ready(function () {
   add_on_service_row_number=parseInt($('#number_of_software_modules').val());
   modules=$('#modules').val();
   modules=JSON.parse(modules);
-
+  loadSelectTitle();
   loadActiveTab();
   loadSelect2();
   baannerForm();
@@ -29,7 +32,7 @@ $(document).ready(function () {
 
   $("#add-more-service").click(function () {
     add_on_service_row_number+=1;
-    addOnServiceContainer.append(addOnServiceRow());
+    addOnServiceContainer.append(addSoftwareModuleRow());
   });
 
   $(document).on(
@@ -94,7 +97,17 @@ $(document).ready(function () {
 
   $("div.setup-panel div a.btn-success").trigger("click");
 });
+function loadSelectTitle()
+{
+  select_module_title=  `
+                        <select name="module_title[]" id="" class="form-control module-title">
+                        <option value=""> Select Module Title</option>
 
+                        ${modules ?.map(function(module) {
+                          return ` <option value="${module.title}" data-description="${module.description}"> ${module.title}</option>`;
+                        })}
+                      </select>`
+}
 function addSteps() {
   stepsRow.append(`
   <div id="add-on-service-step"> 
@@ -135,9 +148,30 @@ function setDescription(description, description_id){
 $(document).on('change', '.module-title', function() {
   var selected_option = $(this).find('option:selected');
   var description = selected_option.data('description'); 
-  alert(description);
-    $(this).parent().closest('.software-module').find('.module-description').html(description);
+  $(this).parent().closest('.software-module').find('.module-description').html(description);
 });
+function isSelectOrTextField(element) {
+  if(element.is('SELECT,select')) {return true;}
+  return false;
+}
+$(document).on('click', '.swap', function() {
+   
+    let select_title;
+    let title_select_field=$(this).parent().closest('.software-module').find('.module-title');
+    if(title_select_field.length) {
+        if(isSelectOrTextField(title_select_field)){
+          title_select_field.replaceWith(manual_title_field);
+          $(this).html(select_module_title_label);
+        }
+        else
+        {
+          title_select_field.replaceWith(select_module_title);
+          $(this).html(manual_title_label);
+
+        }
+    }
+});
+
 
 $("#category").on("change", function () {
   var category = $(this).val();
@@ -595,11 +629,11 @@ function deleteAddOnRow(row_id){
   $(row_id).remove();
   add_on_service_row_number-=1;
 }
-function addOnServiceRow() {
+function addSoftwareModuleRow() {
   return `<div class="row software-module mt-2" id="software-module-row-`+add_on_service_row_number+`">
 
           <div class="col-md-12 col-lg-12  col-sm-12 col-xs-12 mt-2">
-          <label for="">Module Title*</label>
+          <label for="">Module Title*<small class="text text-primary ml-2 swap" >(switch to add manual title) </small></label>
           <select name="module_title[]" id="" class="form-control module-title">
               <option value=""> Select Module Title</option>
 
@@ -630,7 +664,7 @@ function addOnServiceRow() {
         <div class="col-xl-5 col-lg-6 col-sm-12 col-xs-12 form-group">
           <label>Estimated Lead Time</label>
               <input type="number" class="form-control module-delivery" id="module_delivery"
-                    name="add_on_delivery[]"
+                    name="module_delivery[]"
                     placeholder="Enter Hours">
         </div>
 
