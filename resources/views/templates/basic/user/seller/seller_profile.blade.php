@@ -36,12 +36,9 @@
                                     
 
                                     <div class="article">
-                                    <p>Bacon ipsum dolor amet sirloin jowl turducken pork loin pig pork belly, chuck cupim tongue beef doner tri-tip pancetta spare ribs porchetta.
-                                    </p> <a id="clickme">Read more</a>
+                                    <p>{{ !empty($user->basicProfile->about) ? $user->basicProfile->about : ""}}</p>
+{{--                                        <a id="clickme">Read more</a>--}}
 
-                                    <p id="book" class="moretext">
-                                        Brisket ball tip cow sirloin. Chuck porchetta kielbasa pork chop doner sirloin, bacon beef brisket ball tip short ribs.
-                                    </p>
                                     </div>
                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
                                             <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
