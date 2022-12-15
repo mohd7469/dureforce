@@ -3,10 +3,23 @@
 <div class="container-fluid">
 <h2 class="all_p_heading">All Proposals</h2>
 <div class="all_propsal_container">
-    <ul class="allp_nav">
+    {{-- <ul class="allp_nav">
+        
         <li><a href="#">All (7)</a></li>
         <li><a href="#">Draft Proposals (5)</a></li>
         <li><a href="#">Submitted Proposals (6)</a></li>
+    </ul> --}}
+    <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#all">All</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#draft_proposals">Draft Proposals (5)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals (6)</a>
+        </li>
+        
     </ul>
 
     <div class="listing_table_con">
