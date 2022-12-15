@@ -57,7 +57,9 @@ Route::view('/address-verification', 'templates.basic.verification.address_verif
 Route::view('/email-verification', 'email-template.job.email_template');
 Route::view('/job-email-verification', 'email-template.job.job_email_template');
 Route::view('/job-email', 'templates.basic.job_email');
-
+//seller All Proposal
+Route::view('/seller-proposal', 'templates.basic.seller_proposal.all_proposal');
+Route::view('/proposal-details', 'templates.basic.seller_proposal.proposal_details');
 
 
 
