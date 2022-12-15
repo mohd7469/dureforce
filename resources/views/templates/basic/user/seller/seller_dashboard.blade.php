@@ -51,7 +51,7 @@
                                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Jobs_by_Services">Jobs by Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#Jobs_by_Software">Jobs by Software</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Software">Jobs by Software</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Custom">Jobs by Custom</a>
@@ -244,6 +244,8 @@
                                                 <th>@lang('Delivet Time')</th>
                                                 <th>@lang('Status')</th>
                                                 <th>@lang('Last Update')</th>
+                            
+                            
                                                 <th>@lang('Views')</th>
                                                 <th>@lang('Action')</th>
                                             </tr>
