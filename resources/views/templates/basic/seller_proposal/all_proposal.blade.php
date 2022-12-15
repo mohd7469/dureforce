@@ -2,6 +2,7 @@
 @section('content')
 <div class="container-fluid">
 <h2 class="all_p_heading">All Proposals</h2>
+
 <div class="all_propsal_container">
     {{-- <ul class="allp_nav">
         
@@ -9,49 +10,80 @@
         <li><a href="#">Draft Proposals (5)</a></li>
         <li><a href="#">Submitted Proposals (6)</a></li>
     </ul> --}}
-    <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav">
+
+
+
+
+    
+    <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#all">All</a>
+            <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
+            
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#draft_proposals">Draft Proposals (5)</a>
+            <a class="nav-link"  data-bs-toggle="tab" href="#draft_proposals">Draft Proposals (5)</a>
+      
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals (6)</a>
+            
+            <a class="nav-link " data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals (6)</a>
         </li>
         
     </ul>
+   
 
-    <div class="listing_table_con">
-        <table>
-            <thead>
-              <th>Title</th>
-              <th>Job Type</th>
-              <th>Proposed Price</th>
-              <th>Proposal Status</th>
-              <th>Action</th>
-            </thead>
-            @for($j=0; $j<5; $j++)
-            <tr>
-              <td>
-                  <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                  <p class="per_jobs_d">Job posted by Martin Collins on 30 Sep 2022</p>
-              </td>
-              <td>
-                  <span class="jobtype-per">Service</span>
-              </td>
-              <td>
-                  <p class="job_price">$350.00</p>
-              </td>
-              <td><span class="job_status_p">Draft</span></td>
-              <td><a href="#" class="view_propasal_per">View Proposal</a></td>
-            </tr>
-           @endfor
+            
+ <div class="tab-content">
+        <div class="listing_table_con card-body tab-pane active" id="all"> 
+            <table>
+                <thead>
+                <th>Title</th>
+                <th>Job Type</th>
+                <th>Proposed Price</th>
+                <th>Proposal Status</th>
+                <th>Action</th>
+                </thead>
+                @for($j=0; $j<5; $j++)
+                
+                <tr>
+                <td>
+                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
+                    <p class="per_jobs_d">Job posted by Martin Collins on 30 Sep 2022</p>
+                </td>
+                <td>
+                    <span class="jobtype-per">Service</span>
+                </td>
+                <td>
+                    <p class="job_price">$350.00</p>
+                </td>
+                <td><span class="job_status_p">Draft</span></td>
+                <td><a href="#" class="view_propasal_per">View Proposal</a></td>
+                </tr>
+                @endfor
+            </table>
+        </div>
+           
+           <div class="tab-pane" id="draft_proposals">
+            <p class="card-text text-center">
+            <div class="d-flex align-items-center justify-content-center ">
+                <h6 class="display-6 fw-bold">Coming Soon!</h6>
+            </div>
+            </p>
+        </div>
+        <div class="tab-pane" id="submitted_proposals">
+            <p class="card-text text-center">
+            <div class="d-flex align-items-center justify-content-center ">
+                <h6 class="display-6 fw-bold">Coming Soon!</h6>
+            </div>
+            </p>
+        </div>
           
-          </table>
+         
     </div>
+    
+
 </div>
-</div>
+
 
 @endsection
 
@@ -237,6 +269,9 @@ p.per_jobs_d {
 
 <script>
    'use strict';
+//    function HideTab() {
+//     $('.listing_table_con').hide();
+//    }
    $('#defaultSearch').on('change', function() {
        this.form.submit();
    });
