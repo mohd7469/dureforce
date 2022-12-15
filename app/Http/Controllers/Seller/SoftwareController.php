@@ -45,25 +45,21 @@ class SoftwareController extends Controller
         $completedReview = '';
 
         $features = Features::latest()->get();
-
-        $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
-
         $software = null;
 
         if (! empty($id) || $id > 0) {
-            $software = Software::with('softwareDetail', 'softwareSteps', 'softwareAttributes','extraSoftware', 'category', 'subCategory')->findOrFail($id);
+            $software = Software::withAll()->findOrFail($id);
 
-            $completedOverview = $software->softwareAttributes()->count() > 0 ? 'completed' : '';
-            $completedPricing = $software->amount > 0 ? 'completed' : '';
-            $completedImage = !empty($software->image) || !empty($software->demo_url) ? 'completed' : '';
-            $completedRequirements = !empty($software->softwareDetail->client_requirements) ? 'completed' : '';
-            $completedReview = !empty($software->softwareDetail->max_no_projects) ? 'completed' : '';
+            $completedOverview = $software->title !='' ? 'completed' : '';
+            $completedPricing = $software->rate_per_hour > 0 ? 'completed' : '';
+            $completedBanner = $software->banner ? 'completed' : '';
+            $completedRequirements = $software->requirement_for_client ? 'completed' : '';
+            $completedReview = !empty($software->number_of_simultaneous_projects)   ? 'completed' : '';
         }
 
         return view($this->activeTemplate . 'user.seller.software.create', compact(
             'pageTitle',
             'features',
-            'attributes',
             'completedOverview',
             'completedPricing',
             'completedImage',
@@ -76,7 +72,6 @@ class SoftwareController extends Controller
     public function storeOverview(OverviewRequest $request)
     {
         $softwareId = $request->get('software_id');
-
         if(! empty($softwareId)) {
             $software = Software::FindOrFail($softwareId);
         } else {

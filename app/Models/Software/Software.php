@@ -3,11 +3,13 @@
 namespace App\Models\Software;
 
 use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\EntityLogo;
 use App\Models\ExtraSoftware;
 use App\Models\Features;
 use App\Models\Milestone;
+use App\Models\ModuleBanner;
 use App\Models\OptionalImage;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
@@ -15,6 +17,8 @@ use App\Models\Review;
 use App\Models\ReviewRating;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareDetail;
+use App\Models\SoftwareProvidingStep;
+use App\Models\Status;
 use App\Models\SubCategory;
 use App\Models\Tag;
 use App\Models\TagsAssociate;
@@ -42,7 +46,7 @@ class Software extends Model
         'CANCELLED' =>  20,
         'UNDER_REVIEW' =>  21
     ];
-
+    protected $table = "softwares";
     protected $casts = [
         'tag' => 'object'
     ];
@@ -54,9 +58,10 @@ class Software extends Model
         'category_id',
         'sub_category_id',
         'title',
+        'software_application',
         'description',
-        'rate_per_hour',
-        'estimated_delivery_time',
+        'price',
+        'estimated_lead_time',
         'requirement_for_client',
         'number_of_simultaneous_projects',
         'is_terms_accepted',
@@ -64,15 +69,13 @@ class Software extends Model
     ];
 
     public function scopeWithAll($query){
-        $query->with('user')->with('serviceSteps')->with('category')->with('subCategory')->with('deliverable')->with('addOns')->with('status')->with('tags')->with('features')->with('skills');
+        $query->with('user')->with('softwareSteps')->with('category')->with('subCategory')->with('status')->with('tags')->with('features');
     }
 
-    public function softwareSteps()
+    public function deliverable()
     {
-        return $this->hasMany(SoftwareStep::class, 'software_id');
+        return $this->belongsToMany(Deliverable::class, 'software_deliverables');
     }
-    
-  
 
     public function user()
     {
@@ -81,15 +84,19 @@ class Software extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function features()
+    {
+        return $this->morphToMany(Features::class, 'module','module_features');
+
+    }
 
     public function subCategory()
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
-
 
     public function reviewCount()
     {
@@ -103,7 +110,6 @@ class Software extends Model
         self::observe(SoftwareObserver::class);
     }
 
-    
 
     public function scopeActive($query)
     {
@@ -115,18 +121,15 @@ class Software extends Model
         return $query->where('status', self::IN_ACTIVE);
     }
 
-    public function serviceSteps()
+    public function softwareSteps()
     {
-        return $this->hasMany(ServiceProjectStep::class,'service_id');
+        return $this->hasMany(SoftwareProvidingStep::class,'software_id');
     }
-    public function deliverable()
-    {
-        return $this->belongsToMany(Deliverable::class, 'service_deliverables');
-    }
+    
 
-    public function addOns()
+    public function modules()
     {
-        return $this->hasMany(AddOnService::class, 'service_id');
+        return $this->hasMany(SoftwareStep::class, 'software_id');
     }
 
     public function banner()
@@ -168,8 +171,5 @@ class Software extends Model
     {
         return $this->morphMany(DeliveryMode::class, 'module');
     }
-    public function skills()
-    {
-        return $this->belongsToMany(Skills::class, 'service_skills','service_id','skills_id');
-    }
+    
 }

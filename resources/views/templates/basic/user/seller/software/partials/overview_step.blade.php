@@ -95,15 +95,7 @@
 
                 </div>
                 
-                <br>
-                <input type="checkbox" name="skills[]" style="display: none">
-                <div style="display:inline;display:none" id="skills_heading">
-                    <h4 class="" style="display:inline">Job Attributes* </h4>
-                    <small>(At least one skill is required)</small>
-                </div>
-                <div id="form_attributes" class="col-xl-12 col-lg-12 pt-1" >
-                    
-                </div>
+                <input type="checkbox" name="skills[]" id="" checked value="1" style="display: none">
 
                 <div class="row">
                     <div class="col-md-6">

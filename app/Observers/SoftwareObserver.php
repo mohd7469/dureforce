@@ -3,18 +3,20 @@
 namespace App\Observers;
 
 use App\Models\GeneralSetting;
+use App\Models\Software\Software;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class SoftwareObserver
 {
     //
     public function creating($software)
     {   
-        $general = GeneralSetting::first();
+        //$general = GeneralSetting::first();
 
         $software->user_id = auth()->id();    
-        $software->status = $general->approval_post == 1 ? 1 : 0;
-        $software->amount = $software->amount ?: 0;
+        $software->status_id = Software::STATUSES['DRAFT'];
+        $software->uuid= Str::uuid()->toString();
         $software->updated_at = Carbon::now();   
     }
 

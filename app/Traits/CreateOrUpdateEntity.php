@@ -14,6 +14,7 @@ use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
 use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
+use App\Models\SoftwareProvidingStep;
 use App\Models\Tag;
 use DB;
 
@@ -84,33 +85,28 @@ trait CreateOrUpdateEntity {
     public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
          DB::transaction(function () use ($request, $model, $modelId, $type) {
-            // dd($request->all());
 
             $model->fill($request->all())->save();
             
             if(! empty($modelId)) {
                 
                 $model->features()->detach();
-                $model->skills()->detach();
+                if($type == Attribute::SERVICE){
+                    $model->skills()->detach();}
                 $model->tags()->detach();
             }
             
-            if($type == Attribute::SERVICE) {
-                
-                $tags=collect($request->tag)->map(function ($tag)  {
-                    $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
-                    return $tag->id;
-                });
+            $tags=collect($request->tag)->map(function ($tag)  {
+                $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
+                return $tag->id;
+            });
 
-                $model->tags()->attach($tags);
+            $model->tags()->attach($tags);
+            
+            if($type == Attribute::SERVICE)
                 $model->skills()->attach($request->skills);
-                $model->features()->attach($request->features);
 
-             
-            } else {
-                
-            }
-
+            $model->features()->attach($request->features);
 
         });
 
@@ -208,28 +204,37 @@ trait CreateOrUpdateEntity {
     {
         DB::transaction(function () use ($request, $model, $type) {
             
-            if($type == Attribute::SERVICE) {
-                $model->update([
-                    'rate_per_hour'         => $request->price,
-                    'estimated_delivery_time' => $request->delivery_time
-                ]);
-            } else {
-                $model->update([
-                    'amount'         => $request->amount,
-                    'status'        => Service::PENDING,
-                    'deliverables'  => !empty($request->deliverables) ? decodeOrEncodeFields($request->deliverables, false) : null,
-                    'delivery_time' => $request->delivery_time
-                ]);
-            }
+            $model->update([
+                'price'         => $request->price,
+                'estimated_lead_time' => $request->delivery_time
+            ]);
 
+            $model->deliverable()->sync($request->deliverables);
+           
             if($type == Attribute::SERVICE) {
               $model->serviceSteps()->delete();
               $model->addOns()->delete();
-              $model->deliverable()->sync($request->deliverables);
+              if(!empty($request->service_add_ons)) {
+                    $model->addOns()->createMany($request->service_add_ons);
+                }
 
             } else {
               $model->softwareSteps()->delete();
-              $model->extraSoftware()->delete();
+              $model->modules()->delete();
+              if (!empty($request->module_title)) 
+                {
+                    $modules=[];
+                    foreach ($request->get('module_title') as $key => $value) 
+                    {
+                        $modules[] = new SoftwareStep([
+                            'name' => $value,
+                            'description' => $request->get('module_description')[$key],
+                            'start_price' => $request->get('module_price')[$key],
+                            'estimated_lead_time' => $request->get('module_delivery')[$key],
+                        ]);
+                    }
+                    $model->modules()->saveMany($modules);
+                }   
 
             }
 
@@ -242,7 +247,7 @@ trait CreateOrUpdateEntity {
                             'description' => $request->get('description')[$key]
                         ]);
                     } else {
-                        $steps[] = new SoftwareStep([
+                        $steps[] = new SoftwareProvidingStep([
                             'name' => $value,
                             'description' => $request->get('description')[$key]
                         ]);
@@ -251,12 +256,11 @@ trait CreateOrUpdateEntity {
                 if($type == Attribute::SERVICE) {
                     $model->serviceSteps()->saveMany($steps);
                 } else {
+                   
                     $model->softwareSteps()->saveMany($steps);
-                }
-            }
 
-            if (!empty($request->service_add_ons)) {
-                $model->addOns()->createMany($request->service_add_ons);
+                    
+                }
             }
 
         });
