@@ -82,7 +82,7 @@
                                         </div>
                                        </div>
                                       <div class="col-xl-12 mt-8">
-                                          <strong class="title">Languages</strong>
+                                          <strong class="title">{{$user->languages->count() >1 ?'Languages' : 'Language'}}</strong>
                                           <div class="pt-1">
                                             @foreach ($user->languages as $item)
                                             <b>{{getLanaguageName($item->language_id)}}</b>:{{getProficiencyLevelName($item->language_level_id)}}<br>
