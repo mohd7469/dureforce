@@ -45,28 +45,24 @@ class SoftwareController extends Controller
         $completedReview = '';
 
         $features = Features::latest()->get();
-
-        $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
-
         $software = null;
 
         if (! empty($id) || $id > 0) {
-            $software = Software::with('softwareDetail', 'softwareSteps', 'softwareAttributes','extraSoftware', 'category', 'subCategory')->findOrFail($id);
+            $software = Software::withAll()->findOrFail($id);
 
-            $completedOverview = $software->softwareAttributes()->count() > 0 ? 'completed' : '';
-            $completedPricing = $software->amount > 0 ? 'completed' : '';
-            $completedImage = !empty($software->image) || !empty($software->demo_url) ? 'completed' : '';
-            $completedRequirements = !empty($software->softwareDetail->client_requirements) ? 'completed' : '';
-            $completedReview = !empty($software->softwareDetail->max_no_projects) ? 'completed' : '';
+            $completedOverview = $software->title  ? 'completed' : '';
+            $completedPricing = $software->price > 0 ? 'completed' : '';
+            $completedBanner = $software->banner ? 'completed' : '';
+            $completedRequirements = $software->requirement_for_client ? 'completed' : '';
+            $completedReview = $software->number_of_simultaneous_projects > 0   ? 'completed' : '';
         }
-
+        // dd($completedOverview,$completedPricing,$completedBanner,$completedRequirements,$completedReview);
         return view($this->activeTemplate . 'user.seller.software.create', compact(
             'pageTitle',
             'features',
-            'attributes',
             'completedOverview',
             'completedPricing',
-            'completedImage',
+            'completedBanner',
             'completedRequirements',
             'completedReview',
             'software'
@@ -76,7 +72,6 @@ class SoftwareController extends Controller
     public function storeOverview(OverviewRequest $request)
     {
         $softwareId = $request->get('software_id');
-
         if(! empty($softwareId)) {
             $software = Software::FindOrFail($softwareId);
         } else {
@@ -117,18 +112,20 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
-
-        if(!$result) {
-            $notify[] = ['error', 'Some error occured while saving banner.'];
-            return redirect()->back()->withNotify($notify);
-        }
-
-        if($software->amount == 0) {
+        if($software->price<1) {
             $notify[] = ['error', 'Please complete the software pricing first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-2'])->withNotify($notify);
         }
+        else
+        {
+            $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
 
+            if(!$result) {
+                $notify[] = ['error', 'Some error occured while saving banner.'];
+                return redirect()->back()->withNotify($notify);
+            }
+        }
+       
         $notify[] = ['success', 'Software Banner Saved Successfully.'];
         return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-4'])->withNotify($notify);
     }
@@ -144,7 +141,7 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        if(empty($software->image)) {
+        if(!$software->banner) {
             $notify[] = ['error', 'Please complete the software banners first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
         }

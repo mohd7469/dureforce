@@ -12,7 +12,10 @@ class SoftwareStep extends Model
     protected $fillable = [
         'software_id',
         'name',
-        'description'
+        'description',
+        'start_price',
+        'estimated_lead_time',
+        'is_manual_title'
     ];
 
     public function software()

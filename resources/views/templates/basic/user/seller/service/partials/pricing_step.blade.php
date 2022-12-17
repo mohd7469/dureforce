@@ -64,9 +64,6 @@ if (!empty($service)) {
                     
                 </div>
 
-                
-                {{-- <div class="col-lg-4 "> --}}
-
                
                 <br />
                 <h4 class="hdng-create col-12">Add On Service</h4>
@@ -155,19 +152,19 @@ if (!empty($service)) {
                                     <label for="" class="d-inline-block">Step Name *</label>
                                     <span title="1 Requirement Gathering : Developer /client must identify the exact  requirements of service from start to finish.
 
-2 Analyzing :
-After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
-(service budget analysis can be done at this time )
+                                        2 Analyzing :
+                                        After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
+                                        (service budget analysis can be done at this time )
 
-3 Development :
-Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
+                                        3 Development :
+                                        Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
 
-4 Testing :
-In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
+                                        4 Testing :
+                                        In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
 
-5 Deployment :
-Developer will deploy the following service (program /software) as per client’s requirements.">
-                        <i class="fa fa-info-circle"></i></span>
+                                        5 Deployment :
+                                        Developer will deploy the following service (program /software) as per client’s requirements.">
+                                        <i class="fa fa-info-circle"></i></span>
                                     <input type="text" name="steps[]" id="step" placeholder="E.g. Initial Requirements"
                                         class="form-control step"
                                           />

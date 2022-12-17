@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoftwareStepsTable extends Migration
+class CreateSoftwareDeliverablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,15 @@ class CreateSoftwareStepsTable extends Migration
      */
     public function up()
     {
-        Schema::create('software_steps', function (Blueprint $table) {
+        Schema::create('software_deliverables', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('software_id')->nullable();
-            $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->decimal('start_price', 28,2)->default(0)->nullable();
-            $table->integer('estimated_lead_time')->nullable();
-            $table->timestamps();
+            $table->unsignedBigInteger('deliverable_id')->index();
+            $table->unsignedBigInteger('software_id')->index()->nullable();
             $table->softDeletes();
+            $table->timestamps();
 
+            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
             $table->foreign('software_id')->references('id')->on('softwares')->onDelete('cascade');
-
         });
     }
 
@@ -35,6 +32,6 @@ class CreateSoftwareStepsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('software_steps');
+        Schema::dropIfExists('software_deliverables');
     }
 }

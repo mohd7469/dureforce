@@ -75,6 +75,12 @@
 
 @push('style')
     <style>
+        .add-another{
+            margin-left:-9px;
+        }
+        .inline{
+            display: flex;
+        }
         .select2Tag input {
             background-color: transparent !important;
             padding: 0 !important;
@@ -158,5 +164,6 @@
     <script>
         let route = "{{ route('user.category') }}";
     </script>
-    <script src="{{ asset('/assets/resources/js/service/create-service.js') }}"></script>
+    <script src="{{ asset('/assets/resources/software/software.js') }}"></script>
+    
 @endpush

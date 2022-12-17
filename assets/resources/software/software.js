@@ -5,16 +5,19 @@ let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
 let add_on_service_row_number='';
+let modules=[];
+let manual_title_field='<input type="text" name="module_title[]" id="" class="form-control module-title" >';
+let manual_title_label="(switch to add manual title)";
+let select_module_title_label="(switch to select title)";
+let select_module_title='';
 
 "use strict";
 $(document).ready(function () {
-  var service_id=$('#service_id').val();
-  add_on_service_row_number=parseInt($('#number_of_add_on_services').val());
-  if (service_id) {
-    var category_id=$('#category').val();
-    var sub_category_id=$('#sub-category').val();
-    fetchSkills(category_id,sub_category_id,false);
-  }
+  
+  add_on_service_row_number=parseInt($('#number_of_software_modules').val());
+  modules=$('#modules').val();
+  modules=JSON.parse(modules);
+  loadSelectTitle();
   loadActiveTab();
   loadSelect2();
   baannerForm();
@@ -22,22 +25,14 @@ $(document).ready(function () {
   overviewFormValidation();
   pricingFormValidation();
   requirementFormValidation();
-    $('#service_features').select2({
-      tags: true
-    });
-  // if (action != "edit") {
-  //   if (selector.val() == "1") {
-  //     back.attr("style", "display:none !important");
-  //     front.show();
-  //   } else {
-  //     front.attr("style", "display:none !important");
-  //     back.show();
-  //   }
-  // }
+  $('#service_features').select2({
+    tags: true
+  });
+  
 
   $("#add-more-service").click(function () {
-    addOnServiceContainer.append(addOnServiceRow());
     add_on_service_row_number+=1;
+    addOnServiceContainer.append(addSoftwareModuleRow());
   });
 
   $(document).on(
@@ -102,7 +97,17 @@ $(document).ready(function () {
 
   $("div.setup-panel div a.btn-success").trigger("click");
 });
+function loadSelectTitle()
+{
+  select_module_title=  `
+                        <select name="module_title[]" id="" class="form-control module-title">
+                        <option value=""> Select Module Title</option>
 
+                        ${modules ?.map(function(module) {
+                          return ` <option value="${module.title}" data-description="${module.description}"> ${module.title}</option>`;
+                        })}
+                      </select>`
+}
 function addSteps() {
   stepsRow.append(`
   <div id="add-on-service-step"> 
@@ -136,6 +141,38 @@ function removeExtraService(row) {
     row.remove();
   }
 }
+
+function setDescription(description, description_id){
+}
+
+$(document).on('change', '.module-title', function() {
+  var selected_option = $(this).find('option:selected');
+  var description = selected_option.data('description'); 
+  $(this).parent().closest('.software-module').find('.module-description').html(description);
+});
+function isSelectOrTextField(element) {
+  if(element.is('SELECT,select')) {return true;}
+  return false;
+}
+$(document).on('click', '.swap', function() {
+   
+    let select_title;
+    let title_select_field=$(this).parent().closest('.software-module').find('.module-title');
+    if(title_select_field.length) {
+        if(isSelectOrTextField(title_select_field)){
+          title_select_field.replaceWith(manual_title_field);
+          $(this).html(select_module_title_label);
+        }
+        else
+        {
+          title_select_field.replaceWith(select_module_title);
+          $(this).html(manual_title_label);
+
+        }
+    }
+});
+
+
 $("#category").on("change", function () {
   var category = $(this).val();
   $.ajax({
@@ -196,6 +233,27 @@ function proPicURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+function previewVideo(url){
+  url=url.replace("watch?v=", "embed/");
+  $("#preview_video").attr('src', url);
+
+}
+
+$("#video_url").on("focusout", function () {
+
+    previewVideo($(this).val());
+
+});
+
+$("#video_url").keypress(function(e)
+{   
+    e.preventDefault();
+    if(e.which == 13)
+    {
+        previewVideo($(this).val());
+    }
+
+});
 
 $(".profilePicUpload").on("change", function () {
   proPicURL(this);
@@ -364,84 +422,109 @@ function overviewFormValidation() {
   });
 }
 function baannerForm() {
+
   $(".banner-form").submit(function (e) {
   
-    var static_banner = $("#static_image").val();
-    var banner_heading = $("#banner_heading").val();
-    var banner_intro = $("#banner_detail").val();
-    $(".error").remove();
-    if ($("#pages div#banner2").css("display") == "none") {
-      if (
-        $("#dynamic_banner_image").val().length < 1 &&
-        !$("input[name='image']").attr("value")
-      ) {
-        e.preventDefault();
-        console.log($("input[name='image']").attr("value"));
+      var static_banner = $("#static_image").val();
+      var banner_heading = $("#banner_heading").val();
+      var video_url = $("#video_url").val();
+      var banner_intro = $("#banner_detail").val();
+      $(".error").remove();
 
-        $("#dynamic_banner_image").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Image is required",
-          position: "topRight",
-        });
-      } else {
-        return true;
-      }
-    } 
-    else if ($("#pages div#banner1").css("display") == "none") {
-      if ($.trim(banner_heading).length < 1) {
-        e.preventDefault();
-        $("#banner_heading").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Banner Title is required",
-          position: "topRight",
-        });
-      }
-      if ($.trim(banner_intro).length < 1) {
-        e.preventDefault();
-        $("#banner_detail").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Banner details is required",
-          position: "topRight",
-        });
-      }
-      if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
-        e.preventDefault();
-        $("#banner_err").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Background Image is required",
-          position: "topRight",
-        });
-      }
+      if ($("#pages div#banner1").css("display") == "block") {
 
-      
-      if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
-        iziToast.error({
-          message: "Technology Logos are required",
-          position: "topRight",
-        });
-       }
-      
-      if($('input:checkbox[name="technology_logos[]"]:checked').length != 3) {
-          e.preventDefault();
+          if (
+              $("#dynamic_banner_image").val().length < 1 &&
+              !$("input[name='image']").attr("value")
+            ) 
+            {
+            
+              e.preventDefault();
+              console.log($("input[name='image']").attr("value"));
+
+              $("#dynamic_banner_image").after(
+                '<span class="error text-danger">This field is required</span>'
+              );
+
+              iziToast.error({
+                message: "Image is required",
+                position: "topRight",
+              });
+
+        } else {
+          return true;
+        }
+      } 
+
+      else if ($("#pages div#banner2").css("display") == "block") {
+
+          if ($.trim(banner_heading).length < 1) {
+            e.preventDefault();
+            $("#banner_heading").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Banner Title is required",
+              position: "topRight",
+            });
+          }
+          if ($.trim(banner_intro).length < 1) {
+            e.preventDefault();
+            $("#banner_detail").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Banner details is required",
+              position: "topRight",
+            });
+          }
+          if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
+            e.preventDefault();
+            $("#banner_err").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Background Image is required",
+              position: "topRight",
+            });
+          }
+
+          if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
+            iziToast.error({
+              message: "Technology Logos are required",
+              position: "topRight",
+            });
+          }
           
+          if($('input:checkbox[name="technology_logos[]"]:checked').length != 3) {
+              e.preventDefault();
+              
+              iziToast.error({
+                message: "3 Logos should be selected",
+                position: "topRight",
+              });
+          }
+
+          return true;
+      }
+
+      else{
+        if ($.trim(video_url).length < 1) {
+          e.preventDefault();
+          $('#video_url').after(
+            '<span class="error text-danger">This field is required</span>'
+          );
           iziToast.error({
-            message: "3 Logos should be selected",
+            message: "Banner Video Url is required",
             position: "topRight",
           });
+        }
       }
 
-      return true;
-    }
   });
+
 }
+
 function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();
@@ -478,6 +561,7 @@ function reviewForm() {
     }
   });
 }
+
 function showValidationError(error){
   iziToast.error({
     message: error,
@@ -525,7 +609,7 @@ function pricingFormValidation() {
       showValidationError('Minimum rate should be 5$');
     }
 
-    $(".add-ons").each(function () {
+    $(".software-module").each(function () {
       
         validateAddOnRows($(this), e);
       
@@ -554,37 +638,86 @@ function pricingFormValidation() {
 }
 
 function validateAddOnRows(element, e) {
- 
+    if (
+            element.find(".module-title").val() < 1 &&
+            element.find(".module-title") != "") 
+      {
+            e.preventDefault();
+            element
+                .find(".module-title")
+                .after('<span class="error text-danger">This field is required</span>');
+        }
+  
+        if (
+                element.find(".module_price").val() < 1 &&
+                element.find(".module_price") != ""
+        ) {
+                e.preventDefault();
+                element
+                    .find(".module_price")
+                    .after(
+                    '<span class="error text-danger">Minimum rate should be greater than 0</span>'
+                );
+        }
+  
+        if (
+            element.find(".module-delivery").val() < 1 &&
+            element.find(".module-delivery") != ""
+        ) {
+            e.preventDefault();
+            element
+                .find(".module-delivery")
+                .after('<span class="error text-danger">This field is required.</span>');
+        }
 
-}
+  }
 function deleteAddOnRow(row_id){
   $(row_id).remove();
   add_on_service_row_number-=1;
 }
-function addOnServiceRow() {
-  return `<div class="row add-ons" id="add-on-row-id-`+add_on_service_row_number+`">
+function addSoftwareModuleRow() {
+  return `<div class="row software-module mt-2" id="software-module-row-`+add_on_service_row_number+`">
 
-            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
-              <label>Title</label>
-              <input type="text" class="form-control add-on-title" name="service_add_ons[`+add_on_service_row_number+`][title]"  placeholder="Title"  step="any" >
-            </div>
+          <div class="col-md-12 col-lg-12  col-sm-12 col-xs-12 mt-2">
+          <label for="">Module Title*<small class="text text-primary ml-2 swap" >(switch to add manual title) </small></label>
+          <select name="module_title[]" id="" class="form-control module-title">
+              <option value=""> Select Module Title</option>
 
-            <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
-                <label>Per Hour Rate</label>
-                <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]"  
-                    placeholder="per hour rate" id="add_on_price" step="any" >
-            </div>
-          
-            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
-              <label>Estimated Delivery Time</label>
-              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours">
-              
-          </div>  
-          
-          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#add-on-row-id-`+add_on_service_row_number+`')">
+              ${modules ?.map(function(module) {
+                return ` <option value="${module.title}" data-description="${module.description}"> ${module.title}</option>`;
+              })}
+             
+
+          </select>
+        </div>
+
+        <div class="col-md-12 col-lg-12  col-sm-12 col-xs-12 mt-2">
+
+          <label for="discription" >Module Description</label>
+          <textarea type="text" name="module_description[]" id="discription"
+                  placeholder="This is a short description." class="form-control module-description"
+          ></textarea>
+
+        </div>
+
+        <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Starting From Price</label>
+          <input type="number" class="form-control module_price" name="module_price[]"
+                placeholder="E.g. $100" id="add_on_price" step="any">
+
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-sm-12 col-xs-12 form-group">
+          <label>Estimated Lead Time</label>
+              <input type="number" class="form-control module-delivery" id="module_delivery"
+                    name="module_delivery[]"
+                    placeholder="Enter Hours">
+        </div>
+
+          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#software-module-row-`+add_on_service_row_number+`')">
             <button  type="button" class="btn btn-danger" ><i class="fa fa-trash"></i></button>
           </div>
-
+        <hr>
         </div>
       `;
 }
@@ -596,26 +729,7 @@ $(document).on("click", "#removeRow", function () {
     }
 });
 
-// function addOnServiceRowcustom() {
-//   return `<div class="row add-ons" id="add-on-customservice-row">
-//   <div class="col-xl-4 col-lg-4 form-group">
-//       <label>Starting From Price</label>
-//       <input type="number" class="form-control add_on_price" name="add_on_price[]"
-//           placeholder="E.g. $100" id="add_on_price" step="any" >
-//   </div>
-//   <div class="col-xl-4 col-lg-4 form-group">
-//       <label>Estimated Lead Time</label>
-//       <div class="input-group mb-3">
-//           <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-//               placeholder="Enter Hours">
-//       </div>
-// </div>  
-//   <div class ="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-//   <button id="removecustomRow" type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-//   </div>
-// </div>
-// `;
-// }
+
 
 $(document).on("click", "#removecustomRow", function () {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);

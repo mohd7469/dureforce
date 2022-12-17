@@ -12,8 +12,11 @@ use App\Models\Service;
 use App\Models\ServiceAttribute;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
+use App\Models\Software\Software;
+use App\Models\Software\SoftwareDefaultStep;
 use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
+use App\Models\SoftwareProvidingStep;
 use App\Models\Tag;
 use DB;
 
@@ -84,39 +87,28 @@ trait CreateOrUpdateEntity {
     public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
          DB::transaction(function () use ($request, $model, $modelId, $type) {
-            // dd($request->all());
 
             $model->fill($request->all())->save();
             
             if(! empty($modelId)) {
                 
                 $model->features()->detach();
-                $model->skills()->detach();
+                if($type == Attribute::SERVICE){
+                    $model->skills()->detach();}
                 $model->tags()->detach();
             }
             
-            if($type == Attribute::SERVICE) {
-                
-                $tags=collect($request->tag)->map(function ($tag)  {
-                    $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
-                    return $tag->id;
-                });
+            $tags=collect($request->tag)->map(function ($tag)  {
+                $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
+                return $tag->id;
+            });
 
-                $model->tags()->attach($tags);
+            $model->tags()->attach($tags);
+            
+            if($type == Attribute::SERVICE)
                 $model->skills()->attach($request->skills);
-                $model->features()->attach($request->features);
 
-                // $model->serviceDetail()->create([
-                //     'entity_fields' => decodeOrEncodeFields($request->entity_field, false),
-                //     'client_requirements' => $detail['requirements'],
-                //     'max_no_projects'     => $detail['max_no_projects'],
-                //     'copyright_notice'    => $detail['copyright_notice'],
-                //     'privacy_notice'      => $detail['privacy_notice']
-                // ]);
-            } else {
-                
-            }
-
+            $model->features()->sync($request->features);
 
         });
 
@@ -209,33 +201,50 @@ trait CreateOrUpdateEntity {
         });
         return true;
     }
-
+    public function isManualTitle($tile){
+        $module=SoftwareDefaultStep::where('title',$tile)->first();
+        if($module)
+        {
+            return false;
+        }
+        return true;
+    }
     public function savePricing($request, $model, $type = Attribute::SERVICE) : bool
     {
         DB::transaction(function () use ($request, $model, $type) {
             
-            if($type == Attribute::SERVICE) {
-                $model->update([
-                    'rate_per_hour'         => $request->price,
-                    'estimated_delivery_time' => $request->delivery_time
-                ]);
-            } else {
-                $model->update([
-                    'amount'         => $request->amount,
-                    'status'        => Service::PENDING,
-                    'deliverables'  => !empty($request->deliverables) ? decodeOrEncodeFields($request->deliverables, false) : null,
-                    'delivery_time' => $request->delivery_time
-                ]);
-            }
+            $model->update([
+                'price'         => $request->price,
+                'estimated_lead_time' => $request->delivery_time
+            ]);
 
+            $model->deliverable()->sync($request->deliverables);
+           
             if($type == Attribute::SERVICE) {
               $model->serviceSteps()->delete();
               $model->addOns()->delete();
-              $model->deliverable()->sync($request->deliverables);
+              if(!empty($request->service_add_ons)) {
+                    $model->addOns()->createMany($request->service_add_ons);
+                }
 
             } else {
               $model->softwareSteps()->delete();
-              $model->extraSoftware()->delete();
+              $model->modules()->delete();
+              if (!empty($request->module_title)) 
+                {
+                    $modules=[];
+                    foreach ($request->get('module_title') as $key => $value) 
+                    {
+                        $modules[] = new SoftwareStep([
+                            'name' => $value,
+                            'is_manual_title' => $this->isManualTitle($value),
+                            'description' => $request->get('module_description')[$key],
+                            'start_price' => $request->get('module_price')[$key],
+                            'estimated_lead_time' => $request->get('module_delivery')[$key],
+                        ]);
+                    }
+                    $model->modules()->saveMany($modules);
+                }   
 
             }
 
@@ -248,7 +257,7 @@ trait CreateOrUpdateEntity {
                             'description' => $request->get('description')[$key]
                         ]);
                     } else {
-                        $steps[] = new SoftwareStep([
+                        $steps[] = new SoftwareProvidingStep([
                             'name' => $value,
                             'description' => $request->get('description')[$key]
                         ]);
@@ -257,12 +266,11 @@ trait CreateOrUpdateEntity {
                 if($type == Attribute::SERVICE) {
                     $model->serviceSteps()->saveMany($steps);
                 } else {
+                   
                     $model->softwareSteps()->saveMany($steps);
-                }
-            }
 
-            if (!empty($request->service_add_ons)) {
-                $model->addOns()->createMany($request->service_add_ons);
+                    
+                }
             }
 
         });
@@ -291,6 +299,7 @@ trait CreateOrUpdateEntity {
     
     public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
     {   
+        
         if(($request->type)) {
             try {
 
@@ -336,7 +345,13 @@ trait CreateOrUpdateEntity {
                 }
                 else
                 {
-                    // $model->banner->video_url='';
+                    
+                    $model->banner()->delete();
+                    $model->banner()->create([
+                        'banner_type' => $request->type ,
+                        'video_url'   => $request->video_url,
+                    ]);
+
                 }
 
             } catch (\Exception $exp) {
@@ -350,18 +365,14 @@ trait CreateOrUpdateEntity {
     public function saveRequirements($request, $model, $type = Attribute::SERVICE): bool
     {
         DB::transaction(function () use ($request, $model, $type) {
-            if($type == Attribute::SERVICE) {
-                $model->update([
-                    'requirement_for_client' => $request->client_requirements
-                ]);
-            } else {
-                $model->softwareDetail()->update([
-                    'client_requirements' => $request->client_requirements
-                ]);
-            }
-          
+           
+            $model->update([
+                'requirement_for_client' => $request->client_requirements
+            ]);
+           
         });
         return true;
+
     }
 
     public function saveReview($request, $model, $type = Attribute::SERVICE, $notificationText = 'Service', $notificationUrl = 'service'): bool
@@ -378,24 +389,23 @@ trait CreateOrUpdateEntity {
                 $model->save();
 
             } else {
-                $model->softwareDetail()->update([
-                    'max_no_projects' => $request->max_no_projects,
-                    'copyright_notice' => $request->copyright_notice == "on" ? true : false,
-                    'privacy_notice' => $request->privacy_notice == "on" ? true : false
-                ]);
-    
+                
                 $model->update([
-                    'creation_status' => Service::SERIVCE_CREATION_COMPLETED
+                    'number_of_simultaneous_projects' => $request->max_no_projects,
+                    'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
+                    'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
+                    'status_id'  => Software::STATUSES['PENDING']
                 ]);
+
+                $model->save();
             }
          
-
             $adminNotification = new AdminNotification();
             $adminNotification->user_id = auth()->id();
             $adminNotification->title = "{$notificationText} Create {$model->title}";
             $adminNotification->click_url = urlPath("admin.{$notificationUrl}.details", $model->id);
             $adminNotification->save();
-
+            
         });
 
         return true;

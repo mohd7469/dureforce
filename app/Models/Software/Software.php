@@ -2,12 +2,15 @@
 
 namespace App\Models\Software;
 
+use App\Models\BannerLogo;
 use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\EntityLogo;
 use App\Models\ExtraSoftware;
 use App\Models\Features;
 use App\Models\Milestone;
+use App\Models\ModuleBanner;
 use App\Models\OptionalImage;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
@@ -15,6 +18,8 @@ use App\Models\Review;
 use App\Models\ReviewRating;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareDetail;
+use App\Models\SoftwareProvidingStep;
+use App\Models\Status;
 use App\Models\SubCategory;
 use App\Models\Tag;
 use App\Models\TagsAssociate;
@@ -35,62 +40,43 @@ class Software extends Model
     const ACTIVE = 1;
     const IN_ACTIVE = 0;
 
+    public const STATUSES = [
+        'DRAFT'     =>     22,
+        'PENDING'   =>     23,
+        'APPROVED'  =>     24,
+        'CANCELLED' =>     25,
+        'UNDER_REVIEW' =>  26
+    ];
+
+    protected $table = "softwares";
     protected $casts = [
-        'tag' => 'object',
-        'file_include' => 'object'
+        'tag' => 'object'
     ];
 
     protected $fillable = [
-        'title',
-        'featured',
+        'uuid',
         'user_id',
-        'amount',
-        'image',
-        'favorite',
-        'rating',
-        'likes',
-        'dislike',
-        'delivery_time',
-        'lead_image',
-        'tag',
-        'description',
-        'banner_detail',
-        'banner_heading',
-        'status',
+        'status_id',
         'category_id',
         'sub_category_id',
-        'creation_status',
-        'demo_url',
-        'document_file',
-        'upload_software',
-        'technology_logos',
-        'file_include',
-        'deliverables'
+        'title',
+        'software_application',
+        'description',
+        'price',
+        'estimated_lead_time',
+        'requirement_for_client',
+        'number_of_simultaneous_projects',
+        'is_terms_accepted',
+        'is_privacy_accepted',
     ];
 
-    public function featuresSoftware()
-    {
-        return $this->belongsToMany(Features::class, 'features_software', 'software_id', 'features_id');
+    public function scopeWithAll($query){
+        $query->with('user')->with('softwareSteps')->with('category')->with('subCategory')->with('status')->with('tags')->with('features');
     }
 
-    public function softwareAttributes()
+    public function deliverable()
     {
-        return $this->hasMany(SoftwareAttribute::class, 'software_id');
-    }
-
-    public function softwareDetail()
-    {
-        return $this->hasOne(SoftwareDetail::class);
-    }
-
-    public function softwareSteps()
-    {
-        return $this->hasMany(SoftwareStep::class, 'software_id');
-    }
-    
-    public function extraSoftware()
-    {
-        return $this->hasMany(ExtraSoftware::class, 'software_id');
+        return $this->belongsToMany(Deliverable::class, 'software_deliverables');
     }
 
     public function user()
@@ -100,28 +86,18 @@ class Software extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function features()
+    {
+        return $this->morphToMany(Features::class, 'module','module_features');
+
+    }
 
     public function subCategory()
     {
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
-    }
-
-    public function tags()
-    {
-        return $this->hasManyThrough(Tag::class, TagsAssociate::class, 'model_id', 'id');
-    }
-
-    public function optionalImage()
-    {
-        return $this->hasMany(OptionalImage::class, 'software_id');
-    }
-
-    public function logos()
-    {
-        return $this->hasMany(EntityLogo::class, 'type_id');
     }
 
     public function reviewCount()
@@ -136,15 +112,6 @@ class Software extends Model
         self::observe(SoftwareObserver::class);
     }
 
-    public function scopeFeatured($query)
-    {
-        return $query->where('featured', self::FEATURED);
-    }
-
-    public function scopeNotFeatured($query)
-    {
-        return $query->where('featured', self::NOT_FEATURED);
-    }
 
     public function scopeActive($query)
     {
@@ -156,18 +123,35 @@ class Software extends Model
         return $query->where('status', self::IN_ACTIVE);
     }
 
-    public function _decoded_deliverables()
+    public function softwareSteps()
     {
-        return json_decode($this->deliverables);
+        return $this->hasMany(SoftwareProvidingStep::class,'software_id');
     }
-    public function reviews()
+    
+
+    public function modules()
     {
-        return $this->morphMany(Review::class, 'reviewable');
+        return $this->hasMany(SoftwareStep::class, 'software_id');
     }
-    public function task_document()
+
+    public function banner()
     {
-        return $this->morphMany(TaskDocument::class, 'module_id');
+        return $this->morphOne(ModuleBanner::class,'module')->with('background');
     }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+    
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+    }
+
+    public function technologyLogos(){
+        return $this->morphMany(BannerLogo::class,'module')->with('background');
+    }
+
     public function documents()
     {
         return $this->morphMany(TaskDocument::class, 'module');
@@ -189,4 +173,5 @@ class Software extends Model
     {
         return $this->morphMany(DeliveryMode::class, 'module');
     }
+    
 }

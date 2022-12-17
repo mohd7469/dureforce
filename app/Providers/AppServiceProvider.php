@@ -15,6 +15,7 @@ use App\Models\Language;
 use App\Models\Rank;
 use App\Models\Service;
 use App\Models\Software\Software;
+use App\Models\Software\SoftwareDefaultStep;
 use App\Models\SupportTicket;
 use App\Models\Tag;
 use App\Models\User;
@@ -62,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['software_module_titles'] = SoftwareDefaultStep::latest()->get();
+
         $viewShare['tags'] = Tag::latest()->get();
 
         
