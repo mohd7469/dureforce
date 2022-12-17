@@ -79,9 +79,9 @@
                 <div class="col-xl-12 col-lg-12 ">
                     <label>@lang('Include Feature')*</label><p class="include_error"></p>
                     <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
-                        @if (!empty($service))
+                        @if (!empty($software))
                             @foreach ($features as  $item )
-                                <option value="{{ $item->id }}" @if(in_array($item->id,$service->features->pluck('id')->toArray())) selected @endif>
+                                <option value="{{ $item->id }}" @if(in_array($item->id,$software->features->pluck('id')->toArray())) selected @endif>
                                     {{ __($item->name) }}</option>
                             @endforeach
                         @else

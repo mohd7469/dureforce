@@ -108,7 +108,7 @@ trait CreateOrUpdateEntity {
             if($type == Attribute::SERVICE)
                 $model->skills()->attach($request->skills);
 
-            $model->features()->attach($request->features);
+            $model->features()->sync($request->features);
 
         });
 
