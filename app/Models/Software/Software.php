@@ -115,7 +115,7 @@ class Software extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE);
+        return $query->where('is_active', self::ACTIVE);
     }
 
     public function scopeInActive($query)
