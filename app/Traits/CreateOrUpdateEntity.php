@@ -213,10 +213,19 @@ trait CreateOrUpdateEntity {
     {
         DB::transaction(function () use ($request, $model, $type) {
             
-            $model->update([
-                'price'         => $request->price,
-                'estimated_lead_time' => $request->delivery_time
-            ]);
+            if($type == Attribute::SERVICE){
+                $model->update([
+                    'rate_per_hour'         => $request->price,
+                    'estimated_lead_time' => $request->delivery_time
+                ]);
+            }
+            else{
+                $model->update([
+                    'price'         => $request->price,
+                    'estimated_lead_time' => $request->delivery_time
+                ]);
+            }
+           
 
             $model->deliverable()->sync($request->deliverables);
            

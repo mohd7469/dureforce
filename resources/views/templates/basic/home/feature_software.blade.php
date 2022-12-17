@@ -12,9 +12,9 @@
                         <a href="javascript:void(0)">{{__(str_limit($software->title, 40))}}</a>
                     </h3>
                     <div class="tags-container">
-                        @foreach ($software->tag as $tags)
+                        @foreach ($software->tags as $tag)
                             <a href="javascript:void(0)"
-                               class=" grey_badge  custom_badge badge-secondary">{{ __($tags) }}</a>
+                               class=" grey_badge  custom_badge badge-secondary">{{ __($tag->name) }}</a>
                         @endforeach
                     </div>
 

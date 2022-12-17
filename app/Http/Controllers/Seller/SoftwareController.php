@@ -38,12 +38,8 @@ class SoftwareController extends Controller
     public function create($id = null)
     {
         $pageTitle = "Create software";
-        $completedOverview = '';
-        $completedPricing = '';
-        $completedImage = '';
-        $completedRequirements = '';
-        $completedReview = '';
-
+        $completedOverview = $completedBanner = $completedPricing= $completedRequirements= $completedReview='';
+       
         $features = Features::latest()->get();
         $software = null;
 
