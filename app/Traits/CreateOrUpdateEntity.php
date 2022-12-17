@@ -12,6 +12,7 @@ use App\Models\Service;
 use App\Models\ServiceAttribute;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
+use App\Models\Software\Software;
 use App\Models\Software\SoftwareDefaultStep;
 use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
@@ -298,6 +299,7 @@ trait CreateOrUpdateEntity {
     
     public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
     {   
+        
         if(($request->type)) {
             try {
 
@@ -343,7 +345,13 @@ trait CreateOrUpdateEntity {
                 }
                 else
                 {
-                    // $model->banner->video_url='';
+                    
+                    $model->banner()->delete();
+                    $model->banner()->create([
+                        'banner_type' => $request->type ,
+                        'video_url'   => $request->video_url,
+                    ]);
+
                 }
 
             } catch (\Exception $exp) {
@@ -357,18 +365,14 @@ trait CreateOrUpdateEntity {
     public function saveRequirements($request, $model, $type = Attribute::SERVICE): bool
     {
         DB::transaction(function () use ($request, $model, $type) {
-            if($type == Attribute::SERVICE) {
-                $model->update([
-                    'requirement_for_client' => $request->client_requirements
-                ]);
-            } else {
-                $model->softwareDetail()->update([
-                    'client_requirements' => $request->client_requirements
-                ]);
-            }
-          
+           
+            $model->update([
+                'requirement_for_client' => $request->client_requirements
+            ]);
+           
         });
         return true;
+
     }
 
     public function saveReview($request, $model, $type = Attribute::SERVICE, $notificationText = 'Service', $notificationUrl = 'service'): bool
@@ -385,24 +389,23 @@ trait CreateOrUpdateEntity {
                 $model->save();
 
             } else {
-                $model->softwareDetail()->update([
-                    'max_no_projects' => $request->max_no_projects,
-                    'copyright_notice' => $request->copyright_notice == "on" ? true : false,
-                    'privacy_notice' => $request->privacy_notice == "on" ? true : false
-                ]);
-    
+                
                 $model->update([
-                    'creation_status' => Service::SERIVCE_CREATION_COMPLETED
+                    'number_of_simultaneous_projects' => $request->max_no_projects,
+                    'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
+                    'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
+                    'status_id'  => Software::STATUSES['PENDING']
                 ]);
+
+                $model->save();
             }
          
-
             $adminNotification = new AdminNotification();
             $adminNotification->user_id = auth()->id();
             $adminNotification->title = "{$notificationText} Create {$model->title}";
             $adminNotification->click_url = urlPath("admin.{$notificationUrl}.details", $model->id);
             $adminNotification->save();
-
+            
         });
 
         return true;

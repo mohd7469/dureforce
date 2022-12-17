@@ -50,19 +50,19 @@ class SoftwareController extends Controller
         if (! empty($id) || $id > 0) {
             $software = Software::withAll()->findOrFail($id);
 
-            $completedOverview = $software->title !='' ? 'completed' : '';
-            $completedPricing = $software->rate_per_hour > 0 ? 'completed' : '';
+            $completedOverview = $software->title  ? 'completed' : '';
+            $completedPricing = $software->price > 0 ? 'completed' : '';
             $completedBanner = $software->banner ? 'completed' : '';
             $completedRequirements = $software->requirement_for_client ? 'completed' : '';
-            $completedReview = !empty($software->number_of_simultaneous_projects)   ? 'completed' : '';
+            $completedReview = $software->number_of_simultaneous_projects > 0   ? 'completed' : '';
         }
-
+        // dd($completedOverview,$completedPricing,$completedBanner,$completedRequirements,$completedReview);
         return view($this->activeTemplate . 'user.seller.software.create', compact(
             'pageTitle',
             'features',
             'completedOverview',
             'completedPricing',
-            'completedImage',
+            'completedBanner',
             'completedRequirements',
             'completedReview',
             'software'
@@ -112,18 +112,20 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
-
-        if(!$result) {
-            $notify[] = ['error', 'Some error occured while saving banner.'];
-            return redirect()->back()->withNotify($notify);
-        }
-
-        if($software->amount == 0) {
+        if($software->price<1) {
             $notify[] = ['error', 'Please complete the software pricing first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-2'])->withNotify($notify);
         }
+        else
+        {
+            $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
 
+            if(!$result) {
+                $notify[] = ['error', 'Some error occured while saving banner.'];
+                return redirect()->back()->withNotify($notify);
+            }
+        }
+       
         $notify[] = ['success', 'Software Banner Saved Successfully.'];
         return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-4'])->withNotify($notify);
     }
@@ -139,7 +141,7 @@ class SoftwareController extends Controller
 
         $software = Software::FindOrFail($softwareId);
 
-        if(empty($software->image)) {
+        if(!$software->banner) {
             $notify[] = ['error', 'Please complete the software banners first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
         }

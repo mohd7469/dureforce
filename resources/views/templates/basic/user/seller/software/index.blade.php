@@ -15,7 +15,7 @@
                                         <thead>
                                             <tr>
                                                 <th>@lang('Title')</th>
-                                                <th>@lang('Amount')</th>
+                                                <th>@lang('Amount ($)')</th>
                                                 <th>@lang('Software File')</th>
                                                 <th>@lang('Demo URL')</th>
                                                 <th>@lang('Documents')</th>
@@ -30,13 +30,13 @@
                                                     <td data-label="@lang('Title')" class="text-start">
                                                             {{__(str_limit($software->title, 10))}}
                                                     </td>
-                                                    <td data-label="@lang('Amount')">{{showAmount($software->amount)}} {{$general->cur_text}}</td>
+                                                    <td data-label="@lang('Amount')">{{showAmount($software->price)}} </td>
                                                     <td data-label="@lang('Software File')">
                                                         <a href="{{route('user.software.file.download',encrypt($software->id))}}" class="btn--action"><i class="fa fa-arrow-down"></i></a>
                                                     </td>
 
                                                      <td data-label="@lang('Demo URL')">
-                                                        <a href="{{$software->demo_url}}" target="__blank">{{$software->demo_url}}</a>
+                                                        <a href="{{getVideoBannerURL($software,'url')}}" target="__blank">{{getVideoBannerURL($software,'url')}}</a>
                                                     </td>
 
                                                     <td data-label="@lang('Documents')">
@@ -44,19 +44,10 @@
                                                     </td>
 
                                                     <td data-label="@lang('Status')">
-                                                        @if($software->status == 1)
-                                                            <span class="badge badge--success">@lang('Approved')</span>
+                                                        
+                                                            <span class="badge {{$software->status->color}}">{{$software->status->name}}</span>
                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @elseif($software->status == 2)
-                                                            <span class="badge badge--danger">@lang('Cancel')</span>
-                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @else
-                                                            <span class="badge badge--primary">@lang('Pending')</span>
-                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @endif
+                                                         
                                                         </td>
                                                     <td data-label="@lang('Last Update')">
                                                         {{showDateTime($software->updated_at)}}

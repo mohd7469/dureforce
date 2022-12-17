@@ -233,6 +233,27 @@ function proPicURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+function previewVideo(url){
+  url=url.replace("watch?v=", "embed/");
+  $("#preview_video").attr('src', url);
+
+}
+
+$("#video_url").on("focusout", function () {
+
+    previewVideo($(this).val());
+
+});
+
+$("#video_url").keypress(function(e)
+{   
+    e.preventDefault();
+    if(e.which == 13)
+    {
+        previewVideo($(this).val());
+    }
+
+});
 
 $(".profilePicUpload").on("change", function () {
   proPicURL(this);
@@ -401,84 +422,109 @@ function overviewFormValidation() {
   });
 }
 function baannerForm() {
+
   $(".banner-form").submit(function (e) {
   
-    var static_banner = $("#static_image").val();
-    var banner_heading = $("#banner_heading").val();
-    var banner_intro = $("#banner_detail").val();
-    $(".error").remove();
-    if ($("#pages div#banner2").css("display") == "none") {
-      if (
-        $("#dynamic_banner_image").val().length < 1 &&
-        !$("input[name='image']").attr("value")
-      ) {
-        e.preventDefault();
-        console.log($("input[name='image']").attr("value"));
+      var static_banner = $("#static_image").val();
+      var banner_heading = $("#banner_heading").val();
+      var video_url = $("#video_url").val();
+      var banner_intro = $("#banner_detail").val();
+      $(".error").remove();
 
-        $("#dynamic_banner_image").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Image is required",
-          position: "topRight",
-        });
-      } else {
-        return true;
-      }
-    } 
-    else if ($("#pages div#banner1").css("display") == "none") {
-      if ($.trim(banner_heading).length < 1) {
-        e.preventDefault();
-        $("#banner_heading").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Banner Title is required",
-          position: "topRight",
-        });
-      }
-      if ($.trim(banner_intro).length < 1) {
-        e.preventDefault();
-        $("#banner_detail").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Banner details is required",
-          position: "topRight",
-        });
-      }
-      if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
-        e.preventDefault();
-        $("#banner_err").after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        iziToast.error({
-          message: "Background Image is required",
-          position: "topRight",
-        });
-      }
+      if ($("#pages div#banner1").css("display") == "block") {
 
-      
-      if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
-        iziToast.error({
-          message: "Technology Logos are required",
-          position: "topRight",
-        });
-       }
-      
-      if($('input:checkbox[name="technology_logos[]"]:checked').length != 3) {
-          e.preventDefault();
+          if (
+              $("#dynamic_banner_image").val().length < 1 &&
+              !$("input[name='image']").attr("value")
+            ) 
+            {
+            
+              e.preventDefault();
+              console.log($("input[name='image']").attr("value"));
+
+              $("#dynamic_banner_image").after(
+                '<span class="error text-danger">This field is required</span>'
+              );
+
+              iziToast.error({
+                message: "Image is required",
+                position: "topRight",
+              });
+
+        } else {
+          return true;
+        }
+      } 
+
+      else if ($("#pages div#banner2").css("display") == "block") {
+
+          if ($.trim(banner_heading).length < 1) {
+            e.preventDefault();
+            $("#banner_heading").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Banner Title is required",
+              position: "topRight",
+            });
+          }
+          if ($.trim(banner_intro).length < 1) {
+            e.preventDefault();
+            $("#banner_detail").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Banner details is required",
+              position: "topRight",
+            });
+          }
+          if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
+            e.preventDefault();
+            $("#banner_err").after(
+              '<span class="error text-danger">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Background Image is required",
+              position: "topRight",
+            });
+          }
+
+          if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
+            iziToast.error({
+              message: "Technology Logos are required",
+              position: "topRight",
+            });
+          }
           
+          if($('input:checkbox[name="technology_logos[]"]:checked').length != 3) {
+              e.preventDefault();
+              
+              iziToast.error({
+                message: "3 Logos should be selected",
+                position: "topRight",
+              });
+          }
+
+          return true;
+      }
+
+      else{
+        if ($.trim(video_url).length < 1) {
+          e.preventDefault();
+          $('#video_url').after(
+            '<span class="error text-danger">This field is required</span>'
+          );
           iziToast.error({
-            message: "3 Logos should be selected",
+            message: "Banner Video Url is required",
             position: "topRight",
           });
+        }
       }
 
-      return true;
-    }
   });
+
 }
+
 function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();

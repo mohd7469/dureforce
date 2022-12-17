@@ -2,6 +2,7 @@
 
 namespace App\Models\Software;
 
+use App\Models\BannerLogo;
 use App\Models\Category;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
@@ -40,12 +41,13 @@ class Software extends Model
     const IN_ACTIVE = 0;
 
     public const STATUSES = [
-        'DRAFT'  =>  17,
-        'PENDING'  =>  18,
-        'APPROVED' =>  19,
-        'CANCELLED' =>  20,
-        'UNDER_REVIEW' =>  21
+        'DRAFT'     =>     22,
+        'PENDING'   =>     23,
+        'APPROVED'  =>     24,
+        'CANCELLED' =>     25,
+        'UNDER_REVIEW' =>  26
     ];
+
     protected $table = "softwares";
     protected $casts = [
         'tag' => 'object'

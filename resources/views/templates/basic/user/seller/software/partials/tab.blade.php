@@ -75,7 +75,7 @@
             <p></p>
         </div>
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedImage }}"
+            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedBanner }}"
                 disabled="disabled">
                 <i class="fa fa-image"></i>
             </a>

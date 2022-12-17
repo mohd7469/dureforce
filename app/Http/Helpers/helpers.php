@@ -238,6 +238,7 @@ function addTechnologyLogos($model,$logos){
         })->toArray()
     );
 }
+
 function getBannerType($model){
     if($model){
         if($model->banner){
@@ -255,6 +256,25 @@ function isStaticBanner($model){
     }
     return 'block';
 }
+
+function isDynamicBanner($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? 'block' : 'none';
+        }
+    }
+    return 'none';
+}
+
+function isVideoBanner($model){
+    if($model){
+        if($model->banner){
+           return  $model->banner->banner_type == ModuleBanner::$Video ? 'block' : 'none';
+        }
+    }
+    return 'none';
+}
+
 function previewServiceRoute($service){
     if($service){
         if($service->uuid){
@@ -263,6 +283,7 @@ function previewServiceRoute($service){
     }
     return '#';
 }
+
 function bannerTypeStatic($model){
     if($model){
         if($model->banner){
@@ -280,6 +301,7 @@ function bannerTypeDynamic($model){
     }
     return false;
 }
+
 function getFile($model){
     if($model){
         if($model->banner){
@@ -288,7 +310,20 @@ function getFile($model){
     }
     return '';
 }
-function getImagesByCategory($service, $type='logo'){
+
+function getVideoBannerURL($model,$type='preview_video'){
+    $url="";
+    if($model){
+        if($model->banner){
+            $url=$model->banner->video_url;
+            if($type == 'preview_video' )
+                $url = str_replace('watch?v=', 'embed/', $url);
+        }
+    }
+    return $url;
+   
+}
+function getImagesByCategory($model, $type='logo'){
     
     $query=BannerBackground::query();
     if($type == 'logo'){
@@ -298,12 +333,13 @@ function getImagesByCategory($service, $type='logo'){
         $query= $query->background();
     }
 
-    if($service->category_id){
-        $query= $query->where('category_id',$service->category_id);
+    if($model->category_id){
+       
+        $query= $query->where('category_id',$model->category_id);
     }
 
-    if($service->sub_category_id){
-        $query= $query->where('sub_category_id',$service->sub_category_id);
+    if($model->sub_category_id){
+        $query= $query->where('sub_category_id',$model->sub_category_id);
     }
 
     return $query->latest()->get();
@@ -327,17 +363,6 @@ function selectedLogoImage($model,$banner_background_id){
     }
     return '';
 }
-
-function isDynamicBanner($model){
-    if($model){
-        if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? 'block' : 'none';
-        }
-    }
-    return 'none';
-}
-
-
 
 function makeDirectory($path)
 {
