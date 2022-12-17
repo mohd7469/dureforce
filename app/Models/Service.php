@@ -136,7 +136,7 @@ class Service extends Model
 
     public function scopeActive($query)
     {
-        return $query->where('status_id', self::ACTIVE);
+        return $query->where('is_active', self::ACTIVE);
     }
 
     public function scopeInActive($query)
