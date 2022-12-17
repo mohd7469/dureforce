@@ -1038,6 +1038,30 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 {{-- @endif --}}
                 <!-- End email template -->
+                {{-- asdc --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon la la-mobile"></i>
+                        <span class="menu-title">@lang('software default module')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            <!-- <li class="sidebar-menu-item {{ menuActive('admin.email.create') }} ">
+                                <a href="{{ route('admin.email.create') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Create Software Detail')</span>
+                                </a>
+                            </li> -->
+                            <li class="sidebar-menu-item {{ menuActive('admin.soft.index') }} ">
+                                <a href="{{ route('admin.soft.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Software Default Steps')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
                 <li class="sidebar__menu-header">@lang('Settings')</li>
 
                 @if (in_array('19', $staffAccess))

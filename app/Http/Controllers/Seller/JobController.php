@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Job;
 use App\Models\SkillCategory;
 use App\Models\Status;
+use App\Models\ModuleOffer;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use WpOrg\Requests\Auth;
@@ -140,6 +141,18 @@ class JobController extends Controller
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
         return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs','user_saved_jobs'));
+    }
+    public function OfferView($uuid){
+        $pageTitle = "View Offer";
+        $offer=ModuleOffer::where('uuid', $uuid)->with('module.user','module.user.user_basic')->first();
+        // $job = Job::where('user_id',$offer->offer_send_to_id )->get();
+        // $client_total_jobs = $job->count();
+        // $client_open_jobs = $job->where('status_id',Status::$Approved)->count();
+
+        $user_saved_jobs = auth()->user()->save_job->pluck('id')->toArray();
+
+        // $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
+        return view($this->activeTemplate .'offer_view',compact('pageTitle','user_saved_jobs','offer'));
     }
 
     /**

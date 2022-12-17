@@ -244,6 +244,8 @@
                                                 <th>@lang('Delivet Time')</th>
                                                 <th>@lang('Status')</th>
                                                 <th>@lang('Last Update')</th>
+                            
+                            
                                                 <th>@lang('Views')</th>
                                                 <th>@lang('Action')</th>
                                             </tr>

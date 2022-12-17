@@ -203,6 +203,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
           
  
         //  });
+        Route::get('soft/index', 'SoftwareDefaultStepController@index')->name('soft.index');
+        Route::get('soft/create', 'SoftwareDefaultStepController@softCreate')->name('soft.create');
+        Route::post('soft/store', 'SoftwareDefaultStepController@store')->name('soft.store');
+        Route::get('soft/edit/{id}', 'SoftwareDefaultStepController@editdetails')->name('soft.edit');
+        Route::post('soft/inactiveBy', 'SoftwareDefaultStepController@inActiveBy')->name('soft.inactive');
+            Route::post('soft/activeBy', 'SoftwareDefaultStepController@activeBy')->name('soft.active');
+        Route::post('soft/update/{id}', 'SoftwareDefaultStepController@softupdate')->name('soft.update');
+        Route::get('/soft/delete/{id}', 'SoftwareDefaultStepController@delete')->name('soft.delete');
+        //Software Template
+        
         // background technology logo
         Route::middleware('staffaccess:34')->group(function () {
             //Manage technology logo
@@ -468,6 +478,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('email-template/{id}/update', 'EmailTemplateController@update')->name('email.template.update');
             Route::post('email-template/send-test-mail', 'EmailTemplateController@sendTestMail')->name('email.template.test.mail');
         });
+        //
 
         Route::middleware('staffaccess:25')->group(function () {
             // SMS Setting
