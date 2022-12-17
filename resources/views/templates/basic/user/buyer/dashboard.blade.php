@@ -10,18 +10,18 @@
                     <div class="dashboard-section">
                         <div class="row justify-content-center mb-30-none">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
-                                <p class="card_h-c">Current Balance</p>
+                                <p class="card_h-c cblance">Current Balance</p>
                                 <p class="card_d_p">$1234.00</p>
                                 <a href="#" class="btn_w_hc">Top Up</a>
                                 <a href="#" class="btn_w_vl">View Log</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
-                                <p class="card_h-c">Total Paid</p>
+                                <p class="card_h-c tp-c1">Total Paid</p>
                                 <p class="card_d_p">$1234.00</p>
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
-                                <p class="card_h-c">Escrow</p>
+                                <p class="card_h-c escrow-c">Escrow</p>
                                 <p class="card_d_p">$1234.00</p>
                                 
                                 <a href="#" class="btn_w_vl">See History</a>
@@ -124,8 +124,9 @@
                                                     <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                                                     <tr>
                                                         <th style="width: 20%">@lang('Title')</th>
-                                                        <th>@lang('Proposals')</th>
                                                         <th>@lang('Messages')</th>
+                                                        <th>@lang('Proposals')</th>
+                                                        
                                                         <th>@lang('Hired')</th>
                                                         <th>@lang('Status')</th>
                                                         <th>@lang('Price')</th>
@@ -140,12 +141,13 @@
                                                                     {{-- route('job.details', [slug($job->title), encrypt($job->id)]) --}}
                                                                     <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                                                 </td>
+                                                                <td data-label="@lang('Messages')" class="msg-icon">
+                                                                    {{ '3' }}
+                                                                </td>
                                                                 <td data-label="@lang('Proposals')">
                                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                                                 </td>
-                                                                <td data-label="@lang('Messages')">
-                                                                    {{ '3' }}
-                                                                </td>
+                                                                
                                                                 <td data-label="@lang('Hired')">
                                                                     {{ '1' }}
                                                                 </td>
@@ -275,6 +277,8 @@ p.card_h-c {
     color: #7F007F;
     border-bottom: 1px solid #D0E2E2;
     padding-bottom: 16px;
+    position: relative;
+    /* padding-left: 40px; */
 }
 p.card_d_p {
     font-weight: 700;
@@ -467,7 +471,55 @@ div#Filters:before {
 .checkbox-menu li.active label:focus {
     background-color: #b8b8ff;
 }
+.cblance, .tp-c1, .escrow-c{
+    position: relative;
+    padding-left: 40px;
+}
+p.cblance:before {
+    width: 30px;
+    height: 31px;
+    position: absolute;
+    background: url(/assets/images/job/save-money.svg) no-repeat;
+    content: '';
+    left: 0px;
+    top: -6px;
+    background-size: 30px;
+}
+p.tp-c1:before {
+    background: url(/assets/images/job/money-bag.svg) no-repeat !important;
+    width: 30px;
+    height: 31px;
+    position: absolute;
+    content: '';
+    left: 0px;
+    top: -2px;
+    background-size: 25px !important;
+}
+p.escrow-c:before{
+    background: url(/assets/images/job/businessman.svg) no-repeat !important;
+    background-size: 30px !important;
+    top: -3px;
+    width: 30px;
+    height: 31px;
+    position: absolute;
+    content: '';
+    left: 0px;
+}
+.msg-icon{
+    position: relative;
+}
+.msg-icon::before{
+    
+    background: url(/assets/images/job/chat.svg) no-repeat !important;
+    background-size: 17px !important;
+    top: 11px;
+    width: 30px;
+    height: 31px;
+    position: absolute;
+    content: '';
+    left: 66px;
 
+}
 /***************Responsive***********/
 
 @media only screen and (max-width:800px){
