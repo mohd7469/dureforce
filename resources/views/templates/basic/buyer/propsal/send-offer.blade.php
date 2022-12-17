@@ -195,7 +195,7 @@
     <div class="d-flex justify-content-between align-items-center responsive-check my-3 ">
         <div class="form-check">
             <input name="accept_privacy_policy" type="checkbox" class="form-check-input " id="exampleCheck1">
-            <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span>and <span>Privacy Policy</span></label>
+            <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span> and <span>Privacy Policy</span></label>
         </div>
         <div class="d-flex align-items-center">
             <button class="btn-purple-outline">Cancel</button>
