@@ -39,7 +39,7 @@
     <p style="font-family: 'Mulish', sans-serif; font-style: normal; font-weight: 500; font-size: 14px; line-height: 18px; color: #000000;">40 hours / week</p>    
 </div> -->
 
-<a href="{{ route('seller.proposal.index') }}" style="font-family: 'Mulish', sans-serif; border-radius: 5px;
+<a href="{{ route('seller.offer.view',$email_data['offer']->uuid) }}" style="font-family: 'Mulish', sans-serif; border-radius: 5px;
     background: #7F007F;  
     border-radius: 5px; 
      color: #fff; 
