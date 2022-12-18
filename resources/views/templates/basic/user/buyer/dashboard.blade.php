@@ -473,7 +473,7 @@ div#Filters:before {
 }
 .cblance, .tp-c1, .escrow-c{
     position: relative;
-    padding-left: 40px;
+    padding-left: 0px;
 }
 p.cblance:before {
     width: 30px;
@@ -481,7 +481,7 @@ p.cblance:before {
     position: absolute;
     background: url(/assets/images/job/save-money.svg) no-repeat;
     content: '';
-    left: 0px;
+    right: 0px;
     top: -6px;
     background-size: 30px;
 }
@@ -491,7 +491,7 @@ p.tp-c1:before {
     height: 31px;
     position: absolute;
     content: '';
-    left: 0px;
+    right: 0px;
     top: -2px;
     background-size: 25px !important;
 }
@@ -503,7 +503,7 @@ p.escrow-c:before{
     height: 31px;
     position: absolute;
     content: '';
-    left: 0px;
+    right: 0px;
 }
 .msg-icon{
     position: relative;
