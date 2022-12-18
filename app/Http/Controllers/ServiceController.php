@@ -14,7 +14,6 @@ class ServiceController extends BaseController
      */
     public function index(Request $request)
     {
-        
         $pageTitle = "Service";
         $emptyMessage = "No data found";
         $services = Service::where('status_id', Service::STATUSES['APPROVED'])
