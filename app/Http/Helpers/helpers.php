@@ -323,6 +323,22 @@ function getVideoBannerURL($model,$type='preview_video'){
     return $url;
    
 }
+function getServiceFee($software){
+    if($software){
+        if($software->modules){
+            return $software->modules->sum('start_price')*0.20;
+        }
+    }
+    return '12%';
+}
+function getSoftwareFee($software){
+    if($software){
+        if($software->modules){
+            return $software->modules->sum('start_price')*0.80;
+        }
+    }
+    return '12%';
+}
 function getImagesByCategory($model, $type='logo'){
     
     $query=BannerBackground::query();

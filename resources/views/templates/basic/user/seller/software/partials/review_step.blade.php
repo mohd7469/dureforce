@@ -20,7 +20,7 @@
                 <h4 class="hdng-create">
                     Summary
                 </h4>
-                @if ($software->modules)
+                @if ($software && $software->modules)
                 <table class="table table-striped">
                     <thead class="thead">
                       <tr>
@@ -55,7 +55,7 @@
                     <div class="form-group pt-3 ">
                        <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                        <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
-                       <span class="pt-2 text-dark">${{$software->modules->sum('start_price')*0.20}}</span>
+                       <span class="pt-2 text-dark">${{getServiceFee($software)}}</span>
                     </div>
 
                  </div>
@@ -64,7 +64,7 @@
                     <div class="form-group pt-3">
                        <label for="" ><strong class="text-dark">You’ll Recieve *</strong></label>
                        <small id="emailHelp" class="form-text text-muted">The estimated amount you'll receive after service fees</small><br>
-                       <span class="pt-2 text-dark">${{$software->modules->sum('start_price')*0.80}}</span>
+                       <span class="pt-2 text-dark">${{getSoftwareFee($software)}}</span>
                     </div>
 
                  </div>

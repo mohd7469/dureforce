@@ -434,7 +434,7 @@ function baannerForm() {
       if ($("#pages div#banner1").css("display") == "block") {
 
           if (
-              $("#dynamic_banner_image").val().length < 1 &&
+              $("#static_banner_image").val().length < 1 &&
               !$("input[name='image']").attr("value")
             ) 
             {
@@ -442,7 +442,7 @@ function baannerForm() {
               e.preventDefault();
               console.log($("input[name='image']").attr("value"));
 
-              $("#dynamic_banner_image").after(
+              $("#static_banner_image").after(
                 '<span class="error text-danger">This field is required</span>'
               );
 
@@ -488,7 +488,25 @@ function baannerForm() {
               position: "topRight",
             });
           }
+          if (
+            $("#lead_image").val().length < 1 &&
+            !$("input[name='dynamic_banner_image']").attr("value")
+          ) 
+            {
+            
+              e.preventDefault();
+              console.log($("input[name='dynamic_banner_image']").attr("value"));
 
+              $("#lead_image").after(
+                '<span class="error text-danger">This field is required</span>'
+              );
+
+              iziToast.error({
+                message: "Lead Image is required",
+                position: "topRight",
+              });
+
+          }
           if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
             iziToast.error({
               message: "Technology Logos are required",

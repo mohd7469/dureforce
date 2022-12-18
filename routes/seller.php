@@ -30,9 +30,6 @@ Route::name('seller.')->group(function () {
                 Route::get('/password-security', [\App\Http\Controllers\Seller\ProfileController::class,'getpassword'])->name('password.security');
                 Route::post('/seller/password/change', [\App\Http\Controllers\Seller\ProfileController::class,'sellerprofilePasswordChange'])->name('seller.password.change');
               
-                
-              
-
             });
 
             // profile completed  routes
@@ -55,10 +52,7 @@ Route::name('seller.')->group(function () {
 
                 });
 
-
             });
-
-
 
         });
     });
