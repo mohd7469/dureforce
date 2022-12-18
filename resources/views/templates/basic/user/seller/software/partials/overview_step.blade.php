@@ -41,7 +41,7 @@
                     {{-- <small>@lang('Tag and enter press')</small> --}}
                 </div>
 
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
+                <div class=" col-sm-12 col-xl-4 col-lg-4 form-group pt-4">
                     <label>@lang('Category')*</label>
                     <select class="form-control bg--gray" name="category_id" id="category">
                         <option selected="" disabled="">@lang('Select Category')</option>
@@ -61,9 +61,9 @@
 
                 </div>
 
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
+                <div class="col-sm-12  col-xl-4 col-lg-4 form-group pt-4">
                     <label for="subCategorys">@lang('Sub Category*')</label>
-                    <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category">
+                    <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category" >
                         <option selected="" disabled="">@lang('Select Category')</option>
 
                         @if (!empty($software))
@@ -76,8 +76,8 @@
 
                 </div>
 
-                <div class="col-xl-12 col-lg-12 ">
-                    <label>@lang('Include Feature')*</label><p class="include_error"></p>
+                <div class="col-sm-12  col-xl-4 col-lg-4 col-md-4  form-group pt-4">
+                    <label for="features[]">@lang('Include Feature')*</label><p class="include_error"></p>
                     <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
                         @if (!empty($software))
                             @foreach ($features as  $item )
@@ -94,16 +94,28 @@
                     </select>
 
                 </div>
+
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                    <label for="software_application">@lang('Software Application')</label>
+                    <textarea name="software_application" id="software_application" cols="30" rows="3" wrap="virtual" class="form-control module-description ">{{ old('software_application',@$software->software_application) }}</textarea>
+                </div>
                 
                 <input type="checkbox" name="skills[]" id="" checked value="1" style="display: none">
 
                 <div class="row">
                     <div class="col-md-6">
-                        
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                href="{{url()->previous()}}" type="button">@lang('BACK')</a>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="submit"
-                            class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE AND CONTINUE')</button>
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
+    
+                        <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                            @lang('Save as Draft')
+                         </button> 
+                         
+                         <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="continue">@lang('Continue')</button>
                     </div>
                 </div>
             </div>

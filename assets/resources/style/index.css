@@ -1199,6 +1199,15 @@
   color: #7f007f;
   width: 100px !important;
 }
+
+.create-service-main .softwar-save-draft--btns {
+  background-color: #f8fafa;
+  border-radius: 5px;
+  border: 1px solid #7f007f;
+  color: #7f007f;
+  width: 130px !important;
+}
+
 .create-service-main .btn-save-continue {
   background-color: #7f007f;
   border-radius: 5px;
