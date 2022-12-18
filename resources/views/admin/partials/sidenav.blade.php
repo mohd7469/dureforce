@@ -567,6 +567,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         @if ($softwarePending)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $softwarePending }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
                                         @endif
                                     </a>
                                 </li>
@@ -574,12 +578,56 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.software.approved') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Approved')</span>
+                                        @if ($softwareCanceled)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareCanceled }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.software.draft') }} ">
+                                    <a href="{{ route('admin.software.draft') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Draft')</span>
+                                        @if ($softwareDraft)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareDraft }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li class="sidebar-menu-item {{ menuActive('admin.software.underReview') }} ">
+                                    <a href="{{ route('admin.software.underReview') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Under Review')</span>
+                                        @if ($softwareUnderReview)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareUnderReview }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
                                     </a>
                                 </li>
                                 <li class="sidebar-menu-item {{ menuActive('admin.software.cancel') }} ">
                                     <a href="{{ route('admin.software.cancel') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Cancel')</span>
+                                        @if ($softwareCanceled)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareCanceled }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
                                     </a>
                                 </li>
                             </ul>

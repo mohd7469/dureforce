@@ -31,22 +31,38 @@ class SoftwareController extends Controller
     {
     	$pageTitle = "Software pending list";
     	$emptyMessage = "No data found";
-    	$softwares = Software::where('status', 0)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$softwares = Software::where('status_id', Software::STATUSES['PENDING'])->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.software.index', compact('pageTitle', 'emptyMessage', 'softwares'));
     }
     public function approved()
     {
     	$pageTitle = "Software approved list";
     	$emptyMessage = "No data found";
-    	$softwares = Software::where('status', 1)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$softwares = Software::where('status_id', Software::STATUSES['APPROVED'])->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.software.index', compact('pageTitle', 'emptyMessage', 'softwares'));
     }
 
     public function cancel()
     {
-    	$pageTitle = "Software approved list";
+    	$pageTitle = "Software cancelled list";
     	$emptyMessage = "No data found";
-    	$softwares = Software::where('status', 2)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$softwares = Software::where('status_id', Software::STATUSES['CANCELLED'])->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	return view('admin.software.index', compact('pageTitle', 'emptyMessage', 'softwares'));
+    }
+
+    public function draft()
+    {
+    	$pageTitle = "Software draft list";
+    	$emptyMessage = "No data found";
+    	$softwares = Software::where('status_id', Software::STATUSES['DRAFT'])->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	return view('admin.software.index', compact('pageTitle', 'emptyMessage', 'softwares'));
+    }
+
+    public function underReview()
+    {
+    	$pageTitle = "Software under review list";
+    	$emptyMessage = "No data found";
+    	$softwares = Software::where('status_id', Software::STATUSES['UNDER_REVIEW'])->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.software.index', compact('pageTitle', 'emptyMessage', 'softwares'));
     }
 
@@ -63,10 +79,10 @@ class SoftwareController extends Controller
     public function approvedBy(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:software,id'
+            'id' => 'required|exists:softwares,id'
         ]);
         $software = Software::findOrFail($request->id);
-        $software->status = 1;
+        $software->status_id = 24;
         $software->created_at = Carbon::now();
         $software->save();
         $notify[] = ['success', 'Software has been approved'];
@@ -76,13 +92,51 @@ class SoftwareController extends Controller
     public function cancelBy(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:software,id'
+            'id' => 'required|exists:softwares,id'
         ]);
         $software = Software::findOrFail($request->id);
-        $software->status = 2;
+        $software->status_id = 25;
         $software->created_at = Carbon::now();
         $software->save();
         $notify[] = ['success', 'Software has been canceled'];
+        return back()->withNotify($notify);
+    }
+    public function draftBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:softwares,id'
+        ]);
+        $software = Software::findOrFail($request->id);
+        $software->status_id = 22;
+        $software->created_at = Carbon::now();
+        $software->save();
+        $notify[] = ['success', 'Software has been drafted'];
+        return back()->withNotify($notify);
+    }
+
+    public function underReviewBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:softwares,id'
+        ]);
+        $software = Software::findOrFail($request->id);
+        $software->status_id = 26;
+        $software->created_at = Carbon::now();
+        $software->save();
+        $notify[] = ['success', 'Software has been under review'];
+        return back()->withNotify($notify);
+    }
+
+    public function pendingBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:softwares,id'
+        ]);
+        $software = Software::findOrFail($request->id);
+        $software->status_id = 23;
+        $software->created_at = Carbon::now();
+        $software->save();
+        $notify[] = ['success', 'Software has been under review'];
         return back()->withNotify($notify);
     }
 

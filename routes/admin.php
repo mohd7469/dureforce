@@ -139,10 +139,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('software/pending', 'SoftwareController@pending')->name('software.pending');
             Route::get('software/approved', 'SoftwareController@approved')->name('software.approved');
             Route::get('software/cancel', 'SoftwareController@cancel')->name('software.cancel');
+            Route::get('software/draft', 'SoftwareController@draft')->name('software.draft');
+            Route::get('software/underReview', 'SoftwareController@underReview')->name('software.underReview');
             Route::get('software/category', 'SoftwareController@softwareCategory')->name('software.category');
             Route::get('software/detail/{id}', 'SoftwareController@details')->name('software.details');
             Route::post('software/approvedBy', 'SoftwareController@approvedBy')->name('software.approvedBy');
             Route::post('software/cancelBy', 'SoftwareController@cancelBy')->name('software.cancelBy');
+            Route::post('software/pendingBy', 'SoftwareController@pendingBy')->name('software.pendingBy');
+            Route::post('software/draftBy', 'SoftwareController@draftBy')->name('software.draftBy');
+            Route::post('software/underReviewBy', 'SoftwareController@underReviewBy')->name('software.underReviewBy');
+
             Route::get('software/{scope}/search', 'SoftwareController@search')->name('software.search');
             Route::get('software/download/{id}', 'SoftwareController@softwareFile')->name('software.download');
             Route::get('software/document/{id}', 'SoftwareController@softwareDocument')->name('document.download');
