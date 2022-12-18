@@ -71,34 +71,64 @@
                             </li>
                         </ul>
                        
-                        <div class="f-container">
+                        <div class="f-container ">
                             <div name="Filters" id="Filters"> </div>
                             
-                            <ul class="filter-drop-dw">
-                            <li>
-                                <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
-                                <label class="form-check-label" for="check1">All</label>
-                              </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
-                                <label class="form-check-label" for="check2">Open (22)</label>
-                              </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="check3" name="option2" value="something">
-                                <label class="form-check-label" for="check3">Closed (3)</label>
-                              </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">
-                                <label class="form-check-label" for="check4">Onhold (0)</label>
-                              </div>
-                            </li>
+                            <ul class="filter-drop-dw mr-3">
+                            
+                                <li>
+                                    
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
+                                        <label class="form-check-label" for="check1">All</label>
+                                    </div>
+
+                                </li>
+                            
+                                <li>
+                                    <div class="form-check">
+
+                                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
+                                        <label class="form-check-label" for="check2">Open (10)</label>
+                                    </div>
+                                </li>
+                            
+                                <li>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
+                                        <label class="form-check-label" for="check2">Draft (5)</label>
+                                </div>
+
+                                </li>
+
+                                <li>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check3" name="option2" value="something">
+                                        <label class="form-check-label" for="check3">In Progress (20)</label>
+                                </div>
+
+                                </li>
+                            
+                                <li>
+                                    <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="check3" name="option2" value="something">
+                                    <label class="form-check-label" for="check3">Closed (15)</label>
+                                </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="check3" name="option2" value="something">
+                                    <label class="form-check-label" for="check3">Archived (10)</label>
+                                </div>
+                                </li>
+
+                                <li>
+                                    <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">
+                                    <label class="form-check-label" for="check4">Published (15)</label>
+                                </div>
+                                </li>
                             </ul>
                 
                         
@@ -393,19 +423,19 @@ input.search_btnc {
     cursor: pointer;
 }
 ul.filter-drop-dw {
-    width: 178px;
-    height: 154px;
-    left: 976px;
+    margin-right: 34px !important;
+    width: 243px;
+    height: 202px;
+    left: 964px;
     top: 190px;
     background: #FFFFFF;
     box-shadow: 0px 4px 5px rgb(0 0 0 / 5%);
     position: absolute;
-    left: 0px;
+    left: -45px;
     z-index: 91;
     top: 42px;
-    padding: 18px 11px;
+    padding: 3px 11px;
     display: none;
-   
     border-radius: 7px;
 }
 div#Filters:before {

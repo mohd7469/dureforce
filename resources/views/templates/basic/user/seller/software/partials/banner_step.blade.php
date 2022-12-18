@@ -79,7 +79,7 @@ if (!empty($software)) {
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                        <input type="file" name="image" value="{{getFile($software)}}"  accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" id="dynamic_banner_image"
+                                        <input type="file" name="image" value="{{getFile($software)}}"  accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" id="static_banner_image"
                                             onchange="readURL(this)">
 
                                     </label>

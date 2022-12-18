@@ -247,7 +247,7 @@
 
                                         <div id="outer" class="text-right">
                                             <div class="inner">
-                                                <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button>
+                                                <a href="{{route('buyer.job.index')}}"> <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button></a>
                                             </div>
                                             <div class="inner">
                                                 <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
