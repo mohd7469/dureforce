@@ -223,16 +223,19 @@ if (!empty($software)) {
                 <hr />
 
                 <div class="row">
-
-                    <div class="col-md-6 m-0 p-0">
+                    <div class="col-md-6 ">
                         <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
-                           href="?view=step-2" type="button">@lang('BACK')</a>
+                            href="?view=step-2" type="button">@lang('BACK')</a>
                     </div>
                     
                     <div class="col-md-6 text-right">
-                        <button type="submit"
-                            class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND
-                            CONTINUE')</button>
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
+    
+                        <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                            @lang('Save as Draft')
+                         </button> 
+                         <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="continue">@lang('Continue')</button>
                     </div>
 
                 </div>

@@ -75,6 +75,40 @@
 
 @push('style')
     <style>
+
+.service-fee{
+    background-color: #EFF3F3 !important ;
+    border-radius: 4px;
+    margin-inline-start: 8px !important;
+}
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+    background: #F7F9F9;
+    border: 0.5px solid #E8E8E8;
+ }
+ .modules-total-row{
+    
+   background-color: #E6F1F1 !important;
+    border: 0.5px solid #E8E8E8 !important;
+
+ }
+ .table .thead {
+    background: #EFF4F4;
+    border: 1px solid #E8E8E8;
+    border-radius: 0px;
+ }
+ tbody, td, tfoot, th, thead, tr {
+    border-style: none !important;
+    border-width: 0;
+}
+ .table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+  
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+
+ }
+
         .add-another{
             margin-left:-9px;
         }
