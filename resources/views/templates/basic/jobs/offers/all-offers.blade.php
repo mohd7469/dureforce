@@ -222,6 +222,9 @@
 <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
+    ul.skills-listing li {
+    margin-bottom: 8px !important;
+}
     
     .nav-link.active {
         background: -o-linear-gradient(left, #1c6a6a 0%, #1c6a6a 100%) !important;

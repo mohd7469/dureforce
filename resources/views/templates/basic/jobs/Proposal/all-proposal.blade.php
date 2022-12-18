@@ -16,7 +16,7 @@
                                 <a class="nav-link" data-bs-toggle="tab" href="#Shortlisted">Shortlisted ({{count($short_listed_proposals)}})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Messaged (2)</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Messaged</a>
                             </li>
                         </ul>
                     </div>
