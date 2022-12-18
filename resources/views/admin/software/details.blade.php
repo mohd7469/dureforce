@@ -50,28 +50,6 @@
         </div>
 
         <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 mt-10">
-            @if ($software->optionalImage->count() != 0)
-                <div class="row mb-30">
-                    <div class="col-lg-12">
-                        <div class="card border--dark">
-                            <h5 class="card-header bg--dark">@lang('SCREENSHOT')</h5>
-                            <div class="card-body">
-                                <div class="row my-2">
-                                    @foreach ($software->optionalImage as $optional)
-                                        <div class="col-lg-3 col-md-3 col-sm-6">
-                                            <a href="{{ getImage('assets/images/screenshot/' . $optional->image) }}"
-                                                target="_blank">
-                                                <img src="{{ getImage('assets/images/screenshot/' . $optional->image) }}"
-                                                    class="b-radius--10 w-80 ml-2 my-3" alt="@lang('Optional Image')">
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
 
             <div class="row mb-30">
                 <div class="col-lg-6 mt-2">
@@ -116,12 +94,16 @@
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
                                     @lang('Status')
-                                    @if ($software->status == 1)
-                                        <span class="font-weight-normal badge--success badge--sm">@lang('Approved')</span>
-                                    @elseif($software->status == 2)
-                                        <span class="font-weight-normal badge--danger badge--sm">@lang('Cancel')</span>
+                                    @if($software->status_id == 24)
+                                        <span class="badge badge-pill bg--success">@lang('Approved')</span>
+                                    @elseif($software->status_id == 25)
+                                        <span class="badge badge-pill bg--danger">@lang('Canceled')</span>
+                                    @elseif($software->status_id == 22)
+                                        <span class="badge badge-pill bg--warning">@lang('Draft')</span>
+                                    @elseif($software->status_id == 26)
+                                        <span class="badge badge-pill bg--info">@lang('Under Review')</span>
                                     @else
-                                        <span class="font-weight-normal badge--primary badge--sm">@lang('Pending')</span>
+                                        <span class="badge badge-pill bg--primary">@lang('Pending')</span>
                                     @endif
                                 </li>
 
@@ -151,31 +133,6 @@
 
 
             <div class="row mb-30">
-                <div class="col-lg-6 mt-2">
-                    <div class="card border--dark">
-                        <h5 class="card-header bg--dark">@lang('Features')</h5>
-                        <div class="card-body">
-                            <ul>
-                                @foreach ($software->featuresSoftware as $features)
-                                    <li class="font-weight-bold">{{ $loop->iteration }}. {{ __($features->name) }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 mt-2">
-                    <div class="card border--dark">
-                        <h5 class="card-header bg--dark">@lang('Tag')</h5>
-                        <div class="card-body">
-                            <ul>
-                                @foreach ($software->tag as $value)
-                                    <li class="font-weight-bold">{{ $loop->iteration }}. {{ __($value) }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-lg-3 mt-2">
                     <div class="card border--dark">
