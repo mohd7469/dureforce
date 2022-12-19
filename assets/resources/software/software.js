@@ -447,7 +447,7 @@ function baannerForm() {
               );
 
               iziToast.error({
-                message: "Image is required",
+                message: "Static Banner Image is required",
                 position: "topRight",
               });
 
