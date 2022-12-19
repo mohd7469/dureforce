@@ -474,7 +474,7 @@ function baannerForm() {
               '<span class="error text-danger">This field is required</span>'
             );
             iziToast.error({
-              message: "Banner details is required",
+              message: "Banner Introduction field  is required",
               position: "topRight",
             });
           }
