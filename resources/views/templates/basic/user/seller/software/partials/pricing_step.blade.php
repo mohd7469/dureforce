@@ -3,7 +3,7 @@
     $software_modules = collect([]);
 
     if (!empty($software)) {
-        $software_modules = \App\Models\Software\softwareStep::where('software_id', $software->id)->get();
+        $software_modules = \App\Models\Software\SoftwareStep::where('software_id', $software->id)->get();
         $softwareSteps = \App\Models\SoftwareProvidingStep::where('software_id', $software->id)->get();
     }
 @endphp
