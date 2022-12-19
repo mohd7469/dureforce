@@ -397,14 +397,14 @@ function overviewFormValidation() {
         });
       }
     }
-    if ($('#service_features :selected').length<=0) {
+    if ($('#software_features :selected').length<=0) {
       
       e.preventDefault();
-      $(".include_error").after(
+      $(".software-features").after(
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Include features is required",
+        message: "Included Features field is required",
         position: "topRight",
       });
     }
