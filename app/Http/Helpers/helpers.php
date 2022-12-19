@@ -329,7 +329,7 @@ function getServiceFee($software){
             return $software->modules->sum('start_price')*0.20;
         }
     }
-    return '12%';
+    return '';
 }
 function getSoftwareFee($software){
     if($software){
@@ -337,7 +337,7 @@ function getSoftwareFee($software){
             return $software->modules->sum('start_price')*0.80;
         }
     }
-    return '12%';
+    return '';
 }
 function getImagesByCategory($model, $type='logo'){
     
