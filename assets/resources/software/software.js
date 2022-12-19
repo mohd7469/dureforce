@@ -238,10 +238,25 @@ function previewVideo(url){
   $("#preview_video").attr('src', url);
 
 }
+function validateUrl(value){
+  if(value==''){
+    Swal.fire({
+      icon: 'error',
+      title: 'Wrong URL',
+      text: 'Please Enter Valid Banner Video URL',
+    })
+  }else{
+    previewVideo(value);
 
-$("#video_url").on("focusout", function () {
-
-    previewVideo($(this).val());
+  }
+}
+$('#video_preview').on("click", function (e) {
+  e.preventDefault();
+  validateUrl($("#video_url").val());
+});
+$("#video_url").on("focusout", function (e) {
+  e.preventDefault();
+  validateUrl($(this).val());
 
 });
 
@@ -250,13 +265,13 @@ $("#video_url").keypress(function(e)
     e.preventDefault();
     if(e.which == 13)
     {
-        previewVideo($(this).val());
+      validateUrl($(this).val());
     }
 
 });
 
 $(".profilePicUpload").on("change", function () {
-  proPicURL(this);
+    proPicURL(this);
 });
 
 $(".remove-image").on("click", function () {
@@ -397,14 +412,14 @@ function overviewFormValidation() {
         });
       }
     }
-    if ($('#service_features :selected').length<=0) {
+    if ($('#software_features :selected').length<=0) {
       
       e.preventDefault();
-      $(".include_error").after(
+      $(".software-features").after(
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Include features is required",
+        message: "Included Features field is required",
         position: "topRight",
       });
     }
@@ -432,9 +447,9 @@ function baannerForm() {
       $(".error").remove();
 
       if ($("#pages div#banner1").css("display") == "block") {
-
+         
           if (
-              $("#dynamic_banner_image").val().length < 1 &&
+              $("#static_banner_image").val().length < 1 &&
               !$("input[name='image']").attr("value")
             ) 
             {
@@ -442,12 +457,12 @@ function baannerForm() {
               e.preventDefault();
               console.log($("input[name='image']").attr("value"));
 
-              $("#dynamic_banner_image").after(
+              $("#static_banner_image").after(
                 '<span class="error text-danger">This field is required</span>'
               );
 
               iziToast.error({
-                message: "Image is required",
+                message: "Static Banner Image is required",
                 position: "topRight",
               });
 
@@ -474,7 +489,7 @@ function baannerForm() {
               '<span class="error text-danger">This field is required</span>'
             );
             iziToast.error({
-              message: "Banner details is required",
+              message: "Banner Introduction field  is required",
               position: "topRight",
             });
           }
@@ -488,7 +503,25 @@ function baannerForm() {
               position: "topRight",
             });
           }
+          if (
+            $("#lead_image").val().length < 1 &&
+            !$("input[name='dynamic_banner_image']").attr("value")
+          ) 
+            {
+            
+              e.preventDefault();
+              console.log($("input[name='dynamic_banner_image']").attr("value"));
 
+              $("#lead_image").after(
+                '<span class="error text-danger">This field is required</span>'
+              );
+
+              iziToast.error({
+                message: "Lead Image is required",
+                position: "topRight",
+              });
+
+          }
           if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
             iziToast.error({
               message: "Technology Logos are required",
@@ -500,7 +533,7 @@ function baannerForm() {
               e.preventDefault();
               
               iziToast.error({
-                message: "3 Logos should be selected",
+                message: "3 Technology Logos should be selected",
                 position: "topRight",
               });
           }
@@ -545,7 +578,7 @@ function reviewForm() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Terms of Service is required",
+        message: "Terms of Service field is required",
         position: "topRight",
       });
     }

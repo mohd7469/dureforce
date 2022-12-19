@@ -12,7 +12,6 @@
                                     <th>@lang('Seller')</th>
                                     <th>@lang('Category / SubCategory')</th>
                                     <th>@lang('Software')</th>
-                                    <th>@lang('Featured Item')</th>
                                     <th>@lang('Amount')</th>
                                     <th>@lang('Document')</th>
                                     <th>@lang('Status')</th>
@@ -25,9 +24,6 @@
                                     <tr @if ($loop->odd) class="table-light" @endif>
                                         <td data-label="@lang('Title')">
                                             <div class="user">
-                                                <div class="thumb"><img
-                                                        src="{{ getImage('assets/images/software/' . $software->image, '590x300') }}"
-                                                        alt="@lang('image')"></div>
                                                 <span
                                                     class="name">{{ __(str_limit($software->title, 10)) }}</span>
                                             </div>
@@ -54,31 +50,9 @@
                                             <a href="{{ route('admin.software.download', encrypt($software->id)) }}"
                                                 class="icon-btn"><i class="las la-arrow-down"></i></a>
                                         </td>
-                                        <td data-label="@lang('Featured Item')">
-                                            @if ($software->featured == 1)
-                                                <span
-                                                    class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
-                                                <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude"
-                                                    data-toggle="tooltip" title=""
-                                                    data-original-title="@lang('Not Include')"
-                                                    data-id="{{ $software->id }}">
-                                                    <i class="las la-arrow-alt-circle-left"></i>
-                                                </a>
-                                            @else
-                                                <span
-                                                    class="badge badge-warning badge-pill font-weight-bold text-white">@lang('Not
-                                                    included')</span>
-                                                <a href="javascript:void(0)"
-                                                    class="icon-btn btn--success ml-2 include text-white"
-                                                    data-toggle="tooltip" title="" data-original-title="@lang('Include')"
-                                                    data-id="{{ $software->id }}">
-                                                    <i class="las la-arrow-alt-circle-right"></i>
-                                                </a>
-                                            @endif
-                                        </td>
                                         <td data-label="@lang('Amount')">
                                             <span
-                                                class="font-weight-bold">{{ $general->cur_sym }}{{ getAmount($software->amount) }}</span>
+                                                class="font-weight-bold">{{ $general->cur_sym }}{{showAmount($software->price)}}</span>
                                         </td>
 
                                         <td data-label="@lang('Document')">
@@ -87,19 +61,27 @@
                                         </td>
 
                                         <td data-label="@lang('Status')">
-                                            @if ($software->status == 1)
-                                                <span class="font-weight-normal badge--success">@lang('Approved')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @elseif($software->status == 2)
-                                                <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @elseif($software->status == 0)
-                                                <span class="font-weight-normal badge--primary">@lang('Pending')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @endif
+                                        @if($software->status_id == 24)
+                                            <span class="font-weight-normal badge--success">@lang('Approved')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 25)
+                                            <span class="font-weight-normal badge--danger">@lang('Canceled')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 23)
+                                            <span class="font-weight-normal badge--primary">@lang('Pending')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 22)
+                                            <span class="font-weight-normal badge--warning">@lang('Draft')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 26)
+                                            <span class="font-weight-normal badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}    
+                                        @endif
                                         </td>
 
                                         <td data-label="@lang('Last Update')">
@@ -109,18 +91,81 @@
                                         </td>
 
                                         <td data-label="@lang('Action')">
-                                            @if ($software->status == 0)
-                                                <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip"
-                                                    data-id="{{ $software->id }}"
-                                                    data-original-title="@lang('Approved')">
-                                                    <i class="las la-check"></i>
-                                                </button>
+                                        @if($software->status_id == 23)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+                                        @if($software->status_id == 24)
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
 
-                                                <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip"
-                                                    data-original-title="@lang('Cancel')" data-id="{{ $software->id }}">
-                                                    <i class="las la-times"></i>
-                                                </button>
-                                            @endif
+                                        @if($software->status_id == 22)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+
+                                        @if($software->status_id == 25)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                        @endif
+
+                                        @if($software->status_id == 26)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+
+                                         
 
                                             <div style="display: flex">
                                                 <a href="{{ route('admin.software.details', $software->id) }}"

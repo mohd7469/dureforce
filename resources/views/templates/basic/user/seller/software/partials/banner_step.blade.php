@@ -79,7 +79,7 @@ if (!empty($software)) {
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                        <input type="file" name="image" value="{{getFile($software)}}"  accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" id="dynamic_banner_image"
+                                        <input type="file" name="image" value="{{ bannerTypeStatic($software) ? getFile($software) : ''}}"  accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" id="static_banner_image"
                                             onchange="readURL(this)">
 
                                     </label>
@@ -164,7 +164,7 @@ if (!empty($software)) {
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                         Drag & Drop to Upload File
                                         <a>Browse File</a>
-                                         <input type="file" name="dynamic_banner_image"  value="{{getFile($software)}}" onchange="previewMultiple(event);readURL(this)" id="lead_image" accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" />
+                                         <input type="file" name="dynamic_banner_image"  value="{{ bannerTypeDynamic($software) ? getFile($software) : ''}}" onchange="previewMultiple(event);readURL(this)" id="lead_image" accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" />
                                     </label>
                                 <br />
                             </div>
@@ -204,6 +204,11 @@ if (!empty($software)) {
 
                                     </div>
                                 </div>
+
+                                <div class="mt-2">
+                                    <button class="btn btn-primary" style="background: #7F007F;
+                                    border-radius: 5px;" id="video_preview">Preview</button>
+                                </div>
                                 
                                 <div class="avatar-edit my-3">
                                 
@@ -223,16 +228,19 @@ if (!empty($software)) {
                 <hr />
 
                 <div class="row">
-
-                    <div class="col-md-6 m-0 p-0">
+                    <div class="col-md-6 ">
                         <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
-                           href="?view=step-2" type="button">@lang('BACK')</a>
+                            href="?view=step-2" type="button">@lang('BACK')</a>
                     </div>
                     
                     <div class="col-md-6 text-right">
-                        <button type="submit"
-                            class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND
-                            CONTINUE')</button>
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
+    
+                        <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                            @lang('Save as Draft')
+                         </button> 
+                         <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="continue">@lang('Continue')</button>
                     </div>
 
                 </div>

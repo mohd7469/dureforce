@@ -18,7 +18,7 @@ use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareProvidingStep;
 use App\Models\Tag;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 trait CreateOrUpdateEntity {
 
@@ -388,26 +388,20 @@ trait CreateOrUpdateEntity {
     {
         DB::transaction(function () use ($request, $model, $notificationText, $notificationUrl, $type) {
 
+            $model->update([
+                'number_of_simultaneous_projects' => $request->max_no_projects,
+                'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
+                'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false
+            ]);
             if($type == Attribute::SERVICE) {
-                $model->update([
-                    'number_of_simultaneous_projects' => $request->max_no_projects,
-                    'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
-                    'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
-                    'status_id'  => $request->action == 'save_project' ? Service::STATUSES['DRAFT']:Service::STATUSES['PENDING']
-                ]);
-                $model->save();
-
+               
+                $model->status_id  = $request->action == 'save_project' ? Service::STATUSES['DRAFT']:Service::STATUSES['PENDING'];
             } else {
                 
-                $model->update([
-                    'number_of_simultaneous_projects' => $request->max_no_projects,
-                    'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
-                    'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
-                    'status_id'  => Software::STATUSES['PENDING']
-                ]);
-
-                $model->save();
+                $model->status_id  = $request->action == 'save_project' ? Software::STATUSES['DRAFT']:Software::STATUSES['PENDING'];
             }
+            
+            $model->save();
          
             $adminNotification = new AdminNotification();
             $adminNotification->user_id = auth()->id();

@@ -3,7 +3,7 @@
     $software_modules = collect([]);
 
     if (!empty($software)) {
-        $software_modules = \App\Models\Software\softwareStep::where('software_id', $software->id)->get();
+        $software_modules = \App\Models\Software\SoftwareStep::where('software_id', $software->id)->get();
         $softwareSteps = \App\Models\SoftwareProvidingStep::where('software_id', $software->id)->get();
     }
 @endphp
@@ -258,8 +258,13 @@
                             </div>
 
                             <div class="col-md-6 text-right">
-                                <button type="submit"
-                                        class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND CONTINUE')</button>
+                                <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                        href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
+            
+                                <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                                    @lang('Save as Draft')
+                                 </button> 
+                                 <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="continue">@lang('Continue')</button>
                             </div>
 
                         </div>
