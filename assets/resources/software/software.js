@@ -432,7 +432,7 @@ function baannerForm() {
       $(".error").remove();
 
       if ($("#pages div#banner1").css("display") == "block") {
-
+         
           if (
               $("#static_banner_image").val().length < 1 &&
               !$("input[name='image']").attr("value")

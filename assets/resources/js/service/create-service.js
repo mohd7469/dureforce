@@ -372,14 +372,14 @@ function baannerForm() {
     $(".error").remove();
     if ($("#pages div#banner2").css("display") == "none") {
       if (
-        $("#dynamic_banner_image").val().length < 1 &&
+        $("#static_banner_image").val().length < 1 &&
         !$("input[name='image']").attr("value")
       ) {
         e.preventDefault();
         console.log($("input[name='image']").attr("value"));
 
-        $("#dynamic_banner_image").after(
-          '<span class="error text-danger">This field is required</span>'
+        $("#static_banner_image").after(
+          '<span class="error text-danger" style="margin-top:5px !important;">This field is required</span>'
         );
         iziToast.error({
           message: "Image is required",
@@ -419,6 +419,21 @@ function baannerForm() {
           message: "Background Image is required",
           position: "topRight",
         });
+        if(
+            $("#lead_image").val().length < 1 &&
+            !$("input[name='dynamic_banner_image']").attr("value")
+          ) {
+            e.preventDefault();
+            console.log($("input[name='dynamic_banner_image']").attr("value"));
+    
+            $("#lead_image").after(
+              '<span class="error text-danger " style="margin-top:5px !important;">This field is required</span>'
+            );
+            iziToast.error({
+              message: "Lead Image is required",
+              position: "topRight",
+            });
+        }
       }
 
       
