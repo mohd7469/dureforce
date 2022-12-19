@@ -243,7 +243,7 @@ function validateUrl(value){
     Swal.fire({
       icon: 'error',
       title: 'Wrong URL',
-      text: 'Please Enter Valid URL',
+      text: 'Please Enter Valid Banner Video URL',
     })
   }else{
     previewVideo(value);
