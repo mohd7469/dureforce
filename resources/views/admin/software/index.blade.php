@@ -262,6 +262,84 @@
         </div>
     </div>
 
+    <div class="modal fade" id="pendingBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.pendingBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to pending this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="draftBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.draftBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to draft this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="underReviewBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.underReviewBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to under review this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="includeFeatured" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -354,17 +432,35 @@
 @push('script')
     <script>
         'use strict';
-        $('.approved').on('click', function() {
-            var modal = $('#approvedby');
-            modal.find('input[name=id]').val($(this).data('id'))
-            modal.modal('show');
-        });
+    $('.approved').on('click', function () {
+        var modal = $('#approvedby');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
 
-        $('.cancel').on('click', function() {
-            var modal = $('#cancelBy');
-            modal.find('input[name=id]').val($(this).data('id'))
-            modal.modal('show');
-        });
+    $('.cancel').on('click', function () {
+        var modal = $('#cancelBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.drafted').on('click', function () {
+        var modal = $('#draftBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.pending').on('click', function () {
+        var modal = $('#pendingBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.underreview').on('click', function () {
+        var modal = $('#underReviewBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
 
         $('.include').on('click', function() {
             var modal = $('#includeFeatured');
