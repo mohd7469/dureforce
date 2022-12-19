@@ -448,7 +448,7 @@ function baannerForm() {
           e.preventDefault();
           
           iziToast.error({
-            message: "3 Logos should be selected",
+            message: "3 Technology Logos should be selected",
             position: "topRight",
           });
       }
