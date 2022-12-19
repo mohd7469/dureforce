@@ -522,6 +522,7 @@ p.escrow-c:before{
 }
 /***************Responsive***********/
 
+
 @media only screen and (max-width:800px){
     .dashboard_card_cstm{
         padding: 15px 10px;
@@ -663,6 +664,38 @@ ul.jbs_nav_s {
     display: inline-block;
     width: 100%;
 }
+}
+
+
+@media only screen and (max-width:2560px){
+    .msg-icon::before{
+        left: 132px;
+    }
+}
+@media only screen and (max-width:2050px){
+    .msg-icon::before{
+        left: 113px;
+    }
+}
+@media only screen and (max-width:1850px){
+    .msg-icon::before{
+        left: 98px;
+    }
+}
+@media only screen and (max-width:1650px){
+    .msg-icon::before{
+        left: 87px;
+    }
+}
+@media only screen and (max-width:1440px){
+    .msg-icon::before{
+        left: 76px;
+    }
+}
+@media only screen and (max-width:1363px){
+    .msg-icon::before{
+        left: 70px;
+    }
 }
 </style>
 @endsection
