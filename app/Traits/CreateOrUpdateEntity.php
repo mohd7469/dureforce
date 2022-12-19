@@ -18,7 +18,7 @@ use App\Models\Software\SoftwareStep;
 use App\Models\SoftwareAttribute;
 use App\Models\SoftwareProvidingStep;
 use App\Models\Tag;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 trait CreateOrUpdateEntity {
 
