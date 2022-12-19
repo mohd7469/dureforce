@@ -1,6 +1,6 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections ptb-60">
+<section class="all-sections ptb-20">
     <div class="container-fluid">
         <div class="section-wrapper">
             <div class="row justify-content-center mb-30-none">
