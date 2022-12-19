@@ -97,7 +97,8 @@
 
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <label for="software_application">@lang('Software Application')</label>
-                    <textarea name="software_application" id="software_application" cols="30" rows="3" wrap="virtual" class="form-control module-description ">{{ old('software_application',@$software->software_application) }}</textarea>
+                    <textarea name="software_application" id="software_application" cols="30" rows="3" wrap="virtual" class="form-control module-description " placeholder="E.g. Areas where this software can provide useful results
+                    ">{{ old('software_application',@$software->software_application) }}</textarea>
                 </div>
                 
                 <input type="checkbox" name="skills[]" id="" checked value="1" style="display: none">
