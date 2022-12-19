@@ -16,7 +16,7 @@
                                                 <tr>
                                                     <th>@lang('Title')</th>
                                                     <th>@lang('Category')</th>
-                                                    <th>@lang('Rate/hour')</th>
+                                                    <th>@lang('Rate/hour')</th> 
                                                     <th>@lang('Delivery Time')</th>
                                                     <th>@lang('Status')</th>
                                                     <th>@lang('Last Update')</th>
