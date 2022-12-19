@@ -43,8 +43,8 @@ class SoftwareController extends Controller
         $features = Features::latest()->get();
         $software = null;
 
-        if (! empty($id) || $id > 0) {
-            $software = Software::withAll()->findOrFail($id);
+        if ($id) {
+            $software = Software::WithAll()->findOrFail($id);
 
             $completedOverview = $software->title  ? 'completed' : '';
             $completedPricing = $software->price > 0 ? 'completed' : '';
