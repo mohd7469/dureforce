@@ -477,7 +477,7 @@ function reviewForm() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Terms of Service is required",
+        message: "Terms of Service field is required",
         position: "topRight",
       });
     }
