@@ -432,7 +432,7 @@ function baannerForm() {
       $(".error").remove();
 
       if ($("#pages div#banner1").css("display") == "block") {
-
+         
           if (
               $("#static_banner_image").val().length < 1 &&
               !$("input[name='image']").attr("value")
@@ -447,7 +447,7 @@ function baannerForm() {
               );
 
               iziToast.error({
-                message: "Image is required",
+                message: "Static Banner Image is required",
                 position: "topRight",
               });
 
@@ -518,7 +518,7 @@ function baannerForm() {
               e.preventDefault();
               
               iziToast.error({
-                message: "3 Logos should be selected",
+                message: "3 Technology Logos should be selected",
                 position: "topRight",
               });
           }
@@ -563,7 +563,7 @@ function reviewForm() {
         '<span class="error text-danger">This field is required</span>'
       );
       iziToast.error({
-        message: "Terms of Service is required",
+        message: "Terms of Service field is required",
         position: "topRight",
       });
     }
