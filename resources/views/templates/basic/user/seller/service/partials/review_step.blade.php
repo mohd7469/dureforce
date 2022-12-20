@@ -65,9 +65,7 @@ class="review-form"
                         CANCEL 
                     </button>--}}
 
-                    <button class="btn service-cancel-btn  m-3">
-                        @lang('Cancel')
-                    </button>
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
                     <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
                         @lang('Preview Service')
