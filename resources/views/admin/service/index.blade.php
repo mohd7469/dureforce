@@ -13,7 +13,7 @@
                                 <th>@lang('Category / SubCategory')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Delivery Time')</th>
-                                <!-- <th>@lang('Featured Item')</th> -->
+                                <th>@lang('Featured Item')</th>
                                 <th>@lang('Status')</th>
                                 <th>@lang('Last Update')</th>
                                 <th>@lang('Action')</th>
@@ -53,8 +53,8 @@
                                    <span class="font-weight-bold">{{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }}</span>
                                 </td>
 
-                                <!-- <td data-label="@lang('Featured Item')">
-                                     @if($service->featured == 1)
+                                <td data-label="@lang('Featured Item')">
+                                     @if($service->is_featured == 1)
                                         <span class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
                                         <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude" data-toggle="tooltip" title="" data-original-title="@lang('Not Include')" data-id="{{ $service->id }}">
                                             <i class="las la-arrow-alt-circle-left"></i>
@@ -65,7 +65,7 @@
                                             <i class="las la-arrow-alt-circle-right"></i>
                                         </a>
                                     @endif
-                                </td> -->
+                                </td>
 
                                 <td data-label="@lang('Status')">
                                     @if($service->status_id == 19)

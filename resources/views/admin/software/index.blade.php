@@ -12,6 +12,7 @@
                                     <th>@lang('Seller')</th>
                                     <th>@lang('Category / SubCategory')</th>
                                     <th>@lang('Software')</th>
+                                    <th>@lang('Featured Item')</th>
                                     <th>@lang('Amount')</th>
                                     <th>@lang('Document')</th>
                                     <th>@lang('Status')</th>
@@ -49,6 +50,28 @@
                                         <td data-label="@lang('Software')">
                                             <a href="{{ route('admin.software.download', encrypt($software->id)) }}"
                                                 class="icon-btn"><i class="las la-arrow-down"></i></a>
+                                        </td>
+                                        <td data-label="@lang('Featured Item')">
+                                            @if ($software->is_featured == 1)
+                                                <span
+                                                    class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
+                                                <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude"
+                                                    data-toggle="tooltip" title=""
+                                                    data-original-title="@lang('Not Include')"
+                                                    data-id="{{ $software->id }}">
+                                                    <i class="las la-arrow-alt-circle-left"></i>
+                                                </a>
+                                            @else
+                                                <span
+                                                    class="badge badge-warning badge-pill font-weight-bold text-white">@lang('Not
+                                                    included')</span>
+                                                <a href="javascript:void(0)"
+                                                    class="icon-btn btn--success ml-2 include text-white"
+                                                    data-toggle="tooltip" title="" data-original-title="@lang('Include')"
+                                                    data-id="{{ $software->id }}">
+                                                    <i class="las la-arrow-alt-circle-right"></i>
+                                                </a>
+                                            @endif
                                         </td>
                                         <td data-label="@lang('Amount')">
                                             <span
