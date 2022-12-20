@@ -4,7 +4,7 @@
         <div class="carousel-item active ">
             <div class="card">
                 <div class="img-wrapper">
-                <img src="{{ !empty($software->image) ? asset('assets/images/software/'.$software->image,'590x300') : asset('assets/images/default.png','590x300') }}" alt="@lang('image')">
+                <img src="{{ $software->banner ? $software->banner->url : asset('assets/images/default.png','590x300') }}" alt="@lang('image')">
                 </div>
 
                 <div class="card-body item-area item-card">

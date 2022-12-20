@@ -126,12 +126,12 @@ class Service extends Model
 
     public function scopeFeatured($query)
     {
-        return $query->where('status_id', self::FEATURED);
+        return $query->where('is_featured', self::FEATURED);
     }
 
     public function scopeNotFeatured($query)
     {
-        return $query->where('status_id', self::NOT_FEATURED);
+        return $query->where('is_featured', self::NOT_FEATURED);
     }
 
     public function scopeActive($query)
