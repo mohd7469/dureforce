@@ -30,6 +30,8 @@ class CreateServicesTable extends Migration
             $table->boolean('is_terms_accepted')->nullable()->default(false);
             $table->boolean('is_privacy_accepted')->nullable()->default(false);
             $table->boolean('is_active')->default(true)->nullable();
+            $table->boolean('is_featured')->default(false);
+
             $table->integer('views')->default(0)->nullable();
             $table->timestamp('last_viewed')->nullable();
             $table->softDeletes();
