@@ -17,6 +17,7 @@ class CreateDODSTable extends Migration
             $table->bigIncrements('id');
             $table->string('title')->nullable();
             $table->unsignedBigInteger('module_id')->index();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('module_id')

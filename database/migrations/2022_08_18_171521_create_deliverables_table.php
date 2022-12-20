@@ -18,6 +18,8 @@ class CreateDeliverablesTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->unsignedBigInteger('module_id')->index();
+            $table->boolean('is_active')->default(true)->nullable();
+
             $table->softDeletes();
             $table->timestamps();
 
