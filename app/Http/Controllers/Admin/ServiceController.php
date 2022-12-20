@@ -142,7 +142,7 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        $service->featured = 1;
+        $service->is_featured = 1;
         $service->save();
         $notify[] = ['success', 'Include this service featured list'];
         return back()->withNotify($notify);
@@ -154,7 +154,7 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        $service->featured = 0;
+        $service->is_featured = 0;
         $service->save();
         $notify[] = ['success', 'Remove this service featured list'];
         return back()->withNotify($notify);

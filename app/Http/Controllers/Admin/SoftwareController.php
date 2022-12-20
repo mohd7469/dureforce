@@ -202,10 +202,10 @@ class SoftwareController extends Controller
     public function featuredInclude(Request $request)
     {
     	$request->validate([
-            'id' => 'required|exists:services,id'
+            'id' => 'required|exists:softwares,id'
         ]);
         $service = Software::findOrFail($request->id);
-        $service->featured = 1;
+        $service->is_featured = 1;
         $service->save();
         $notify[] = ['success', 'Included this Software featured list'];
         return back()->withNotify($notify);
@@ -214,10 +214,10 @@ class SoftwareController extends Controller
     public function featuredNotInclude(Request $request)
     {
         $request->validate([
-            'id' => 'required|exists:services,id'
+            'id' => 'required|exists:softwares,id'
         ]);
         $service = Software::findOrFail($request->id);
-        $service->featured = 0;
+        $service->is_featured = 0;
         $service->save();
         $notify[] = ['success', 'Removed this Software featured list'];
         return back()->withNotify($notify);
