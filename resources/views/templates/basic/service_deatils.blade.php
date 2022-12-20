@@ -243,11 +243,14 @@
                                                         <a href="javascript:void(0)" data-bs-toggle="modal"
                                                         data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
                                                         Developer')</a>
+
+                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                        data-bs-target="#depoModal"
+                                                        class="standard-btn">@lang('Message')</a>
+                                                        
                                                     @endif
 
-                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                       data-bs-target="#depoModal"
-                                                       class="standard-btn">@lang('Message')</a>
+                                                  
                                                 </div>
                                             </div>
                                         </div>
