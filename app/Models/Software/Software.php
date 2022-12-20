@@ -177,6 +177,10 @@ class Software extends Model
     {
         return $query->where('is_featured', self::FEATURED);
     }
+    public function scopeStatus($query,$status_id)
+    {
+        return $query->where('status_id', $status_id);
+    }
 
     public function scopeNotFeatured($query)
     {
