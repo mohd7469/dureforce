@@ -53,9 +53,18 @@
                                                     <td data-label="Views">{{$software->views}}</td>
                                                     <td data-label="Actions">
                                                         <div style="display: flex">
+                                                            <a href="{{ route('software.view', [$software->uuid]) }}"
+                                                                class="btn--action mr-3" style=" margin-right: 10px;">
+                                                                <i
+                                                                    class="fa fa-eye">
+                                                                </i>
+                                                            </a>
                                                             <a href="{{ route('user.software.create', [$software->id]) }}"
-                                                                class="btn--action"><i
-                                                                    class="fa fa-edit"></i></a>
+                                                                class="btn--action">
+                                                                <i
+                                                                    class="fa fa-edit">
+                                                                </i>
+                                                            </a>
                                                             <form  action="{{route('user.software.destroy', [$software->id])}}"  onclick="return confirm('Are you sure you want to delete.')" method="POST" style="margin-left: 5px">
                                                                 @csrf
                                                                 <button  class="btn--action del" type="submit"><i class="fa fa-trash-alt"></i></button>

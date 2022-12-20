@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\ServiceController;
-
+use App\Http\Controllers\Seller\SoftwareController;
 
 Route::middleware(['verified'])->group(function () {
     Route::prefix('ticket')->group(function () {
@@ -20,6 +20,9 @@ Route::middleware(['verified'])->group(function () {
     });
     Route::name('service.')->group(function () {
         Route::get('/service/details/{uuid}', [ServiceController::class,'show'])->name('view');
+    });
+    Route::name('software.')->group(function () {
+        Route::get('/software/details/{uuid}', [SoftwareController::class,'show'])->name('view');
     });
     Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
     

@@ -173,5 +173,13 @@ class Software extends Model
     {
         return $this->morphMany(DeliveryMode::class, 'module');
     }
-    
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', self::FEATURED);
+    }
+
+    public function scopeNotFeatured($query)
+    {
+        return $query->where('is_featured', self::NOT_FEATURED);
+    }
 }
