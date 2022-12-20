@@ -204,6 +204,11 @@ if (!empty($software)) {
 
                                     </div>
                                 </div>
+
+                                <div class="mt-2">
+                                    <button class="btn btn-primary" style="background: #7F007F;
+                                    border-radius: 5px;" id="video_preview">Preview</button>
+                                </div>
                                 
                                 <div class="avatar-edit my-3">
                                 

@@ -578,9 +578,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.software.approved') }}" class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Approved')</span>
-                                        @if ($softwareCanceled)
+                                        @if ($softwareApprove)
                                             <span
-                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareCanceled }}</span>
+                                                class="menu-badge pill bg--primary ml-auto">{{ $softwareApprove }}</span>
                                         @else 
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">0

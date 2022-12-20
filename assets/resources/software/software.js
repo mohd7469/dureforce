@@ -238,10 +238,25 @@ function previewVideo(url){
   $("#preview_video").attr('src', url);
 
 }
+function validateUrl(value){
+  if(value==''){
+    Swal.fire({
+      icon: 'error',
+      title: 'Wrong URL',
+      text: 'Please Enter Valid Banner Video URL',
+    })
+  }else{
+    previewVideo(value);
 
-$("#video_url").on("focusout", function () {
-
-    previewVideo($(this).val());
+  }
+}
+$('#video_preview').on("click", function (e) {
+  e.preventDefault();
+  validateUrl($("#video_url").val());
+});
+$("#video_url").on("focusout", function (e) {
+  e.preventDefault();
+  validateUrl($(this).val());
 
 });
 
@@ -250,13 +265,13 @@ $("#video_url").keypress(function(e)
     e.preventDefault();
     if(e.which == 13)
     {
-        previewVideo($(this).val());
+      validateUrl($(this).val());
     }
 
 });
 
 $(".profilePicUpload").on("change", function () {
-  proPicURL(this);
+    proPicURL(this);
 });
 
 $(".remove-image").on("click", function () {
