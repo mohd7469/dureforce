@@ -17,7 +17,7 @@ if ($folder == 'service') {
 
                 <div class=" col-12 px-0 " 
                 > 
-                <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) :'#'}}" >
+                <a href="{{ $model->uuid ? route($url,[$model->uuid]) :'#'}}" >
 
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
@@ -33,7 +33,7 @@ if ($folder == 'service') {
     <div class=" col-12 px-0 " 
 
     >
-    <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) : '#'}}" >
+    <a href="{{ $model->uuid ? route($url,[$model->uuid]) : '#'}}" >
         @if ($model->banner->type==\App\Models\ModuleBanner::$Video)
             <div id="videoContainer">
                                         
