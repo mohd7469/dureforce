@@ -30,18 +30,21 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
         Route::namespace('Buyer')->group(function () {
 
-            //profile
-            Route::name('profile.')->prefix('profile')->group(function () {
 
-                Route::post('/save-company', [\App\Http\Controllers\Buyer\ProfileController::class,'saveCompany'])->name('save.company');
-                Route::post('/save-payment-methods', [\App\Http\Controllers\Buyer\ProfileController::class,'savePaymentMethod'])->name('save.payment.methods');
-                Route::post('/payment/save', [\App\Http\Controllers\Buyer\ProfileController::class,'storePayment'])->name('payment.save');
-                Route::get('/view', [\App\Http\Controllers\Buyer\ProfileController::class,'getUserProfile'])->name('view');
-                Route::post('/update_picture', [\App\Http\Controllers\Buyer\ProfileController::class,'updateProfilePicture'])->name('update.picture');
-
-            });
             
             Route::middleware('is-profile-completed')->group(function () {
+
+                //profile
+                Route::name('profile.')->prefix('profile')->group(function () {
+
+                    Route::post('/save-company', [\App\Http\Controllers\Buyer\ProfileController::class,'saveCompany'])->name('save.company');
+                    Route::post('/save-payment-methods', [\App\Http\Controllers\Buyer\ProfileController::class,'savePaymentMethod'])->name('save.payment.methods');
+                    Route::post('/payment/save', [\App\Http\Controllers\Buyer\ProfileController::class,'storePayment'])->name('payment.save');
+                    Route::get('/view', [\App\Http\Controllers\Buyer\ProfileController::class,'getUserProfile'])->name('view');
+                    Route::post('/update_picture', [\App\Http\Controllers\Buyer\ProfileController::class,'updateProfilePicture'])->name('update.picture');
+
+                });
+
 
                 Route::name('job.')->group(function(){
                     
