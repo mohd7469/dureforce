@@ -46,7 +46,7 @@ class Software extends Model
         'APPROVED'  =>     24,
         'CANCELLED' =>     25,
         'UNDER_REVIEW' =>  26,
-        'Featured' =>  27
+        'FEATURED' =>  27
     ];
 
     protected $table = "softwares";
@@ -185,6 +185,6 @@ class Software extends Model
 
     public function scopePublicFeatured($query)
     {
-        return $query->whereNotIn('status_id', [self::STATUSES['Featured']]);
+        return $query->whereNotIn('status_id', [self::STATUSES['FEATURED']]);
     }
 }
