@@ -6,7 +6,7 @@
     </div>
     <div class="item-card-content  mt-2">
         <div>
-            <div class="col-md-12" style="margin: -4px;margin-top: -24px;">
+            <div class="col-md-12" >
                 <h3>
                     <b>
                         {{$service->title}}

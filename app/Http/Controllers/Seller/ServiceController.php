@@ -46,9 +46,11 @@ class ServiceController extends Controller
         return view($this->activeTemplate . 'user.seller.service.index', compact('pageTitle', 'services', 'emptyMessage'));
     }
     public function show($uuid){
-       
+
         $pageTitle = "Service details";
         $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
+        $service->views += 1;
+        $service->save();
         $related_services = Service::withAll()->where('category_id', $service->category_id)->where('sub_category_id', $service->sub_category_id)->where('id','<>',$service->id)->where('status_id', Service::STATUSES['APPROVED'])->latest()->limit(4)->get();
         $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
         

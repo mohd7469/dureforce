@@ -187,9 +187,8 @@ if (!empty($service)) {
                             href="?view=step-2" type="button">@lang('BACK')</a>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button class="btn service-cancel-btn  m-3">
-                            Cancel
-                        </button>
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+
     
                         <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
                            Preview Service

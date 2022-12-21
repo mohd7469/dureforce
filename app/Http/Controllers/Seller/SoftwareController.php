@@ -200,11 +200,13 @@ class SoftwareController extends Controller
     }
 
     public function show($uuid){
+        $emptyMessage="No data found";
         $pageTitle = "Software details";
         $software = Software::withAll()->where('uuid', $uuid)->firstOrFail();
+        $software->views +=1;
+        $software->save();
         $related_softwares = Software::withAll()->where('category_id', $software->category_id)->where('sub_category_id', $software->sub_category_id)->where('id','<>',$software->id)->where('status_id', Software::STATUSES['APPROVED'])->latest()->limit(4)->get();
-        
-        return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software','related_softwares'));
+        return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software','related_softwares','emptyMessage'));
     }
 
     private function screenshotImageStore($request, $screenshot, $softwareId)

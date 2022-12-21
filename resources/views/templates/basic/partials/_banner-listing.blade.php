@@ -1,9 +1,9 @@
 @php
 $url = '#';
 if ($folder == 'service') {
-    $url = 'service.details';
+    $url = 'service.view';
 } elseif ($folder == 'software') {
-    $url = 'software.details';
+    $url = 'software.view';
 } else {
     $url = 'job.details';
 }
@@ -16,12 +16,12 @@ if ($folder == 'service') {
             <div class="">
 
                 <div class=" col-12 px-0 " 
-                style="height: 200px;width:628px"> 
-                <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) :'#'}}" >
+                > 
+                <a href="{{ $model->uuid ? route($url,[$model->uuid]) :'#'}}" >
 
                         <img alt="{{ $model->title }}"
                             src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
-                            style="height: 159px;width:346px;border-bottom:1px solid gainsboro">
+                            >
                 
                     </a>
                 </div>
@@ -29,16 +29,25 @@ if ($folder == 'service') {
         </div>
     </div>
 @else
-   
-    <div class=" col-12 px-0 " 
-    style="height: 200px;width:628px"
-    >
 
-        <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) : '#'}}" >
+    <div class=" col-12 px-0 " 
+
+    >
+    <a href="{{ $model->uuid ? route($url,[$model->uuid]) : '#'}}" >
+        @if ($model->banner->type==\App\Models\ModuleBanner::$Video)
+            <div id="videoContainer">
+                                        
+                <iframe src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+            </div>
+        @else
+          
+    
 
             <img alt="{{ $model->title }}"
-            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" style="height: 159px;width:346px;border-bottom:1px solid gainsboro">
-        </a>
+            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" class="img-thumbnail">
+        @endif
+        
+    </a>
       
         
     </div>

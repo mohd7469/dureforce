@@ -31,7 +31,7 @@
                             <div class="col-5 col-md-4 ">
                                 <span class="rates">
                                 <small class="start-from">Start from</small>
-                                <span class="value">${{ round($service->price, 2) }}</span>
+                                <span class="value">${{ round($service->rate_per_hour, 2) }}</span>
                                 </span>
                             </div>
                         </div>
