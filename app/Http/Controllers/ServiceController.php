@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,12 +15,19 @@ class ServiceController extends BaseController
      */
     public function index(Request $request)
     {
+        $services = Service::where($this->applyFilters($request))
+            ->with(['user', 'user.basicProfile' ])
+            ->inRandomOrder();
+        if (getLastLoginRoleId() == Role::$Freelancer){
+            $services = $services->where('user_id', auth()->user()->id);
+        }
+        else{
+            $services = $services->where('status_id', Service::STATUSES['APPROVED']);
+        }
+        $services = $services->paginate(getPaginate())->withQueryString();
         $pageTitle = "Service";
         $emptyMessage = "No data found";
-        $services = Service::where('status_id', Service::STATUSES['APPROVED'])
-            ->where($this->applyFilters($request))
-            ->with(['user', 'user.basicProfile' ])
-            ->inRandomOrder()->paginate(getPaginate())->withQueryString();
+
         return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
     }
 
