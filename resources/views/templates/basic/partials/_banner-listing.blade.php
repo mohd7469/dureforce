@@ -30,14 +30,12 @@ if ($folder == 'service') {
     </div>
 @else
    
-    <div class=" col-12 px-0 " 
-    style="height: 200px;width:628px"
-    >
+    <div class=" col-12 px-0 ">
 
         <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) : '#'}}" >
 
             <img alt="{{ $model->title }}"
-            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" style="height: 159px;width:346px;border-bottom:1px solid gainsboro">
+            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" class="img-thumbnail">
         </a>
       
         
