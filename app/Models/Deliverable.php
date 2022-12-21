@@ -10,7 +10,7 @@ class Deliverable extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $fillable = ['name', 'slug', 'module_id'];
+    protected $fillable = ['name', 'slug', 'module_id','is_active'];
     protected $table = "deliverables";
 
     public function scopeOnlyJob($query)
