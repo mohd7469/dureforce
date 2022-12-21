@@ -10,7 +10,7 @@ class DOD extends Model
 {
 
     use HasFactory;
-    protected $fillable = ['title','module_id'];
+    protected $fillable = ['title','module_id','is_active'];
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);
