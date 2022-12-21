@@ -28,17 +28,17 @@
 
             </div>
 
-            <div class="footer row">
-                <div class="author_detail col-12 col-md-8">
+            <div class="footer row mt-4">
+                <div class="author_detail col-12 col-md-7">
                     <span class="author text-capitalize">by <a
                             href="{{ route('profile', $software->user->username ?? '') }}">{{ __($software->user->username ?? '') }}
                         </a> </span><br>
                     <span class="delivery">Lead Time {{ $software->estimated_lead_time }} days</span>
                 </div>
-                <div class=" col-12 col-md-4">
+                <div class=" col-12 col-md-5">
                     <span class="rates">
                         <span
-                            class="value">{{ __("Base Price") }}{{ __(showAmount($software->price)) }}</span>
+                            class="value">{{ __("Base Price") }} <p> {{ __(showAmount($software->price)) }}</p></span>
                        
                 </div>
             </div>
