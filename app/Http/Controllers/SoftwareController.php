@@ -22,9 +22,8 @@ class SoftwareController extends BaseController
     {
         $pageTitle = "Software";
         $emptyMessage = "No data found";
-        $softwares = Software::where('status', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->where($this->applyFilters($request))->with('tags', 'user')->inRandomOrder()->paginate(getPaginate())->withQueryString();
+        $request->merge(['is_software_filter' => true]);
+        $softwares = Software::Active()->NotFeatured()->Status(Software::STATUSES['APPROVED'])->where($this->applyFilters($request))->with('tags', 'user')->inRandomOrder()->paginate(getPaginate())->withQueryString();
 
         return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage'));
     }
