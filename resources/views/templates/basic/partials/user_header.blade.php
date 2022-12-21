@@ -9,7 +9,7 @@
                             aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fas fa-bars"></span>
                         </button>
-                        <a class="site-logo site-title" href="{{ route('home') }}"><img
+                       <a class="site-logo site-title" href="{{ route('home') }}"><img
                             src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.svg') }}"
                             alt="{{ __($general->sitename) }}"></a>
                         <!-- <button type="button" class="short-menu-open-btn"><i class="fas fa-align-center"></i></button> -->

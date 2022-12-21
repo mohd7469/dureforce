@@ -18,6 +18,11 @@ Route::middleware(['verified'])->group(function () {
         Route::post('/reply/{ticket}', 'TicketController@replyTicket')->name('ticket.reply');
         Route::get('/download/{ticket}', 'TicketController@ticketDownload')->name('ticket.download');
     });
+
+    Route::get('/service', 'ServiceController@index')->name('service');
+    Route::get('/software', 'SoftwareController@index')->name('software');
+
+
     Route::name('service.')->group(function () {
         Route::get('/service/details/{uuid}', [ServiceController::class,'show'])->name('view');
     });

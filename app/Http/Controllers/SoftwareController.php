@@ -37,6 +37,20 @@ class SoftwareController extends BaseController
         $request->merge(['is_software_filter' => true]);
 
         return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage'));
+    }    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function featured(Request $request)
+    {
+        $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->with(['user', 'user.basicProfile', 'tags'])->paginate(getPaginate());;
+
+        $pageTitle = "Software";
+        $emptyMessage = "No data found";
+        $request->merge(['is_software_filter' => true]);
+
+        return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage'));
     }
 
     /**

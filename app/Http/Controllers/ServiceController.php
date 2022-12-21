@@ -30,6 +30,16 @@ class ServiceController extends BaseController
 
         return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
     }
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function featured(Request $request)
+    {
+        $services = Service::Active()->Featured()->whereIn('status_id',[Service::STATUSES['APPROVED'],Service::STATUSES['FEATURED']])->with(['user', 'user.basicProfile', 'tags' ])->paginate(getPaginate());
+        $pageTitle = "Service";
+        $emptyMessage = "No data found";
+        return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+    }
 
     /**
      * Show the form for creating a new resource.

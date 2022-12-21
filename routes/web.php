@@ -301,7 +301,7 @@ Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name(
 Route::get('/', 'SiteController@index')->name('home');//Landing Page
 
 // Route::get('/cdf', 'SiteController@index')->name('user.home');//extra
-Route::get('/service', 'ServiceController@index')->name('service');
+Route::get('/featured-services', 'ServiceController@featured')->name('featured.service');
 Route::get('/service/details/{slug}/{id}', 'SiteController@serviceDetails')->name('service.details');
 Route::get('/search/item/filter', 'FilterController@allServiceSearch')->name('home.search.item');
 Route::get('/service/search', 'FilterController@serviceSearch')->name('service.search');
@@ -310,7 +310,8 @@ Route::get('/service/category/{slug}/{id}', 'FilterController@serviceCategory')-
 Route::get('/service/sub/category/{slug}/{id}', 'FilterController@serviceSubCategory')->name('service.sub.category');
 
 //software
-Route::get('/software', 'SoftwareController@index')->name('software');
+//Route::get('/software', 'SoftwareController@index')->name('software');
+Route::get('/featured-software', 'SoftwareController@featured')->name('featured.software');
 Route::get('/software/details/{slug}/{id}', 'SiteController@softwareDetails')->name('software.details');
 Route::get('/software/search/filter', 'FilterController@softwareItemSearch')->name('software.search.filter');
 Route::get('/software/category/{slug}/{id}', 'FilterController@softwareCategory')->name('software.category');

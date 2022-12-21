@@ -28,10 +28,10 @@
                                 <li><a href="{{ route('home') }}"
                                        @if (request()->routeIs('home')) class="active" @endif>@lang('Home')</a></li>
 {{--                                @if (auth()->user() AND in_array(\App\Models\Role::$ClientName, auth()->user()->getRoleNames()->toArray()))--}}
-                                <li><a href="{{ route('service') }}"
+                                <li><a href="{{ route('featured.service') }}"
                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a>
                                 </li>
-                                <li><a href="{{ route('software') }}"
+                                <li><a href="{{ route('featured.software') }}"
                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a>
                                 </li>
 {{--                                @elseif (auth()->user() AND in_array(\App\Models\Role::$FreelancerName, auth()->user()->getRoleNames()->toArray()))--}}
