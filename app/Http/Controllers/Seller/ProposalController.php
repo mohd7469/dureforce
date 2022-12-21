@@ -51,8 +51,27 @@ class ProposalController extends Controller
             $offers = $proposals->pluck('offer.module');
             $offers = $offers->filter();
 
-
             return view('templates.basic.buyer.propsal.my-proposal-list')->with('user', $user)->with('offers', $offers);
+
+        } catch (\Exception $e) {
+
+            return response()->json(["error" => "There is a technical error"]);
+
+        }
+
+
+
+    }
+    public function details($uuid)
+    {
+        try {
+            // $user = User::with(['proposal.job', 'invitations.job'])->find(Auth::user()->id);
+
+            // $proposals = Proposal::with('offer.module')->where('user_id', Auth::user()->id)->get();
+            // $offers = $proposals->pluck('offer.module');
+            // $offers = $offers->filter();
+
+            return view('templates.basic.buyer.propsal.proposal_details');
 
         } catch (\Exception $e) {
 
