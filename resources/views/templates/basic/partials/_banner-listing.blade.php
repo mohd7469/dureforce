@@ -20,7 +20,7 @@ if ($folder == 'service') {
                 <a href="{{ $model->uuid ? route('service.view',[$model->uuid]) :'#'}}" >
 
                         <img alt="{{ $model->title }}"
-                            src="{{ getAzureImage( $folder . '/' . $model->lead_image, imagePath()["$folder"]['size']) }}"
+                            src="{{ $model->banner->url }}"
                             style="height: 159px;width:346px;border-bottom:1px solid gainsboro">
                 
                     </a>
