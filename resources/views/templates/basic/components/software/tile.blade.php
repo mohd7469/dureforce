@@ -20,10 +20,10 @@
             <div class="tags-container">
 
                 @foreach ($software->tags as $tag)
-                    @if (!empty($tag))
-                        <a href="tags/{{ $tag->id }}"
-                            class=" grey_badge  custom_badge badge-secondary">{{ $tag->name }}</a>
-                    @endif
+                    
+                    <a href="tags/{{ $tag->id }}"
+                        class=" grey_badge  custom_badge badge-secondary">{{ $tag->name }}</a>
+                   
                 @endforeach
 
             </div>
@@ -32,15 +32,15 @@
                 <div class="author_detail col-12 col-md-8">
                     <span class="author text-capitalize">by <a
                             href="{{ route('profile', $software->user->username ?? '') }}">{{ __($software->user->username ?? '') }}
-                        </a> </span>
-                    <span class="delivery">Delivered in 4 days</span>
+                        </a> </span><br>
+                    <span class="delivery">Lead Time {{ $software->estimated_lead_time }} days</span>
                 </div>
-                {{-- <div class=" col-12 col-md-4">
+                <div class=" col-12 col-md-4">
                     <span class="rates">
                         <span
-                            class="value">{{ __($general->cur_sym) }}{{ __(showAmount($software->price)) }}</span>
-                        <small>per hour</small></span>
-                </div> --}}
+                            class="value">{{ __("Base Price") }}{{ __(showAmount($software->price)) }}</span>
+                       
+                </div>
             </div>
         </div>
     </div>

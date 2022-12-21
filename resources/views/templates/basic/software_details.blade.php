@@ -59,19 +59,7 @@
                                                     ])
                                                 @endif
                                                 
-                                                {{-- slider area --}}
-                                                {{-- <div thumbsSlider="" class="item-small-slider mt-20"> --}}
-                                                {{-- <div class="swiper-wrapper"> --}}
-                                                {{-- @foreach ($software->optionalImage as $value) --}}
-                                                {{-- <div class="swiper-slide"> --}}
-                                                {{-- <div class="item-small-thumb"> --}}
-                                                {{-- <img src="{{getImage('assets/images/optionalService/'.$value->image, imagePath()['optionalService']['size']) }}" --}}
-                                                {{-- alt="@lang('item-banner')"> --}}
-                                                {{-- </div> --}}
-                                                {{-- </div> --}}
-                                                {{-- @endforeach --}}
-                                                {{-- </div> --}}
-                                                {{-- </div> --}}
+                                               
                                                 <div class="row item-details-content">
                                                     <div class="service_subtitle1 mt-20">{{ $pageTitle }}</div>
                                                     <div class="service_subtitle2">
