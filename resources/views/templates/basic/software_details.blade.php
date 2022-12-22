@@ -71,15 +71,16 @@
                                                     </div>
                                                     
                                                     <div class="service_subtitle2">
-                                                        Attributes
+                                                        Software Application
                                                     </div>
-                                                    <div id="form_attributes">
-                                                   
+                                                    <div class="sep-solid"></div>
+                                                    <div class="product-desc-content">
+                                                        {!! $software->software_application !!}
                                                     </div>
 
-                                                    <div class="sep-solid"></div>
+                                                   
                                                     <div class="service_subtitle2 mt-20">
-                                                        Steps
+                                                        Software Providing Steps
                                                     </div>
                                                     <div class="sep-solid"></div>
                                                     <div class="simpletext">
@@ -95,44 +96,40 @@
                                             </div>
                                             
                                             <div class="item-details-thumb-area2">
-                                                <div class="service_subtitle1">Software Modules</div>
-                                                <div >
-                                                   @if ($software->modules->isNotEmpty())
-                                                        <table  class="table">
+                                                <div class="service_subtitle1 mb-3">Software Modules</div>
+                                                @if ($software->modules->isNotEmpty())
+                                                    <table  class="table software-table" >
+                                                        
+                                                        <thead >
+                                                        <tr >
+                                                                <th class="col-md-6">@lang('Module Title & Description')</th>
+                                                                <th class="col-md-3">@lang('Base Price')</th>
+                                                                <th class="col-md-3">@lang('Estimated Lead Time (Hours)')</th>
+                                                        </tr>
                                                             
-                                                            <thead >
-                                                               <tr >
-                                                                    <th class="col-md-6">@lang('Module Title & Description')</th>
-                                                                    <th class="col-md-3">@lang('Base Price')</th>
-                                                                    <th class="col-md-3">@lang('Estimated Lead Time (Hours)')</th>
-                                                               </tr>
-                                                                
-                                                            </thead>
+                                                        </thead>
 
-                                                            <tbody>
-                                                                @foreach ($software->modules as $module)
-                                                                    <tr>
-                                                                        <td>
-                                                                            <b>{{ $module->name }}</b><br>
-                                                                            {{ $module->description }}
-                                                                        </td>
-                                                                        <td>
-                                                                            ${{$module->start_price}}
-                                                                        </td>
-                                                                        <td>
-                                                                            {{$module->estimated_lead_time}} {{ 'Hours'}}
+                                                        <tbody>
+                                                            @foreach ($software->modules as $module)
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{ $module->name }}</b><br>
+                                                                        {{ $module->description }}
+                                                                    </td>
+                                                                    <td>
+                                                                        ${{$module->start_price}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{$module->estimated_lead_time}} {{ 'Hours'}}
 
-                                                                        </td>
+                                                                    </td>
 
-                                                                    </tr>
-                                                                    @endforeach
-                                                            </tbody>
+                                                                </tr>
+                                                                @endforeach
+                                                        </tbody>
 
-                                                        </table>
-                                                   @endif 
-                                                   
-                                                
-                                                </div>
+                                                    </table>
+                                                @endif 
                                             </div>
                                             @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                                 <div class="item-details-thumb-area2">
