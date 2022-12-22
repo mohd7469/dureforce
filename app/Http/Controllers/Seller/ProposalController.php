@@ -45,14 +45,29 @@ class ProposalController extends Controller
     public function index()
     {
         try {
-            $user = User::with(['proposal.job', 'invitations.job'])->find(Auth::user()->id);
 
-            $proposals = Proposal::with('offer.module')->where('user_id', Auth::user()->id)->get();
-            $offers = $proposals->pluck('offer.module');
-            $offers = $offers->filter();
+            $proposals = Proposal::with('module.user')->where('user_id', Auth::user()->id)->get();
+
+            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals);
+
+        } catch (\Exception $e) {
+
+            return response()->json(["error" => "There is a technical error"]);
+
+        }
 
 
-            return view('templates.basic.buyer.propsal.my-proposal-list')->with('user', $user)->with('offers', $offers);
+
+    }
+    public function details($uuid)
+    {
+        try {
+
+            $proposal = Proposal::with(['module.user.country','attachment','milestone','delivery_mode'])->where('uuid', $uuid)->first();
+
+            // dd($proposal->toArray());
+
+            return view('templates.basic.buyer.propsal.proposal_details')->with('proposal',$proposal);
 
         } catch (\Exception $e) {
 
@@ -131,6 +146,7 @@ class ProposalController extends Controller
                 $proposal->amount_receive = $request_data['total_project_price'] * 0.80;
                 $proposal->project_start_date = $request_data['project_start_date'];
                 $proposal->project_end_date = $request_data['project_end_date'];
+                $proposal->bid_type = 'Project';
 
             } else {
                 $proposal->amount_receive = $request_data['hourly_bid_rate'] * 0.80;
