@@ -357,6 +357,9 @@
     </div>
 </header>
 <style>
+     .custom-table-new thead tr th:first-child{
+        text-align: left !important;
+    }
     .mobile-bars{
         color: #7F007F !important;
     }
