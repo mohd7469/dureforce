@@ -216,7 +216,7 @@ trait CreateOrUpdateEntity {
             if($type == Attribute::SERVICE){
                 $model->update([
                     'rate_per_hour'         => $request->price,
-                    'estimated_lead_time' => $request->delivery_time
+                    'estimated_delivery_time' => $request->delivery_time
                 ]);
             }
             else{
