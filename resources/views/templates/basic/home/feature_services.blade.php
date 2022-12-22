@@ -1,32 +1,37 @@
 <div id="carouselFeatureServices" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
         @foreach($services as $service)
-        <div class="carousel-item active ">
-            <div class="card">
-                <div class="img-wrapper">
-                    <img src="{{ $service->banner ? $service->banner->url: asset('assets/images/default.png','590x300') }}" alt="@lang('image')">
-                </div>
-
-                <div class="card-body item-area item-card">
-                    <h3 class="item-card-title">
-                        <a href="javascript:void(0)">{{__(str_limit($service->title, 40))}}</a>
-                    </h3>
-                    <div class="tags-container">
-                        @foreach ($service->tags as $tag)
-                            <a href="javascript:void(0)"
-                               class=" grey_badge  custom_badge badge-secondary">{{ __($tag->name) }}</a>
-                        @endforeach
+            <div class="carousel-item active ">
+                <div class="card">
+                    <div class="img-wrapper">
+                        <a href="{{ $service->uuid ? route('service.view',[$service->uuid]) : '#'}}">
+                            <img src="{{ $service->banner ? $service->banner->url: asset('assets/images/default.png','590x300') }}"
+                                 alt="@lang('image')">
+                        </a>
                     </div>
+
+                    <div class="card-body item-area item-card">
+                        <h3 class="item-card-title">
+                            <a href="{{ $service->uuid ? route('service.view',[$service->uuid]) : '#'}}">{{__(str_limit($service->title, 40))}}</a>
+                        </h3>
+                        <div class="tags-container">
+                            @foreach ($service->tags as $tag)
+                                <a href="javascript:void(0)"
+                                   class=" grey_badge  custom_badge badge-secondary">{{ __($tag->name) }}</a>
+                            @endforeach
+                        </div>
 
                         <div class="footer row">
                             <div class="author_detail col-7 col-md-8">
                                     <span class="author text-capitalize pb-1">by
                                         <a href="javascript:void(0)">{{ !empty($service->user->fullname)? $service->user->fullname: '' }}</a>
                                     </span>
-                                    <div class="col-12 col-md-12 ">
-                                        <span class="rates">
+                                <div class="col-12 col-md-12 ">
+                                    <a href="{{ $service->uuid ? route('service.view',[$service->uuid]) : '#'}}">
+                                         <span class="rates">
                                         <p>Schedule Meeting</p></span>
-                                    </div>
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-5 col-md-4 ">
                                 <span class="rates">
@@ -36,8 +41,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-        </div>
         @endforeach
     </div>
     <span class="seeall"><a href="">See All</a></span>

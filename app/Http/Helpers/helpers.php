@@ -990,6 +990,7 @@ function imagePath()
     $data['attachments'] = [
         'path' => $url . '/attachments',
     ];
+
     $data['optionalService'] = [
         'path' => 'assets/images/optionalService',
         'size' => '920x468',
@@ -1007,13 +1008,21 @@ function imagePath()
         'path' => 'assets/images/screenshot',
         'size' => '920x468',
     ];
+    $data['software_old'] = [
+        'path' => 'assets/images/software',
+        'size' => '920x468',
+    ];
     $data['software'] = [
         'path' => 'assets/images/software',
+        'size' => '1280x959',
+    ];
+    $data['service_old'] = [
+        'path' => $url . '/service',
         'size' => '920x468',
     ];
     $data['service'] = [
         'path' => $url . '/service',
-        'size' => '920x468',
+        'size' => '1280x959',
     ];
     $data['subcategory'] = [
         'path' => 'assets/images/subcategory',

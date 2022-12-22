@@ -71,15 +71,16 @@
                                                     </div>
                                                     
                                                     <div class="service_subtitle2">
-                                                        Attributes
+                                                        Software Application
                                                     </div>
-                                                    <div id="form_attributes">
-                                                   
+                                                    <div class="sep-solid"></div>
+                                                    <div class="product-desc-content">
+                                                        {!! $software->software_application !!}
                                                     </div>
 
-                                                    <div class="sep-solid"></div>
+                                                   
                                                     <div class="service_subtitle2 mt-20">
-                                                        Steps
+                                                        Software Providing Steps
                                                     </div>
                                                     <div class="sep-solid"></div>
                                                     <div class="simpletext">
@@ -95,44 +96,40 @@
                                             </div>
                                             
                                             <div class="item-details-thumb-area2">
-                                                <div class="service_subtitle1">Software Modules</div>
-                                                <div >
-                                                   @if ($software->modules->isNotEmpty())
-                                                        <table  class="table">
-                                                            
-                                                            <thead >
-                                                               <tr >
+                                                <div class="service_subtitle1 mb-3">Software Modules</div>
+                                                @if ($software->modules->isNotEmpty())
+                                                    <table  class="table software-table" >
+                                                        
+                                                        <thead >
+                                                            <tr >
                                                                     <th class="col-md-6">@lang('Module Title & Description')</th>
                                                                     <th class="col-md-3">@lang('Base Price')</th>
                                                                     <th class="col-md-3">@lang('Estimated Lead Time (Hours)')</th>
-                                                               </tr>
+                                                            </tr>
                                                                 
-                                                            </thead>
+                                                        </thead>
 
-                                                            <tbody>
-                                                                @foreach ($software->modules as $module)
-                                                                    <tr>
-                                                                        <td>
-                                                                            <b>{{ $module->name }}</b><br>
-                                                                            {{ $module->description }}
-                                                                        </td>
-                                                                        <td>
-                                                                            ${{$module->start_price}}
-                                                                        </td>
-                                                                        <td>
-                                                                            {{$module->estimated_lead_time}} {{ 'Hours'}}
+                                                        <tbody>
+                                                            @foreach ($software->modules as $module)
+                                                                <tr>
+                                                                    <td>
+                                                                        <b>{{ $module->name }}</b><br>
+                                                                        {{ $module->description }}
+                                                                    </td>
+                                                                    <td>
+                                                                        ${{$module->start_price}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{$module->estimated_lead_time}} {{ 'Hours'}}
 
-                                                                        </td>
+                                                                    </td>
 
-                                                                    </tr>
-                                                                    @endforeach
-                                                            </tbody>
+                                                                </tr>
+                                                                @endforeach
+                                                        </tbody>
 
-                                                        </table>
-                                                   @endif 
-                                                   
-                                                
-                                                </div>
+                                                    </table>
+                                                @endif 
                                             </div>
                                             @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                                 <div class="item-details-thumb-area2">
@@ -291,43 +288,45 @@
 </section>
 
 @include($activeTemplate . 'partials.end_ad')
-<div class="modal fade" id="depoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">@lang('Start new conversation')</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('user.conversation.store') }}">
-                    @csrf
-                    <input type="hidden" name="recevier_id" value="{{ $software->user_id }}">
 
-                    <div class="form-group">
-                        <label for="subject" class="font-weight-bold">@lang('Subject')</label>
-                        <input type="text" class="form-control" name="subject" placeholder="@lang('Enter Subject')"
-                               maxlength="255" required>
-                    </div>
+    <div class="modal fade" id="depoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">@lang('Start new conversation')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('user.conversation.store') }}">
+                        @csrf
+                        <input type="hidden" name="recevier_id" value="{{ $software->user_id }}">
 
-                    <div class="form-group">
-                        <label for="message" class="font-weight-bold">@lang('Message')</label>
-                        <textarea rows="8" class="form-control" name="message" maxlength="500" placeholder="@lang('Enter Message')"
-                                  required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn--base" style="width:100%;">@lang('Submit')</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn--danger btn-rounded text-white"
-                        data-bs-dismiss="modal">@lang('Close')</button>
+                        <div class="form-group">
+                            <label for="subject" class="font-weight-bold">@lang('Subject')</label>
+                            <input type="text" class="form-control" name="subject" placeholder="@lang('Enter Subject')"
+                                maxlength="255" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="font-weight-bold">@lang('Message')</label>
+                            <textarea rows="8" class="form-control" name="message" maxlength="500" placeholder="@lang('Enter Message')"
+                                    required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn--base" style="width:100%;">@lang('Submit')</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--danger btn-rounded text-white"
+                            data-bs-dismiss="modal">@lang('Close')</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    
     </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection

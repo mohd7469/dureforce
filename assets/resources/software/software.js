@@ -644,7 +644,7 @@ function pricingFormValidation() {
 
     $(".software-module").each(function () {
       
-        validateAddOnRows($(this), e);
+        validateSoftwareModuleRows($(this), e);
       
     });
 
@@ -670,7 +670,7 @@ function pricingFormValidation() {
   });
 }
 
-function validateAddOnRows(element, e) {
+function validateSoftwareModuleRows(element, e) {
     if (
             element.find(".module-title").val() < 1 &&
             element.find(".module-title") != "") 
@@ -734,14 +734,14 @@ function addSoftwareModuleRow() {
         </div>
 
         <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12 form-group">
-          <label>Starting From Price</label>
+          <label>Starting From Price *</label>
           <input type="number" class="form-control module_price" name="module_price[]"
                 placeholder="E.g. $100" id="add_on_price" step="any">
 
         </div>
 
         <div class="col-xl-5 col-lg-6 col-sm-12 col-xs-12 form-group">
-          <label>Estimated Lead Time</label>
+          <label>Estimated Lead Time *</label>
               <input type="number" class="form-control module-delivery" id="module_delivery"
                     name="module_delivery[]"
                     placeholder="Enter Hours">

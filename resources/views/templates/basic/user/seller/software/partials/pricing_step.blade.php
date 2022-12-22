@@ -100,14 +100,14 @@
                                 </div>
 
                                 <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12 form-group">
-                                    <label>@lang('Starting From Price')</label>
+                                    <label>@lang('Starting From Price')*</label>
                                     <input type="number" class="form-control module_price" name="module_price[]"
                                            placeholder="@lang('E.g. $100')" id="module_price" step="any">
 
                                 </div>
 
                                 <div class="col-xl-6 col-lg-6 col-sm-12 col-xs-12 form-group">
-                                    <label>@lang('Estimated Lead Time')</label>
+                                    <label>@lang('Estimated Lead Time')*</label>
                                         <input type="number" class="form-control module-delivery" id="module_delivery"
                                                name="module_delivery[]"
                                                placeholder="@lang('Enter Hours')">
@@ -152,18 +152,18 @@
                                     </div>
 
                                     <div class="col-md-6 col-xl-6 col-lg-6 col-sm-12 form-group">
-                                        <label>@lang('Per Hour Rate')*</label>
+                                        <label>@lang('Starting From Price')*</label>
                                         <input type="number" class="form-control module_price"
                                                value="{{ floatval($module->start_price) ?: 'Enter add on price' }}"
-                                               name="module_rate[]" placeholder="@lang('Per hour rate')"
+                                               name="module_price[]" placeholder="@lang('E.g $100')"
                                                step="any">
                                     </div>
 
                                     <div class="{{$exKey>0 ?'col-xl-5 col-lg-5 col-md-5 col-sm-11' : 'col-md-6 col-xl-6 col-lg-6'}} form-group">
-                                        <label>@lang(' Delivery Days ')*</label>
+                                        <label>@lang(' Estimated Lead Time')*</label>
                                         <input type="number" class="form-control module-delivery"
                                                value="{{ $module->estimated_lead_time ?: 'Enter delivery' }}"
-                                               name="module_delivery_days[]" min="1" placeholder="@lang('Enter Days')">
+                                               name="module_delivery[]" min="1" placeholder="@lang('Enter Days')">
                                     </div>
                                     @if($exKey>0)
                                         <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">

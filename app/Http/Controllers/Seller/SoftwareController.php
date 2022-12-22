@@ -200,6 +200,7 @@ class SoftwareController extends Controller
     }
 
     public function show($uuid){
+
         $emptyMessage="No data found";
         $pageTitle = "Software details";
         $software = Software::withAll()->where('uuid', $uuid)->firstOrFail();

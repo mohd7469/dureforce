@@ -30,7 +30,8 @@ class Service extends Model
         'PENDING'  =>  18,
         'APPROVED' =>  19,
         'CANCELLED' =>  20,
-        'UNDER_REVIEW' =>  21
+        'UNDER_REVIEW' =>  21,
+        'FEATURED' =>  28
     ];
 
     protected $casts = [

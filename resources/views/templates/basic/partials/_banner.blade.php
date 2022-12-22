@@ -2,7 +2,7 @@
 
 @if(bannerTypeDynamic($model))
 <div class="detail-banner"
-     style='background-image:url({{$model->banner->background->url}});min-height:400px;min-width:1041px;max-height:min-height:400px;'>
+     style='background-image:url({{$model->banner->background->url}});'>
 
     <div class="banner_header">
                 {{-- <img
@@ -46,15 +46,15 @@
 </div>
 @elseif(bannerTypeStatic($model))
  
-    <div class="detail-banner" >
+    <div class="" >
         <a>
             <img alt="{{$model->title }}"
-                src='{{ $model->banner->url }}' style="max-height:440px;max-width:1041px;min-height:440px;min-width:1041px">
+                src='{{ $model->banner->url }}' >
         </a>
     </div>
 @else
     
-    <div class="detail-banner" style='min-height:400px;min-width:1041px;max-height:min-height:400px;'>
+    <div class="" >
         <div id="videoContainer">
                                         
             <iframe width="1041px" height="400px" src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>

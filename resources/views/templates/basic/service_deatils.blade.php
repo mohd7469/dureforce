@@ -157,10 +157,11 @@
                                                     </div>
                                                 </div>
 
+                                                @if(getLastLoginRoleId()==App\Models\Role::$Client)
                                                 <div class="item-details-thumb-area2">
                                                     
                                                     <div class="service_subtitle3">
-                                                        About {{ __($service->user->username) }}
+                                                        About Freelancer
                                                         <span><i class="fa fa-regular fa fa-star"></i> 4.5 ({{ $service->reviewCount->count() }} Reviews)</span>
                                                     </div>
                                                     
@@ -201,7 +202,7 @@
                                                     </div>
                                                     
                                                 </div>
-
+                                                @endif
                                             </div>
 
                                         </div>

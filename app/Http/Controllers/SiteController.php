@@ -38,9 +38,9 @@ class SiteController extends Controller
         $pageTitle = "Home";
         $emptyMessage = "No data found";
         $services =[];
-       $services = Service::Active()->Featured()->Status(Service::STATUSES['APPROVED'])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags' ])->get();
+       $services = Service::Active()->Featured()->whereIn('status_id',[Service::STATUSES['APPROVED'],Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags' ])->get();
 
-        $softwares = Software::Active()->Featured()->Status(Software::STATUSES['APPROVED'])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
+        $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
 
         $sellers = User::whereHas(
             'roles', function($q){
