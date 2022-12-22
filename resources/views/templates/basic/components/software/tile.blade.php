@@ -13,7 +13,7 @@
 
         <div>
             <h3 class="item-card-title"><a
-                    href="{{ route('software.details', [slug($software->title), encrypt($software->id)]) }}">{{ __($software->title) }}</a>
+                    href="{{ route('software.view', [$software->uuid]) }}">{{ __($software->title) }}</a>
             </h3>
 
             {{-- Tag content --}}

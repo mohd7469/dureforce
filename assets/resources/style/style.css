@@ -269,6 +269,9 @@ blockquote .quote-icon {
   }
 }
 
+.software-table{
+  margin-left: -8px !important;
+}
 .mt-10 {
   margin-top: 10px;
 }
