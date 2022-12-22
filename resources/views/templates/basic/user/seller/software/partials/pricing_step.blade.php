@@ -155,7 +155,7 @@
                                         <label>@lang('Per Hour Rate')*</label>
                                         <input type="number" class="form-control module_price"
                                                value="{{ floatval($module->start_price) ?: 'Enter add on price' }}"
-                                               name="module_rate[]" placeholder="@lang('Per hour rate')"
+                                               name="module_price[]" placeholder="@lang('Per hour rate')"
                                                step="any">
                                     </div>
 
@@ -163,7 +163,7 @@
                                         <label>@lang(' Delivery Days ')*</label>
                                         <input type="number" class="form-control module-delivery"
                                                value="{{ $module->estimated_lead_time ?: 'Enter delivery' }}"
-                                               name="module_delivery_days[]" min="1" placeholder="@lang('Enter Days')">
+                                               name="module_delivery[]" min="1" placeholder="@lang('Enter Days')">
                                     </div>
                                     @if($exKey>0)
                                         <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">

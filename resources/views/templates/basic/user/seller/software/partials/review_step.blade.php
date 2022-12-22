@@ -15,8 +15,13 @@
                 <span class="msg-create">How many projects can you handle at one time and still deliver great results
                     ?</span>
             </div>
+            <div class="col-xl-6 col-lg-6 form-group">
+                <label>@lang('Maximum number of simultaneous projects')*</label>
+                <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->softwareDetail->max_no_projects}}">
+            </div>
             <hr>
             <div class="row mt-2">
+                <div>
                 <h4 class="hdng-create">
                     Summary
                 </h4>
@@ -35,18 +40,19 @@
                             <td>{{  $module->name   }}</td>
                             <td>${{  $module->start_price   }}</td>
                             <td>{{  $module->estimated_lead_time   }}</td>
-                      </tr> 
+                      </tr>
                     @endforeach
                       <tr class="modules-total-row">
                         <td><b>{{  'Total'  }}</b></td>
                         <td>${{  $software->modules->sum('start_price')   }}</td>
                         <td>{{  $software->modules->sum('estimated_lead_time')   }}</td>
                       </tr>
-                      
+
                     </tbody>
                   </table>
                 @endif
-                
+
+            </div>
             </div>
             <hr>
             <div class="row ">
@@ -70,10 +76,7 @@
                  </div>
             </div>
             <div class="row ">
-                <div class="col-xl-6 col-lg-6 form-group">
-                    <label>@lang('Maximum number of simultaneous projects')*</label>
-                    <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->softwareDetail->max_no_projects}}">
-                </div>
+
                 <br>
                 <h4 class="hdng-create">Copyright Notice</h4>
                 <p class="lbl-review">By submitting your project, you declare that you either own or have rights to the material posted and
@@ -118,6 +121,7 @@
                 </div>
 
         </div>
+
     </div>
 
 </form>
