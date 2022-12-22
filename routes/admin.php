@@ -218,7 +218,28 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('soft/update/{id}', 'SoftwareDefaultStepController@softupdate')->name('soft.update');
         Route::get('/soft/delete/{id}', 'SoftwareDefaultStepController@delete')->name('soft.delete');
         //Software Template
-        
+        //Deliverables route
+        Route::get('deliverable/index', 'DeliverableController@index')->name('deliverable.index');
+        Route::get('deliverable/create', 'DeliverableController@Create')->name('deliverable.create');
+        Route::post('deliverable/store', 'DeliverableController@store')->name('deliverable.store');
+
+        Route::get('deliverable/edit/{id}', 'DeliverableController@editdetails')->name('deliverable.edit');
+        Route::post('deliverable/inactiveBy', 'DeliverableController@inActiveBy')->name('deliverable.inactive');
+        Route::post('deliverable/activeBy', 'DeliverableController@activeBy')->name('deliverable.active');
+        Route::post('deliverable/update/{id}', 'DeliverableController@update')->name('deliverable.update');
+
+        Route::get('/deliverable/delete/{id}', 'DeliverableController@delete')->name('deliverable.delete');
+        //dod route
+        Route::get('dod/index', 'DODController@index')->name('dod.index');
+        Route::get('dod/create', 'DODController@Create')->name('dod.create');
+        Route::post('dod/store', 'DODController@store')->name('dod.store');
+
+        Route::get('dod/edit/{id}', 'DODController@editdetails')->name('dod.edit');
+        Route::post('dod/inactiveBy', 'DODController@inActiveBy')->name('dod.inactive');
+        Route::post('dod/activeBy', 'DODController@activeBy')->name('dod.active');
+        Route::post('dod/update/{id}', 'DODController@update')->name('dod.update');
+
+        Route::get('/dod/delete/{id}', 'DODController@delete')->name('dod.delete');
         // background technology logo
         Route::middleware('staffaccess:34')->group(function () {
             //Manage technology logo

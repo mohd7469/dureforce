@@ -1110,6 +1110,46 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                {{-- Deliveable crud  --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon la la-mobile"></i>
+                        <span class="menu-title">@lang('Deliverables module')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.deliverable.index') }} ">
+                                <a href="{{ route('admin.deliverable.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Deliverables ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                {{-- end deleverable --}}
+                 {{-- DoDS crud  --}}
+                 <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon la la-mobile"></i>
+                        <span class="menu-title">@lang('Dods module')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.dod.index') }} ">
+                                <a href="{{ route('admin.dod.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Dods ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                 {{-- end DoDS --}}
                 <li class="sidebar__menu-header">@lang('Settings')</li>
 
                 @if (in_array('19', $staffAccess))
