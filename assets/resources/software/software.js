@@ -613,18 +613,18 @@ function pricingFormValidation() {
       if ($("#deliverables :selected").length < 1) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Atleaset 3 deliverables required</span>'
+          '<span class="error text-danger">This field is required</span>'
         );
-        showValidationError('Atleaset 3 deliverables required');
+        showValidationError('Deliverables field is required');
       }
 
-      if ($("#deliverables :selected").length > 3) {
-        e.preventDefault();
-        $(".del_error").after(
-          '<span class="error text-danger">Cannot select more than 3</span>'
-        );
-        showValidationError('Cannot select more than 3');
-      }
+      // if ($("#deliverables :selected").length > 3) {
+      //   e.preventDefault();
+      //   $(".del_error").after(
+      //     '<span class="error text-danger">Cannot select more than 3</span>'
+      //   );
+      //   showValidationError('Cannot select more than 3');
+      // }
     }
 
     if ($.trim(new_delivery) < 1) {
