@@ -1394,6 +1394,29 @@ function getNumberOfPropsals($uuid)
     return $job->proposal()->count();
 }
 
+function getClientJobsCount($id)
+{
+    $job_count = Job::where('user_id',$id)->count();
+    if ($job_count){
+        return $job_count;
+    }
+    else{
+        return 0;
+    }
+
+}
+function getClientOpenJobsCount($id)
+{
+    $job_count = Job::where('user_id',$id)->where('status_id',Job::$Approved)->count();
+    if ($job_count){
+        return $job_count;
+    }
+    else{
+        return 0;
+    }
+
+}
+
 function getLanaguageName($id)
 {
     return ModelsLanguage::where('id',$id)->first()->iso_language_name;
