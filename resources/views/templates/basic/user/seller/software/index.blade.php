@@ -33,7 +33,7 @@
                                                     <td data-label="@lang('Category / SubCategory')">
                                                         <span class="font-weight-bold">{{ __(@$software->category->name) }}</span>
                                                     </td>
-                                                    <td data-label="@lang('Amount')">{{ $general->cur_sym }}{{showAmount($software->price)}} </td>
+                                                    <td data-label="@lang('Amount Per Hour')">{{ $general->cur_sym }}{{showAmount($software->price)}} </td>
                                                     <td data-label="@lang('Delivery Time')">
                                                             {{ $software->estimated_lead_time ? $software->estimated_lead_time.' Days' : " " }} 
                                                     </td>
