@@ -8,8 +8,8 @@
                     <!---Cover Letter Section Start--->
                     <h3 class="heading_proposal">Proposal Details</h3>
                     <div class="btm-c">
-                        <p class="heading_cover_l">{{$proposal->cover_letter}}</p>
-                        <p class="prop_description"></p>
+                        <p class="heading_cover_l"></p>
+                        <p class="prop_description">{{$proposal->cover_letter}}</p>
                         <p class="heading-att">Attachments </p>
                         @isset($proposal->attachment)
                             @foreach($proposal->attachment as $files)
@@ -39,12 +39,12 @@
                     <div class="btm-c">
                         <div class="pt_con">
                             <span class="fm-c"> Fixed Amount </span>
-                            <span class="am_price">$1200.00 </span>
+                            <span class="am_price">${{$proposal->fixed_bid_amount ?? ''}} </span>
                         </div>
 
                         <div class="pt_con">
                             <span class="fm-c"> You’ll Recieve </span>
-                            <span class="am_price">$960.00 </span>
+                            <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
                         </div>
 
 
@@ -53,22 +53,21 @@
                             <div class="mainTabs">
 
                                 <div class="tab">
-                                    <button class="tablinks active" onclick="openCity(event, 'tab1')">By Milestone
+                                    <button class="tablinks @if($proposal->bid_type=='Project') active @else disabled @endif" onclick="openCity(event, 'tab1')">By Project
                                     </button>
-                                    <button class="tablinks" onclick="openCity(event, 'tab2')">By Project</button>
+                                    <button class="tablinks @if($proposal->bid_type=='Milestone') active @else disabled @endif" onclick="openCity(event, 'tab2')">By Milestone</button>
 
                                 </div>
-
                                 <div id="tab1" class="tabcontent">
                                     <form>
                                         <ul class="method_l">
                                             <li>
                                                 <p class="lable-c">Project Start Date</p>
-                                                <input id="datepicker" placeholder="12/20/2022">
+                                                <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}">
                                             </li>
                                             <li>
-                                                <p class="lable-c">Project Start Date</p>
-                                                <input id="datepicker" placeholder="12/20/2022">
+                                                <p class="lable-c">Project End Date</p>
+                                                <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}">
                                             </li>
                                         </ul>
 
@@ -77,53 +76,25 @@
 
                                 <div id="tab2" class="tabcontent">
                                     <ul class="method_l method_2">
+                                        @foreach($proposal->milestone as $miles)
                                         <li>
-                                            <p class="lable-c">Project Start Date</p>
-                                            <input type="text" placeholder="Research">
+                                            <p class="lable-c">Milestone Description</p>
+                                            <input type="text" placeholder="{{$miles->description ?? ''}}">
                                         </li>
                                         <li>
                                             <p class="lable-c">Start Date</p>
-                                            <input type="datetime" id="datepicker" placeholder="12/20/2022">
+                                            <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}">
                                         </li>
                                         <li>
                                             <p class="lable-c">Due Date</p>
-                                            <input id="datepicker" placeholder="12/20/2022">
+                                            <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}">
                                         </li>
                                         <li>
                                             <p class="lable-c">Amount</p>
-                                            <input type="text" placeholder="$ 30.00">
+                                            <input type="text" placeholder="{{$miles->amount ?? ''}}">
                                         </li>
 
-                                        <li>
-                                            <input type="text" placeholder="Research">
-                                        </li>
-                                        <li>
-
-                                            <input id="datepicker" placeholder="12/20/2022">
-                                        </li>
-                                        <li>
-
-                                            <input id="datepicker" placeholder="12/20/2022">
-                                        </li>
-                                        <li>
-
-                                            <input type="number" placeholder="$ 30.00">
-                                        </li>
-                                        <li>
-                                            <input type="text" placeholder="Research">
-                                        </li>
-                                        <li>
-
-                                            <input id="datepicker" placeholder="12/20/2022">
-                                        </li>
-                                        <li>
-
-                                            <input id="datepicker" placeholder="12/20/2022">
-                                        </li>
-                                        <li>
-
-                                            <input type="number" placeholder="$ 30.00">
-                                        </li>
+                                        @endforeach
                                     </ul>
                                 </div>
 
@@ -145,12 +116,22 @@
                 <div class="prosal-right-con">
                     <div class="p_amount_con">
                         <ul class="listing_ps">
-                            <li><span class="p_fcs">Proposed Amount</span> <span class="p_price">$1200</span></li>
-                            <li><span class="p_fcs">Net Amount</span> <span class="p_price">$960</span></li>
+                            <li><span class="p_fcs">Proposed Amount</span> <span class="p_price">${{ $proposal->fixed_bid_amount ?? '' }}</span></li>
+                            <li><span class="p_fcs">Net Amount</span> <span class="p_price">${{ $proposal->amount_receive ?? '' }}</span></li>
                             <li><span class="p_fcs">Status</span> <span class="btn_sbmitd">Submitted</span></li>
-                            <li><span class="p_fcs">Job Type</span> <span class="p_pricess">Service</span></li>
-                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">10 Days</span></li>
-                            <li><span class="p_fcs">Mode of Delivery</span> <span class="p_days">Messages</span></li>
+                            <li><span class="p_fcs">Job Type</span> <span class="p_pricess">
+                            @if($proposal->module_type == "App\Models\Job")
+                                Job
+                            @elseif($proposal->module_type == "App\Models\Service")
+                                Service
+                            @elseif($proposal->module_type == "App\Models\Software")
+                                Software
+                            @else
+
+                            @endif
+                            </span></li>
+                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">{{ dateDiffInDays($proposal->project_start_date,$proposal->project_end_date) ?? 0 }}</span></li>
+                            <li><span class="p_fcs">Mode of Delivery</span> <span class="p_days">{{$proposal->delivery_mode->title ?? ''}}</span></li>
                         </ul>
                     </div>
 
@@ -159,15 +140,15 @@
                         <p class="abt-client">About the Client</p>
                         <ul class="client_listing-c">
                             <li>
-                                <img src="/assets/images/job/client.svg" alt="client">
+                                <img src="{{ !empty($proposal->user->basicProfile->profile_picture)? $proposal->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
                                 <div class="about_client">
-                                    <p class="client_name">Gloria May</p>
-                                    <p class="client_date">Member since April 20, 2020 </p>
+                                    <p class="client_name">{{$proposal->user->fullname ?? ''}}</p>
+                                    <p class="client_date">Member since {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </div>
                             </li>
                             <li>
-                                <span class="location_c">USA</span>
-                                <span class="time_cs">12:37 pm local time</span>
+                                <span class="location_c">{{$proposal->user? $proposal->user->address: ''}}</span>
+                                <span class="time_cs">{{ date('h:i a', strtotime($proposal->module->created_at))}} local time pm local time</span>
                             </li>
                             <li>
                                 <p class="payment_c">Payment method verified</p>
