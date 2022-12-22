@@ -101,12 +101,12 @@
                                                     <table  class="table software-table" >
                                                         
                                                         <thead >
-                                                        <tr >
-                                                                <th class="col-md-6">@lang('Module Title & Description')</th>
-                                                                <th class="col-md-3">@lang('Base Price')</th>
-                                                                <th class="col-md-3">@lang('Estimated Lead Time (Hours)')</th>
-                                                        </tr>
-                                                            
+                                                            <tr >
+                                                                    <th class="col-md-6">@lang('Module Title & Description')</th>
+                                                                    <th class="col-md-3">@lang('Base Price')</th>
+                                                                    <th class="col-md-3">@lang('Estimated Lead Time (Hours)')</th>
+                                                            </tr>
+                                                                
                                                         </thead>
 
                                                         <tbody>
@@ -288,43 +288,45 @@
 </section>
 
 @include($activeTemplate . 'partials.end_ad')
-<div class="modal fade" id="depoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-     aria-hidden="true">
-    <div class="modal-dialog " role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">@lang('Start new conversation')</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('user.conversation.store') }}">
-                    @csrf
-                    <input type="hidden" name="recevier_id" value="{{ $software->user_id }}">
 
-                    <div class="form-group">
-                        <label for="subject" class="font-weight-bold">@lang('Subject')</label>
-                        <input type="text" class="form-control" name="subject" placeholder="@lang('Enter Subject')"
-                               maxlength="255" required>
-                    </div>
+    <div class="modal fade" id="depoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">@lang('Start new conversation')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('user.conversation.store') }}">
+                        @csrf
+                        <input type="hidden" name="recevier_id" value="{{ $software->user_id }}">
 
-                    <div class="form-group">
-                        <label for="message" class="font-weight-bold">@lang('Message')</label>
-                        <textarea rows="8" class="form-control" name="message" maxlength="500" placeholder="@lang('Enter Message')"
-                                  required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn--base" style="width:100%;">@lang('Submit')</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn--danger btn-rounded text-white"
-                        data-bs-dismiss="modal">@lang('Close')</button>
+                        <div class="form-group">
+                            <label for="subject" class="font-weight-bold">@lang('Subject')</label>
+                            <input type="text" class="form-control" name="subject" placeholder="@lang('Enter Subject')"
+                                maxlength="255" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="font-weight-bold">@lang('Message')</label>
+                            <textarea rows="8" class="form-control" name="message" maxlength="500" placeholder="@lang('Enter Message')"
+                                    required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn--base" style="width:100%;">@lang('Submit')</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--danger btn-rounded text-white"
+                            data-bs-dismiss="modal">@lang('Close')</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    
     </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
