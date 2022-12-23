@@ -169,9 +169,7 @@
                                                                 <p class="show-read-more">
                                                                     {{ __(@$software->user->basicProfile->about) }}</p>
                                                             </div>
-                                                            {{-- <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
-                                                            <a href="javascript:void(0)" id="readless"
-                                                            class="standard-btn-sm">Read less</a> --}}
+
                                                         </div>
                                                     </div>
                                                     
@@ -266,7 +264,7 @@
 
                                         <div class="item-card-wrapper border-0  grid-view" style="padding: 12px">
                                             @forelse($related_softwares as $realted_software)
-                                                @include($activeTemplate . 'components.services.tile', ['software' => $realted_software])
+                                                @include($activeTemplate . 'components.software.tile', ['software' => $realted_software])
                                             @empty
                                                 <div class="empty-message-box bg--gray">
                                                     <div class="icon"><i class="las la-frown"></i></div>
