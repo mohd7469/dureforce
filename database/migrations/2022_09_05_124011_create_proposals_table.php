@@ -17,6 +17,7 @@ class CreateProposalsTable extends Migration
             $table->bigIncrements('id');
             $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
+            $table->unsignedBigInteger('status_id')->nullable();
             $table->unsignedBigInteger('delivery_mode_id')->index()->nullable();
             $table->unsignedBigInteger('service_fees_id')->index()->nullable();
             $table->integer('module_id')->index()->nullable();
@@ -34,6 +35,7 @@ class CreateProposalsTable extends Migration
             $table->date('project_end_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('delivery_mode_id')->references('id')->on('delivery_modes')->onDelete('cascade');
             $table->foreign('service_fees_id')->references('id')->on('service_fees')->onDelete('cascade');

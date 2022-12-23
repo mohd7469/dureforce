@@ -15,6 +15,12 @@ class Proposal extends Model
     public static $by_project = 'by_project';
 
 
+    public const STATUSES = [
+        'SUBMITTED'  =>  29,
+        'ARCHIVED'  =>  30,
+        'ACTIVE'  =>  31,
+    ];
+
     protected static function boot()
     {
 

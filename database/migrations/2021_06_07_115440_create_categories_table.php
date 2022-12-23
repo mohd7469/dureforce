@@ -17,6 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name', 191)->nullable();
             $table->tinyInteger('status')->comment('Enable: 1, Disable ; 2');
+            $table->boolean('is_active')->default(true)->nullable();
+
             $table->timestamps();
         });
     }
