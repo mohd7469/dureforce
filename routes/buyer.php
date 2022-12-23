@@ -45,7 +45,6 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 });
 
-
                 Route::name('job.')->group(function(){
                     
                     Route::get('job/create',            [\App\Http\Controllers\Buyer\JobController::class,'create'] )->name('create');

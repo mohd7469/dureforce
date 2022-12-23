@@ -31,7 +31,7 @@
                         <div class="item-section item-details-section">
                             <div class="container">
                                 <div class="item-details-content" style="padding-top: 0px;">
-                                    <h2 class="title">{{ __($service->category->name) }}</h2>
+                                    <h2 class="title">{{ __($service->category->name) }}  {{ __($service->subCategory ? '>' .$service->subCategory->name: '')}}</h2>
                                 </div>
                                 <div class="row justify-content-center mb-30-none">
                                     <div class="col-xl-9 col-lg-9 mb-30">
@@ -146,7 +146,7 @@
                                                                 @foreach ($service->addOns as $extra)
                                                                     <li>
                                                                         <div style="width: 30%;">{{ __($extra->title) }}</div>
-                                                                        <div style="width: 18%;">{{ __($general->cur_sym) }}{{ showAmount($extra->rate_per_hour) }}</div>
+                                                                        <div style="width: 18%;">{{ showAmount($extra->rate_per_hour) }}</div>
                                                                         <div style="width: 18%;">{{ $extra->estimated_delivery_time }} Days</div>
                                                                         <div style="width: 18%;">
                                                                         </div>
@@ -218,7 +218,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>@lang('Estimated Delivery Time')</span>
-                                                        <span>{{ __($service->delivery_time) }} @lang('Hours')</span>
+                                                        <span>{{ __($service->estimated_delivery_time) }} @lang('Hours')</span>
                                                     </li>
                                                 </ul>
 
