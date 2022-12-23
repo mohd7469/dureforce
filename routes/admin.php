@@ -233,13 +233,20 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('dod/index', 'DODController@index')->name('dod.index');
         Route::get('dod/create', 'DODController@Create')->name('dod.create');
         Route::post('dod/store', 'DODController@store')->name('dod.store');
-
         Route::get('dod/edit/{id}', 'DODController@editdetails')->name('dod.edit');
         Route::post('dod/inactiveBy', 'DODController@inActiveBy')->name('dod.inactive');
         Route::post('dod/activeBy', 'DODController@activeBy')->name('dod.active');
         Route::post('dod/update/{id}', 'DODController@update')->name('dod.update');
-
         Route::get('/dod/delete/{id}', 'DODController@delete')->name('dod.delete');
+        //DeliverMode Route
+        Route::get('deliver/index', 'DeliverModeController@index')->name('deliver.index');
+        Route::get('deliver/create', 'DeliverModeController@Create')->name('deliver.create');
+        Route::post('deliver/store', 'DeliverModeController@store')->name('deliver.store');
+        Route::get('deliver/edit/{id}', 'DeliverModeController@editdetails')->name('deliver.edit');
+        Route::post('deliver/inactiveBy', 'DeliverModeController@inActiveBy')->name('deliver.inactive');
+        Route::post('deliver/activeBy', 'DeliverModeController@activeBy')->name('deliver.active');
+        Route::post('deliver/update/{id}', 'DeliverModeController@update')->name('deliver.update');
+        Route::get('/deliver/delete/{id}', 'DeliverModeController@delete')->name('deliver.delete');
         // background technology logo
         Route::middleware('staffaccess:34')->group(function () {
             //Manage technology logo
