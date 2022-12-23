@@ -136,11 +136,18 @@ class JobController extends Controller
         $client_total_jobs = $client_jobs->count();
         $client_open_jobs = $client_jobs->where('status_id',Status::$Approved)->count();
 
+        $proposal = $job->proposal->where('user_id',auth()->user()->id)->first();
+
+        $proposal_submitted = false;
+        if (!empty($proposal)){
+
+            $proposal_submitted = true;
+        }
         $user_saved_jobs = auth()->user()->save_job->pluck('id')->toArray();
 
         $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
         $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs','user_saved_jobs'));
+        return view($this->activeTemplate .'job_view',compact('pageTitle','job','data','client_total_jobs','client_open_jobs','user_saved_jobs','proposal_submitted','proposal'));
     }
     public function OfferView($uuid){
         $pageTitle = "View Offer";
