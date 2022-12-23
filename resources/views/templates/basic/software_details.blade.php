@@ -169,9 +169,7 @@
                                                                 <p class="show-read-more">
                                                                     {{ __(@$software->user->basicProfile->about) }}</p>
                                                             </div>
-                                                            {{-- <a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>
-                                                            <a href="javascript:void(0)" id="readless"
-                                                            class="standard-btn-sm">Read less</a> --}}
+
                                                         </div>
                                                     </div>
                                                     
