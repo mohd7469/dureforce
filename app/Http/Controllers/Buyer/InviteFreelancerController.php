@@ -40,7 +40,7 @@ class InviteFreelancerController extends Controller
                 "job_id"=>$job_id,
                 "message"=>$request['message'],
             ]);
-//            DB::commit();
+            DB::commit();
             $job = Job::find($job_id);
 
             $user_email = User::where('id',$request['user_id'])->pluck('email')->first();
