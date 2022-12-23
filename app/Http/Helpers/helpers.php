@@ -1394,6 +1394,29 @@ function getNumberOfPropsals($uuid)
     return $job->proposal()->count();
 }
 
+function getClientJobsCount($id)
+{
+    $job_count = Job::where('user_id',$id)->count();
+    if ($job_count){
+        return $job_count;
+    }
+    else{
+        return 0;
+    }
+
+}
+function getClientOpenJobsCount($id)
+{
+    $job_count = Job::where('user_id',$id)->where('status_id',Job::$Approved)->count();
+    if ($job_count){
+        return $job_count;
+    }
+    else{
+        return 0;
+    }
+
+}
+
 function getLanaguageName($id)
 {
     return ModelsLanguage::where('id',$id)->first()->iso_language_name;
@@ -1490,3 +1513,12 @@ function getYearMonthDays($timestamp){
     return $month_name.' '. $day.', '. $year;
 
 }
+function dateDiffInDays($date1, $date2) 
+  {
+      // Calculating the difference in timestamps
+      $diff = strtotime($date2) - strtotime($date1);
+  
+      // 1 day = 24 hours
+      // 24 * 60 * 60 = 86400 seconds
+      return abs(round($diff / 86400));
+  }

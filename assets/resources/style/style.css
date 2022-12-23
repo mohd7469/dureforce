@@ -276,6 +276,19 @@ blockquote .quote-icon {
   margin-top: 10px;
 }
 
+.profile-pic-edit-icon {
+  border-radius: 33px;
+  color: black;
+  position: absolute;
+  top: 81px !important;
+  right: 97px !important;
+  padding: 5px 7px 4px 11px;
+  border: 1px solid white !important;
+  background-color: whitesmoke;
+}
+.icon-size{
+  font-size: 1.5em !important;
+}
 .mt-20 {
   margin-top: 20px;
 }

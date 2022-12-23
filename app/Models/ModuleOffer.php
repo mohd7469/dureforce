@@ -43,11 +43,10 @@ class ModuleOffer extends Model
         
         parent::boot();
         static::creating(function ($model)  {
-            
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
             $model->offer_send_by_id=auth()->user()->id;
-            $model->expire_at=Carbon::now()->addDays(env('OFFER_EXPIRE_DAYS', 10));
+            $model->expire_at=Carbon::now()->addDays(config('settings.offer_expire_days'));
             $model->status_id=self::STATUSES['PENDING'];
         });
 

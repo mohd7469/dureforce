@@ -110,7 +110,7 @@
                             href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
 
                         <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
-                            href="#" type="button">@lang('Preview')</a>
+                            href="{{$software ? route('software.view',[$software->uuid]) : '#'}}" type="button">@lang('Preview')</a>
 
                     <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
                         @lang('Save as Draft')

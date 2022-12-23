@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,13 +21,11 @@ class Deliverable extends Model
 
     protected static function boot()
     {
-        
         parent::boot();
         static::saving(function ($model)  {
-            
             $model->slug = \Str::slug($model->name);
         });
-
+        static::addGlobalScope(new ActiveScope);
 
     }
     public function module()

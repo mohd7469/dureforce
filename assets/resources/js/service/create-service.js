@@ -341,20 +341,21 @@ function overviewFormValidation() {
     }
     if ($('#service_features :selected').length<=0) {
       
-      e.preventDefault();
-      $(".include_error").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Include features is required",
-        position: "topRight",
-      });
+        e.preventDefault();
+        $(".include_error").after(
+          '<span class="error text-danger">This field is required</span>'
+        );
+        iziToast.error({
+          message: "Include features is required",
+          position: "topRight",
+        });
     }
     if($("input:checkbox[name='skills[]']:checked").length <= 0){
-      iziToast.error({
-        message: "Atleaset one skill is required",
-        position: "topRight",
-      });
+        e.preventDefault();
+        iziToast.error({
+          message: "Atleaset one skill is required",
+          position: "topRight",
+        });
      }
      
     var err = false;
@@ -511,18 +512,18 @@ function pricingFormValidation() {
       if ($("#deliverables :selected").length < 1) {
         e.preventDefault();
         $(".del_error").after(
-          '<span class="error text-danger">Atleaset 3 deliverables required</span>'
+          '<span class="error text-danger">This field is required</span>'
         );
-        showValidationError('Atleaset 3 deliverables required');
+        showValidationError('Deliverables field is required');
       }
 
-      if ($("#deliverables :selected").length > 3) {
-        e.preventDefault();
-        $(".del_error").after(
-          '<span class="error text-danger">Cannot select more than 3</span>'
-        );
-        showValidationError('Cannot select more than 3');
-      }
+      // if ($("#deliverables :selected").length > 3) {
+      //   e.preventDefault();
+      //   $(".del_error").after(
+      //     '<span class="error text-danger">Cannot select more than 3</span>'
+      //   );
+      //   showValidationError('Cannot select more than 3');
+      // }
     }
 
     if ($.trim(new_delivery) < 1) {

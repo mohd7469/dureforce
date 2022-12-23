@@ -17,7 +17,28 @@
                         <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
-                                    <img class="thumbnail" src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                                        
+                                    <img class="thumbnail" 
+                                        src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" 
+                                        id="preview-img"
+                                        alt=""
+                                    >
+
+                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                        
+                                        <div class="profile-pic-edit-icon" id="profile-pic-edit-btn">
+                                            <i class="fa fa-camera fa-2x icon-size" ></i>
+                                        </div>
+
+                                        <form action="#" class="d-none" method="post" id="profile_picture_form" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="file" name="profile_pic" id="profile_pic_id" accept="image/png, image/gif, image/jpeg"
+                                            onchange="previewFile(this)"
+                                            >
+                                        </form>
+
+                                    @endif
+                                    
                                     <h4 class="my-3 text-center">{{$user->full_name}}</h4>
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <div class="text-center">
@@ -858,7 +879,10 @@
     let exp_btn=$('#exp-btn');
     let add_exp_btn=$('#add-exp-btn');
     let add_edu_btn=$('#add-edu-btn');
-
+    let edit_profile_picture_btn=$('#profile-pic-edit-btn');
+    var token= $('input[name=_token]').val();
+    var profile_picture_form = $('#profile_picture_form');
+    
     $(document).ready(function() {
         
         readmore();
@@ -872,6 +896,9 @@
 
         });
 
+        edit_profile_picture_btn.click(function(e){
+            $('#profile_pic_id').click();
+        });
         add_edu_btn.click(function(e){
             education_form.attr('action', "{{route('seller.profile.education.add')}}");
             education_form[0].reset();
@@ -923,6 +950,56 @@
 
     });
 
+    function updateProfilePicture(){
+        
+        // var profile_file=$('input[type=file]')[0].files[0];
+        let form_data = new FormData(profile_picture_form[0]);
+        // form_data.append('profile_picture', profile_file);
+        
+        $.ajax({
+            type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:"{{route('seller.profile.picture.update')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
+                console.log(response);
+                if(response.success){
+                    
+                    notify('success', response.success);
+                }
+                else{
+                    notify('error', response.errors);
+                }
+                $(".preloader").css("display", "none");
+
+            }
+        });
+    }
+
+    function previewFile(input) {
+
+        let file = $("input[type=file]").get(0).files[0];
+        let idxDot = file.name.lastIndexOf(".") + 1;
+        let extFile = file.name.substr(idxDot, file.name.length).toLowerCase();
+        if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function() {
+                    $("#preview-img").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+                updateProfilePicture();
+            }
+        } else {
+            alert("Only jpg/jpeg, png files are allowed!");
+            return false;
+        }
+
+    }
     function checkDate(parent, element) {
 
         if (parent.is(':checked')) {
@@ -990,7 +1067,6 @@
         let form_data = new FormData(user_basic_form[0]);
         // form_data.append('profile_picture', profile_file);
         // var form_data = user_basic_form.serialize();
-        console.log(form_data);
         $.ajax({
             type:"POST",
             headers: {

@@ -18,7 +18,7 @@
                 <input type="hidden" name="number_of_software_modules" value="{{ count($software_modules) }}" id="number_of_software_modules">
                 
                 <div class="col-lg-4 ">
-                    <label>@lang('Starting From Price (Base Software)')</label>
+                    <label>@lang('Starting From Price (Base Software)')*</label>
                     <input type="number" class="form-control" name="price" id="price" step="any"
                            value="{{ old('amount', floatval(@$software->price) ? : "Enter Price") }}"
                            placeholder="@lang('E.g. $550')"
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="col-lg-4 ">
-                    <label>@lang('Estimated Lead Time (Base Software)')</label>
+                    <label>@lang('Estimated Lead Time (Base Software)')*</label>
                     <input type="number" name="delivery_time" class="form-control"
                            value="{{ old('delivery_time', @$software->estimated_lead_time) }}"
                            id="delivery"
