@@ -225,9 +225,9 @@
             var selected_skills=$('#service_skills_id').val();
             selected_skills=(selected_skills.split(','));
             selected_skills=selected_skills.map(Number);
-            console.log(selected_skills);
+           
             $('#form_attributes').empty();
-            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4>');
+            $('#form_attributes').append('<div style="display:inline;"<h4 class="pb-3">Job Attributes</h4><small style="display:inline"> (At least one skill is required) </small></div>');
             for (var main_category in data) { //heading main
                 
                 var all_sub_categories=data[main_category];
