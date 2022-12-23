@@ -29,6 +29,7 @@ Route::name('seller.')->group(function () {
                 Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
                 Route::get('/password-security', [\App\Http\Controllers\Seller\ProfileController::class,'getpassword'])->name('password.security');
                 Route::post('/seller/password/change', [\App\Http\Controllers\Seller\ProfileController::class,'sellerprofilePasswordChange'])->name('seller.password.change');
+                Route::post('/profile-picture-update', [\App\Http\Controllers\Seller\ProfileController::class,'profilePictureUpdate'])->name('picture.update');
               
             });
 
@@ -45,6 +46,7 @@ Route::name('seller.')->group(function () {
                 Route::view('/my-proposal-list','templates.basic.buyer.propsal.my-proposal-list');
                
                 Route::name('proposal.')->group(function () {
+
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
                     Route::post('/validate-proposal',      [\App\Http\Controllers\Seller\ProposalController::class,'validatePropsal'] )->name('validate');
                     Route::post('proposal-store/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'savePropsal'])->name('store');

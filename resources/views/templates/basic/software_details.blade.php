@@ -8,7 +8,7 @@
                     <div class="item-section item-details-section">
                         <div class="container">
                             <div class="item-details-content" style="padding-top: 0px;">
-                                <h2 class="title">{{ __($software->category->name) }}</h2>
+                                <h2 class="title">{{ __($software->category->name) }} {{ __($software->subCategory ? '>' .$software->subCategory->name: '')}}</h2>
                                 
                             </div>
                             <div class="row justify-content-center mb-30-none">
@@ -326,7 +326,7 @@
             </div>
         </div>
     </div>
-    
+
     </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection

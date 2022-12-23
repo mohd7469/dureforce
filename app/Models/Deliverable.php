@@ -20,13 +20,10 @@ class Deliverable extends Model
 
     protected static function boot()
     {
-        
         parent::boot();
         static::saving(function ($model)  {
-            
             $model->slug = \Str::slug($model->name);
         });
-
 
     }
     public function module()

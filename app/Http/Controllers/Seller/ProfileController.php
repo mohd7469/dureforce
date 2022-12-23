@@ -209,8 +209,6 @@ class ProfileController extends Controller
             return response()->json(['validation_errors'=>$validator->errors()]);
         }
        
-   
-
         try {
             
             $user = auth()->user();        
@@ -456,52 +454,87 @@ class ProfileController extends Controller
         else
             return response()->json(["validated" => "Portfolio Data Is Valid"]);
     }
+    
     public function getpassword(){
         return view( 'templates.basic.user.seller.new_password');
-}
-public function sellerprofilePasswordChange(Request $request){
+    }
+    
+    /**
+     * sellerprofilePasswordChange
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function sellerprofilePasswordChange(Request $request){
 
-    $validator = Validator::make($request->all(), [
-        'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
-        'password_confirmation' => 'min:8',
-        'old_password' => [
-            'required', function ($attribute, $value, $fail) {
-                if (!Hash::check($value, Auth::user()->password)) {
-                    $fail('Old Password didn\'t match');
+        $validator = Validator::make($request->all(), [
+            'new_password' => 'min:8|required_with:password_confirmation|same:password_confirmation',
+            'password_confirmation' => 'min:8',
+            'old_password' => [
+                'required', function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
+                        $fail('Old Password didn\'t match');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+
+
+            try {
+                if (Hash::check($request->old_password, Auth::user()->password)) {
+                    Auth::user()->fill([
+                        'password' => Hash::make($request->new_password)
+                    ])->save();
+
+
+                    return response()->json(['success' => 'Seller Password Updated Successfully', 'redirect_url' => route('user.home')]);
+
+
                 }
-            },
-        ],
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(["validation_errors" => $validator->errors()]);
-    } else {
 
 
-        try {
-            if (Hash::check($request->old_password, Auth::user()->password)) {
-                Auth::user()->fill([
-                    'password' => Hash::make($request->new_password)
-                ])->save();
+            } catch (\Throwable $exception) {
 
-
-                return response()->json(['success' => 'Seller Password Updated Successfully', 'redirect_url' => route('user.home')]);
+                DB::rollback();
+                return response()->json(['error' => $exception->getMessage()]);
+                $notify[] = ['errors', 'Failled To Save User Profile .'];
+                return back()->withNotify($notify);
+                
 
 
             }
-
-
-        } catch (\Throwable $exception) {
-
-            DB::rollback();
-            return response()->json(['error' => $exception->getMessage()]);
-            $notify[] = ['errors', 'Failled To Save User Profile .'];
-            return back()->withNotify($notify);
-            
-
-
         }
+
+    }
+    
+    /**
+     * profilePictureUpdate
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function profilePictureUpdate(Request $request){
+        
+        $user=auth()->user();
+        if ($request->hasFile('profile_pic')) {
+
+            $path = imagePath()['attachments']['path'];
+            $file=$request->profile_pic;
+            $filename = uploadAttachments($file, $path);
+            $file_extension = getFileExtension($file);
+            $url = $path . '/' . $filename;
+            $user->basicProfile->profile_picture=$url;
+            $user->basicProfile->save();
+            return response()->json(['success'=>'Profile picture updated successfully']);
+        }
+        else
+            return response()->json(['errors'=>['Failled to update profile picture']]);
     }
 
-}
+        
+
 }
