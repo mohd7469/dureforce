@@ -286,6 +286,7 @@ class CommonProfileController extends Controller
                     $user->basicProfile()->update(['profile_picture' => $url]);
 
                 }
+                $user->rate_per_hour = $request_data['rate'];
                 $user->save();
 
                 DB::commit();
