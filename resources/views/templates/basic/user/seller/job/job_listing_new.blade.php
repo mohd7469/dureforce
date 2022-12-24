@@ -10,15 +10,25 @@
                   <div class="container single-jobc">
                         <div class="allpropsel_container">
                             <!-- Tabs navs -->
+                            @php
+                            if ($tabs == 'saved-jobs')
+                            {
+                                $saved_job = 'active';
+                                $search_job = '';
+                            }else{
+                                $search_job = 'active';
+                                $saved_job = '';
+                            }
+                            @endphp
                             <div class="card">
                                 <div class="top-card-header ">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                                         <li class="nav-item">
-                                            <a class="nav-link active" aria-current="true" data-bs-toggle="tab"
+                                            <a class="nav-link {{$search_job}}" aria-current="true" data-bs-toggle="tab"
                                             href="#Search_tab">Search</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab"
+                                            <a class="nav-link {{$saved_job}}" data-bs-toggle="tab"
                                             href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
                                         </li>
                                     </ul>
