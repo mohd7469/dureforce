@@ -137,11 +137,20 @@ class CategoryController extends Controller
     }
     public function delete($id)
     {
-        $category = Category::find($id);
-       
-        $category->delete();
-        $notify[] = ['success', 'CategoryDetail deleted successfully'];
-        return back()->withNotify($notify);
+       try {
+            DB::beginTransaction();
+            $category = Category::find($id);
+            $category->delete();
+            $notify[] = ['success', 'CategoryDetail deleted successfully'];
+            DB::commit();
+            return back()->withNotify($notify);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $notify[] = ['success', ' Category delete Failed'];
+            return back()->withNotify($notify);
+
+        }
     }
     public function deleteSubCategory($id)
     {
@@ -150,7 +159,6 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             $subCategory = SubCategory::find($id);
-       
             $subCategory->delete();
             $notify[] = ['success', 'Sub CategoryDetail deleted successfully'];
             
