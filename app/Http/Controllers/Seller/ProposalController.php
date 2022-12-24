@@ -126,6 +126,7 @@ class ProposalController extends Controller
                 "start_hour_limit" => isset($request_data['start_hour_limit']) ? $request_data['start_hour_limit'] : null,
                 "end_hour_limit" => isset($request_data['end_hour_limit']) ? $request_data['end_hour_limit'] : null,
                 "cover_letter" => $request_data['cover_letter'],
+                "status_id" => Proposal::STATUSES['SUBMITTED'],
             ]);
 
 
