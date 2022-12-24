@@ -44,7 +44,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by {{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0] .'. on '.getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">
@@ -164,6 +164,12 @@
             }
 
             h2.per_heading {
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 23px;
+                color: #007F7F;
+            }
+            .per_heading_name {
                 font-weight: 600;
                 font-size: 18px;
                 line-height: 23px;

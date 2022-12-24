@@ -17,28 +17,33 @@
                         <div class="mt-3  mb-0 d-flex flex-column ">
                             <div class="card mb-4">
                                 <div class="card-body  profile">
+                                    <div style="position:relative">
                                         
-                                    <img class="thumbnail" 
-                                        src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" 
-                                        id="preview-img"
-                                        alt=""
-                                    >
+                                        <img class="thumbnail" 
+                                            src="{{ !empty($user->basicProfile->profile_picture)? $user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" 
+                                            id="preview-img"
+                                            alt=""
+                                        >
 
-                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         
-                                        <div class="profile-pic-edit-icon" id="profile-pic-edit-btn">
-                                            <i class="fa fa-camera fa-2x icon-size" ></i>
-                                        </div>
+                                            <div class="profile-pic-edit-icon" id="profile-pic-edit-btn">
+                                                <i class="fa fa-camera fa-2x icon-size" ></i>
+                                            </div>
 
-                                        <form action="#" class="d-none" method="post" id="profile_picture_form" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="file" name="profile_pic" id="profile_pic_id" accept="image/png, image/gif, image/jpeg"
-                                            onchange="previewFile(this)"
-                                            >
-                                        </form>
-
-                                    @endif
+                                        @endif
+                                    </div>
                                     
+
+                                   
+
+                                    <form action="#" class="d-none" method="post" id="profile_picture_form" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="file" name="profile_pic" id="profile_pic_id" accept="image/png, image/gif, image/jpeg"
+                                        onchange="previewFile(this)"
+                                        >
+                                    </form>
+
                                     <h4 class="my-3 text-center">{{$user->full_name}}</h4>
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <div class="text-center">
