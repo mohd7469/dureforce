@@ -62,7 +62,18 @@
                                 <td>
                                     <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
                                 </td>
-                                <td><span class="job_status_p">Draft</span></td>
+                                <td>
+                                @if($proposal->status_id == 29)
+                                    <span class="badge badge--success">Submitted</span>
+                                @elseif($proposal->status_id == 30)
+                                    <span class="badge badge--info">Draft</span>
+                                @elseif($proposal->status_id == 31)
+                                    <span class="badge badge--primary">Active</span>
+                                @else
+
+                                @endif
+                                    
+                                </td>
                                 <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
                                        class="view_propasal_per">View Proposal</a></td>
                             </tr>
