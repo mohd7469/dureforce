@@ -1042,7 +1042,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 {{-- @if (in_array('34', $staffAccess)) --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                            <i class="menu-icon la la-mobile"></i>
+                            <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Email image settings')</span>
                         </a>
                         <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
@@ -1089,8 +1089,8 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 {{-- asdc --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon la la-mobile"></i>
-                        <span class="menu-title">@lang('Software Default Steps')</span>
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Software Default ')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1113,8 +1113,8 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 {{-- Deliveable crud  --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon la la-mobile"></i>
-                        <span class="menu-title">@lang('Deliverables module')</span>
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Deliverables')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1133,8 +1133,8 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                  {{-- DoDS crud  --}}
                  <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon la la-mobile"></i>
-                        <span class="menu-title">@lang('Dods module')</span>
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('DODS')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1153,8 +1153,8 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                   {{-- Deliver Mode crud  --}}
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon la la-mobile"></i>
-                        <span class="menu-title">@lang('Deliver Mode module')</span>
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Deliver Mode')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1170,6 +1170,28 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                    {{-- End Deliver Mode crud  --}}
+                   
+                   {{-- Category Mode crud  --}}
+                   <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Category')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.deliver.index') }} ">
+                                <a href="{{ route('admin.category.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Category ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+
+                   {{-- category Mode crud  --}}
                 <li class="sidebar__menu-header">@lang('Settings')</li>
 
                 @if (in_array('19', $staffAccess))

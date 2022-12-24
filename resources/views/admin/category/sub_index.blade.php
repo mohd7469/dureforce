@@ -10,12 +10,14 @@
                                 <tr>
                                     <th>@lang('Name')</th>
                                     <th>@lang('Category')</th>
+                                    <th>@lang('Status')</th>
                                     <th>@lang('Last Update')</th>
                                     <th>@lang('Action')</th>
                                 </tr>
                             </thead>
                             <tbody>
                             @forelse($subCategorys as $subCategory)
+                            
                                 <tr>
                                      <td data-label="@lang('Gateway')">
                                         <div class="user">
@@ -27,6 +29,14 @@
                                     <td data-label="@lang('Category')">
                                         <span class="font-weight-bold">{{$subCategory->category->name ?? ''}}</span>
                                     </td>
+                                    <td data-label="@lang('Status')">
+                                        @if($subCategory->is_active == 1)
+                                            <span class="font-weight-normal badge--success">@lang('Active')</span>
+                                        @elseif($subCategory->is_active == 0)
+                                            <span class="font-weight-normal badge--danger">@lang('InActice')</span>
+                                        @endif
+                                    </td>
+                                    
                                  
                                     <td data-label="@lang('Last Update')">
                                         {{ showDateTime($subCategory->updated_at ?? now()) }} <br> {{ diffForHumans($subCategory->updated_at ?? now()) }}
@@ -38,6 +48,9 @@
                                             data-name="{{$subCategory->name}}" 
                                             data-category_id="{{$subCategory->category_id}}" >
                                             <i class="las la-edit"></i>
+                                        </a>
+                                        <a type="submit"  href="{{route('admin.category.subcategory.delete', $subCategory->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                            <i class="las la-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -85,6 +98,12 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label class="form-control-label font-weight-bold">@lang('Status') </label>
+                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                   data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('InActive')"
+                                   name="is_active">
+                        </div>
 
                         <!-- <div class="form-group">
                             <label for="symbol" class="form-control-label font-weight-bold">@lang('Image')</label>
@@ -117,6 +136,7 @@
                 <form action="{{ route('admin.category.subcategory.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id">
+                    <input type="hidden" name="is_active">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
@@ -131,6 +151,12 @@
                                     <option value="{{$category->id}}">{{__($category->name)}}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label font-weight-bold">@lang('Status') </label>
+                            <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
+                                   data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('InActive')"
+                                   name="is_active">
                         </div>
 <!-- 
                         <div class="form-group">

@@ -87,6 +87,7 @@ class DeliverModeController extends Controller
     public function activeBy(Request $request)
     {
         
+        
         $dod = DeliveryMode::findOrFail($request->id);
         $dod->is_active = 1;
         $dod->created_at = Carbon::now();
