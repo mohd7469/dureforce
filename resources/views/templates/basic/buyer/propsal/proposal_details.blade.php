@@ -42,13 +42,25 @@
                     <h3 class="heading_proposal jdc">Your Proposed Terms</h3>
                     <div class="btm-c">
                         <div class="pt_con">
-                            <span class="fm-c"> Proposed Fixed Amount </span>
-                            <span class="am_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}} </span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="fm-c"> Proposed Fixed Amount </span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="am_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}} </span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="pt_con">
-                            <span class="fm-c"> You’ll Recieve </span>
-                            <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="fm-c"> You’ll Recieve </span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
+                                </div>
+                            </div>
                         </div>
 
 
