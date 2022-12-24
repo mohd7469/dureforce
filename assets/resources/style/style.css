@@ -1628,6 +1628,7 @@ label {
   text-align: center;
   z-index: 9999999;
   background-color: white;
+  opacity: 0.9;
 }
 
 .box-loader {
@@ -1642,7 +1643,7 @@ label {
 .loader {
   position: absolute;
   left: 0;
-  top: -170px;
+  top: 0;
   right: 0;
   bottom: 0;
   margin: auto;
