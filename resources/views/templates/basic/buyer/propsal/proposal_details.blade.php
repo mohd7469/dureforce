@@ -10,7 +10,11 @@
                     <div class="btm-c">
                         <p class="heading_cover_l">Cover Letter</p>
                         <p class="prop_description">{{$proposal->cover_letter}}</p>
+                        @if($proposal->attachment->count() > 1)
                         <p class="heading-att">Attachments </p>
+                        @else
+                        <p class="heading-att">Attachment </p>
+                        @endif
                         @isset($proposal->attachment)
                             @foreach($proposal->attachment as $files)
                                 <span class="attacment_file">{{$files->uploaded_name}}</span>
@@ -38,13 +42,25 @@
                     <h3 class="heading_proposal jdc">Your Proposed Terms</h3>
                     <div class="btm-c">
                         <div class="pt_con">
-                            <span class="fm-c"> Proposed Fixed Amount </span>
-                            <span class="am_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}} </span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="fm-c"> Proposed Fixed Amount </span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="am_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}} </span>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="pt_con">
-                            <span class="fm-c"> You’ll Recieve </span>
-                            <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="fm-c"> You’ll Recieve </span>
+                                </div>
+                                <div class="col-md-3">
+                                    <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -68,11 +84,11 @@
                                         <ul class="method_l">
                                             <li>
                                                 <p class="lable-c">Project Start Date</p>
-                                                <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}">
+                                                <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}" readonly>
                                             </li>
                                             <li>
                                                 <p class="lable-c">Project End Date</p>
-                                                <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}">
+                                                <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}" readonly>
                                             </li>
                                         </ul>
 
@@ -85,19 +101,19 @@
                                         @foreach($proposal->milestone as $miles)
                                         <li>
                                             <p class="lable-c">Milestone Description</p>
-                                            <input type="text" placeholder="{{$miles->description ?? ''}}">
+                                            <input type="text" placeholder="{{$miles->description ?? ''}}" readonly>
                                         </li>
                                         <li>
                                             <p class="lable-c">Start Date</p>
-                                            <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}">
+                                            <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}" readonly>
                                         </li>
                                         <li>
                                             <p class="lable-c">Due Date</p>
-                                            <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}">
+                                            <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}" readonly>
                                         </li>
                                         <li>
                                             <p class="lable-c">Amount</p>
-                                            <input type="text" placeholder="{{$miles->amount ?? ''}}">
+                                            <input type="text" placeholder="{{$miles->amount ?? ''}}" readonly>
                                         </li>
 
                                         @endforeach
@@ -125,7 +141,18 @@
                         <ul class="listing_ps">
                             <li><span class="p_fcs">Proposed Amount</span> <span class="p_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</span></li>
                             <li><span class="p_fcs">Net Amount</span> <span class="p_price">${{ $proposal->amount_receive ?? '' }}</span></li>
-                            <li><span class="p_fcs">Status</span> <span class="btn_sbmitd">Submitted</span></li>
+                            <li><span class="p_fcs">Status</span> 
+                            <!-- <span class="btn_sbmitd">Submitted</span> -->
+                            @if($proposal->status_id == 29)
+                                <span class="badge badge--success badge_color">Submitted</span>
+                            @elseif($proposal->status_id == 30)
+                                <span class="badge badge--info badge_color">Draft</span>
+                            @elseif($proposal->status_id == 31)
+                                <span class="badge badge--primary badge_color">Active</span>
+                            @else
+
+                            @endif
+                            </li>
                             <li><span class="p_fcs">Job Type</span> <span class="p_pricess">
                             @if($proposal->module_type == "App\Models\Job")
                                 Job
@@ -154,7 +181,7 @@
                                 </div>
                             </li>
                             <li>
-                                <i class="fa fa-map-marker"></i> <span class="location_c"> {{$proposal->module->user->country->name? $proposal->module->user->country->name: ''}}</span>
+                                <i class="fa fa-map-marker"></i> <span class="location_c"> {{isset($proposal->module->user->country->name) ? $proposal->module->user->country->name: ''}}</span>
                                 &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ date('h:i a', strtotime($proposal->module->created_at))}} pm local time</span>
                             </li>
                             <li>
@@ -332,6 +359,13 @@
     ul.listing_ps li:first-child, ul.listing_ps li:nth-child(2) {
         border-bottom: 1px solid #CBDFDF;
         padding: 13px 0px;
+    }
+
+    span.badge_color {
+        border-radius: 20px;
+        padding: 4px 19px;
+        font-size: 14px;
+        float: right;
     }
 
     span.btn_sbmitd {
