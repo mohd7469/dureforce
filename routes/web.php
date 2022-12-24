@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/clear', function () {
     \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 });
+Route::get('coming-soon', function () {
+    return view('errors.cooming_soon');
+});
 
 
 Route::get('/jobs-listing-old', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
