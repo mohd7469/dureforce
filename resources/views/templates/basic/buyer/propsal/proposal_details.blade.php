@@ -182,7 +182,7 @@
                             </li>
                             <li>
                                 <i class="fa fa-map-marker"></i> <span class="location_c"> {{isset($proposal->module->user->country->name) ? $proposal->module->user->country->name: ''}}</span>
-                                &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ date('h:i a', strtotime($proposal->module->created_at))}} pm local time</span>
+                                &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ date('h:i a', strtotime($proposal->module->created_at))}} local time</span>
                             </li>
                             <li>
                                 <p class="payment_c">Payment method verified</p>
