@@ -43,11 +43,12 @@
 <div class="preloader">
     <div class="box-loader">
         <div class="loader animate">
-            <svg class="circular" viewBox="50 50 100 100">
-                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
-                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"
-                      stroke-linecap="round"/>
-            </svg>
+            <img src="{{ asset('assets/images/loader/dureforceloader.gif') }}" alt="@lang('image')">
+{{--            <svg class="circular" viewBox="50 50 100 100">--}}
+{{--                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>--}}
+{{--                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"--}}
+{{--                      stroke-linecap="round"/>--}}
+{{--            </svg>--}}
         </div>
     </div>
 </div>
