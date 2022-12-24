@@ -19,6 +19,7 @@
                             </thead>
                             <tbody>
                             @forelse($categorys as $category)
+                            
                                 <tr>
                                     <td data-label="@lang('Name')"><span
                                                 class="font-weight-bold">{{__($category->name)}}</span></td>
@@ -27,10 +28,10 @@
                                     </td>
 
                                     <td data-label="@lang('Status')">
-                                        @if($category->status == 1)
-                                            <span class="badge badge--success">@lang('Enable')</span>
-                                        @else
-                                            <span class="badge badge--danger">@lang('Disabled')</span>
+                                        @if($category->is_active == 1)
+                                            <span class="font-weight-normal badge--success">@lang('Active')</span>
+                                        @elseif($category->is_active == 0)
+                                            <span class="font-weight-normal badge--danger">@lang('InActice')</span>
                                         @endif
                                     </td>
 
@@ -51,6 +52,9 @@
                                            data-status="{{$category->status}}">
                                             <i class="las la-edit"></i>
                                         </a>
+                                        <a type="submit"  href="{{route('admin.category.delete', $category->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                            <i class="las la-trash"></i>
+                                        </a> 
                                     </td>
                                 </tr>
                             @empty
@@ -89,7 +93,7 @@
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="type" class="form-control-label font-weight-bold">@lang('Type') </label>
 
                             <select name="type_id" required id="type" class="form-control form-control-lg">
@@ -98,14 +102,14 @@
                                 @endforeach
                             </select>
 
-                        </div>
+                        </div> --}}
 
 
                         <div class="form-group">
                             <label class="form-control-label font-weight-bold">@lang('Status') </label>
                             <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                   data-toggle="toggle" data-on="@lang('Enable')" data-off="@lang('Disabled')"
-                                   name="status">
+                                   data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('InActive')"
+                                   name="is_active">
                         </div>
 
                     </div>
@@ -132,13 +136,14 @@
                 <form action="{{route('admin.category.update')}}" method="POST">
                     @csrf
                     <input type="hidden" name="id">
+                    <input type="hidden" name="is_active">
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
                             <input type="text" class="form-control form-control-lg" name="name"
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
                         </div>
-
+{{-- 
                         <div class="form-group">
                             <label for="type" class="form-control-label font-weight-bold">@lang('Type') </label>
 
@@ -148,13 +153,13 @@
                                 @endforeach
                             </select>
 
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <label class="form-control-label font-weight-bold">@lang('Status') </label>
                             <input type="checkbox" data-width="100%" data-onstyle="-success" data-offstyle="-danger"
-                                   data-toggle="toggle" data-on="@lang('Enable')" data-off="@lang('Disabled')"
-                                   name="status">
+                                   data-toggle="toggle" data-on="@lang('Active')" data-off="@lang('InActive')"
+                                   name="is_active">
                         </div>
 
                     </div>
@@ -177,6 +182,18 @@
 @push('script')
     <script>
         "use strict";
+        $('.bannerinactive').on('click', function () {
+        
+        var modal = $('#inactiveBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.banneractive').on('click', function () {
+        var modal = $('#activeBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
         $('.addCategory').on('click', function () {
             $('#addModal').modal('show');
         });
