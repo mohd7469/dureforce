@@ -6211,7 +6211,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/chat/messages', {
         send_to_id: this.active_user.send_to_user.id,
-        job_id: this.active_user.module_id
+        module_id: this.active_user.module_id,
+        module_type: this.active_user.module_type
       }).then(function (response) {
         _this2.messages = response.data.messages;
       });
@@ -6266,6 +6267,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -6470,13 +6472,15 @@ __webpack_require__.r(__webpack_exports__);
         id: '',
         message: '',
         send_to_id: '',
-        module_type: 'App\\Models\\Job',
+        module_type: '',
         module_id: ''
       },
       errors: []
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.active_user);
+  },
   methods: {
     formattedDate: function formattedDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(String(date)).format('hh:mm A');
@@ -6487,6 +6491,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.message_form.message != ' ') {
         this.message_form.send_to_id = this.active_user.send_to_user.id;
         this.message_form.module_id = this.active_user.module_id;
+        this.message_form.module_type = this.active_user.module_type;
         axios.post('../chat/save/message', this.message_form).then(function (res) {
           _this.$emit('newMessage');
         })["catch"](function (error) {
@@ -6520,6 +6525,22 @@ __webpack_require__.r(__webpack_exports__);
     editMessage: function editMessage(message) {
       this.message_form.id = message.id;
       this.message_form.message = message.message;
+    },
+    viewModuleDetail: function viewModuleDetail() {
+      var redirect_url = '';
+
+      if (this.active_user.model == 'Software') {
+        redirect_url = '/software/details/' + this.active_user.module.uuid;
+      } else if (this.active_user.model == 'Service') {
+        redirect_url = '/service/details/' + this.active_user.module.uuid;
+      } else {
+        redirect_url = '/job/single-job/' + this.active_user.module.uuid;
+      }
+
+      window.location.replace(redirect_url);
+    },
+    viewProposal: function viewProposal() {
+      window.location.replace('/view-proposal/' + this.active_user.proposal_uuid);
     }
   },
   components: {}
@@ -12013,7 +12034,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.div-diemension[data-v-ef8bd22e]{\r\n    max-height: 660px;\r\n    min-height: 660px;\r\n    overflow: overlay;\n}\n.online_icon[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 29px;\r\n    top: -20px;\n}\n.user-font-size[data-v-ef8bd22e]{\r\n        font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\r\n        \r\n        padding-top: 7px;\n}\n.border-right-custom[data-v-ef8bd22e]{\r\n        border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\r\n        --bs-gutter-x: 1.5rem;\r\n        --bs-gutter-y: 0;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        margin-top: calc(var(--bs-gutter-y) * -1);\r\n        margin-right: 0px !important; \r\n        margin-left: calc(var(--bs-gutter-x)/ -2);\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.div-diemension[data-v-ef8bd22e]{\r\n    max-height: 660px;\r\n    min-height: 660px;\r\n    overflow: overlay;\n}\n.online_icon[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 29px;\r\n    top: -20px;\n}\n.user-font-size[data-v-ef8bd22e]{\r\n        font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\r\n        \r\n        padding-top: 7px;\r\n        cursor: pointer;\n}\n.border-right-custom[data-v-ef8bd22e]{\r\n        border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\r\n        --bs-gutter-x: 1.5rem;\r\n        --bs-gutter-y: 0;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        margin-top: calc(var(--bs-gutter-y) * -1);\r\n        margin-right: 0px !important; \r\n        margin-left: calc(var(--bs-gutter-x)/ -2);\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -56728,7 +56749,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-md-4 border-right-custom div-diemension " },
+    { staticClass: "col-md-4 border-right-custom div-diemension" },
     _vm._l(_vm.users, function (user) {
       return _c(
         "div",
@@ -56771,7 +56792,11 @@ var render = function () {
                   },
                 }),
             _vm._v(" "),
-            _c("span", { staticClass: "online_icon" }),
+            _c("span", {
+              class: user.send_to_user.is_session_active
+                ? "online_icon"
+                : "offline",
+            }),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6 " }, [
@@ -56784,16 +56809,23 @@ var render = function () {
             ]),
             _c("br"),
             _vm._v(" "),
-            user.job
+            user.module
               ? _c("span", { staticClass: "user-font-size" }, [
-                  _vm._v(_vm._s(user.job.title)),
+                  _vm._v(_vm._s(user.module.title)),
                 ])
               : _vm._e(),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 " }, [
             _c("span", { staticClass: "user-font-size" }, [
-              _vm._v(_vm._s(_vm.formattedDate(user.send_to_user.created_at))),
+              _vm._v(
+                _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
+              ),
+            ]),
+            _c("br"),
+            _vm._v(" "),
+            _c("span", { class: user.model_color }, [
+              _vm._v(_vm._s(user.model)),
             ]),
           ]),
         ]
@@ -56871,18 +56903,61 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm.active_user.send_to_user.created_at
+            _vm.active_user.send_to_user.last_login_at
               ? _c("small", [
                   _vm._v(
                     _vm._s(
-                      _vm.formattedDate(_vm.active_user.send_to_user.created_at)
+                      _vm.formattedDate(
+                        _vm.active_user.send_to_user.last_login_at
+                      )
                     ) + "\n                    "
                   ),
                 ])
               : _vm._e(),
           ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("small", { staticClass: "dropdown icon icon_position" }, [
+            _c("i", {
+              staticClass: " las la-chevron-circle-down fa-lg",
+              attrs: { "data-bs-toggle": "dropdown", "aria-expanded": "false" },
+            }),
+            _vm._v(" "),
+            _c("ul", { staticClass: "dropdown-menu" }, [
+              _c("li", [
+                _vm.active_user.model == "Job"
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function ($event) {
+                            return _vm.viewProposal()
+                          },
+                        },
+                      },
+                      [_vm._v("View Proposal")]
+                    )
+                  : _vm._e(),
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.viewModuleDetail()
+                      },
+                    },
+                  },
+                  [_vm._v("View " + _vm._s(_vm.active_user.model))]
+                ),
+              ]),
+            ]),
+          ]),
         ]),
       ]),
     ]),
@@ -56916,7 +56991,11 @@ var render = function () {
                           },
                         }),
                     _vm._v(" "),
-                    _c("span", { staticClass: "online_icon" }),
+                    _c("span", {
+                      class: message.user.is_session_active
+                        ? "online_icon"
+                        : "offline",
+                    }),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "msg_cotainer" }, [
@@ -57076,7 +57155,11 @@ var render = function () {
                           },
                         }),
                     _vm._v(" "),
-                    _c("span", { staticClass: "offline" }),
+                    _c("span", {
+                      class: message.user.is_session_active
+                        ? "online_icon"
+                        : "offline",
+                    }),
                   ]),
                 ]
               ),
@@ -57122,7 +57205,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-2  " }, [
           _c("div", { staticClass: " row " }, [
-            _vm._m(1),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 action_send" }, [
               _c("i", {
@@ -57141,31 +57224,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "dropdown icon icon_position" }, [
-      _c("i", {
-        staticClass: " las la-chevron-circle-down fa-lg",
-        attrs: { "data-bs-toggle": "dropdown", "aria-expanded": "false" },
-      }),
-      _vm._v(" "),
-      _c("ul", { staticClass: "dropdown-menu" }, [
-        _c("li", [
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("View Proposal"),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-            _vm._v("View Job"),
-          ]),
-        ]),
-      ]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement

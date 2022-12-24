@@ -4,6 +4,7 @@ namespace App\Models\Software;
 
 use App\Models\BannerLogo;
 use App\Models\Category;
+use App\Models\ChatMessage;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\EntityLogo;
@@ -11,6 +12,7 @@ use App\Models\ExtraSoftware;
 use App\Models\Features;
 use App\Models\Milestone;
 use App\Models\ModuleBanner;
+use App\Models\ModuleChatUser;
 use App\Models\OptionalImage;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
@@ -186,5 +188,15 @@ class Software extends Model
     public function scopePublicFeatured($query)
     {
         return $query->whereNotIn('status_id', [self::STATUSES['FEATURED']]);
+    }
+
+    public function messages()
+    {
+        return $this->morphMany(ChatMessage::class, 'module')->with('user');
+    }
+
+    public function chatUsers()
+    {
+        return $this->morphMany(ModuleChatUser::class, 'module');
     }
 }

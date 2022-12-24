@@ -11,6 +11,8 @@ use App\Models\Job;
 use App\Models\ModuleChatUser;
 use App\Models\Proposal;
 use App\Models\Role;
+use App\Models\Service;
+use App\Models\Software\Software;
 use App\Models\User;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
@@ -22,13 +24,13 @@ class ChatController extends Controller
         $user_id=auth()->user()->id;
         if(getLastLoginRoleName() ==Role::$ClientName)
         {
-            $user_job_ids=Job::has('messages')->where('user_id',$user_id)->get()->pluck('id')->toArray();
-            $users=ModuleChatUser::with('send_to_user')->with('job')->whereIn('module_id',$user_job_ids)->get();
-
+            // $user_job_ids=Job::has('messages')->where('user_id',$user_id)->get()->pluck('id')->toArray();
+            $users=ModuleChatUser::with('send_to_user')->with('module')->where('sender_id',auth()->user()->id)->orwhere('send_to_id',auth()->user()->id)->orderBy('updated_at','desc')->get();
+            // dd($users->toArray());
         }
         else
         {
-            $users=ModuleChatUser::with('user')->with('job')->where('sender_id',$user_id)->get();
+            $users=ModuleChatUser::with('user')->with('module')->where('sender_id',$user_id)->get();
             $users = $users->map(function ($item) {
                 
                  $item->send_to_user = $item->user; 
@@ -43,28 +45,31 @@ class ChatController extends Controller
     public function getUserChat(Request $request)
     {
         $send_to_id=$request->send_to_id;
-        $job_id=$request->job_id;
-        $job=Job::findOrFail($job_id);
-        $messages=$job->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
+        $module_id=$request->module_id;
+        $module_type=$request->module_type;
+        $chat_module=$module_type::findOrFail($module_id);
+        $messages=$chat_module->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
+
         return response()->json(['messages' => $messages]);
     }
 
     public function saveMessage(Request $request)
     {
         try {
-
-            $job=job::findOrFail($request->module_id);
+            $module_id=$request->module_id;
+            $module_type=$request->module_type;
+            $chat_module=$module_type::findOrFail($module_id);
             $request->request->add(['sender_id' => auth()->user()->id,'role' => strtolower(getLastLoginRoleName())]);
             $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
             if(!$message->wasRecentlyCreated && $message->wasChanged()){
-                event(new MessageEditedEvent($message, $message->user,$job));
+                event(new MessageEditedEvent($message, $message->user,$chat_module));
 
             }
             else
-                event(new NewMessageEvent($message, $message->user,$job));
+                event(new NewMessageEvent($message, $message->user,$chat_module));
 
             
-            $job->chatUsers()->firstOrNew(['sender_id'=> auth()->user()->id,'send_to_id' =>$request->send_to_id],[]);
+            $chat_module->chatUsers()->firstOrNew(['sender_id'=> auth()->user()->id,'send_to_id' =>$request->send_to_id],[]);
             
                 
             return response()->json(['message' => 'message successfully added']);
@@ -86,20 +91,70 @@ class ChatController extends Controller
         return response()->json(['message' => 'message Deleted Successfully']);
     }
 
-    public function savePropsalMessage($propsal_id)
+    public function saveInitialMessage($model_uuid,$model)
     {
-        $proposal=Proposal::with('job')->where('uuid',$propsal_id)->first();
-        $job=$proposal->job;
-        $job->messages()->updateOrCreate(
-            ['proposal_id' =>  $proposal->id],
-            [
-                'sender_id' => $proposal->user_id,
-                'send_to_id' => $job->user_id,
-                'message'   => $proposal->cover_letter,
-                'role'      =>  strtolower(Role::$FreelancerName)
-            ]
-        );
-        $job->chatUsers()->updateOrCreate(['sender_id'=> $proposal->user_id,'send_to_id' =>$job->user_id],[]);
+        if($model=='Proposal'){
+
+            $proposal=Proposal::with('job')->where('uuid',$model_uuid)->first();
+            $job=$proposal->job;
+            $job->messages()->updateOrCreate(
+                ['proposal_id' =>  $proposal->id],
+                [
+                    'sender_id' => $proposal->user_id,
+                    'send_to_id' => $job->user_id,
+                    'message'   => $proposal->cover_letter,
+                    'role'      =>  strtolower(Role::$FreelancerName)
+                ]
+            );
+            $job->chatUsers()->updateOrCreate(
+                [
+                    'sender_id'=> $proposal->user_id,
+                    'send_to_id' =>$job->user_id,
+                    'proposal_uuid' => $proposal->uuid
+                ],
+                []
+            );
+
+        }
+        elseif($model=="Software"){
+
+            $model_message=Software::where('uuid',$model_uuid)->first();
+            $model_message->messages()->updateOrCreate(
+                [
+                    'module_id' =>  $model_message->id,
+                    'module_type'   => 'App\Models\Software',
+                    'message'   => $model_message->title,
+                    
+                ],
+                [
+                    'sender_id' => $model_message->user_id,
+                    'send_to_id' => auth()->user()->id,
+                    'role'      =>  strtolower(Role::$FreelancerName)
+                ]
+            );
+
+            $model_message->chatUsers()->updateOrCreate(['sender_id'=> $model_message->user_id,'send_to_id' =>auth()->user()->id],[]);
+        }
+        else
+        {
+            $model_message=Service::where('uuid',$model_uuid)->first();
+            $model_message->messages()->updateOrCreate(
+                [
+                    'module_id' =>  $model_message->id,
+                    'module_type'   => 'App\Models\Service',
+                    'message'   => $model_message->title,
+                    
+                ],
+                [
+                    'sender_id' => $model_message->user_id,
+                    'send_to_id' => auth()->user()->id,
+                    'role'      =>  strtolower(Role::$FreelancerName)
+                ]
+            );
+
+            $model_message->chatUsers()->updateOrCreate(['sender_id'=> $model_message->user_id,'send_to_id' =>auth()->user()->id],[]);
+        }
+
         return redirect()->route('chat.inbox');
     }
 }
