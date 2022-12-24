@@ -721,7 +721,7 @@
                             </div> --}}
 
                             <div class="form-group col-lg-12 pt-2">
-                                <label for="exampleFormControlTextarea1">Message </label>
+                                <label for="exampleFormControlTextarea1">Message* </label>
                                 <textarea class="form-control" name="message" id="textAreaExample1" rows="4"></textarea>
                                 <input type="hidden" id="user_id" name="user_id">
 
