@@ -403,6 +403,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('sub/category', 'CategoryController@subCategoryIndex')->name('category.subcategory.index');
             Route::post('sub/category/store', 'CategoryController@subCategoryStore')->name('category.subcategory.store');
             Route::post('sub/category/update', 'CategoryController@subCategoryUpdate')->name('category.subcategory.update');
+        
+            Route::get('/category/delete/{id}', 'CategoryController@delete')->name('category.delete');
+            Route::get('/sub/category/delete/{id}', 'CategoryController@deleteSubCategory')->name('category.subcategory.delete');
         });
 
         Route::middleware('staffaccess:12')->group(function () {
