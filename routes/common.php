@@ -29,6 +29,9 @@ Route::middleware(['verified'])->group(function () {
     Route::name('software.')->group(function () {
         Route::get('/software/details/{uuid}', [SoftwareController::class,'show'])->name('view');
     });
+
+    Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
     Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
+    Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
     
 });

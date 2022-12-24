@@ -17,9 +17,11 @@ class CreateModuleChatUsersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('sender_id')->index('sender_id')->nullable();
             $table->unsignedBigInteger('send_to_id')->index('send_to_id')->nullable();
+            $table->uuid('proposal_uuid')->after('module_id')->nullable();
             $table->morphs('module');//job,service,software
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('send_to_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

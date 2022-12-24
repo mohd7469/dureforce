@@ -1,23 +1,25 @@
 <template>
     
-    <div class="col-md-4 border-right-custom div-diemension ">
+    <div class="col-md-4 border-right-custom div-diemension">
         
         <div class="row border-bottom" v-for="user of users" @click="changeUser(user)">
             <div class="col-md-2" >
                 <img alt="User Pic" v-if="user.send_to_user.basic_profile && user.send_to_user.basic_profile.profile_picture!=null" :src="user.send_to_user.basic_profile.profile_picture" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 <img alt="User Pic" v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 
-                <span class="online_icon"></span>
+                <span :class="user.send_to_user.is_session_active ? 'online_icon': 'offline'"></span>
             </div>
 
             <div class="col-md-6 ">
                 <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b></br>
-                <span class="user-font-size" v-if="user.job">{{user.job.title}}</span>
+                <span class="user-font-size" v-if="user.module">{{user.module.title}}</span>
                 
             </div>
 
             <div class="col-md-4 ">
-                <span class="user-font-size">{{formattedDate(user.send_to_user.created_at)}}</span>
+                <span class="user-font-size">{{formattedDate(user.send_to_user.last_login_at)}}</span></br>
+                <span :class="user.model_color">{{user.model}}</span>
+
             </div>
 
         </div>
@@ -25,8 +27,7 @@
        
 
     </div>
-
-            
+ 
 </template>
 
 <script>
@@ -85,6 +86,7 @@
     .border-bottom{
         
         padding-top: 7px;
+        cursor: pointer;
     }
     .border-right-custom{
         border-right: 1px solid #DEE7E7;
