@@ -125,7 +125,7 @@ z-index: 1;
     
     <!----== Client Info Section Start ==----->
     <div class="client-info-section">
-        <p class="cp-basic">Company Details 2</p>
+        <p class="cp-basic">Company Details</p>
         <div style="float:right">
             <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#companyModal">
                 Edit 
