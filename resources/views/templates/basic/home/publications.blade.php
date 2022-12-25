@@ -193,7 +193,7 @@
             </div>
         </div>
     </div>
-    <span class="seeall"><a href="">See All</a></span>
+    <span class="seeall"><a href="{{url('coming-soon')}}">See All</a></span>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
