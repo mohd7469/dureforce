@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $general->sitename($pageTitle ?? '404 | page not found') }}</title>
+  <title>{{ $general->sitename($pageTitle ?? 'Coming Soon') }}</title>
   <link rel="shortcut icon" type="image/png" href="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}">
   <!-- bootstrap 4  -->
   <link rel="stylesheet" href="{{ asset('assets/errors/css/bootstrap.min.css') }}">
