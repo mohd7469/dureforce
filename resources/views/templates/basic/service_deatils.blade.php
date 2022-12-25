@@ -241,8 +241,11 @@
                                                         <a href="{{ route('user.service.create', [$service->id])}}"
                                                          class="standard-btn mr-15">@lang('Edit Service')</a>
                                                     @else
-                                                        <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                        {{-- <a href="javascript:void(0)" data-bs-toggle="modal"
                                                         data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
+                                                        Developer')</a> --}}
+                                                        <a href="{{url('coming-soon')}}"
+                                                         class="standard-btn mr-15">@lang('Book
                                                         Developer')</a>
 
                                                         <a href="{{route('chat.start.message',[$service->uuid,'Service'])}}" 
