@@ -1436,7 +1436,7 @@ function getUserEducation($obj)
      $education.='-'.Carbon::parse($obj->end_date)->format('Y');
     else
         $education.='-PRESENT';
-    return $education;
+    return $education.'</br>';
 }
 
 function getDegreeSession($obj)

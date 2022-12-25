@@ -1780,8 +1780,8 @@ option {
   text-align: center;
   z-index: 9999999;
   background-color: white;
+  opacity: 0.9;
 }
-
 .box-loader {
   position: absolute;
   top: 0;
@@ -1798,7 +1798,7 @@ option {
   right: 0;
   bottom: 0;
   margin: auto;
-  width: 150px;
+  width: 300px;
 }
 
 .loader:before {

@@ -117,7 +117,7 @@
                                             ID: Verified <br>
                                             <b>Education</b><br>
                                             @foreach ($user->education as $item)
-                                                {{getUserEducation($item)}}
+                                                {!!getUserEducation($item)!!}
                                             @endforeach
                                             
                                         </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Redirect;
@@ -26,7 +27,7 @@ class EnsureEmailIsVerified
                     ? abort(403, 'Your email address is not verified.')
                     : Redirect::guest(URL::route($redirectToRoute ?: 'verification.notice'));
         }
-
+        auth()->user()->last_activity_at=Carbon::now();
         return $next($request);
     }
 }
