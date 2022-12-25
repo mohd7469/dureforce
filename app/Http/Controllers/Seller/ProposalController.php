@@ -47,8 +47,11 @@ class ProposalController extends Controller
         try {
 
             $proposals = Proposal::with('module.user')->where('user_id', Auth::user()->id)->get();
+            $submitted_proposals = $proposals->where('status_id',Proposal::STATUSES['SUBMITTED']);
+            $archived_proposals = $proposals->where('status_id',Proposal::STATUSES['ARCHIVED']);
+            $active_proposals = $proposals->where('status_id',Proposal::STATUSES['ACTIVE']);
 
-            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals);
+            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals',$active_proposals);
 
         } catch (\Exception $e) {
 

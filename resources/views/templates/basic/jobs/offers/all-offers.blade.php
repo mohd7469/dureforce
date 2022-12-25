@@ -81,7 +81,7 @@
 
                                                     <div class="col-md-8" style="text-align:left">
 
-                                                        <h4 class="pname-c">
+                                                        <h4 class="pname-c"> 
 
                                                             {{$offer->proposal->user->fullname}}
 
@@ -136,7 +136,7 @@
                                         <div class="row p_desription" style="text-align: left;">
                                             <div class="col-md-12">
                                                 {{-- @isset($proposal->cover_letter) --}}
-                                                <p>  {{$offer->description_of_work}}</p>
+                                                <p><strong>Message -  </strong>  {{$offer->description_of_work}}</p>
                                                 {{-- @endisset --}}
                                             </div>
                                         </div>
@@ -162,7 +162,11 @@
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
+                                                        @if($offer->attachments->count() > 0)
                                                         <h2> Attachments</h2>
+                                                        @else
+                                                        <h2> </h2>
+                                                        @endif
                                                         <div class="row">
                                                            
                                                              @foreach($offer->attachments as $document) 

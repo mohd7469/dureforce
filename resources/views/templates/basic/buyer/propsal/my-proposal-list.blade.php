@@ -18,19 +18,22 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_proposals">Draft Proposals (5)</a>
+
+                    <a class="nav-link " data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposals)}})</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposals)}})</a>
 
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposals)}})</a>
 
-                    <a class="nav-link " data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals (6)</a>
                 </li>
-
             </ul>
 
 
             <div class="tab-content">
-                <div class="listing_table_con card-body tab-pane active" id="all"> 
+                <div class="listing_table_con card-body tab-pane active" id="all">
                     <table>
                         <thead>
                         <th>Title</th>
@@ -63,11 +66,11 @@
                                     <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
                                 </td>
                                 <td>
-                                @if($proposal->status_id == 29)
+                                @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
                                     <span class="badge badge--success">Submitted</span>
-                                @elseif($proposal->status_id == 30)
-                                    <span class="badge badge--info">Draft</span>
-                                @elseif($proposal->status_id == 31)
+                                @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
+                                    <span class="badge badge--info">Archived</span>
+                                @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
                                     <span class="badge badge--primary">Active</span>
                                 @else
 
@@ -82,26 +85,166 @@
                     </table>
                 </div>
 
-                <div class="tab-pane" id="draft_proposals">
-                    <p class="card-text text-center">
-                    <div class="d-flex align-items-center justify-content-center ">
-                        <h6 class="display-6 fw-bold">Coming Soon!</h6>
-                    </div>
-                    </p>
-                </div>
-                <div class="tab-pane" id="submitted_proposals">
-                    <p class="card-text text-center">
-                    <div class="d-flex align-items-center justify-content-center ">
-                        <h6 class="display-6 fw-bold">Coming Soon!</h6>
-                    </div>
-                    </p>
+                <div class="listing_table_con card-body tab-pane" id="submitted_proposals"> 
+                    <table>
+                        <thead>
+                        <th>Title</th>
+                        <th>Job Type</th>
+                        <th>Proposed Price</th>
+                        <th>Proposal Status</th>
+                        <th>Action</th>
+                        </thead>
+
+                        @foreach($submitted_proposals as $proposal)
+                            <tr>
+                                <td>
+                                    <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                </td>
+                                <td>
+                    <span class="jobtype-per">
+                        @if($proposal->module_type == "App\Models\Job")
+                            Job
+                        @elseif($proposal->module_type == "App\Models\Service")
+                            Service
+                        @elseif($proposal->module_type == "App\Models\Software")
+                            Software
+                        @else
+
+                        @endif
+                    </span>
+                                </td>
+                                <td>
+                                    <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
+                                </td>
+                                <td>
+                                    @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
+                                        <span class="badge badge--success">Submitted</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
+                                        <span class="badge badge--info">Archived</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
+                                        <span class="badge badge--primary">Active</span>
+                                    @else
+
+                                    @endif
+
+                                </td>
+                                <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
+                                       class="view_propasal_per">View Proposal</a></td>
+                            </tr>
+                        @endforeach
+
+                    </table>
                 </div>
 
+                <div class="listing_table_con card-body tab-pane" id="draft_proposals"> 
+                    <table>
+                        <thead>
+                        <th>Title</th>
+                        <th>Job Type</th>
+                        <th>Proposed Price</th>
+                        <th>Proposal Status</th>
+                        <th>Action</th>
+                        </thead>
+
+                        @foreach($archived_proposals as $proposal)
+                            <tr>
+                                <td>
+                                    <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                </td>
+                                <td>
+                    <span class="jobtype-per">
+                        @if($proposal->module_type == "App\Models\Job")
+                            Job
+                        @elseif($proposal->module_type == "App\Models\Service")
+                            Service
+                        @elseif($proposal->module_type == "App\Models\Software")
+                            Software
+                        @else
+
+                        @endif
+                    </span>
+                                </td>
+                                <td>
+                                    <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
+                                </td>
+                                <td>
+                                    @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
+                                        <span class="badge badge--success">Submitted</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
+                                        <span class="badge badge--info">Archived</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
+                                        <span class="badge badge--primary">Active</span>
+                                    @else
+
+                                    @endif
+
+                                </td>
+                                <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
+                                       class="view_propasal_per">View Proposal</a></td>
+                            </tr>
+                        @endforeach
+
+                    </table>
+                </div>
+                <div class="listing_table_con card-body tab-pane" id="active_proposals"> 
+                    <table>
+                        <thead>
+                        <th>Title</th>
+                        <th>Job Type</th>
+                        <th>Proposed Price</th>
+                        <th>Proposal Status</th>
+                        <th>Action</th>
+                        </thead>
+
+                        @foreach($active_proposals as $proposal)
+                            <tr>
+                                <td>
+                                    <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                </td>
+                                <td>
+                    <span class="jobtype-per">
+                        @if($proposal->module_type == "App\Models\Job")
+                            Job
+                        @elseif($proposal->module_type == "App\Models\Service")
+                            Service
+                        @elseif($proposal->module_type == "App\Models\Software")
+                            Software
+                        @else
+
+                        @endif
+                    </span>
+                                </td>
+                                <td>
+                                    <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
+                                </td>
+                                <td>
+                                    @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
+                                        <span class="badge badge--success">Submitted</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
+                                        <span class="badge badge--info">Archived</span>
+                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
+                                        <span class="badge badge--primary">Active</span>
+                                    @else
+
+                                    @endif
+
+                                </td>
+                                <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
+                                       class="view_propasal_per">View Proposal</a></td>
+                            </tr>
+                        @endforeach
+
+                    </table>
+                </div>
 
             </div>
 
 
         </div>
+    </div>
 
 
         @endsection
