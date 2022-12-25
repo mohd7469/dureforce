@@ -69,7 +69,7 @@ class JobController extends Controller
 
     public function create(Request $request)
     {
-    
+
         $pageTitle = "Create Job";
         $data = $this->getJobData();
 
@@ -94,7 +94,7 @@ class JobController extends Controller
         parse_str($request->data, $request_data);
 
         $user = Auth::user();
-        $custom_messages =[
+        $custom_messages = [
 
             'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
             'country_id.required' => 'Job location is required',
@@ -105,7 +105,7 @@ class JobController extends Controller
 
 
         ];
-        $rules= [
+        $rules = [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
             'country_id' => 'required',
@@ -113,7 +113,7 @@ class JobController extends Controller
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'project_stage_id' => 'exists:project_stages,id',
-            'expected_start_date' => 'required||after_or_equal:'.Carbon::now()->format('d-m-Y'),
+            'expected_start_date' => 'required||after_or_equal:' . Carbon::now()->format('d-m-Y'),
             'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
@@ -124,19 +124,15 @@ class JobController extends Controller
             'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
         ];
 
-        if($request_data['budget_type_id']==BudgetType::$hourly)
-        {
-            $rules['hourly_start_range'] ='gt:0|required:budget_type_id,'.BudgetType::$hourly;
-            $rules['hourly_end_range'] ='gte:hourly_start_range|required:budget_type_id,'.BudgetType::$hourly;
-        }
-        elseif($request_data['budget_type_id']==BudgetType::$fixed){
-            $rules['fixed_amount'] ='required:budget_type_id,'.BudgetType::$fixed;
-        }
-        else
-        {
+        if ($request_data['budget_type_id'] == BudgetType::$hourly) {
+            $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
+            $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
+        } elseif ($request_data['budget_type_id'] == BudgetType::$fixed) {
+            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed;
+        } else {
 
         }
-        $validator = Validator::make($request_data,$rules,$custom_messages);
+        $validator = Validator::make($request_data, $rules, $custom_messages);
         if ($validator->fails()) {
 
             return response()->json(["error" => $validator->errors()]);
@@ -154,7 +150,7 @@ class JobController extends Controller
         $user = Auth::user();
         DB::beginTransaction();
         try {
-           
+
 
             $job = Job::create([
                 "user_id" => $user->id,
@@ -193,17 +189,17 @@ class JobController extends Controller
 
                     $this->fileValidate($file);
 
-                        $filename = uploadAttachments($file, $path);
+                    $filename = uploadAttachments($file, $path);
 
-                        $file_extension = getFileExtension($file);
-                        $url = $path . '/' . $filename;
-                        $document = new TaskDocument;
-                        $document->name = $filename;
-                        $document->uploaded_name = $file->getClientOriginalName();
-                        $document->url = $url;
-                        $document->type = $file_extension;
-                        $document->is_published = "Active";
-                        $job->documents()->save($document);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $document = new TaskDocument;
+                    $document->name = $filename;
+                    $document->uploaded_name = $file->getClientOriginalName();
+                    $document->url = $url;
+                    $document->type = $file_extension;
+                    $document->is_published = "Active";
+                    $job->documents()->save($document);
 
 
                 }
@@ -290,18 +286,17 @@ class JobController extends Controller
                 foreach ($request->file as $file) {
 
                     $this->fileValidate($file);
-                        $filename = uploadAttachments($file, $path);
+                    $filename = uploadAttachments($file, $path);
 
-                        $file_extension = getFileExtension($file);
-                        $url = $path . '/' . $filename;
-                        $document = new TaskDocument;
-                        $document->name = $filename;
-                        $document->uploaded_name = $file->getClientOriginalName();
-                        $document->url = $url;
-                        $document->type = $file_extension;
-                        $document->is_published = "Active";
-                        $job->documents()->save($document);
-
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $document = new TaskDocument;
+                    $document->name = $filename;
+                    $document->uploaded_name = $file->getClientOriginalName();
+                    $document->url = $url;
+                    $document->type = $file_extension;
+                    $document->is_published = "Active";
+                    $job->documents()->save($document);
 
 
                 }
@@ -426,6 +421,7 @@ class JobController extends Controller
 
             $job->documents()->delete();
 
+            $job->proposal()->update(['status_id' => Proposal::STATUSES['ARCHIVED']]);
 
             DB::table('job_deliverables')->where('job_id', $job->id)
                 ->update(['deleted_at' => DB::raw('NOW()')]);
@@ -460,10 +456,10 @@ class JobController extends Controller
 
         $user_ids = $job->invited_freelancer->pluck('user_id');
 
-        $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic','experiences','skills','education')->get();
-        $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
+        $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic', 'experiences', 'skills', 'education')->get();
+        $invited_freelancers = InviteFreelancer::where('job_id', $job->id)->with('user')->get();
         $pageTitle = "inviteProposal";
-        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle', 'job', 'freelancers','invited_freelancers'));
+        return view('templates.basic.jobs.invite-freelancer', compact('pageTitle', 'job', 'freelancers', 'invited_freelancers'));
 
     }
 }
