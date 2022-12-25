@@ -403,6 +403,14 @@
             @include($activeTemplate . 'home.feature_software', ['softwares' => $softwares])
         </div>
     </section>
+    <section class="all-sections    section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Featured Jobs</h2>
+            </article>
+            @include($activeTemplate . 'home.feature_jobs', ['jobs' => $jobs])
+        </div>
+    </section>
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
@@ -512,6 +520,215 @@
 @endsection
 @push('style')
 <style>
+     @media (max-width: 1400px){
+         .header-short-menu {
+                padding: 0px 10px;
+        }
+        }
+    
+.skills-cont{
+    min-height: 80px !important;
+}
+        .button-review-color {
+            color: #007F7F;
+        }
+
+        .job-list-price-button {
+            background: #7F007F;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
+        }
+
+        .btn-skill-job-list {
+
+            background: #007F7F;
+            border-radius: 4px;
+        }
+
+        .btn-sm-job-list {
+            color: white;
+        }
+         .cat-nav{
+            padding: 12px 0px 20px;
+            width: 92.5%;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            }
+        .cat-nav li {
+            margin: -21px 30px;
+            display: inline-table;
+            /* margin: 0 13px; */
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .cat-nav ul{
+            display: inherit;
+        }
+        .sub-nav ul{
+            display: inherit;
+        }
+        .sub-nav {
+            padding: 12px 0px 20px;
+
+        }
+        .sub-nav li {
+            margin: 0px 15px;
+            display: inline-table;
+            /* margin: 0 13px; */
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .listing-jb-container{
+            background: #F8FAFA;
+            border: 1px solid #CBDFDF;
+            
+        }
+        .listing-nav-in li a {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #636060;
+        }
+        .listing-nav-in {
+            text-align: left;
+            display: inline-block;
+            float: left;
+        }
+        .sub-nav{
+            width: 82.5%;
+        }
+        .t-sbh {
+            width: 130px;
+            position: relative;
+            top: 23epx;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #000000;
+            padding-top: 18px;
+            margin-bottom: 10px;
+        }
+        .isub-head-con{
+            width: 100%;
+            display: inline-block;
+            padding: 28px 0px 6px 0px;
+        }
+        .isub-heading{
+            float:left;
+            display: inline-block;
+            width: 30%;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 28px;
+            color: #000000;
+            padding-left: 11px;
+        }
+        .right-con-isub{
+            float: right;
+            display: inline-block;
+        }
+        span.isub-filter {
+            width: 98px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 5px;
+            float: right;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            color: #007F7F;
+            text-align: center;
+            padding-top: 13px;
+            padding-left: 30px;
+            background: #EFF8F8 url(/assets/images/job/lines.png) no-repeat;
+            background-position: 14px center;
+            cursor: pointer;
+
+        }
+        
+        #custom-search-input {
+            border: solid 1px #E4E4E4;
+            border-radius: 6px;
+            float: right;
+            width: 242px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 6px;
+            margin-right:14px;
+        }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        #custom-search-input button {
+            margin: 5px 0 0 0;
+            background: none;
+            box-shadow: none;
+            border: 0;
+            color: #666666;
+            padding: 0 8px 0 10px;
+            /* border-left: solid 1px #ccc; */
+            background: url(/assets/images/job/searchicon.png) no-repeat;
+            width: 26px;
+            height: 30px;
+            margin-right: 10px;
+            background-position: center;
+            margin-right: 15px;
+        }
+
+        #custom-search-input button:hover{
+            border: 0;
+            box-shadow: none;
+            border-left: solid 1px #ccc;
+        }
+        li.nav-item.active-c {
+            border-bottom: 2px solid #007F7F;
+        }
+        .intro{border-bottom: 2px solid #007F7F;}
+        .ul-margin li:nth-child(1) a{border-bottom: 2px solid #007F7F;}
+        .intro2{
+            border-bottom: 2px solid #007F7F !important;
+        }
+
+        @media only screen and (max-width:767px){
+            .isub-heading{
+                font-size: 18px !important;
+            }
+            .t-sbh {
+                width: 100%;
+                position: relative;
+                left: 0px;
+                top: 6px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 18px;
+                color: #000000;
+                text-align: center;
+            }
+        }
+                @media (min-width: 768px){
+                .container {
+                    max-width: 1390px !important;
+                }
+        }
+        
+        .main_nav > :first-child {
+           border-bottom: 2px solid #007F7F!impo;
+        }
+        
     .mt-h{
         margin-top: -158px;
     }
