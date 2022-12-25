@@ -343,15 +343,21 @@
                 </div>
             </div>
         </div>
+        <div class="categories_type_container">
+            @include('templates.basic.partials.category._header', [
+                'type_id' => \App\Models\Category::ServiceType,
+                'route'=>route('service')
+            ])
 
-        <div class="header-short-menu">
+        </div>
+        <!-- <div class="header-short-menu">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <ul class="short-menu">
                             <li class="short-menu-close-btn-area"> <button type="button"
                                     class="short-menu-close-btn">Close</button></li>
-                                    <!-- <li class="mx-3">Sub Categories:</li> -->
+                                    <li class="mx-3">Sub Categories:</li>
                             @foreach ($categorys->take(8) as $category)
                                 <li><a
                                        class="sub-short-menu" href="{{ route('service.category', [slug($category->name), $category->id]) }}">{{ __($category->name) }}</a>
@@ -361,10 +367,15 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </header>
 <style>
+    .sub-nav ul {
+        margin: 0;
+        display: block;
+        -webkit-padding-start: 0px;
+    }
     .mobile-bars{
         color: #7F007F !important;
     }

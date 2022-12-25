@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
 @endpush
 @section('content')
+    @guest
     <div class="categories_type_container">
         @include('templates.basic.partials.category._header', [
             'type_id' => \App\Models\Category::ServiceType,
@@ -10,6 +11,8 @@
         ])
 
     </div>
+    @endguest
+    
     <section class="all-sections ">
         <div class="container-fluid p-max-sm-0">
             <div class="sections-wrapper d-flex flex-wrap justify-content-center">
