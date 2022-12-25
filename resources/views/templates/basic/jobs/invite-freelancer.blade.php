@@ -102,7 +102,7 @@
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="{{route('seller.profile',$freelancer->uuid)}}" class="btn-products-s">View Profile</a>
-                                                    <a href="#" class="btn-products-s">Hire</a>
+                                                    <a href="{{url('coming-soon')}}" class="btn-products-s">Hire</a>
                                                     <a class="btn-products-s phire inviteJobModal"
                                                                data-bs-toggle="modal"
                                                                onclick="inviteJobModal({{$freelancer}},{{$job}},{{$freelancer->user_basic}},{{$freelancer->country}})">Invite to

@@ -126,7 +126,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Jobs')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('My Jobs')</span>
                                             </a>
@@ -134,7 +134,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Saved Jobs')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
@@ -153,11 +153,11 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Submitted Proposals')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Active Proposals')</span>
                                             </a>
@@ -290,24 +290,24 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class=" d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
                                     </a>
                                     <strong class="profile_dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder profile_px-3 py-2">@lang('My Finance')</strong>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
-                                        <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
+                                        <span class="dropdown-menu__caption">@lang('Current Balance')
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Withdraw Funds')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Transaction History')</span>
                                     </a>
