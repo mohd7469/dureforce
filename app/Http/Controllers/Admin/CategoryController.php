@@ -58,8 +58,9 @@ class CategoryController extends Controller
     {
         $pageTitle = "Sub Category list";
         $emptyMessage = "No data found";
-        $categorys = Category::where('status', 1)->get();
+        $categorys = Category::all();
         $subCategorys = SubCategory::with('category')->latest()->paginate(getPaginate());
+        
         return view('admin.category.sub_index', compact('subCategorys', 'pageTitle', 'emptyMessage', 'categorys'));
     }
 
