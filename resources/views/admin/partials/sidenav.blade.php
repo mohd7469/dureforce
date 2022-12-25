@@ -1154,7 +1154,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Deliver Mode')</span>
+                        <span class="menu-title">@lang('Delivery Mode')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
                         <ul>
@@ -1162,7 +1162,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             <li class="sidebar-menu-item {{ menuActive('admin.deliver.index') }} ">
                                 <a href="{{ route('admin.deliver.index') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Add Deliver Mode ')</span>
+                                    <span class="menu-title">@lang('Add Delivery Mode ')</span>
                                 </a>
                             </li>
                             
