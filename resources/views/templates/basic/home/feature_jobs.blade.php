@@ -1,7 +1,7 @@
 <div id="carouselFeatureJobs" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
         @foreach($jobs as $job)
-        <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-5 " style="width: 19rem;">
+        <div class="card col-xl-3 col-lg-3 col-md-4 col-sm-2 col-12 mt-5 carousel-item">
             <a href="{{route('seller.job.jobview',$job->uuid)}}">
             <div class="card-body">
                 <h5 class="card-title "><strong>{{$job->title}}</strong></h5>
@@ -44,3 +44,11 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+<style>
+#carouselFeatureJobs .carousel-item {
+    margin-right: 16px;
+    flex: 0 0 23.333333%;
+    display: block;
+    margin-bottom: 20px;
+}
+</style>
