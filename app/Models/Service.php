@@ -194,4 +194,15 @@ class Service extends Model
     {
         return $this->morphMany(DeliveryMode::class, 'module');
     }
+
+    public function messages()
+    {
+        return $this->morphMany(ChatMessage::class, 'module')->with('user');
+    }
+
+    public function chatUsers()
+    {
+        return $this->morphMany(ModuleChatUser::class, 'module');
+    }
+    
 }

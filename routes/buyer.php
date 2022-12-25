@@ -23,8 +23,6 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 Route::post('/save-company', 'Buyer\ProfileController@buyersaveCompany')->name('profile.save.company');
                 Route::delete('/buyer-payment-destroy/{id}', 'Buyer\ProfileController@buyerdestroy')->name('profile.payment.destroy');
                 
-             
-
             });
         });
 

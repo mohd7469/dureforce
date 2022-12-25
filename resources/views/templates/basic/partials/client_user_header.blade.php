@@ -122,7 +122,7 @@
                                             @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Jobs')</span>
                                             </a>
@@ -134,7 +134,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create Jobs')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
@@ -149,15 +149,15 @@
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Invite Sellers')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Shortlisted Sellers')</span>
                                             </a>
@@ -178,7 +178,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Services')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Booked Services')</span>
                                             </a>
@@ -199,7 +199,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Search Softwares')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{url('coming-soon')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Booked Softwares')</span>
                                             </a>  
@@ -291,24 +291,24 @@
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class=" d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
                                     </a>
                                     <strong class="profile_dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder profile_px-3 py-2">@lang('My Finance')</strong>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
-                                        <span class="dropdown-menu__caption">@lang('Current Balance')<br><span class="fw-bold">$685.00</span></span>
+                                        <span class="dropdown-menu__caption">@lang('Current Balance')
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Deposit Funds')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Billing & Payments')</span>
                                     </a>
-                                    <a href="#"
+                                    <a href="{{url('coming-soon')}}"
                                         class="d-flex align-items-center px-3 profile_py-2">
                                         <span class="dropdown-menu__caption">@lang('Transaction History')</span>
                                     </a>

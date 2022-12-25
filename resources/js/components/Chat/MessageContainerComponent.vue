@@ -8,7 +8,7 @@
                 <div class="mw-100">
                     <span class="float-sm-left header-title">
                         <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
-                        <small v-if="active_user.send_to_user.created_at">{{formattedDate(active_user.send_to_user.created_at)}}
+                        <small v-if="active_user.send_to_user.last_login_at">{{formattedDate(active_user.send_to_user.last_login_at)}}
                         </small> 
 
                         
@@ -16,8 +16,8 @@
                     <small class="dropdown icon icon_position" >
                         <i class=" las la-chevron-circle-down fa-lg" data-bs-toggle="dropdown" aria-expanded="false"></i>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#" >View Proposal</a></li>
-                            <li><a class="dropdown-item" href="#" >View Job</a></li>
+                            <li><a class="dropdown-item" href="#" v-if="active_user.model=='Job'" @click="viewProposal()">View Proposal</a></li>
+                            <li><a class="dropdown-item" href="#"  @click="viewModuleDetail()">View {{ active_user.model }}</a></li>
                         </ul>
                     </small>
                 </div>
@@ -40,7 +40,7 @@
                         <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg">
                         <img v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                         
-                        <span class="online_icon"></span>
+                        <span :class="message.user.is_session_active ? 'online_icon': 'offline'"></span>
                     </div>
 
                     <div class="msg_cotainer">
@@ -85,7 +85,7 @@
                     </div>
                     <div class="img_cont_msg">
                         <img v-if="message.user.basic_profile && message.user.basic_profile.profile_picture" :src="message.user.basic_profile.profile_picture" class="rounded-circle user_img_msg"><img  src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg" v-else>
-                        <span class="offline"></span>
+                        <span :class="message.user.is_session_active ? 'online_icon': 'offline'"></span>
                     </div>
                 </div>
 
@@ -140,14 +140,14 @@
                     id:'',
                     message : '',
                     send_to_id : '',
-                    module_type : 'App\\Models\\Job',
+                    module_type : '',
                     module_id : '',
                 },
                 errors:[]
             }
         },
         mounted() {
-            
+            console.log(this.active_user);
         },
         methods: {
             formattedDate(date)
@@ -157,8 +157,11 @@
             sendMessage(){
                 
                 if(this.message_form.message !=' '){
+                    
                     this.message_form.send_to_id=this.active_user.send_to_user.id;
                     this.message_form.module_id=this.active_user.module_id;
+                    this.message_form.module_type=this.active_user.module_type;
+
                     axios.post('../chat/save/message',this.message_form)
                     .then(res=>{
                         this.$emit('newMessage');
@@ -192,7 +195,25 @@
                 this.message_form.id=message.id;
                 this.message_form.message=message.message;
 
+            },
+            viewModuleDetail(){
+                let redirect_url='';
+                if(this.active_user.model == 'Software'){
+                    redirect_url = '/software/details/'+this.active_user.module.uuid;
+                }
+                else if(this.active_user.model == 'Service'){
+                    redirect_url = '/service/details/'+this.active_user.module.uuid;
+                }
+                else{
+                    redirect_url = '/job/single-job/'+this.active_user.module.uuid;
+
+                }
+                window.location.replace(redirect_url);
+            },
+            viewProposal(){
+                window.location.replace('/view-proposal/'+this.active_user.proposal_uuid);
             }
+
         },
         components: {
         },

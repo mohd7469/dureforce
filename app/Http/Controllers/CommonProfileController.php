@@ -231,6 +231,7 @@ class CommonProfileController extends Controller
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
             'about' => 'required|string',
+            'rate' => 'required|gt:0',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
 
             // 'phone_number' => ['required', new PhoneNumberValidate],
@@ -244,6 +245,7 @@ class CommonProfileController extends Controller
             'about.required' => 'About is required',
             'phone_number.required'        => 'Phone No is required',
             'city_id.required'    => 'City is required',
+            'rate.required'    => 'Rate per hour is required',
             'languages.required'    => 'Please Select Language',
             'languages.*.language_id.required'    => 'Please Select at least one Language',
             'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
@@ -286,6 +288,7 @@ class CommonProfileController extends Controller
                     $user->basicProfile()->update(['profile_picture' => $url]);
 
                 }
+                $user->rate_per_hour = $request_data['rate'];
                 $user->save();
 
                 DB::commit();

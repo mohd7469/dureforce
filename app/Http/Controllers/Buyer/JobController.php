@@ -91,12 +91,13 @@ class JobController extends Controller
     public function jobDataValidate(Request $request)
     {
         $request_data = [];
-
         parse_str($request->data, $request_data);
+
         $user = Auth::user();
         $custom_messages =[
 
             'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
+            'country_id.required' => 'Job location is required',
             'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is hourly',
             'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
             'hourly_start_range.gt' => 'Weekly range start field should be greater than zero',
@@ -107,6 +108,7 @@ class JobController extends Controller
         $rules= [
             'title' => 'required|string|max:150',
             'description' => 'required|string|max:1000',
+            'country_id' => 'required',
             'job_type_id' => 'required|exists:job_types,id',
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',

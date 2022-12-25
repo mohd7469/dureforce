@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Extension;
 use App\Models\UserLogin;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -78,6 +79,10 @@ class LoginController extends Controller
 
 
             $user = auth()->user();
+            $user->last_login_at=Carbon::now();
+            $user->last_activity_at=Carbon::now();
+            $user->is_session_active=true;
+            $user->save();
 //            $user->last_role_activity = isset($data['role']) ? $data['role'] : null;
 
             return $this->sendLoginResponse($request);
@@ -124,10 +129,14 @@ class LoginController extends Controller
 
     public function logout()
     {
+        $user = auth()->user();
+        $user->last_activity_at=Carbon::now();
+        $user->is_session_active=false;
+        $user->save();
+
         $this->guard()->logout();
-
         request()->session()->invalidate();
-
+        
         $notify[] = ['success', 'You have been logged out.'];
         return redirect()->route('home')->withNotify($notify);
     }
