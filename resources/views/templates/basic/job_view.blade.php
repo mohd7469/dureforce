@@ -231,7 +231,7 @@
                                                                 <div>
                                                                     <ul class="location">
                                                                         <li>
-                                                                            <i class="fa fa-map-marker"></i><span
+                                                                            <i class="fa fa-map-marker"></i> {{$job->user->country? $job->user->country->name: ''}}<span
                                                                                     class="job_count_label_padding">{{$job->user? $job->user->address: ''}} </span>
                                                                             <i class="fa fa-clock job_count_label_padding"></i>
                                                                             <span class="job_count_label_padding"> {{ date('h:i a', strtotime($job->created_at))}} local time</span>
