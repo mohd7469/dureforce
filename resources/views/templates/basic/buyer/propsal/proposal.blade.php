@@ -150,7 +150,7 @@
                                         </div>
 
                                         <div  class="pt-3 pb-3 profile-border-bottom">
-                                            @include('templates.basic.buyer.propsal.portfolio')
+                                            @include('templates.basic.buyer.propsal.portfolio',['portfolios'=>$proposal->user->portfolios])
                                         </div>
 
                                         <div  class="pt-3 pb-3 profile-border-bottom">

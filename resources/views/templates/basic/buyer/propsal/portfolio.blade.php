@@ -8,25 +8,13 @@
         <div class="card-body " style="border:none">
             
             <div class="row">
-                
-                <div class="col-md-3 ">
-                    <img alt="User Pic" src="/assets/images/propsal/testnominal.jpg" id="profile-image1" class=" img-responsive" > 
-                    <span>Getvcore</span> 
-    
-                </div>
-                <div class="col-md-3 ">
-                    <img alt="User Pic" src="/assets/images/propsal/testnominal.jpg" id="profile-image1" class=" img-responsive" >  
-                    <span>Getvcore fasf</span> 
-                </div>
-                <div class="col-md-3 ">
-                    <img alt="User Pic" src="/assets/images/propsal/testnominal.jpg" id="profile-image1" class=" img-responsive" >  
-                    <span>fasf fas</span> 
-                </div>
-                <div class="col-md-3 ">
-                    <img alt="User Pic" src="/assets/images/propsal/testnominal.jpg" id="profile-image1" class=" img-responsive" >  
-                    <span>fafs</span> 
-                </div>
 
+                @foreach($portfolios as $portfolio)
+                <div class="col-md-3 ">
+                    <img alt="User Pic" src="{{$portfolio->attachments ? $portfolio->attachments[0]->url : '#'}}" id="profile-image1" class=" img-responsive" >
+                    <span>{{$portfolio->name}}</span>
+                </div>
+                @endforeach
             </div>
             
         </div>
