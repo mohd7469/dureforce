@@ -41,13 +41,14 @@ class SiteController extends Controller
        $services = Service::Active()->Featured()->whereIn('status_id',[Service::STATUSES['APPROVED'],Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags' ])->get();
 
         $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
-
+        $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->limit(20)->get();
+        
         $sellers = User::whereHas(
             'roles', function($q){
                 $q->where('name', 'Freelancer');
             }
         )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
+        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers','jobs'));
     }
 
     public function service()

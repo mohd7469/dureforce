@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 class Job extends Model
 {
     use HasFactory, SoftDeletes;
+    
     public static $attachment_path = "attachments";
     protected $fillable = [
 
@@ -30,6 +31,14 @@ class Job extends Model
         "expected_start_date",
         "status_id"
 
+    ];
+    public const STATUSES = [
+        'DRAFT'  =>  17,
+        'PENDING'  =>  18,
+        'APPROVED' =>  19,
+        'CANCELLED' =>  20,
+        'UNDER_REVIEW' =>  21,
+        'FEATURED' =>  28
     ];
 
     public static $Pending=1;
