@@ -23,7 +23,7 @@ Route::name('seller.')->group(function () {
                 Route::post('/education/add', [\App\Http\Controllers\Seller\ProfileController::class,'addEducation'])->name('education.add');
                 Route::post('/education/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editEducation'])->name('education.edit');
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
-                Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view');
+                Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view')->middleware('is-profile-completed');
                 Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
                 Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
