@@ -14,6 +14,7 @@ use App\Models\Role;
 use App\Models\Service;
 use App\Models\Software\Software;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -56,6 +57,7 @@ class ChatController extends Controller
     public function saveMessage(Request $request)
     {
         try {
+            // dd($request->send_to_id,auth()->user()->id);
             $module_id=$request->module_id;
             $module_type=$request->module_type;
             $chat_module=$module_type::findOrFail($module_id);
@@ -68,9 +70,15 @@ class ChatController extends Controller
             else
                 event(new NewMessageEvent($message, $message->user,$chat_module));
 
-            
             $chat_module->chatUsers()->firstOrNew(['sender_id'=> auth()->user()->id,'send_to_id' =>$request->send_to_id],[]);
-            
+         
+            $chat_user=$chat_module->chatUsers()->where('sender_id',auth()->user()->id)->where('send_to_id',$request->send_to_id);
+            if($chat_user->exists())
+                $chat_user->first()->touch();
+            $chat_user=$chat_module->chatUsers()->where('sender_id',$request->send_to_id)->where('send_to_id',auth()->user()->id);
+            if($chat_user->exists())
+                $chat_user->first()->touch();
+
                 
             return response()->json(['message' => 'message successfully added']);
         } catch (\Throwable $th) {

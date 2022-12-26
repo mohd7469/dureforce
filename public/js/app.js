@@ -6299,16 +6299,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      activeUserindex: 0
+    };
+  },
   props: {
     users: Array
+  },
+  watch: {
+    users: function users(newVal, oldVal) {
+      // watch it
+      this.activeUserindex = 0;
+    }
   },
   methods: {
     formattedDate: function formattedDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(String(date)).format('MM/DD/YYYY hh:mm');
     },
-    changeUser: function changeUser(user) {
+    changeUser: function changeUser(user, index) {
+      this.activeUserindex = index;
       this.$emit('userChange', user);
     }
   },
@@ -6332,6 +6345,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -12034,7 +12049,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.div-diemension[data-v-ef8bd22e]{\r\n    max-height: 660px;\r\n    min-height: 660px;\r\n    overflow: overlay;\n}\n.online_icon[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 29px;\r\n    top: -20px;\n}\n.user-font-size[data-v-ef8bd22e]{\r\n        font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\r\n        \r\n        padding-top: 7px;\r\n        cursor: pointer;\n}\n.border-right-custom[data-v-ef8bd22e]{\r\n        border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\r\n        --bs-gutter-x: 1.5rem;\r\n        --bs-gutter-y: 0;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        margin-top: calc(var(--bs-gutter-y) * -1);\r\n        margin-right: 0px !important; \r\n        margin-left: calc(var(--bs-gutter-x)/ -2);\n}\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.active_chat[data-v-ef8bd22e]{\r\n    background-color: rgba(0,0,0,.03);\n}\n.div-diemension[data-v-ef8bd22e]{\r\n    max-height: 660px;\r\n    min-height: 660px;\r\n    overflow: overlay;\n}\n.online_icon[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-ef8bd22e]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 29px;\r\n    top: -20px;\n}\n.user-font-size[data-v-ef8bd22e]{\r\n        font-size: 12px;\n}\n.border-bottom[data-v-ef8bd22e]{\r\n        \r\n        padding-top: 7px;\r\n        cursor: pointer;\n}\n.border-right-custom[data-v-ef8bd22e]{\r\n        border-right: 1px solid #DEE7E7;\n}\n.row[data-v-ef8bd22e] {\r\n        --bs-gutter-x: 1.5rem;\r\n        --bs-gutter-y: 0;\r\n        display: flex;\r\n        flex-wrap: wrap;\r\n        margin-top: calc(var(--bs-gutter-y) * -1);\r\n        margin-right: -12px !important;\r\n        margin-left: -24px !important;\n}\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12058,7 +12073,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: initial !important;\r\n    right: 2px;\r\n    top: -15px;\n}\n.icon_position[data-v-478330f7]{\r\n    margin-top: 12px\r\n    ;\n}\n.card-header[data-v-478330f7]:first-child {\r\n    border-radius: 0px !important;\r\n    min-height: 20px;\r\n    height: 55px;\r\n    margin-right: -5px;\n}\n.header-title[data-v-478330f7]{\r\n    margin-top: 5px;\n}\n.actions[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 35px;\n}\n.action_send[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 15px;\n}\n.empty-space-margin[data-v-478330f7]{\r\n    margin-right: -6px;\n}\n.action_item[data-v-478330f7]{\r\n    \r\n    padding: 16px;\r\n    position: relative;\r\n    margin-left: -21px;\r\n    margin-top: -8px;\n}\n.action_item[data-v-478330f7]:hover {\r\n    border-radius: 56%;\r\n    background-color: #f4c2c2;\n}\n.icon_send[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    left: -7px;\r\n    top: -15px;\n}\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    right: 2px;\r\n    top: -15px;\n}\n.mt-custom[data-v-478330f7]{\r\n        margin-top: 40px;\n}\n.btn-propsal[data-v-478330f7]{\r\n\r\n            width: 117px;\r\n            height: 30px;\r\n            left: 1147px;\r\n            top: 86px;\r\n            background: #007F7F;\r\n            border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\r\n        width: 94px;\r\n        height: 30px;\r\n        left: 1043px;\r\n        top: 86px;\r\n        border: 2px solid #007F7F;\r\n        border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\r\n        padding-left: 0px;\r\n        padding-right: 0px;\n}\n.message-body[data-v-478330f7]{\r\n        height: 400px;\n}\n.align-header[data-v-478330f7]{\r\n        margin-top: -4px;\n}\n.no-border[data-v-478330f7]{\r\n        border: none;\n}\n.background[data-v-478330f7]{\r\n        border-top: 1px solid #CBDFDF;\r\n        margin-left: 0px;\r\n        margin-right: 0px;\n}\n.msg_card_body[data-v-478330f7]{\r\n        overflow-y: scroll;\r\n        overflow-x: hidden;\r\n        min-height: 570px;\r\n        max-height: 570px;\n}\n.msg_card_body[data-v-478330f7]::-webkit-scrollbar{\r\n        display: none;\n}\n.type_msg[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3) !important;\r\n        border:0 !important;\r\n        color:white !important;\r\n        height: 60px !important;\r\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]:focus{\r\n         box-shadow:none !important;\r\n         outline:0px !important;\n}\n.active[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3);\n}\n.user_img[data-v-478330f7]{\r\n        height: 70px;\r\n        width: 70px;\r\n        border:1.5px solid #f5f6fa;\n}\n.user_img_msg[data-v-478330f7]{\r\n        min-width: 40px;\r\n        height: 40px;\r\n        width: 40px;\r\n        border:1.5px solid #f5f6fa;\n}\n.img_cont[data-v-478330f7]{\r\n        position: relative;\r\n        height: 70px;\r\n        width: 70px;\n}\n.img_cont_msg[data-v-478330f7]{\r\n        height: 40px;\r\n        width: 40px;\n}\n.online_icon[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    right: 0px;\r\n    top: -20px;\n}\n.user_info[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 15px;\n}\n.user_info span[data-v-478330f7]{\r\n    font-size: 20px;\r\n    color: white;\n}\n.user_info p[data-v-478330f7]{\r\nfont-size: 10px;\r\ncolor: rgba(255,255,255,0.6);\n}\n.msg_cotainer[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    min-width: 85px;\n}\n.msg_cotainer_send[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-right: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    right: 0px;\r\n    min-width: 85px;\n}\n.msg_time[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -23px;\r\n    font-size: 10px;\n}\n.user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -15px;\r\n    top: -22px;\r\n    font-size: 10px;\n}\n.sender_user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: -22px;\n}\n.msg_time_send[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: 41px;\n}\n.msg_head[data-v-478330f7]{\r\n    position: relative;\n}\r\n\r\n\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: initial !important;\r\n    right: 2px;\r\n    top: -15px;\n}\n.icon_position[data-v-478330f7]{\r\n    margin-top: 12px\r\n    ;\n}\n.card-header[data-v-478330f7]:first-child {\r\n    border-radius: 0px !important;\r\n    min-height: 20px;\r\n    height: 55px;\r\n    margin-right: -5px;\n}\n.header-title[data-v-478330f7]{\r\n    margin-top: 5px;\n}\n.actions[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 35px;\n}\n.action_send[data-v-478330f7]{\r\n    background-color: #fce8fc;\r\n    border-radius: 56%;\r\n    width: 30px;\r\n    height: 30px;\r\n    margin-top: 7px;\r\n    margin-left: 15px;\n}\n.empty-space-margin[data-v-478330f7]{\r\n    margin-right: -6px;\n}\n.action_item[data-v-478330f7]{\r\n    \r\n    padding: 16px;\r\n    position: relative;\r\n    margin-left: -21px;\r\n    margin-top: -8px;\n}\n.action_item[data-v-478330f7]:hover {\r\n    border-radius: 56%;\r\n    background-color: #f4c2c2;\n}\n.icon_send[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    left: -7px;\r\n    top: -15px;\n}\n.icon[data-v-478330f7] {\r\n    background-color: transparent;\r\n    color: darkgray;\r\n    padding: 10px;\r\n    width: 20px;\r\n    height: 20px;\r\n    position: absolute;\r\n    right: 2px;\r\n    top: -15px;\n}\n.mt-custom[data-v-478330f7]{\r\n        margin-top: 40px;\n}\n.btn-propsal[data-v-478330f7]{\r\n\r\n            width: 117px;\r\n            height: 30px;\r\n            left: 1147px;\r\n            top: 86px;\r\n            background: #007F7F;\r\n            border-radius: 6px;\n}\n.btn-job[data-v-478330f7]{\r\n        width: 94px;\r\n        height: 30px;\r\n        left: 1043px;\r\n        top: 86px;\r\n        border: 2px solid #007F7F;\r\n        border-radius: 6px;\n}\n.remove-space[data-v-478330f7]{\r\n        padding-left: 0px;\r\n        padding-right: 0px;\n}\n.message-body[data-v-478330f7]{\r\n        height: 400px;\n}\n.align-header[data-v-478330f7]{\r\n        margin-top: -4px;\n}\n.no-border[data-v-478330f7]{\r\n        border: none;\n}\n.background[data-v-478330f7]{\r\n        border-top: 1px solid #CBDFDF;\r\n        margin-left: 0px;\r\n        margin-right: 0px;\n}\n.msg_card_body[data-v-478330f7]{\r\n        overflow-y: scroll;\r\n        overflow-x: hidden;\r\n        min-height: 570px;\r\n        max-height: 570px;\n}\n.msg_card_body[data-v-478330f7]::-webkit-scrollbar{\r\n        display: none;\n}\n.type_msg[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3) !important;\r\n        border:0 !important;\r\n        color:white !important;\r\n        height: 60px !important;\r\n        overflow-y: auto;\n}\n.type_msg[data-v-478330f7]:focus{\r\n         box-shadow:none !important;\r\n         outline:0px !important;\n}\n.active[data-v-478330f7]{\r\n        background-color: rgba(0,0,0,0.3);\n}\n.user_img[data-v-478330f7]{\r\n        height: 70px;\r\n        width: 70px;\r\n        border:1.5px solid #f5f6fa;\n}\n.user_img_msg[data-v-478330f7]{\r\n        min-width: 40px;\r\n        height: 40px;\r\n        width: 40px;\r\n        border:1.5px solid #f5f6fa;\n}\n.img_cont[data-v-478330f7]{\r\n        position: relative;\r\n        height: 70px;\r\n        width: 70px;\n}\n.img_cont_msg[data-v-478330f7]{\r\n        height: 40px;\r\n        width: 40px;\n}\n.online_icon[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #4cd137;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    left: 28px;\r\n    top: -20px;\n}\n.offline[data-v-478330f7]{\r\n    position: relative;\r\n    height: 10px;\r\n    width: 10px;\r\n    background-color: #c23616;\r\n    border-radius: 50%;\r\n    border: 1.5px solid white;\r\n    right: 0px;\r\n    top: -20px;\n}\n.user_info[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 15px;\n}\n.user_info span[data-v-478330f7]{\r\n    font-size: 20px;\r\n    color: white;\n}\n.user_info p[data-v-478330f7]{\r\nfont-size: 10px;\r\ncolor: rgba(255,255,255,0.6);\n}\n.msg_cotainer[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-left: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    min-width: 85px;\n}\n.msg_cotainer_send[data-v-478330f7]{\r\n    margin-top: auto;\r\n    margin-bottom: auto;\r\n    margin-right: 10px;\r\n    background-color: ghostwhite;\r\n    padding: 10px;\r\n    position: relative;\r\n    top:25px;\r\n    right: 0px;\r\n    min-width: 85px;\n}\n.msg_time[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -23px;\r\n    font-size: 10px;\n}\n.user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    left: 0;\r\n    bottom: -15px;\r\n    top: -22px;\r\n    font-size: 10px;\r\n    white-space: nowrap;\n}\n.sender_user_name[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: -22px;\r\n    white-space: nowrap;\n}\n.msg_time_send[data-v-478330f7]{\r\n    position: absolute;\r\n    right:0;\r\n    bottom: -15px;\r\n    font-size: 10px;\r\n    top: 41px;\n}\n.msg_head[data-v-478330f7]{\r\n    position: relative;\n}\r\n\r\n\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -56713,7 +56728,7 @@ var render = function () {
                     messages: _vm.messages,
                     active_user: _vm.active_user,
                   },
-                  on: { newMessage: _vm.getActiveUserChat },
+                  on: { newMessage: _vm.getUSers },
                 }),
               ],
               1
@@ -56750,19 +56765,22 @@ var render = function () {
   return _c(
     "div",
     { staticClass: "col-md-4 border-right-custom div-diemension" },
-    _vm._l(_vm.users, function (user) {
+    _vm._l(_vm.users, function (user, index) {
       return _c(
         "div",
         {
-          staticClass: "row border-bottom",
+          class: [
+            "row border-bottom",
+            { active_chat: index === _vm.activeUserindex },
+          ],
           on: {
             click: function ($event) {
-              return _vm.changeUser(user)
+              return _vm.changeUser(user, index)
             },
           },
         },
         [
-          _c("div", { staticClass: "col-md-2" }, [
+          _c("div", { staticClass: "col-md-2 " }, [
             user.send_to_user.basic_profile &&
             user.send_to_user.basic_profile.profile_picture != null
               ? _c("img", {
@@ -56817,11 +56835,13 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 " }, [
-            _c("span", { staticClass: "user-font-size" }, [
-              _vm._v(
-                _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
-              ),
-            ]),
+            user.send_to_user.last_login_at
+              ? _c("span", { staticClass: "user-font-size" }, [
+                  _vm._v(
+                    _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
+                  ),
+                ])
+              : _vm._e(),
             _c("br"),
             _vm._v(" "),
             _c("span", { class: user.model_color }, [
@@ -57205,7 +57225,7 @@ var render = function () {
         _vm._v(" "),
         _c("div", { staticClass: "col-md-2  " }, [
           _c("div", { staticClass: " row " }, [
-            _vm._m(0),
+            _c("div", { staticClass: "col-md-6 " }),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-6 action_send" }, [
               _c("i", {
@@ -57223,16 +57243,7 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 actions" }, [
-      _c("i", { staticClass: "fas fa-paperclip action_item" }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
