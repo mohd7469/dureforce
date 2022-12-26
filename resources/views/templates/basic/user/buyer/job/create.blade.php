@@ -68,12 +68,12 @@
                                                             <div class="fallback">
                                                                 <input name="file" type="file" multiple />
                                                             </div>
-                                                            <div>
-                                                                <div class="upload_icon">
-                                                                    <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
-                                                                    <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
-                                                                </div>
-                                                            </div>
+                                                            
+                                                            {{-- <div class="upload_icon ">
+                                                                <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                                                                <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                                            </div> --}}
+                                                            
 
                                                             <div class="dz-message ">
                                                                 @lang('Drag or Drop to Upload')
