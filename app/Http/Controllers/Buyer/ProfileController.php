@@ -71,7 +71,7 @@ class ProfileController extends Controller
 
             try {
                 DB::beginTransaction();
-                $user = User::findOrFail(auth()->id());
+                $user = User::findOrFail(auth()->user()->id);
                 $filename = '';
 
                 if ($request->hasFile('company_logo') && $request->company_logo != 'undefined') {
@@ -243,7 +243,7 @@ class ProfileController extends Controller
                     $userPayment->expiration_date = $request->expiration_date;
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
-                    $userPayment->user_id = auth()->id();
+                    $userPayment->user_id = auth()->user()->id;
                     $userPayment->country_id = $request->country_id;
                     $userPayment->city_id = $request->city_id;
                     $userPayment->address = $request->address;
@@ -267,7 +267,7 @@ class ProfileController extends Controller
                         'country_id' => $request->country_id,
                         'city_id' => $request->city_id,
                         'address' => $request->address,
-                        'user_id' => auth()->id(),
+                        'user_id' => auth()->user()->id,
                         'is_primary' => 1,
                         'is_active' => 1
                     ]);
@@ -432,7 +432,7 @@ class ProfileController extends Controller
                     $userPayment->country_id = $request->country_id;
                     $userPayment->city_id = $request->city_id;
                     $userPayment->address = $request->address;
-                    $userPayment->user_id = auth()->id();
+                    $userPayment->user_id = auth()->user()->id;
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
                     $userPayment->save();
@@ -456,7 +456,7 @@ class ProfileController extends Controller
                         'country_id' => $request->country_id,
                         'city_id' => $request->city_id,
                         'address' => $request->address,
-                        'user_id' => auth()->id(),
+                        'user_id' => auth()->user()->id,
                         'is_primary' => 1,
                         'is_active' => 1
                     ]);
@@ -561,7 +561,7 @@ class ProfileController extends Controller
 
     public function buyersaveCompany(Request $request)
     {
-        
+
 
         $rules = [
             'email' => 'email',
@@ -580,7 +580,7 @@ class ProfileController extends Controller
             try {
                 
                 DB::beginTransaction();
-                $user = User::findOrFail(auth()->id());
+                $user = User::findOrFail(auth()->user()->id);
                 $filename = '';
 
                 if ($request->hasFile('company_logo')) {
