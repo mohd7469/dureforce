@@ -52,6 +52,7 @@ class Service extends Model
         'number_of_simultaneous_projects',
         'is_terms_accepted',
         'is_privacy_accepted',
+        'updated_at',
     ];
 
     public function scopeWithAll($query){

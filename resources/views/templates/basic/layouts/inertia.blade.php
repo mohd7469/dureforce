@@ -27,8 +27,13 @@
 </head>
 <body>
 
-
-@include($activeTemplate.'partials.inertia_user_header')
+    @auth
+        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+            @include($activeTemplate.'partials.seller_user_header')
+        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+            @include($activeTemplate.'partials.client_user_header')
+        @endif
+    @endauth
 
 @inertia
 
