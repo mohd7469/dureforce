@@ -31,7 +31,7 @@
                                 <p class="card_h-c">Total Withdrawn</p>
                                 <p class="card_d_p">$1234.00</p>
                                 
-                                <a href="#" class="btn_w_vl">See History</a>
+                                <a href="#" class="btn_w_vl">View Log</a>
                             </div>
 
                            
