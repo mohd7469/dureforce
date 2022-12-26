@@ -2,8 +2,9 @@
     
     <div class="col-md-4 border-right-custom div-diemension">
         
-        <div class="row border-bottom" v-for="user of users" @click="changeUser(user)">
-            <div class="col-md-2" >
+        <div  v-for="(user, index) in users" :class="['row border-bottom',{'active_chat': index===activeUserindex}]"   @click="changeUser(user,index)">
+            <div class="col-md-2 " >
+
                 <img alt="User Pic" v-if="user.send_to_user.basic_profile && user.send_to_user.basic_profile.profile_picture!=null" :src="user.send_to_user.basic_profile.profile_picture" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 <img alt="User Pic" v-else src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 40px;height: 40px"> 
                 
@@ -17,7 +18,7 @@
             </div>
 
             <div class="col-md-4 ">
-                <span class="user-font-size">{{formattedDate(user.send_to_user.last_login_at)}}</span></br>
+                <span class="user-font-size" v-if="user.send_to_user.last_login_at">{{formattedDate(user.send_to_user.last_login_at)}}</span></br>
                 <span :class="user.model_color">{{user.model}}</span>
 
             </div>
@@ -33,9 +34,20 @@
 <script>
     import moment from 'moment';    
     export default {
+       
+        data(){  
+            return {  
+                activeUserindex:0,
+            };  
+        },
         props: {
 
             users: Array,
+        },
+        watch: { 
+            users: function(newVal, oldVal) { // watch it
+                this.activeUserindex=0;
+            },
            
         },
         methods: {
@@ -43,8 +55,9 @@
             {
                return moment(String(date)).format('MM/DD/YYYY hh:mm')
             },
-            changeUser(user)
+            changeUser(user,index)
             {
+                this.activeUserindex=index;
                 this.$emit('userChange',user);
             }
 
@@ -55,6 +68,10 @@
     }
 </script>
 <style scoped>
+
+.active_chat{
+    background-color: rgba(0,0,0,.03);
+}
 .div-diemension{
     max-height: 660px;
     min-height: 660px;
@@ -87,6 +104,7 @@
         
         padding-top: 7px;
         cursor: pointer;
+     
     }
     .border-right-custom{
         border-right: 1px solid #DEE7E7;
@@ -98,8 +116,8 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: calc(var(--bs-gutter-y) * -1);
-        margin-right: 0px !important; 
-        margin-left: calc(var(--bs-gutter-x)/ -2);
+        margin-right: -12px !important;
+        margin-left: -24px !important;
     }
 
 

@@ -13,7 +13,7 @@
                             <Messages 
                                 v-bind:messages="messages" 
                                 v-bind:active_user="active_user" 
-                                @newMessage="getActiveUserChat"
+                                @newMessage="getUSers"
                             ></Messages>
                             
                         </div>

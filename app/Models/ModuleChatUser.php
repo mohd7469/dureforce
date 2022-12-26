@@ -13,7 +13,7 @@ class ModuleChatUser extends Model
         'SERVICE'  =>'badge--success',
         'SOFTWARE' =>'badge--danger',
     ];
-    protected $fillable = ['sender_id','send_to_id','module_type','module_id','proposal_uuid'];
+    protected $fillable = ['sender_id','send_to_id','module_type','module_id','proposal_uuid','updated_at'];
     
     protected $appends = ["model","model_color"];
 
@@ -26,6 +26,7 @@ class ModuleChatUser extends Model
         return  class_basename($this->attributes['module_type']);
         
     }
+
     public function getModelColorAttribute() {
 
         $model_color='';
@@ -40,6 +41,8 @@ class ModuleChatUser extends Model
         return 'badge '.$model_color;
 
     }
+
+
     public function send_to_user()
     {
         return $this->belongsTo(User::class, 'sender_id')->with('basicProfile');
