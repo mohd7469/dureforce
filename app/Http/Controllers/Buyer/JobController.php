@@ -128,7 +128,7 @@ class JobController extends Controller
             $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
             $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
         } elseif ($request_data['budget_type_id'] == BudgetType::$fixed) {
-            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed;
+            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed.'|gt:0';
         } else {
 
         }
