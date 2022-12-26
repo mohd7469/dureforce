@@ -562,7 +562,6 @@ class ProfileController extends Controller
     public function buyersaveCompany(Request $request)
     {
 
-
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
@@ -585,9 +584,10 @@ class ProfileController extends Controller
 
                 if ($request->hasFile('company_logo')) {
 
-                    $location = imagePath()['profile']['user']['path'];
-                    $size = imagePath()['profile']['user']['size'];
-                    $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+                    $path = imagePath()['attachments']['path'];
+//                    $size = imagePath()['profile']['user']['size'];
+//                    $filename = uploadImage($request->company_logo, $path, $size, auth()->user()->image);
+                    $filename = uploadAttachments($request->company_logo, $path);
                 }
 
                 if (empty($filename)) {
