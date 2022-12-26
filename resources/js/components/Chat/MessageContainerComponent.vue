@@ -105,9 +105,11 @@
                 </div>
                 <div class="col-md-2  ">
                     <div class=" row ">
-                        <div class="col-md-6 actions">
-                            <i class="fas fa-paperclip action_item" ></i>
-
+                        <!-- <div class="col-md-6 actions "> -->
+                            <!-- <i class="fas fa-paperclip action_item" ></i> -->
+                        <!-- </div> -->
+                        <div class="col-md-6 ">
+                            <!-- <i class="fas fa-paperclip action_item" ></i> -->
                         </div>
                         <div class="col-md-6 action_send">
                             <i class="fas fa-location-arrow action_item " @click="sendMessage()"></i>
@@ -460,25 +462,27 @@ color: rgba(255,255,255,0.6);
     bottom: -15px;
     top: -22px;
     font-size: 10px;
+    white-space: nowrap;
 }
 .sender_user_name{
     position: absolute;
     right:0;
-    bottom: -15px;
     font-size: 10px;
     top: -22px;
+    white-space: nowrap;
 }
 .msg_time_send{
     position: absolute;
     right:0;
-    bottom: -15px;
     font-size: 10px;
     top: 41px;
 }
 .msg_head{
     position: relative;
 }
-
+ul { 
+    white-space: nowrap;
+}
 
 
 </style>

@@ -7,7 +7,7 @@
                 <div class="col-xl-12 col-lg-12 form-group">
                     <label>@lang('Title')*</label>
                     <input type="text" id="title_over" name="title" maxlength="255" value="{{ old('title', @$software->title) }}"
-                        class="form-control" placeholder="@lang(' E.g. Full Stack Developer ')"   >
+                        class="form-control" placeholder="@lang(' E.g. CRM software for leads management and customer support. ')"   >
 
                 </div>
 
