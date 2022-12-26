@@ -48,7 +48,7 @@
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <div class="text-center">
                                         <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
-                                        <p class="short-text"><i class="fa fa-clock"></i> 12:37 pm Local time</p>
+                                        <p class="short-text"><i class="fa fa-clock"></i> {{ date('h:i a', strtotime($user->last_activity_at))}} Local time</p>
                                         {{--                                  edit profile modal--}}
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <div class="d-flex mt-5">
