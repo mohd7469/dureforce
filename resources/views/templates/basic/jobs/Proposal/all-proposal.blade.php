@@ -152,7 +152,8 @@
 
                                                 @endforeach
                                             </div >
-                                            @isset($proposal->attachment)
+
+                                            @if( isset($proposal->attachment) AND $proposal->attachment->count() > 0 )
                                             <div class="col-md-6 col-lg-6">
                                                 <div class="attachment">
                                                     <div class="service_subtitle2 mt-20 heading-text">
@@ -173,7 +174,7 @@
                                                 </div>
 
                                             </div>
-                                            @endisset
+                                            @endif
                                         </div>
                                         <hr>
                                     </div>

@@ -234,10 +234,11 @@ class SoftwareController extends Controller
 
     public function destroy($id)
     {
-        $this->deleteEntity(Software::class, 'software', $id);
+        $software = Software::find($id)->delete();
+//        $this->deleteEntity(Software::class, 'software', $id);
 
         $notify[] = ['success', 'software has been uploaded.'];
-        return back()->withNotify();
+        return back()->withNotify($notify);
     }
 
 }

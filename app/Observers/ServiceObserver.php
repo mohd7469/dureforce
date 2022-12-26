@@ -31,5 +31,6 @@ class ServiceObserver
         $service->tags()->detach();
         $service->serviceSteps()->delete();
         $service->banner()->delete();
+        $service->features()->delete();
     }
 }
