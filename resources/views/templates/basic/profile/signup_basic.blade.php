@@ -702,7 +702,7 @@
                         displayErrorMessage(response.validation_errors);
                       }
                       else{
-                        errorMessages(response.errors);
+                        notify('error', response.error);
                       }
 
                   }
@@ -734,7 +734,7 @@
                         displayErrorMessage(response.validation_errors);
                       }
                       else{
-                        errorMessages(response.errors);
+                        notify('error', response.error);
                       }
 
                   }
@@ -763,7 +763,7 @@
                         displayErrorMessage(response.validation_errors);
                       }
                       else{
-                        errorMessages(response.errors);
+                        notify('error', response.error);
                       }
 
                   }

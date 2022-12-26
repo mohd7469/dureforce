@@ -25,7 +25,7 @@ class isProfileCompleted
 
             if (in_array(Role::$ClientName, $user->getRoleNames()->toArray())) {
 
-                if ($user->getLanguagesMoreThanOneCount() > 0 && $user->getPaymentMethodsMoreThanOneCount() > 0 && $user->getCompaniesMoreThanOneCount() > 0) {
+                if ($user->getLanguagesMoreThanOneCount() > 0  && $user->getCompaniesMoreThanOneCount() > 0) {
                     return $next($request);
                 } else {
                     $notify[] = ['error', 'Please complete your profile first.'];

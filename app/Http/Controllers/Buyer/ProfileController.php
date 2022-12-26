@@ -336,8 +336,8 @@ class ProfileController extends Controller
 
         $user_languages_ = WorldLanguage::whereIn('id', $user_languages->pluck('language_id')->toArray())->get();
         $user_languages_level_ = LanguageLevel::whereIn('id', $user_languages->pluck('language_level_id')->toArray())->get();
-        $user_country_ = Country::where('id', $user->company->country_id)->first();
-        $user_loc_ = Country::where('id', $user->company->country_id)->first();
+        $user_country_ = $user->company? Country::where('id', $user->company->country_id)->first():null;
+        $user_loc_ = $user->company ? Country::where('id', $user->company->country_id)->first() : null;
 
 
         return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills', 'usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_', 'user_country_'));
@@ -439,7 +439,7 @@ class ProfileController extends Controller
                     $userPayment->save();
                     DB::commit();
 
-
+fdsfs;
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
 
 
@@ -476,9 +476,7 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
-                $notify[] = ['errors', 'Failled To Update User Payment Method .'];
-                return back()->withNotify($notify);
+                return response()->json(['error' => 'Failled To Update User Payment Method .']);
 
             }
         }
@@ -557,11 +555,7 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
-                $notify[] = ['errors', 'Failled To Save User Profile .'];
-                return back()->withNotify($notify);
-
-
+                return response()->json(['error' => 'Failled To Save User Profile .']);
             }
         }
     }
@@ -620,10 +614,7 @@ class ProfileController extends Controller
 
             } catch (\Throwable $th) {
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
-                $notify[] = ['errors', 'Failled To Save User Company .'];
-                return back()->withNotify($notify);
-
+                return response()->json(['error' => 'Failled To Save User Company .']);
             }
         }
     }
