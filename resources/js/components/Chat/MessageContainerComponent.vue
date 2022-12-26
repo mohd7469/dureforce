@@ -467,7 +467,6 @@ color: rgba(255,255,255,0.6);
 .sender_user_name{
     position: absolute;
     right:0;
-    bottom: -15px;
     font-size: 10px;
     top: -22px;
     white-space: nowrap;
@@ -475,14 +474,15 @@ color: rgba(255,255,255,0.6);
 .msg_time_send{
     position: absolute;
     right:0;
-    bottom: -15px;
     font-size: 10px;
     top: 41px;
 }
 .msg_head{
     position: relative;
 }
-
+ul { 
+    white-space: nowrap;
+}
 
 
 </style>

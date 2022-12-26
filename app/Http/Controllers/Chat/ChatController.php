@@ -49,7 +49,7 @@ class ChatController extends Controller
         $module_id=$request->module_id;
         $module_type=$request->module_type;
         $chat_module=$module_type::findOrFail($module_id);
-        $messages=$chat_module->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
+        $messages=$chat_module->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->take(20)->get();
 
         return response()->json(['messages' => $messages]);
     }
