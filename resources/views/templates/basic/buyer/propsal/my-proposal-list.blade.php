@@ -43,6 +43,7 @@
                         <th>Action</th>
                         </thead>
 
+                        @if(isset($proposals) && $proposals->count() > 0)
                         @foreach($proposals as $proposal)
                             <tr>
                                 <td>
@@ -81,7 +82,7 @@
                                        class="view_propasal_per">View Proposal</a></td>
                             </tr>
                         @endforeach
-
+                        @endif
                     </table>
                 </div>
 
@@ -94,7 +95,7 @@
                         <th>Proposal Status</th>
                         <th>Action</th>
                         </thead>
-
+                        @if(isset($submitted_proposals) && $submitted_proposals->count() > 0)
                         @foreach($submitted_proposals as $proposal)
                             <tr>
                                 <td>
@@ -133,7 +134,7 @@
                                        class="view_propasal_per">View Proposal</a></td>
                             </tr>
                         @endforeach
-
+                        @endif
                     </table>
                 </div>
 
@@ -146,7 +147,7 @@
                         <th>Proposal Status</th>
                         <th>Action</th>
                         </thead>
-
+                        @if(isset($archived_proposals) && $archived_proposals->count() > 0)
                         @foreach($archived_proposals as $proposal)
                             <tr>
                                 <td>
@@ -185,7 +186,7 @@
                                        class="view_propasal_per">View Proposal</a></td>
                             </tr>
                         @endforeach
-
+                        @endif
                     </table>
                 </div>
                 <div class="listing_table_con card-body tab-pane" id="active_proposals"> 
