@@ -274,7 +274,8 @@ p.cp-jt {
     color: #444444;
 }
 button.btn.btn-primary.cstm-edit {
-    background: #7F007F;
+    background: #7F007F !important;
+    color:#FFFFFF !important;
     border-radius: 5px;
     width: 103px;
     height: 40px;
