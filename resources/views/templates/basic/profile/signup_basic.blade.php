@@ -716,7 +716,7 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('buyer.profile.save.payment.methods')}}",
+                  url:"{{route('buyer.basic.profile.save.payment.methods')}}",
                   data: form_data,
                   processData: false,
                   contentType: false,
@@ -749,10 +749,10 @@
            
             $.ajax({
                   type:"POST",
-                  url:"{{route('buyer.profile.save.company')}}",
+                  url:"{{route('buyer.basic.profile.save.company')}}",
                   data: form_data,
                   processData: false,
-                contentType: false,
+                  contentType: false,
                   success:function(response){
 
                       if(response.success){

@@ -26,6 +26,7 @@ use App\Models\UserPayment;
 use App\Models\UserSkill;
 use App\Models\WorldLanguage;
 use App\Rules\PhoneNumberValidate;
+use Illuminate\Support\Facades\DB as FacadesDB;
 use LVR\CreditCard\CardCvc;
 use LVR\CreditCard\CardNumber;
 
@@ -62,8 +63,6 @@ class ProfileController extends Controller
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-
-
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -72,7 +71,6 @@ class ProfileController extends Controller
         } else {
 
             try {
-
                 DB::beginTransaction();
                 $user = User::findOrFail(auth()->id());
                 $filename = '';
@@ -575,18 +573,19 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            // 'phone' => ['required', new PhoneNumberValidate],
-            'vat' => 'required|string|min:4|max:15'
-
-
+            'vat' => 'required|string|min:4|max:15',
+            'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
         ];
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
-            try {
 
+            try {
+                
                 DB::beginTransaction();
                 $user = User::findOrFail(auth()->id());
                 $filename = '';
