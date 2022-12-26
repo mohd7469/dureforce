@@ -13,8 +13,7 @@ use App\Models\User;
 use App\Models\ModuleOffer;
 use App\Models\Job;
 use App\Models\ModuleOfferMilestone;
-
-
+use App\Models\Role;
 use App\Models\UserBasic;
 use DB;
 use Illuminate\Support\Facades\Hash;
@@ -439,7 +438,6 @@ class ProfileController extends Controller
                     $userPayment->save();
                     DB::commit();
 
-fdsfs;
                     $notify[] = ['success', 'User Payment Method Updated Profile.'];
 
 
@@ -497,7 +495,8 @@ fdsfs;
             'languages.*.language_id' => 'required|exists:world_languages,id',
             'languages.*.language_level_id' => 'required|exists:language_levels,id',
         ];
-        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+        
+        if (getLastLoginRoleId() == Role::$Freelancer) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }

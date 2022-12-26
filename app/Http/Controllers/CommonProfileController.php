@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Degree;
 use App\Models\LanguageLevel;
+use App\Models\Role;
 use App\Models\Skills;
 use App\Models\UserSkill;
 use Khsing\World\Models\Country as ModelsCountry;
@@ -110,7 +111,8 @@ class CommonProfileController extends Controller
             'languages.*.language_id.required'    => 'Please Select at least one Language',
 
         ];
-        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+        
+        if (getLastLoginRoleId() == Role::$Freelancer) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
@@ -156,11 +158,7 @@ class CommonProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
-                $notify[] = ['errors', 'Failled To Save User Profile .'];
-                return back()->withNotify($notify);
-
-
+                return response()->json(['error' => 'Failled To Save User Profile' ]);
             }
         }
     }
