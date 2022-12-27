@@ -591,7 +591,10 @@ class ProfileController extends Controller
                 }
 
                 if (empty($filename)) {
-                    $filename = $user->company->logo ?? '';
+                    $url = $user->company->logo ?? '';
+                }
+                else{
+                    $url = $path . '/' . $filename;
                 }
 
                 $user->company()->delete();
@@ -599,7 +602,7 @@ class ProfileController extends Controller
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
                     'number' => $request->get('phone'),
-                    'logo' => $filename,
+                    'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
                     'vat' => $request->get('vat'),
