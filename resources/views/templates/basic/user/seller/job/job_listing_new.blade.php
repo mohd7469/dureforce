@@ -24,7 +24,7 @@
                                 <div class="top-card-header ">
                                     <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                                         <li class="nav-item">
-                                            <a class="nav-link {{$search_job}}" aria-current="true" data-bs-toggle="tab"
+                                            <a class="nav-link {{$search_job}}"  data-bs-toggle="tab"
                                             href="#Search_tab">Search</a>
                                         </li>
                                         <li class="nav-item">
@@ -72,7 +72,7 @@
                                 <!---Search Filter Container End--->
                                     <!----------- ===== Job Experties Container Start ==== ------------->
                                 <form class="card-body tab-content">
-                                    <div class="tab-pane active" id="Search_tab">
+                                    <div class="tab-pane {{$search_job}}" id="Search_tab">
                                         <p class="jb-found">{{count($jobs)}} jobs found</p>
                                             @foreach($jobs as $job)
                                             <div class="details-scs">
@@ -130,7 +130,7 @@
                                             <!----------- ===== Job Experties Container  ==== ------------->   
                                             @endforeach
                                     </div>
-                                    <div class="tab-pane" id="Saved_jobs_tab">
+                                    <div class="tab-pane {{$saved_job}}" id="Saved_jobs_tab">
                                             @foreach($user_saved_jobs as $job)
                                                 <br>
                                                 <br>

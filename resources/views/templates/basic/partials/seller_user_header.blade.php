@@ -153,13 +153,17 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
                                             </a>
-                                            <a href="{{url('coming-soon')}}"
+                                            <a href="{{ route('seller.proposal.index','submitted_proposals') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Submitted Proposals')</span>
                                             </a>
-                                            <a href="{{url('coming-soon')}}"
+                                            <a href="{{ route('seller.proposal.index','active_proposals') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Active Proposals')</span>
+                                            </a>
+                                            <a href="{{ route('seller.proposal.index','archived_proposals') }}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Archived Proposals')</span>
                                             </a>
                                         </div>
                                     </div>    

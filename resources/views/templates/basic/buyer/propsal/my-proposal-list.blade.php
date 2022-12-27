@@ -14,26 +14,26 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
+                    <a class="nav-link {{ $type==null ? 'active' : ''}}" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
 
                 </li>
                 <li class="nav-item">
 
-                    <a class="nav-link " data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposals)}})</a>
+                    <a class="nav-link {{ $type=="submitted_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposals)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposals)}})</a>
+                    <a class="nav-link {{ $type=="archived_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposals)}})</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposals)}})</a>
+                    <a class="nav-link {{ $type=="active_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposals)}})</a>
 
                 </li>
             </ul>
 
 
             <div class="tab-content">
-                <div class="listing_table_con card-body tab-pane active" id="all">
+                <div class="listing_table_con card-body tab-pane {{ $type==null ? 'active' : ''}}" id="all">
                     <table>
                         <thead>
                         <th>Title</th>
@@ -76,7 +76,7 @@
                                 @else
 
                                 @endif
-                                    
+
                                 </td>
                                 <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
                                        class="view_propasal_per">View Proposal</a></td>
@@ -86,7 +86,7 @@
                     </table>
                 </div>
 
-                <div class="listing_table_con card-body tab-pane" id="submitted_proposals"> 
+                <div class="listing_table_con card-body tab-pane {{ $type=="submitted_proposals" ? 'active' : ''}}" id="submitted_proposals"> 
                     <table>
                         <thead>
                         <th>Title</th>
@@ -138,7 +138,7 @@
                     </table>
                 </div>
 
-                <div class="listing_table_con card-body tab-pane" id="draft_proposals"> 
+                <div class="listing_table_con card-body tab-pane {{ $type=="archived_proposals" ? 'active' : ''}}" id="draft_proposals"> 
                     <table>
                         <thead>
                         <th>Title</th>
@@ -189,7 +189,7 @@
                         @endif
                     </table>
                 </div>
-                <div class="listing_table_con card-body tab-pane" id="active_proposals"> 
+                <div class="listing_table_con card-body tab-pane {{ $type=="active_proposals" ? 'active' : ''}}" id="active_proposals"> 
                     <table>
                         <thead>
                         <th>Title</th>
