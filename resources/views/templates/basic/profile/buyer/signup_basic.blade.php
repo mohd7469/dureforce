@@ -51,7 +51,7 @@
 
     @endphp
     
-    <section class="account-section bg-overlay-white bg_img">
+    <section class="account-section  bg_img">
         <div class="container">
             <div id="viewport">
                 <div class="row justify-content-center">
