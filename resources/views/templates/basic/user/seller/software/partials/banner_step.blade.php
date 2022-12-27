@@ -264,6 +264,7 @@ if (!empty($software)) {
     }
     function previewMultiple(event){
             var data = document.getElementById("lead_image");
+            $("#galeria").empty();
             var item = data.files.length;
             for(i = 0; i < item; i++){
                 var urls = URL.createObjectURL(event.target.files[i]);
