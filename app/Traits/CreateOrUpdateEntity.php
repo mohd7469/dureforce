@@ -383,7 +383,10 @@ trait CreateOrUpdateEntity {
         return true;
 
     }
-
+    public function updateSoftwareStatus($request, $model){
+        $model->status_id  = $request->action == 'save_project' ? Software::STATUSES['DRAFT']:Software::STATUSES['PENDING'];
+        return $model;
+    }
     public function saveReview($request, $model, $type = Attribute::SERVICE, $notificationText = 'Service', $notificationUrl = 'service'): bool
     {
         DB::transaction(function () use ($request, $model, $notificationText, $notificationUrl, $type) {
@@ -397,8 +400,7 @@ trait CreateOrUpdateEntity {
                
                 $model->status_id  = $request->action == 'save_project' ? Service::STATUSES['DRAFT']:Service::STATUSES['PENDING'];
             } else {
-                
-                $model->status_id  = $request->action == 'save_project' ? Software::STATUSES['DRAFT']:Software::STATUSES['PENDING'];
+                $model=$this->updateSoftwareStatus($request,$model);
             }
             
             $model->save();

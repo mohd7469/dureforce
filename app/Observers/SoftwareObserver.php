@@ -22,7 +22,10 @@ class SoftwareObserver
 
     public function updating($software)
     {
-        $software->updated_at = Carbon::now();        
+        $software->updated_at = Carbon::now();  
+        if($software->status_id == Software::STATUSES['APPROVED']){
+            $software->status_id=Software::STATUSES['PENDING'];
+        }         
         
     }
     public function deleting($software)

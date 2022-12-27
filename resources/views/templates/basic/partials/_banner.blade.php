@@ -2,7 +2,8 @@
 
 @if(bannerTypeDynamic($model))
 <div class="detail-banner"
-     style='background-image:url({{$model->banner->background->url}});'>
+     style='background-image:url({{$model->banner->background->url}});height: 621px;
+     width: 100%;'>
 
     <div class="banner_header">
                 {{-- <img
