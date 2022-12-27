@@ -24,9 +24,6 @@ class ServiceObserver
     public function updating($service)
     {
         $service->updated_at = Carbon::now();
-        if($service->status_id == Service::STATUSES['APPROVED']){
-            $service->status_id=Service::STATUSES['PENDING'];
-        }       
     }
     public function deleting($service)
     {   
