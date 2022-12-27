@@ -45,7 +45,7 @@ class Proposal extends Model
     }
     public function module()
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
     public function delivery_mode()
     {
