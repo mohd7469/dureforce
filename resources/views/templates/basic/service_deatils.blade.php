@@ -142,9 +142,10 @@
                                                         </ul>
 
                                                         <ul class="service-table">
-                                                            @if ($service->addOns->isNotEmpty())
+
                                                                 @foreach ($service->addOns as $extra)
                                                                     <li>
+                                                                      
                                                                         <div style="width: 30%;">{{ __($extra->title) }}</div>
                                                                         <div style="width: 18%;">{{ showAmount($extra->rate_per_hour) }}</div>
                                                                         <div style="width: 18%;">{{ $extra->estimated_delivery_time }} Days</div>
@@ -156,7 +157,7 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                                
+
                                                 @if(getLastLoginRoleId()==App\Models\Role::$Client)
                                                 <div class="item-details-thumb-area2">
                                                     
