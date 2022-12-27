@@ -8,7 +8,7 @@
                 <div class="mw-100">
                     <span class="float-sm-left header-title">
                         <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
-                        <small v-if="active_user.send_to_user.last_login_at">{{formattedDate(active_user.send_to_user.last_login_at)}}
+                        <small v-if="active_user.send_to_user.last_activity_at">{{formattedDate(active_user.send_to_user.last_activity_at)}}
                         </small> 
 
                         

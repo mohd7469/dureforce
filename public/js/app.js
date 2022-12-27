@@ -56835,10 +56835,12 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 " }, [
-            user.send_to_user.last_login_at
+            user.send_to_user.last_activity_at
               ? _c("span", { staticClass: "user-font-size" }, [
                   _vm._v(
-                    _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
+                    _vm._s(
+                      _vm.formattedDate(user.send_to_user.last_activity_at)
+                    )
                   ),
                 ])
               : _vm._e(),
@@ -56923,12 +56925,12 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm.active_user.send_to_user.last_login_at
+            _vm.active_user.send_to_user.last_activity_at
               ? _c("small", [
                   _vm._v(
                     _vm._s(
                       _vm.formattedDate(
-                        _vm.active_user.send_to_user.last_login_at
+                        _vm.active_user.send_to_user.last_activity_at
                       )
                     ) + "\n                    "
                   ),
