@@ -111,96 +111,19 @@ trait CreateOrUpdateEntity {
             $model->features()->sync($request->features);
 
         });
+        if($type == Attribute::SOFTWARE){
+            $this->updateStatus($request,$model);
+        }
+        else{
+            if($model->status_id == $model::STATUSES['APPROVED']){
 
+                $model->status_id = $model::STATUSES['PENDING'];
+                $model->save();
+            }
+        }
         return true;
     }
 
-
-    public function savePricingBackup($request, $model, $type = Attribute::SERVICE) : bool
-    {
-
-        DB::transaction(function () use ($request, $model, $type) {
-
-            $model->status = Service::PENDING;
-
-            if($type == Attribute::SERVICE) {
-                $model->update([
-                    'price'         => $request->price,
-                    'status'        => Service::PENDING,
-                    'deliverables'  => !empty($request->deliverables) ? decodeOrEncodeFields($request->deliverables, false) : null,
-                    'delivery_time' => $request->delivery_time
-                ]);
-            } else {
-                $model->update([
-                    'amount'         => $request->amount,
-                    'status'        => Service::PENDING,
-                    'deliverables'  => !empty($request->deliverables) ? decodeOrEncodeFields($request->deliverables, false) : null,
-                    'delivery_time' => $request->delivery_time
-                ]);
-            }
-
-            if($type == Attribute::SERVICE) {
-              $model->serviceSteps()->delete();
-              $model->extraService()->delete();
-            } else {
-              $model->softwareSteps()->delete();
-              $model->extraSoftware()->delete();
-            }
-
-            if (!empty($request->steps)) {
-                $steps = [];
-                foreach ($request->get('steps') as $key => $value) {
-                    if($type == Attribute::SERVICE) {
-                        $steps[] = new ServiceStep([
-                            'name' => $value,
-                            'description' => $request->get('description')[$key]
-                        ]);
-                    } else {
-                        $steps[] = new SoftwareStep([
-                            'name' => $value,
-                            'description' => $request->get('description')[$key]
-                        ]);
-                    }
-                }
-                if($type == Attribute::SERVICE) {
-                    $model->serviceSteps()->saveMany($steps);
-                } else {
-                    $model->softwareSteps()->saveMany($steps);
-                }
-            }
-
-            if (!empty($request->extra_title)) {
-                $extraService = [];
-                foreach ($request->get('extra_title') as $key => $value) {
-                    
-                    if($type == Attribute::SERVICE) {
-                        $extraService[] = new ExtraService([
-                            'title' => $request->extra_title[$key] ?? '',
-                            'price' => $request->add_on_price[$key] ?? 0,
-                            'delivery' => $request->add_on_delivery[$key] ?? ''
-                        ]);
-                    } else {
-                        $extraService[] = new ExtraSoftware([
-                            'title' => $request->extra_title[$key] ?? '',
-                            'price' => $request->add_on_price[$key] ?? 0,
-                            'delivery' => $request->add_on_delivery[$key] ?? ''
-                        ]);
-                    }
-
-                }
-
-            
-                
-                if($type == Attribute::SERVICE) {
-                    $model->extraService()->saveMany($extraService);
-                } else {
-                    $model->extraSoftware()->saveMany($extraService);
-                }
-            }
-
-        });
-        return true;
-    }
     public function isManualTitle($tile){
         $module=SoftwareDefaultStep::where('title',$tile)->first();
         if($module)
@@ -233,7 +156,11 @@ trait CreateOrUpdateEntity {
               $model->serviceSteps()->delete();
               $model->addOns()->delete();
               if(!empty($request->service_add_ons)) {
-                    $model->addOns()->createMany($request->service_add_ons);
+                    foreach ($request->service_add_ons as $key => $value) {
+                       if(isset($value['title']) || isset($value['rate_per_hour'])|| isset($value['estimated_delivery_time'])){
+                            $model->addOns()->create($value);
+                        }
+                    }
                 }
 
             } else {
@@ -282,7 +209,11 @@ trait CreateOrUpdateEntity {
                 }
             }
 
+
+
         });
+        $this->updateStatus($request,$model);
+
         return true;
     }
 
@@ -362,6 +293,7 @@ trait CreateOrUpdateEntity {
                     ]);
 
                 }
+                $this->updateStatus($request,$model);
 
             } catch (\Exception $exp) {
                 return false;
@@ -380,12 +312,22 @@ trait CreateOrUpdateEntity {
             ]);
            
         });
+        $this->updateStatus($request,$model);
+
         return true;
 
     }
-    public function updateSoftwareStatus($request, $model){
-        $model->status_id  = $request->action == 'save_project' ? Software::STATUSES['DRAFT']:Software::STATUSES['PENDING'];
-        return $model;
+    public function updateStatus($request, $model){
+        if($request->action == 'save_project'){
+            $model->status_id=$model::STATUSES['DRAFT'];
+        }
+        else{
+            if($model->is_terms_accepted)
+                $model->status_id  = $model::STATUSES['PENDING'];
+
+        }
+        $model->save();
+
     }
     public function saveReview($request, $model, $type = Attribute::SERVICE, $notificationText = 'Service', $notificationUrl = 'service'): bool
     {
@@ -396,14 +338,8 @@ trait CreateOrUpdateEntity {
                 'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
                 'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false
             ]);
-            if($type == Attribute::SERVICE) {
-               
-                $model->status_id  = $request->action == 'save_project' ? Service::STATUSES['DRAFT']:Service::STATUSES['PENDING'];
-            } else {
-                $model=$this->updateSoftwareStatus($request,$model);
-            }
-            
-            $model->save();
+            $this->updateStatus($request,$model);
+  
          
             $adminNotification = new AdminNotification();
             $adminNotification->user_id = auth()->id();
