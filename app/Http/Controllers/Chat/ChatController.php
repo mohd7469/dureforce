@@ -104,6 +104,8 @@ class ChatController extends Controller
         if($model=='Proposal'){
 
             $proposal=Proposal::with('job')->where('uuid',$model_uuid)->first();
+            $proposal->status_id=Proposal::STATUSES['ACTIVE'];
+            $proposal->save();
             $job=$proposal->job;
             $job->messages()->updateOrCreate(
                 ['proposal_id' =>  $proposal->id],

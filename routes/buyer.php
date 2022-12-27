@@ -12,7 +12,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
         Route::name('basic.')->prefix('buyer')->group(function () {
             Route::middleware(['verified','is-client'])->group(function () {
-                Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile');
+                Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile')->middleware('is-profile-completed');
                 Route::post('/profle/password/change', 'Buyer\ProfileController@buyerprofilePasswordChange')->name('profile.password.change');
                 Route::post('/profile/skills', 'ProfileController@saveSkills')->name('skills.save');
                 Route::post('/user-profile', 'Buyer\ProfileController@buyersaveUserBasics')->name('profile.save');
