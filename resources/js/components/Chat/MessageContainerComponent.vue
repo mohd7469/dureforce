@@ -8,7 +8,7 @@
                 <div class="mw-100">
                     <span class="float-sm-left header-title">
                         <b>{{active_user.send_to_user.first_name}} {{active_user.send_to_user.last_name}} </b> 
-                        <small v-if="active_user.send_to_user.last_login_at">{{formattedDate(active_user.send_to_user.last_login_at)}}
+                        <small v-if="active_user.send_to_user.last_activity_at">{{formattedDate(active_user.send_to_user.last_activity_at)}}
                         </small> 
 
                         
@@ -46,7 +46,7 @@
                     <div class="msg_cotainer">
                         <div>
                             
-                            <div class="dropdown icon" v-if="active_user.send_to_user.id!=message.sender_id">
+                            <div class="dropdown actions-icon" v-if="active_user.send_to_user.id!=message.sender_id">
                                 <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
                                 <ul class="dropdown-menu">
@@ -235,6 +235,19 @@
     right: 2px;
     top: -15px;
 }
+
+.actions-icon {
+    background-color: transparent;
+    color: darkgray;
+    padding: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0px;
+    top: -15px;
+}
+
+
 .icon_position{
     margin-top: 12px
     ;
@@ -459,7 +472,6 @@ color: rgba(255,255,255,0.6);
 .user_name{
     position: absolute;
     left: 0;
-    bottom: -15px;
     top: -22px;
     font-size: 10px;
     white-space: nowrap;
