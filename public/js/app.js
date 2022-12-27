@@ -6206,9 +6206,16 @@ __webpack_require__.r(__webpack_exports__);
       this.getActiveUserChat();
       this.userPuserChannel();
     },
+    shiftUsers: function shiftUsers(user) {
+      this.users.sort(function (x, y) {
+        return x.id == user.id ? -1 : y.id == user.id ? 1 : 0;
+      });
+    },
     getActiveUserChat: function getActiveUserChat() {
       var _this2 = this;
 
+      var is_shift_users = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      if (is_shift_users) this.shiftUsers(this.active_user);
       axios.post('/chat/messages', {
         send_to_id: this.active_user.send_to_user.id,
         module_id: this.active_user.module_id,
@@ -56728,7 +56735,11 @@ var render = function () {
                     messages: _vm.messages,
                     active_user: _vm.active_user,
                   },
-                  on: { newMessage: _vm.getUSers },
+                  on: {
+                    newMessage: function ($event) {
+                      return _vm.getActiveUserChat(true)
+                    },
+                  },
                 }),
               ],
               1
@@ -56835,12 +56846,10 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4 " }, [
-            user.send_to_user.last_activity_at
+            user.send_to_user.last_login_at
               ? _c("span", { staticClass: "user-font-size" }, [
                   _vm._v(
-                    _vm._s(
-                      _vm.formattedDate(user.send_to_user.last_activity_at)
-                    )
+                    _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
                   ),
                 ])
               : _vm._e(),
