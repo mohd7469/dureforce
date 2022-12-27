@@ -18,7 +18,7 @@
                                     <a class="nav-link" data-bs-toggle="tab" href="#Invited_Freelancers_tab">Invited Freelancers ({{count($invited_freelancers)}})</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="tab" href="#My_Hires_tab">My Hires (2)</a>
+                                    <a class="nav-link" data-bs-toggle="tab" href="#My_Hires_tab">My Hires</a>
                                 </li>
                             </ul>
                         </div>
@@ -47,19 +47,14 @@
                                                 <div class="col-md-4">
                                                         <select name="Best match" id="bestmatch">
                                                             <option>Best match</option>
-                                                            <option>1</option>
-                                                            <option>1</option>
-                                                            <option>1</option>
-                                                            <option>1</option>
+
                                                         </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
-                                                        <option>1</option>
+                                                        <option>Coming soon</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -246,7 +241,7 @@
                             <div class="tab-pane" id="My_Hires_tab">
                                 <p class="card-text text-center">
                                 <div class="d-flex align-items-center justify-content-center ">
-                                    <h3 class="display-1 fw-bold">My Hires Data Not Found</h3>
+                                    <h3 class="display-1 fw-bold">Coming Soon</h3>
                                 </div>
                                 </p>
                             </div>

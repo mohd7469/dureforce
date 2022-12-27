@@ -23,7 +23,7 @@ Route::name('seller.')->group(function () {
                 Route::post('/education/add', [\App\Http\Controllers\Seller\ProfileController::class,'addEducation'])->name('education.add');
                 Route::post('/education/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editEducation'])->name('education.edit');
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
-                Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view');
+                Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view')->middleware('is-profile-completed');
                 Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
                 Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
@@ -50,7 +50,7 @@ Route::name('seller.')->group(function () {
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
                     Route::post('/validate-proposal',      [\App\Http\Controllers\Seller\ProposalController::class,'validatePropsal'] )->name('validate');
                     Route::post('proposal-store/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'savePropsal'])->name('store');
-                    Route::get('proposal-lists',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');
+                    Route::get('proposal-lists/{type?}',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');
                     Route::get('proposal-detail/{uuid}',           [\App\Http\Controllers\Seller\ProposalController::class,'details'])->name('detail');
 
                 });

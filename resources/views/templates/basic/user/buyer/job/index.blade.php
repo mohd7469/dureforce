@@ -15,7 +15,7 @@
                                 <th style="width: 20%">@lang('Title')</th>
                                 <th>@lang('Proposals')</th>
                                 <th>@lang('Messages')</th>
-                                <th>@lang('Hired')</th>
+{{--                                <th>@lang('Hired')</th>--}}
                                 <th>@lang('Status')</th>
                                 <th>@lang('Price')</th>
                                 <th>@lang('Action')</th>
@@ -33,11 +33,11 @@
                                             <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                         </td>
                                         <td data-label="@lang('Messages')">
-                                            {{ '3' }}
+                                            {{ $job->messages->count() }}
                                         </td>
-                                        <td data-label="@lang('Hired')">
-                                            {{ '1' }}
-                                        </td>
+{{--                                        <td data-label="@lang('Hired')">--}}
+{{--                                            {{ '1' }}--}}
+{{--                                        </td>--}}
                                         
                                         <td data-label="@lang('Status')">
                                                 @if($job->status->id == \App\Models\Job::$Approved)

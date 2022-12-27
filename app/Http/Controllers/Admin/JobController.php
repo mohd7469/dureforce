@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\Skills;
@@ -11,6 +12,7 @@ use App\Models\Category;
 use Carbon\Carbon;
 use App\Models\JobBiding;
 use App\Traits\DeleteEntity;
+use Illuminate\Support\Facades\DB;
 
 class JobController extends Controller
 {
@@ -225,9 +227,37 @@ class JobController extends Controller
 
     public function destroy($id)
     {
-        $this->deleteEntity(Job::class,'job', $id);
-        $notify[] = ['success', 'Job has been deleted'];
-        return back()->withNotify($notify);
+
+        try {
+            DB::beginTransaction();
+            $job = Job::where("id", $id)->first();
+
+            foreach ($job->documents as $document) {
+                $path = Job::$attachment_path . '/' . $document->name;
+                removeFile($path);
+            }
+
+            $job->documents()->delete();
+
+            $job->proposal()->update(['status_id' => Proposal::STATUSES['ARCHIVED']]);
+
+            DB::table('job_deliverables')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+            DB::table('job_dods')->where('job_id', $job->id)
+                ->update(['deleted_at' => DB::raw('NOW()')]);
+
+            $job->delete();
+            DB::commit();
+            $notify[] = ['success', 'Job has been deleted'];
+            return back()->withNotify($notify);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $notify[] = ['success', 'Job delete failed'];
+            return back()->withNotify($notify);
+
+        }
+
     }
 
 }

@@ -37,9 +37,18 @@
                         <!----== Client Info Section Start ==----->
         
                        <div class="cp-profile_c_main">
-                        <div class="profile-img-buyer col-md-12" action="" style="background-color: transparent;">
+                        <div class="profile-img-buyer col-md-4" action="" style="background-color: transparent;">
                             <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after" onchange="return previewFile(this);" title="">
-                            <img class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                            <div style="position: relative">
+                                <img class="thumbnail" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                                        
+                                <div class="client-profile-pic-edit-icon" id="profile-pic-edit-btn">
+                                    <i class="fa fa-camera fa-2x icon-size" ></i>
+                                </div>
+                            </div>
+                           
+
+                       
                             <div class="cp-profile-h">{{$basicProfile->designation}}</div>
                         </div>
                            {{-- <div class="h-img">
@@ -158,14 +167,14 @@
     <script>
         "use strict";
         $("#img-upload").on('change',function(){
-            
             $('#form-basic-save').submit();
+        });
 
-    });
+        $('#profile-pic-edit-btn').click(function(e){
+            $('#img-upload').click();
+        });
 
-        
-
-        </script>
+    </script>
 @endpush
 <style>
     

@@ -13,7 +13,7 @@
                             <Messages 
                                 v-bind:messages="messages" 
                                 v-bind:active_user="active_user" 
-                                @newMessage="getUSers"
+                                @newMessage="getActiveUserChat(true)"
                             ></Messages>
                             
                         </div>
@@ -63,14 +63,19 @@
                 this.userPuserChannel();
 
             },
-            getActiveUserChat()
+            shiftUsers(user){
+                this.users.sort(function(x,y){ return x.id == user.id ? -1 : y.id == user.id ? 1 : 0; });
+            },
+            getActiveUserChat(is_shift_users=false)
             {
+                if(is_shift_users)
+                    this.shiftUsers(this.active_user);
                 axios.post('/chat/messages', {  
                     send_to_id: this.active_user.send_to_user.id,  
                     module_id: this.active_user.module_id,
                     module_type: this.active_user.module_type,
 
-                })  
+                })
 
                 .then( response => {
                     this.messages=response.data.messages;
