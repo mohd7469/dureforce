@@ -534,7 +534,7 @@
         padding: 21px 22px;
         transition: 0.3s;
         font-size: 17px;
-        background: #DBEFEF;
+        background: #007F7F !important;
         /* border-radius: 8px 0px 0px 0px;    */
         font-weight: 700;
         font-size: 14px;
