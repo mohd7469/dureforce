@@ -33,7 +33,7 @@
                                             <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                         </td>
                                         <td data-label="@lang('Messages')">
-                                            {{ '3' }}
+                                            {{ $job->messages->count() }}
                                         </td>
 {{--                                        <td data-label="@lang('Hired')">--}}
 {{--                                            {{ '1' }}--}}
