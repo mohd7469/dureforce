@@ -562,11 +562,10 @@ class ProfileController extends Controller
     public function buyersaveCompany(Request $request)
     {
 
-
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:4|max:15',
+            'vat' => 'required|string|min:4|max:9',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -585,9 +584,10 @@ class ProfileController extends Controller
 
                 if ($request->hasFile('company_logo')) {
 
-                    $location = imagePath()['profile']['user']['path'];
-                    $size = imagePath()['profile']['user']['size'];
-                    $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+                    $path = imagePath()['attachments']['path'];
+//                    $size = imagePath()['profile']['user']['size'];
+//                    $filename = uploadImage($request->company_logo, $path, $size, auth()->user()->image);
+                    $filename = uploadAttachments($request->company_logo, $path);
                 }
 
                 if (empty($filename)) {
