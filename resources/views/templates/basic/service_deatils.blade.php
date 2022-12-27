@@ -127,7 +127,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                @if ($service->addOns->isNotEmpty())
                                                 <div class="item-details-thumb-area2">
                                                     <div class="service_subtitle1">Add-Ons</div>
                                                     <div class="service_subtitle3">
@@ -152,11 +152,11 @@
                                                                         </div>
                                                                     </li>
                                                                 @endforeach
-                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </div>
-
+                                                @endif
+                                                
                                                 @if(getLastLoginRoleId()==App\Models\Role::$Client)
                                                 <div class="item-details-thumb-area2">
                                                     
