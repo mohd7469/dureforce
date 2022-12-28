@@ -172,7 +172,7 @@
                                                                     <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                                                 </td>
                                                                 <td data-label="@lang('Messages')" class="msg-icon">
-                                                                    {{ '3' }}
+                                                                    {{ $job->messages->count() }}
                                                                 </td>
                                                                 <td data-label="@lang('Proposals')">
                                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>

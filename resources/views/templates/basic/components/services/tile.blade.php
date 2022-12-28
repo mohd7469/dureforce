@@ -31,7 +31,7 @@
                     <span class="author text-capitalize">by
                         <a href="{{ route('profile', $service->user->username ?? '') }}">
                             {{ __($service->user->username ?? '-') }} </a></span><br>
-                    <span class="delivery">{{"Delivery Time ".$service->estimated_delivery_time}}</span>
+                    <span class="delivery">{{"Delivery Time ".$service->estimated_delivery_time.' Days'}}</span>
                 </div>
                 <div class="col-12 col-md-5 ">
                     <span class="rates">
