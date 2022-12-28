@@ -8,7 +8,7 @@ use App\Models\UserLogin;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -129,10 +129,12 @@ class LoginController extends Controller
 
     public function logout()
     {
-        $user = auth()->user();
-        $user->last_activity_at=Carbon::now();
-        $user->is_session_active=false;
-        $user->save();
+        if(Auth::check()){
+            $user = auth()->user();
+            $user->last_activity_at=Carbon::now();
+            $user->is_session_active=false;
+            $user->save();
+        }
 
         $this->guard()->logout();
         request()->session()->invalidate();

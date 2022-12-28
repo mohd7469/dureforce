@@ -22,7 +22,8 @@ class SoftwareObserver
 
     public function updating($software)
     {
-        $software->updated_at = Carbon::now();        
+        $software->updated_at = Carbon::now();  
+
         
     }
     public function deleting($software)

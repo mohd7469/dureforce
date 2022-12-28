@@ -51,7 +51,13 @@ class JobController extends Controller
         $user_saved_jobs_ids = $user_saved_jobs->pluck('id')->toArray();
 
         $tabs = $category;
+        if($tabs == 'saved-jobs')
+        {
         $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+
+        }else{
+        $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+        }
 
         $categories = Category::with('subCategory')->get();
         if($category == null){

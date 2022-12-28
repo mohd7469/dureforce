@@ -565,7 +565,7 @@ class ProfileController extends Controller
         $rules = [
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:4|max:9',
+            'vat' => 'required|string|min:5|max:15',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -591,7 +591,10 @@ class ProfileController extends Controller
                 }
 
                 if (empty($filename)) {
-                    $filename = $user->company->logo ?? '';
+                    $url = $user->company->logo ?? '';
+                }
+                else{
+                    $url = $path . '/' . $filename;
                 }
 
                 $user->company()->delete();
@@ -599,7 +602,7 @@ class ProfileController extends Controller
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
                     'number' => $request->get('phone'),
-                    'logo' => $filename,
+                    'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
                     'vat' => $request->get('vat'),

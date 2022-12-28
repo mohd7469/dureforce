@@ -68,11 +68,11 @@
                                 </td>
                                 <td>
                                 @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
-                                    <span class="badge badge--success">Submitted</span>
+                                    <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Submitted</span>
                                 @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
-                                    <span class="badge badge--info">Archived</span>
+                                    <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Archived</span>
                                 @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
-                                    <span class="badge badge--primary">Active</span>
+                                    <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Active</span>
                                 @else
 
                                 @endif
@@ -120,11 +120,11 @@
                                 </td>
                                 <td>
                                     @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
-                                        <span class="badge badge--success">Submitted</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Submitted</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
-                                        <span class="badge badge--info">Archived</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Archived</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
-                                        <span class="badge badge--primary">Active</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Active</span>
                                     @else
 
                                     @endif
@@ -172,11 +172,11 @@
                                 </td>
                                 <td>
                                     @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
-                                        <span class="badge badge--success">Submitted</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Submitted</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
-                                        <span class="badge badge--info">Archived</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Archived</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
-                                        <span class="badge badge--primary">Active</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Active</span>
                                     @else
 
                                     @endif
@@ -223,11 +223,11 @@
                                 </td>
                                 <td>
                                     @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
-                                        <span class="badge badge--success">Submitted</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--success'}}">Submitted</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
-                                        <span class="badge badge--info">Archived</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--dark'}}">Archived</span>
                                     @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
-                                        <span class="badge badge--primary">Active</span>
+                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--success'}}">Active</span>
                                     @else
 
                                     @endif

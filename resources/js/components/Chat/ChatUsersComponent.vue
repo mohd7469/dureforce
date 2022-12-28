@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-md-4 ">
-                <span class="user-font-size" v-if="user.send_to_user.last_activity_at">{{formattedDate(user.send_to_user.last_activity_at)}}</span></br>
+                <span class="user-font-size" v-if="user.send_to_user.last_login_at">{{formattedDate(user.send_to_user.last_login_at)}}</span></br>
                 <span :class="user.model_color">{{user.model}}</span>
 
             </div>

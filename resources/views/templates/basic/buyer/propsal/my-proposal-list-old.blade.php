@@ -137,7 +137,7 @@
                             <div class="tab-pane" id="Invited_Freelancers_tab">
                                 <p class="card-text text-center">
                                 <div class="d-flex align-items-center justify-content-center ">
-                                    <h3 class="display-1 fw-bold">My Hires Data Not Found</h3>
+                                    <h3 class="display-1 fw-bold">Coming Soon</h3>
                                 </div>
                                 </p>
                             </div>

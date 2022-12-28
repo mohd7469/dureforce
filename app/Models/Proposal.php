@@ -45,7 +45,7 @@ class Proposal extends Model
     }
     public function module()
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
     public function delivery_mode()
     {
@@ -54,6 +54,10 @@ class Proposal extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id')->with('user_basic');
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
     public function job()
     {

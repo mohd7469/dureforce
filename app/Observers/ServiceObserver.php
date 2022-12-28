@@ -23,7 +23,7 @@ class ServiceObserver
 
     public function updating($service)
     {
-        $service->updated_at = Carbon::now();        
+        $service->updated_at = Carbon::now();
     }
     public function deleting($service)
     {   

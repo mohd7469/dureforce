@@ -218,7 +218,6 @@ if (!empty($service)) {
             var item = data.files.length;
             var urls = URL.createObjectURL(event.target.files[0]);
             $('#galeria').html('');
-
             $('#galeria').append(` 
             '<img src="${urls}" class="profilePicPreview bg_img" style="height: 250px";>'
             `);
