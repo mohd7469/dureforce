@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\UserLogin;
 use App\Models\ServiceFee;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -107,6 +108,8 @@ class RegisterController extends Controller
             $user = $this->create($request->all());
 
             $this->guard()->login($user);
+            $user->last_activity_at=Carbon::now();
+            $user->last_login_at=Carbon::now();
             $user->is_session_active = true;
             $user->save();
             return $this->registered($request, $user)
