@@ -3,9 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\DatabaseOperations;
 
 class CreateProposalsTable extends Migration
 {
+    use DatabaseOperations;
+
     /**
      * Run the migrations.
      *
@@ -33,8 +36,7 @@ class CreateProposalsTable extends Migration
             $table->boolean('is_shortlisted')->default(false)->nullable();
             $table->date('project_start_date')->nullable();
             $table->date('project_end_date')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $this->addCommonDBFields($table);
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('delivery_mode_id')->references('id')->on('delivery_modes')->onDelete('cascade');
