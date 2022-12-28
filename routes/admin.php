@@ -408,6 +408,20 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('/sub/category/delete/{id}', 'CategoryController@deleteSubCategory')->name('category.subcategory.delete');
         });
 
+        //Email Creditional Route
+        Route::get('credential', 'SystemCredentialController@index')->name('credential.index');
+        Route::post('credential/store', 'SystemCredentialController@store')->name('credential.store');
+        Route::post('credential/activeBy', 'SystemCredentialController@activeBy')->name('credential.activeBy');
+        Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
+         
+         Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
+       
+      
+      
+    
+        Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+        
+
         Route::middleware('staffaccess:12')->group(function () {
             //features
             Route::get('features', 'FeaturesController@index')->name('features.index');
