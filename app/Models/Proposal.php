@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\DatabaseOperations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Proposal extends Model
 {
-    use HasFactory;
+    use HasFactory , DatabaseOperations , SoftDeletes;
     protected $fillable = ['user_id','bid_type','status_id','service_fees_id','delivery_mode_id','module_id','module_type','hourly_bid_rate','amount_receive','start_hour_limit','end_hour_limit','is_shortlisted','cover_letter','deleted_at','fixed_bid_amount','project_start_date','project_end_date'];
 
     public static $bid_type_milestone = 'milestone';
