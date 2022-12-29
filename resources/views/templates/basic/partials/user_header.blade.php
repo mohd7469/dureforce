@@ -75,10 +75,12 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Password & Security')</span>
                                     </a>
+                                    
                                     <a href="#"
                                         class=" d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Identity Verification')</span>
                                     </a>
+
                                     <strong class="dropdown-menu__item dropdown-menu__caption d-flex align-items-center fw-bolder px-3 py-2">@lang('My Finance')</strong>
                                     <a href="#"
                                         class="d-flex align-items-center px-3 py-2">
