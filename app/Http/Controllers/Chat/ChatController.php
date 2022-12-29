@@ -31,7 +31,7 @@ class ChatController extends Controller
         }
         else
         {
-            $users=ModuleChatUser::with('user')->with('module')->where('sender_id',$user_id)->get();
+            $users=ModuleChatUser::with('user')->with('module')->where('sender_id',$user_id)->orderBy('updated_at','desc')->get();
             $users = $users->map(function ($item) {
                 
                  $item->send_to_user = $item->user; 
