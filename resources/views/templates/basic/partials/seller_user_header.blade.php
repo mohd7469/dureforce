@@ -146,10 +146,10 @@
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('proposals')) class="active" @endif>@lang('Proposals')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
-                                            <a href="{{ route('seller.proposal.index') }}"
+                                            <a href="#"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('All Proposals')</span>
                                             </a>
@@ -174,7 +174,7 @@
                                     <div class="dropdown">
                                         <button class="nav-button" class="" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
-                                            <a href="{{ route('service') }}"
+                                            <a href="#"
                                             @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
@@ -195,7 +195,7 @@
                                     <div class="dropdown">
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
-                                            <a href="{{ route('software') }}"
+                                            <a href="#"
                                             @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
