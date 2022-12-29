@@ -15,7 +15,7 @@
                         <button type="button" class="short-menu-close-btn">@lang('Close')</button>
                     </li> -->
                     @foreach(\App\Models\Category::getByType($type_id) as $category)
-                        <li class="nav-item active">
+                        <li class="nav-item">
 
                             <a href="{{$goto}}?category_id={{$category->id}}&category_name={{$category->name}}">{{__($category->name)}}</a>
                         </li>
