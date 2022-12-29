@@ -11,25 +11,25 @@
                         <div class="row justify-content-center mb-30-none">
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Current Balance</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_hc">Withdraw</a>
                                 <a href="#" class="btn_w_vl">View Log</a>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Sales (Services)</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Sales (Software)</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
 
                             <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Withdrawn</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 
                                 <a href="#" class="btn_w_vl">View Log</a>
                             </div>
@@ -64,11 +64,11 @@
                             <ul class="filter-drop-dw">
                             <li>
                                 <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
-                                <label class="form-check-label" for="check1">All</label>
+                                <!-- <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something"> -->
+                                <label class="form-check-label" for="check1">Coming soon</label>
                               </div>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
                                 <label class="form-check-label" for="check2">Open (22)</label>
@@ -85,7 +85,7 @@
                                 <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">
                                 <label class="form-check-label" for="check4">Onhold (0)</label>
                               </div>
-                            </li>
+                            </li> -->
                             </ul>
                 
                         
@@ -423,6 +423,7 @@ input.search_btnc {
     background-position: 60% 39%;
     font-size: 0;
     cursor: pointer !important;
+    margin-top: -40px;
 }
 
 .f-container {
@@ -447,7 +448,7 @@ input.search_btnc {
 }
 ul.filter-drop-dw {
     width: 178px;
-    height: 154px;
+    /* height: 154px; */
     left: 976px;
     top: 190px;
     background: #FFFFFF;

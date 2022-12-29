@@ -698,7 +698,7 @@
             border-bottom: 2px solid #007F7F;
         }
         .intro{border-bottom: 2px solid #007F7F;}
-        .ul-margin li:nth-child(1) a{border-bottom: 2px solid #007F7F;}
+        /* .ul-margin li:nth-child(1) a{border-bottom: 2px solid #007F7F;} */
         .intro2{
             border-bottom: 2px solid #007F7F !important;
         }

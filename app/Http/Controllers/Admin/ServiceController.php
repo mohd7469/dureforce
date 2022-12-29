@@ -71,15 +71,10 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        
-        // if(!$service->creation_status) {
-        //     $notify[] = ['error', 'Service cannot be approved because it is not complete.'];
-        //     return back()->withNotify($notify);
-        // }
-
         $service->status_id = 19;
         $service->created_at = Carbon::now();
         $service->save();
+
         $notify[] = ['success', 'Service has been approved'];
         return back()->withNotify($notify);
     }

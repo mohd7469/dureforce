@@ -276,6 +276,7 @@
                 e.preventDefault();
                 e.stopPropagation(); 
                 saveUserCompany();
+                $('#go_to_dashboard_div').show();
 
             });
         
