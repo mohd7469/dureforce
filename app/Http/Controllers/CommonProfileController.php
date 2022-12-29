@@ -113,6 +113,7 @@ class CommonProfileController extends Controller
         ];
         
         if (getLastLoginRoleId() == Role::$Freelancer) {
+           
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
@@ -136,7 +137,7 @@ class CommonProfileController extends Controller
                     ]);
                 $user->languages()->delete();
                 $user->languages()->createMany($request_data['languages']);
-                if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+                if (getLastLoginRoleId() == Role::$Freelancer) {
                     $user->categories()->sync($request_data['category_id']);
                 }
 
