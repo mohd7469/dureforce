@@ -16,7 +16,15 @@ class CreateLanguageLevelsTable extends Migration
         Schema::create('language_levels', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('slug')->nullable();
+            $table->unsignedBigInteger('module_id')->index()->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->foreign('module_id')
+                ->references('id')
+                ->on('modules')
+                ->onDelete('cascade');
         });
     }
 
