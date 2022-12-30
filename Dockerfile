@@ -22,10 +22,10 @@ RUN mkdir /run/php
 RUN chmod 777 -R /html
 
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev -o
-RUN php artisan optimize:clear
 RUN php artisan route:cache
 RUN php artisan config:cache
 RUN php artisan view:cache
+RUN php artisan optimize:clear
 
 COPY --from=builder /src/node_modules /html/node_modules
 
