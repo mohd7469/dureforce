@@ -182,6 +182,9 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
 {
     $filename = '';
     $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+    $app_name = getenv('APP_NAME');
+    $app_debug = getenv('APP_DEBUG');
+
     try {
 
 //        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
@@ -226,6 +229,9 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
         $obj = [];
         $obj['error'] = $e->getMessage();
         $obj['connection_string'] = $connectionString;
+        $obj['app_name'] = $app_name;
+        $obj['app_debug'] = $app_debug;
+        $obj['env'] = $_ENV;
 //        error ($e);
         \Illuminate\Support\Facades\Log::error($obj);
 //        error($obj);
