@@ -217,9 +217,9 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $thumbcontent = fopen($thumbImage, "r");
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
-    } catch (ServiceException $e) {
+    } catch (\Exception $e) {
         echo "<pre>";
-        print '[ERROR] ' . $connectionString . "\n";
+        echo '[ERROR] ' . $connectionString . "\n";
         print_r($e);
         die();
 //        error($e);
