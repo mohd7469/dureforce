@@ -37,6 +37,8 @@ RUN php artisan view:cache
 
 COPY --from=builder /src/node_modules /html/node_modules
 
+RUN grep "\S" .env-dev | awk '{print "export "$0}' > ./load-env.sh
+
 EXPOSE 80
 
 STOPSIGNAL SIGQUIT
