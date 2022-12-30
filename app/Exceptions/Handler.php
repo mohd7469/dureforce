@@ -41,12 +41,14 @@ class Handler extends ExceptionHandler
 //            echo " -->";
 //        });
         // // redirects user to login page if csrf token expires
-        // $this->renderable(function(\Exception $e){
+        $this->renderable(function(\Exception $e){
 
-        //     if($e->getPrevious() instanceof TokenMismatchException) {
-        //         return redirect()->route('login');
-        //     }
-        // });
+            if($e->getPrevious() instanceof TokenMismatchException) {
+                return redirect()->route('login');
+            }
+        });
 
     }
+   
+
 }

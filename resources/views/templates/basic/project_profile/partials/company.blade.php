@@ -12,7 +12,7 @@
         <div class="container-fluid welcome-body" id="">
             <h1 class="mb-4">Company</h1>
             <span class="cmnt pb-4">Complete your profile to search from thousands of skilled freelancers and
-                request proposals.</span>
+                request proposals</span>
             <div>
                 <div id="company-container">
 

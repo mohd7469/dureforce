@@ -11,18 +11,18 @@
                         <div class="row justify-content-center mb-30-none">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c cblance">Current Balance</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_hc">Top Up</a>
                                 <a href="#" class="btn_w_vl">View Log</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c tp-c1">Total Paid</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c escrow-c">Escrow</p>
-                                <p class="card_d_p">$1234.00</p>
+                                <p class="card_d_p">Coming soon</p>
                                 
                                 <a href="#" class="btn_w_vl">See History</a>
                             </div>
@@ -34,17 +34,17 @@
                         <div class="row justify-content-center mb-30-none">
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Total Hired</p>
-                                <p class="card_d_p">10</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_vl">View All</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Current Resources</p>
-                                <p class="card_d_p">10</p>
+                                <p class="card_d_p">Coming soon</p>
                                 <a href="#" class="btn_w_vl">View All</a>
                             </div>
                             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30 dashboard_card_cstm">
                                 <p class="card_h-c">Previous Resources</p>
-                                <p class="card_d_p">10</p>
+                                <p class="card_d_p">Coming soon</p>
                                 
                                 <a href="#" class="btn_w_vl">View All</a>
                             </div>
@@ -79,13 +79,13 @@
                                 <li>
                                     
                                     <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
-                                        <label class="form-check-label" for="check1">All</label>
+                                        <!-- <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something"> -->
+                                        <label class="form-check-label" for="check1">Coming soon</label>
                                     </div>
 
                                 </li>
                             
-                                <li>
+                                <!-- <li>
                                     <div class="form-check">
 
                                         <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
@@ -128,7 +128,7 @@
                                     <input type="checkbox" class="form-check-input" id="check4" name="option2" value="something">
                                     <label class="form-check-label" for="check4">Published (15)</label>
                                 </div>
-                                </li>
+                                </li> -->
                             </ul>
                 
                         
@@ -172,7 +172,7 @@
                                                                     <a href="{{'#'}}" title="">{{__(str_limit($job->title, 20))}}</a>
                                                                 </td>
                                                                 <td data-label="@lang('Messages')" class="msg-icon">
-                                                                    {{ '3' }}
+                                                                    {{ $job->messages->count() }}
                                                                 </td>
                                                                 <td data-label="@lang('Proposals')">
                                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
@@ -400,6 +400,7 @@ input.search_btnc {
     background-position: 60% 39%;
     font-size: 0;
     cursor: pointer !important;
+    margin-top: -40px;
 }
 
 .f-container {
@@ -425,7 +426,7 @@ input.search_btnc {
 ul.filter-drop-dw {
     margin-right: 34px !important;
     width: 243px;
-    height: 202px;
+    /* height: 202px; */
     left: 964px;
     top: 190px;
     background: #FFFFFF;
@@ -560,6 +561,10 @@ p.escrow-c:before{
     p.card_d_p{
         font-size: 16px;
     }
+    input.search_btnc{
+        background-position: 60% 29%;
+        margin-top: 0px;
+    }
     p.card_h-c{
         font-size: 13px;
     }
@@ -642,6 +647,7 @@ input.search_input {
 }
 input.search_btnc{
     background-position: 60% 29%;
+    margin-top: 0px;
 }
 #Filters{
     height: 34px;

@@ -1,6 +1,12 @@
 @extends($activeTemplate . 'layouts.master')
 @section('content')
 <style>
+    input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
     .btn-save-continue {
         background-color: #7f007f;
         border-radius: 5px;

@@ -29,12 +29,15 @@ use App\Models\TaskDocument;
 use App\Models\User;
 use App\Observers\SoftwareObserver;
 use App\Observers\TagsObserver;
+use App\Traits\DatabaseOperations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Software extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes , DatabaseOperations;
+
 
     const UPDATED_AT = null;
     const FEATURED = 1;

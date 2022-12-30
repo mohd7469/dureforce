@@ -33,7 +33,7 @@
                     <span class="author text-capitalize">by <a
                             href="{{ route('profile', $software->user->username ?? '') }}">{{ __($software->user->username ?? '') }}
                         </a> </span><br>
-                    <span class="delivery">Lead Time {{ $software->estimated_lead_time }} days</span>
+                    <span class="delivery">Lead Time {{ $software->estimated_lead_time }} Days</span>
                 </div>
                 <div class=" col-12 col-md-5">
                     <span class="rates">

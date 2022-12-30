@@ -79,15 +79,17 @@
             </div>
         </div>
 
-        @if (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0 || count(App\Models\UserCompany::where('user_id', auth()->id())->get())>0)
-            <div class=" p-0">
-                <div class="col-md-12">
-                    <a href="{{route('user.home')}}" class="btn btn-continue m-0 my-2 btn-secondary ">
-                        Go To Dashboard
-                    </a>
-                </div>
+        <div class=" p-0" style="display:{{ (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0 || count(App\Models\UserCompany::where('user_id', auth()->id())->get())>0 )? 'block' : 'none'}}" id="go_to_dashboard_div">
+            <div class="col-md-12">
+    
+                <a href="{{route('user.home')}}" class="btn btn-continue m-0 my-2 btn-secondary " id="go_to_dasboard" >
+                    Go To Dashboard
+                </a>
+                    
+               
+
             </div>
-        @endif
+        </div>
 
        
     </div>

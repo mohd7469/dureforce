@@ -31,8 +31,8 @@
         </div>
         
         <div class="card-body msg_card_body" v-chat-scroll>
-
-            <div v-for="message of messages">
+            
+            <div v-for="message of messages" >
                 
                 <div class="d-flex justify-content-start mb-4 mt-custom" v-if="message.role=='freelancer'">
                     
@@ -90,7 +90,12 @@
                 </div>
 
             </div>
+            <div v-if="!messages.length">
+                    <strong>Messages Not Found</strong>
+            </div>
         </div>
+
+        
         <!-- buttons -->
         <div class="empty-space-margin">
             
