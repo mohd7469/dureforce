@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
+use Illuminate\Support\Facades\Request;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,10 +42,14 @@ class Handler extends ExceptionHandler
 //            echo " -->";
 //        });
         // // redirects user to login page if csrf token expires
-        $this->renderable(function(\Exception $e){
+        $this->renderable(function(\Exception $e,$request){
 
             if($e->getPrevious() instanceof TokenMismatchException) {
-                return redirect()->route('login');
+                if($request->ajax()){
+                    return response()->json(["redirect" => route('user.login'), "message" => "Session Expired"]);
+                }
+                else
+                    return redirect()->route('user.login');
             }
         });
 

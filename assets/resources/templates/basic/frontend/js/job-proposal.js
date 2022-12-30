@@ -133,7 +133,11 @@ $(function() {
   
                         }
                         else{
-
+                          if(data.redirect)
+                          {
+                          
+                            window.location.replace(data.redirect);
+                          }
                           displayErrorMessage(data.error);
   
                         }

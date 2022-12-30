@@ -181,9 +181,13 @@ function uploadFile($file, $location, $size = null, $old = null)
 function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
 {
     $filename = '';
+    $connectionString = env('AZURE_STORAGE_SAS_URL');
+    $app_name = env('APP_NAME');
+    $app_debug = env('APP_DEBUG');
+
     try {
 
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+//        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
         //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
         $blobClient = BlobRestProxy::createBlobService($connectionString);
 
@@ -216,9 +220,21 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $thumbcontent = fopen($thumbImage, "r");
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
-    } catch (ServiceException $e) {
-       
-        error($e);
+    } catch (\Exception $e) {
+//        echo "<pre>";
+//        echo '[ERROR] ' . $connectionString . "\n";
+//        print_r($e);
+//        die();
+//        error($e);
+        $obj = [];
+        $obj['error'] = $e->getMessage();
+        $obj['connection_string'] = $connectionString;
+        $obj['app_name'] = $app_name;
+        $obj['app_debug'] = $app_debug;
+        $obj['env'] = $_ENV;
+//        error ($e);
+        \Illuminate\Support\Facades\Log::error($obj);
+//        error($obj);
     }
     return $filename;
 

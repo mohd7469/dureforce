@@ -44,6 +44,9 @@ RUN echo " " >> ./run-with-env.sh
 RUN chmod a+x ./run-with-env.sh
 COPY --from=builder /src/node_modules /html/node_modules
 
+RUN grep "\S" .env-dev | awk '{print "export "$0}' > ./run-with-env.sh
+
+RUN cat ./run.sh >> ./run-with-env.sh
 EXPOSE 80
 
 STOPSIGNAL SIGQUIT
