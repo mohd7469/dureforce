@@ -10,6 +10,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /html 
 
 COPY . .
+RUN php artisan route:clear
+RUN php artisan config:clear
+RUN php artisan view:clear
+RUN php artisan optimize:clear
 
 COPY nginx-conf/nginx.conf /etc/nginx/nginx.conf
 COPY nginx-conf/fastcgi_params /etc/nginx/fastcgi_params
