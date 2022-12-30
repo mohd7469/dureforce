@@ -220,10 +220,11 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
     } catch (ServiceException $e) {
        
 //        error($e);
-        $obj = [];
-        $obj['error'] = $e->getMessage();
-        $obj['connection_string'] = $connectionString;
-        return $obj;
+//        $obj = [];
+//        $obj['error'] = $e->getMessage();
+//        $obj['connection_string'] = $connectionString;
+        print '[ERROR] ' . $connectionString . "\n";
+        error ($e);
 //        error($obj);
     }
     return $filename;
