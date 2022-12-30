@@ -10,11 +10,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 WORKDIR /html 
 
 COPY . .
-RUN php artisan route:clear
-RUN php artisan config:clear
-RUN php artisan event:clear
-RUN php artisan view:clear
-RUN php artisan optimize:clear
 
 COPY nginx-conf/nginx.conf /etc/nginx/nginx.conf
 COPY nginx-conf/fastcgi_params /etc/nginx/fastcgi_params
@@ -27,6 +22,13 @@ RUN mkdir /run/php
 RUN chmod 777 -R /html
 
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev -o
+
+RUN php artisan route:clear
+RUN php artisan config:clear
+RUN php artisan event:clear
+RUN php artisan view:clear
+RUN php artisan optimize:clear
+
 RUN php artisan route:cache
 RUN php artisan config:cache
 RUN php artisan event:cache
