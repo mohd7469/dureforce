@@ -18,6 +18,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (!\Illuminate\Support\Facades\Auth::check()) {
+            
             return route('user.login');
         }
     }
