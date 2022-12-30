@@ -415,13 +415,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
          
          Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
-       
-      
-      
-    
-        Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
-        
-
+         Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+        //Tag route
+        Route::get('tag', 'TagController@index')->name('tag.index');
+        Route::post('tag/store', 'TagController@store')->name('tag.store');
+        Route::post('tag/activeBy', 'TagController@activeBy')->name('tag.activeBy');
+        Route::post('tag/inactiveBy', 'TagController@inactiveBy')->name('tag.inactiveBy');
+         
+         Route::post('tag/update', 'TagController@update')->name('tag.update');
+         Route::get('/tag/delete/{id}', 'TagController@delete')->name('tag.delete');
         Route::middleware('staffaccess:12')->group(function () {
             //features
             Route::get('features', 'FeaturesController@index')->name('features.index');
