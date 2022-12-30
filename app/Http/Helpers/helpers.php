@@ -181,9 +181,9 @@ function uploadFile($file, $location, $size = null, $old = null)
 function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
 {
     $filename = '';
-    $connectionString = getenv('AZURE_STORAGE_SAS_URL');
-    $app_name = getenv('APP_NAME');
-    $app_debug = getenv('APP_DEBUG');
+    $connectionString = env('AZURE_STORAGE_SAS_URL');
+    $app_name = env('APP_NAME');
+    $app_debug = env('APP_DEBUG');
 
     try {
 
