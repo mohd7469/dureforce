@@ -218,15 +218,16 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
     } catch (\Exception $e) {
-        echo "<pre>";
-        echo '[ERROR] ' . $connectionString . "\n";
-        print_r($e);
-        die();
+//        echo "<pre>";
+//        echo '[ERROR] ' . $connectionString . "\n";
+//        print_r($e);
+//        die();
 //        error($e);
-//        $obj = [];
-//        $obj['error'] = $e->getMessage();
-//        $obj['connection_string'] = $connectionString;
-        error ($e);
+        $obj = [];
+        $obj['error'] = $e->getMessage();
+        $obj['connection_string'] = $connectionString;
+//        error ($e);
+        \Illuminate\Support\Facades\Log::error($obj);
 //        error($obj);
     }
     return $filename;
