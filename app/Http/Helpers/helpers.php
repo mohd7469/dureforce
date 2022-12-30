@@ -221,7 +221,7 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
        
 //        error($e);
         $obj = [];
-        $obj['error'] = $e;
+        $obj['error'] = $e->getMessage();
         $obj['connection_string'] = $connectionString;
         return $obj;
 //        error($obj);
