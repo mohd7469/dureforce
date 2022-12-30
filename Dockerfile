@@ -44,5 +44,5 @@ EXPOSE 80
 
 STOPSIGNAL SIGQUIT
 
-CMD ["/html/run-with-env.sh"]
+CMD ["./run.sh"]
 # CMD ["php-fpm"]
