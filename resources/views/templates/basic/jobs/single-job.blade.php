@@ -1,9 +1,11 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
+    @guest
     <div class="categories_type_container">
         @include('templates.basic.partials.category._header', [
             'type_id' => \App\Models\Category::JobType,
         ])</div>
+    @endguest    
 
         <section class="all-sections pt-3">
         <div class="container-fluid p-max-sm-0">
