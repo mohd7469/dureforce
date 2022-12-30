@@ -25,7 +25,7 @@ RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev -o
 # RUN php artisan route:cache
 RUN php artisan config:cache
 RUN php artisan view:cache
-RUN php artisan optimize:clear
+RUN php artisan optimize:cache
 
 COPY --from=builder /src/node_modules /html/node_modules
 
