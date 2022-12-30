@@ -34,6 +34,7 @@ RUN php artisan config:cache
 RUN php artisan event:cache
 RUN php artisan view:cache
 # RUN php artisan optimize
+
 RUN echo "#!/bin/bash" > ./run-with-env.sh
 RUN echo " " > ./run-with-env.sh
 RUN grep "\S" .env-dev | awk '{print "export "$0}' >> ./run-with-env.sh
@@ -41,12 +42,10 @@ RUN grep "\S" .env-dev | awk '{print "export "$0}' >> ./run-with-env.sh
 RUN echo " " >> ./run-with-env.sh
 RUN cat ./run.sh >> ./run-with-env.sh
 RUN echo " " >> ./run-with-env.sh
+
 RUN chmod a+x ./run-with-env.sh
 COPY --from=builder /src/node_modules /html/node_modules
 
-RUN grep "\S" .env-dev | awk '{print "export "$0}' > ./run-with-env.sh
-
-RUN cat ./run.sh >> ./run-with-env.sh
 EXPOSE 80
 
 STOPSIGNAL SIGQUIT
