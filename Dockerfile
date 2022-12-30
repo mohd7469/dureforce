@@ -12,6 +12,7 @@ WORKDIR /html
 COPY . .
 RUN php artisan route:clear
 RUN php artisan config:clear
+RUN php artisan event:clear
 RUN php artisan view:clear
 RUN php artisan optimize:clear
 
@@ -26,10 +27,11 @@ RUN mkdir /run/php
 RUN chmod 777 -R /html
 
 RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev -o
-# RUN php artisan route:cache
+RUN php artisan route:cache
 RUN php artisan config:cache
+RUN php artisan event:cache
 RUN php artisan view:cache
-RUN php artisan optimize:cache
+RUN php artisan optimize
 
 COPY --from=builder /src/node_modules /html/node_modules
 
