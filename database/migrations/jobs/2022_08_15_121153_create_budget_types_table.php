@@ -16,7 +16,9 @@ class CreateBudgetTypesTable extends Migration
         Schema::create('budget_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->string('slug')->nullable();
+            $table->unsignedBigInteger('module_id')->index()->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
 

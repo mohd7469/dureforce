@@ -21,28 +21,36 @@ RUN rm -rf /html/nginx-conf
 RUN mkdir /run/php
 RUN chmod 777 -R /html
 
-RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev -o
+RUN composer install --no-interaction --prefer-dist --no-scripts 
+# --no-dev -o
 
-RUN php artisan route:clear
-RUN php artisan config:clear
-RUN php artisan event:clear
-RUN php artisan view:clear
+# RUN php artisan route:clear
+# RUN php artisan config:clear
+# RUN php artisan event:clear
+# RUN php artisan view:clear
 RUN php artisan optimize:clear
 
 # RUN php artisan route:cache
-RUN php artisan config:cache
-RUN php artisan event:cache
-RUN php artisan view:cache
+# RUN php artisan config:cache
+# RUN php artisan event:cache
+# RUN php artisan view:cache
 # RUN php artisan optimize
 
+RUN echo "#!/bin/bash" > ./run-with-env.sh
+RUN echo " " > ./run-with-env.sh
+RUN grep "\S" .env-dev | awk '{print "export "$0}' >> ./run-with-env.sh
+# RUN sh ./temp.sh
+RUN echo " " >> ./run-with-env.sh
+RUN cat ./run.sh >> ./run-with-env.sh
+RUN echo " " >> ./run-with-env.sh
+
+RUN chmod a+x ./run-with-env.sh
 COPY --from=builder /src/node_modules /html/node_modules
 
-RUN grep "\S" .env-dev | awk '{print "export "$0}' > ./run-with-env.sh
-
-RUN cat ./run.sh >> ./run-with-env.sh
 EXPOSE 80
 
 STOPSIGNAL SIGQUIT
 
-CMD ["./run.sh"]
+# CMD ["./run.sh"]
+CMD ["./run-with-env.sh"]
 # CMD ["php-fpm"]
