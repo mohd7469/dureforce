@@ -109,6 +109,7 @@ class FilterController extends Controller
 
     public function serviceCategory(Request $request, $slug, $categoryId)
     {
+        
         $level = null;
         $featuresData = null;
         $emptyMessage = "No data found";
@@ -146,6 +147,7 @@ class FilterController extends Controller
 
     public function serviceSubCategory($slug, $subCategoryId)
     {
+    
         $emptyMessage = "No data found";
         $subCategorys = SubCategory::where('id', $subCategoryId)->firstOrFail();
         $pageTitle = $subCategorys->name;

@@ -4,27 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class UserPayment extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
 
     const ACTIVE = 1;
     const IN_ACTIVE = 0;
 
+    protected $table = "user_payments";
 
     protected $fillable = [
         'card_number',
         'expiration_date',
         'cvv_code',
         'name_on_card',
-        'country',
-        'city',
-        'street_address',
-        'street_address_two',
-        'status',
+        'country_id',
+        'city_id',
+        'address',
+        'is_active',
         'user_id'
     ];
 
@@ -33,22 +34,6 @@ class UserPayment extends Model
     ];
 
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function(){
-
-        });
-
-        static::updating(function($model){
-            if($model->isDirty('status')) {
-                self::where("status", true)->update([
-                    'status' => false
-                ]);
-            }
-        });
-    }
 
     public function user()
     {

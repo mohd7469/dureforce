@@ -23,7 +23,7 @@
                                             {{ __($attribute->name) }}
                                         </td>
                                         <td>
-                                            <img src="{{ getImage('assets/images/service/' . $attribute->image, '590x300') }}" alt="" width="100">
+                                            <img src="{{ getAzureImage('service/' . $attribute->image, '590x300') }}" alt="" width="100">
                                         </td>
                                         <td data-label="@lang('Status')">
                                             @if ($attribute->status == 1)

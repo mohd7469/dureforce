@@ -30,7 +30,7 @@
                                                     <td data-label="@lang('Service')" class="text-start">
                                                         <div class="author-info">
                                                             <div class="thumb">
-                                                                <img src="{{getImage('assets/images/service/'.$booking->service->image,'590x300') }}" alt="@lang('Service Image')">
+                                                                <img src="{{getAzureImage('service/'.$booking->service->image,'590x300') }}" alt="@lang('Service Image')">
                                                             </div>
                                                             <div class="content"><a href="{{route('service.details', [slug($booking->service->title), $booking->service->id])}}">{{__(str_limit($booking->service->title, 10))}}</a></div>
                                                         </div>
