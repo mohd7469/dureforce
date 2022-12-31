@@ -17,7 +17,7 @@ class CreateBannerBackgroundsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id')->index()->nullable();
             $table->unsignedBigInteger('sub_category_id')->index()->nullable();
-            $table->enum('document_type',['Background','Technology Logo','Logo'])->nullable();
+            $table->enum('document_type',['Background','Technology Logo','Logo','Leading Image'])->nullable();
             $table->string('subject')->index()->nullable();
             $table->string('name')->index()->nullable();
             $table->string('uploaded_name')->index()->nullable();

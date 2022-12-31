@@ -181,9 +181,11 @@ function uploadFile($file, $location, $size = null, $old = null)
 function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
 {
     $filename = '';
+    $connectionString = env('AZURE_STORAGE_SAS_URL');
+    
     try {
 
-        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
+//        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
         //"DefaultEndpointsProtocol=https;AccountName=".getenv('AZURE_STORAGE_NAME').";AccountKey=".getenv('AZURE_STORAGE_KEY');
         $blobClient = BlobRestProxy::createBlobService($connectionString);
 
@@ -216,9 +218,9 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $thumbcontent = fopen($thumbImage, "r");
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
-    } catch (ServiceException $e) {
-       
-        error($e);
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error($e->getMessage());
+//        error($obj);
     }
     return $filename;
 

@@ -21,6 +21,7 @@ class CreateProjectLengthsTable extends Migration
             $table->integer('end_range')->nullable();
             $table->enum('type', ['Weeks', 'Months', 'Days','Years'])->nullable();
             $table->unsignedBigInteger('module_id')->index()->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('module_id')

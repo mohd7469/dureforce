@@ -16,3 +16,6 @@ npm-debug.log
 yarn-error.log
 .idea/*
 .env
+package-lock.json
+# test-image-upload.php
+Dockerfile.upload-test.txt
