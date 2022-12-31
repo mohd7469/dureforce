@@ -415,12 +415,22 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
          
          Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
-       
-      
-      
-    
-        Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+       Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
         
+      // project stage route
+      Route::get('project', 'ProjectStageController@index')->name('project.index');
+      Route::post('project/store', 'ProjectStageController@store')->name('project.store');
+      Route::post('project/activeBy', 'ProjectStageController@activeBy')->name('project.activeBy');
+      Route::post('project/inactiveBy', 'ProjectStageController@inactiveBy')->name('project.inactiveBy');
+      Route::post('project/update', 'ProjectStageController@update')->name('project.update');
+      Route::get('/project/delete/{id}', 'ProjectStageController@delete')->name('project.delete');
+      //Job Type route
+      Route::get('type', 'JobTypeController@index')->name('type.index');
+      Route::post('type/store', 'JobTypeController@store')->name('type.store');
+      Route::post('type/activeBy', 'JobTypeController@activeBy')->name('type.activeBy');
+      Route::post('type/inactiveBy', 'JobTypeController@inactiveBy')->name('type.inactiveBy');
+      Route::post('type/update', 'JobTypeController@update')->name('type.update');
+      Route::get('/type/delete/{id}', 'JobTypeController@delete')->name('type.delete');
 
         Route::middleware('staffaccess:12')->group(function () {
             //features
