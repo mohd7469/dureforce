@@ -156,11 +156,13 @@
                                                                 </div>
                                                             </div>
                                                             <div class="right btn-area mb-10">
+
                                                                 <a href="{{ route('seller.profile', $software->user->uuid) }}"
                                                                 class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                <a href="{{  route('seller.profile', $software->user->uuid) }}"
-                                                                class="standard-btn">@lang('View Portfolio')</a>
+                                                                <a href="{{  route('seller.profile.portfolio', $software->user->uuid) }}"
+                                                                    class="standard-btn">@lang('View Portfolio')</a>
+                                                                    
                                                             </div>
                                                         </div>
                                                         <div class="profile-widget-author-meta mb-10-none">

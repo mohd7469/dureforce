@@ -128,13 +128,13 @@
                                     <!-- Nav tabs -->
                                     <ul class="nav ">
                                         <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#msg">Work History</a>
+                                            <a class="nav-link {{ \Route::is('seller.profile') || \Route::is('seller.profile.view') ? 'active' : '' }}" data-bs-toggle="tab" href="#msg">Work History</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#set">Portfolio</a>
+                                            <a class="nav-link {{ \Route::is('seller.profile.portfolio') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#edu">Education & Certifications</a>
