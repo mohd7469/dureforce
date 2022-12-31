@@ -196,17 +196,17 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($request->get('service_id'));
 
-        if($service->banner && $service->rate_per_hour != 0) {
+        if($service->requirement_for_client) {
 
+            $notify[] = ['error', 'Please complete the previous steps first.'];
+            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-1'])->withNotify($notify);
+        }
+        else{
+            
             $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
             $this->ServiceAddConfirmationMail($service);
             $notify[] = ['success', 'Service Review Saved Successfully.'];
             return redirect()->route('user.service.index')->withNotify($notify);
-                       
-        }
-        else{
-            $notify[] = ['error', 'Please complete the previous steps first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-1'])->withNotify($notify);
         }
 
         
@@ -254,6 +254,7 @@ class ServiceController extends Controller
         $notify[] = ['success', 'Service has been Deleted Successfully.'];
         return back()->withNotify($notify);
     }
+
     public function ServiceAddConfirmationMail($service){
 
         Mail::to($service->user->email)->send(new serviceaddonMail($service));
