@@ -186,15 +186,20 @@ class SoftwareController extends Controller
 
             $software = Software::FindOrFail($request->get('software_id'));
 
-            if (empty($software->image) && $software->price == 0) {
+            if ($software->requirement_for_client) {
+                $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
+                Log::info(["Software" => $software]);
+                $notify[] = ['success', 'Software Review Saved Successfully.'];
+                return redirect()->route('user.software.index')->withNotify($notify);
+
+                
+            }
+            else{
                 $notify[] = ['error', 'Please complete the previous steps first.'];
                 return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-1'])->withNotify($notify);
             }
 
-            $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
-            Log::info(["Software" => $software]);
-            $notify[] = ['success', 'Software Review Saved Successfully.'];
-            return redirect()->route('user.software.index')->withNotify($notify);
+            
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
         }
