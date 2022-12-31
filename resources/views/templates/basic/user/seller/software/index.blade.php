@@ -1,6 +1,6 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections ptb-60">
+<section class="all-sections ptb-20">
     <div class="container-fluid">
         <div class="section-wrapper">
             <div class="row justify-content-center mb-30-none">
@@ -15,12 +15,12 @@
                                         <thead>
                                             <tr>
                                                 <th>@lang('Title')</th>
-                                                <th>@lang('Amount')</th>
-                                                <th>@lang('Software File')</th>
-                                                <th>@lang('Demo URL')</th>
-                                                <th>@lang('Documents')</th>
+                                                <th>@lang('Category')</th>
+                                                <th>@lang('Amount Per Hour')</th>
+                                                <th>@lang('Delivery Time')</th>
                                                 <th>@lang('Status')</th>
                                                 <th>@lang('Last Update')</th>
+                                                <th>@lang('Views')</th>
                                                 <th>@lang('Actions')</th>
                                             </tr>
                                         </thead>
@@ -30,44 +30,41 @@
                                                     <td data-label="@lang('Title')" class="text-start">
                                                             {{__(str_limit($software->title, 10))}}
                                                     </td>
-                                                    <td data-label="@lang('Amount')">{{showAmount($software->amount)}} {{$general->cur_text}}</td>
-                                                    <td data-label="@lang('Software File')">
-                                                        <a href="{{route('user.software.file.download',encrypt($software->id))}}" class="btn--action"><i class="fa fa-arrow-down"></i></a>
+                                                    <td data-label="@lang('Category / SubCategory')">
+                                                        <span class="font-weight-bold">{{ __(@$software->category->name) }}</span>
+                                                    </td>
+                                                    <td data-label="@lang('Amount Per Hour')">{{ $general->cur_sym }}{{showAmount($software->price)}} </td>
+                                                    <td data-label="@lang('Delivery Time')">
+                                                            {{ $software->estimated_lead_time ? $software->estimated_lead_time.' Days' : " " }} 
                                                     </td>
 
-                                                     <td data-label="@lang('Demo URL')">
-                                                        <a href="{{$software->demo_url}}" target="__blank">{{$software->demo_url}}</a>
-                                                    </td>
-
-                                                    <td data-label="@lang('Documents')">
-                                                        <a href="{{route('user.software.document.download',encrypt($software->id))}}" class="btn--action"><i class="fa fa-file"></i></a>
-                                                    </td>
 
                                                     <td data-label="@lang('Status')">
-                                                        @if($software->status == 1)
-                                                            <span class="badge badge--success">@lang('Approved')</span>
+                                                        
+                                                            <span class="badge {{$software->status->color}}">{{$software->status->name}}</span>
                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @elseif($software->status == 2)
-                                                            <span class="badge badge--danger">@lang('Cancel')</span>
-                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @else
-                                                            <span class="badge badge--primary">@lang('Pending')</span>
-                                                             <br>
-                                                            {{diffforhumans($software->created_at)}}
-                                                        @endif
+                                                         
                                                         </td>
                                                     <td data-label="@lang('Last Update')">
                                                         {{showDateTime($software->updated_at)}}
                                                         <br>
                                                         {{diffforhumans($software->updated_at)}}
                                                     </td>
+                                                    <td data-label="Views">{{$software->views}}</td>
                                                     <td data-label="Actions">
                                                         <div style="display: flex">
+                                                            <a href="{{ route('software.view', [$software->uuid]) }}"
+                                                                class="btn--action mr-3" style=" margin-right: 10px;">
+                                                                <i
+                                                                    class="fa fa-eye">
+                                                                </i>
+                                                            </a>
                                                             <a href="{{ route('user.software.create', [$software->id]) }}"
-                                                                class="btn--action"><i
-                                                                    class="fa fa-edit"></i></a>
+                                                                class="btn--action">
+                                                                <i
+                                                                    class="fa fa-edit">
+                                                                </i>
+                                                            </a>
                                                             <form  action="{{route('user.software.destroy', [$software->id])}}"  onclick="return confirm('Are you sure you want to delete.')" method="POST" style="margin-left: 5px">
                                                                 @csrf
                                                                 <button  class="btn--action del" type="submit"><i class="fa fa-trash-alt"></i></button>

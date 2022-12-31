@@ -358,7 +358,7 @@
 
 .detail-banner .banner_header {
   text-align: center;
-  padding: 1em;
+  padding: 2em;
 }
 
 .detail-banner .banner_header img {
@@ -379,7 +379,7 @@
 }
 
 .detail-banner .footer img {
-  max-width: 100px;
+  max-width: 143px;
 }
 
 .footer-section {
@@ -1197,6 +1197,15 @@
   color: #7f007f;
   width: 100px !important;
 }
+
+.create-service-main .softwar-save-draft--btns {
+  background-color: #f8fafa;
+  border-radius: 5px;
+  border: 1px solid #7f007f;
+  color: #7f007f;
+  width: 130px !important;
+}
+
 .create-service-main .btn-save-continue {
   background-color: #7f007f;
   border-radius: 5px;
@@ -1510,7 +1519,7 @@ select {
   height: 40px;
   padding: 0 20px;
   color: gray !important;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   width: 100%;
 }

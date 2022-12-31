@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminNotification;
-use App\Models\Deposit;
-use App\Models\User;
-use App\Models\UserLogin;
-use App\Models\Withdrawal;
-use App\Models\Software;
-use App\Models\Service;
-use App\Models\Job;
+use App\Models\Advertise;
 use App\Models\Booking;
 use App\Models\Category;
-use App\Models\Advertise;
+use App\Models\Deposit;
+use App\Models\Job;
+use App\Models\Service;
+use App\Models\Software\Software;
+use App\Models\User;
+use App\Models\Withdrawal;
 use App\Rules\FileTypeValidate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -39,9 +38,9 @@ class AdminController extends Controller
 
         // User Info
         $widget['total_users'] = User::count();
-        $widget['verified_users'] = User::where('status', 1)->count();
-        $widget['email_unverified_users'] = User::where('ev', 0)->count();
-        $widget['sms_unverified_users'] = User::where('sv', 0)->count();
+        $widget['verified_users'] = User::where('is_active', 1)->count();
+        $widget['email_unverified_users'] = User::where('email_verified_at', null)->count();
+        $widget['sms_unverified_users'] = User::where('sms_verified_at', null)->count();
 
         // Monthly Deposit & Withdraw Report Graph
         $report['months'] = collect([]);
@@ -116,18 +115,18 @@ class AdminController extends Controller
 
 
         // user Browsing, Country, Operating Log
-        $userLoginData = UserLogin::where('created_at', '>=', \Carbon\Carbon::now()->subDay(30))->get(['browser', 'os', 'country']);
+        // $userLoginData = UserLogin::where('created_at', '>=', \Carbon\Carbon::now()->subDay(30))->get(['browser', 'os', 'country']);
+        // $userLoginData = null;
 
-        $chart['user_browser_counter'] = $userLoginData->groupBy('browser')->map(function ($item, $key) {
-            return collect($item)->count();
-        });
-        $chart['user_os_counter'] = $userLoginData->groupBy('os')->map(function ($item, $key) {
-            return collect($item)->count();
-        });
-        $chart['user_country_counter'] = $userLoginData->groupBy('country')->map(function ($item, $key) {
-            return collect($item)->count();
-        })->sort()->reverse()->take(5);
-
+        // $chart['user_browser_counter'] = $userLoginData->groupBy('browser')->map(function ($item, $key) {
+        //     return collect($item)->count();
+        // });
+        // $chart['user_os_counter'] = $userLoginData->groupBy('os')->map(function ($item, $key) {
+        //     return collect($item)->count();
+        // });
+        // $chart['user_country_counter'] = $userLoginData->groupBy('country')->map(function ($item, $key) {
+        //     return collect($item)->count();
+        // })->sort()->reverse()->take(5);
 
         $payment['total_deposit_amount'] = Deposit::where('status',1)->sum('amount');
         $payment['total_deposit_charge'] = Deposit::where('status',1)->sum('charge');
@@ -136,7 +135,7 @@ class AdminController extends Controller
         $paymentWithdraw['total_withdraw_amount'] = Withdrawal::where('status',1)->sum('amount');
         $paymentWithdraw['total_withdraw_charge'] = Withdrawal::where('status',1)->sum('charge');
         $paymentWithdraw['total_withdraw_pending'] = Withdrawal::where('status',2)->count();
-        return view('admin.dashboard', compact('pageTitle', 'widget', 'report', 'withdrawals', 'chart','payment','paymentWithdraw','depositsMonth','withdrawalMonth','months','deposits', 'seoInfo'));
+        return view('admin.dashboard', compact('pageTitle', 'widget', 'report', 'withdrawals','payment','paymentWithdraw','depositsMonth','withdrawalMonth','months','deposits', 'seoInfo'));
     }
 
 
@@ -158,8 +157,15 @@ class AdminController extends Controller
 
         if ($request->hasFile('image')) {
             try {
-                $old = $user->image ?: null;
-                $user->image = uploadImage($request->image, imagePath()['profile']['admin']['path'], imagePath()['profile']['admin']['size'], $old);
+
+                $path = imagePath()['attachments']['path'];
+                $file = $request->image;
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                // $user->image->update(['image' => $url]);
+                //$old = $user->image ?: null;
+                //$user->image = uploadImage($request->image, imagePath()['profile']['admin']['path'], imagePath()['profile']['admin']['size'], $old);
             } catch (\Exception $exp) {
                 $notify[] = ['error', 'Image could not be uploaded.'];
                 return back()->withNotify($notify);
@@ -168,6 +174,7 @@ class AdminController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->image = $url;
         $user->save();
         $notify[] = ['success', 'Your profile has been updated.'];
         return redirect()->route('admin.profile')->withNotify($notify);

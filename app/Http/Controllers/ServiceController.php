@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,19 +15,29 @@ class ServiceController extends BaseController
      */
     public function index(Request $request)
     {
+        $services = Service::where($this->applyFilters($request))
+            ->with(['user', 'user.basicProfile' ])
+            ->inRandomOrder();
+        if (getLastLoginRoleId() == Role::$Freelancer){
+            $services = $services->where('user_id', auth()->user()->id);
+        }
+        else{
+            $services = $services->where('status_id', Service::STATUSES['APPROVED']);
+        }
+        $services = $services->paginate(getPaginate())->withQueryString();
         $pageTitle = "Service";
         $emptyMessage = "No data found";
-        $services = Service::where('status', 1)
-            ->whereHas('category', function ($q) {
-                $q->where('status', 1);
-            })
-            ->where($this->applyFilters($request))
-            ->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
-                $builder->with(['tag' => function (BelongsTo $belongsTo) {
-                    $belongsTo->select(['id', 'name']);
-                }]);
-            }])
-            ->inRandomOrder()->paginate(getPaginate())->withQueryString();
+
+        return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+    }
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function featured(Request $request)
+    {
+        $services = Service::Active()->Featured()->whereIn('status_id',[Service::STATUSES['APPROVED'],Service::STATUSES['FEATURED']])->with(['user', 'user.basicProfile', 'tags' ])->paginate(getPaginate());
+        $pageTitle = "Service";
+        $emptyMessage = "No data found";
         return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
     }
 

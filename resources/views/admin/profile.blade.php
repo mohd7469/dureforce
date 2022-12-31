@@ -9,7 +9,7 @@
                 <div class="card-body p-0">
                     <div class="d-flex p-3 bg--primary align-items-center">
                         <div class="avatar avatar--lg">
-                            <img src="{{ getImage(imagePath()['profile']['admin']['path'].'/'. $admin->image,imagePath()['profile']['admin']['size'])}}" alt="@lang('Image')">
+                            <img src="{{ !empty($admin->image)? $admin->image: getImage('assets/images/default.png') }}" alt="@lang('Image')">
                         </div>
                         <div class="pl-3">
                             <h4 class="text--white">{{__($admin->name)}}</h4>
@@ -51,7 +51,7 @@
                                     <div class="image-upload">
                                         <div class="thumb">
                                             <div class="avatar-preview">
-                                                <div class="profilePicPreview" style="background-image: url({{ getImage(imagePath()['profile']['admin']['path'].'/'.auth()->guard('admin')->user()->image,imagePath()['profile']['admin']['size']) }})">
+                                                <div class="profilePicPreview" style="background-image: url({{ !empty(auth()->guard('admin')->user()->image)? auth()->guard('admin')->user()->image: getImage('assets/images/default.png') }})">
                                                     <button type="button" class="remove-image"><i class="fa fa-times"></i></button>
                                                 </div>
                                             </div>

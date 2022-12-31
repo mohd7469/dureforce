@@ -5,20 +5,17 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\OverviewRequest;
-use App\Http\Requests\PricingRequest;
 use App\Http\Requests\ReviewRequest;
-use Illuminate\Http\Request;
-use App\Models\Software;
-use App\Models\Features;
-use App\Models\OptionalImage;
 use App\Models\Attribute;
 use App\Models\EntityField;
+use App\Models\Features;
+use App\Models\OptionalImage;
+use App\Models\Software\Software;
 use App\Traits\CreateOrUpdateEntity;
 use App\Traits\DeleteEntity;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Razorpay\Api\Entity;
+use Illuminate\Support\Facades\Log;
 
 class SoftwareController extends Controller
 {
@@ -31,153 +28,195 @@ class SoftwareController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        $pageTitle = "Manage Software";
-        $emptyMessage = "No data found";
-        $softwares = Software::where('user_id', $user->id)->latest()->paginate(getPaginate());
+        try {
+            $user = Auth::user();
+            $pageTitle = "Manage Software";
+            $emptyMessage = "No data found";
+            $softwares = Software::where('user_id', $user->id)->latest()->paginate(getPaginate());
+            Log::info(["Software" => $softwares]);
+            return view($this->activeTemplate . 'user.seller.software.index', compact('pageTitle', 'softwares', 'emptyMessage'));
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
 
-        return view($this->activeTemplate . 'user.seller.software.index', compact('pageTitle', 'softwares', 'emptyMessage'));
     }
 
     public function create($id = null)
     {
-        $pageTitle = "Create software";
-        $completedOverview = '';
-        $completedPricing = '';
-        $completedImage = '';
-        $completedRequirements = '';
-        $completedReview = '';
+        try {
+            $pageTitle = "Create software";
+            $completedOverview = $completedBanner = $completedPricing = $completedRequirements = $completedReview = '';
 
-        $features = Features::latest()->get();
+            $features = Features::latest()->get();
+            $software = null;
 
-        $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
+            if ($id) {
+                $software = Software::WithAll()->findOrFail($id);
 
-        $software = null;
+                $completedOverview = $software->title ? 'completed' : '';
+                $completedPricing = $software->price > 0 ? 'completed' : '';
+                $completedBanner = $software->banner ? 'completed' : '';
+                $completedRequirements = $software->requirement_for_client ? 'completed' : '';
+                $completedReview = $software->number_of_simultaneous_projects > 0 ? 'completed' : '';
+            }
+            // dd($completedOverview,$completedPricing,$completedBanner,$completedRequirements,$completedReview);
+            Log::info(["features" => $features]);
 
-        if (! empty($id) || $id > 0) {
-            $software = Software::with('softwareDetail', 'softwareSteps', 'softwareAttributes','extraSoftware', 'category', 'subCategory')->findOrFail($id);
+            return view($this->activeTemplate . 'user.seller.software.create', compact(
+                'pageTitle',
+                'features',
+                'completedOverview',
+                'completedPricing',
+                'completedBanner',
+                'completedRequirements',
+                'completedReview',
+                'software'
+            ));
 
-            $completedOverview = $software->softwareAttributes()->count() > 0 ? 'completed' : '';
-            $completedPricing = $software->amount > 0 ? 'completed' : '';
-            $completedImage = !empty($software->image) || !empty($software->demo_url) ? 'completed' : '';
-            $completedRequirements = !empty($software->softwareDetail->client_requirements) ? 'completed' : '';
-            $completedReview = !empty($software->softwareDetail->max_no_projects) ? 'completed' : '';
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        return view($this->activeTemplate . 'user.seller.software.create', compact(
-            'pageTitle',
-            'features',
-            'attributes',
-            'completedOverview',
-            'completedPricing',
-            'completedImage',
-            'completedRequirements',
-            'completedReview',
-            'software'
-        ));
     }
 
     public function storeOverview(OverviewRequest $request)
     {
-        $softwareId = $request->get('software_id');
+        try {
+            $softwareId = $request->get('software_id');
+            if (!empty($softwareId)) {
+                $software = Software::FindOrFail($softwareId);
+            } else {
+                $software = new Software();
+            }
 
-        if(! empty($softwareId)) {
-            $software = Software::FindOrFail($softwareId);
-        } else {
-            $software = new Software();
+            $this->saveOverview($request, $software, $softwareId, Attribute::SOFTWARE);
+            Log::info(["Software" => $software]);
+            $notify[] = ['success', 'Software Overview has been Saved.'];
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-2'])->withNotify($notify);
+
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $this->saveOverview($request, $software, $softwareId, Attribute::SOFTWARE);
-
-        $notify[] = ['success', 'Software Overview has been Saved.'];
-        return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-2'])->withNotify($notify);
     }
 
     public function storePricing(Request $request)
     {
-        $softwareId = $request->get('software_id');
+        try {
+            $softwareId = $request->get('software_id');
 
-        if(empty($softwareId)) {
-            $notify[] = ['error', 'Recently Created Software is missing.'];
-            return redirect()->back()->withNotify($notify);
+            if (empty($softwareId)) {
+                $notify[] = ['error', 'Recently Created Software is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $software = Software::FindOrFail($softwareId);
+
+            $this->savePricing($request, $software, Attribute::SOFTWARE);
+            Log::info(["Software" => $software]);
+            $notify[] = ['success', 'Software Pricing Saved Successfully.'];
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $software = Software::FindOrFail($softwareId);
-
-        $this->savePricing($request, $software, Attribute::SOFTWARE);
-
-        $notify[] = ['success', 'Software Pricing Saved Successfully.'];
-        return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
     }
 
     public function storeBanner(Request $request)
     {
-        $softwareId = $request->get('software_id');
+        try {
+            $softwareId = $request->get('software_id');
 
-        if(empty($softwareId)) {
-            $notify[] = ['error', 'Recently Created Software is missing.'];
-            return redirect()->back()->withNotify($notify);
+            if (empty($softwareId)) {
+                $notify[] = ['error', 'Recently Created Software is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $software = Software::FindOrFail($softwareId);
+
+            if ($software->price < 1) {
+                $notify[] = ['error', 'Please complete the software pricing first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-2'])->withNotify($notify);
+            } else {
+                $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
+
+                if (!$result) {
+                    $notify[] = ['error', 'Some error occured while saving banner.'];
+                    return redirect()->back()->withNotify($notify);
+                }
+            }
+            Log::info(["Software" => $software]);
+            $notify[] = ['success', 'Software Banner Saved Successfully.'];
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-4'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $software = Software::FindOrFail($softwareId);
-
-        $result = $this->saveBanner($request, $software, Attribute::SOFTWARE, 'software', 'optionalSoftware');
-
-        if(!$result) {
-            $notify[] = ['error', 'Some error occured while saving banner.'];
-            return redirect()->back()->withNotify($notify);
-        }
-
-        if($software->amount == 0) {
-            $notify[] = ['error', 'Please complete the software pricing first.'];
-            return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-2'])->withNotify($notify);
-        }
-
-        $notify[] = ['success', 'Software Banner Saved Successfully.'];
-        return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-4'])->withNotify($notify);
     }
 
     public function storeRequirements(ClientRequest $request)
     {
-        $softwareId = $request->get('software_id');
+        try {
+            $softwareId = $request->get('software_id');
 
-        if(empty($softwareId)) {
-            $notify[] = ['error', 'Recently Created Software is missing.'];
-            return redirect()->back()->withNotify($notify);
+            if (empty($softwareId)) {
+                $notify[] = ['error', 'Recently Created Software is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $software = Software::FindOrFail($softwareId);
+
+            if (!$software->banner) {
+                $notify[] = ['error', 'Please complete the software banners first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
+            }
+
+            $this->saveRequirements($request, $software, Attribute::SOFTWARE);
+            Log::info(["Software" => $software]);
+            $notify[] = ['success', 'Software Requirements Saved Successfully.'];
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-5'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $software = Software::FindOrFail($softwareId);
-
-        if(empty($software->image)) {
-            $notify[] = ['error', 'Please complete the software banners first.'];
-            return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-3'])->withNotify($notify);
-        }
-
-        $this->saveRequirements($request, $software, Attribute::SOFTWARE);
-
-        $notify[] = ['success', 'Software Requirements Saved Successfully.'];
-        return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-5'])->withNotify($notify);
     }
 
     public function storeReview(ReviewRequest $request)
     {
-        if(empty($request->get('software_id')))
-        {
-            $notify[] = ['error', 'Recently Created Software is missing.'];
-            return redirect()->route('user.software.create', ['view' => 'step-1'])->withNotify($notify);
+        try {
+            if (empty($request->get('software_id'))) {
+                $notify[] = ['error', 'Recently Created Software is missing.'];
+                return redirect()->route('user.software.create', ['view' => 'step-1'])->withNotify($notify);
+            }
+
+            $software = Software::FindOrFail($request->get('software_id'));
+
+            if ($software->requirement_for_client) {
+                $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
+                Log::info(["Software" => $software]);
+                $notify[] = ['success', 'Software Review Saved Successfully.'];
+                return redirect()->route('user.software.index')->withNotify($notify);
+
+                
+            }
+            else{
+                $notify[] = ['error', 'Please complete the previous steps first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-1'])->withNotify($notify);
+            }
+
+            
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
 
         $software = Software::FindOrFail($request->get('software_id'));
 
-        if(empty($software->image) && $software->price == 0) {
+        if($software->requirement_for_client) {
+            $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
+            $notify[] = ['success', 'Software Review Saved Successfully.'];
+            return redirect()->route('user.software.index')->withNotify($notify);
+        }
+        else{
             $notify[] = ['error', 'Please complete the previous steps first.'];
             return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-1'])->withNotify($notify);
         }
 
-        $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
-
-        $notify[] = ['success', 'Software Review Saved Successfully.'];
-        return redirect()->route('user.software.index')->withNotify($notify);
+        
     }
 
 
@@ -210,6 +249,21 @@ class SoftwareController extends Controller
         return readfile($full_path);
     }
 
+    public function show($uuid)
+    {
+        try {
+            $emptyMessage = "No data found";
+            $pageTitle = "Software details";
+            $software = Software::withAll()->where('uuid', $uuid)->firstOrFail();
+            $software->views += 1;
+            $software->save();
+            $related_softwares = Software::withAll()->where('category_id', $software->category_id)->where('sub_category_id', $software->sub_category_id)->where('id', '<>', $software->id)->where('status_id', Software::STATUSES['APPROVED'])->latest()->limit(4)->get();
+            Log::info(["Software" => $software, "Related Software" => $related_softwares]);
+            return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'related_softwares', 'emptyMessage'));
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
+    }
 
     private function screenshotImageStore($request, $screenshot, $softwareId)
     {
@@ -235,10 +289,16 @@ class SoftwareController extends Controller
 
     public function destroy($id)
     {
-        $this->deleteEntity(Software::class, 'software', $id);
+        try {
+            $software = Software::find($id)->delete();
+//        $this->deleteEntity(Software::class, 'software', $id);
+            Log::info(["Software" => $software]);
 
-        $notify[] = ['success', 'software has been uploaded.'];
-        return back()->withNotify();
+            $notify[] = ['success', 'software has been uploaded.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
     }
 
 }

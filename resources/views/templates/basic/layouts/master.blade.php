@@ -20,30 +20,40 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/style.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
-
     @stack('style-lib')
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
           rel="stylesheet"/>
 </head>
 <body>
+    
+   
+   
+   
 @stack('fbComment')
 
 <div class="preloader">
     <div class="box-loader">
         <div class="loader animate">
-            <svg class="circular" viewBox="50 50 100 100">
-                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
-                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"
-                      stroke-linecap="round"/>
-            </svg>
+{{--            <svg class="circular" viewBox="50 50 100 100">--}}
+{{--                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>--}}
+{{--                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"--}}
+{{--                      stroke-linecap="round"/>--}}
+{{--            </svg>--}}
+            <img src="{{ asset('assets/images/loader/dureforceloader.gif') }}" alt="@lang('image')">
         </div>
     </div>
 </div>
 
+    @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+        @include($activeTemplate.'partials.seller_user_header')
+    @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+        @include($activeTemplate.'partials.client_user_header')
+    @endif
 
-@include($activeTemplate.'partials.user_header')
+
 @yield('content')
 @include($activeTemplate.'partials.footer')
 
@@ -73,7 +83,7 @@
     </div>
 </div>
 
-
+    
 <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/swiper.min.js')}}"></script>
@@ -82,6 +92,7 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/wow.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 @stack('script-lib')
 @stack('script')
@@ -90,11 +101,11 @@
 <script>
     (function ($) {
         "use strict";
+
         $(".langSel").on("change", function () {
             window.location.href = "{{route('home')}}/change/" + $(this).val();
         });
     })(jQuery);
 </script>
-
 </body>
 </html>

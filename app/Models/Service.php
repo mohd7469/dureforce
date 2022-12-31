@@ -4,14 +4,17 @@ namespace App\Models;
 
 use App\Observers\ServiceObserver;
 use App\Observers\TagsObserver;
+use App\Traits\DatabaseOperations;
+use Database\Seeders\ModuleSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes , DatabaseOperations;
 
     const UPDATED_AT = null;
     const SERVICE_CREATION_IN_PROGRESS = 0;
@@ -23,37 +26,38 @@ class Service extends Model
     const PENDING = 0;
     const APPROVED = 1;
 
+    public const STATUSES = [
+        'DRAFT'  =>  17,
+        'PENDING'  =>  18,
+        'APPROVED' =>  19,
+        'CANCELLED' =>  20,
+        'UNDER_REVIEW' =>  21,
+        'FEATURED' =>  28
+    ];
+
     protected $casts = [
         'tag' => 'object'
     ];
 
     protected $fillable = [
-        'title',
-        'featured',
+        'uuid',
         'user_id',
-        'price',
-        'image',
-        'favorite',
-        'rating',
-        'likes',
-        'dislike',
-        'delivery_time',
-        'tag',
-        'description',
-        'banner_detail',
-        'banner_heading',
-        'lead_image',
-        'status',
+        'status_id',
         'category_id',
         'sub_category_id',
-        'technology_logos',
-        'creation_status',
-        'deliverables'
+        'title',
+        'description',
+        'rate_per_hour',
+        'estimated_delivery_time',
+        'requirement_for_client',
+        'number_of_simultaneous_projects',
+        'is_terms_accepted',
+        'is_privacy_accepted',
+        'updated_at',
     ];
 
-    public function featuresService()
-    {
-        return $this->belongsToMany(Features::class, 'features_services', 'service_id', 'features_id');
+    public function scopeWithAll($query){
+        $query->with('user')->with('serviceSteps')->with('category')->with('subCategory')->with('deliverable')->with('addOns')->with('status')->with('tags')->with('features')->with('skills');
     }
 
     public function user()
@@ -61,24 +65,14 @@ class Service extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function serviceAttributes()
-    {
-        return $this->hasMany(ServiceAttribute::class, 'service_id');
-    }
-
-    public function serviceDetail()
-    {
-        return $this->hasOne(ServiceDetail::class);
-    }
-
     public function serviceSteps()
     {
-        return $this->hasMany(ServiceStep::class);
+        return $this->hasMany(ServiceProjectStep::class,'service_id');
     }
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subCategory()
@@ -86,35 +80,37 @@ class Service extends Model
         return $this->belongsTo(SubCategory::class, 'sub_category_id');
     }
 
-    public function extraService()
+    public function deliverable()
     {
-        return $this->hasMany(ExtraService::class, 'service_id');
+        return $this->belongsToMany(Deliverable::class, 'service_deliverables');
     }
 
-    public function optionalImage()
+    public function addOns()
     {
-        return $this->hasMany(OptionalImage::class, 'service_id');
+        return $this->hasMany(AddOnService::class, 'service_id');
     }
 
-
+    public function banner()
+    {
+        return $this->morphOne(ModuleBanner::class,'module')->with('background');
+    }
     public function reviewCount()
     {
         return $this->hasMany(ReviewRating::class, 'service_id');
     }
-
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
     public function tags()
     {
-        return $this->hasMany(TagsAssociate::class, 'model_id');
+        return $this->morphToMany(Tag::class, 'module','module_tags');
     }
 
-    public function logos()
-    {
-        $relation = $this->hasMany(EntityLogo::class, 'type_id');
-        $relation->getQuery()->where('type', 'SERVICE');
-        return $relation;
+    public function technologyLogos(){
+        return $this->morphMany(BannerLogo::class,'module')->with('background');
     }
-    
-
+  
     public function scopeUserServiceInProgress($query)
     {
         $query->where([
@@ -131,38 +127,29 @@ class Service extends Model
         ]);
     }
 
-
     public function scopeFeatured($query)
     {
-        return $query->where('featured', self::FEATURED);
+        return $query->where('is_featured', self::FEATURED);
+    }
+    public function scopeStatus($query,$status_id)
+    {
+        return $query->where('status_id', $status_id);
     }
 
     public function scopeNotFeatured($query)
     {
-        return $query->where('featured', self::NOT_FEATURED);
+        return $query->where('is_featured', self::NOT_FEATURED);
     }
 
     public function scopeActive($query)
     {
-        return $query->where('status', self::ACTIVE);
+        return $query->where('is_active', self::ACTIVE);
     }
 
     public function scopeInActive($query)
     {
-        return $query->where('status', self::IN_ACTIVE);
+        return $query->where('status_id', self::IN_ACTIVE);
     }
-
-    public function _decoded_deliverables()
-    {
-        return json_decode($this->deliverables);
-    }
-
-
-//    public function associatedTags()
-//    {
-//        return $this->belongsToMany('services', 'tags-associates', 'model_id', 'tag_id')
-//            ->withPivot(['id', 'name']);
-//    }
 
     public static function boot()
     {
@@ -171,11 +158,53 @@ class Service extends Model
         self::observe(ServiceObserver::class);
     }
 
-//    public function withTags(){
-//
-//        'tags' => function (HasMany $builder) {
-//            $builder->with(['tag' => function (BelongsTo $belongsTo) {
-//                $belongsTo->select(['id', 'name']);
-//            }]
-//    }
+    public function reviews()
+    {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
+    public function documents()
+    {
+        return $this->morphMany(TaskDocument::class, 'module');
+    }
+    public function task_skill()
+    {
+        return $this->morphMany(TaskSkill::class, 'module_id');
+    }
+    public function skills()
+    {
+        return $this->belongsToMany(Skills::class, 'service_skills','service_id','skills_id');
+    }
+    public function features()
+    {
+        return $this->morphToMany(Features::class, 'module','module_features');
+
+    }
+    public function proposal()
+    {
+        return $this->morphMany(Proposal::class, 'module');
+    }
+    public function proposal_document()
+    {
+        return $this->morphMany(ProposalAttachment::class, 'module');
+    }
+
+    public function milestone()
+    {
+        return $this->morphMany(Milestone::class, 'module');
+    }
+    public function delivery_mode()
+    {
+        return $this->morphMany(DeliveryMode::class, 'module');
+    }
+
+    public function messages()
+    {
+        return $this->morphMany(ChatMessage::class, 'module')->with('user');
+    }
+
+    public function chatUsers()
+    {
+        return $this->morphMany(ModuleChatUser::class, 'module');
+    }
+    
 }

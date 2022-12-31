@@ -1,6 +1,12 @@
 @extends($activeTemplate . 'layouts.master')
 @section('content')
 <style>
+    input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
     .btn-save-continue {
         background-color: #7f007f;
         border-radius: 5px;
@@ -17,6 +23,7 @@
         color: #7f007f;
         width: 100px !important;
     }
+
     .hdng-create{
         color: #007F7F;
         font-size: 18px;
@@ -74,6 +81,46 @@
 
 @push('style')
     <style>
+
+.service-fee{
+    background-color: #EFF3F3 !important ;
+    border-radius: 4px;
+    margin-inline-start: 8px !important;
+}
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+    background: #F7F9F9;
+    border: 0.5px solid #E8E8E8;
+ }
+ .modules-total-row{
+    
+   background-color: #E6F1F1 !important;
+    border: 0.5px solid #E8E8E8 !important;
+
+ }
+ .table .thead {
+    background: #EFF4F4;
+    border: 1px solid #E8E8E8;
+    border-radius: 0px;
+ }
+ tbody, td, tfoot, th, thead, tr {
+    border-style: none !important;
+    border-width: 0;
+}
+ .table-striped>tbody>tr:nth-child(odd)>td, 
+.table-striped>tbody>tr:nth-child(odd)>th {
+  
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+
+ }
+
+        .add-another{
+            margin-left:-9px;
+        }
+        .inline{
+            display: flex;
+        }
         .select2Tag input {
             background-color: transparent !important;
             padding: 0 !important;
@@ -157,5 +204,6 @@
     <script>
         let route = "{{ route('user.category') }}";
     </script>
-    <script src="{{ asset('/assets/resources/js/service/create-service.js') }}"></script>
+    <script src="{{ asset('/assets/resources/software/software.js') }}"></script>
+    
 @endpush

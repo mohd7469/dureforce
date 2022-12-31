@@ -1,9 +1,9 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
+@guest
     <div class="categories_type_container">
-        @include('templates.basic.partials.category._header', [
-            'type_id' => \App\Models\Category::ServiceType,
-        ])</div>
+        @include('templates.basic.partials.category._header')</div>
+@endguest        
 
     <section class="filters-container bg-grey p-15  ">
         <div class="container p2">

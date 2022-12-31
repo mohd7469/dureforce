@@ -16,7 +16,7 @@
                                                 <tr>
                                                     <th>@lang('Title')</th>
                                                     <th>@lang('Category')</th>
-                                                    <th>@lang('Rate/hour')</th>
+                                                    <th>@lang('Rate/hour')</th> 
                                                     <th>@lang('Delivery Time')</th>
                                                     <th>@lang('Status')</th>
                                                     <th>@lang('Last Update')</th>
@@ -38,40 +38,42 @@
                                                             <!--</div>-->
                                                         </td>
                                                         <td data-label="@lang('Category')">
-                                                            {{ __($service->category->name) }}</td>
-                                                        <td data-label="@lang('Amount')">{{ showAmount($service->price) }}
+                                                            {{ __($service->category ? $service->category->name : '') }}</td>
+                                                        <td data-label="@lang('Amount')">{{ showAmount($service->rate_per_hour) }}
                                                             {{ $general->cur_text }}</td>
                                                         <td data-label="@lang('Delivery Time')">
-                                                            {{ $service->delivery_time }} @lang('Days')</td>
+                                                            {{ $service->estimated_delivery_time ? $service->estimated_delivery_time.' Days' : " " }} </td>
+                                                        <!-- <td data-label="@lang('Status')">
+                                                            <span class="badge {{$service->status->color}}">@lang($service->status ? $service->status->name : '')</span>
+                                                            <br>
+                                                            {{ diffforhumans($service->created_at) }}
+                                                            
+                                                        </td> Status -->
                                                         <td data-label="@lang('Status')">
-                                                            @if ($service->status == 1)
-                                                                <span class="badge badge--success">@lang('Approved')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @elseif($service->status == 2)
-                                                                <span class="badge badge--danger">@lang('Cancel')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @else
-                                                                <span class="badge badge--primary">@lang('Pending')</span>
-                                                                <br>
-                                                                {{ diffforhumans($service->created_at) }}
-                                                            @endif
+                                                            <span class="badge {{$service->status->color}}">{{$service->status->name}}</span>
+                                                            <br>
+                                                            {{diffforhumans($service->created_at)}}
                                                         </td>
+
                                                         <td data-label="@lang('Last Update')">
                                                             {{ showDateTime($service->updated_at) }}
                                                             <br>
                                                             {{ diffforhumans($service->updated_at) }}
                                                         </td>
-                                                        <td data-label="Views">0</td>
+                                                        <td data-label="Views">{{$service->views}}</td>
                                                         <td data-label="Actions">
                                                             <div style="display: flex">
-                                                                    <form action="{{ route('user.service.create', [$service->id]) }}"
-                                                                            method="get">
-                                                                        @csrf
-                                                                        <button class="btn--action" type="submit"><i
-                                                                                    class="fa fa-edit"></i></button>
-                                                                    </form>
+                                                                @if ($service->uuid)
+                                                                    <a href="{{route('service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
+                                                                @endif
+                                                                
+                                                                <form action="{{ route('user.service.create', [$service->id]) }}"
+                                                                        method="get">
+                                                                    @csrf
+                                                                    <button class="btn--action" type="submit"><i
+                                                                                class="fa fa-edit"></i></button>
+                                                                </form>
+
                                                                 <form
                                                                     action="{{ route('user.service.destroy', [$service->id]) }}"
                                                                     method="POST">
@@ -81,6 +83,7 @@
                                                                         type="submit"><i
                                                                             class="fa fa-trash-alt"></i></button>
                                                                 </form>
+
                                                             </div>
                                                         </td>
                                                     </tr>

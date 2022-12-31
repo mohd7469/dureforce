@@ -5,10 +5,9 @@ namespace App\Observers;
 use App\Helpers\ArrayHelper;
 use App\Models\Frontend;
 use App\Models\Service;
-use App\Models\Software;
+use App\Models\Software\Software;
 use App\Models\Tag;
 use App\Models\TagsAssociate;
-use Illuminate\Support\Arr;
 
 class TagsObserver
 {

@@ -3,8 +3,9 @@ $serviceSteps = collect([]);
 $extraService = collect([]);
 
 if (!empty($service)) {
-    $extraService = App\Models\ExtraService::where('service_id', $service->id)->get();
-    $serviceSteps = App\Models\ServiceStep::where('service_id', $service->id)->get();
+    
+    $extraService = $service->addOns;
+    $serviceSteps = $service->serviceSteps;
 }
 @endphp
 
@@ -16,111 +17,120 @@ if (!empty($service)) {
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
                 <input type="hidden" name="service_id" value="{{ $service->id ?? '' }}">
+                <input type="hidden" name="number_of_add_on_services" value="{{ count($extraService) }}" id="number_of_add_on_services">
+
 
                 <div class="col-lg-4 form-group">
                     <label>@lang('Per Hour Rate')*</label>
-                    <input type="number"  class="form-control" name="price"  id="price"  step=".01"
-                        value="{{ old('price',  floatval(@$service->price) ?: "Enter Price") }}" placeholder="@lang('Enter Eg. $50')"
+                    <input type="number" step="any"  class="form-control" name="price"  id="price"  step="any"
+                        value="{{ old('price',  floatval(@$service->rate_per_hour) ?: "Enter per hour rate") }}" placeholder="@lang('Enter Eg. $50')"
                        min="0" >
                 </div>
                 <div class="col-lg-4 form-group">
                     <label>@lang('Estimated Delivery Time')*</label>
-                    <input type="number" name="delivery_time" class="form-control mt-1" id="delivery"
-                        value="{{ old('delivery_time', @$service->delivery_time) }}"
+                    <input type="number" name="delivery_time" step="any" class="form-control mt-1" id="delivery"
+                        value="{{ old('delivery_time', @$service->estimated_delivery_time) }}"
                         placeholder="@lang('Enter Hours')"
                            min="0"
                     >
                 </div>
                 <div class=" col-lg-4">
-                    <div class="form-group select2Tag">
+                    <div class="form-group">
                         <label class="d-inline-block">@lang('Deliverables')*</label>
                         <span title="No.of Revision (no.)
-free number field
-source code
-Unit test project
-Deployment ">
+                            free number field
+                            source code
+                            Unit test project
+                            Deployment ">
                         <i class="fa fa-info-circle"></i></span>
-                        <select class="form-control select2 deliverables" data-placeholder="Enter Deliverables" name="deliverables[]" id="deliverables"
-                            multiple="multiple">
-                            {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
-
-                            @if (!empty($service) && !empty($service->_decoded_deliverables()))
-                                @foreach ($service->_decoded_deliverables() as $delivery)
-                                    <option selected="true"> {{ $delivery }}</option>
+                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Deliverables" style="width: 100%;" tabindex="-1" aria-hidden="true" name="deliverables[]" id="deliverables">
+                            
+                            @if (!empty($service))
+                                @foreach ($deliverables as  $item )
+                                    <option value="{{ $item->id }}" @if(in_array($item->id,$service->deliverable->pluck('id')->toArray())) selected @endif>
+                                        {{ __($item->name) }}</option>
+                                @endforeach
+                            @else
+                                @foreach($deliverables as  $item)
+                                    <option value="{{__($item->id)}}">{{__($item->name)}}</option>
                                 @endforeach
                             @endif
-                        </select><span class="del_error"></span>
+                           
+                        
+                        </select>
+                        <span class="del_error"></span>
                     </div>
                     <br />
-                    <br />
+                    
                 </div>
 
-                <br />
-                <br />
-                <hr />
-                {{-- <div class="col-lg-4 "> --}}
-
-                <br />
+               
                 <br />
                 <h4 class="hdng-create col-12">Add On Service</h4>
                 <br />
 
+                @if(count($extraService)>0)
 
-                @if (!isset($extraService) || $extraService->isEmpty())
-                    <div id="add-service-container">
-                        <div class="row add-ons">
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>Title</label>
-                                <input type="text" name="extra_title[]" placeholder="Title" id="extra_title" class="form-control add-on-title"
-                                     />
-                            </div>
-
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>@lang('Per Hour Rate')</label>
-                                <input type="number" class="form-control add_on_price"   name="add_on_price[]"
-                                    placeholder="@lang('Per hour rate')" id="add_on_price" step=".01" >
-
-
-                            </div>
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>@lang(' Estimated Delivery Time ')</label>
-                                    <input type="number" class="form-control add-on-delivery" id="add_on_delivery" name="add_on_delivery[]"
-                                        placeholder="@lang('Enter Hours')" >
-                            </div>
-                        </div>
-                    </div>
-                @else
                     @foreach ($extraService as $exKey => $extra)
                         <div id="add-service-container">
-                            <div class="row add-ons" id="add-on-service-row-{{ $exKey }}">
+                            <div class="row add-ons" id="add-on-row-id-{{ $exKey }}">
+                                
                                 <div class="col-xl-4 col-lg-4 form-group">
                                     <label>Title</label>
-                                    <input type="text"name="extra_title[]" placeholder="Title"  value="{{ $extra->title }}"
-                                         class="form-control add-on-title"   >
-
+                                    <input type="text"name="service_add_ons[{{$exKey}}][title]" placeholder="Title"  value="{{ $extra->title }}"
+                                        class="form-control add-on-title">
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 form-group">
                                     <label>@lang('Per Hour Rate')</label>
-                                    <input type="number" class="form-control add_on_price" value="{{ floatval($extra->price) ?: 'Enter add on price' }}"
-                                        name="add_on_price[]"  placeholder="@lang('Per hour rate')"
-                                        step=".01">
+                                    <input type="number" class="form-control add_on_price" value="{{ floatval($extra->rate_per_hour) ?: 'Enter add on price' }}"
+                                        name="service_add_ons[{{$exKey}}][rate_per_hour]"  placeholder="@lang('Per hour rate')"
+                                        step="any">
                                 </div>
+
                                 <div class="col-xl-3 col-lg-3 form-group">
                                     <label>@lang(' Estimated Delivery Time ')</label>
-                                        <input type="number" class="form-control add-on-delivery" value="{{ $extra->delivery ?: 'Enter delivery' }}"
-                                            name="add_on_delivery[]" id="add_on_delivery" min="1" placeholder="@lang('Enter Days')">
+                                        <input type="number" class="form-control add-on-delivery" value="{{ $extra->estimated_delivery_time ?: 'Enter delivery' }}"
+                                        name="service_add_ons[{{$exKey}}][estimated_delivery_time]" id="add_on_delivery"  placeholder="@lang('Enter Days')">
                                 </div>
-                                    <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-                                        <button type="button" class="btn btn-danger"
-                                            onclick="removeAddOnRow($('#add-on-service-row-{{ $exKey }}'))"><i
-                                                class="fa fa-trash"></i></button>
-                                    </div>
+                                    @if($exKey>0)
+                                        <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+                                            <button type="button" class="btn btn-danger"
+                                                onclick="deleteAddOnRow($('#add-on-row-id-{{ $exKey }}'))"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </div>
+                                    @endif
                             </div>
                         </div>
                     @endforeach
+                    
+                @else
+                    <div id="add-service-container">
+
+                        <div class="row add-ons">
+
+                            <div class="col-xl-4 col-lg-4 form-group">
+                                <label>Title</label>
+                                <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title"/>
+                            </div>
+
+                            <div class="col-xl-4 col-lg-4 form-group">
+                                <label>@lang('Per Hour Rate')</label>
+                                <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
+                                    placeholder="@lang('Per hour rate')" id="add_on_price"  >
+                            </div>
+
+                            <div class="col-xl-4 col-lg-4 form-group">
+                                <label>@lang(' Estimated Delivery Time ')</label>
+                                    <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
+                                    placeholder="@lang('Enter Hours')" >
+                            </div>
+                        </div>
+
+                    </div>
 
                 @endif
+
                 <div class="row">
 
                     <div class="col-12 form-group">
@@ -142,19 +152,19 @@ Deployment ">
                                     <label for="" class="d-inline-block">Step Name *</label>
                                     <span title="1 Requirement Gathering : Developer /client must identify the exact  requirements of service from start to finish.
 
-2 Analyzing :
-After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
-(service budget analysis can be done at this time )
+                                        2 Analyzing :
+                                        After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
+                                        (service budget analysis can be done at this time )
 
-3 Development :
-Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
+                                        3 Development :
+                                        Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
 
-4 Testing :
-In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
+                                        4 Testing :
+                                        In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
 
-5 Deployment :
-Developer will deploy the following service (program /software) as per client’s requirements.">
-                        <i class="fa fa-info-circle"></i></span>
+                                        5 Deployment :
+                                        Developer will deploy the following service (program /software) as per client’s requirements.">
+                                        <i class="fa fa-info-circle"></i></span>
                                     <input type="text" name="steps[]" id="step" placeholder="E.g. Initial Requirements"
                                         class="form-control step"
                                           />
@@ -207,7 +217,12 @@ Developer will deploy the following service (program /software) as per client’
                             href="?view=step-1">@lang('BACK')</a>
                     </div>
                     <div class="col-md-6 text-right">
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
+    
+                        <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                           Preview Service
+                        </button> </a>
                         <button type="submit"
                             class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE AND CONTINUE')</button>
                     </div>
@@ -218,4 +233,5 @@ Developer will deploy the following service (program /software) as per client’
         {{-- </div> --}}
     </div>
 </form>
+
 

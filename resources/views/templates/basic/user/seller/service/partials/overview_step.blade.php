@@ -1,9 +1,17 @@
+
+
 <form role="form" class="user-profile-form" action="{{ route('user.service.store.overview') }}" method="POST">
     @csrf
     <div class="card-body">
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
-                <input type="hidden" value="{{ $service->id ?? '' }}" name="service_id">
+                <input type="hidden" value="{{ $service->id ?? '' }}" name="service_id" id="service_id">
+                @if ($service)
+                    <input type="hidden" value="{{ $service->skills ? implode(',',$service->skills->pluck('id')->toArray()) : '' }}" name="service_skills" id="service_skills_id">
+                @else
+                    <input type="hidden" value="" name="service_skills" id="service_skills_id">
+                @endif
+
                 <div class="col-xl-12 col-lg-12 form-group">
                     <label>@lang('Title')*</label>
                     <input type="text" name="title" id="title_over" maxlength="255" value="{{ old('title', @$service->title) }}"
@@ -20,155 +28,122 @@
                 <div class="col-xl-4 col-lg-4 form-group select2Tag">
                     <label>@lang('Service Tags')*</label>
 
-                    <select data-placeholder="Tag1, Tag2, Tag3" class="select2 tags" id="tags" name="tag[]"
+                    <select data-placeholder="Please Select Tags" class="select2 tags" id="tags" name="tag[]"
                         multiple="multiple" >
                         {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
 
-                        @if (!empty($service->tag))
-                            @foreach ($service->tag as $tag)
-                                <option selected="true" > {{ $tag }}</option>
+                        @if ($service && count($service->tags)>0)
+                            @foreach ($tags as $tag)
+                                <option {{isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
                             @endforeach
+                        @else
+                            @foreach ($tags as $tag)
+                                <option > {{ $tag->name }}</option>
+                            @endforeach
+                        
                         @endif
 
                     </select>
                     <div id="error"></div>
                     {{-- <small>@lang('Tag and enter press')</small> --}}
                 </div>
-
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
-                    <label>@lang('Category')*</label>
-                    <select class="form-control bg--gray" name="category_id" id="category">
-
-                        <option selected="" disabled="" >@lang('Select Category')</option>
-                        @if (!empty($service))
-                            @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
-                                <option value="{{ $category->id }}" @if ($category->id == $service->category_id) selected @endif>
-                                    {{ __($category->name) }}</option>
-                            @endforeach
-                        @else
-                            @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
-                                <option value="{{ __($category->id) }}">
-                                    {{ __($category->name) }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div>
-
-                <div class="col-xl-6 col-lg-6 form-group pt-4">
-                    <label for="subCategorys">@lang('Sub-Category*')</label>
-                    <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category">
-                        <option selected="" disabled="" >@lang('Sub Category')</option>
-                        @if (!empty($service))
-                            @foreach (\App\Models\Category::find($service->category_id)->subCategory as $sub)
-                                <option @if ($sub->id == $service->sub_category_id) selected @endif value="{{ $sub->id }}">
-                                    {{ $sub->name }}</option>
-                            @endforeach
-                        @endif
-
-                    </select>
-                </div>
-                <div class="col-xl-12 col-lg-12 position-relative">
-                    <label class="d-inline-block mx-1">@lang('Include Feature')*</label>
-                    <span title="
-Support : Provide customer service and resolve various issues online
-
-Consultancy : Provide consultancy or advice with particular service
-
-Training : Provide customer training related to particular service
-
-Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
-
-Software Development : Provide key aspects of software development (programming , testing , deployment and  support
-
- ">
-                        <i class="fa fa-info-circle"></i></span>
-                    <p class="include_error"></p>
-                    @if (!empty($service))
-                    <div class="col-xl-12 col-lg-12 form-group mt-2 d-flex flex-wrap back">
-                    @foreach ($features as $feature)
-                    <div class="form-group px-2 ">
-                    <label class="container1 ">{{ __($feature->name) }}
-                    <input id="include" value="{{ $feature->id }}" name="features[]" type="checkbox" @foreach ($service->featuresService as $value) {{ $feature->id == $value->id ? 'checked' : '' }} @endforeach
-                                                                                    >
-                    <span class="checkmark"></span>
-                    </label>
-
-                </div>
-
-                            @endforeach
-                            </div>
+                <div class="row">
+                    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+                        <label>@lang('Category')*</label>
+                        <select class="form-control bg--gray" name="category_id" id="category">
+    
+                            <option selected="" disabled="" >@lang('Select Category')</option>
+                            @if (!empty($service))
+                                @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
+                                    <option value="{{ $category->id }}" @if ($category->id == $service->category_id) selected @endif>
+                                        {{ __($category->name) }}</option>
+                                @endforeach
                             @else
-                            <div class="col-xl-12 col-lg-12 form-group mt-2 d-flex flex-wrap back">
-                            @foreach ($features as $feature)
-                            <div class="form-group px-2 pl-2">
-                            <!-- <label for="privacy" class="d-flex">
-                            <input  id="include" value="{{ $feature->id }}"  class="checkbox-review" name="features[]" type="checkbox" />
-                                <span class="lbl-review review-check mb-3">{{ __($feature->name) }}</span>
-                            </label> -->
-                            <label class="container1">{{ __($feature->name) }}
-                                <input id="include" value="{{ $feature->id }}" name="features[]" type="checkbox">
-                                <span class="checkmark"></span>
-                                </label>
-                            </div>
-
-                            @endforeach
-                            </div>
+                                @foreach (\App\Models\Category::getByType(\App\Models\Category::ServiceType) as $category)
+                                    <option value="{{ __($category->id) }}">
+                                        {{ __($category->name) }}
+                                    </option>
+                                @endforeach
                             @endif
-
-
+                        </select>
+                    </div>
+    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+                        <label for="subCategorys">@lang('Sub-Category*')</label>
+                        <select name="sub_category_id" class="form-control mySubCatgry" id="sub-category">
+                            <option selected="" disabled="" >@lang('Sub Category')</option>
+                            @if (!empty($service))
+                                @foreach (\App\Models\Category::find($service->category_id)->subCategory as $sub)
+                                    <option @if ($sub->id == $service->sub_category_id) selected @endif value="{{ $sub->id }}">
+                                        {{ $sub->name }}</option>
+                                @endforeach
+                            @endif
+    
+                        </select>
+                    </div>
+    
+                    <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group pt-4">
+    
+                        <label class="d-inline-block ">@lang('Include Feature')*</label>
+                        <span title="Support : Provide customer service and resolve various issues online
+    
+                                        Consultancy : Provide consultancy or advice with particular service
+    
+                                        Training : Provide customer training related to particular service
+    
+                                        Infrastructure Management : provide a method to monitor and maintain IT infrastructure to ensure best use of resources and cloud service utilization
+    
+                                        Software Development : Provide key aspects of software development (programming , testing , deployment and  support">
+                                    <i class="fa fa-info-circle"></i>
+                        </span>
+    
+                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
+                            @if (!empty($service))
+                                @foreach ($features as  $item )
+                                    <option value="{{ $item->id }}" @if(in_array($item->id,$service->features->pluck('id')->toArray())) selected @endif>
+                                        {{ __($item->name) }}</option>
+                                @endforeach
+                            @else
+                                @foreach($features as  $item)
+                                    <option value="{{__($item->id)}}">{{__($item->name)}}</option>
+                                @endforeach
+                            @endif
+                            
+    
+                        </select>
+                    </div>
 
                 </div>
-                <!-- <div class="col-xl-4 col-lg-6 form-group service-feat pt-4">
-
-                    <select name="features[]" id="include" class="form-control ">
-
-                        <option selected="" disabled="">@lang('Select Features')</option>
-                        @if (!empty($service))
-                            @foreach ($features as $feature)
-                                <option
-                                    @foreach ($service->featuresService as $value) {{ $feature->id == $value->id ? 'selected' : '' }} @endforeach
-                                    value="{{ $feature->id }}">
-                                    {{ __($feature->name) }}
-                                </option>
-                            @endforeach
-                        @else
-                            @foreach ($features as $feature)
-                                <option multiple value="{{ $feature->id }}">
-                                    {{ __($feature->name) }}
-                                </option>
-                            @endforeach
-                        @endif
-                    </select>
-                </div> -->
+                
                 <br>
-                <div class="col-xl-12 col-lg-12">
-                    <h3>
-                        Service Attributes
-                    </h3>
-                    <br />
+                <input type="checkbox" name="skills[]" style="display: none">
+                
+                
+                <div style="display:inline;display:none" id="skills_heading">
+                    <h4 class="" style="display:inline">Job Attributes* </h4>
+                    <small >(At least one skill is required)</small>
                 </div>
-                <br>
 
-                @if (empty($service))
-                    @include($activeTemplate . 'user.seller.shared.attributes')
-                @else
-                    @include($activeTemplate . 'user.seller.shared.attributes_edit_service', ['model' => $service])
-                @endif
+                <div id="form_attributes" class="col-xl-12 col-lg-12 pt-1" >
+                    
+                </div>
 
             </div>
             <hr />
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6 text-right">
-                    <button type="submit"
-                        class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                AND
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                CONTINUE')</button>
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE AND CONTINUE')</button>
                 </div>
             </div>
 
         </div>
     </div>
 </form>
-
+<script>
+    let action = '';
+    
+</script>

@@ -25,9 +25,6 @@
                                     <tr @if ($loop->odd) class="table-light" @endif>
                                         <td data-label="@lang('Title')">
                                             <div class="user">
-                                                <div class="thumb"><img
-                                                        src="{{ getImage('assets/images/software/' . $software->image, '590x300') }}"
-                                                        alt="@lang('image')"></div>
                                                 <span
                                                     class="name">{{ __(str_limit($software->title, 10)) }}</span>
                                             </div>
@@ -55,7 +52,7 @@
                                                 class="icon-btn"><i class="las la-arrow-down"></i></a>
                                         </td>
                                         <td data-label="@lang('Featured Item')">
-                                            @if ($software->featured == 1)
+                                            @if ($software->is_featured == 1)
                                                 <span
                                                     class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
                                                 <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude"
@@ -78,7 +75,7 @@
                                         </td>
                                         <td data-label="@lang('Amount')">
                                             <span
-                                                class="font-weight-bold">{{ $general->cur_sym }}{{ getAmount($software->amount) }}</span>
+                                                class="font-weight-bold">{{ $general->cur_sym }}{{showAmount($software->price)}}</span>
                                         </td>
 
                                         <td data-label="@lang('Document')">
@@ -87,19 +84,27 @@
                                         </td>
 
                                         <td data-label="@lang('Status')">
-                                            @if ($software->status == 1)
-                                                <span class="font-weight-normal badge--success">@lang('Approved')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @elseif($software->status == 2)
-                                                <span class="font-weight-normal badge--danger">@lang('Cancel')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @elseif($software->status == 0)
-                                                <span class="font-weight-normal badge--primary">@lang('Pending')</span>
-                                                <br>
-                                                {{ diffforhumans($software->created_at) }}
-                                            @endif
+                                        @if($software->status_id == 24)
+                                            <span class="font-weight-normal badge--success">@lang('Approved')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 25)
+                                            <span class="font-weight-normal badge--danger">@lang('Canceled')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 23)
+                                            <span class="font-weight-normal badge--primary">@lang('Pending')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 22)
+                                            <span class="font-weight-normal badge--warning">@lang('Draft')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}
+                                        @elseif($software->status_id == 26)
+                                            <span class="font-weight-normal badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                            <br>
+                                            {{diffforhumans($software->created_at)}}    
+                                        @endif
                                         </td>
 
                                         <td data-label="@lang('Last Update')">
@@ -109,18 +114,81 @@
                                         </td>
 
                                         <td data-label="@lang('Action')">
-                                            @if ($software->status == 0)
-                                                <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip"
-                                                    data-id="{{ $software->id }}"
-                                                    data-original-title="@lang('Approved')">
-                                                    <i class="las la-check"></i>
-                                                </button>
+                                        @if($software->status_id == 23)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+                                        @if($software->status_id == 24)
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
 
-                                                <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip"
-                                                    data-original-title="@lang('Cancel')" data-id="{{ $software->id }}">
-                                                    <i class="las la-times"></i>
-                                                </button>
-                                            @endif
+                                        @if($software->status_id == 22)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+
+                                        @if($software->status_id == 25)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--info ml-2 underreview" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Under Review')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                        @endif
+
+                                        @if($software->status_id == 26)
+                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--warning ml-2 drafted" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Drafted')">
+                                                <i class="las la-check"></i>
+                                            </button>
+                                            <button class="icon-btn btn--danger ml-2 cancel" data-toggle="tooltip" title="" data-original-title="@lang('Cancel')" data-id="{{$software->id}}">
+                                                <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+
+                                         
 
                                             <div style="display: flex">
                                                 <a href="{{ route('admin.software.details', $software->id) }}"
@@ -207,6 +275,84 @@
                     <input type="hidden" name="id">
                     <div class="modal-body">
                         <p>@lang('Are you sure to cancel this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="pendingBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.pendingBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to pending this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="draftBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.draftBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to draft this software?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="underReviewBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Cancel Confirmation')</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                
+                <form action="{{ route('admin.software.underReviewBy') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure to under review this software?')</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -309,17 +455,35 @@
 @push('script')
     <script>
         'use strict';
-        $('.approved').on('click', function() {
-            var modal = $('#approvedby');
-            modal.find('input[name=id]').val($(this).data('id'))
-            modal.modal('show');
-        });
+    $('.approved').on('click', function () {
+        var modal = $('#approvedby');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
 
-        $('.cancel').on('click', function() {
-            var modal = $('#cancelBy');
-            modal.find('input[name=id]').val($(this).data('id'))
-            modal.modal('show');
-        });
+    $('.cancel').on('click', function () {
+        var modal = $('#cancelBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.drafted').on('click', function () {
+        var modal = $('#draftBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.pending').on('click', function () {
+        var modal = $('#pendingBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.underreview').on('click', function () {
+        var modal = $('#underReviewBy');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
 
         $('.include').on('click', function() {
             var modal = $('#includeFeatured');

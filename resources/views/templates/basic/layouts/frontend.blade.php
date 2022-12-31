@@ -6,16 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    @if(\App\Models\GeneralSetting::$showSEOTags)
-        <title>{{$general->sitename(__($pageTitle))}}</title>
-        @include('partials.seo')
-    @endif
-
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css"
           rel="stylesheet">
+
+    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/fontawesome-all.min.css')}}">
+
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/fontawesome-all.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap.min.css')}}">
     <link rel="shortcut icon" href="{{getImage(imagePath()['logoIcon']['path'] .'/favicon.png')}}" type="image/x-icon">
@@ -24,7 +22,11 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/line-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/animate.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/style/style.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/custom/custom.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/seller_profile.css')}}">
+
+
     {{-- <link rel="stylesheet" href="{{asset('/assets/resources/style/index.scss')}}"> --}}
 
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
@@ -33,7 +35,6 @@
     @stack('style')
     <link href="{{ asset($activeTemplateTrue . 'frontend/css/color.php') }}?color={{$general->base_color}}&secondColor={{$general->secondary_color}}"
           rel="stylesheet"/>
-
 </head>
 <body>
 @stack('fbComment')
@@ -42,18 +43,28 @@
 <div class="preloader">
     <div class="box-loader">
         <div class="loader animate">
-            <svg class="circular" viewBox="50 50 100 100">
-                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
-                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"
-                      stroke-linecap="round"/>
-            </svg>
+            <img src="{{ asset('assets/images/loader/dureforceloader.gif') }}" alt="@lang('image')">
+{{--            <svg class="circular" viewBox="50 50 100 100">--}}
+{{--                <circle class="path" cx="75" cy="75" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>--}}
+{{--                <line class="line" x1="127" x2="150" y1="0" y2="0" stroke="black" stroke-width="3"--}}
+{{--                      stroke-linecap="round"/>--}}
+{{--            </svg>--}}
         </div>
     </div>
 </div>
 {{-- End Preloader --}}
 
 @if(!\Route::is('verification.notice') )
+    @guest
     @include($activeTemplate.'partials.header')
+    @endguest
+    @auth
+        @if( getLastLoginRoleId() == App\Models\Role::$Freelancer )
+            @include($activeTemplate.'partials.seller_user_header')
+        @elseif (getLastLoginRoleId() == App\Models\Role::$Client)
+            @include($activeTemplate.'partials.client_user_header')
+        @endif
+    @endauth
 @endif
 @yield('content')
 @include($activeTemplate.'partials.footer')
@@ -100,6 +111,7 @@
 @include('partials.plugins')
 @include('partials.notify')
 <script>
+
     (function ($) {
         "use strict";
         $(".langSel").on("change", function () {
@@ -147,6 +159,270 @@
             });
         });
     })(jQuery);
+
+    var multipleCardCarouselServices = document.querySelector(
+        "#carouselFeatureServices"
+    );
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarouselServices, {
+            interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselFeatureServices .carousel-control-next").on("click", function () {
+            if (scrollPosition < carouselWidth - cardWidth * 3) {
+                scrollPosition += cardWidth;
+                $("#carouselFeatureServices .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        $("#carouselFeatureServices .carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $("#carouselFeatureServices .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+    }
+    var multipleCardCarouselJobs = document.querySelector(
+        "#carouselFeatureJobs"
+    );
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarouselJobs, {
+            interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselFeatureJobs .carousel-control-next").on("click", function () {
+            if (scrollPosition < carouselWidth - cardWidth * 3) {
+                scrollPosition += cardWidth;
+                $("#carouselFeatureJobs .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        $("#carouselFeatureJobs .carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $("#carouselFeatureJobs .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+    }
+    if (window.matchMedia("(min-width: 1280px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarouselServices, {
+            interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselFeatureServices .carousel-control-next").on("click", function () {
+            if (scrollPosition < carouselWidth - cardWidth * 4) {
+                scrollPosition += cardWidth;
+                $("#carouselFeatureServices .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        $("#carouselFeatureServices .carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $("#carouselFeatureServices .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+    }else {
+        $(multipleCardCarouselServices).addClass("slide");
+    }
+    // second card home page
+    var multipleCardCarouselSoftware = document.querySelector(
+        "#carouselFeatureSoftware"
+    );
+    if (window.matchMedia("(min-width: 768px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarouselSoftware, {
+            interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselFeatureSoftware .carousel-control-next").on("click", function () {
+            if (scrollPosition < carouselWidth - cardWidth * 3) {
+                scrollPosition += cardWidth;
+                $("#carouselFeatureSoftware .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        $("#carouselFeatureSoftware .carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $("#carouselFeatureSoftware .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+    }
+    if (window.matchMedia("(min-width: 1280px)").matches) {
+        var carousel = new bootstrap.Carousel(multipleCardCarouselSoftware, {
+            interval: false,
+        });
+        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+        var cardWidth = $(".carousel-item").width();
+        var scrollPosition = 0;
+        $("#carouselFeatureSoftware .carousel-control-next").on("click", function () {
+            if (scrollPosition < carouselWidth - cardWidth * 4) {
+                scrollPosition += cardWidth;
+                $("#carouselFeatureSoftware .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+        $("#carouselFeatureSoftware .carousel-control-prev").on("click", function () {
+            if (scrollPosition > 0) {
+                scrollPosition -= cardWidth;
+                $("#carouselFeatureSoftware .carousel-inner").animate(
+                    { scrollLeft: scrollPosition },
+                    600
+                );
+            }
+        });
+    }else {
+        $(multipleCardCarouselSoftware).addClass("slide");
+    }
+    // end second card
+    // third card home page
+        var multipleCardCarouselPublications = document.querySelector(
+        "#carouselPublications"
+        );
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            var carousel = new bootstrap.Carousel(multipleCardCarouselPublications, {
+                interval: false,
+            });
+            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+            var cardWidth = $(".carousel-item").width();
+            var scrollPosition = 0;
+            $("#carouselPublications .carousel-control-next").on("click", function () {
+                if (scrollPosition < carouselWidth - cardWidth * 3) {
+                    scrollPosition += cardWidth;
+                    $("#carouselPublications .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+            $("#carouselPublications .carousel-control-prev").on("click", function () {
+                if (scrollPosition > 0) {
+                    scrollPosition -= cardWidth;
+                    $("#carouselPublications .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+        }
+        if (window.matchMedia("(min-width: 1280px)").matches) {
+            var carousel = new bootstrap.Carousel(multipleCardCarouselPublications, {
+                interval: false,
+            });
+            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+            var cardWidth = $(".carousel-item").width();
+            var scrollPosition = 0;
+            $("#carouselPublications .carousel-control-next").on("click", function () {
+                if (scrollPosition < carouselWidth - cardWidth * 4) {
+                    scrollPosition += cardWidth;
+                    $("#carouselPublications .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+            $("#carouselPublications .carousel-control-prev").on("click", function () {
+                if (scrollPosition > 0) {
+                    scrollPosition -= cardWidth;
+                    $("#carouselPublications .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+        }else {
+            $(multipleCardCarouselPublications).addClass("slide");
+        }
+    // end third card
+    // fourth card home page
+        var multipleCardCarouselUserProfile = document.querySelector(
+        "#carouselUserProfile"
+        );
+        if (window.matchMedia("(min-width: 768px)").matches) {
+            var carousel = new bootstrap.Carousel(multipleCardCarouselUserProfile, {
+                interval: false,
+            });
+            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+            var cardWidth = $(".carousel-item").width();
+            var scrollPosition = 0;
+            $("#carouselUserProfile .carousel-control-next").on("click", function () {
+                if (scrollPosition < carouselWidth - cardWidth * 3) {
+                    scrollPosition += cardWidth;
+                    $("#carouselUserProfile .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+            $("#carouselUserProfile .carousel-control-prev").on("click", function () {
+                if (scrollPosition > 0) {
+                    scrollPosition -= cardWidth;
+                    $("#carouselUserProfile .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+        }
+        if (window.matchMedia("(min-width: 1280px)").matches) {
+            var carousel = new bootstrap.Carousel(multipleCardCarouselUserProfile, {
+                interval: false,
+            });
+            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
+            var cardWidth = $(".carousel-item").width();
+            var scrollPosition = 0;
+            $("#carouselUserProfile .carousel-control-next").on("click", function () {
+                if (scrollPosition < carouselWidth - cardWidth * 4) {
+                    scrollPosition += cardWidth;
+                    $("#carouselUserProfile .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+            $("#carouselUserProfile .carousel-control-prev").on("click", function () {
+                if (scrollPosition > 0) {
+                    scrollPosition -= cardWidth;
+                    $("#carouselUserProfile .carousel-inner").animate(
+                        { scrollLeft: scrollPosition },
+                        600
+                    );
+                }
+            });
+            // end fourth card
+        }else {
+            $(multipleCardCarouselUserProfile).addClass("slide");
+        }
 </script>
 
 <style>

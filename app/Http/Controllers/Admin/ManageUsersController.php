@@ -2,19 +2,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
+use App\Models\Country;
 use App\Models\Deposit;
 use App\Models\EmailLog;
 use App\Models\Gateway;
 use App\Models\GeneralSetting;
+use App\Models\Job;
+use App\Models\Service;
+use App\Models\Software\Software;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Models\Service;
-use App\Models\Software;
-use App\Models\Job;
-use App\Models\Booking;
-use App\Models\UserLogin;
-use App\Models\WithdrawMethod;
 use App\Models\Withdrawal;
+use App\Models\WithdrawMethod;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Users';
         $emptyMessage = 'No user found';
-        $users = User::orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -33,7 +34,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Manage Active Users';
         $emptyMessage = 'No active user found';
-        $users = User::active()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->where('is_active', 1)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -41,7 +42,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Banned Users';
         $emptyMessage = 'No banned user found';
-        $users = User::banned()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->where('is_active', 0)->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -49,14 +50,14 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Email Unverified Users';
         $emptyMessage = 'No email unverified user found';
-        $users = User::emailUnverified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->EmailUnverified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
     public function emailVerifiedUsers()
     {
         $pageTitle = 'Email Verified Users';
         $emptyMessage = 'No email verified user found';
-        $users = User::emailVerified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->emailVerified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -65,7 +66,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'SMS Unverified Users';
         $emptyMessage = 'No sms unverified user found';
-        $users = User::smsUnverified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -74,7 +75,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'SMS Verified Users';
         $emptyMessage = 'No sms verified user found';
-        $users = User::smsVerified()->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->smsVerified()->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -83,7 +84,7 @@ class ManageUsersController extends Controller
     {
         $pageTitle = 'Users with balance';
         $emptyMessage = 'No sms verified user found';
-        $users = User::where('balance','!=',0)->orderBy('id','desc')->paginate(getPaginate());
+        $users = User::with('country')->orderBy('id','desc')->paginate(getPaginate());
         return view('admin.users.list', compact('pageTitle', 'emptyMessage', 'users'));
     }
 
@@ -92,7 +93,7 @@ class ManageUsersController extends Controller
     public function search(Request $request, $scope)
     {
         $search = $request->search;
-        $users = User::where(function ($user) use ($search) {
+        $users = User::with('country')->where(function ($user) use ($search) {
             $user->where('username', 'like', "%$search%")
                 ->orWhere('email', 'like', "%$search%");
         });
@@ -133,7 +134,8 @@ class ManageUsersController extends Controller
         $totalJob = Job::where('user_id',$user->id)->count();
         $totalServiceBooking = Booking::where('user_id',$user->id)->whereNotNull('service_id')->where('status', '!=', 0)->count();
         $totalPurchaseSoftware = Booking::where('user_id',$user->id)->whereNotNull('software_id')->where('status', '!=', 0)->count();
-        $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        // $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+        $countries = Country::select('id', 'name')->get();
         return view('admin.users.detail', compact('pageTitle', 'user','totalDeposit','totalWithdraw','totalTransaction','countries', 'totalService', 'totalSoftware', 'totalJob', 'totalServiceBooking', 'totalPurchaseSoftware'));
     }
 
@@ -198,27 +200,39 @@ class ManageUsersController extends Controller
             'firstname' => 'required|max:50',
             'lastname' => 'required|max:50',
             'email' => 'required|email|max:90|unique:users,email,' . $user->id,
-            'mobile' => 'required|unique:users,mobile,' . $user->id,
+            // 'mobile' => 'required|unique:users,mobile,' . $user->id,
             'country' => 'required',
         ]);
+        if(isset($request->status) && $request->status == 'on')
+        {
+            $user->is_active = 1;
+        }else{
+            $user->is_active = 0;
+        }
+        if(isset($request->email_verified_at) && $request->email_verified_at == 'on')
+        {
+            $user->email_verified_at = Carbon::now()->timestamp;;
+        }else{
+            $user->email_verified_at = null;
+        }
         $countryCode = $request->country;
-        $user->mobile = $request->mobile;
-        $user->country_code = $countryCode;
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
+        // $user->mobile = $request->mobile;
+        // $user->country_code = $countryCode;
+        $user->first_name = $request->firstname;
+        $user->last_name = $request->lastname;
         $user->email = $request->email;
-        $user->address = [
-                            'address' => $request->address,
-                            'city' => $request->city,
-                            'state' => $request->state,
-                            'zip' => $request->zip,
-                            'country' => @$countryData->$countryCode->country,
-                        ];
-        $user->status = $request->status ? 1 : 0;
-        $user->ev = $request->ev ? 1 : 0;
-        $user->sv = $request->sv ? 1 : 0;
-        $user->ts = $request->ts ? 1 : 0;
-        $user->tv = $request->tv ? 1 : 0;
+        // $user->address = [
+                            // 'address' => $request->address,
+                            // 'city' => $request->city,
+                            // 'state' => $request->state,
+                            // 'zip' => $request->zip,
+                        //     'country' => @$countryData->$countryCode->country,
+                        // ];
+        // $user->status = $request->status ? 1 : 0;
+        // $user->ev = $request->ev ? 1 : 0;
+        // $user->sv = $request->sv ? 1 : 0;
+        // $user->ts = $request->ts ? 1 : 0;
+        // $user->tv = $request->tv ? 1 : 0;
         $user->save();
 
         $notify[] = ['success', 'User detail has been updated'];
@@ -437,9 +451,9 @@ class ManageUsersController extends Controller
             'subject' => 'required|string|max:190',
         ]);
 
-        foreach (User::where('status', 1)->cursor() as $user) {
-            sendGeneralEmail($user->email, $request->subject, $request->message, $user->username);
-        }
+        // foreach (User::where('status', 1)->cursor() as $user) {
+        //     sendGeneralEmail($user->email, $request->subject, $request->message, $user->username);
+        // }
 
         $notify[] = ['success', 'All users will receive an email shortly.'];
         return back()->withNotify($notify);

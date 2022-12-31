@@ -1780,8 +1780,8 @@ option {
   text-align: center;
   z-index: 9999999;
   background-color: white;
+  opacity: 0.9;
 }
-
 .box-loader {
   position: absolute;
   top: 0;
@@ -1798,8 +1798,10 @@ option {
   right: 0;
   bottom: 0;
   margin: auto;
-  width: 150px;
+  width: 300px;
 }
+
+
 
 .loader:before {
   content: "";
@@ -4605,7 +4607,7 @@ option {
 }
 .dropdown-menu__item .dropdown-menu__caption {
   padding-left: 10px;
-  font-size: 14px;
+  font-size: 13px;
   color: #606975;
   font-weight: 500;
 }

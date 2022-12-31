@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-12">
                     <label class="mt-4">Phone</label>
-                    <input type="number" name="mobile" placeholder="" value="{{ auth()->user()->mobile ?? '' }}"
+                    <input type="number" step="any" name="mobile" placeholder="" value="{{ auth()->user()->mobile ?? '' }}"
                          />
                 </div>
                 <div class="language-container row" id="language-row" style="justify-content: space-between !important">

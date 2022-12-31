@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\Status;
 use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
 {
@@ -24,9 +27,31 @@ class TicketController extends Controller
         if (!Auth::user()) {
             abort(404);
         }
+
+
+        $user = auth()->user();
+
+        $tickets = SupportTicket::with(['status','priority','supportMessage'])->where('role_id', $user->last_role_activity)->where('user_id', $user->id)->orderBy('id','desc')->get();
+
         $pageTitle = "Support Tickets";
-        $supports = SupportTicket::where('user_id', Auth::id())->orderBy('priority', 'desc')->orderBy('id','desc')->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.support.index', compact('supports', 'pageTitle'));
+        return view($this->activeTemplate . 'user.support.index', compact('tickets', 'pageTitle'));
+    }
+
+
+    public function create(Request $request)
+    {
+        try {
+
+            $pageTitle = "Create Support Ticket";
+            $user = auth()->user();
+            $priorities = Status::where('type',Status::$Priority)->get();
+            return view($this->activeTemplate . 'user.support.create_ticket', compact('user', 'pageTitle','priorities'));
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+
     }
 
 
@@ -46,7 +71,11 @@ class TicketController extends Controller
         $message = new SupportMessage();
 
         $files = $request->file('attachments');
-        $allowedExts = array('jpg', 'png', 'jpeg', 'pdf','doc','docx');
+        $allowedExts = array('jpg', 'png', 'jpeg', 'pdf', 'doc', 'docx');
+        do {
+            $ticket_no = rand(1, 1000000000);
+            $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+        } while (!$ticket_exists);
 
         $this->validate($request, [
             'attachments' => [
@@ -93,13 +122,13 @@ class TicketController extends Controller
         $adminNotification = new AdminNotification();
         $adminNotification->user_id = $user->id;
         $adminNotification->title = 'New support ticket has opened';
-        $adminNotification->click_url = urlPath('admin.ticket.view',$ticket->id);
+        $adminNotification->click_url = urlPath('admin.ticket.view', $ticket->id);
         $adminNotification->save();
 
 
         $path = imagePath()['ticket']['path'];
         if ($request->hasFile('attachments')) {
-            foreach ($files as  $file) {
+            foreach ($files as $file) {
                 try {
                     $attachment = new SupportAttachment();
                     $attachment->support_message_id = $message->id;
@@ -115,6 +144,127 @@ class TicketController extends Controller
         return redirect()->route('ticket')->withNotify($notify);
     }
 
+    public function  validateTicket(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $validator = Validator::make($request_data,[
+            'subject' => 'required',
+            'priority_id' => 'required',
+            'message'     => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            return response()->json(["error" => $validator->errors()]);
+
+        } else
+            return response()->json(["validated" => "Ticket Data Is Valid"]);
+    }
+
+    public function store(Request $request)
+    {
+        $request_data = [];
+        parse_str($request->data, $request_data);
+        $user = auth()->user();
+
+        do {
+            $ticket_no = rand(1, 1000000000);
+            $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+        } while ($ticket_exists);
+
+        $ticket =SupportTicket::create([
+            "user_id"=>$user->id,
+            "role_id"=>$user->last_role_activity,
+            "priority_id"=>$request_data['priority_id'],
+            "status_id"=>SupportTicket::$Open,
+            "ticket_no"=>$ticket_no,
+            "subject"=>$request_data['subject'],
+            "message"=>$request_data['message'],
+        ]);
+        if ($request->hasFile('file')) {
+
+            foreach ($request->file as $file) {
+                $path = imagePath()['attachments']['path'];
+                try {
+                    
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $uploaded_name = $file->getClientOriginalName();
+                
+                    $ticket->attachments()->create([
+
+                        'name' => $filename,
+                        'uploaded_name' => $uploaded_name,
+                        'url'           => $url,
+                        'type' =>$file_extension,
+                        'is_published' =>1
+
+                    ]);
+
+                } catch (\Exception $exp) {
+                    $notify[] = ['error', 'Document could not be uploaded.'];
+                    return back()->withNotify($notify);
+                }
+
+            }
+        }
+        $notify[] = ['success', 'ticket created successfully!'];
+        return response()->json(['redirect' => route('ticket')]);
+    }
+
+    public function storeComment(Request $request,$ticket_no)
+    {
+        $request->validate([
+            'message' => 'required'
+        ],
+            ['message.required'=>"Comment field is required"]
+        );
+        $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+
+        $user = auth()->user();
+
+        $message =SupportMessage::create([
+            "user_id"=>$user->id,
+            "support_ticket_id"=>$support_ticket->id,
+            "message"=>$request['message'],
+        ]);
+       
+       if ($request->hasFile('comment_attachment')) {
+        try {
+                foreach ($request->file('comment_attachment') as $file) {
+                    $path = imagePath()['attachments']['path'];
+            
+                    $filename = uploadAttachments($file, $path);
+                    $file_extension = getFileExtension($file);
+                    $url = $path . '/' . $filename;
+                    $uploaded_name = $file->getClientOriginalName();
+
+                    $message->attachments()->create([
+
+                        'name' => $filename,
+                        'uploaded_name' => $uploaded_name,
+                        'url'           => $url,
+                        'type' =>$file_extension,
+                        'is_published' =>1
+
+                    ]);
+
+                 }
+            }
+        catch (\Exception $exp) {
+            $notify[] = ['error', 'Document could not be uploaded.'];
+            return back()->withNotify($notify);
+        }
+        
+                          
+       }
+        $notify[] = ['success', 'ticket created successfully!'];
+        return redirect()->route('ticket.view',$ticket_no);
+    }
+
+
     public function viewTicket($ticket)
     {
         $pageTitle = "Support Tickets";
@@ -122,29 +272,59 @@ class TicketController extends Controller
         if (Auth::user()) {
             $userId = Auth::id();
         }
-        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id',$userId)->orderBy('id','desc')->firstOrFail();
-        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id','desc')->get();
+        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
+        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
         $user = auth()->user();
-        if($user){
-            return view($this->activeTemplate. 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+        if ($user) {
+            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+        } else {
+            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
         }
-        else{
-            return view($this->activeTemplate. 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+
+    }
+
+//    public function show($ticket)
+//    {
+//        $pageTitle = "Support Tickets";
+//        $userId = 0;
+//        if (Auth::user()) {
+//            $userId = Auth::id();
+//        }
+//        $my_ticket = SupportTicket::where('ticket', $ticket)->where('user_id', $userId)->orderBy('id', 'desc')->firstOrFail();
+//        $messages = SupportMessage::where('supportticket_id', $my_ticket->id)->orderBy('id', 'desc')->get();
+//        $user = auth()->user();
+//        if ($user) {
+//            return view($this->activeTemplate . 'user.support.view', compact('my_ticket', 'messages', 'pageTitle', 'user'));
+//        } else {
+//            return view($this->activeTemplate . 'ticket_view', compact('my_ticket', 'messages', 'pageTitle'));
+//        }
+//
+//    }
+    public function show($ticket)
+    {
+        try {
+            $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments','supportMessage.user.basicProfile')->firstOrFail();
+            $pageTitle = "Support Ticket Details";
+            return view($this->activeTemplate . 'user.support.ticket_details', compact( 'pageTitle','support_ticket'));
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
         }
 
     }
 
     public function replyTicket(Request $request, $id)
     {
+       
         $userId = 0;
         if (Auth::user()) {
             $userId = Auth::id();
         }
-        $ticket = SupportTicket::where('user_id',$userId)->where('id',$id)->firstOrFail();
+        $ticket = SupportTicket::where('user_id', $userId)->where('id', $id)->firstOrFail();
         $message = new SupportMessage();
         if ($request->replayTicket == 1) {
             $attachments = $request->file('attachments');
-            $allowedExts = array('jpg', 'png', 'jpeg', 'pdf', 'doc','docx');
+            $allowedExts = array('jpg', 'png', 'jpeg', 'pdf', 'doc', 'docx');
             $this->validate($request, [
                 'attachments' => [
                     'max:4096',
@@ -197,13 +377,12 @@ class TicketController extends Controller
             $ticket->last_reply = Carbon::now();
             $ticket->save();
             $notify[] = ['success', 'Support ticket closed successfully!'];
-        }else{
-            $notify[] = ['error','Invalid request'];
+        } else {
+            $notify[] = ['error', 'Invalid request'];
         }
         return back()->withNotify($notify);
 
     }
-    
 
 
     public function ticketDownload($ticket_id)
@@ -212,7 +391,7 @@ class TicketController extends Controller
         $file = $attachment->attachment;
 
         $path = imagePath()['ticket']['path'];
-        $full_path = $path.'/'. $file;
+        $full_path = $path . '/' . $file;
 
         $title = slug($attachment->supportMessage->ticket->subject);
         $ext = pathinfo($file, PATHINFO_EXTENSION);
