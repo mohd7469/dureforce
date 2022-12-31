@@ -23,6 +23,8 @@ use App\Models\ServiceStep;
 use App\Traits\CreateOrUpdateEntity;
 use App\Traits\DeleteEntity;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\serviceaddonMail;
@@ -39,189 +41,229 @@ class ServiceController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-        $pageTitle = "Manage service";
-        $emptyMessage = "No data found";
-        $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.seller.service.index', compact('pageTitle', 'services', 'emptyMessage'));
-    }
-    public function show($uuid){
+        try {
+            $user = Auth::user();
+            $pageTitle = "Manage service";
+            $emptyMessage = "No data found";
+            $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate());
+            Log::info(["Services" => $services]);
+            return view($this->activeTemplate . 'user.seller.service.index', compact('pageTitle', 'services', 'emptyMessage'));
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
 
-        $pageTitle = "Service details";
-        $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
-        $service->views += 1;
-        $service->save();
-        $related_services = Service::withAll()->where('category_id', $service->category_id)->where('sub_category_id', $service->sub_category_id)->where('id','<>',$service->id)->where('status_id', Service::STATUSES['APPROVED'])->latest()->limit(4)->get();
-        $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
-        
-        return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service','selected_skills','related_services'));
-    
+        }
     }
+
+    public function show($uuid)
+    {
+        try {
+
+            $pageTitle = "Service details";
+            $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
+            $service->views += 1;
+            $service->save();
+            $related_services = Service::withAll()->where('category_id', $service->category_id)->where('sub_category_id', $service->sub_category_id)->where('id', '<>', $service->id)->where('status_id', Service::STATUSES['APPROVED'])->latest()->limit(4)->get();
+            $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
+            Log::info(["Services" => $service, "Related Services" => $related_services]);
+            return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service', 'selected_skills', 'related_services'));
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+
+        }
+    }
+
     public function create($id = null)
     {
-        $pageTitle = "Create service";
-        $completedOverview = '';
-        $completedPricing = '';
-        $completedBanner = '';
-        $completedRequirements = '';
-        $completedReview = '';
+        try {
+            $pageTitle = "Create service";
+            $completedOverview = '';
+            $completedPricing = '';
+            $completedBanner = '';
+            $completedRequirements = '';
+            $completedReview = '';
 
-        $features = Features::latest()->get();
+            $features = Features::latest()->get();
 
-        $attributes = EntityField::with('attributes')->Entity(EntityField::SERVICE)->where('status', true)->get();
+            $attributes = EntityField::with('attributes')->Entity(EntityField::SERVICE)->where('status', true)->get();
 
-        $service = null;
+            $service = null;
 
-        if ($id) {
-            $service = Service::with('serviceSteps','addOns', 'category', 'subCategory')->findOrFail($id);
-            $completedOverview = $service->skills()->count() > 0 ? 'completed' : '';
-            $completedPricing = $service->rate_per_hour > 0 ? 'completed' : '';
-            $completedBanner = $service->banner ? 'completed' : '';
-            $completedRequirements = $service->requirement_for_client ? 'completed' : '';
-            $completedReview = !empty($service->number_of_simultaneous_projects)   ? 'completed' : '';
+            if ($id) {
+                $service = Service::with('serviceSteps', 'addOns', 'category', 'subCategory')->findOrFail($id);
+                $completedOverview = $service->skills()->count() > 0 ? 'completed' : '';
+                $completedPricing = $service->rate_per_hour > 0 ? 'completed' : '';
+                $completedBanner = $service->banner ? 'completed' : '';
+                $completedRequirements = $service->requirement_for_client ? 'completed' : '';
+                $completedReview = !empty($service->number_of_simultaneous_projects) ? 'completed' : '';
+            }
+            Log::info(["Service" => $service]);
+
+            return view($this->activeTemplate . 'user.seller.service.create', compact(
+                'pageTitle',
+                'features',
+                'attributes',
+                'completedOverview',
+                'completedPricing',
+                'completedBanner',
+                'completedRequirements',
+                'completedReview',
+                'service'
+            ));
+
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-        return view($this->activeTemplate . 'user.seller.service.create', compact(
-            'pageTitle',
-            'features',
-            'attributes',
-            'completedOverview',
-            'completedPricing',
-            'completedBanner',
-            'completedRequirements',
-            'completedReview',
-            'service'
-        ));
     }
 
 
     public function storeOverview(Request $request)
     {
+        try {
+            $serviceId = $request->get('service_id');
 
-        $serviceId = $request->get('service_id');
+            if (!empty($serviceId)) {
+                $service = Service::FindOrFail($serviceId);
+            } else {
+                $service = new Service();
+            }
 
-        if(! empty($serviceId)) {
-            $service = Service::FindOrFail($serviceId);
-        } else {
-            $service = new Service();
+            $this->saveOverview($request, $service, $serviceId, Attribute::SERVICE);
+
+            $notify[] = ['success', 'Service Overview has been Saved.'];
+            Log::info(["Service" => $service]);
+
+            return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-2'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $this->saveOverview($request, $service, $serviceId, Attribute::SERVICE);
-
-        $notify[] = ['success', 'Service Overview has been Saved.'];
-        return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
     }
 
     public function storePricing(PricingRequest $request)
     {
+        try {
+            $serviceId = $request->get('service_id');
 
-        $serviceId = $request->get('service_id');
+            if (empty($serviceId)) {
+                $notify[] = ['error', 'Recently Created Service is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
 
-        if(empty($serviceId)) {
-            $notify[] = ['error', 'Recently Created Service is missing.'];
-            return redirect()->back()->withNotify($notify);
+            $service = Service::FindOrFail($serviceId);
+
+            $this->savePricing($request, $service, Attribute::SERVICE);
+            Log::info(["Service" => $service]);
+            $notify[] = ['success', 'Service Pricing Saved Successfully.'];
+            return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
 
-        $service = Service::FindOrFail($serviceId);
-
-        $this->savePricing($request, $service, Attribute::SERVICE);
-
-        $notify[] = ['success', 'Service Pricing Saved Successfully.'];
-        return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-3'])->withNotify($notify);
     }
 
     public function storeBanner(Request $request)
     {
-       
-        $serviceId = $request->get('service_id');
+        try {
+            $serviceId = $request->get('service_id');
 
-        if(empty($serviceId)) {
-            $notify[] = ['error', 'Recently Created Service Is Missing'];
-            return redirect()->back()->withNotify($notify);
+            if (empty($serviceId)) {
+                $notify[] = ['error', 'Recently Created Service Is Missing'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $service = Service::FindOrFail($serviceId);
+
+            if (!$service->rate_per_hour) {
+                $notify[] = ['error', 'Please complete the service pricing first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-2'])->withNotify($notify);
+            }
+
+            $result = $this->saveBanner($request, $service, Attribute::SERVICE, 'service', 'optionalService');
+
+            if (!$result) {
+                $notify[] = ['error', 'Some error occured while saving banner.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            Log::info(["Service" => $service]);
+            $notify[] = ['success', 'Service Banner Saved Successfully.'];
+            return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
-
-        $service = Service::FindOrFail($serviceId);
-
-        if(!$service->rate_per_hour) {
-            $notify[] = ['error', 'Please complete the service pricing first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
-        }
-        
-        $result = $this->saveBanner($request, $service, Attribute::SERVICE, 'service', 'optionalService');
-
-        if(!$result) {
-            $notify[] = ['error', 'Some error occured while saving banner.'];
-            return redirect()->back()->withNotify($notify);
-        }
-
-        
-
-        $notify[] = ['success', 'Service Banner Saved Successfully.'];
-        return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-4'])->withNotify($notify);
     }
 
     public function storeRequirements(ClientRequest $request)
     {
-        $serviceId = $request->get('service_id');
+        try {
+            $serviceId = $request->get('service_id');
 
-        if(empty($serviceId)) {
-            $notify[] = ['error', 'Recently Created Service is missing.'];
-            return redirect()->back()->withNotify($notify);
+            if (empty($serviceId)) {
+                $notify[] = ['error', 'Recently Created Service is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $service = Service::FindOrFail($serviceId);
+
+            if ($service->banner) {
+                $this->saveRequirements($request, $service, Attribute::SERVICE);
+                $notify[] = ['success', 'Service Requirements Saved Successfully.'];
+                Log::info(["Service" => $service]);
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
+            } else {
+                $notify[] = ['error', 'Please complete the service banners first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
+            }
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
 
-        $service = Service::FindOrFail($serviceId);
-
-        if($service->banner) {
-            $this->saveRequirements($request, $service, Attribute::SERVICE);
-            $notify[] = ['success', 'Service Requirements Saved Successfully.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-5'])->withNotify($notify);
-        }
-        else
-        {
-            $notify[] = ['error', 'Please complete the service banners first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-3'])->withNotify($notify);
-        }
-
-        
     }
 
     public function storeReview(ReviewRequest $request)
     {
+        try {
 
-        if(empty($request->get('service_id')))
-        {
-            $notify[] = ['error', 'Recently Created Service is missing.'];
-            return redirect()->route('user.service.create', ['view' => 'step-1'])->withNotify($notify);
+            if (empty($request->get('service_id'))) {
+                $notify[] = ['error', 'Recently Created Service is missing.'];
+                return redirect()->route('user.service.create', ['view' => 'step-1'])->withNotify($notify);
+            }
+
+            $service = Service::FindOrFail($request->get('service_id'));
+
+            if ($service->banner && $service->rate_per_hour != 0) {
+
+                $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
+                $this->ServiceAddConfirmationMail($service);
+                Log::info(["Service" => $service]);
+                $notify[] = ['success', 'Service Review Saved Successfully.'];
+                return redirect()->route('user.service.index')->withNotify($notify);
+
+            } else {
+                $notify[] = ['error', 'Please complete the previous steps first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-1'])->withNotify($notify);
+            }
+
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
         }
 
-        $service = Service::FindOrFail($request->get('service_id'));
-
-        if($service->banner && $service->rate_per_hour != 0) {
-
-            $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
-            $this->ServiceAddConfirmationMail($service);
-            $notify[] = ['success', 'Service Review Saved Successfully.'];
-            return redirect()->route('user.service.index')->withNotify($notify);
-                       
-        }
-        else{
-            $notify[] = ['error', 'Please complete the previous steps first.'];
-            return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-1'])->withNotify($notify);
-        }
-
-        
-      
     }
 
 
     public function optionalImageRemove(Request $request)
     {
-        $optional = OptionalImage::findOrFail(decrypt($request->id));
-        $path = imagePath()['optionalService']['path'];
-        $file_remove = $path . '/' . $optional->image;
-        removeFile($file_remove);
-        $optional->delete();
-        $notify[] = ['success', 'Image has been deleted.'];
-        return back()->withNotify($notify);
+        try {
+            $optional = OptionalImage::findOrFail(decrypt($request->id));
+            $path = imagePath()['optionalService']['path'];
+            $file_remove = $path . '/' . $optional->image;
+            removeFile($file_remove);
+            $optional->delete();
+            Log::info(["Optional" => $optional]);
+            $notify[] = ['success', 'Image has been deleted.'];
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
     }
 
     private function optionalImageStore($request, $optionalImage, $serviceId)
@@ -248,13 +290,24 @@ class ServiceController extends Controller
 
     public function destroy($id)
     {
-        $service = Service::findOrFail($id);
-        $service->delete();
-        $notify[] = ['success', 'Service has been Deleted Successfully.'];
-        return back()->withNotify($notify);
+        try {
+            $service = Service::findOrFail($id);
+            $service->delete();
+            $notify[] = ['success', 'Service has been Deleted Successfully.'];
+            Log::info(["Service" => $service]);
+            return back()->withNotify($notify);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
     }
-    public function ServiceAddConfirmationMail($service){
 
-        Mail::to($service->user->email)->send(new serviceaddonMail($service));
+    public function ServiceAddConfirmationMail($service)
+    {
+        try {
+            Mail::to($service->user->email)->send(new serviceaddonMail($service));
+            Log::info(["Service email sent to" => $service->user->email]);
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
     }
 }
