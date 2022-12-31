@@ -12,7 +12,7 @@
             </div>
 
             <div class="col-md-6 ">
-                <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b>< /br>
+                <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b><br/>
                 <span class="user-font-size" v-if="user.module">{{user.module.title}}</span>
                 
             </div>

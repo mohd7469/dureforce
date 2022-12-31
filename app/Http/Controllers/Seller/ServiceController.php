@@ -141,7 +141,7 @@ class ServiceController extends Controller
 
         $service = Service::FindOrFail($serviceId);
 
-        if(!$service->rate_per_hour) {
+        if($service->rate_per_hour<1) {
             $notify[] = ['error', 'Please complete the service pricing first.'];
             return redirect()->route('user.service.create', ['id'=> $service->id, 'view' => 'step-2'])->withNotify($notify);
         }
