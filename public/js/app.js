@@ -56855,7 +56855,8 @@ var render = function () {
                     _vm._s(user.send_to_user.last_name)
                 ),
               ]),
-              _vm._v("< /br>\n            "),
+              _c("br"),
+              _vm._v(" "),
               user.module
                 ? _c("span", { staticClass: "user-font-size" }, [
                     _vm._v(_vm._s(user.module.title)),
