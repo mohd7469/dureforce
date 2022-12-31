@@ -134,7 +134,7 @@
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link {{ \Route::is('seller.profile.portfolio') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
+                                            <a class="nav-link {{ \Route::is('profile.portfolio') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#edu">Education & Certifications</a>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane container active" id="msg">
+                            <div class="tab-pane container {{ \Route::is('seller.profile') || \Route::is('seller.profile.view') ? 'active' : 'fade' }}" id="msg">
                                     <div class="container col-sm ">
                                             <div class="inner-tab">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -244,7 +244,7 @@
                                 </div>
                             
                                 {{-- experience tab --}}
-                            <div class="tab-pane container fade" id="Exp">
+                            <div class="tab-pane container fade " id="Exp">
                                 <div class="container mt-5 mb-5">
                                     <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
@@ -284,7 +284,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane container fade" id="set">
+                            <div class="tab-pane container  {{ \Route::is('profile.portfolio') ? 'active' : 'fade' }}" id="set">
                                 
                                 <div class="row section-heading-border justify-content-center align-items-center" style="
                                     margin-bottom: 23px;">

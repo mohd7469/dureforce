@@ -30,7 +30,7 @@ Route::middleware(['verified'])->group(function () {
         Route::get('/software/details/{uuid}', [SoftwareController::class,'show'])->name('view');
     });
 
-    Route::get('/user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile.portfolio');
+    Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
 
 
     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');

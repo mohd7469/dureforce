@@ -186,7 +186,7 @@
                                                                 <a href="{{ route('seller.profile', $service->user->uuid) }}"
                                                                    class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                <a href="{{  route('seller.profile.portfolio', $service->user->uuid) }}"
+                                                                <a href="{{  route('profile.portfolio', $service->user->uuid) }}"
                                                                    class="standard-btn">@lang('View Portfolio')</a>
                                                             </div>
                                                         </div>

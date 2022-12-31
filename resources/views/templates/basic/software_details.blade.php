@@ -160,7 +160,7 @@
                                                                 <a href="{{ route('seller.profile', $software->user->uuid) }}"
                                                                 class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                <a href="{{  route('seller.profile.portfolio', $software->user->uuid) }}"
+                                                                <a href="{{  route('profile.portfolio', $software->user->uuid) }}"
                                                                     class="standard-btn">@lang('View Portfolio')</a>
                                                                     
                                                             </div>
