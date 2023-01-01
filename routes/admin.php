@@ -289,6 +289,18 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('techlogo/destroy/{id}', 'TechnologyLogoController@destroy')->name('techlogo.destroy');
  
         });
+
+        //Manage lead images logo
+        Route::get('leadImages/index', 'LeadImagesController@index')->name('leadImages.index');
+        Route::get('leadImages/create', 'LeadImagesController@bannerCreate')->name('leadImages.create');
+        Route::post('leadImages/store', 'LeadImagesController@store')->name('leadImages.store');
+        Route::get('leadImages/inActive', 'LeadImagesController@inActive')->name('leadImages.inActive');
+        Route::get('leadImages/active', 'LeadImagesController@active')->name('leadImages.active');
+        Route::post('leadImages/inactiveBy', 'LeadImagesController@inactiveBy')->name('leadImages.inactiveBy');
+        Route::post('leadImages/activeBy', 'LeadImagesController@activeBy')->name('leadImages.activeBy');
+        Route::get('leadImages/details/{uuid}', 'LeadImagesController@details')->name('leadImages.details');
+        Route::get('leadImages/category', 'LeadImagesController@category')->name('leadImages.category');
+        Route::post('leadImages/destroy/{id}', 'LeadImagesController@destroy')->name('leadImages.destroy');
         
 
         Route::middleware('staffaccess:34')->group(function () {
