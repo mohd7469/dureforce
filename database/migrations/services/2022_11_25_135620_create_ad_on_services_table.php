@@ -21,7 +21,7 @@ class CreateAdOnServicesTable extends Migration
             $table->decimal('rate_per_hour', 28,2)->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

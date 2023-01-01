@@ -3,9 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\DatabaseOperations;
 
 class CreateJobsTable extends Migration
 {
+    use DatabaseOperations;
+
     /**
      * Run the migrations.
      *
@@ -40,20 +43,17 @@ class CreateJobsTable extends Migration
             $table->boolean('is_active')->default(true)->nullable();
             $table->integer('views')->default(0)->nullable();
             $table->timestamp('last_viewed')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
-            $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('cascade');
-            $table->foreign('project_stage_id')->references('id')->on('project_stages')->onDelete('cascade');
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
-            $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('cascade');
-            $table->foreign('budget_type_id')->references('id')->on('budget_types')->onDelete('cascade');
-            $table->foreign('project_length_id')->references('id')->on('project_lengths')->onDelete('cascade');
-            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
+            $this->addCommonDBFields($table);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('project_stage_id')->references('id')->on('project_stages')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('job_type_id')->references('id')->on('job_types')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('budget_type_id')->references('id')->on('budget_types')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('project_length_id')->references('id')->on('project_lengths')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

@@ -16,15 +16,16 @@ class CreateJobTypesTable extends Migration
         Schema::create('job_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
-            $table->string('slug')->after('title')->nullable();
-            $table->unsignedBigInteger('module_id')->index();
+            $table->string('slug')->nullable();
+            $table->unsignedBigInteger('module_id')->index()->nullable();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

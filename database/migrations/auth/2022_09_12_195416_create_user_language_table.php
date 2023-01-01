@@ -22,9 +22,9 @@ class CreateUserLanguageTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('language_id')->references('id')->on('world_languages')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('language_level_id')->references('id')->on('language_levels')->onDelete('cascade');
+            $table->foreign('language_id')->references('id')->on('world_languages')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('language_level_id')->references('id')->on('language_levels')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
 

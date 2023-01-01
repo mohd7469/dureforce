@@ -3,9 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Traits\DatabaseOperations;
 
 class CreateUsersTable extends Migration
 {
+    use DatabaseOperations;
+
     /**
      * Run the migrations.
      *
@@ -32,19 +35,12 @@ class CreateUsersTable extends Migration
             $table->boolean('is_active')->default(true)->nullable();
             $table->decimal('rate_per_hour', 28,2)->default(0)->nullable();
 
-            $table->unsignedBigInteger('created_by')->index()->nullable();
-            $table->unsignedBigInteger('updated_by')->index()->nullable();
+            $this->addCommonDBFields($table);
 
-            $table->softDeletes();
-            $table->timestamps();
-
-
-
-            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
-            $table->foreign('service_fee_id')->references('id')->on('service_fees')->onDelete('cascade');
-            $table->foreign('last_role_activity')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('service_fee_id')->references('id')->on('service_fees')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('last_role_activity')->references('id')->on('roles')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            
 
         });
     }

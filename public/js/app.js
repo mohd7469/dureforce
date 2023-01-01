@@ -6307,6 +6307,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -6352,6 +6365,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -56776,96 +56794,111 @@ var render = function () {
   return _c(
     "div",
     { staticClass: "col-md-4 border-right-custom div-diemension" },
-    _vm._l(_vm.users, function (user, index) {
-      return _c(
-        "div",
-        {
-          class: [
-            "row border-bottom",
-            { active_chat: index === _vm.activeUserindex },
-          ],
-          on: {
-            click: function ($event) {
-              return _vm.changeUser(user, index)
+    [
+      _vm._l(_vm.users, function (user, index) {
+        return _c(
+          "div",
+          {
+            class: [
+              "row border-bottom",
+              { active_chat: index === _vm.activeUserindex },
+            ],
+            on: {
+              click: function ($event) {
+                return _vm.changeUser(user, index)
+              },
             },
           },
-        },
-        [
-          _c("div", { staticClass: "col-md-2 " }, [
-            user.send_to_user.basic_profile &&
-            user.send_to_user.basic_profile.profile_picture != null
-              ? _c("img", {
-                  staticClass: "img-circle img-responsive",
-                  staticStyle: {
-                    "border-radius": "50%",
-                    width: "40px",
-                    height: "40px",
-                  },
-                  attrs: {
-                    alt: "User Pic",
-                    src: user.send_to_user.basic_profile.profile_picture,
-                    id: "profile-image1",
-                  },
-                })
-              : _c("img", {
-                  staticClass: "img-circle img-responsive",
-                  staticStyle: {
-                    "border-radius": "50%",
-                    width: "40px",
-                    height: "40px",
-                  },
-                  attrs: {
-                    alt: "User Pic",
-                    src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
-                    id: "profile-image1",
-                  },
-                }),
-            _vm._v(" "),
-            _c("span", {
-              class: user.send_to_user.is_session_active
-                ? "online_icon"
-                : "offline",
-            }),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6 " }, [
-            _c("b", { staticClass: "user-font-size" }, [
-              _vm._v(
-                _vm._s(user.send_to_user.first_name) +
-                  " " +
-                  _vm._s(user.send_to_user.last_name)
-              ),
+          [
+            _c("div", { staticClass: "col-md-2 " }, [
+              user.send_to_user.basic_profile &&
+              user.send_to_user.basic_profile.profile_picture != null
+                ? _c("img", {
+                    staticClass: "img-circle img-responsive",
+                    staticStyle: {
+                      "border-radius": "50%",
+                      width: "40px",
+                      height: "40px",
+                    },
+                    attrs: {
+                      alt: "User Pic",
+                      src: user.send_to_user.basic_profile.profile_picture,
+                      id: "profile-image1",
+                    },
+                  })
+                : _c("img", {
+                    staticClass: "img-circle img-responsive",
+                    staticStyle: {
+                      "border-radius": "50%",
+                      width: "40px",
+                      height: "40px",
+                    },
+                    attrs: {
+                      alt: "User Pic",
+                      src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+                      id: "profile-image1",
+                    },
+                  }),
+              _vm._v(" "),
+              _c("span", {
+                class: user.send_to_user.is_session_active
+                  ? "online_icon"
+                  : "offline",
+              }),
             ]),
-            _c("br"),
             _vm._v(" "),
-            user.module
-              ? _c("span", { staticClass: "user-font-size" }, [
-                  _vm._v(_vm._s(user.module.title)),
-                ])
-              : _vm._e(),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4 " }, [
-            user.send_to_user.last_login_at
-              ? _c("span", { staticClass: "user-font-size" }, [
-                  _vm._v(
-                    _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
-                  ),
-                ])
-              : _vm._e(),
-            _c("br"),
-            _vm._v(" "),
-            _c("span", { class: user.model_color }, [
-              _vm._v(_vm._s(user.model)),
+            _c("div", { staticClass: "col-md-6 " }, [
+              _c("b", { staticClass: "user-font-size" }, [
+                _vm._v(
+                  _vm._s(user.send_to_user.first_name) +
+                    " " +
+                    _vm._s(user.send_to_user.last_name)
+                ),
+              ]),
+              _c("br"),
+              _vm._v(" "),
+              user.module
+                ? _c("span", { staticClass: "user-font-size" }, [
+                    _vm._v(_vm._s(user.module.title)),
+                  ])
+                : _vm._e(),
             ]),
-          ]),
-        ]
-      )
-    }),
-    0
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4 " }, [
+              user.send_to_user.last_login_at
+                ? _c("span", { staticClass: "user-font-size" }, [
+                    _vm._v(
+                      _vm._s(_vm.formattedDate(user.send_to_user.last_login_at))
+                    ),
+                  ])
+                : _vm._e(),
+              _c("br"),
+              _vm._v(" "),
+              _c("span", { class: user.model_color }, [
+                _vm._v(_vm._s(user.model)),
+              ]),
+            ]),
+          ]
+        )
+      }),
+      _vm._v(" "),
+      !_vm.users.length
+        ? _c("div", [_vm._m(0), _vm._v(" "), _c("br")])
+        : _vm._e(),
+    ],
+    2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-12 text-center mt-5" }, [
+      _c("strong", [_vm._v(" No Active User ")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -56999,204 +57032,216 @@ var render = function () {
         directives: [{ name: "chat-scroll", rawName: "v-chat-scroll" }],
         staticClass: "card-body msg_card_body",
       },
-      _vm._l(_vm.messages, function (message) {
-        return _c("div", [
-          message.role == "freelancer"
-            ? _c(
-                "div",
-                { staticClass: "d-flex justify-content-start mb-4 mt-custom" },
-                [
-                  _c("div", { staticClass: "img_cont_msg" }, [
-                    message.user.basic_profile &&
-                    message.user.basic_profile.profile_picture
-                      ? _c("img", {
-                          staticClass: "rounded-circle user_img_msg",
-                          attrs: {
-                            src: message.user.basic_profile.profile_picture,
-                          },
-                        })
-                      : _c("img", {
-                          staticClass: "rounded-circle user_img_msg",
-                          attrs: {
-                            src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
-                          },
-                        }),
+      [
+        _vm._l(_vm.messages, function (message) {
+          return _c("div", [
+            message.role == "freelancer"
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "d-flex justify-content-start mb-4 mt-custom",
+                  },
+                  [
+                    _c("div", { staticClass: "img_cont_msg" }, [
+                      message.user.basic_profile &&
+                      message.user.basic_profile.profile_picture
+                        ? _c("img", {
+                            staticClass: "rounded-circle user_img_msg",
+                            attrs: {
+                              src: message.user.basic_profile.profile_picture,
+                            },
+                          })
+                        : _c("img", {
+                            staticClass: "rounded-circle user_img_msg",
+                            attrs: {
+                              src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+                            },
+                          }),
+                      _vm._v(" "),
+                      _c("span", {
+                        class: message.user.is_session_active
+                          ? "online_icon"
+                          : "offline",
+                      }),
+                    ]),
                     _vm._v(" "),
-                    _c("span", {
-                      class: message.user.is_session_active
-                        ? "online_icon"
-                        : "offline",
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "msg_cotainer" }, [
-                    _c("div", [
-                      _vm.active_user.send_to_user.id != message.sender_id
-                        ? _c("div", { staticClass: "dropdown actions-icon" }, [
-                            _c("i", {
-                              staticClass: "dropdown-toggle",
-                              attrs: {
-                                icon: "fa-solid fa-caret-down",
-                                "data-bs-toggle": "dropdown",
-                                "aria-expanded": "false",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "dropdown-menu" }, [
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.editMessage(message)
-                                      },
-                                    },
+                    _c("div", { staticClass: "msg_cotainer" }, [
+                      _c("div", [
+                        _vm.active_user.send_to_user.id != message.sender_id
+                          ? _c(
+                              "div",
+                              { staticClass: "dropdown actions-icon" },
+                              [
+                                _c("i", {
+                                  staticClass: "dropdown-toggle",
+                                  attrs: {
+                                    icon: "fa-solid fa-caret-down",
+                                    "data-bs-toggle": "dropdown",
+                                    "aria-expanded": "false",
                                   },
-                                  [_vm._v("Edit")]
-                                ),
-                              ]),
+                                }),
+                                _vm._v(" "),
+                                _c("ul", { staticClass: "dropdown-menu" }, [
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.editMessage(message)
+                                          },
+                                        },
+                                      },
+                                      [_vm._v("Edit")]
+                                    ),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        attrs: { href: "#" },
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.deleteMessage(message.id)
+                                          },
+                                        },
+                                      },
+                                      [_vm._v("Delete")]
+                                    ),
+                                  ]),
+                                ]),
+                              ]
+                            )
+                          : _vm._e(),
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(message.message) +
+                            "\n                    "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("b", { staticClass: "user_name" }, [
+                        _vm._v(
+                          _vm._s(message.user.first_name) +
+                            " " +
+                            _vm._s(message.user.last_name)
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "msg_time" }, [
+                        _vm._v(_vm._s(_vm.formattedDate(message.created_at))),
+                      ]),
+                    ]),
+                  ]
+                )
+              : _c(
+                  "div",
+                  { staticClass: "d-flex justify-content-end mb-4 mt-custom" },
+                  [
+                    _c("div", { staticClass: "msg_cotainer_send" }, [
+                      _c("div", [
+                        _vm.active_user.send_to_user.id != message.sender_id
+                          ? _c("div", { staticClass: "dropdown icon_send" }, [
+                              _c("i", {
+                                staticClass: "dropdown-toggle",
+                                attrs: {
+                                  icon: "fa-solid fa-caret-down",
+                                  "data-bs-toggle": "dropdown",
+                                  "aria-expanded": "false",
+                                },
+                              }),
                               _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.deleteMessage(message.id)
+                              _c("ul", { staticClass: "dropdown-menu" }, [
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.editMessage(message)
+                                        },
                                       },
                                     },
-                                  },
-                                  [_vm._v("Delete")]
-                                ),
-                              ]),
-                            ]),
-                          ])
-                        : _vm._e(),
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(message.message) +
-                          "\n                    "
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("b", { staticClass: "user_name" }, [
-                      _vm._v(
-                        _vm._s(message.user.first_name) +
-                          " " +
-                          _vm._s(message.user.last_name)
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "msg_time" }, [
-                      _vm._v(_vm._s(_vm.formattedDate(message.created_at))),
-                    ]),
-                  ]),
-                ]
-              )
-            : _c(
-                "div",
-                { staticClass: "d-flex justify-content-end mb-4 mt-custom" },
-                [
-                  _c("div", { staticClass: "msg_cotainer_send" }, [
-                    _c("div", [
-                      _vm.active_user.send_to_user.id != message.sender_id
-                        ? _c("div", { staticClass: "dropdown icon_send" }, [
-                            _c("i", {
-                              staticClass: "dropdown-toggle",
-                              attrs: {
-                                icon: "fa-solid fa-caret-down",
-                                "data-bs-toggle": "dropdown",
-                                "aria-expanded": "false",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("ul", { staticClass: "dropdown-menu" }, [
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.editMessage(message)
+                                    [_vm._v("Edit")]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: { href: "#" },
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.deleteMessage(message.id)
+                                        },
                                       },
                                     },
-                                  },
-                                  [_vm._v("Edit")]
-                                ),
+                                    [_vm._v("Delete")]
+                                  ),
+                                ]),
                               ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.deleteMessage(message.id)
-                                      },
-                                    },
-                                  },
-                                  [_vm._v("Delete")]
-                                ),
-                              ]),
-                            ]),
-                          ])
-                        : _vm._e(),
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(message.message) +
-                          "\n                    "
-                      ),
+                            ])
+                          : _vm._e(),
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(message.message) +
+                            "\n                    "
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("b", { staticClass: "sender_user_name" }, [
+                        _vm._v(
+                          _vm._s(message.user.first_name) +
+                            " " +
+                            _vm._s(message.user.last_name)
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "msg_time_send" }, [
+                        _vm._v(_vm._s(_vm.formattedDate(message.created_at))),
+                      ]),
                     ]),
                     _vm._v(" "),
-                    _c("b", { staticClass: "sender_user_name" }, [
-                      _vm._v(
-                        _vm._s(message.user.first_name) +
-                          " " +
-                          _vm._s(message.user.last_name)
-                      ),
+                    _c("div", { staticClass: "img_cont_msg" }, [
+                      message.user.basic_profile &&
+                      message.user.basic_profile.profile_picture
+                        ? _c("img", {
+                            staticClass: "rounded-circle user_img_msg",
+                            attrs: {
+                              src: message.user.basic_profile.profile_picture,
+                            },
+                          })
+                        : _c("img", {
+                            staticClass: "rounded-circle user_img_msg",
+                            attrs: {
+                              src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
+                            },
+                          }),
+                      _vm._v(" "),
+                      _c("span", {
+                        class: message.user.is_session_active
+                          ? "online_icon"
+                          : "offline",
+                      }),
                     ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "msg_time_send" }, [
-                      _vm._v(_vm._s(_vm.formattedDate(message.created_at))),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "img_cont_msg" }, [
-                    message.user.basic_profile &&
-                    message.user.basic_profile.profile_picture
-                      ? _c("img", {
-                          staticClass: "rounded-circle user_img_msg",
-                          attrs: {
-                            src: message.user.basic_profile.profile_picture,
-                          },
-                        })
-                      : _c("img", {
-                          staticClass: "rounded-circle user_img_msg",
-                          attrs: {
-                            src: "https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg",
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c("span", {
-                      class: message.user.is_session_active
-                        ? "online_icon"
-                        : "offline",
-                    }),
-                  ]),
-                ]
-              ),
-        ])
-      }),
-      0
+                  ]
+                ),
+          ])
+        }),
+        _vm._v(" "),
+        !_vm.messages.length
+          ? _c("div", [_c("strong", [_vm._v("Messages Not Found")])])
+          : _vm._e(),
+      ],
+      2
     ),
     _vm._v(" "),
     _c("div", { staticClass: "empty-space-margin" }, [

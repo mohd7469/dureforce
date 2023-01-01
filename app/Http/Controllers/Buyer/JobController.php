@@ -70,75 +70,95 @@ class JobController extends Controller
     public function create(Request $request)
     {
 
-        $pageTitle = "Create Job";
-        $data = $this->getJobData();
+        try {
+            $pageTitle = "Create Job";
+            $data = $this->getJobData();
+            Log::info(["Job create data" => $data]);
+            return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
 
-        return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
+        }
 
 
     }
 
     public function index()
     {
-        $user = Auth::user();
-        $pageTitle = "Manage Job";
-        $emptyMessage = "No data found";
-        $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
-        return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        try {
+            $user = Auth::user();
+            $pageTitle = "Manage Job";
+            $emptyMessage = "No data found";
+            $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
+            Log::info(["All Jobs" => $jobs]);
+            return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
     }
 
     public function jobDataValidate(Request $request)
     {
-        $request_data = [];
-        parse_str($request->data, $request_data);
 
-        $user = Auth::user();
-        $custom_messages = [
+        try {
+            $request_data = [];
+            parse_str($request->data, $request_data);
 
-            'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
-            'country_id.required' => 'Job location is required',
-            'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is hourly',
-            'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
-            'hourly_start_range.gt' => 'Weekly range start field should be greater than zero',
-            'hourly_end_range.gte' => 'Weekly range end field value should be greater or equal to weekly start range',
+            $user = Auth::user();
+            $custom_messages = [
+
+                'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
+                'country_id.required' => 'Job location is required',
+                'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is hourly',
+                'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
+                'hourly_start_range.gt' => 'Weekly range start field should be greater than zero',
+                'hourly_end_range.gte' => 'Weekly range end field value should be greater or equal to weekly start range',
 
 
-        ];
-        $rules = [
-            'title' => 'required|string|max:150',
-            'description' => 'required|string|max:1000',
-            'country_id' => 'required',
-            'job_type_id' => 'required|exists:job_types,id',
-            'category_id' => 'required|exists:categories,id',
-            'sub_category_id' => 'exists:sub_categories,id',
-            'project_stage_id' => 'exists:project_stages,id',
-            'expected_start_date' => 'required||after_or_equal:' . Carbon::now()->format('d-m-Y'),
-            'project_length_id' => 'exists:project_lengths,id',
-            'rank_id' => 'required|exists:ranks,id',
-            'budget_type_id' => 'required|exists:budget_types,id',
-            'deliverables' => 'required|array',
-            'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-            'dod' => 'required|array',
-            'skills' => 'required|array',
-            'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-        ];
+            ];
+            $rules = [
+                'title' => 'required|string|max:150',
+                'description' => 'required|string|max:1000',
+                'country_id' => 'required',
+                'job_type_id' => 'required|exists:job_types,id',
+                'category_id' => 'required|exists:categories,id',
+                'sub_category_id' => 'exists:sub_categories,id',
+                'project_stage_id' => 'exists:project_stages,id',
+                'expected_start_date' => 'required||after_or_equal:' . Carbon::now()->format('d-m-Y'),
+                'project_length_id' => 'exists:project_lengths,id',
+                'rank_id' => 'required|exists:ranks,id',
+                'budget_type_id' => 'required|exists:budget_types,id',
+                'deliverables' => 'required|array',
+                'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
+                'dod' => 'required|array',
+                'skills' => 'required|array',
+                'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
+            ];
 
-        if ($request_data['budget_type_id'] == BudgetType::$hourly) {
-            $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
-            $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
-        } elseif ($request_data['budget_type_id'] == BudgetType::$fixed) {
-            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed.'|gt:0';
-        } else {
+            if ($request_data['budget_type_id'] == BudgetType::$hourly) {
+                $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
+                $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
+            } elseif ($request_data['budget_type_id'] == BudgetType::$fixed) {
+                $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed . '|gt:0';
+            } else {
 
-        }
-        $validator = Validator::make($request_data, $rules, $custom_messages);
-        if ($validator->fails()) {
+            }
+            $validator = Validator::make($request_data, $rules, $custom_messages);
+            if ($validator->fails()) {
 
-            return response()->json(["error" => $validator->errors()]);
+                return response()->json(["error" => $validator->errors()]);
 
-        } else
+            } else
+                Log::info(["Job Validate" => "Job Data Is Valid"]);
+
             return response()->json(["validated" => "Job Data Is Valid"]);
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
+
 
     }
 
@@ -206,10 +226,12 @@ class JobController extends Controller
             }
             DB::commit();
             session()->put('notify', ["Job Created Successfully"]);
+            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
+            Log::error($exp->getMessage());
             return response()->json(["error" => $exp->getMessage()]);
         }
 
@@ -219,15 +241,20 @@ class JobController extends Controller
 
     public function edit($uuid)
     {
-        $job = Job::withAll()->where('uuid', $uuid)->first();
-        $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
-        $data = $this->getJobData();
-        $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-        $data['sub_categories'] = $sub_category;
-        $data['documents'] = json_encode($job->documents->toArray());
-        $pageTitle = "Job Update";
+        try {
+            $job = Job::withAll()->where('uuid', $uuid)->first();
+            $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
+            $data = $this->getJobData();
+            $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
+            $data['sub_categories'] = $sub_category;
+            $data['documents'] = json_encode($job->documents->toArray());
+            $pageTitle = "Job Update";
 
-        return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
+            Log::info(["Job" => $job]);
+            return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
     }
 
     public function update(Request $request, $uuid)
@@ -303,10 +330,12 @@ class JobController extends Controller
             }
 
             DB::commit();
+            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
+            Log::error($exp->getMessage());
             return response()->json(["error" => $exp]);
         }
 

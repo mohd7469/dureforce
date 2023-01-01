@@ -24,7 +24,7 @@ class CreateSoftwareStepsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('cascade');
+            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

@@ -17,8 +17,8 @@ class CreatePortfolioSkillsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_portfolio_id')->index()->nullable();
             $table->unsignedBigInteger('skill_id')->index()->nullable();
-            $table->foreign('user_portfolio_id')->references('id')->on('user_portfolios')->onDelete('cascade');
-            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreign('user_portfolio_id')->references('id')->on('user_portfolios')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->timestamps();
         });
     }

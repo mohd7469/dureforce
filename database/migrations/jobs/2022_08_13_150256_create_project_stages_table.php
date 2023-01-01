@@ -16,13 +16,15 @@ class CreateProjectStagesTable extends Migration
         Schema::create('project_stages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title')->nullable();
+            $table->string('slug')->nullable();
             $table->unsignedBigInteger('module_id')->index();
+            $table->boolean('is_active')->default(true)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

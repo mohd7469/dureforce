@@ -15,7 +15,7 @@ function submitCreateFormData(data)
 
           }
           else{
-              window.location.replace('/buyer/job/index');
+              window.location.replace(data.redirect);
           }
       }
   });  
@@ -94,7 +94,8 @@ $(function() {
                 displayErrorMessage(response.error);
               }
               else{
-                  window.location.replace('/buyer/job/index');
+                window.location.replace(response.redirect);
+
               }
 
                 
@@ -125,6 +126,12 @@ $(function() {
 
                       }
                       else{
+                        console.log(data);
+                        if(data.redirect)
+                        {
+                        
+                          window.location.replace(data.redirect);
+                        }
                         displayErrorMessage(data.error);
 
                       }

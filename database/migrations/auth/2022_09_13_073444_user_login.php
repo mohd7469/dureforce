@@ -30,9 +30,9 @@ class UserLogin extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('city_id')->references('id')->on('world_cities')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('city_id')->references('id')->on('world_cities')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

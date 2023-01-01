@@ -18,7 +18,7 @@ class CreateModuleFeaturesTable extends Migration
             $table->morphs('module');
             $table->timestamps();
             $table->unsignedBigInteger('features_id')->index()->nullable();
-            $table->foreign('features_id')->references('id')->on('features')->onDelete('cascade');
+            $table->foreign('features_id')->references('id')->on('features')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

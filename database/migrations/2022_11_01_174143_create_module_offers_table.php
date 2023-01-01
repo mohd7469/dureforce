@@ -33,10 +33,10 @@ class CreateModuleOffersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('offer_send_to_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('offer_send_by_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
-            $table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('cascade');
+            $table->foreign('offer_send_to_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('offer_send_by_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

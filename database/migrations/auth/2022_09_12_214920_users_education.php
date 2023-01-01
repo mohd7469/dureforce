@@ -27,8 +27,8 @@ class UsersEducation extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('degree_id')->references('id')->on('degrees')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
 

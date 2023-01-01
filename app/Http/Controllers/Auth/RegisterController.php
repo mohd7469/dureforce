@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\UserLogin;
 use App\Models\ServiceFee;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -104,10 +105,13 @@ class RegisterController extends Controller
             }
 
             Session::put('registerUsername', $request->get('username'));
-            event(new Registered($user = $this->create($request->all())));
+            $user = $this->create($request->all());
 
             $this->guard()->login($user);
-
+            $user->last_activity_at=Carbon::now();
+            $user->last_login_at=Carbon::now();
+            $user->is_session_active = true;
+            $user->save();
             return $this->registered($request, $user)
                 ?: redirect($this->redirectPath());
         });
@@ -123,22 +127,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         $general = GeneralSetting::first();
-        //User Create
-        $user = new User();
         $serviceFee = ServiceFee::where('slug', 'new-user')->first();
-        $user->service_fee_id = $serviceFee->id;
-        $user->first_name = isset($data['firstname']) ? $data['firstname'] : null;
-        $user->last_role_activity = isset($data['role']) ? $data['role'] : null;
-        $user->last_name = isset($data['lastname']) ? $data['lastname'] : null;
-        $user->email = strtolower(trim($data['email']));
-        $user->country_id = isset($data['country']) ? $data['country'] : null;
-        $user->password = Hash::make($data['password']);
-        $user->username = trim($data['username']);
-        $user->save();
 
+        //User Create
+        $user=User::create([
+            'service_fee_id' =>$serviceFee->id,
+            'first_name' =>isset($data['firstname']) ? $data['firstname'] : null,
+            'last_role_activity' =>isset($data['role']) ? $data['role'] : null,
+            'last_name' =>isset($data['lastname']) ? $data['lastname'] : null,
+            'email' =>strtolower(trim($data['email'])),
+            'country_id' =>isset($data['country']) ? $data['country'] : null,
+            'password' =>Hash::make($data['password']),
+            'username' =>trim($data['username'])
+    
+        ]);
+        
         $user->assignRole($data['role']);
-
         //Login Log Create
         $ip = $_SERVER["REMOTE_ADDR"];
         $userLogin = new UserLogin();
@@ -153,7 +159,6 @@ class RegisterController extends Controller
         $userLogin->browser = @$userAgent['browser'];
         $userLogin->os = @$userAgent['os_platform'];
         $userLogin->save();
-        
         return $user;
 
     }

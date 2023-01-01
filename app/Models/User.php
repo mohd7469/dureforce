@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Software\Software;
 use App\Notifications\CustomEmailVerification;
+use App\Traits\DatabaseOperations;
 use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,7 +17,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, HasFactory, HasRoles;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles, DatabaseOperations;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;

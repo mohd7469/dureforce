@@ -22,7 +22,7 @@ class CreateModuleOfferMilestonesTable extends Migration
             $table->boolean('is_paid')->default(false)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('module_offer_id')->references('id')->on('module_offers')->onDelete('cascade');
+            $table->foreign('module_offer_id')->references('id')->on('module_offers')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

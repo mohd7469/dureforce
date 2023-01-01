@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Observers\ServiceObserver;
 use App\Observers\TagsObserver;
+use App\Traits\DatabaseOperations;
 use Database\Seeders\ModuleSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes , DatabaseOperations;
 
     const UPDATED_AT = null;
     const SERVICE_CREATION_IN_PROGRESS = 0;

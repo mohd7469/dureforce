@@ -19,7 +19,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-7 text-center">
-          <img src="{{ asset('assets/errors/images/error-403.png') }}" alt="@lang('image')">
+          <img src="{{ asset('assets/errors/images/error-403.png') }}" alt="@lang('forbidden')">
 {{--          <h2 class="title"><b>@lang('404')</b> @lang('Page not found')</h2>--}}
          <p>You don not have access this url,The server understands the request, but it can't fulfill the request because of client-side issues</p>
           <a href="{{ route('home') }}" class="cmn-btn mt-4">@lang('Go to Home')</a>

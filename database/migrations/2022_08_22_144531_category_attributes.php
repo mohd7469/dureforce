@@ -23,9 +23,9 @@ class CategoryAttributes extends Migration
 
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

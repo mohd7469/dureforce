@@ -40,7 +40,7 @@ return [
     */
 
     'debug' => (bool) env('APP_DEBUG', true),
-//     'debug' => true,
+    //  'debug' => true,
 
 
     /*
