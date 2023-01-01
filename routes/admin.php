@@ -247,6 +247,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('type/activeBy', 'JobTypeController@activeBy')->name('type.active');
         Route::post('type/update/{id}', 'JobTypeController@update')->name('type.update');
         Route::get('/type/delete/{id}', 'JobTypeController@delete')->name('type.delete');
+        //Tag route
+        Route::get('tag/index', 'TagController@index')->name('tag.index');
+        Route::get('tag/create', 'TagController@Create')->name('tag.create');
+        Route::post('tag/store', 'TagController@store')->name('tag.store');
+        Route::get('tag/edit/{id}', 'TagController@editdetails')->name('tag.edit');
+        Route::post('tag/inactiveBy', 'TagController@inActiveBy')->name('tag.inactive');
+        Route::post('tag/activeBy', 'TagController@activeBy')->name('tag.active');
+        Route::post('tag/update/{id}', 'TagController@update')->name('tag.update');
+        Route::get('/tag/delete/{id}', 'TagController@delete')->name('tag.delete');
         //project detail
         Route::get('project/index', 'ProjectStageController@index')->name('project.index');
         Route::get('project/create', 'ProjectStageController@Create')->name('project.create');
