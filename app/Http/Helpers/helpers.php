@@ -184,7 +184,7 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
     $connectionString = env('AZURE_STORAGE_SAS_URL');
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
-    \Illuminate\Support\Facades\Log::info(env($connectionString));
+    \Illuminate\Support\Facades\Log::info($connectionString);
 
     try {
 
