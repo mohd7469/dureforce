@@ -292,6 +292,18 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('leadImages/details/{uuid}', 'LeadImagesController@details')->name('leadImages.details');
         Route::get('leadImages/category', 'LeadImagesController@category')->name('leadImages.category');
         Route::post('leadImages/destroy/{id}', 'LeadImagesController@destroy')->name('leadImages.destroy');
+
+        //Manage project length
+        Route::get('projectLength/index', 'projectLengthController@index')->name('projectLength.index');
+        Route::get('projectLength/create', 'projectLengthController@bannerCreate')->name('projectLength.create');
+        Route::post('projectLength/store', 'projectLengthController@store')->name('projectLength.store');
+        Route::get('projectLength/inActive', 'projectLengthController@inActive')->name('projectLength.inActive');
+        Route::get('projectLength/active', 'projectLengthController@active')->name('projectLength.active');
+        Route::post('projectLength/inactiveBy', 'projectLengthController@inactiveBy')->name('projectLength.inactiveBy');
+        Route::post('projectLength/activeBy', 'projectLengthController@activeBy')->name('projectLength.activeBy');
+        Route::get('projectLength/details/{uuid}', 'projectLengthController@details')->name('projectLength.details');
+        Route::get('projectLength/category', 'projectLengthController@category')->name('projectLength.category');
+        Route::post('projectLength/destroy/{id}', 'projectLengthController@destroy')->name('projectLength.destroy');
         
 
         Route::middleware('staffaccess:34')->group(function () {

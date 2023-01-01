@@ -1098,6 +1098,56 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 <!-- End lead images -->
 
+                <!-- lead Project Lenght -->
+                <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.projectLength*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Project Lenght')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.projectLength*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.projectLength.index') }} ">
+                                    <a href="{{ route('admin.projectLength.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Project Lenghts')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.projectLength.active']) }} ">
+                                    <a href="{{ route('admin.projectLength.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Project Lenghts')</span>
+                                        @if ($projectLengthActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $projectLengthActive }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.projectLength.inActive']) }} ">
+                                    <a href="{{ route('admin.projectLength.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Project Lenghs')</span>
+                                        @if ($projectLengthInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $projectLengthInactive }}
+                                            </span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <!-- End lead images -->
+
                 {{-- @if (in_array('34', $staffAccess)) --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
