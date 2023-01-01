@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'route_path' => 'dureforce_admin/log-viewer',
+    'route_path' => 'admin/dureforce_admin/log-viewer',
 
     /*
     |--------------------------------------------------------------------------
