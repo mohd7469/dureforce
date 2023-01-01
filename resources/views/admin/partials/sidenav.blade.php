@@ -1048,6 +1048,55 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
                 <!-- End Technology logo -->
+                <!-- lead images -->
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.leadImages*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Lead images')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.leadImages*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.leadImages.index') }} ">
+                                    <a href="{{ route('admin.leadImages.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Lead images')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.leadImages.active']) }} ">
+                                    <a href="{{ route('admin.leadImages.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Lead images')</span>
+                                        @if ($leadingImageActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $leadingImageActive }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.leadImages.inActive']) }} ">
+                                    <a href="{{ route('admin.leadImages.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Lead images')</span>
+                                        @if ($leadingImageInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $leadingImageInactive }}
+                                            </span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <!-- End lead images -->
 
                 {{-- @if (in_array('34', $staffAccess)) --}}
                     <li class="sidebar-menu-item sidebar-dropdown">

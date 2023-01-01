@@ -111,6 +111,8 @@ class AppServiceProvider extends ServiceProvider
                 'bannerInactive' => Banner::where('document_type', 'Background')->where('is_active', 0)->count(),
                 'technologyLogoActive' => Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->count(),
                 'technologyLogoInactive' => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
+                'leadingImageActive' => Banner::where('document_type', 'Leading Image')->where('is_active', 1)->count(),
+                'leadingImageInactive' => Banner::where('document_type', 'Leading Image')->where('is_active', 0)->count(),
 
             ]);
         });
