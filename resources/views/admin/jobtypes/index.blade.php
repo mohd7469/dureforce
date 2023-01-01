@@ -13,11 +13,17 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    position: relative;
-    right: 180px;
+    /* position: relative;
+    right: 180px; */
+    float: left;
 }
-
-
+a.icon-btn{
+    float: left;
+    
+}
+th.tlst {
+    text-align: left !important;
+}
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -38,8 +44,8 @@
                             <th>@lang('Title')</th>
                             <th>@lang('Slug')</th>
                             <th>@lang('Status')</th>
-                            <th>@lang('Action')</th>
-                            <th></th>
+                            <th class="tlst">@lang('Action')</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
@@ -78,7 +84,7 @@
                                      <a type="submit"  href="{{route('admin.type.delete', $type->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <td data-label="@lang('Action')">
+                                    <div data-label="@lang('Action')">
                                         @if($type->is_active == 1)
                                             <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$type->id}}">
                                                 <i class="las la-check "></i>
@@ -90,8 +96,8 @@
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
-                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                                    </td>
+                                    </div>
+                                   
                               
              
                                
