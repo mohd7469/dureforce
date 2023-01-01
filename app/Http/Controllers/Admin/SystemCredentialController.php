@@ -16,7 +16,7 @@ class SystemCredentialController extends Controller
 
     public function index()
     {
-        $pageTitle = "Category list";
+        $pageTitle = "System credential list";
         // $emptyMessage = "No data found";
         $emailcreds = SystemMailConfiguration::latest()->paginate(getPaginate());
         
@@ -63,7 +63,7 @@ class SystemCredentialController extends Controller
             'mail_from_address' => 'required',
             'mail_from_name' => 'required',
         ]);
-        $credential = new SystemMailConfiguration;
+        $credential = SystemMailConfiguration::find($request->id);
         $credential->mail_driver = $request->mail_driver;
         $credential->mail_host = $request->mail_host;
         $credential->mail_port = $request->mail_port;
@@ -78,6 +78,7 @@ class SystemCredentialController extends Controller
         $notify[] = ['success', 'Email Credential has been created'];
         return back()->withNotify($notify);
     }
+    
 
 
     public function activeBy(Request $request)
