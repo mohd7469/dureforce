@@ -182,7 +182,10 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
 {
     $filename = '';
     $connectionString = env('AZURE_STORAGE_SAS_URL');
-    
+    \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
+    \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
+    \Illuminate\Support\Facades\Log::info(env($connectionString));
+
     try {
 
 //        $connectionString = getenv('AZURE_STORAGE_SAS_URL');
