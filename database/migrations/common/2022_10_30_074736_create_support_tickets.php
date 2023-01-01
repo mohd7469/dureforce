@@ -26,10 +26,10 @@ class CreateSupportTickets extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('priority_id')->references('id')->on('statuses')->onDelete('cascade');
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('priority_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

@@ -20,8 +20,8 @@ class CreateServiceDeliverableTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

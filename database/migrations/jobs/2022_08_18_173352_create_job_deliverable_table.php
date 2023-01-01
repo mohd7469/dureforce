@@ -20,8 +20,8 @@ class CreateJobDeliverableTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
+            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

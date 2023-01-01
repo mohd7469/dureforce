@@ -24,11 +24,11 @@ class CreateJobDodsTable extends Migration
             $table->foreign('d_o_d_id')
                 ->references('id')
                 ->on('d_o_d_s')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->foreign('job_id')
                 ->references('id')
                 ->on('jobs')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

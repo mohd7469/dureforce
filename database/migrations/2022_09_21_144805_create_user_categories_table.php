@@ -18,8 +18,8 @@ class CreateUserCategoriesTable extends Migration
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->unsignedBigInteger('category_id')->index()->nullable();
             
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->timestamps();
         });
     }

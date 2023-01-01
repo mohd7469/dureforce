@@ -24,7 +24,7 @@ class CreateMilestonesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('cascade');
+            $table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

@@ -20,7 +20,7 @@ class CreateSoftwareProvidingStepsTable extends Migration
             $table->longText('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('cascade');
+            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

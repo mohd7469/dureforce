@@ -19,8 +19,8 @@ class AddColumnsToSkillsTable extends Migration
             $table->unsignedBigInteger('skill_category_id')->index()->nullable();
 
             $table->softDeletes();
-            $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('cascade');
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
+            $table->foreign('skill_category_id')->references('id')->on('skill_categories')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

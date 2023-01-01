@@ -20,7 +20,7 @@ class CreateServiceProjectStepsTable extends Migration
             $table->longText('description')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

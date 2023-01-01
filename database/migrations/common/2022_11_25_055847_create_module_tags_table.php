@@ -18,7 +18,7 @@ class CreateModuleTagsTable extends Migration
             $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->morphs('module');
             $table->unsignedBigInteger('tag_id')->index()->nullable();
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->timestamps();
 
         });

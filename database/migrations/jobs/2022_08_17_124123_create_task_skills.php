@@ -19,8 +19,8 @@ class CreateTaskSkills extends Migration
             $table->unsignedBigInteger('job_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

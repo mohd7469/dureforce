@@ -21,8 +21,8 @@ class CreateBannerTechnologyLogoTable extends Migration
             $table->unsignedBigInteger('module_banner_id')->index()->nullable();
 
             $table->timestamps();
-            $table->foreign('banner_background_id')->references('id')->on('banner_backgrounds')->onDelete('cascade');
-            $table->foreign('module_banner_id')->references('id')->on('module_banners')->onDelete('cascade');
+            $table->foreign('banner_background_id')->references('id')->on('banner_backgrounds')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('module_banner_id')->references('id')->on('module_banners')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             
         });
     }
