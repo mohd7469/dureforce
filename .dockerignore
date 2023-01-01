@@ -3,5 +3,8 @@ npm-debug.log
 yarn-error.log
 .idea/*
 Dockerfile
+.env-*
+azure-pipelines*.yml
 Dockerfile*
+composer.lock
 package-lock.json

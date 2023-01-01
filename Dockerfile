@@ -44,6 +44,7 @@ RUN cat ./run.sh >> ./run-with-env.sh
 RUN echo " " >> ./run-with-env.sh
 
 RUN chmod a+x ./run-with-env.sh
+RUN rm -rf tests
 COPY --from=builder /src/node_modules /html/node_modules
 
 EXPOSE 80
