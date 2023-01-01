@@ -20,8 +20,8 @@ class CreateSoftwareDeliverablesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('cascade');
-            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('cascade');
+            $table->foreign('deliverable_id')->references('id')->on('deliverables')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('software_id')->references('id')->on('softwares')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

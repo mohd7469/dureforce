@@ -25,7 +25,7 @@ class CreateJobTypesTable extends Migration
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

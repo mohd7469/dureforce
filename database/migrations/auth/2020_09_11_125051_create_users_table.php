@@ -37,9 +37,9 @@ class CreateUsersTable extends Migration
 
             $this->addCommonDBFields($table);
 
-            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('cascade');
-            $table->foreign('service_fee_id')->references('id')->on('service_fees')->onDelete('cascade');
-            $table->foreign('last_role_activity')->references('id')->on('roles')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('world_countries')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('service_fee_id')->references('id')->on('service_fees')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('last_role_activity')->references('id')->on('roles')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             
 
         });

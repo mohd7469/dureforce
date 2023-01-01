@@ -32,7 +32,7 @@ class CreateModuleBannerTable extends Migration
             $table->string('video_url')->nullable();
             $table->timestamps();
             
-            $table->foreign('banner_background_id')->references('id')->on('banner_backgrounds')->onDelete('cascade');
+            $table->foreign('banner_background_id')->references('id')->on('banner_backgrounds')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

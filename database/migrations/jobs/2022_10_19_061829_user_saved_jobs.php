@@ -19,8 +19,8 @@ class UserSavedJobs extends Migration
             $table->unsignedBigInteger('job_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('job_id')->references('id')->on('jobs')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

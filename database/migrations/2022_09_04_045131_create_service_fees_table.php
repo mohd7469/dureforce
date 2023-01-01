@@ -24,9 +24,9 @@ class CreateServiceFeesTable extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

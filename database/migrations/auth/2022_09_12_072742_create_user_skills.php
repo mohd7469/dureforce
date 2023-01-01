@@ -20,8 +20,8 @@ class CreateUserSkills extends Migration
 
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('skill_id')->references('id')->on('skills')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

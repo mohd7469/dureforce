@@ -24,9 +24,9 @@ class CreateChatMessagesTable extends Migration
             $table->enum('role',['client','freelancer','admin'])->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('send_to_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('offer_id')->references('id')->on('module_offers')->onDelete('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('send_to_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('offer_id')->references('id')->on('module_offers')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

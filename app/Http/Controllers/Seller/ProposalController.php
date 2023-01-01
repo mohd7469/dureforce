@@ -18,6 +18,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 use function activeTemplate;
@@ -42,43 +43,43 @@ class ProposalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($type=null)
+    public function index($type = null)
     {
         try {
 
-            $proposals = Proposal::with(['module.user','status'])->where('user_id', Auth::user()->id)->get();
-            $submitted_proposals = $proposals->where('status_id',Proposal::STATUSES['SUBMITTED']);
-            $archived_proposals = $proposals->where('status_id',Proposal::STATUSES['ARCHIVED']);
-            $active_proposals = $proposals->where('status_id',Proposal::STATUSES['ACTIVE']);
+            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->get();
+            $submitted_proposals = $proposals->where('status_id', Proposal::STATUSES['SUBMITTED']);
+            $archived_proposals = $proposals->where('status_id', Proposal::STATUSES['ARCHIVED']);
+            $active_proposals = $proposals->where('status_id', Proposal::STATUSES['ACTIVE']);
 
-
-            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals',$active_proposals)->with('type',$type);
+            Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
+            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
 
         } catch (\Exception $e) {
-
+            Log::error($e->getMessage());
             return response()->json(["error" => "There is a technical error"]);
 
         }
 
 
-
     }
+
     public function details($uuid)
     {
         try {
 
-            $proposal = Proposal::with(['module.user.country','attachment','milestone','delivery_mode'])->where('uuid', $uuid)->first();
+            $proposal = Proposal::with(['module.user.country', 'attachment', 'milestone', 'delivery_mode'])->where('uuid', $uuid)->first();
 
             // dd($proposal->toArray());
-
-            return view('templates.basic.buyer.propsal.proposal_details')->with('proposal',$proposal);
+            Log::info(["Proposal" => $proposal]);
+            return view('templates.basic.buyer.propsal.proposal_details')->with('proposal', $proposal);
 
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
 
             return response()->json(["error" => "There is a technical error"]);
 
         }
-
 
 
     }
@@ -93,15 +94,23 @@ class ProposalController extends Controller
     function createProposal($uuid)
     {
 
-        $job = Job::where('uuid', $uuid)->withAll()->first();
-        $skill_categories = SkillCategory::select('name', 'id')->get();
-        $delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
-        foreach ($skill_categories as $skillCat) {
-            $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
-        }
-        $pageTitle = "Proposal";
-        return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
+        try {
+            $job = Job::where('uuid', $uuid)->withAll()->first();
+            $skill_categories = SkillCategory::select('name', 'id')->get();
+            $delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
+            foreach ($skill_categories as $skillCat) {
+                $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+            }
+            $pageTitle = "Proposal";
+            Log::info(['Job'=>$job]);
+            return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
 
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(["error" => "There is a technical error"]);
+
+        }
     }
 
     /**
@@ -159,8 +168,7 @@ class ProposalController extends Controller
             }
             $proposal->save();
 
-           
-           
+
             if ($request->hasFile('file')) {
 
                 foreach ($request->file as $file) {
@@ -188,22 +196,24 @@ class ProposalController extends Controller
             }
 
             DB::commit();
+            Log::info(["Proposal"=>$proposal]);
 
             return response()->json(["redirect" => route('seller.jobs.listing'), "message" => "Proposal submitted"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
+            Log::error($exp->getMessage());
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
 
-    
+
     function validatePropsal(Request $request)
     {
         $request_data = [];
         parse_str($request->data, $request_data);
         $rules = [];
-        $custom_messages =[
+        $custom_messages = [
 
             'start_hour_limit.required_with' => 'Enter min hours field value or make empty max hours field',
             'end_hour_limit.required_with' => 'Enter max hours field value or make empty min hours field',
@@ -252,7 +262,7 @@ class ProposalController extends Controller
                 ];
             }
         }
-        $validator = Validator::make($request_data, $rules,$custom_messages);
+        $validator = Validator::make($request_data, $rules, $custom_messages);
         if ($validator->fails()) {
 
             return response()->json(["error" => $validator->errors()]);

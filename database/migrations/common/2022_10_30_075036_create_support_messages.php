@@ -22,9 +22,9 @@ class CreateSupportMessages extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('support_ticket_id')->references('id')->on('support_tickets')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreign('support_ticket_id')->references('id')->on('support_tickets')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

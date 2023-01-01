@@ -25,8 +25,8 @@ class CreateUserBasicsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('city_id')->references('id')->on('world_cities')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('world_cities')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
         });
     }

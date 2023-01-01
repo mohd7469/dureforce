@@ -19,8 +19,8 @@ class CreateServiceSkillTable extends Migration
             $table->unsignedBigInteger('service_id')->index()->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
-            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('services')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('skills_id')->references('id')->on('skills')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

@@ -26,6 +26,16 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
 
                 @if (in_array('9', $staffAccess))
+                    <li class="sidebar-menu-item">
+                        <a href="/admin/dureforce_admin/log-viewer" class="{{ menuActive('admin.users*', 3) }}">
+                            <i class="menu-icon las la-users"></i>
+                            <span class="menu-title">@lang('Logs')</span>
+
+                        </a>
+
+                    </li>
+                @endif
+                @if (in_array('9', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.users*', 3) }}">
                             <i class="menu-icon las la-users"></i>
@@ -53,10 +63,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         @if ($active_users_count)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $active_users_count }}</span>
-                                        @else 
+                                        @else
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">0
-                                            </span>       
+                                            </span>
                                         @endif
                                     </a>
                                 </li>
@@ -67,10 +77,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         @if ($banned_users_count)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $banned_users_count }}</span>
-                                        @else 
+                                        @else
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">0
-                                            </span>       
+                                            </span>
                                         @endif
                                     </a>
                                 </li>
@@ -83,10 +93,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         @if ($email_unverified_users_count)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $email_unverified_users_count }}</span>
-                                        @else 
+                                        @else
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">0
-                                            </span>       
+                                            </span>
                                         @endif
                                     </a>
                                 </li>
@@ -98,10 +108,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         @if ($sms_unverified_users_count)
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">{{ $sms_unverified_users_count }}</span>
-                                        @else 
+                                        @else
                                             <span
                                                 class="menu-badge pill bg--primary ml-auto">0
-                                            </span>       
+                                            </span>
                                         @endif
                                     </a>
                                 </li>

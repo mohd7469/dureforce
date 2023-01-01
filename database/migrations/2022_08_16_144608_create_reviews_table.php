@@ -31,10 +31,10 @@ class CreateReviewsTable extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->foreign('job_id')
                 ->references('id')
-                ->on('jobs')->onDelete('cascade');
+                ->on('jobs')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 

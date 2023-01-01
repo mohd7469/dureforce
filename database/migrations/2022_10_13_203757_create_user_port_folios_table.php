@@ -23,7 +23,7 @@ class CreateUserPortFoliosTable extends Migration
             $table->date('completion_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
 
