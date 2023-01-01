@@ -13,16 +13,8 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    /* position: relative;
-    right: 180px; */
-    float: left;
-}
-a.icon-btn{
-    float: left;
-    
-}
-th.tlst {
-    text-align: left !important;
+    position: relative;
+    right: 180px;
 }
 
 
@@ -30,7 +22,7 @@ th.tlst {
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.project.create') }} " class="btn btn-primary btn-sm float-right">Create Project Stage</a>
+        <a href="{{ route('admin.tag.create') }} " class="btn btn-primary btn-sm float-right">Create Tags</a>
     </div>
 </div>
 <br>
@@ -44,57 +36,62 @@ th.tlst {
                         <tr>
                             
                             <th>@lang('Title')</th>
+                            <th>@lang('Slug')</th>
                             <th>@lang('Status')</th>
-                            <th class="tlst">@lang('Action')</th>
-                            
+                            <th>@lang('Action')</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                             
                             
-                        @foreach($projects as $project)
+                        @foreach($tags as $tag)
                         <tr>
                             
                             <td data-label="@lang('Title')">
                                 <div class="user">
-                                    <span class="name">{{$project->title}}</span>
+                                    <span class="name">{{$tag->name}}</span>
                                 </div>
                             </td>
-                            
+                            <td data-label="@lang('Slug')">
+                                <div class="user">
+                                    <span class="name">{{$tag->slug}}</span>
+                                </div>
+                            </td>
                            
                             <td data-label="@lang('Status')">
-                                @if($project->is_active == 1)
+                                @if($tag->is_active == 1)
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
-                                @elseif($project->is_active == 0)
+                                @elseif($tag->is_active == 0)
                                     <span class="font-weight-normal badge--danger">@lang('InActice')</span>
                                 @endif
                             </td>
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.project.edit', $project->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.tag.edit', $tag->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                     <a type="submit"  href="{{route('admin.project.delete', $project->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                     <a type="submit"  href="{{route('admin.tag.delete', $tag->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <div data-label="@lang('Action')">
-                                        @if($project->is_active == 1)
-                                        <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$project->id}}">
-                                            <i class="las la-check "></i>
-                                        </button>
-                                    @endif
-    
-                                    @if($project->is_active == 0)
-                                        <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$project->id}}">
-                                        <i class="las la-times"></i>
-                                        </button>
-                                    @endif
-                                    </div>
-                                    
+                                    <td data-label="@lang('Action')">
+                                        @if($tag->is_active == 1)
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$tag->id}}">
+                                                <i class="las la-check "></i>
+                                            </button>
+                                        @endif
+        
+                                        @if($tag->is_active == 0)
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$tag->id}}">
+                                            <i class="las la-times"></i>
+                                            </button>
+                                        @endif
+                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
+                                    </td>
                               
              
                                
@@ -152,12 +149,12 @@ th.tlst {
                     </button>
             </div>
             
-            <form action="{{ route('admin.project.inactive') }}" method="POST">
+            <form action="{{ route('admin.tag.inactive') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to inactive this Job Type?')</p>
+                    <p>@lang('Are you sure to inactive this Tags?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -178,12 +175,12 @@ th.tlst {
                     </button>
             </div>
             
-            <form action="{{ route('admin.project.active') }}" method="POST">
+            <form action="{{ route('admin.tag.active') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to active this Job Type?')</p>
+                    <p>@lang('Are you sure to active this Tags?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>

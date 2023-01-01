@@ -1339,6 +1339,8 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                    {{-- End Job Type Mode crud  --}}
+                  
+                  {{-- Project Stage Mode crud  --}}
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1357,9 +1359,27 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
-                  {{-- Project Stage Mode crud  --}}
-
                   {{-- End Project Stage Mode crud  --}}
+                  {{-- Tag Crud --}}
+                  <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Tags')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.tag.index') }} ">
+                                <a href="{{ route('admin.tag.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Tags')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End Tag Crud --}}
 
                    {{-- category Mode crud  --}}
                 <li class="sidebar__menu-header">@lang('Settings')</li>
