@@ -423,7 +423,8 @@ input.search_btnc {
     background-position: 60% 39%;
     font-size: 0;
     cursor: pointer !important;
-    margin-top: -40px;
+    position: absolute;
+    margin-left: -75px;
 }
 
 .f-container {
