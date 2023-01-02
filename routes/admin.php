@@ -238,6 +238,33 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('dod/activeBy', 'DODController@activeBy')->name('dod.active');
         Route::post('dod/update/{id}', 'DODController@update')->name('dod.update');
         Route::get('/dod/delete/{id}', 'DODController@delete')->name('dod.delete');
+        //jobtype route
+        Route::get('type/index', 'JobTypeController@index')->name('type.index');
+        Route::get('type/create', 'JobTypeController@Create')->name('type.create');
+        Route::post('type/store', 'JobTypeController@store')->name('type.store');
+        Route::get('type/edit/{id}', 'JobTypeController@editdetails')->name('type.edit');
+        Route::post('type/inactiveBy', 'JobTypeController@inActiveBy')->name('type.inactive');
+        Route::post('type/activeBy', 'JobTypeController@activeBy')->name('type.active');
+        Route::post('type/update/{id}', 'JobTypeController@update')->name('type.update');
+        Route::get('/type/delete/{id}', 'JobTypeController@delete')->name('type.delete');
+        //Tag route
+        Route::get('tag/index', 'TagController@index')->name('tag.index');
+        Route::get('tag/create', 'TagController@Create')->name('tag.create');
+        Route::post('tag/store', 'TagController@store')->name('tag.store');
+        Route::get('tag/edit/{id}', 'TagController@editdetails')->name('tag.edit');
+        Route::post('tag/inactiveBy', 'TagController@inActiveBy')->name('tag.inactive');
+        Route::post('tag/activeBy', 'TagController@activeBy')->name('tag.active');
+        Route::post('tag/update/{id}', 'TagController@update')->name('tag.update');
+        Route::get('/tag/delete/{id}', 'TagController@delete')->name('tag.delete');
+        //project detail
+        Route::get('project/index', 'ProjectStageController@index')->name('project.index');
+        Route::get('project/create', 'ProjectStageController@Create')->name('project.create');
+        Route::post('project/store', 'ProjectStageController@store')->name('project.store');
+        Route::get('project/edit/{id}', 'ProjectStageController@editdetails')->name('project.edit');
+        Route::post('project/inactiveBy', 'ProjectStageController@inActiveBy')->name('project.inactive');
+        Route::post('project/activeBy', 'ProjectStageController@activeBy')->name('project.active');
+        Route::post('project/update/{id}', 'ProjectStageController@update')->name('project.update');
+        Route::get('/project/delete/{id}', 'ProjectStageController@delete')->name('project.delete');
         //DeliverMode Route
         Route::get('deliver/index', 'DeliverModeController@index')->name('deliver.index');
         Route::get('deliver/create', 'DeliverModeController@Create')->name('deliver.create');
@@ -262,6 +289,30 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('techlogo/destroy/{id}', 'TechnologyLogoController@destroy')->name('techlogo.destroy');
  
         });
+
+        //Manage lead images logo
+        Route::get('leadImages/index', 'LeadImagesController@index')->name('leadImages.index');
+        Route::get('leadImages/create', 'LeadImagesController@bannerCreate')->name('leadImages.create');
+        Route::post('leadImages/store', 'LeadImagesController@store')->name('leadImages.store');
+        Route::get('leadImages/inActive', 'LeadImagesController@inActive')->name('leadImages.inActive');
+        Route::get('leadImages/active', 'LeadImagesController@active')->name('leadImages.active');
+        Route::post('leadImages/inactiveBy', 'LeadImagesController@inactiveBy')->name('leadImages.inactiveBy');
+        Route::post('leadImages/activeBy', 'LeadImagesController@activeBy')->name('leadImages.activeBy');
+        Route::get('leadImages/details/{uuid}', 'LeadImagesController@details')->name('leadImages.details');
+        Route::get('leadImages/category', 'LeadImagesController@category')->name('leadImages.category');
+        Route::post('leadImages/destroy/{id}', 'LeadImagesController@destroy')->name('leadImages.destroy');
+
+        //Manage project length
+        Route::get('projectLength/index', 'projectLengthController@index')->name('projectLength.index');
+        Route::get('projectLength/create', 'projectLengthController@bannerCreate')->name('projectLength.create');
+        Route::post('projectLength/store', 'projectLengthController@store')->name('projectLength.store');
+        Route::get('projectLength/inActive', 'projectLengthController@inActive')->name('projectLength.inActive');
+        Route::get('projectLength/active', 'projectLengthController@active')->name('projectLength.active');
+        Route::post('projectLength/inactiveBy', 'projectLengthController@inactiveBy')->name('projectLength.inactiveBy');
+        Route::post('projectLength/activeBy', 'projectLengthController@activeBy')->name('projectLength.activeBy');
+        Route::get('projectLength/details/{uuid}', 'projectLengthController@details')->name('projectLength.details');
+        Route::get('projectLength/category', 'projectLengthController@category')->name('projectLength.category');
+        Route::post('projectLength/destroy/{id}', 'projectLengthController@destroy')->name('projectLength.destroy');
         
 
         Route::middleware('staffaccess:34')->group(function () {
@@ -415,12 +466,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
          
          Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
-       
-      
-      
-    
-        Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+       Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
         
+     
+      
 
         Route::middleware('staffaccess:12')->group(function () {
             //features
