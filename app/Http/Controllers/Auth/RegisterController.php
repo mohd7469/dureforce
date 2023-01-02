@@ -112,6 +112,8 @@ class RegisterController extends Controller
             $user->last_login_at=Carbon::now();
             $user->is_session_active = true;
             $user->save();
+            event(new Registered($user));
+            Log::info($user);
             return $this->registered($request, $user)
                 ?: redirect($this->redirectPath());
         });
