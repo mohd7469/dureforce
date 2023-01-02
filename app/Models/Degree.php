@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Degree extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','slug'];
+    protected $fillable = ['title','slug','is_active'];
 }

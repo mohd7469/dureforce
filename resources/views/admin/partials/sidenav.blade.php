@@ -731,7 +731,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('12', $staffAccess))
+                {{-- @if (in_array('12', $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.features.index') }}">
                         <a href="{{ route('admin.features.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.features.index') }}">
@@ -739,7 +739,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             <span class="menu-title">@lang('Features') </span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 @if (in_array('13', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
@@ -1289,6 +1289,46 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                    {{-- End Job Type Mode crud  --}}
+                   {{-- Feature Mode crud  --}}
+                   <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Features')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.feature.index') }} ">
+                                <a href="{{ route('admin.feature.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Features ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                   {{-- End Feature Mode crud  --}}
+                    {{-- Degree Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Degrees')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.degree.index') }} ">
+                                    <a href="{{ route('admin.degree.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Degrees ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                       {{-- End Degree Mode crud  --}}
                   
                   {{-- Project Stage Mode crud  --}}
                   <li class="sidebar-menu-item sidebar-dropdown">
