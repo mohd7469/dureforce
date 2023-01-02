@@ -8,6 +8,7 @@ use App\Models\GeneralSetting;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\UserLogin;
+use Illuminate\Support\Facades\Log;
 use App\Models\ServiceFee;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
