@@ -13,7 +13,7 @@ use App\Rules\FileTypeValidate;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\DeleteEntity;
 
-class projectLengthController extends Controller
+class ProjectLengthController extends Controller
 {
     use DeleteEntity;
 
