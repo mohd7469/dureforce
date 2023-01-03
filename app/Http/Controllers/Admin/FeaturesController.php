@@ -6,25 +6,39 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Features;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 class FeaturesController extends Controller
 {
     public function index()
     {
-        
+        try {
+            DB::beginTransaction();
     	$pageTitle = "Feature List";
     	$emptyMessage = "No data found";
         $features = Features::latest()->paginate(getPaginate());
 
         return view('admin.features.index', compact('pageTitle','features'));
+    }catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
     }
     public function Create()
     {
+        try {
+            DB::beginTransaction();
     	$pageTitle = "Create Feature";
          
        
-    	return view('admin.features.create', compact('pageTitle'));
+        return view('admin.features.create', compact('pageTitle'));
+    }catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
     }
     public function store(Request $request)
     {
@@ -36,6 +50,8 @@ class FeaturesController extends Controller
             
             
         ]);
+        try {
+            DB::beginTransaction();
        
         $feature  = new Features();
         
@@ -46,16 +62,29 @@ class FeaturesController extends Controller
         // $dod->module_id = 1;
        
         $feature->save();
-
+        DB::commit();
+        Log::info(["feature" => $feature]);
         
         $notify[] = ['success', 'Your Features detail has been Created.'];
         return redirect()->route('admin.feature.index')->withNotify($notify);
+    }catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
     }
     public function editdetails($id){
+        try {
+            DB::beginTransaction();
         $feature = Features::findOrFail($id);
         $pageTitle = "Manage All Feature Details";
         $emptyMessage = 'No shortcode available';
         return view('admin.features.edit', compact('pageTitle', 'feature','emptyMessage'));
+    }catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
     }
     public function update(Request $request, $id){
         $this->validate($request, [
@@ -65,7 +94,8 @@ class FeaturesController extends Controller
             
             
         ]);
-        
+        try {
+            DB::beginTransaction();
         $feature = Features::findOrFail($id);
       
      
@@ -73,36 +103,71 @@ class FeaturesController extends Controller
         $feature->slug = $request->slug;
         
         $feature->save();
-
+        DB::commit();
+        Log::info(["feature" => $feature]);
         $notify[] = ['success', 'Feature detail has been updated'];
         return redirect()->route('admin.feature.index')->withNotify($notify);
     }
+    catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
+    }
     public function delete($id)
     {
+        try {
+            DB::beginTransaction();
         $feature = Features::find($id);
        
         $feature->delete();
+        DB::commit();
+        Log::info(["feature" => $feature]);
         $notify[] = ['success', 'Job Type deleted successfully'];
         return back()->withNotify($notify);
     }
+    catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
+    }
     public function activeBy(Request $request)
     {
-        
+        try {
+            DB::beginTransaction();
         $feature = Features::findOrFail($request->id);
         $feature->is_active = 1;
         $feature->created_at = Carbon::now();
         $feature->save();
+        DB::commit();
+        Log::info(["feature" => $feature]);
         $notify[] = ['success', 'Feature has been Activated'];
         return redirect()->back()->withNotify($notify);
     }
+    catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
+    }
     public function inActiveBy(Request $request)
     {
-       
+        try {
+            DB::beginTransaction();
         $feature = Features::findOrFail($request->id);
         $feature->is_active = 0;
         $feature->created_at = Carbon::now();
         $feature->save();
+        DB::commit();
+        Log::info(["feature" => $feature]);
         $notify[] = ['success', 'Feature has been inActive'];
         return redirect()->back()->withNotify($notify);
+    }
+    catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        return response()->json(["error" => $exp]);
+    }
     }
 }
