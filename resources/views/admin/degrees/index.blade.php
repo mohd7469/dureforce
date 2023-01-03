@@ -24,11 +24,14 @@ a.icon-btn{
 th.tlst {
     text-align: left !important;
 }
+.table td{
+    white-space: revert !important;
+}
 </style>
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.feature.create') }} " class="btn btn-primary btn-sm float-right">Create Feature</a>
+        <a href="{{ route('admin.degree.create') }} " class="btn btn-primary btn-sm float-right">Create Degree</a>
     </div>
 </div>
 <br>
@@ -41,58 +44,58 @@ th.tlst {
                         <thead>
                         <tr>
                             
-                            <th>@lang('Title')</th>
-                            <th>@lang('Slug')</th>
-                            <th>@lang('Status')</th>
-                            <th class="tlst">@lang('Action')</th>
+                            <th style="width: 30%">@lang('Title')</th>
+                            <th style="width: 30%">@lang('Slug')</th>
+                            <th style="width: 20%">@lang('Status')</th>
+                            <th style="width: 20%" class="tlst">@lang('Action')</th>
                             
                         </tr>
                         </thead>
                         <tbody>
                             
                             
-                        @foreach($features as $feature)
+                        @foreach($degrees as $degree)
                         <tr>
                             
-                            <td data-label="@lang('Name')">
+                            <td data-label="@lang('Title')" style="width: 30%">
                                 <div class="user">
-                                    <span class="name">{{$feature->name}}</span>
+                                    <span class="name">{{$degree->title}}</span>
                                 </div>
                             </td>
-                            <td data-label="@lang('Slug')">
+                            <td data-label="@lang('Slug')" style="width: 30%">
                                 <div class="user">
-                                    <span class="name">{{$feature->slug}}</span>
+                                    <span class="name">{{$degree->slug}}</span>
                                 </div>
                             </td>
                            
-                            <td data-label="@lang('Status')">
-                                @if($feature->is_active == 1)
+                            <td data-label="@lang('Status')" style="width: 20%"> 
+                                @if($degree->is_active == 1)
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
-                                @elseif($feature->is_active == 0)
+                                @elseif($degree->is_active == 0)
                                     <span class="font-weight-normal badge--danger">@lang('InActice')</span>
                                 @endif
                             </td>
                             
-                            <td data-label="@lang('Action')">
+                            <td data-label="@lang('Action')" style="width: 30%">
                                
-                                    <a  href="{{route('admin.feature.edit', $feature->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.degree.edit', $degree->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                     <a type="submit"  href="{{route('admin.feature.delete', $feature->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                     <a type="submit"  href="{{route('admin.degree.delete', $degree->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
                                     <div data-label="@lang('Action')">
-                                        @if($feature->is_active == 1)
-                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$feature->id}}">
+                                        @if($degree->is_active == 1)
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$degree->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
-                                        @if($feature->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$feature->id}}">
+                                        @if($degree->is_active == 0)
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$degree->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
@@ -155,12 +158,12 @@ th.tlst {
                     </button>
             </div>
             
-            <form action="{{ route('admin.feature.inactive') }}" method="POST">
+            <form action="{{ route('admin.degree.inactive') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to inactive this Feature?')</p>
+                    <p>@lang('Are you sure to inactive this Degree?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -181,12 +184,12 @@ th.tlst {
                     </button>
             </div>
             
-            <form action="{{ route('admin.feature.active') }}" method="POST">
+            <form action="{{ route('admin.degree.active') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to active this Feature?')</p>
+                    <p>@lang('Are you sure to active this Degree?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>

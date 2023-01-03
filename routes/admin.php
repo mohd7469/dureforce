@@ -247,6 +247,24 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('type/activeBy', 'JobTypeController@activeBy')->name('type.active');
         Route::post('type/update/{id}', 'JobTypeController@update')->name('type.update');
         Route::get('/type/delete/{id}', 'JobTypeController@delete')->name('type.delete');
+          //Feature route
+          Route::get('feature/index', 'FeaturesController@index')->name('feature.index');
+          Route::get('feature/create', 'FeaturesController@Create')->name('feature.create');
+          Route::post('feature/store', 'FeaturesController@store')->name('feature.store');
+          Route::get('feature/edit/{id}', 'FeaturesController@editdetails')->name('feature.edit');
+          Route::post('feature/inactiveBy', 'FeaturesController@inActiveBy')->name('feature.inactive');
+          Route::post('feature/activeBy', 'FeaturesController@activeBy')->name('feature.active');
+          Route::post('feature/update/{id}', 'FeaturesController@update')->name('feature.update');
+          Route::get('/feature/delete/{id}', 'FeaturesController@delete')->name('feature.delete');
+           //Degree route
+           Route::get('degree/index', 'DegreeController@index')->name('degree.index');
+           Route::get('degree/create', 'DegreeController@Create')->name('degree.create');
+           Route::post('degree/store', 'DegreeController@store')->name('degree.store');
+           Route::get('degree/edit/{id}', 'DegreeController@editdetails')->name('degree.edit');
+           Route::post('degree/inactiveBy', 'DegreeController@inActiveBy')->name('degree.inactive');
+           Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
+           Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
+           Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
         //Tag route
         Route::get('tag/index', 'TagController@index')->name('tag.index');
         Route::get('tag/create', 'TagController@Create')->name('tag.create');
@@ -471,12 +489,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
      
       
 
-        Route::middleware('staffaccess:12')->group(function () {
-            //features
-            Route::get('features', 'FeaturesController@index')->name('features.index');
-            Route::post('features/store', 'FeaturesController@store')->name('features.store');
-            Route::post('features/update', 'FeaturesController@update')->name('features.update');
-        });
+        // Route::middleware('staffaccess:12')->group(function () {
+        //     //features
+        //     Route::get('features', 'FeaturesController@index')->name('features.index');
+        //     Route::post('features/store', 'FeaturesController@store')->name('features.store');
+        //     Route::post('features/update', 'FeaturesController@update')->name('features.update');
+        // });
 
         Route::middleware('staffaccess:8')->group(function () {
             // Advertisement
