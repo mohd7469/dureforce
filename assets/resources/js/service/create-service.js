@@ -5,7 +5,8 @@ let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
 let add_on_service_row_number='';
-
+let default_lead_image=$("input[name='default_lead_image_id']");
+let lead_image_div=$('#lead_image_upload_div_id');
 "use strict";
 $(document).ready(function () {
   var service_id=$('#service_id').val();
@@ -35,6 +36,36 @@ $(document).ready(function () {
   //   }
   // }
 
+  default_lead_image.click(function(){
+    var radio = $(this);
+		if(radio.data("waschecked") == true){
+			radio.prop("checked", false);
+			radio.data("waschecked", false);
+      if(lead_image_div.is(":hidden")){
+        lead_image_div.show();
+      }
+		} else{
+
+			radio.data("waschecked", true);      
+		}
+  });
+
+  default_lead_image.change(function(){
+
+      if (!$("input[name='default_lead_image_id']:checked").val()) {
+          
+          if(lead_image_div.is(":hidden")){
+            lead_image_div.show();
+          }
+      }
+      else {
+          if(lead_image_div.is(":visible")){
+            lead_image_div.hide();
+          }
+      }
+
+  });
+  
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
     add_on_service_row_number+=1;
@@ -136,6 +167,7 @@ function removeExtraService(row) {
     row.remove();
   }
 }
+
 $("#category").on("change", function () {
   var category = $(this).val();
   $.ajax({
@@ -161,6 +193,7 @@ $("#category").on("change", function () {
     },
   });
 });
+
 $(document).on("change", ".custom-file-input", function () {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -420,24 +453,26 @@ function baannerForm() {
           message: "Background Image is required",
           position: "topRight",
         });
-        if(
-            $("#lead_image").val().length < 1 &&
-            !$("input[name='dynamic_banner_image']").attr("value")
-          ) {
-            e.preventDefault();
-            console.log($("input[name='dynamic_banner_image']").attr("value"));
-    
-            $("#lead_image").after(
-              '<span class="error text-danger " style="margin-top:5px !important;">This field is required</span>'
-            );
-            iziToast.error({
-              message: "Lead Image is required",
-              position: "topRight",
-            });
-        }
+        
       }
 
-      
+      if( ($("#lead_image").val().length < 1 && !$("input[name='dynamic_banner_image']").attr("value") ) && $('input:radio[name="default_lead_image_id"]:checked').length < 1) {
+          e.preventDefault();
+          let lead_image_message="Select From Default Lead Images Or Upload";
+          $("#default_lead_img_error").after(
+            `<span class="error text-danger">`+lead_image_message+`</span>`
+          );
+          $("#lead_image").after(
+            '<span class="error text-danger " style="margin-top:5px !important;">'+lead_image_message+'</span>'
+          );
+
+          iziToast.error({
+            message: lead_image_message,
+            position: "topRight",
+          });
+
+      }
+
       if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
         iziToast.error({
           message: "Technology Logos are required",
@@ -574,8 +609,8 @@ function validateAddOnRows(element, e) {
 
 }
 function deleteAddOnRow(row_id){
-  $(row_id).remove();
-  add_on_service_row_number-=1;
+    $(row_id).remove();
+    add_on_service_row_number-=1;
 }
 function addOnServiceRow() {
   return `<div class="row add-ons" id="add-on-row-id-`+add_on_service_row_number+`">

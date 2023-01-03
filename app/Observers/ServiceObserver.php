@@ -27,10 +27,6 @@ class ServiceObserver
     }
     public function deleting($service)
     {   
-        $service->deliverable()->detach();
-        $service->tags()->detach();
-        $service->serviceSteps()->delete();
-        $service->banner()->delete();
-        $service->features()->delete();
+       
     }
 }

@@ -11,7 +11,8 @@ class BannerBackground extends Model
     use HasFactory, SoftDeletes;
     const BACKGROUND_TYPES = [
         'BACKGROUND'       =>  'Background',
-        'TECHNOLOGY_LOGO'  =>  'Technology Logo'
+        'TECHNOLOGY_LOGO'  =>  'Technology Logo',
+        'LEAD_IMAGE'       =>  'Leading Image',
     ];
     
     public function scopeBackground($query){
@@ -20,6 +21,11 @@ class BannerBackground extends Model
     
     public function scopeLogos($query){
         return $query->where('document_type',self::BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
+    }
+
+
+    public function scopeLeadImages($query){
+        return $query->where('document_type',self::BACKGROUND_TYPES['LEAD_IMAGE']);
     }
 }
 

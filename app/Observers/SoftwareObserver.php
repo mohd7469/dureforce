@@ -28,11 +28,6 @@ class SoftwareObserver
     }
     public function deleting($software)
     {
-        $software->deliverable()->detach();
-        $software->tags()->detach();
-        $software->softwareSteps()->delete();
-        $software->features()->delete();
-        $software->banner()->delete();
-        $software->modules()->delete();
+       
     }
 }

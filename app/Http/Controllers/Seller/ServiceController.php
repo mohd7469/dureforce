@@ -309,13 +309,25 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         try {
-            $service = Service::findOrFail($id);
+            $service = Service::withAll()->findOrFail($id);
+            
+            $service->deliverable()->detach();
+            $service->tags()->detach();
+            $service->serviceSteps()->delete();
+            $this->deleteBannerLogos($service);
+
+            $service->banner()->delete();
+            // $service->features()->delete();
+
             $service->delete();
             $notify[] = ['success', 'Service has been Deleted Successfully.'];
             Log::info(["Service" => $service]);
             return back()->withNotify($notify);
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
+            $notify[] = ['error', 'Failled to delete Service'];
+            return redirect()->back()->withNotify($notify);
+
         }
     }
 
