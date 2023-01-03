@@ -310,7 +310,8 @@ function bannerTypeDynamic($model){
 function getFile($model){
     if($model){
         if($model->banner){
-            return  $model->banner->url;
+            if(!$model->banner->default_lead_image_id)
+                return  $model->banner->url;
         }
     }
     return '';
@@ -344,16 +345,10 @@ function getSoftwareFee($software){
     }
     return '';
 }
-function getImagesByCategory($model, $type='logo'){
+function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
     
-    $query=BannerBackground::query();
-    if($type == 'logo'){
-        $query= $query->logos();
-    }
-    else{
-        $query= $query->background();
-    }
-
+    $query=BannerBackground::where('document_type',$type);
+    
     if($model->category_id){
        
         $query= $query->where('category_id',$model->category_id);
@@ -366,15 +361,35 @@ function getImagesByCategory($model, $type='logo'){
     return $query->latest()->get();
 }
 
-function selectedBackgroundImage($model,$banner_background_id){
+function selectedBackgroundImage($model,$banner_background_id,$column){
     if($model){
         if($model->banner){
-            return $model->banner->banner_background_id == $banner_background_id ? 'checked' : '';
+            return $model->banner->$column == $banner_background_id ? 'checked' : '';
         }
     }
     return '';
 }
-
+function getLeadImageUrl($model){
+    if($model){
+        if($model->banner){
+            if($model->banner->defaultLeadImage)
+                return $model->banner->defaultLeadImage->url;
+            else
+                return $model->banner->url;
+        }
+    }
+}
+function IsDefaultLeadImage($model){
+    if($model){
+        if($model->banner){
+            if($model->banner->default_lead_image_id ){
+                return  'none';
+            }
+        }
+        
+    }
+    return 'block';
+}
 function selectedLogoImage($model,$banner_background_id){
     if($model){
         if($model->technologyLogos){
