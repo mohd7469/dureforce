@@ -18,6 +18,7 @@ use App\Models\Software\Software;
 use App\Models\Software\SoftwareDefaultStep;
 use App\Models\SupportTicket;
 use App\Models\Tag;
+use App\Models\ProjectLength;
 use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -113,6 +114,8 @@ class AppServiceProvider extends ServiceProvider
                 'technologyLogoInactive' => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
                 'leadingImageActive' => Banner::where('document_type', 'Leading Image')->where('is_active', 1)->count(),
                 'leadingImageInactive' => Banner::where('document_type', 'Leading Image')->where('is_active', 0)->count(),
+                'projectLengthActive' => ProjectLength::where('is_active', 1)->count(),
+                'projectLengthInactive' => ProjectLength::where('is_active', 0)->count(),
 
             ]);
         });

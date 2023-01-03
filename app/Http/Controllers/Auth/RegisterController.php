@@ -15,6 +15,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
@@ -106,12 +107,14 @@ class RegisterController extends Controller
 
             Session::put('registerUsername', $request->get('username'));
             $user = $this->create($request->all());
-
+            
             $this->guard()->login($user);
             $user->last_activity_at=Carbon::now();
             $user->last_login_at=Carbon::now();
             $user->is_session_active = true;
             $user->save();
+            event(new Registered($user ));
+            Log::info($user);
             return $this->registered($request, $user)
                 ?: redirect($this->redirectPath());
         });
