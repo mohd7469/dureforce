@@ -483,8 +483,24 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('credential/activeBy', 'SystemCredentialController@activeBy')->name('credential.activeBy');
         Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
          
-         Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
-       Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+        Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
+        Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
+
+        //Redis Creditional Route
+        Route::get('redis-credential', 'RedisSystemCredentialController@index')->name('redis.credential.index');
+        Route::post('redis-credential/store', 'RedisSystemCredentialController@store')->name('redis.credential.store');
+        Route::post('redis-credential/activeBy', 'RedisSystemCredentialController@activeBy')->name('redis.credential.activeBy');
+        Route::post('redis-credential/inactiveBy', 'RedisSystemCredentialController@inactiveBy')->name('redis.credential.inactiveBy');
+        Route::post('redis-credential/update', 'RedisSystemCredentialController@update')->name('redis.credential.update');
+        Route::get('/redis-credential/delete/{id}', 'RedisSystemCredentialController@delete')->name('redis.credential.delete');
+
+        //Pusher Creditional Route
+        Route::get('pusher-credential', 'PusherSystemCredentialController@index')->name('pusher.credential.index');
+        Route::post('pusher-credential/store', 'PusherSystemCredentialController@store')->name('pusher.credential.store');
+        Route::post('pusher-credential/activeBy', 'PusherSystemCredentialController@activeBy')->name('pusher.credential.activeBy');
+        Route::post('pusher-credential/inactiveBy', 'PusherSystemCredentialController@inactiveBy')->name('pusher.credential.inactiveBy');
+        Route::post('pusher-credential/update', 'PusherSystemCredentialController@update')->name('pusher.credential.update');
+        Route::get('/pusher-credential/delete/{id}', 'PusherSystemCredentialController@delete')->name('pusher.credential.delete');
         
      
       

@@ -1319,6 +1319,49 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                   {{-- End System Email Creditional Mode crud  --}}
+                
+                  {{--Redis Creditional Mode crud  --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.redis*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Redis Credentials')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.redis*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.redis.credential.index') }} ">
+                                <a href="{{ route('admin.redis.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Redis Credentials ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End Redis Creditional Mode crud  --}}
+
+                {{--pusher Creditional Mode crud  --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.pusher*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Pusher Credentials')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.pusher*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.pusher.credential.index') }} ">
+                                <a href="{{ route('admin.pusher.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Pusher Credentials ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End pusher Creditional Mode crud  --}}
+
                    {{-- Job Type Mode crud  --}}
                    <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
