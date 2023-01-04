@@ -14,7 +14,7 @@
 .tickbtn {
     padding: 5.5px 7px;
     position: relative;
-    right: 136px;
+    right: 190px;
 }
 
 
