@@ -142,7 +142,7 @@ class Software extends Model
 
     public function banner()
     {
-        return $this->morphOne(ModuleBanner::class,'module')->with('background');
+        return $this->morphOne(ModuleBanner::class,'module')->with('background')->with('defaultLeadImage');
     }
     public function status()
     {

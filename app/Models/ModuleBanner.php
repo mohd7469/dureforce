@@ -24,6 +24,8 @@ class ModuleBanner extends Model
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
         });
+        
+        
 
     }
     public function module(){
@@ -32,5 +34,11 @@ class ModuleBanner extends Model
 
     public function background(){
         return $this->belongsTo(BannerBackground::class,'banner_background_id', 'id');
+    }
+    public function defaultLeadImage(){
+        return $this->belongsTo(BannerBackground::class,'default_lead_image_id', 'id');
+    }
+    public function logos(){
+        return $this->hasMany(BannerLogo::class,'module_banner_id', 'id');
     }
 }

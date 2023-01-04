@@ -1,11 +1,14 @@
 @php
 $banner_backgrounds = collect([]);
 $banner_logos = collect([]);
+$lead_images = collect([]);
 
 if (!empty($software)) {
     
-    $banner_backgrounds= getImagesByCategory($software,'background');
-    $banner_logos= getImagesByCategory($software,'logo');
+    $banner_backgrounds = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['BACKGROUND']);
+    $banner_logos       = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
+    $lead_images        = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['LEAD_IMAGE']);
+
 }
 @endphp
 
@@ -101,37 +104,37 @@ if (!empty($software)) {
 
                                     </div>
                                     <div class="row flex-wrap d-flex">
-                                        @foreach ($banner_backgrounds as $item)
+                                        @forelse ($banner_backgrounds as $item)
                                             <div class="col-md-3">
                                                 <img src="{{$item->url}}" alt="" style="border: 1px solid black;height:144px;width:100%;">
-                                                <input type="radio" value="{{$item->id}}" name="banner_background_id" id="dynamic_image_1" class="col-1 bg-radio" {{selectedBackgroundImage($software,$item->id)}}>
+                                                <input type="radio" value="{{$item->id}}" name="banner_background_id" id="dynamic_image_1" class="col-1 bg-radio" {{selectedBackgroundImage($software,$item->id,'banner_background_id')}}>
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <div class="row text-center">
+                                                <strong class="text text-danger">@lang('Banner Backgrounds Not Found') </strong>
+                                            </div>
+                                        @endforelse
                                     </div>
                                 </div>
+                                <div class="p-3">
+                                    <div>
+                                        <label>@lang('Select From Default Banner Lead Image')<p id="default_lead_img_error"></p></label>
 
-                                <div class=" addImage m-3">
-                                    @if (!empty($software->optionalImage))
-                                        @foreach ($software->optionalImage as $data)
-                                            <div
-                                                class="d-flex flex-wrap align-items-center justify-content-between optional_img_wrapper mb-20">
-                                                <div class="optional-thumb">
-                                                    <span><strong>Caption</strong>:{{ $data->caption }}</span>
-
-                                                    <img class="optional_img"
-                                                        src="{{ getImage('assets/images/optionalService/' . $data->image, '590x300') }}">
-
-                                                </div>
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-sm btn-danger deleteOptionalImage"
-                                                    data-bs-toggle="modal" data-id="{{ encrypt($data->id) }}"
-                                                    data-bs-target="#approvedModal"
-                                                    data-id="{{ $data->id }}">@lang('Remove')</a>
-                                                <hr />
+                                    </div>
+                                    <div class="row flex-wrap d-flex">
+                                        @forelse($lead_images as $item)
+                                            <div class="col-md-3">
+                                                <img src="{{$item->url}}" alt="" style="border: 1px solid black;height:144px;width:100%;">
+                                                <input type="radio" value="{{$item->id}}" name="default_lead_image_id" id="default_lead_image_id" class="col-1 bg-radio" {{selectedBackgroundImage($software,$item->id,'default_lead_image_id')}}>
                                             </div>
-                                        @endforeach
-                                    @endif
+                                        @empty
+                                            <div class="row text-center">
+                                                <strong class="text text-danger">@lang('Lead Images Not Found')</strong>
+                                            </div>
+                                        @endforelse
+                                    </div>
                                 </div>
+                                
                                 <div class="p-2">
                                     <div class="p-3">
                                         <label>@lang('Banner Heading') *</label>
@@ -150,15 +153,16 @@ if (!empty($software)) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-12 col-lg-12">
+                        <div class="col-xl-12 col-lg-12" id="lead_image_upload_div_id" style="display: {{IsDefaultLeadImage($software)}}">
                             <div class="px-4">
                                 <label>@lang('Lead Image') *</label>
                                 <div class="avatar-edit">
-                                <div id="galeria">
-                                    @if (bannerTypeDynamic($software))
-                                        <img src="{{ $software->banner->url }}" class="profilePicPreview bg_img" style="height: 250px" ;="">  
-                                    @endif
-                                </div>
+
+                                    <div id="galeria">
+                                        @if (bannerTypeDynamic($software) && !$software->banner->default_lead_image_id)
+                                            <img src="{{ $software->banner->url }}" class="profilePicPreview bg_img" style="height: 250px;">  
+                                        @endif
+                                    </div>
                                     <label class="mb-0" id="image">
                                      
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
@@ -166,29 +170,35 @@ if (!empty($software)) {
                                         <a>Browse File</a>
                                          <input type="file" name="dynamic_banner_image"  value="{{ bannerTypeDynamic($software) ? getFile($software) : ''}}" onchange="previewMultiple(event);readURL(this)" id="lead_image" accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" />
                                     </label>
-                                <br />
+                                    <br />
+                                </div>
                             </div>
                         </div>
+
                         <div class="col-xl-12 col-lg-12 ">
                             <div class="px-4">
                                 <label class="logo-div">@lang('Technology Logos (Select only 3)') *</label>
                                     <ul class="logo-ul">
                                         <div class="row">
                                             
-                                            @foreach ($banner_logos as $item)
+                                            @forelse($banner_logos as $item)
                                                 <div class="col-md-2 col-lg-2 col-sm-4 col-xs-6">
                                                     <img src="{{$item->url}}" alt="" style="border: 1px solid black;height: 80px;
                                                     width: 51%;border-radius: 68%;">
                                                     <input type="checkbox" value="{{$item->id}}" name="technology_logos[]" id="dynamic_image_1" class="col-1 bg-radio" {{selectedLogoImage($software,$item->id)}}>
                                                 </div>
-                                            @endforeach         
+                                            @empty
+                                                <div class="row text-center">
+                                                    <strong class="text text-danger">@lang('Technology Logos Not Found')</strong>
+                                                </div>
+                                            @endforelse
                                         </div>
                                             
                                     </ul>
                                 <br />
                             </div>
                         </div>
-                        </div>
+                        
                     </div>
 
                     <div id="banner3" class="mydivhide2" style="display:  {{ isVideoBanner($software) }};">
@@ -264,12 +274,12 @@ if (!empty($software)) {
     }
     function previewMultiple(event){
             var data = document.getElementById("lead_image");
-            $("#galeria").empty();
-            var item = data.files.length;
-            for(i = 0; i < item; i++){
-                var urls = URL.createObjectURL(event.target.files[i]);
-                document.getElementById("galeria").innerHTML += '<img src="'+urls+'" class="logo-box">';
-            }
+            var urls = URL.createObjectURL(event.target.files[0]);
+            $('#galeria').html('');
+            $('#galeria').append(` 
+            '<img src="${urls}" class="profilePicPreview bg_img" style="height: 250px";>'
+            `);
+            
         }
 
     function readURL(input) {

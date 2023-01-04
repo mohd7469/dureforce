@@ -290,14 +290,25 @@ class SoftwareController extends Controller
     public function destroy($id)
     {
         try {
-            $software = Software::find($id)->delete();
-//        $this->deleteEntity(Software::class, 'software', $id);
-            Log::info(["Software" => $software]);
+            $software = Software::withAll()->find($id);
+            Log::info(["Software Deleted " => $software]);
 
-            $notify[] = ['success', 'software has been uploaded.'];
+            $software->deliverable()->detach();
+            $software->tags()->detach();
+            $software->softwareSteps()->delete();
+            // $software->features()->delete();
+            $this->deleteBannerLogos($software);
+            $software->banner()->delete();
+            $software->modules()->delete();
+            $software->delete();
+
+            $notify[] = ['success', 'Software has been deleted successfully.'];
             return back()->withNotify($notify);
         } catch (\Exception $exp) {
+            
             Log::error($exp->getMessage());
+            $notify[] = ['error', 'Failled to delete Software'];
+            return redirect()->back()->withNotify($notify);
         }
     }
 

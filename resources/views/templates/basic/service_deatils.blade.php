@@ -340,6 +340,8 @@
 <script>
     $(document).ready(function() {
         fetchSkills();
+        
+
         $("#readless").hide();
         var maxLength = 700;
         $(".show-read-more").each(function() {
