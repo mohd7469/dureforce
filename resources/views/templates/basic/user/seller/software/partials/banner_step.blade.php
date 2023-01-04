@@ -157,11 +157,12 @@ if (!empty($software)) {
                             <div class="px-4">
                                 <label>@lang('Lead Image') *</label>
                                 <div class="avatar-edit">
-                                <div id="galeria">
-                                    @if (bannerTypeDynamic($software) && !$software->banner->default_lead_image_id)
-                                        <img src="{{ $software->banner->url }}" class="profilePicPreview bg_img" style="height: 250px;">  
-                                    @endif
-                                </div>
+
+                                    <div id="galeria">
+                                        @if (bannerTypeDynamic($software) && !$software->banner->default_lead_image_id)
+                                            <img src="{{ $software->banner->url }}" class="profilePicPreview bg_img" style="height: 250px;">  
+                                        @endif
+                                    </div>
                                     <label class="mb-0" id="image">
                                      
                                         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
@@ -169,7 +170,8 @@ if (!empty($software)) {
                                         <a>Browse File</a>
                                          <input type="file" name="dynamic_banner_image"  value="{{ bannerTypeDynamic($software) ? getFile($software) : ''}}" onchange="previewMultiple(event);readURL(this)" id="lead_image" accept="image/png, image/jpg, image/jpeg,image/PNG, image/JPG, image/JPEG" />
                                     </label>
-                                <br />
+                                    <br />
+                                </div>
                             </div>
                         </div>
 
@@ -196,7 +198,7 @@ if (!empty($software)) {
                                 <br />
                             </div>
                         </div>
-                        </div>
+                        
                     </div>
 
                     <div id="banner3" class="mydivhide2" style="display:  {{ isVideoBanner($software) }};">
