@@ -15,30 +15,32 @@ class JobTypeController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+           
     	$pageTitle = "Job Type List";
     	$emptyMessage = "No data found";
         $types = JobType::latest()->paginate(getPaginate());
 
         return view('admin.jobtypes.index', compact('pageTitle','types'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function Create()
     {
         try {
-            DB::beginTransaction();
+           
     	$pageTitle = "Create Job Type";
          $modules = Module::all();
        
         return view('admin.jobtypes.create', compact('pageTitle','modules'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function store(Request $request)
@@ -70,20 +72,22 @@ class JobTypeController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function editdetails($id){
         try {
-            DB::beginTransaction();
+            
         $type = JobType::findOrFail($id);
         $pageTitle = "Manage All Job Type Details";
         $emptyMessage = 'No shortcode available';
         return view('admin.jobtypes.edit', compact('pageTitle', 'type','emptyMessage'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function update(Request $request, $id){
@@ -111,7 +115,8 @@ class JobTypeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function delete($id)
@@ -129,7 +134,8 @@ class JobTypeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function activeBy(Request $request)
@@ -148,7 +154,8 @@ class JobTypeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -167,7 +174,8 @@ class JobTypeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
 }

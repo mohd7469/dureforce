@@ -14,31 +14,33 @@ class ProjectStageController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Project Stage List";
     	$emptyMessage = "No data found";
         $projects = ProjectStage::latest()->paginate(getPaginate());
 
         return view('admin.projects.index', compact('pageTitle','projects'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+         return back()->withNotify($notify);
     }
     
     }
     public function Create()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Create Project stage";
          $modules = Module::all();
        
         return view('admin.projects.create', compact('pageTitle','modules'));
-    }catch (\Exception $exp) {
-        DB::rollback();
+      }catch (\Exception $exp) {
+       
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function store(Request $request)
@@ -71,20 +73,22 @@ class ProjectStageController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function editdetails($id){
         try {
-            DB::beginTransaction();
+            
         $project = ProjectStage::findOrFail($id);
         $pageTitle = "Manage All Project Detail";
         $emptyMessage = 'No shortcode available';
         return view('admin.projects.edit', compact('pageTitle', 'project','emptyMessage'));
     }catch (\Exception $exp) {
-        DB::rollback();
+       
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function update(Request $request, $id){
@@ -109,7 +113,8 @@ class ProjectStageController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function delete($id)
@@ -128,7 +133,8 @@ class ProjectStageController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
    
@@ -150,7 +156,8 @@ class ProjectStageController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -169,7 +176,8 @@ class ProjectStageController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
 }
