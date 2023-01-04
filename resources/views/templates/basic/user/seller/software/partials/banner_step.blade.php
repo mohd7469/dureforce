@@ -274,12 +274,12 @@ if (!empty($software)) {
     }
     function previewMultiple(event){
             var data = document.getElementById("lead_image");
-            $("#galeria").empty();
-            var item = data.files.length;
-            for(i = 0; i < item; i++){
-                var urls = URL.createObjectURL(event.target.files[i]);
-                document.getElementById("galeria").innerHTML += '<img src="'+urls+'" class="logo-box">';
-            }
+            var urls = URL.createObjectURL(event.target.files[0]);
+            $('#galeria').html('');
+            $('#galeria').append(` 
+            '<img src="${urls}" class="profilePicPreview bg_img" style="height: 250px";>'
+            `);
+            
         }
 
     function readURL(input) {
