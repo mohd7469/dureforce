@@ -265,6 +265,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
            Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
            Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
            Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
+           //Language Lavel route
+           Route::get('language-level/index', 'LanguageLevelsController@index')->name('language.level.index');
+           Route::get('language-level/create', 'LanguageLevelsController@Create')->name('language.level.create');
+           Route::post('language-level/store', 'LanguageLevelsController@store')->name('language.level.store');
+           Route::get('language-level/edit/{id}', 'LanguageLevelsController@editdetails')->name('language.level.edit');
+           Route::post('language-level/inactiveBy', 'LanguageLevelsController@inActiveBy')->name('language.level.inactive');
+           Route::post('language-level/activeBy', 'LanguageLevelsController@activeBy')->name('language.level.active');
+           Route::post('language-level/update/{id}', 'LanguageLevelsController@update')->name('language.level.update');
+           Route::get('/language-level/delete/{id}', 'LanguageLevelsController@delete')->name('language.level.delete');
         //Tag route
         Route::get('tag/index', 'TagController@index')->name('tag.index');
         Route::get('tag/create', 'TagController@Create')->name('tag.create');

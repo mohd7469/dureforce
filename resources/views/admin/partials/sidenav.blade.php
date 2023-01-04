@@ -1379,6 +1379,27 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </div>
                     </li>
                        {{-- End Degree Mode crud  --}}
+
+                       {{-- Language Level Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.language.level*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Language Levels')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.language.level*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.language.level.index') }} ">
+                                    <a href="{{ route('admin.language.level.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Language Levels ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                       {{-- End Language Level Mode crud  --}}   
                   
                   {{-- Project Stage Mode crud  --}}
                   <li class="sidebar-menu-item sidebar-dropdown">
