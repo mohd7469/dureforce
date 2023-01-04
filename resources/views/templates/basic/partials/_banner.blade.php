@@ -16,12 +16,12 @@
             
             <div class=" col-md-4 col-lg-4 col-sm-6 justify-content-center align-self-center" style="height: 309px;width:309px;border-radius:2px">
                 <img alt="{{$model->banner_heading}}"
-                     src="{{$model->banner->url}}" style="height: 100%;width:100%">
+                     src="{{getLeadImageUrl($model)}}" style="height: 100%;width:100%">
             </div>
             
             <div class="col-12 col-md-7 justify-content-center "  style="text-align: right" >
                 <h1 class="heading font-weight-bold" style="font-size:45px"><strong>{{$model->banner->banner_heading}}</strong></h1>
-                <p class="para " style="font-size: 20px;margin-top:20px">{{$model->banner->banner_introduction}}</p>
+                <p class="para" style="font-size: 20px;margin-top:20px">{{$model->banner->banner_introduction}}</p>
             </div>
       
            

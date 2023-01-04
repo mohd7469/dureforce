@@ -10,7 +10,8 @@ let manual_title_field='<input type="text" name="module_title[]" id="" class="fo
 let manual_title_label="(switch to add manual title)";
 let select_module_title_label="(switch to select title)";
 let select_module_title='';
-
+let default_lead_image=$("input[name='default_lead_image_id']");
+let lead_image_div=$('#lead_image_upload_div_id');
 "use strict";
 $(document).ready(function () {
   
@@ -29,6 +30,35 @@ $(document).ready(function () {
     tags: true
   });
   
+  default_lead_image.click(function(){
+    var radio = $(this);
+		if(radio.data("waschecked") == true){
+			radio.prop("checked", false);
+			radio.data("waschecked", false);
+      if(lead_image_div.is(":hidden")){
+        lead_image_div.show();
+      }
+		} else{
+
+			radio.data("waschecked", true);      
+		}
+  });
+
+  default_lead_image.change(function(){
+
+      if (!$("input[name='default_lead_image_id']:checked").val()) {
+          
+          if(lead_image_div.is(":hidden")){
+            lead_image_div.show();
+          }
+      }
+      else {
+          if(lead_image_div.is(":visible")){
+            lead_image_div.hide();
+          }
+      }
+
+  });
 
   $("#add-more-service").click(function () {
     add_on_service_row_number+=1;
@@ -504,20 +534,25 @@ function baannerForm() {
             });
           }
           if (
-            $("#lead_image").val().length < 1 &&
-            !$("input[name='dynamic_banner_image']").attr("value")
-          ) 
+              $("#lead_image").val().length < 1 &&
+              !$("input[name='dynamic_banner_image']").attr("value")
+              && $('input:radio[name="default_lead_image_id"]:checked').length < 1
+            ) 
             {
             
               e.preventDefault();
-              console.log($("input[name='dynamic_banner_image']").attr("value"));
+              let lead_image_message="Select From Default Lead Images Or Upload";
+              
+              $("#default_lead_img_error").after(
+                `<span class="error text-danger">`+lead_image_message+`</span>`
+              );
 
               $("#lead_image").after(
-                '<span class="error text-danger">This field is required</span>'
+                '<span class="error text-danger">'+lead_image_message+'</span>'
               );
 
               iziToast.error({
-                message: "Lead Image is required",
+                message: lead_image_message,
                 position: "topRight",
               });
 
