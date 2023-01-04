@@ -35,6 +35,8 @@ RUN php artisan optimize:clear
 # RUN php artisan view:cache
 # RUN php artisan optimize
 
+RUN php artisan migrate --path=database/migrations/production
+
 RUN echo "#!/bin/bash" > ./run-with-env.sh
 RUN echo " " > ./run-with-env.sh
 RUN grep "\S" .env-dev | awk '{print "export "$0}' >> ./run-with-env.sh
