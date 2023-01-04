@@ -18,7 +18,7 @@ class SystemCredentialController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+           
         $pageTitle = "System credential list";
         // $emptyMessage = "No data found";
         $emailcreds = SystemMailConfiguration::latest()->paginate(getPaginate());
@@ -27,7 +27,8 @@ class SystemCredentialController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function store(Request $request)
@@ -63,7 +64,8 @@ class SystemCredentialController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
         return back()->withNotify($notify);
     }
@@ -102,7 +104,8 @@ class SystemCredentialController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     
@@ -124,7 +127,8 @@ class SystemCredentialController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -143,7 +147,8 @@ class SystemCredentialController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function delete($id)

@@ -14,7 +14,7 @@
 .tickbtn {
     padding: 5.5px 7px;
     position: relative;
-    right: 170px;
+    right: 205px;
 }
 .table td{
     white-space: revert !important;

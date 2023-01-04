@@ -14,30 +14,32 @@ class TagController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Tag List";
     	$emptyMessage = "No data found";
         $tags = Tag::latest()->paginate(getPaginate());
-
+        Log::info($tags);
         return view('admin.tags.index', compact('pageTitle','tags'));
         }catch (\Exception $exp) {
-            DB::rollback();
+            
             Log::error($exp->getMessage());
-            return response()->json(["error" => $exp]);
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
         }
     }
     public function Create()
     {
         try {
-            DB::beginTransaction();
+           
     	$pageTitle = "Create Tags";
         
        
         return view('admin.tags.create', compact('pageTitle'));
         }catch (\Exception $exp) {
-            DB::rollback();
+            
             Log::error($exp->getMessage());
-            return response()->json(["error" => $exp]);
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
         }
     }
     public function store(Request $request)
@@ -68,20 +70,22 @@ class TagController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function editdetails($id){
         try {
-            DB::beginTransaction();
+            
         $tag = Tag::findOrFail($id);
         $pageTitle = "Manage All Tag Details";
         $emptyMessage = 'No shortcode available';
         return view('admin.tags.edit', compact('pageTitle', 'tag','emptyMessage'));
         }catch (\Exception $exp) {
-            DB::rollback();
+            
             Log::error($exp->getMessage());
-            return response()->json(["error" => $exp]);
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
         }
     }
     public function update(Request $request, $id){
@@ -107,7 +111,8 @@ class TagController extends Controller
             catch (\Exception $exp) {
                 DB::rollback();
                 Log::error($exp->getMessage());
-                return response()->json(["error" => $exp]);
+                $notify[] = ['error', 'An error occured'];
+               return back()->withNotify($notify);
             }
     }
     public function delete($id)
@@ -125,7 +130,8 @@ class TagController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['success', 'Tag deleted successfully'];
+        return back()->withNotify($notify);
     }
     }
     public function activeBy(Request $request)
@@ -145,7 +151,8 @@ class TagController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -164,7 +171,8 @@ class TagController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
     }
     }
 }
