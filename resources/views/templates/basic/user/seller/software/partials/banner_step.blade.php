@@ -137,7 +137,7 @@ if (!empty($software)) {
                             </div>
                         </div>
                         {{-- Lead Image Type --}}
-                        <div class="p-2 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                        <div class="p-3 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                             <label for="budget">@lang('Lead Image Type')*</label>
                             <select name="lead_image_type" class="form-control budget" id="lead_image_type_id" >
                                     
