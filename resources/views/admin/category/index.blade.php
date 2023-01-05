@@ -88,7 +88,7 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
+                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name"
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
                         </div>
@@ -139,7 +139,7 @@
                     <input type="hidden" name="is_active">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
+                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name"
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
                         </div>
