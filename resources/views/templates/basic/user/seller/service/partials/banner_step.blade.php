@@ -88,16 +88,6 @@
 
                                 <div class=" p-0">
 
-                                    <div class="p-3 col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                        <label for="budget">@lang('Lead Image Type')*</label>
-                                        <select name="lead_image_type" class="form-control budget" id="lead_image_type_id" >
-                                                
-                                                <option value="{{ 'Default' }}" selected >{{__('Default Lead Image')}}</option>
-                                                <option value="{{ 'Custom' }}" {{ isCustomSelected($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['CUSTOM'])}}>{{__('Custom Lead Image')}}</option>
-                                               
-                                        </select>
-                                    </div>
-
                                     <div class="p-3">
                                         <div>
                                             <label>@lang('Banner Background Image')    <p id="banner_err"></p></label>
@@ -116,27 +106,8 @@
                                             @endforelse
                                         </div>
                                     </div>
-
-                                    <div class="p-3" id="default_lead_image_div" style="display:{{  ($service && $service->banner) ? IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['DEFAULT'] ) : 'block'}}">
-                                        <div>
-                                            <label>@lang('Default Lead Images')<p id="default_lead_img_error"></p></label>
-
-                                        </div>
-                                        <div class="row flex-wrap d-flex">
-                                            @forelse($lead_images as $item)
-                                                <div class="col-md-3">
-                                                    <img src="{{$item->url}}" alt="" style="border: 1px solid black;height:144px;width:100%;">
-                                                    <input type="radio" value="{{$item->id}}" name="default_lead_image_id" id="default_lead_image_id" class="col-1 bg-radio" {{selectedBackgroundImage($service,$item->id,'default_lead_image_id')}}>
-                                                </div>
-                                            @empty
-                                                <div class="row text-center">
-                                                    <strong class="text text-danger">@lang('Lead Images Not Found')</strong>
-                                                </div>
-                                            @endforelse
-                                        </div>
-                                    </div>
-
-                                    
+                                   
+ 
                                     <div class="p-2">
                                         
                                         <div class="p-3">
@@ -158,6 +129,39 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            <div class="px-4 p-3 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                <label for="budget">@lang('Lead Image Type')*</label>
+                                <select name="lead_image_type" class="form-control budget" id="lead_image_type_id" >
+                                        
+                                        <option value="{{ 'Default' }}" selected >{{__('Default Lead Image')}}</option>
+                                        <option value="{{ 'Custom' }}" {{ isCustomSelected($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['CUSTOM'])}}>{{__('Custom Lead Image')}}</option>
+                                       
+                                </select>
+                            </div>
+
+                            
+
+                            <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12" id="default_lead_image_div" style="display:{{  ($service && $service->banner) ? IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['DEFAULT'] ) : 'block'}}">
+                                <div class="px-4">
+                                    <div>
+                                        <label>@lang('Default Lead Images')<p id="default_lead_img_error"></p></label>
+    
+                                    </div>
+                                    <div class="row flex-wrap d-flex">
+                                        @forelse($lead_images as $item)
+                                            <div class="col-md-3">
+                                                <img src="{{$item->url}}" alt="" style="border: 1px solid black;height:144px;width:100%;">
+                                                <input type="radio" value="{{$item->id}}" name="default_lead_image_id" id="default_lead_image_id" class="col-1 bg-radio" {{selectedBackgroundImage($service,$item->id,'default_lead_image_id')}}>
+                                            </div>
+                                        @empty
+                                            <div class="row text-center">
+                                                <strong class="text text-danger">@lang('Lead Images Not Found')</strong>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                               
                             </div>
 
                             <div class="col-xl-12 col-lg-12" id="lead_image_upload_div_id" style="display:{{IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['CUSTOM'])}}"> 
