@@ -120,7 +120,6 @@ class LanguageLevelsController extends Controller
         $notify[] = ['success', 'Job has been deleted'];
         return back()->withNotify($notify);
     }
-    
     public function delete($id)
     {
         try {
