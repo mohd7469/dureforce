@@ -13,19 +13,25 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    position: relative;
-    right: 205px;
+    /* position: relative;
+    right: 180px; */
+    float: left;
+}
+a.icon-btn{
+    float: left;
+    
+}
+th.tlst {
+    text-align: left !important;
 }
 .table td{
     white-space: revert !important;
 }
-
-
 </style>
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.tag.create') }} " class="btn btn-primary btn-sm float-right">Create Tags</a>
+        <a href="{{ route('admin.language.level.create') }} " class="btn btn-primary btn-sm float-right">Create Language Level</a>
     </div>
 </div>
 <br>
@@ -38,63 +44,71 @@
                         <thead>
                         <tr>
                             
-                            <th>@lang('Title')</th>
+                            <th>@lang('Name')</th>
                             <th>@lang('Slug')</th>
+                            <th>@lang('Module')</th>
                             <th>@lang('Status')</th>
-                            <th>@lang('Action')</th>
-                            <th></th>
+                            <th class="tlst">@lang('Action')</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
                             
                             
-                        @foreach($tags as $tag)
+                        @foreach($languageLavels as $languageLavel)
+                       
                         <tr>
                             
-                            <td data-label="@lang('Title')">
+                            <td data-label="@lang('Name')">
                                 <div class="user">
-                                    <span class="name">{{$tag->name}}</span>
+                                    <span class="name">{{$languageLavel->name}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Slug')">
                                 <div class="user">
-                                    <span class="name">{{$tag->slug}}</span>
+                                    <span class="name">{{$languageLavel->slug}}</span>
+                                </div>
+                            </td>
+
+                            <td data-label="@lang('Slug')">
+                                <div class="user">
+                                    <span class="name">{{$languageLavel->module->name ?? ''}}</span>
                                 </div>
                             </td>
                            
-                            <td data-label="@lang('Status')">
-                                @if($tag->is_active == 1)
+                            <td data-label="@lang('Status')"> 
+                                @if($languageLavel->is_active == 1)
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
-                                @elseif($tag->is_active == 0)
+                                @elseif($languageLavel->is_active == 0)
                                     <span class="font-weight-normal badge--danger">@lang('InActice')</span>
                                 @endif
                             </td>
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.tag.edit', $tag->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.language.level.edit', $languageLavel->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                     <a type="submit"  href="{{route('admin.tag.delete', $tag->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                     <a type="submit"  href="{{route('admin.language.level.delete', $languageLavel->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <td data-label="@lang('Action')">
-                                        @if($tag->is_active == 1)
-                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$tag->id}}">
+                                    <div data-label="@lang('Action')">
+                                        @if($languageLavel->is_active == 1)
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$languageLavel->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
-                                        @if($tag->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$tag->id}}">
+                                        @if($languageLavel->is_active == 0)
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$languageLavel->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
-                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                                    </td>
+                                    </div>
+                                   
                               
              
                                
@@ -115,33 +129,6 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div class="container">
-    <div
-            class="modal fade"
-            id="bannerModal"
-            tabindex="-1"
-            aria-labelledby="emailVerifyLabel"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img alt="User Pic" src="" id="profile-image-invite"
-                                             class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="inactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -152,12 +139,12 @@
                     </button>
             </div>
             
-            <form action="{{ route('admin.tag.inactive') }}" method="POST">
+            <form action="{{ route('admin.language.level.inactive') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to inactive this Tags?')</p>
+                    <p>@lang('Are you sure to inactive this language Lavel?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -178,12 +165,12 @@
                     </button>
             </div>
             
-            <form action="{{ route('admin.tag.active') }}" method="POST">
+            <form action="{{ route('admin.language.level.active') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to active this Tags?')</p>
+                    <p>@lang('Are you sure to active this language Lavel?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>

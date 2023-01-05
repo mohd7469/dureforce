@@ -14,30 +14,32 @@ class FeaturesController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Feature List";
     	$emptyMessage = "No data found";
         $features = Features::latest()->paginate(getPaginate());
 
         return view('admin.features.index', compact('pageTitle','features'));
     }catch (\Exception $exp) {
-        DB::rollback();
+       
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function Create()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Create Feature";
          
        
         return view('admin.features.create', compact('pageTitle'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function store(Request $request)
@@ -70,20 +72,22 @@ class FeaturesController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function editdetails($id){
         try {
-            DB::beginTransaction();
+            
         $feature = Features::findOrFail($id);
         $pageTitle = "Manage All Feature Details";
         $emptyMessage = 'No shortcode available';
         return view('admin.features.edit', compact('pageTitle', 'feature','emptyMessage'));
     }catch (\Exception $exp) {
-        DB::rollback();
+       
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function update(Request $request, $id){
@@ -111,7 +115,8 @@ class FeaturesController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function delete($id)
@@ -129,7 +134,8 @@ class FeaturesController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function activeBy(Request $request)
@@ -148,7 +154,8 @@ class FeaturesController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -167,7 +174,8 @@ class FeaturesController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
 }

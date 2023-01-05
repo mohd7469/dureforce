@@ -85,12 +85,12 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
+                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name" placeholder="@lang("Enter Name")"  maxlength="100" required="">
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id" class="form-control-label font-weight-bold">@lang('Select Category')</label>
+                            <label for="category_id" class="form-control-label font-weight-bold">@lang('Select Category')<span class="text-danger">*</span></label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option>@lang('Select Category')</option>
                                 @foreach($categorys as $category)
@@ -128,7 +128,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('Update Category')</h5>
+                    <h5 class="modal-title">@lang('Update Sub Category')</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -139,12 +139,12 @@
                     <input type="hidden" name="is_active">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
+                            <label for="name" class="form-control-label font-weight-bold">@lang('Name') <span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name" placeholder="@lang("Enter Name")"  maxlength="100" required="">
                         </div>
 
                         <div class="form-group">
-                            <label for="category_id" class="form-control-label font-weight-bold">@lang('Select Category')</label>
+                            <label for="category_id" class="form-control-label font-weight-bold">@lang('Select Category')<span class="text-danger">*</span></label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option>@lang('Select Category')</option>
                                 @foreach($categorys as $category)

@@ -13,30 +13,32 @@ class DegreeController extends Controller
     public function index()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Degree List";
     	$emptyMessage = "No data found";
         $degrees = Degree::latest()->paginate(getPaginate());
 
         return view('admin.degrees.index', compact('pageTitle','degrees'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function Create()
     {
         try {
-            DB::beginTransaction();
+            
     	$pageTitle = "Create Degree";
          
        
         return view('admin.degrees.create', compact('pageTitle'));
     }catch (\Exception $exp) {
-        DB::rollback();
+       
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function store(Request $request)
@@ -69,20 +71,22 @@ class DegreeController extends Controller
     }catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function editdetails($id){
         try {
-            DB::beginTransaction();
+            
         $degree = Degree::findOrFail($id);
         $pageTitle = "Manage All Degree Details";
         $emptyMessage = 'No shortcode available';
         return view('admin.degrees.edit', compact('pageTitle', 'degree','emptyMessage'));
     }catch (\Exception $exp) {
-        DB::rollback();
+        
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function update(Request $request, $id){
@@ -110,7 +114,8 @@ class DegreeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function delete($id)
@@ -128,7 +133,8 @@ class DegreeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function activeBy(Request $request)
@@ -147,7 +153,8 @@ class DegreeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
     public function inActiveBy(Request $request)
@@ -166,7 +173,8 @@ class DegreeController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
     }
     }
 }

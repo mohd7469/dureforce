@@ -14,7 +14,7 @@
 .tickbtn {
     padding: 5.5px 7px;
     position: relative;
-    right: 136px;
+    right: 190px;
 }
 
 
@@ -70,11 +70,12 @@
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                    <a type="submit"  href="{{route('admin.dod.delete', $dod->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                    <a type="submit"  href="{{route('admin.dod.delete', $dod->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
                                     <td data-label="@lang('Action')">
                                         @if($dod->is_active == 1)
+                                        
                                             <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$dod->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
