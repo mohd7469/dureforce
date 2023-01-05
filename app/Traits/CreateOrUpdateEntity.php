@@ -287,6 +287,7 @@ trait CreateOrUpdateEntity {
                                 'banner_type' => $request->type,
                             ]);
                         }
+                        $banner->lead_image_type=$request->lead_image_type;
                         $banner->banner_background_id   = $request->banner_background_id;
                         $banner->banner_heading  =  $request->banner_heading;
                         $banner->banner_introduction = $request->banner_introduction;
