@@ -379,16 +379,29 @@ function getLeadImageUrl($model){
         }
     }
 }
-function IsDefaultLeadImage($model){
+function IsDefaultLeadImage($model,$type){
     if($model){
         if($model->banner){
-            if($model->banner->default_lead_image_id ){
-                return  'none';
+            if($model->banner->lead_image_type==$type ){
+                return  'block';
             }
+
         }
         
     }
-    return 'block';
+    return 'none';
+}
+function isCustomSelected($model,$type){
+    if($model){
+        if($model->banner){
+            if($model->banner->lead_image_type==$type ){
+                return  'selected';
+            }
+
+        }
+        
+    }
+    return '';
 }
 function selectedLogoImage($model,$banner_background_id){
     if($model){

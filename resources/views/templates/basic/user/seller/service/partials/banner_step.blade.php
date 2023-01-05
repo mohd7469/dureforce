@@ -81,12 +81,22 @@
 
                             </div>
                         </div>
-
+                        
                         <div id="banner2" class="mydivhide" style="display: {{ isDynamicBanner($service) }}">
 
                             <div class="col-xl-12 col-lg-12">
 
                                 <div class=" p-0">
+
+                                    <div class="p-3 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <label for="budget">@lang('Lead Image Type')*</label>
+                                        <select name="lead_image_type" class="form-control budget" id="lead_image_type_id" >
+                                                
+                                                <option value="{{ 'Default' }}" selected >{{__('Default Lead Image')}}</option>
+                                                <option value="{{ 'Custom' }}" {{ isCustomSelected($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['CUSTOM'])}}>{{__('Custom Lead Image')}}</option>
+                                               
+                                        </select>
+                                    </div>
 
                                     <div class="p-3">
                                         <div>
@@ -107,9 +117,9 @@
                                         </div>
                                     </div>
 
-                                    <div class="p-3">
+                                    <div class="p-3" id="default_lead_image_div" style="display:{{  ($service && $service->banner) ? IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['DEFAULT'] ) : 'block'}}">
                                         <div>
-                                            <label>@lang('Select From Default Banner Lead Image')<p id="default_lead_img_error"></p></label>
+                                            <label>@lang('Default Lead Images')<p id="default_lead_img_error"></p></label>
 
                                         </div>
                                         <div class="row flex-wrap d-flex">
@@ -150,7 +160,7 @@
 
                             </div>
 
-                            <div class="col-xl-12 col-lg-12" id="lead_image_upload_div_id" style="display: {{IsDefaultLeadImage($service)}}">
+                            <div class="col-xl-12 col-lg-12" id="lead_image_upload_div_id" style="display:{{IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['CUSTOM'])}}"> 
                                 <div class="px-4">
 
                                     <label>@lang('Lead Image') *</label>
