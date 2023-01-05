@@ -46,5 +46,9 @@ class Module extends Model
     {
         return $this->hasMany(Status::class,'module_id');
     }
+    public function language_level()
+    {
+        return $this->hasMany(LanguageLevel::class,'module_id');
+    }
 
 }

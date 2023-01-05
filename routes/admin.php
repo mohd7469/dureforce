@@ -265,6 +265,17 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
            Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
            Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
            Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
+
+           //Budget Type route
+           Route::get('budget-type/index', 'BudgetTypeController@index')->name('budget.type.index');
+           Route::get('budget-type/create', 'BudgetTypeController@Create')->name('budget.type.create');
+           Route::post('budget-type/store', 'BudgetTypeController@store')->name('budget.type.store');
+           Route::get('budget-type/edit/{id}', 'BudgetTypeController@editdetails')->name('budget.type.edit');
+           Route::post('budget-type/inactiveBy', 'BudgetTypeController@inActiveBy')->name('budget.type.inactive');
+           Route::post('budget-type/activeBy', 'BudgetTypeController@activeBy')->name('budget.type.active');
+           Route::post('budget-type/update/{id}', 'BudgetTypeController@update')->name('budget.type.update');
+           Route::get('/budget-type/delete/{id}', 'BudgetTypeController@delete')->name('budget.type.delete');
+
            //Language Lavel route
            Route::get('language-level/index', 'LanguageLevelsController@index')->name('language.level.index');
            Route::get('language-level/create', 'LanguageLevelsController@Create')->name('language.level.create');

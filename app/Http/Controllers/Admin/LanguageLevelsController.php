@@ -18,7 +18,7 @@ class LanguageLevelsController extends Controller
             DB::beginTransaction();
     	$pageTitle = "Language Levels List";
     	$emptyMessage = "No data found";
-        $languageLavels = LanguageLevel::with('modules')->latest()->paginate(getPaginate());    
+        $languageLavels = LanguageLevel::with('module')->latest()->paginate(getPaginate());    
         return view('admin.language_levels.index', compact('pageTitle','languageLavels'));
     }catch (\Exception $exp) {
         DB::rollback();
@@ -64,7 +64,7 @@ class LanguageLevelsController extends Controller
         DB::commit();
         Log::info(["languageLavel" => $languageLavel]);
         
-        $notify[] = ['success', 'Your Degree Language Lavel has been Created.'];
+        $notify[] = ['success', 'Your Language Lavel has been Created.'];
         return redirect()->route('admin.language.level.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();

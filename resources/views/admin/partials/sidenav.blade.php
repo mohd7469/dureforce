@@ -1402,6 +1402,26 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                    {{-- End Feature Mode crud  --}}
+                   {{-- Budget Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.budget.type*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Budget Type')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.budget.type*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.budget.type.index') }} ">
+                                    <a href="{{ route('admin.budget.type.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Budget Type')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End Budget Mode crud  --}}
                     {{-- Degree Mode crud  --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
@@ -1421,7 +1441,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
-                       {{-- End Degree Mode crud  --}}
+                    {{-- End Degree Mode crud  --}}
 
                        {{-- Language Level Mode crud  --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
