@@ -13,7 +13,7 @@
                         <div class="row">
                             {{-- Category --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Category')*</label>
+                                <label>@lang('Category')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="category" id="category" >
                                     <option selected="" disabled="">@lang('Select Category')</option>
                                     @foreach($categories as $category)
@@ -26,7 +26,7 @@
                         <div class="row">
                             {{-- Sub Category --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="subCategorys">@lang('Sub Category')*</label>
+                                <label for="subCategorys">@lang('Sub Category')<span class="text-danger">*</span></label>
                                     <select name="sub_category" class="form-control mySubCatgry" id="subCategorys" >
                                     </select>
                             </div>
