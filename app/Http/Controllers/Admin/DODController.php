@@ -154,7 +154,9 @@ class DODController extends Controller
         try {
             DB::beginTransaction();
         $dod = DOD::findOrFail($request->id);
+        
         $dod->is_active = 0;
+      
         $dod->created_at = Carbon::now();
         $dod->save();
         DB::commit();
