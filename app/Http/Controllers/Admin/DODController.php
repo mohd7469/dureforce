@@ -17,6 +17,7 @@ class DODController extends Controller
     	$pageTitle = "DODS List";
     	$emptyMessage = "No data found";
         $dods = DOD::latest()->paginate(getPaginate());
+        
 
         return view('admin.dods.index', compact('pageTitle','dods'));
     }catch (\Exception $exp) {
@@ -152,11 +153,11 @@ class DODController extends Controller
     public function inActiveBy(Request $request)
     {
         try {
-            DB::beginTransaction();
+            
         $dod = DOD::findOrFail($request->id);
         
         $dod->is_active = 0;
-      
+       
         $dod->created_at = Carbon::now();
         $dod->save();
         DB::commit();

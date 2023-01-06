@@ -1423,7 +1423,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                     {{-- End Budget Mode crud  --}}
                     {{-- Degree Mode crud  --}}
-                    <li class="sidebar-menu-item sidebar-dropdown">
+                    {{-- <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Degrees')</span>
@@ -1440,7 +1440,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 
                             </ul>
                         </div>
-                    </li>
+                    </li> --}}
                     {{-- End Degree Mode crud  --}}
 
                        {{-- Language Level Mode crud  --}}
