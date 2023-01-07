@@ -49,8 +49,8 @@ class WorldLanguageController extends Controller
             'native_name' => 'required',
     
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
        
         $worldLanguage  = new WorldLanguage();
     
@@ -60,17 +60,17 @@ class WorldLanguageController extends Controller
         $worldLanguage->iso3 = $request->iso3;
        
         $worldLanguage->save();
-        // DB::commit();
-        // Log::info(["worldLanguage" => $worldLanguage]);
+        DB::commit();
+        Log::info(["worldLanguage" => $worldLanguage]);
         
         $notify[] = ['success', 'Your world language detail has been Created.'];
         return redirect()->route('admin.world.language.index')->withNotify($notify);
-    // }catch (\Exception $exp) {
-    //     DB::rollback();
-    //     Log::error($exp->getMessage());
-    //     $notify[] = ['error', 'An error occured'];
-    //     return back()->withNotify($notify);
-    // }
+    }catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        $notify[] = ['error', 'An error occured'];
+        return back()->withNotify($notify);
+    }
     }
     public function editdetails($id){
         try {
