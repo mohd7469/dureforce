@@ -57,7 +57,7 @@ class="review-form"
             <div class="row">
                 <div class="col-md-4 ">
                     <a class="btn service--btns btn-secondary float-left  mt-20 w-100"
-                        href="?view=step-4">@lang('BACK')</a>
+                        href="?view=step-5">@lang('BACK')</a>
                 </div>
                 <div class="col-md-8 text-right">
 

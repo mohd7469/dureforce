@@ -1,0 +1,179 @@
+<form action="#" method="post" id="propsal_form" enctype="multipart/form-data">
+    @csrf
+    
+    <div class="card-body">
+        <div class="card-form-wrapper">
+            <div class="row justify-content-center">
+                {{-- Bidding Rate --}}
+                <div class="row section-end-line">
+                    
+                    {{-- hourly rate --}}
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
+                        <div class="form-group pt-3">
+                            <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
+                            <small id="milestones_amount_receive" class="form-text text-muted">Total amount the client will see on your proposal</small>
+                            <div class="input-group">
+                                <input type="number" name="hourly_bid_rate" class="form-control" step="any" id="hourly_bid_rate"  min="1">
+                                <span class="input-group-text float-end">$</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {{-- service fee --}}
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12 bg-default">
+                    
+                        <div class="form-group pt-3">
+                            <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
+                            <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
+                            <span class="pt-2 text-dark" id="system_fee"></span>
+                        </div>
+
+                    </div>
+                    
+                    {{-- freelancer recieving amount --}}
+                    <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
+                        <div class="form-group pt-3 ">
+                            <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
+                            <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
+                            <div class="input-group">
+                                <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly>
+                                <span class="input-group-text float-end">$</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row ">
+                    
+                    {{-- hours Limit --}}
+                    <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                        <div class="form-group pt-3">
+                            <label for=""><strong class="text-dark">What is your weekly working hours limit?</strong></label>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
+
+                                    <small  class="form-text text-dark">Min. Hours Per Week</small>
+                                    <input type="integer" class="form-control" step="any" id="start_hour_limit" name="start_hour_limit">
+
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
+
+                                    <small  class="form-text text-dark">Max. Hours Per Week</small>
+                                    <input type="integer" step="any" class="form-control" id="end_hour_limit" name="end_hour_limit">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                
+                    {{-- Mode of Work Delivery --}}
+                    <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
+                        <div class="form-group pt-3">
+                            <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
+                            <small id="emailHelp" class="form-text text-dark">Mode of Devlivery *</small>
+                            <select name="delivery_mode_id" id="mode_of_delivery" class="form-control">
+                                <option value="">Select Mode Of Delivery</option>
+                                @foreach ($delivery_modes as $mode)
+                                <option value="{{$mode->id}}">{{$mode->title}}</option>
+                                    
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                {{-- Additional Detail--}}
+                <div class="row">
+                
+                    {{-- card header --}}
+                    <div class="card-header bg-default ">
+                        {{-- div title --}}
+                        <h3>Additional Detail </h3>
+                    </div>
+                    {{-- card body --}}
+                    <div class="div-background" >
+                        
+                        {{-- Cover Letter --}}
+                        <div class="form-group">
+                            <label for="cover_letter">Cover Letter*</label>
+                            <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
+                        </div>
+            
+                        {{-- Required documents --}}
+                        <div class="form-group">
+                            <label>@lang('Required Documents')</label>
+                            <div id="dropzone">
+                                <div class="dropzone needsclick" id="demo-upload" action="#" >
+                                    
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple />
+                                    </div>
+                                    <div>
+                                        <div class="upload_icon">
+                                            <img src="{{url('assets/images/frontend/job/upload.svg')}}" alt="">
+                                            <img src="{{url('assets/images/frontend/job/arrow_up.svg')}}" alt="" class="upload_inner_arrow">
+                                        </div>
+                                    </div>
+                                    <div class="dz-message"> 
+                                        @lang('Drag or Drop to Upload')  <br> 
+                                        <span class="text text-primary ">
+                                        @lang('Browse')  
+                                        
+                                        </span>
+                                    </div>
+            
+                                </div>
+                            </div>
+                            <small>
+                                Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
+                                Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your job.
+                            </small>
+                    
+                        </div>
+                    </div>
+
+                    
+            
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 ">
+                    <a class="btn service--btns btn-secondary float-left  mt-20 w-100" href="?view=step-3">@lang('BACK')</a>
+                </div>
+                <div class="col-md-6 text-right">
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+
+
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                       Preview Service
+                    </button> </a>
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
+                        AND
+                        CONTINUE')</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+ </form>
+
+@push('style-lib')
+
+    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/proposal_step.css')}}">
+
+@endpush
+@push('script-lib')
+
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/proposal-step.js')}}"></script>
+
+
+@endpush
+
+

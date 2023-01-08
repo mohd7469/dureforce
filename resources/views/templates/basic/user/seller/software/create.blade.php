@@ -53,24 +53,36 @@ input::-webkit-inner-spin-button {
                     <div class="dashboard-sidebar-open"><i class="las la-bars"></i> @lang('Menu')</div>
 
                     <div class="card custom--card create-service-main mx-0">
+                        
                         <div class="card-header d-flex flex-wrap align-items-center justify-content-between pb-1">
                             @include($activeTemplate . 'user.seller.software.partials.tab')
                         </div>
+                        
                         <div class="panel panel-primary setup-content" id="step-1">
                             @include($activeTemplate . 'user.seller.software.partials.overview_step')
                         </div>
+                        
                         <div class=" panel panel-primary setup-content" id="step-2">
                             @include($activeTemplate . 'user.seller.software.partials.pricing_step')
                         </div>
+                       
+                       
                         <div class="panel panel-primary setup-content" id="step-3">
                             @include($activeTemplate . 'user.seller.software.partials.banner_step')
                         </div>
+                        
                         <div class="panel panel-primary setup-content" id="step-4">
+                            @include($activeTemplate . 'user.seller.software.partials.proposal_step')
+                        </div>
+
+                        <div class="panel panel-primary setup-content" id="step-5">
                             @include($activeTemplate . 'user.seller.software.partials.requirement_step')
                         </div>
-                        <div class="panel panel-primary setup-content" id="step-5">
+
+                        <div class="panel panel-primary setup-content" id="step-6">
                             @include($activeTemplate . 'user.seller.software.partials.review_step')
                         </div>
+
                     </div>
                 </div>
             </div>

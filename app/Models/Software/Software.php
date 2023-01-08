@@ -13,6 +13,7 @@ use App\Models\Features;
 use App\Models\Milestone;
 use App\Models\ModuleBanner;
 use App\Models\ModuleChatUser;
+use App\Models\ModuleProposal;
 use App\Models\OptionalImage;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
@@ -201,5 +202,9 @@ class Software extends Model
     public function chatUsers()
     {
         return $this->morphMany(ModuleChatUser::class, 'module');
+    }
+
+    public function propsal(){
+        return $this->morphOne(ModuleProposal::class, 'module');
     }
 }
