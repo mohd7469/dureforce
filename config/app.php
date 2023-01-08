@@ -142,6 +142,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Onecentlin\Adminer\ServiceProvider::class,
         Khsing\World\WorldServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -181,6 +182,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SystemMailConfiguration::class,
         App\Providers\PusherConfiguration::class,
+        App\Providers\SetAdminerPermission::class,
     ],
 
     /*

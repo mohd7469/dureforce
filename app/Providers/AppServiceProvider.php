@@ -60,6 +60,8 @@ class AppServiceProvider extends ServiceProvider
             return Auth::guard('admin')->user();
         });
 
+
+
         $activeTemplate = activeTemplate();
         $general = GeneralSetting::first();
         $viewShare['paginator'] = Paginator::useBootstrap();
