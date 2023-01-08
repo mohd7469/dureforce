@@ -16,7 +16,7 @@ class DODController extends Controller
             
     	$pageTitle = "Dod List";
     	$emptyMessage = "No data found";
-        $dods = DOD::latest()->paginate();
+        $dods = DOD::withoutGlobalScopes()->latest()->paginate();
         Log::info($dods);
         return view('admin.dods.index', compact('pageTitle','dods'));
         }catch (\Exception $exp) {

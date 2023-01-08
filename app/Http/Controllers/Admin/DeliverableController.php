@@ -17,7 +17,7 @@ class DeliverableController extends Controller
         try {
     	$pageTitle = "Deliverable List";
     	$emptyMessage = "No data found";
-        $deliverables = Deliverable::latest()->paginate(getPaginate());
+        $deliverables = Deliverable::withoutGlobalScopes()->latest()->paginate(getPaginate());
         return view('admin.deliverables.index', compact('pageTitle','deliverables'));
     }catch (\Exception $exp) {
             
