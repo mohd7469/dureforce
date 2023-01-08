@@ -13,19 +13,18 @@ class DODController extends Controller
     public function index()
     {
         try {
-        
-    	$pageTitle = "DODS List";
-    	$emptyMessage = "No data found";
-        $dods = DOD::latest()->paginate(getPaginate());
-        
-
-        return view('admin.dods.index', compact('pageTitle','dods'));
-    }catch (\Exception $exp) {
             
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
-        return back()->withNotify($notify);
-    }
+    	$pageTitle = "Dod List";
+    	$emptyMessage = "No data found";
+        $dods = DOD::latest()->paginate();
+        Log::info($dods);
+        return view('admin.dods.index', compact('pageTitle','dods'));
+        }catch (\Exception $exp) {
+            
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
     public function Create()
     {

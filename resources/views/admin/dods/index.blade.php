@@ -21,6 +21,14 @@
 .icon-btn{
     float: right;
 }
+table{
+    table-layout: fixed;
+}
+th.tlst {
+    text-align: right !important;
+    position: relative;
+    padding-right: 6% !important;
+}
 
 
 
@@ -46,7 +54,7 @@
                             
                             <th>@lang('Status')</th>
                             <th>@lang('Action')</th>
-                            <th></th>
+                            
                         </tr>
                         </thead>
                         <tbody>
@@ -218,6 +226,7 @@ for (var i = 0; i < deleteLinks.length; i++) {
     $('.bannerinactive').on('click', function () {
         
         var modal = $('#inactiveBy');
+       
         modal.find('input[name=id]').val($(this).data('id'))
         modal.modal('show');
     });

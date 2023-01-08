@@ -18,6 +18,7 @@ class TagController extends Controller
     	$pageTitle = "Tag List";
     	$emptyMessage = "No data found";
         $tags = Tag::latest()->paginate(getPaginate());
+        
         Log::info($tags);
         return view('admin.tags.index', compact('pageTitle','tags'));
         }catch (\Exception $exp) {

@@ -26,10 +26,7 @@ table{
 }
 th.tlst {
     text-align: right !important;
-    /* margin-right: 10% !important; */
-    /* display: inline-block; */
     position: relative;
-    /* right: 10%; */
     padding-right: 6% !important;
 }
 
