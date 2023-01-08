@@ -13,17 +13,23 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    /* position: relative;
-    right: 180px; */
-    float: left;
+    float: right;
 }
-a.icon-btn{
-    float: left;
-    
+.table td{
+    white-space: revert !important;
+}
+.icon-btn{
+    float: right;
+}
+table{
+    table-layout: fixed;
 }
 th.tlst {
-    text-align: left !important;
+    text-align: right !important;
+    position: relative;
+    padding-right: 6% !important;
 }
+
 </style>
 <div class="row">
     <div class="col-lg-12">

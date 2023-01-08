@@ -1280,25 +1280,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 </li>
                    {{-- End Deliver Mode crud  --}}
                    
-                   {{-- Category Mode crud  --}}
-                   <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Category')</span>
-                    </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
-                        <ul>
-                            
-                            <li class="sidebar-menu-item {{ menuActive('admin.deliver.index') }} ">
-                                <a href="{{ route('admin.category.index') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Add Category ')</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
+                   
                 {{-- System Email Creditional Mode crud  --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">

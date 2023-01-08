@@ -11,11 +11,7 @@
     /* background: red; */
     display: inline-block;
 }
-.tickbtn {
-    padding: 5.5px 7px;
-    position: relative;
-    right: 98px;
-}
+
 
 
 </style>
