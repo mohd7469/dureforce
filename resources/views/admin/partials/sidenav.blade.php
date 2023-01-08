@@ -1425,6 +1425,27 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                     {{-- End Degree Mode crud  --}}
 
+                    {{-- World Languag Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.world.language*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('World Languags')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.world.language*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.world.language.index') }} ">
+                                    <a href="{{ route('admin.world.language.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add World Languag ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End World language Mode crud  --}}
+
                        {{-- Language Level Mode crud  --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.language.level*', 3) }}">
