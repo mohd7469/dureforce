@@ -13,13 +13,22 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    position: relative;
-    right: 205px;
+    float: right;
 }
 .table td{
     white-space: revert !important;
 }
-
+.icon-btn{
+    float: right;
+}
+table{
+    table-layout: fixed;
+}
+th.tlst {
+    text-align: right !important;
+    position: relative;
+    padding-right: 6% !important;
+}
 
 </style>
 <div class="row">
@@ -41,8 +50,8 @@
                             <th>@lang('Title')</th>
                             <th>@lang('Slug')</th>
                             <th>@lang('Status')</th>
-                            <th>@lang('Action')</th>
-                            <th></th>
+                            <th class="tlst">@lang('Action')</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
@@ -81,20 +90,20 @@
                                      <a type="submit"  href="{{route('admin.tag.delete', $tag->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <td data-label="@lang('Action')">
-                                        @if($tag->is_active == 1)
-                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$tag->id}}">
-                                                <i class="las la-check "></i>
-                                            </button>
-                                        @endif
-        
-                                        @if($tag->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$tag->id}}">
-                                            <i class="las la-times"></i>
-                                            </button>
-                                        @endif
-                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                                    </td>
+                                    <span data-label="@lang('Action')">
+                                    @if($tag->is_active == 1)
+                                    <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$tag->id}}">
+                                        <i class="las la-check "></i>
+                                    </button>
+                                    @endif
+
+                                    @if($tag->is_active == 0)
+                                        <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$tag->id}}">
+                                        <i class="las la-times"></i>
+                                        </button>
+                                    @endif
+                                    </span>
+                                    
                               
              
                                
