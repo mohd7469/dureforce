@@ -124,13 +124,17 @@ class DODController extends Controller
     }
     public function activeBy(Request $request)
     {
+        
+       
         try {
             DB::beginTransaction();
-        $dod = DOD::findOrFail($request->id);
+      
+        $dod = DOD::where('id',$request->id)->withOutGlobalScopes()->first();
         $dod->is_active = 1;
-        $dod->created_at = Carbon::now();
+        $dod->updated_at = Carbon::now();
         $dod->save();
         DB::commit();
+        
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Dods Detail has been Activated'];
         return redirect()->back()->withNotify($notify);

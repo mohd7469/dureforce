@@ -112,12 +112,18 @@ class DeliverableController extends Controller
     }
     public function delete($id)
     {
+     
         try {
+            
             DB::beginTransaction();
-        $deliverable = Deliverable::find($id);
+           
+        $deliverable = Deliverable::findOrFail($id);
+       
        
         $deliverable->delete();
+       
         DB::commit();
+        
         Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable Detail deleted successfully'];
         return back()->withNotify($notify);
@@ -125,7 +131,7 @@ class DeliverableController extends Controller
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        $notify[] = ['success', 'Tag deleted successfully'];
+        $notify[] = ['success', 'Deliverable deleted successfully'];
         return back()->withNotify($notify);
     }
     }
@@ -133,7 +139,8 @@ class DeliverableController extends Controller
     {
         try {
             DB::beginTransaction();
-        $deliverable = Deliverable::findOrFail($request->id);
+        $deliverable = Deliverable::where('id',$request->id)->withOutGlobalScopes()->first();
+        // $deliverable = Deliverable::findOrFail($request->id);
         $deliverable->is_active = 1;
         $deliverable->created_at = Carbon::now();
         $deliverable->save();
@@ -153,7 +160,7 @@ class DeliverableController extends Controller
     {
         try {
             DB::beginTransaction();
-        $deliverable = Deliverable::findOrFail($request->id);
+        $deliverable = Deliverable::where('id',$request->id)->withOutGlobalScopes()->first();
         $deliverable->is_active = 0;
         $deliverable->created_at = Carbon::now();
         $deliverable->save();
