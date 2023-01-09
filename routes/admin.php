@@ -265,6 +265,21 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
            Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
            Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
            Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
+           //World Language route
+           Route::get('world-language/index', 'WorldLanguageController@index')->name('world.language.index');
+           Route::get('world-language/create', 'WorldLanguageController@Create')->name('world.language.create');
+           Route::post('world-language/store', 'WorldLanguageController@store')->name('world.language.store');
+           Route::get('world-language/edit/{id}', 'WorldLanguageController@editdetails')->name('world.language.edit');
+           Route::post('world-language/update/{id}', 'WorldLanguageController@update')->name('world.language.update');
+           Route::get('/world-language/delete/{id}', 'WorldLanguageController@delete')->name('world.language.delete');
+
+           //World cities route
+           Route::get('world-city/index', 'WorldCitiesController@index')->name('world.city.index');
+           Route::get('world-city/create', 'WorldCitiesController@Create')->name('world.city.create');
+           Route::post('world-city/store', 'WorldCitiesController@store')->name('world.city.store');
+           Route::get('world-city/edit/{id}', 'WorldCitiesController@editdetails')->name('world.city.edit');
+           Route::post('world-city/update/{id}', 'WorldCitiesController@update')->name('world.city.update');
+           Route::get('/world-city/delete/{id}', 'WorldCitiesController@delete')->name('world.city.delete');
 
            //Budget Type route
            Route::get('budget-type/index', 'BudgetTypeController@index')->name('budget.type.index');
