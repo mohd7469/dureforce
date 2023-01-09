@@ -112,22 +112,15 @@ class DODController extends Controller
     }
     public function delete($id)
     {
-        try {
-            DB::beginTransaction();
+       
+        
         $dod = DOD::find($id);
        
         $dod->delete();
-        DB::commit();
-        Log::info(["dod" => $dod]);
+        
         $notify[] = ['success', 'Dod Detail deleted successfully'];
         return back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['success', 'Tag deleted successfully'];
-        return back()->withNotify($notify);
-    }
+   
     }
     public function activeBy(Request $request)
     {

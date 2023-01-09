@@ -117,6 +117,8 @@ class DeliverableController extends Controller
         $deliverable = Deliverable::find($id);
        
         $deliverable->delete();
+        DB::commit();
+        Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable Detail deleted successfully'];
         return back()->withNotify($notify);
     }
