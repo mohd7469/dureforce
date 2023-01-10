@@ -2,6 +2,7 @@ var token= $('input[name=_token]').val();
 var myDropzone='';
 var row_id=1;
 'use strict';
+var uploaded_files=Array();
 Dropzone.autoDiscover = false;
   
 
@@ -69,38 +70,48 @@ function displayInfoAlertMessage(message)
 $(function() {
 
     var form_data='';
-    var action_url=$("#propsal_form").attr('action');
+    var action_url=file_upload_url;
     var dropzone = new Dropzone('#demo-upload', {
          url:action_url,
-         autoProcessQueue: false,
+          autoProcessQueue: true,
           parallelUploads: 1,
           dictDefaultMessage: "your custom message",
           thumbnailHeight: 80,
           thumbnailWidth: 80,
-          maxFiles: 1,
+          maxFiles: 6,
           uploadMultiple:false,
-          maxFilesize: 3,
           acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
           filesizeBase: 1000,
           addRemoveLinks: false,
+          headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           init: function() {
             
             this.on("addedfile", function (file) {
                 var _this = this;
-                // if ($.inArray(file.type, ['image/jpeg', 'image/jpg', 'image/png', 'image/gif']) == -1) {
-                //     _this.removeFile(file);
-                // }
+                
+            });
+            
+            this.on("sending", function(file, xhr, formData) {
+              formData.append("_token",token);
+            });
+
+            this.on("error", function (file, response) {
+                var _this = this;
+                _this.removeFile(file);
+                let errors=response.errors;
+                Object.entries(errors).forEach(([key, value]) => {
+                  displayAlertMessage(value);
+
+                });
             });
 
             this.on("success", function (file, response) {
-                if(response.error)
-                {
-                    displayErrorMessage(response.error);
-                }
-                if(response.redirect){
-                    file.previewElement.innerHTML = "";
-                    window.location.replace(response.redirect);
-                }
+              var _this = this;
+              _this.removeFile(file);
+              uploaded_files.push(response.uploaded_file);
+              addFile(response.uploaded_file);
+             
+
             });
             
             this.on("complete", function(file, xhr, formData) {
@@ -112,47 +123,8 @@ $(function() {
                   window.location.replace(response.redirect);
             });
   
-            
-  
             myDropzone = this;
-    
-            $("#propsal_form").submit(function (event) {
-              form_data= $(this).serialize();
-                event.preventDefault();
-                event.stopPropagation(); 
-                var validate_url='/seller/validate-proposal';
-                $.ajax({
-                    type:"POST",
-                    url:validate_url,
-                    data: {data : form_data,_token:token},
-                    success:function(data){
   
-                        if(data.validated){
-  
-                            if(myDropzone.getQueuedFiles().length>0){
-                              myDropzone.processQueue();
-                              
-
-
-                            }
-                            else
-                            {
-                              submitProposal(form_data);
-                            }
-  
-                        }
-                        else{
-                          if(data.redirect)
-                          {
-                          
-                            window.location.replace(data.redirect);
-                          }
-                          displayErrorMessage(data.error);
-  
-                        }
-                    }
-                });
-            }); 
           },
           thumbnail: function(file, dataUrl) {
          
@@ -180,7 +152,17 @@ $(function() {
     $("#milestone_btn").click(function(){
           addRow();
     });
-    
+
+    //remove file
+    $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
+      
+      let file_index=$(this).closest("tr").index();
+      uploaded_files.splice(file_index, 1);
+      $(this).closest("tr").remove();
+      $('#uploaded_files_input_id').val(uploaded_files);
+
+    });
+
     //hourly bid rate
     $("#hourly_bid_rate").focusout(function(){
        
@@ -220,7 +202,11 @@ $(function() {
     });
   
 });
+function addFile(file){
+  $('#file_name_div').append('<tr><td>'+file.uploaded_name+'</td><td class="text-center">'+file.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td></tr>');
+  $('#uploaded_files_input_id').val(uploaded_files);
 
+}
 function calculateMilestoneAmountSum()
 {
     var total_amount=0;

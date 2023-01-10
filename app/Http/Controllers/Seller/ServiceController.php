@@ -8,6 +8,7 @@ use App\Http\Requests\OverviewRequest;
 use App\Http\Requests\PricingRequest;
 use App\Http\Requests\ServiceBannerRequest;
 use App\Http\Requests\ReviewRequest;
+use App\Http\Requests\ServiceProposalRequest;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Features;
@@ -33,7 +34,7 @@ use Illuminate\Support\Facades\Validator;
 class ServiceController extends Controller
 {
     use DeleteEntity, CreateOrUpdateEntity;
-
+    public $activeTemplate='';
     public function __construct()
     {
         $this->activeTemplate = activeTemplate();
@@ -192,6 +193,10 @@ class ServiceController extends Controller
             Log::error($exp->getMessage());
         }
     }
+    
+    public function storeProposal(ServiceProposalRequest $request){
+        dd($request->all());
+    }
 
     public function storeRequirements(ClientRequest $request)
     {
@@ -262,9 +267,6 @@ class ServiceController extends Controller
             $notify[] = ['success', 'Service Review Saved Successfully.'];
             return redirect()->route('user.service.index')->withNotify($notify);
         }
-
-        
-      
     }
 
 

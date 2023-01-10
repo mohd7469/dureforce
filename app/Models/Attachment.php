@@ -16,7 +16,7 @@ class Attachment extends Model
         'name',
         'type',
         'is_published',
-        'section_typr',
+        'section_type',
         'section_id'
     ];
 }

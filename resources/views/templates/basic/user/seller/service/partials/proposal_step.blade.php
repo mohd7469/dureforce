@@ -1,4 +1,4 @@
-<form action="#" method="post" id="propsal_form" enctype="multipart/form-data">
+<form action="{{route('seller.service.store.proposal')}}" method="post" id="propsal_form" enctype="multipart/form-data">
     @csrf
     
     <div class="card-body">
@@ -140,7 +140,15 @@
                     
             
                 </div>
-
+                {{-- uploaded files preview --}}
+                <div>
+                    <table class="table table-bordered" id="uploaded_file_table_id">
+                        <tbody id="file_name_div">
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-6 ">
@@ -158,6 +166,7 @@
                         CONTINUE')</button>
                 </div>
             </div>
+            <input type="hidden" value="" name="uploaded_files" id="uploaded_files_input_id">
         </div>
     </div>
   
@@ -169,7 +178,9 @@
 
 @endpush
 @push('script-lib')
-
+    <script>
+        var file_upload_url="{{route('file.upload') }}";
+    </script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/proposal-step.js')}}"></script>
 

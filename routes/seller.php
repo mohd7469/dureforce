@@ -55,7 +55,13 @@ Route::name('seller.')->group(function () {
 
                 });
 
+                
+
             });
+
+           Route::name('service.')->prefix('service')->group(function () {
+                Route::post('/store-proposal', [\App\Http\Controllers\Seller\ServiceController::class,'storeProposal'] )->name('store.proposal');
+        });
 
         });
     });

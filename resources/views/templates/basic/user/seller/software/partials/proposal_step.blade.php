@@ -243,9 +243,11 @@
 
 @endpush
 @push('script-lib')
-
-  <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-  <script src="{{asset('/assets/resources/templates/basic/frontend/js/proposal-step.js')}}"></script>
+   <script>
+      var file_upload_url="{{route('file.upload') }}";
+   </script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
+   <script src="{{asset('/assets/resources/templates/basic/frontend/js/proposal-step.js')}}"></script>
 
 
 @endpush
