@@ -13,18 +13,18 @@ class DODController extends Controller
     public function index()
     {
         try {
-        
-    	$pageTitle = "DODS List";
-    	$emptyMessage = "No data found";
-        $dods = DOD::latest()->paginate(getPaginate());
-
-        return view('admin.dods.index', compact('pageTitle','dods'));
-    }catch (\Exception $exp) {
             
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
-        return back()->withNotify($notify);
-    }
+    	$pageTitle = "Dod List";
+    	$emptyMessage = "No data found";
+        $dods = DOD::withoutGlobalScopes()->latest()->paginate();
+        Log::info($dods);
+        return view('admin.dods.index', compact('pageTitle','dods'));
+        }catch (\Exception $exp) {
+            
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
     public function Create()
     {
@@ -110,34 +110,45 @@ class DODController extends Controller
        return back()->withNotify($notify);
     }
     }
-    public function delete($id)
+    public function delete($id, Request $request)
     {
+        
         try {
+            
             DB::beginTransaction();
-        $dod = DOD::find($id);
+        
+        
+        $dod = DOD::where('id',$request->id)->withOutGlobalScopes()->first();
+      
        
         $dod->delete();
+       
         DB::commit();
+        
         Log::info(["dod" => $dod]);
-        $notify[] = ['success', 'Dod Detail deleted successfully'];
+        $notify[] = ['success', 'DOD Detail deleted successfully'];
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
         DB::rollback();
         Log::error($exp->getMessage());
-        $notify[] = ['success', 'Tag deleted successfully'];
+        $notify[] = ['success', 'DOD deleted successfully'];
         return back()->withNotify($notify);
     }
     }
     public function activeBy(Request $request)
     {
+        
+       
         try {
             DB::beginTransaction();
-        $dod = DOD::findOrFail($request->id);
+      
+        $dod = DOD::where('id',$request->id)->withOutGlobalScopes()->first();
         $dod->is_active = 1;
-        $dod->created_at = Carbon::now();
+        $dod->updated_at = Carbon::now();
         $dod->save();
         DB::commit();
+        
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Dods Detail has been Activated'];
         return redirect()->back()->withNotify($notify);
@@ -152,11 +163,11 @@ class DODController extends Controller
     public function inActiveBy(Request $request)
     {
         try {
-            DB::beginTransaction();
+            
         $dod = DOD::findOrFail($request->id);
         
         $dod->is_active = 0;
-      
+       
         $dod->created_at = Carbon::now();
         $dod->save();
         DB::commit();

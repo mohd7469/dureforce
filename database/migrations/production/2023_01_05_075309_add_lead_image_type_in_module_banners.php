@@ -14,7 +14,7 @@ class AddLeadImageTypeInModuleBanners extends Migration
     public function up()
     {
         Schema::table('module_banners', function (Blueprint $table) {
-            $table->enum('lead_image_type',['Custom','Default'])->nullable()->after('banner_type');
+            $table->enum('lead_image_type',['Custom','Default'])->nullable()->after('banner_type')->default('Custom');
         });
     }
 

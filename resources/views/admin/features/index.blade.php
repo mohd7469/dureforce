@@ -13,17 +13,47 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    /* position: relative;
-    right: 180px; */
-    float: left;
+    float: right;
 }
 a.icon-btn{
-    float: left;
+    float: right;
     
 }
-th.tlst {
-    text-align: left !important;
+.table td{
+    white-space: revert !important;
 }
+table .user .name {
+    width: calc(100% - 40px);
+    padding-left: 10px;
+}
+.icon-btn i {
+    font-size: 22px;
+}
+.editbtn-c {
+    width: 35px;
+    height: 35px;
+    /* background: red; */
+    display: inline-block;
+}
+.tickbtn {
+    padding: 5.5px 7px;
+    float: right;
+}
+.table td{
+    white-space: revert !important;
+}
+.icon-btn{
+    float: right;
+}
+table{
+    table-layout: fixed;
+}
+th.tlst {
+    text-align: right !important;
+    position: relative;
+    padding-right: 6% !important;
+}
+
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -84,7 +114,7 @@ th.tlst {
                                      <a type="submit"  href="{{route('admin.feature.delete', $feature->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <div data-label="@lang('Action')">
+                                    <span data-label="@lang('Action')">
                                         @if($feature->is_active == 1)
                                             <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$feature->id}}">
                                                 <i class="las la-check "></i>
@@ -96,7 +126,7 @@ th.tlst {
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
-                                    </div>
+                                    </span>
                                    
                               
              

@@ -13,16 +13,25 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    /* position: relative;
-    right: 180px; */
-    float: left;
+    float: right;
 }
 a.icon-btn{
-    float: left;
+    float: right;
     
 }
+table{
+    table-layout: fixed;
+}
+.table td{
+    white-space: revert !important;
+}
 th.tlst {
-    text-align: left !important;
+    text-align: right !important;
+    /* margin-right: 10% !important; */
+    /* display: inline-block; */
+    position: relative;
+    /* right: 10%; */
+    padding-right: 6% !important;
 }
 
 
@@ -45,7 +54,7 @@ th.tlst {
                             
                             <th>@lang('Title')</th>
                             <th>@lang('Status')</th>
-                            <th class="tlst">@lang('Action')</th>
+                            <th  class="tlst">@lang('Action')</th>
                             
                         </tr>
                         </thead>

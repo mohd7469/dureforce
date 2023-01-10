@@ -198,8 +198,7 @@
                               </div>
                           </div>
                         </form>
-
-                     
+                        
                   </div>
 
                </div>
@@ -220,7 +219,6 @@
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
-
 
 @endpush
 
