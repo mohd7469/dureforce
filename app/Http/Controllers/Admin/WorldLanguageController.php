@@ -47,6 +47,8 @@ class WorldLanguageController extends Controller
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
+            'iso2' => 'max:2',
+            'iso3' => 'max:3',
     
         ]);
         try {
@@ -87,17 +89,17 @@ class WorldLanguageController extends Controller
     }
     }
     public function update(Request $request, $id){
+
         $this->validate($request, [
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
-            
+            'iso2' => 'max:2',
+            'iso3' => 'max:3',
         ]);
         try {
             DB::beginTransaction();
         $worldLanguage = WorldLanguage::findOrFail($id);
-      
-     
         $worldLanguage->iso_language_name = $request->iso_language_name;
         $worldLanguage->native_name = $request->native_name;
         $worldLanguage->iso2 = $request->iso2;
