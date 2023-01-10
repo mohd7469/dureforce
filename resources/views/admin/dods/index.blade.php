@@ -61,6 +61,7 @@ th.tlst {
                             
                             
                         @foreach($dods as $dod)
+                       
                         <tr>
                             
                             <td data-label="@lang('Title')">
@@ -87,6 +88,7 @@ th.tlst {
                                
                                     <a type="submit"  href="{{route('admin.dod.delete', $dod->id)}}" class="icon-btn btn--danger ml-1 editbtn-c " id="" data-toggle="tooltip1" title="" data-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
+                                        
                                     </a> 
                                     <span data-label="@lang('Action')">
                                         @if($dod->is_active == 1)
