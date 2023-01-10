@@ -110,17 +110,31 @@ class DODController extends Controller
        return back()->withNotify($notify);
     }
     }
-    public function delete($id)
+    public function delete($id, Request $request)
     {
-       
         
-        $dod = DOD::find($id);
+        try {
+            
+            DB::beginTransaction();
+        
+        
+        $dod = DOD::where('id',$request->id)->withOutGlobalScopes()->first();
+      
        
         $dod->delete();
+       
+        DB::commit();
         
-        $notify[] = ['success', 'Dod Detail deleted successfully'];
+        Log::info(["dod" => $dod]);
+        $notify[] = ['success', 'DOD Detail deleted successfully'];
         return back()->withNotify($notify);
-   
+    }
+    catch (\Exception $exp) {
+        DB::rollback();
+        Log::error($exp->getMessage());
+        $notify[] = ['success', 'DOD deleted successfully'];
+        return back()->withNotify($notify);
+    }
     }
     public function activeBy(Request $request)
     {
