@@ -22,16 +22,19 @@
                     <input type="number" class="form-control" name="price" id="price" step="any"
                            value="{{ old('amount', floatval(@$software->price) ? : "Enter Price") }}"
                            placeholder="@lang('E.g. $550')"
+                           
+                           oninput="this.value = Math.abs(this.value)"
                     >
                 </div>
 
-                <div class="col-lg-4 ">
+                <div class="col-lg-4">
                     <label>@lang('Estimated Lead Time (Base Software)')*</label>
                     <input type="number" name="delivery_time" class="form-control"
                            value="{{ old('delivery_time', @$software->estimated_lead_time) }}"
                            id="delivery"
                            placeholder="@lang('Enter Hours')"
                            min="0"
+                           oninput="this.value = Math.abs(this.value)"
                     >
 
                 </div>

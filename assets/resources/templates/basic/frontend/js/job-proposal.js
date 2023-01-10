@@ -259,7 +259,7 @@ function addRow()
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">'+
             '<label>Amount*</label>'+
-            '<div class="input-group"><input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  id="milestones.'+row_id+'.amount"> <span class="input-group-text float-end">$</span></div>'+
+            '<div class="input-group"><input type="number" class="form-control milestones_amount" name="milestones['+row_id+'][amount]" maxlength="255" value=""  id="milestones.'+row_id+'.amount" oninput="this.value = Math.abs(this.value)"> <span class="input-group-text float-end">$</span></div>'+
           '</div>'+
 
           '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >'+
