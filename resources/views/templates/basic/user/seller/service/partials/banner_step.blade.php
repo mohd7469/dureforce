@@ -142,7 +142,7 @@
 
                             
 
-                            <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12" id="default_lead_image_div" style="display:{{  ($service && $service->banner) ? IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['DEFAULT'] ) : 'block'}}">
+                            <div class="col-xl-12 col-lg-12 col-sm-12 col-xs-12" id="default_lead_image_div" style="display:{{   IsDefaultLeadImage($service,App\Models\ModuleBanner::LEAD_IMAGES_TYPES['DEFAULT']) }}">
                                 <div class="px-4">
                                     <div>
                                         <label>@lang('Default Lead Images')<p id="default_lead_img_error"></p></label>

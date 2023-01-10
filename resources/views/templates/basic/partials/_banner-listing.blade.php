@@ -30,27 +30,19 @@ if ($folder == 'service') {
     </div>
 @else
 
-    <div class=" col-12 px-0 "
+    <div class=" col-12 px-0">
+        <a href="{{ $model->uuid ? route($url,[$model->uuid]) : '#'}}" >
+            @if ($model->banner->type==\App\Models\ModuleBanner::$Video)
+                <div id="videoContainer">
+                    <iframe src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+                </div>
+            @else
+                <img alt="{{ $model->title }}" onerror="this.src='placeholder-image/920x468'"  src="{{ getLeadImageUrl($model) }}" class="img-thumbnail">
+            @endif
 
-    >
-    <a href="{{ $model->uuid ? route($url,[$model->uuid]) : '#'}}" >
-        @if ($model->banner->type==\App\Models\ModuleBanner::$Video)
-            <div id="videoContainer">
-
-                <iframe src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
-            </div>
-        @else
-
-
-
-            <img alt="{{ $model->title }}"
-            onerror="this.src='placeholder-image/920x468'"  src="{{ $model->banner->url }}" class="img-thumbnail">
-        @endif
-
-    </a>
-      
-        
+        </a>
     </div>
+    
 @endif
 
 
