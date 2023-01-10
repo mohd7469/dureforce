@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="img-wrapper">
                         <a href="{{ $service->uuid ? route('service.view',[$service->uuid]) : '#'}}">
-                            <img src="{{ $service->banner ? $service->banner->url: asset('assets/images/default.png','590x300') }}"
+                            <img src="{{ $service->banner ? getLeadImageUrl($service): asset('assets/images/default.png','590x300') }}"
                                  alt="@lang('image')">
                         </a>
                     </div>

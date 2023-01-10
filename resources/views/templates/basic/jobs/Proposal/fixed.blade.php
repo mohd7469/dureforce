@@ -109,7 +109,7 @@
                         <label>@lang('Amount')*</label>
                         
                         <div class="input-group">
-                           <input type="number" name="milestones[1][amount]" step="any" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount">
+                           <input type="number" name="milestones[1][amount]" step="any" maxlength="255" value="" class="form-control milestones_amount"  id="milestones.1.amount" oninput="this.value = Math.abs(this.value)">
                            <span class="input-group-text float-end">$</span>
                         </div>
                      </div>
@@ -135,7 +135,7 @@
                         your client will see</small>
                         
                         <div class="input-group">
-                           <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly>
+                           <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly oninput="this.value = Math.abs(this.value)">
                            <span class="input-group-text float-end">$</span>
                         </div>
 

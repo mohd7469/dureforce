@@ -620,12 +620,12 @@ function addOnServiceRow() {
             <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
                 <label>Per Hour Rate</label>
                 <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]"  
-                    placeholder="per hour rate" id="add_on_price" step="any" >
+                    placeholder="per hour rate" id="add_on_price" step="any" oninput="this.value = Math.abs(this.value)">
             </div>
           
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
               <label>Estimated Delivery Time</label>
-              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours">
+              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours" oninput="this.value = Math.abs(this.value)">
               
           </div>  
           

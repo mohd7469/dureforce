@@ -231,7 +231,7 @@ class ServiceController extends Controller
 
             $service = Service::FindOrFail($request->get('service_id'));
 
-            if ($service->banner && $service->rate_per_hour != 0) {
+            if ($service->requirement_for_client) {
 
                 $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
                 $this->ServiceAddConfirmationMail($service);

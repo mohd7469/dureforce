@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
-                            <img src="{{ $software->banner ? $software->banner->url : asset('assets/images/default.png','590x300') }}"
+                            <img src="{{ $software->banner ? getLeadImageUrl($software) : asset('assets/images/default.png','590x300') }}"
                                  alt="@lang('image')">
                         </a>
                     </div>
