@@ -6,7 +6,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('admin.world.city.update',$worldLanguage->id)}}" method="POST"
+                    <form action="{{route('admin.world.city.update',$worldCitie->id)}}" method="POST"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -14,26 +14,26 @@
 
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="iso_language_name" value="{{$worldLanguage->iso_language_name}}" >
+                                    <label class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="name" value="{{$worldCitie->name}}" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="native_name" value="{{$worldLanguage->native_name}}" >
+                                    <label class="form-control-label font-weight-bold">@lang('Full Name')<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="full_name" value="{{$worldCitie->full_name}}" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code2')</label>
-                                    <input class="form-control" type="text" name="iso2" value="{{$worldLanguage->iso2}}" >
+                                    <label class="form-control-label font-weight-bold">@lang('Code')</label>
+                                    <input class="form-control" type="text" name="code" value="{{$worldCitie->code}}" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code3')</label>
-                                    <input class="form-control" type="text" name="iso3" value="{{$worldLanguage->iso3}}" >
+                                    <label class="form-control-label font-weight-bold">@lang('Timezone')</label>
+                                    <input class="form-control" type="text" name="iana_timezone" value="{{$worldCitie->iana_timezone}}" >
                                 </div>
                             </div>
                         </div>
