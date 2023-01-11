@@ -280,6 +280,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
            Route::get('world-city/edit/{id}', 'WorldCitiesController@editdetails')->name('world.city.edit');
            Route::post('world-city/update/{id}', 'WorldCitiesController@update')->name('world.city.update');
            Route::get('/world-city/delete/{id}', 'WorldCitiesController@delete')->name('world.city.delete');
+            //World cities route
+            Route::get('world-country/index', 'WorldCountriesController@index')->name('world.country.index');
+            Route::get('world-country/create', 'WorldCountriesController@Create')->name('world.country.create');
+            Route::post('world-country/store', 'WorldCountriesController@store')->name('world.country.store');
+            Route::get('world-country/edit/{id}', 'WorldCountriesController@editdetails')->name('world.country.edit');
+            Route::post('world-country/update/{id}', 'WorldCountriesController@update')->name('world.country.update');
+            Route::get('/world-country/delete/{id}', 'WorldCountriesController@delete')->name('world.country.delete');
 
            //Budget Type route
            Route::get('budget-type/index', 'BudgetTypeController@index')->name('budget.type.index');
