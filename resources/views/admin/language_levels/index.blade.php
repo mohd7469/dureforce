@@ -2,6 +2,10 @@
 @section('panel')
 
 <style>
+ a.disabled{
+        pointer-events: none;
+        cursor: default;
+    }
 .icon-btn i {
     font-size: 22px;
 }
@@ -13,20 +17,27 @@
 }
 .tickbtn {
     padding: 5.5px 7px;
-    /* position: relative;
-    right: 180px; */
-    float: left;
+    float: right;
 }
 a.icon-btn{
-    float: left;
+    float: right;
     
 }
-th.tlst {
-    text-align: left !important;
+table{
+    table-layout: fixed;
 }
 .table td{
     white-space: revert !important;
 }
+th.tlst {
+    text-align: right !important;
+    /* margin-right: 10% !important; */
+    /* display: inline-block; */
+    position: relative;
+    /* right: 10%; */
+    padding-right: 6% !important;
+}
+
 </style>
 <div class="row">
     <div class="col-lg-12">
@@ -92,7 +103,7 @@ th.tlst {
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                     <a type="submit"  href="{{route('admin.language.level.delete', $languageLavel->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                     <a type="submit"  href="{{route('admin.language.level.delete', $languageLavel->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
                                     <div data-label="@lang('Action')">
