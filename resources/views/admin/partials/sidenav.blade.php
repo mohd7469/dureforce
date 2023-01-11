@@ -1424,7 +1424,25 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </div>
                     </li>
                     {{-- End Degree Mode crud  --}}
-
+                    {{-- World countries Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.world.country*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('World Countries')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.world.country*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.world.country.index') }} ">
+                                    <a href="{{ route('admin.world.country.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add World country')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
                     {{-- World cities Mode crud  --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.world.city*', 3) }}">
