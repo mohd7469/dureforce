@@ -80,7 +80,7 @@ class ServiceController extends Controller
             $pageTitle = "Create service";
             $empty='';
             $completed='completed';
-            $completedOverview = $completedPricing = $completedBanner = $completedRequirements =  $completedReview = $empty ;
+            $completedOverview = $completedPricing = $completedBanner = $completedRequirements =  $completedReview = $completedProposal=$empty ;
 
             $features = Features::latest()->get();
 
