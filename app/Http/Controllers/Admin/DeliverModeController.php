@@ -14,7 +14,7 @@ class DeliverModeController extends Controller
     public function index()
     {
         try {
-    	$pageTitle = "Deliver Mode List";
+    	$pageTitle = "delivery Mode List";
     	$emptyMessage = "No data found";
         $delivers = DeliveryMode::latest()->paginate(getPaginate());
 
