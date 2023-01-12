@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
-                        href="?view=step-3" type="button">@lang('BACK')</a>
+                        href="?view=step-4" type="button">@lang('BACK')</a>
                 </div>
                 <div class="col-md-6 text-right">
                     <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
