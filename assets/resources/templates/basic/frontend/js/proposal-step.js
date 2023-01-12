@@ -159,7 +159,7 @@ $(function() {
       let file_index=$(this).closest("tr").index();
       uploaded_files.splice(file_index, 1);
       $(this).closest("tr").remove();
-      $('#uploaded_files_input_id').val(uploaded_files);
+      $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
 
     });
 

@@ -66,7 +66,6 @@ input::-webkit-inner-spin-button {
                             @include($activeTemplate . 'user.seller.software.partials.pricing_step')
                         </div>
                        
-                       
                         <div class="panel panel-primary setup-content" id="step-3">
                             @include($activeTemplate . 'user.seller.software.partials.banner_step')
                         </div>
