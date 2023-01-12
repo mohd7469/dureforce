@@ -79,7 +79,7 @@
                                 <td>
                                     <form action="{{route('admin.banner.destroy', [$banner->id])}}" method="POST" >
                                         @csrf
-                                        <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1"  type="submit">Delete</button>
+                                        <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1 disabled"  type="submit">Delete</button>
                                     </form>
                                 </td>
                                 <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
@@ -180,7 +180,12 @@
 </div>
 @endsection
 
-
+<style>
+    .disabled{
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
 
 @push('script')
 <script>

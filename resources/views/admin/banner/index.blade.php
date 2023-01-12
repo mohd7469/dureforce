@@ -185,6 +185,7 @@
         pointer-events: none;
         cursor: default;
     }
+   
 </style>
 
 
@@ -194,7 +195,9 @@
     $('.bannerinactive').on('click', function () {
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
+        $('.disabled').addClass('disabled');
         modal.modal('show');
+
     });
 
     $('.banneractive').on('click', function () {
