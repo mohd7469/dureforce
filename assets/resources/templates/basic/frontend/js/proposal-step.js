@@ -68,7 +68,7 @@ function displayInfoAlertMessage(message)
   });
 }
 $(function() {
-
+  uploaded_files= JSON.parse($('#uploaded_files_input_id').val());
     var form_data='';
     var action_url=file_upload_url;
     var dropzone = new Dropzone('#demo-upload', {
@@ -76,8 +76,8 @@ $(function() {
           autoProcessQueue: true,
           parallelUploads: 1,
           dictDefaultMessage: "your custom message",
-          thumbnailHeight: 80,
-          thumbnailWidth: 80,
+          thumbnailHeight: 120,
+          thumbnailWidth: 120,
           maxFiles: 6,
           uploadMultiple:false,
           acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
@@ -203,8 +203,9 @@ $(function() {
   
 });
 function addFile(file){
-  $('#file_name_div').append('<tr><td>'+file.uploaded_name+'</td><td class="text-center">'+file.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td></tr>');
-  $('#uploaded_files_input_id').val(uploaded_files);
+  $('#file_name_div').append('<tr><td>'+file.uploaded_name+'</td><td class="text-center">'+file.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td><td class="text-center">'+
+  '<a href="'+file.url+'" download><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-download"  ></i></span></a></td></tr>');
+  $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
 
 }
 function calculateMilestoneAmountSum()

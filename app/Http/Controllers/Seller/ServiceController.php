@@ -78,11 +78,9 @@ class ServiceController extends Controller
     {
         try {
             $pageTitle = "Create service";
-            $completedOverview = '';
-            $completedPricing = '';
-            $completedBanner = '';
-            $completedRequirements = '';
-            $completedReview = '';
+            $empty='';
+            $completed='completed';
+            $completedOverview = $completedPricing = $completedBanner = $completedRequirements =  $completedReview = $empty ;
 
             $features = Features::latest()->get();
 
@@ -92,11 +90,12 @@ class ServiceController extends Controller
 
             if ($id) {
                 $service = Service::with('serviceSteps', 'addOns', 'category', 'subCategory')->findOrFail($id);
-                $completedOverview = $service->skills()->count() > 0 ? 'completed' : '';
-                $completedPricing = $service->rate_per_hour > 0 ? 'completed' : '';
-                $completedBanner = $service->banner ? 'completed' : '';
-                $completedRequirements = $service->requirement_for_client ? 'completed' : '';
-                $completedReview = !empty($service->number_of_simultaneous_projects) ? 'completed' : '';
+                $completedOverview = $service->skills()->count() > 0 ? $completed : $empty;
+                $completedPricing = $service->rate_per_hour > 0 ? $completed : $empty;
+                $completedBanner = $service->banner ? $completed : $empty;
+                $completedProposal = $service->defaultProposal ? $completed : $empty;
+                $completedRequirements = $service->requirement_for_client ? $completed : $empty;
+                $completedReview = !empty($service->number_of_simultaneous_projects) ? $completed : $empty;
             }
             Log::info(["Service" => $service]);
 
@@ -107,6 +106,7 @@ class ServiceController extends Controller
                 'completedOverview',
                 'completedPricing',
                 'completedBanner',
+                'completedProposal',
                 'completedRequirements',
                 'completedReview',
                 'service'
@@ -175,7 +175,7 @@ class ServiceController extends Controller
             $service = Service::FindOrFail($serviceId);
 
             if (!$service->rate_per_hour) {
-                $notify[] = ['error', 'Please complete the service pricing first.'];
+                $notify[] = ['error', 'Please complete the service pricing step first.'];
                 return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-2'])->withNotify($notify);
             }
 
@@ -195,7 +195,29 @@ class ServiceController extends Controller
     }
     
     public function storeProposal(ServiceProposalRequest $request){
-        dd($request->all());
+        try {
+
+            $serviceId = $request->get('service_id');
+            if (empty($serviceId)) {
+                $notify[] = ['error', 'Recently Created Service is missing.'];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $service = Service::FindOrFail($serviceId);
+
+            if ($service->banner) {
+                $this->saveProposal($request, $service, Attribute::SERVICE);
+                $notify[] = ['success', 'Service Proposal Saved Successfully.'];
+                Log::info(["Service" => $service]);
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
+            } else {
+                $notify[] = ['error', 'Please complete the service banners step first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
+            }
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+        }
+
     }
 
     public function storeRequirements(ClientRequest $request)
@@ -210,14 +232,14 @@ class ServiceController extends Controller
 
             $service = Service::FindOrFail($serviceId);
 
-            if ($service->banner) {
+            if ($service->defaultProposal) {
                 $this->saveRequirements($request, $service, Attribute::SERVICE);
                 $notify[] = ['success', 'Service Requirements Saved Successfully.'];
                 Log::info(["Service" => $service]);
-                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-6'])->withNotify($notify);
             } else {
-                $notify[] = ['error', 'Please complete the service banners first.'];
-                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
+                $notify[] = ['error', 'Please complete the service proposal step first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
             }
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -245,8 +267,8 @@ class ServiceController extends Controller
                 return redirect()->route('user.service.index')->withNotify($notify);
 
             } else {
-                $notify[] = ['error', 'Please complete the previous steps first.'];
-                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-1'])->withNotify($notify);
+                $notify[] = ['error', 'Please complete the requirements steps first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
             }
 
         } catch (\Exception $exp) {
@@ -311,20 +333,21 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         try {
+
             $service = Service::withAll()->findOrFail($id);
             
             $service->deliverable()->detach();
             $service->tags()->detach();
             $service->serviceSteps()->delete();
             $this->deleteBannerLogos($service);
-
             $service->banner()->delete();
-            // $service->features()->delete();
-
+            $service->features()->detach();
             $service->delete();
+
             $notify[] = ['success', 'Service has been Deleted Successfully.'];
             Log::info(["Service" => $service]);
             return back()->withNotify($notify);
+
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
             $notify[] = ['error', 'Failled to delete Service'];

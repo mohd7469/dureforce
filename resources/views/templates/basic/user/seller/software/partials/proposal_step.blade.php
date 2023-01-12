@@ -1,12 +1,19 @@
-<form action="#" method="post" id="propsal_form" enctype="multipart/form-data">
+<form action="{{route('seller.software.store.proposal')}}" method="post" id="propsal_form" enctype="multipart/form-data">
    @csrf
-   
+   <input type="hidden" value="{{ $software->id ?? '' }}" name="software_id" id="software_id">
+    @php
+        $proposal=getSoftwareProposalData($software);
+        $files=old('uploaded_files',$proposal['attachments']);
+        if(is_string($files)){
+            $files=json_decode($files);
+        }
+    @endphp
    <div class="card-body">
        <div class="card-form-wrapper">
            <div class="row justify-content-center">
                
                {{-- payment  mode  --}}
-               <div class="row section-end-line text-dark pt-3 pb-1">
+               {{-- <div class="row section-end-line text-dark pt-3 pb-1">
                   
                   <div class="form-check">
                      <input class="form-check-input" type="radio" name="bid_type" id="milestone" checked onclick="byMilestone()" value="milestone">
@@ -24,16 +31,16 @@
                      <small>You'll be paid for complete amount as the project completed and approved.</small>
                   </div>
 
-               </div>
+               </div> --}}
                
                {{-- By Project Section --}}
-               <div class="row section-end-line text-dark pt-3 pb-1 d-none " id="by_project_section">
+               <div class="row section-end-line text-dark pt-3 pb-1  " id="by_project_section">
 
                   {{--project  start date --}}
                   <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6 col-xs-6">
                      <label>@lang('Project Start Date')*</label>
                      <div class="input-group mb-3">
-                     <input type="date" class="form-control" name="project_start_date" value="" >
+                     <input type="date" class="form-control" name="project_start_date" value="{{old('project_start_date',$proposal['project_start_date'])}}">
                      </div>
                   </div>
 
@@ -41,14 +48,14 @@
                   <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6 col-xs-6" >
                      <label>@lang('Project End Date')*</label>
                      <div class="input-group mb-3">
-                     <input type="date" class="form-control" name="project_end_date" value=""  >
+                     <input type="date" class="form-control" name="project_end_date" value="{{old('project_end_date',$proposal['project_end_date'])}}">
                      </div>
                   </div>
 
                </div>
 
                {{-- by milestone section --}}
-               <div class="row section-end-line text-dark pt-3 pb-1 " id="by_milestone_section">
+               <div class="row section-end-line text-dark pt-3 pb-1 d-none" id="by_milestone_section">
 
                      {{-- description --}}
                      <div class=" milestones" id="milestiones">
@@ -106,7 +113,7 @@
                            your client will see</small>
                            
                            <div class="input-group">
-                              <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="total_project_price" readonly>
+                              <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="fixed_bid_amount"  oninput="this.value = Math.abs(this.value)" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount']) }}">
                               <span class="input-group-text float-end">$</span>
                            </div>
 
@@ -119,7 +126,9 @@
                      <div class="form-group pt-3">
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
                         <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
-                        <span class="pt-2 text-dark" id="system_fee"></span>
+                        <span class="pt-2 text-dark" id="system_fee">
+                           {{old('fixed_bid_amount',(float)$proposal['fixed_bid_amount'])*0.20 }}
+                        </span>
                      </div>
 
                   </div>
@@ -131,7 +140,7 @@
                         <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                            
                            <div class="input-group">
-                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive">
+                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive" value="{{old('fixed_bid_amount',(float)$proposal['fixed_bid_amount']) * 0.80 }}">
                               <span class="input-group-text float-end">$</span>
                            </div>
                            
@@ -152,7 +161,7 @@
                         <select name="delivery_mode_id" id="delivery_mode_id" class="form-control">
                            <option value="">Select Mode Of Delivery</option>
                            @foreach ($delivery_modes as $mode)
-                              <option value="{{$mode->id}}">{{$mode->title}}</option>
+                              <option value="{{$mode->id}}" {{ (old("delivery_mode_id",$proposal['delivery_mode_id']) == $mode->id ? "selected":"") }}>{{$mode->title}}</option>
                               
                            @endforeach
                         </select>
@@ -175,7 +184,7 @@
                        {{-- Cover Letter --}}
                        <div class="form-group">
                            <label for="cover_letter">Cover Letter*</label>
-                           <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
+                           <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{old('cover_letter',$proposal['cover_letter']) }}</textarea>
                        </div>
            
                        {{-- Required documents --}}
@@ -204,7 +213,7 @@
                                </div>
                            </div>
                            <small>
-                               Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
+                               Attachments Guideline: You may attach up to 6 files under the size of 3MB each. Include work samples or other documents to support your application. 
                                Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your job.
                            </small>
                    
@@ -214,9 +223,31 @@
                    
            
                </div>
+                {{-- uploaded files preview --}}
+               <div>
+                  <table class="table table-bordered" id="uploaded_file_table_id">
+                      <tbody id="file_name_div">
+                          @foreach ( $files  as $item)
+                              <tr>
+                                  <td><a href="{{$item->url}}" download>{{$item->uploaded_name}}</a></td>
+                                  <td class="text-center">{{$item->type}}</td>
+                                  <td class="text-center" id="DeleteButton">
+                                      <span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span>
+                                  </td>
+                                  <td class="text-center">
+                                      <a href="{{$item->url}}" download><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-download"  ></i></span></a>
 
-           </div>
-           <div class="row">
+                                  </td>
+
+                              </tr>
+                          @endforeach
+                      </tbody>
+                  </table>
+               </div>
+
+            </div>
+
+            <div class="row">
                <div class="col-md-6">
                   <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
                      href="?view=step-3" type="button">@lang('BACK')</a>
@@ -232,6 +263,9 @@
                </div>
 
             </div>
+
+            <input type="hidden" value="{{old('uploaded_files',json_encode($proposal['attachments']))}}" name="uploaded_files" id="uploaded_files_input_id">
+
        </div>
    </div>
  

@@ -115,7 +115,7 @@ input::-webkit-inner-spin-button {
     border: 1px solid #E8E8E8;
     border-radius: 0px;
  }
- tbody, td, tfoot, th, thead, tr {
+  tfoot, th, thead {
     border-style: none !important;
     border-width: 0;
 }

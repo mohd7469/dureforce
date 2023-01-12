@@ -204,7 +204,7 @@ class Software extends Model
         return $this->morphMany(ModuleChatUser::class, 'module');
     }
 
-    public function propsal(){
+    public function defaultProposal(){
         return $this->morphOne(ModuleProposal::class, 'module');
     }
 }

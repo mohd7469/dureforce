@@ -15,18 +15,14 @@ class ModuleProposal extends Model
 
     protected static function boot()
     {
-        
         parent::boot();
         static::saving(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
         });
-
     }
     public function attachments(){
-
         return $this->morphMany(Attachment::class,'section');
-        
     }
    
 }

@@ -1,6 +1,4 @@
-<style>
 
-</style>
 <form role="form" action="{{ route('user.software.store.review') }}" method="POST" class="review-form"
     enctype="multipart/form-data">
     @csrf
@@ -127,3 +125,4 @@
 </form>
 
 </div>
+
