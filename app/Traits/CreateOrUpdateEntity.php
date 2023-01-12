@@ -336,7 +336,33 @@ trait CreateOrUpdateEntity {
 
         return true;
     }
-    
+    public function saveProposal($request, $model, $type = Attribute::SERVICE): bool
+    {
+        DB::beginTransaction();
+        try {
+
+            if( $model->defaultProposal)
+            {
+                $model->defaultProposal()->delete();
+            }
+            
+            $model_default_proposal=$model->defaultProposal()->create($request->all());
+            if ($request->has('uploaded_files')) {
+                $prposal_attachments=json_decode($request->uploaded_files,true);
+                $model_default_proposal->attachments()->createMany($prposal_attachments);
+            }
+            DB::commit();
+            $this->updateStatus($request,$model);
+            return true;
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            Log::error(["Error In Saving Proposal: ". $th->getMessage()]);
+            return false;
+            //throw $th;
+        }
+       
+    }
     public function saveRequirements($request, $model, $type = Attribute::SERVICE): bool
     {
         DB::transaction(function () use ($request, $model, $type) {

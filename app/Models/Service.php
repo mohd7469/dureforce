@@ -206,5 +206,7 @@ class Service extends Model
     {
         return $this->morphMany(ModuleChatUser::class, 'module');
     }
-    
+    public function defaultProposal(){
+        return $this->morphOne(ModuleProposal::class, 'module');
+    }
 }

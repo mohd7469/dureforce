@@ -6,6 +6,7 @@ use App\Models\AdminNotification;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\Deposit;
 use App\Models\Features;
 use App\Models\Frontend;
@@ -71,6 +72,8 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['delivery_modes'] = DeliveryMode::latest()->get();
+
         $viewShare['software_module_titles'] = SoftwareDefaultStep::latest()->get();
 
         $viewShare['tags'] = Tag::latest()->get();

@@ -175,7 +175,6 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('/service/store-requirement', 'ServiceController@storeRequirements')->name('service.store.requirement');
                 Route::post('/service/store-review', 'ServiceController@storeReview')->name('service.store.review');
 
-
                 Route::post('/service/update/{id}', 'ServiceController@update')->name('service.update');
                 Route::get('/service/edit/{slug}/{id}', 'ServiceController@edit')->name('service.edit');
                 Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');

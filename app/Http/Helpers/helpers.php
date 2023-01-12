@@ -391,6 +391,52 @@ function IsDefaultLeadImage($model,$type){
     }
     return 'none';
 }
+
+function getServiceProposalData($model){
+    $proposal['hourly_bid_rate']   = '';
+    $proposal['amount_receive']    = '';
+    $proposal['start_hour_limit']  = '';
+    $proposal['end_hour_limit']    = '';
+    $proposal['delivery_mode_id']  = '';
+    $proposal['cover_letter']      = '';
+    $proposal['attachments']       = [];
+
+    if($model && $model->defaultProposal){
+        $proposal['hourly_bid_rate']   = $model->defaultProposal->hourly_bid_rate;
+        $proposal['amount_receive']    = $model->defaultProposal->amount_receive;
+        $proposal['start_hour_limit']  = $model->defaultProposal->start_hour_limit;
+        $proposal['end_hour_limit']    = $model->defaultProposal->end_hour_limit;
+        $proposal['delivery_mode_id']  = $model->defaultProposal->delivery_mode_id;
+        $proposal['cover_letter']      = $model->defaultProposal->cover_letter;
+        $proposal['attachments']       = $model->defaultProposal->attachments;
+
+    }
+    return $proposal;
+}
+
+function getSoftwareProposalData($model){
+    
+    $proposal['fixed_bid_amount']   = '';
+    $proposal['amount_receive']    = '';
+    $proposal['project_start_date']  = '';
+    $proposal['project_end_date']    = '';
+    $proposal['delivery_mode_id']  = '';
+    $proposal['cover_letter']      = '';
+    $proposal['attachments']       = [];
+
+    if($model && $model->defaultProposal){
+        $proposal['fixed_bid_amount']    = $model->defaultProposal->fixed_bid_amount;
+        $proposal['amount_receive']      = $model->defaultProposal->amount_receive;
+        $proposal['project_start_date']  = $model->defaultProposal->project_start_date;
+        $proposal['project_end_date']    = $model->defaultProposal->project_end_date;
+        $proposal['delivery_mode_id']  = $model->defaultProposal->delivery_mode_id;
+        $proposal['cover_letter']      = $model->defaultProposal->cover_letter;
+        $proposal['attachments']       = $model->defaultProposal->attachments;
+
+    }
+    return $proposal;
+}
+
 function isCustomSelected($model,$type){
     if($model){
         if($model->banner){
@@ -403,6 +449,7 @@ function isCustomSelected($model,$type){
     }
     return '';
 }
+
 function selectedLogoImage($model,$banner_background_id){
     if($model){
         if($model->technologyLogos){
