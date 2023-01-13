@@ -32,7 +32,7 @@
                                 </div>
                             </td>
                             <td data-label="@lang('Category / SubCategory')">
-                                <span class="font-weight-bold">{{__($banner->category->name)}}</span>
+                                <span class="font-weight-bold">{{($banner->category->name ?? '')}}</span>
                                 <br>
                                 @if($banner->sub_category_id)
                                     <span>{{__($banner->subCategory->name)}}</span>
@@ -185,6 +185,7 @@
         pointer-events: none;
         cursor: default;
     }
+   
 </style>
 
 
@@ -194,7 +195,9 @@
     $('.bannerinactive').on('click', function () {
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
+        $('.disabled').addClass('disabled');
         modal.modal('show');
+
     });
 
     $('.banneractive').on('click', function () {

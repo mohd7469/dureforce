@@ -57,7 +57,7 @@ class Service extends Model
     ];
 
     public function scopeWithAll($query){
-        $query->with('user')->with('serviceSteps')->with('category')->with('subCategory')->with('deliverable')->with('addOns')->with('status')->with('tags')->with('features')->with('skills');
+        $query->with('user')->with('serviceSteps')->with('category')->with('subCategory')->with('deliverable')->with('addOns')->with('status')->with('tags')->with('features')->with('skills')->with('defaultProposal.attachments');
     }
 
     public function user()
@@ -207,6 +207,6 @@ class Service extends Model
         return $this->morphMany(ModuleChatUser::class, 'module');
     }
     public function defaultProposal(){
-        return $this->morphOne(ModuleProposal::class, 'module');
+        return $this->morphOne(ModuleProposal::class, 'module')->with('delivery_mode');
     }
 }
