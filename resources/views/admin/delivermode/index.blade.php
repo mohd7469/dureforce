@@ -25,7 +25,7 @@ a.disabled{
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.deliver.create') }} " class="btn btn-primary btn-sm float-right">Create Deliver Mode Detail</a>
+        <a href="{{ route('admin.deliver.create') }} " class="btn btn-primary btn-sm float-right">Create delivery Mode Detail</a>
     </div>
 </div>
 <br>
