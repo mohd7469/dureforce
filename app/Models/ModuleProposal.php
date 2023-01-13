@@ -24,5 +24,9 @@ class ModuleProposal extends Model
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');
     }
+    public function delivery_mode()
+    {
+        return $this->belongsTo(DeliveryMode::class, 'delivery_mode_id');
+    }
    
 }
