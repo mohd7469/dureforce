@@ -66,13 +66,13 @@
                             </td>
                             <td data-label="@lang('Last Update')">
                                 @if(isset($project_lengt->created_at))
-                                    <span>{{systemDateTimeFormat($project_lengt->created_at)}}</span>
+                                    <span>{{($project_lengt->created_at  ?? '')}}</span>
                                     <br>
-                                    {{diffforhumans($project_lengt->created_at)}}
+                                    {{isset($project_lengt->created_at) ? diffforhumans($project_lengt->created_at) : ''}}
                                     @else
-                                    <span>{{showDateTime($project_lengt->updated_at)}}</span>
+                                    <span>{{($project_lengt->updated_at ?? '')}}</span>
                                     <br>
-                                    {{diffforhumans($project_lengt->updated_at)}}
+                                    {{isset($project_lengt->updated_at) ? diffforhumans($project_lengt->updated_at) : ''}}
                                  @endif
                                 
                             </td>
