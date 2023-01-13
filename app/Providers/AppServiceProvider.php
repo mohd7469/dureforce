@@ -26,6 +26,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
 
@@ -56,7 +57,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        Log::info(["Previous URL"=>url()->full()]);
+        Log::info(["Previous URL"=>url()->previous()]);
+        Log::info(["Request data"=>\Request::all()]);
         LogViewer::auth(function ($request) {
             return Auth::guard('admin')->user();
         });
