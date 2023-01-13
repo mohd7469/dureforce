@@ -55,11 +55,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
-        Log::info(["Previous URL"=>url()->full()]);
-        Log::info(["Previous URL"=>url()->previous()]);
-        Log::info(["Request data"=>\Request::all()]);
-
         LogViewer::auth(function ($request) {
             return Auth::guard('admin')->user();
         });
