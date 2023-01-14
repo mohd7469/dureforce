@@ -6,9 +6,9 @@
 
     if (!empty($service)) {
         
-        $banner_backgrounds = getImagesByCategory($service,App\Models\BannerBackground::BACKGROUND_TYPES['BACKGROUND']);
-        $banner_logos       = getImagesByCategory($service,App\Models\BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
-        $lead_images        = getImagesByCategory($service,App\Models\BannerBackground::BACKGROUND_TYPES['LEAD_IMAGE']);
+        $banner_backgrounds = getImagesByCategory($service,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['BACKGROUND']);
+        $banner_logos       = getImagesByCategory($service,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
+        $lead_images        = getImagesByCategory($service,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['LEAD_IMAGE']);
     }
 
 @endphp
