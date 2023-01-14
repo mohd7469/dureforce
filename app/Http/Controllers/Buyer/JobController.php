@@ -56,10 +56,10 @@ class JobController extends Controller
 
         $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
 
-        $data['project_length'] = ProjectLength::OnlyJob()->select(['id', 'name'])->get();
+        $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
 
 
-        $data['project_stages'] = ProjectStage::OnlyJob()->select(['id', 'title'])->get();
+        $data['project_stages'] = ProjectStage::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
         $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
 
