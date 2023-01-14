@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class SupportTicket extends Model
 {
@@ -13,9 +14,18 @@ class SupportTicket extends Model
     public static $Open=4;
     public static $Closed=5;
     public static $OnHold=6;
+
+    protected static function boot()
+    {
+        parent::boot();
+        Log::info(["Current URL"=>url()->full()]);
+        Log::info(["Previous URL"=>url()->previous()]);
+        Log::info(["Request data"=>\Request::all()]);
+    }
     
     public function getFullnameAttribute()
     {
+
         return $this->name;
     }
 
