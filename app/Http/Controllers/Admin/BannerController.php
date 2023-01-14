@@ -88,7 +88,7 @@ class BannerController extends Controller
     	$pageTitle = "InActive Banner";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Background')->where('is_active', 0)->latest()->paginate(getPaginate());
-    	return view('admin.banner.inActive', compact('pageTitle', 'emptyMessage', 'banners'));
+    	return view('admin.banner.inactive', compact('pageTitle', 'emptyMessage', 'banners'));
     }
 
     public function active()
