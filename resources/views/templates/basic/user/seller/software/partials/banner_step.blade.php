@@ -5,9 +5,9 @@ $lead_images = collect([]);
 
 if (!empty($software)) {
     
-    $banner_backgrounds = getImagesByCategory($software,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['BACKGROUND']);
-    $banner_logos       = getImagesByCategory($software,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
-    $lead_images        = getImagesByCategory($software,App\Models\BannerBackground::where('is_active', 1)->BACKGROUND_TYPES['LEAD_IMAGE']);
+    $banner_backgrounds = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['BACKGROUND']);
+    $banner_logos       = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']);
+    $lead_images        = getImagesByCategory($software,App\Models\BannerBackground::BACKGROUND_TYPES['LEAD_IMAGE']);
 
 }
 @endphp
