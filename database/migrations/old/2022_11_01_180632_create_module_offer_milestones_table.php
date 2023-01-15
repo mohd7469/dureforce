@@ -18,7 +18,7 @@ class CreateModuleOfferMilestonesTable extends Migration
             $table->unsignedBigInteger('module_offer_id')->index()->nullable();
             $table->string('description')->nullable();
             $table->datetime('due_date')->nullable();
-            $table->integer('deposit_amount')->nullable();
+            $table->integer('amount')->nullable();
             $table->boolean('is_paid')->default(false)->nullable();
             $table->timestamps();
             $table->softDeletes();
