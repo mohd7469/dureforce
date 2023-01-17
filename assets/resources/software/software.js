@@ -263,6 +263,7 @@ function validateUrl(value){
       text: 'Please Enter Valid Banner Video URL',
     })
   }else{
+    
     previewVideo(value);
 
   }

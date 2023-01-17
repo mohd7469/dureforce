@@ -272,13 +272,19 @@
 
             }
 
+            $("#country_id").on('change',function(){
+
+                getCountryCities($(this).val(),'#location_city_id');
+
+            });
+
             $('#payment_method_country_id').on('change', function(){
                 var country_id = $(this).val();
-                getCountryCities(country_id);
+                getCountryCities(country_id,'#payment_method_cities');
             });
         });
 
-        function getCountryCities(country_id)
+        function getCountryCities(country_id,select_field_id)
         {
             $.ajax({
                 type:"GET",
@@ -288,8 +294,8 @@
                     if(data.cities)
                     {    
                        
-                        $('#payment_method_cities').empty();
-                        $('#payment_method_cities').append(
+                        $(select_field_id).empty();
+                        $(select_field_id).append(
                             `<option>Select City</option>
                             ${data.cities?.map((city) => {
                                 return ` <option value="${city.id}"> ${city.name}</option>`;
