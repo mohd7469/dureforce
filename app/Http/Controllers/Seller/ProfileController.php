@@ -235,6 +235,7 @@ class ProfileController extends Controller
      */
     public function editExperience(Request $request,$seller_experience_id)
     {
+        
         $validator = \Validator::make($request->all(), 
         [
             'job_title'   => 'required',

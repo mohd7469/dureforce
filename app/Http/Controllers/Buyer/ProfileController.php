@@ -54,6 +54,7 @@ class ProfileController extends Controller
      */
     public function saveCompany(Request $request)
     {
+    
 
         $rules = [
             'email' => 'email',
@@ -309,6 +310,7 @@ class ProfileController extends Controller
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
+       
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         return view('templates/basic/profile/view_signup_basic', compact('countries', 'pageTitle', 'user', 'userCompanies', 'user_payment_methods', 'basicProfile', 'cities', 'user_languages', 'languages', 'language_levels'));
 
@@ -488,6 +490,7 @@ class ProfileController extends Controller
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
+            'country_id' => 'required',
             'about' => 'required|string',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'city_id' => 'required|exists:world_cities,id',
@@ -563,6 +566,7 @@ class ProfileController extends Controller
     {
 
         $rules = [
+            'name' => 'required',
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'vat' => 'required|string|min:5|max:15',
