@@ -1,5 +1,6 @@
 <div class="modal fade" id="clientBasicModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+       
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
@@ -72,9 +73,11 @@
                             Select Location
                          </option>
                          @foreach ($cities as $city)
+                       
                          <option
                          value="{{$city->id}}"
                          {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                         
                          >
                          {{$city->name}}
                          </option>
