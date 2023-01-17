@@ -10,10 +10,14 @@
             <div class="row">
 
                 @foreach($portfolios as $portfolio)
-                <div class="col-md-3 ">
-                    <img alt="User Pic" src="{{$portfolio->attachments ? $portfolio->attachments[0]->url : '#'}}" id="profile-image1" class=" img-responsive" >
-                    <span>{{$portfolio->name}}</span>
-                </div>
+               
+                    <div class="col-md-3 ">
+                        @if ($portfolio->attachments->isNotEmpty())
+                            <img alt="User Pic" src="{{ $portfolio->attachments[0]->url }}" id="profile-image1" class=" img-responsive" alt="Portfolio image not found">
+                            
+                        @endif
+                        <span>{{$portfolio->name}}</span>
+                    </div>
                 @endforeach
             </div>
             

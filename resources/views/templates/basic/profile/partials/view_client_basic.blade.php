@@ -3,7 +3,7 @@
           enctype="multipart/form-data">
         @csrf
 
-@include("templates.basic.profile.modals.client_basic_")
+        @include("templates.basic.profile.modals.client_basic_")
 
         <div class="container-fluid welcome-body">
            
@@ -165,7 +165,12 @@
 
 @push('script')
     <script>
+
+       
         "use strict";
+        
+        
+
         $("#img-upload").on('change',function(){
             $('#form-basic-save').submit();
         });
@@ -174,6 +179,7 @@
             $('#img-upload').click();
         });
 
+       
     </script>
 @endpush
 <style>
