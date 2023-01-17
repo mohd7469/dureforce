@@ -209,4 +209,14 @@ class Service extends Model
     public function defaultProposal(){
         return $this->morphOne(ModuleProposal::class, 'module')->with('delivery_mode');
     }
+    public function Job()
+    {
+        return $this->morphOne(Job::class,'module');
+    }
+    function isBooked(){
+
+        $user=auth()->user();
+        return $this->Job()->where('user_id',$user->id)->exists() ? true:false;
+        
+    }
 }
