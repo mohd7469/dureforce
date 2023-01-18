@@ -139,7 +139,7 @@
                                             {{-- Weekly Range start --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
 
-                                                <label>@lang('Hourly rate(Starting)')*</label>
+                                                <label>@lang('Hourly Rate(Starting)')*</label>
                                                 <input type="number" step="any" class="form-control" name="hourly_start_range" value="" placeholder="" >
 
                                             </div>
@@ -147,7 +147,7 @@
                                             {{-- Weekly Range end --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
 
-                                                <label>@lang('Hourly rate(Ending)')*</label>
+                                                <label>@lang('Hourly Rate(Ending)')*</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" class="form-control" step="any" name="hourly_end_range" value="" placeholder="" >
                                                 </div>
