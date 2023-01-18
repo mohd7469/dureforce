@@ -59,23 +59,28 @@
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content" >
                                                             {!!$job->description !!}
+                                                        @if ($job->deliverable->count() > 0)
+                                                            <div class="service_subtitle2 mt-20 dod-text">
+                                                                <p> Deliverables</p>
+                                                                    @foreach ($job->deliverable as $deliverable)
+                                                                    
+                                                                    <span> {{$deliverable->name}},</span>
+                                                                    
+                                                                    @endforeach
+                                                            </div>
+                                                        @endif
                                                         
-                                                        <div class="service_subtitle2 mt-20 dod-text">
-                                                            <p> Deliverables</p>
-                                                                @foreach ($job->deliverable as $deliverable)
-                                                                
-                                                                <span> {{$deliverable->name}},</span>
-                                                                
-                                                                @endforeach
-                                                        </div>
                                                     
 
-                                                        <div class="service_subtitle2 mt-20 dod-text">
-                                                            <p> Definition of Done (DOD)</p>
-                                                                @foreach ($job->dod as $dod)
-                                                                <span>{{$dod->title ? $dod->title  : ''}},</span>
-                                                                @endforeach
-                                                        </div>
+                                                        @if ($job->dod->count()>0)
+                                                            <div class="service_subtitle2 mt-20 dod-text">
+                                                                <p> Definition of Done (DOD)</p>
+                                                                    @foreach ($job->dod as $dod)
+                                                                    <span>{{$dod->title ? $dod->title  : ''}},</span>
+                                                                    @endforeach
+                                                            </div>
+                                                        @endif
+                                                        
 
                                                         <div>
                                                         @if($job->documents->count()>0)
@@ -97,14 +102,17 @@
                                                         
                                                     </div>
                                                     
-                                                    <div class="service_subtitle2 mt-20"  id="skills_heading">
-                                                        Job Attributes
-                                                    </div>
+                                                    @if ($job->skill->count()>0)    
+                                                        <div class="service_subtitle2 mt-20"  id="skills_heading">
+                                                            Job Attributes
+                                                        </div>
 
                                                     
-                                                    <div id="form_attributes">
-                                                       
-                                                    </div>
+                                                        <div id="form_attributes">
+                                                        
+                                                        </div>
+                                                    @endif
+                                                   
                                                     
 
                                                     

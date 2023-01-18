@@ -239,13 +239,9 @@
                                                  class="standard-btn mr-15">@lang('Edit Software')</a>
                                             @else
                                             
-                                            @if ($software->isBooked())
-                                                <a href="#"  class="standard-btn mr-15">@lang('Booked Software')</a>
-                                            @else
-                                                <a href="{{route('buyer.software.book',$software->uuid)}}" name="book_software_btn"  
-                                                    class="standard-btn mr-15">@lang('Book software')</a>
-                                            @endif
-                                        
+                                           
+                                            <a href="{{ $software->isBooked() ? '#' : route('buyer.software.book',$software->uuid)}}"  class="standard-btn mr-15">@lang($software->isBooked() ? 'Booked Software' :'Create Booking Job')</a>
+                                           
                                             <a href="{{route('chat.start.message',[$software->uuid,'Software'])}}" 
                                                class="standard-btn">@lang('Message')</a>
                                             @endif
