@@ -27,7 +27,7 @@
                             </div>
                             {{-- Module --}}
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Module')*</label>
+                                <label>@lang('Module')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="module" >
                                     <option selected="" disabled="">@lang('Select Module')</option>
                                     @foreach($modules as $module)
