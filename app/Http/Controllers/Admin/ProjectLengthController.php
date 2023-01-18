@@ -21,7 +21,7 @@ class ProjectLengthController extends Controller
     {
     	$pageTitle = "Manage All Project length";
     	$emptyMessage = "No data found";
-    	$project_lengths = ProjectLength::with('modules')->latest()->paginate(getPaginate());
+    	$project_lengths = ProjectLength::with('module')->latest()->paginate(getPaginate());
     	return view('admin.project_length.index', compact('pageTitle', 'emptyMessage', 'project_lengths'));
     }
 
