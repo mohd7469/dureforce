@@ -47,7 +47,7 @@ class JobController extends Controller
 
         $data['countries'] = World::Countries();
 
-        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
+        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
