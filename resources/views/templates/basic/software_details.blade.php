@@ -238,16 +238,16 @@
                                                 <a href="{{ route('user.software.create', [$software->id])}}"
                                                  class="standard-btn mr-15">@lang('Edit Software')</a>
                                             @else
-                                                {{-- <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
-                                                Developer')</a> --}}
-                                                <a href="{{url('coming-soon')}}"
-                                                 class="standard-btn mr-15">@lang('Book
-                                                Developer')</a>
-
-                                                <a href="{{route('chat.start.message',[$software->uuid,'Software'])}}" 
-                                               
-                                                class="standard-btn">@lang('Message')</a>
+                                            
+                                            @if ($software->isBooked())
+                                                <a href="#"  class="standard-btn mr-15">@lang('Booked Software')</a>
+                                            @else
+                                                <a href="{{route('buyer.software.book',$software->uuid)}}" name="book_software_btn"  
+                                                    class="standard-btn mr-15">@lang('Book software')</a>
+                                            @endif
+                                        
+                                            <a href="{{route('chat.start.message',[$software->uuid,'Software'])}}" 
+                                               class="standard-btn">@lang('Message')</a>
                                             @endif
                                             
                                         </div>
@@ -377,6 +377,44 @@
                     '<a href="javascript:void(0)" id="readmore" class="standard-btn-sm">Read more</a>');
         });
     });
+    $(document).on("click","a[name='book_software_btn']", function (e) {
+        e.preventDefault();
+        BookSoftwareConfirmation($(this).attr('href'));
+    });
+    function BookSoftwareConfirmation(book_software_route){
+        const swalWithBootstrapButtons = Swal.mixin(   
+        {
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+        title: 'Are you sure you want to book software ?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, Book software!',
+        cancelButtonText: 'No, Cancel!',
+        reverseButtons: true
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                window.location.replace(book_software_route);
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Software Booking has been cancelled :)',
+                    'error'
+                )
+            }
+        })
+    }
 </script>
     <script>
         'use strict';

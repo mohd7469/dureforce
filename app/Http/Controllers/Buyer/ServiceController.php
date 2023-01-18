@@ -6,6 +6,7 @@ use App\Models\Job;
 use App\Models\JobType;
 use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -18,12 +19,12 @@ class ServiceController extends Controller
     }
 
     public function bookService(Request $request,$uuid){
-        
+        DB::beginTransaction();
         try {
            
             $user=auth()->user();
-            $service=Service::where('uuid',$uuid)->firstOrFail();
-            
+            $service=Service::with('defaultProposal.attachments')->where('uuid',$uuid)->firstOrFail();
+
             $job=Job::create([
                 "user_id"   => $user->id,
                 "job_type_id"   => JobType::$OneTime,
@@ -47,14 +48,19 @@ class ServiceController extends Controller
 
             ]);
 
-            Log::info('Service Booed SuccessFully');
+            $service_proposal=$service->defaultProposal;
+            $job_proposal=$job->proposal()->create($service_proposal->toArray());
+            $job_proposal->attachment()->createMany($service_proposal->attachments->toArray());
+            DB::commit();
+            Log::info('Service Booked SuccessFully');
             $notify[] = ['success','Service Booked SuccessFully'];
             return redirect()->back()->withNotify($notify);
 
         } catch (\Throwable $th) {
+            DB::rollBack();
 
             Log::error(['Error In Booking Service' => $th->getMessage()]);
-            $notify[] = ['error','Failled to book service'];
+            $notify[] = ['error',"Failled To Book Service"];
             return redirect()->back()->withNotify($notify);
 
         }
