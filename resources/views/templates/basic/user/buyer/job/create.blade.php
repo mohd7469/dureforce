@@ -139,7 +139,7 @@
                                             {{-- Weekly Range start --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range" >
 
-                                                <label>@lang('Weekly Range(Starting)')*</label>
+                                                <label>@lang('Hourly rate(Starting)')*</label>
                                                 <input type="number" step="any" class="form-control" name="hourly_start_range" value="" placeholder="" >
 
                                             </div>
@@ -147,7 +147,7 @@
                                             {{-- Weekly Range end --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range">
 
-                                                <label>@lang('Weekly Range(Ending)')*</label>
+                                                <label>@lang('Hourly rate(Ending)')*</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" class="form-control" step="any" name="hourly_end_range" value="" placeholder="" >
                                                 </div>
@@ -184,9 +184,9 @@
 
                                               {{-- dod --}}
                                         <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                            <label>@lang('Defination of Done(DOD)')*</label>
+                                            <label>@lang('Definition of Done(DOD)')*</label>
                                                 <div class="input-group mb-3">
-                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Definition of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
                                                         @foreach($data['dods'] as $item)
                                                             <option value="{{__($item->id)}}">{{__($item->title)}}</option>
                                                         @endforeach
