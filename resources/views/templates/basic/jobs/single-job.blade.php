@@ -59,23 +59,28 @@
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content" >
                                                             {!!$job->description !!}
+                                                        @if ($job->deliverable->count() > 0)
+                                                            <div class="service_subtitle2 mt-20 dod-text">
+                                                                <p> Deliverables</p>
+                                                                    @foreach ($job->deliverable as $deliverable)
+                                                                    
+                                                                    <span> {{$deliverable->name}},</span>
+                                                                    
+                                                                    @endforeach
+                                                            </div>
+                                                        @endif
                                                         
-                                                        <div class="service_subtitle2 mt-20 dod-text">
-                                                            <p> Deliverables</p>
-                                                                @foreach ($job->deliverable as $deliverable)
-                                                                
-                                                                <span> {{$deliverable->name}},</span>
-                                                                
-                                                                @endforeach
-                                                        </div>
                                                     
 
-                                                        <div class="service_subtitle2 mt-20 dod-text">
-                                                            <p> Definition of Done (DOD)</p>
-                                                                @foreach ($job->dod as $dod)
-                                                                <span>{{$dod->title ? $dod->title  : ''}},</span>
-                                                                @endforeach
-                                                        </div>
+                                                        @if ($job->dod->count()>0)
+                                                            <div class="service_subtitle2 mt-20 dod-text">
+                                                                <p> Definition of Done (DOD)</p>
+                                                                    @foreach ($job->dod as $dod)
+                                                                    <span>{{$dod->title ? $dod->title  : ''}},</span>
+                                                                    @endforeach
+                                                            </div>
+                                                        @endif
+                                                        
 
                                                         <div>
                                                         @if($job->documents->count()>0)
@@ -97,14 +102,17 @@
                                                         
                                                     </div>
                                                     
-                                                    <div class="service_subtitle2 mt-20"  id="skills_heading">
-                                                        Job Attributes
-                                                    </div>
+                                                    @if ($job->skill->count()>0)    
+                                                        <div class="service_subtitle2 mt-20"  id="skills_heading">
+                                                            Job Attributes
+                                                        </div>
 
                                                     
-                                                    <div id="form_attributes">
-                                                       
-                                                    </div>
+                                                        <div id="form_attributes">
+                                                        
+                                                        </div>
+                                                    @endif
+                                                   
                                                     
 
                                                     
@@ -148,7 +156,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Est. Project Duration</span>
-                                                        <p>{{$job->project_length->name}}</p>
+                                                        <p>{{$job->project_length ? $job->project_length->name : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
@@ -158,12 +166,12 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Stage</span>
-                                                        <p>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</p>
+                                                        <p>{{$job->projectStage ? $job->projectStage->title  : ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Experience Level</span>
-                                                        <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                                                        <p>{{$job->rank ?  $job->rank->level : ''}}</p>
                                                     </li>
                                                 </ul>
 

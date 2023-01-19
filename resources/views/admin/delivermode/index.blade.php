@@ -16,13 +16,16 @@
     position: relative;
     right: 50px;
 }
-
+a.disabled{
+        pointer-events: none;
+        cursor: default;
+    }
 
 </style>
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.deliver.create') }} " class="btn btn-primary btn-sm float-right">Create Deliver Mode Detail</a>
+        <a href="{{ route('admin.deliver.create') }} " class="btn btn-primary btn-sm float-right">Create delivery Mode Detail</a>
     </div>
 </div>
 <br>
@@ -75,7 +78,7 @@
                                
                                      {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
                                
-                                    <a type="submit"  href="{{route('admin.deliver.delete', $deliver->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                    <a type="submit"  href="{{route('admin.deliver.delete', $deliver->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
                                     <td data-label="@lang('Action')">

@@ -14,6 +14,11 @@ class ProjectLength extends Model
         return $query->where('module_id',Module::$Job);
     }
 
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
+
     public function jobs()
     {
         return $this->hasMany(Job::class,'project_length_id');

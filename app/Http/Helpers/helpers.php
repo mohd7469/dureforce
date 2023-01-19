@@ -116,6 +116,7 @@ function getNumber($length = 8)
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
 {
+    
     $filename = '';
     try {
 
@@ -140,6 +141,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
         try {
 
             $properties = $blobClient->GetContainerProperties($container);
+            
         } catch (ServiceException $e) {
             error($e);
             $blobClient->createContainer($container, $createContainerOptions);
@@ -310,7 +312,8 @@ function bannerTypeDynamic($model){
 function getFile($model){
     if($model){
         if($model->banner){
-            return  $model->banner->url;
+            if(!$model->banner->default_lead_image_id)
+                return  $model->banner->url;
         }
     }
     return '';
@@ -344,16 +347,10 @@ function getSoftwareFee($software){
     }
     return '';
 }
-function getImagesByCategory($model, $type='logo'){
+function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
     
-    $query=BannerBackground::query();
-    if($type == 'logo'){
-        $query= $query->logos();
-    }
-    else{
-        $query= $query->background();
-    }
-
+    $query=BannerBackground::where('document_type',$type);
+    
     if($model->category_id){
        
         $query= $query->where('category_id',$model->category_id);
@@ -366,11 +363,91 @@ function getImagesByCategory($model, $type='logo'){
     return $query->latest()->get();
 }
 
-function selectedBackgroundImage($model,$banner_background_id){
+function selectedBackgroundImage($model,$banner_background_id,$column){
     if($model){
         if($model->banner){
-            return $model->banner->banner_background_id == $banner_background_id ? 'checked' : '';
+            return $model->banner->$column == $banner_background_id ? 'checked' : '';
         }
+    }
+    return '';
+}
+function getLeadImageUrl($model){
+    if($model){
+        if($model->banner){
+            if($model->banner->defaultLeadImage)
+                return $model->banner->defaultLeadImage->url;
+            else
+                return $model->banner->url;
+        }
+    }
+}
+function IsDefaultLeadImage($model,$type){
+    if($model){
+        if($model->banner){
+            if($model->banner->lead_image_type==$type ){
+                return  'block';
+            }
+
+        }
+        
+    }
+    return 'none';
+}
+
+function getServiceProposalData($model){
+    $proposal['hourly_bid_rate']   = '';
+    $proposal['amount_receive']    = '';
+    $proposal['start_hour_limit']  = '';
+    $proposal['end_hour_limit']    = '';
+    $proposal['delivery_mode_id']  = '';
+    $proposal['cover_letter']      = '';
+    $proposal['attachments']       = [];
+
+    if($model && $model->defaultProposal){
+        $proposal['hourly_bid_rate']   = $model->defaultProposal->hourly_bid_rate;
+        $proposal['amount_receive']    = $model->defaultProposal->amount_receive;
+        $proposal['start_hour_limit']  = $model->defaultProposal->start_hour_limit;
+        $proposal['end_hour_limit']    = $model->defaultProposal->end_hour_limit;
+        $proposal['delivery_mode_id']  = $model->defaultProposal->delivery_mode_id;
+        $proposal['cover_letter']      = $model->defaultProposal->cover_letter;
+        $proposal['attachments']       = $model->defaultProposal->attachments;
+
+    }
+    return $proposal;
+}
+
+function getSoftwareProposalData($model){
+    
+    $proposal['fixed_bid_amount']   = '';
+    $proposal['amount_receive']    = '';
+    $proposal['project_start_date']  = '';
+    $proposal['project_end_date']    = '';
+    $proposal['delivery_mode_id']  = '';
+    $proposal['cover_letter']      = '';
+    $proposal['attachments']       = [];
+
+    if($model && $model->defaultProposal){
+        $proposal['fixed_bid_amount']    = $model->defaultProposal->fixed_bid_amount;
+        $proposal['amount_receive']      = $model->defaultProposal->amount_receive;
+        $proposal['project_start_date']  = $model->defaultProposal->project_start_date;
+        $proposal['project_end_date']    = $model->defaultProposal->project_end_date;
+        $proposal['delivery_mode_id']  = $model->defaultProposal->delivery_mode_id;
+        $proposal['cover_letter']      = $model->defaultProposal->cover_letter;
+        $proposal['attachments']       = $model->defaultProposal->attachments;
+
+    }
+    return $proposal;
+}
+
+function isCustomSelected($model,$type){
+    if($model){
+        if($model->banner){
+            if($model->banner->lead_image_type==$type ){
+                return  'selected';
+            }
+
+        }
+        
     }
     return '';
 }

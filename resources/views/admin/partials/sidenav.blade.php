@@ -731,7 +731,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('12', $staffAccess))
+                {{-- @if (in_array('12', $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.features.index') }}">
                         <a href="{{ route('admin.features.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.features.index') }}">
@@ -739,7 +739,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             <span class="menu-title">@lang('Features') </span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 @if (in_array('13', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
@@ -1048,14 +1048,113 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
                 <!-- End Technology logo -->
+                <!-- lead images -->
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.leadImages*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Lead images')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.leadImages*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.leadImages.index') }} ">
+                                    <a href="{{ route('admin.leadImages.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Lead images')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.leadImages.active']) }} ">
+                                    <a href="{{ route('admin.leadImages.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Lead images')</span>
+                                        @if ($leadingImageActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $leadingImageActive }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.leadImages.inActive']) }} ">
+                                    <a href="{{ route('admin.leadImages.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Lead images')</span>
+                                        @if ($leadingImageInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $leadingImageInactive }}
+                                            </span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <!-- End lead images -->
+
+                <!-- lead Project Lenght -->
+                <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.projectLength*', 3) }}">
+                            <i class="menu-icon la la-mobile"></i>
+                            <span class="menu-title">@lang('Project Lenght')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.projectLength*', 2) }} ">
+                            <ul>
+                                <li class="sidebar-menu-item {{ menuActive('admin.projectLength.index') }} ">
+                                    <a href="{{ route('admin.projectLength.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('All Project Lenghts')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.projectLength.active']) }} ">
+                                    <a href="{{ route('admin.projectLength.active') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Active Project Lenghts')</span>
+                                        @if ($projectLengthActive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $projectLengthActive }}</span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive(['admin.projectLength.inActive']) }} ">
+                                    <a href="{{ route('admin.projectLength.inActive') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('InActive Project Lenghs')</span>
+                                        @if ($projectLengthInactive)
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">{{ $projectLengthInactive }}
+                                            </span>
+                                        @else 
+                                            <span
+                                                class="menu-badge pill bg--primary ml-auto">0
+                                            </span>       
+                                        @endif
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                <!-- End lead images -->
 
                 {{-- @if (in_array('34', $staffAccess)) --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
-                        <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.email*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Email image settings')</span>
                         </a>
-                        <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                        <div class="sidebar-submenu {{ menuActive('admin.email*', 2) }} ">
                             <ul>
                                 <!-- <li class="sidebar-menu-item {{ menuActive('admin.email.create') }} ">
                                     <a href="{{ route('admin.email.create') }}" class="nav-link">
@@ -1098,11 +1197,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 <!-- End email template -->
                 {{-- asdc --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.soft*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
                         <span class="menu-title">@lang('Software Default ')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('admin.soft*', 2) }} ">
                         <ul>
                             <!-- <li class="sidebar-menu-item {{ menuActive('admin.email.create') }} ">
                                 <a href="{{ route('admin.email.create') }}" class="nav-link">
@@ -1122,11 +1221,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 </li>
                 {{-- Deliveable crud  --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.deliverable*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
                         <span class="menu-title">@lang('Deliverables')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('admin.deliverable*', 2) }} ">
                         <ul>
                             
                             <li class="sidebar-menu-item {{ menuActive('admin.deliverable.index') }} ">
@@ -1142,11 +1241,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 {{-- end deleverable --}}
                  {{-- DoDS crud  --}}
                  <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.dod*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
                         <span class="menu-title">@lang('DODS')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('admin.dod*', 2) }} ">
                         <ul>
                             
                             <li class="sidebar-menu-item {{ menuActive('admin.dod.index') }} ">
@@ -1162,11 +1261,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                  {{-- end DoDS --}}
                   {{-- Deliver Mode crud  --}}
                   <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.deliver*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
                         <span class="menu-title">@lang('Delivery Mode')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('admin.deliver*', 2) }} ">
                         <ul>
                             
                             <li class="sidebar-menu-item {{ menuActive('admin.deliver.index') }} ">
@@ -1181,32 +1280,14 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 </li>
                    {{-- End Deliver Mode crud  --}}
                    
-                   {{-- Category Mode crud  --}}
-                   <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
-                        <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Category')</span>
-                    </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
-                        <ul>
-                            
-                            <li class="sidebar-menu-item {{ menuActive('admin.deliver.index') }} ">
-                                <a href="{{ route('admin.category.index') }}" class="nav-link">
-                                    <i class="menu-icon las la-dot-circle"></i>
-                                    <span class="menu-title">@lang('Add Category ')</span>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                </li>
+                   
                 {{-- System Email Creditional Mode crud  --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.credential*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
                         <span class="menu-title">@lang('Email Credentials')</span>
                     </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.banner*', 2) }} ">
+                    <div class="sidebar-submenu {{ menuActive('admin.credential*', 2) }} ">
                         <ul>
                             
                             <li class="sidebar-menu-item {{ menuActive('admin.credential.index') }} ">
@@ -1220,6 +1301,251 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </div>
                 </li>
                   {{-- End System Email Creditional Mode crud  --}}
+                
+                  {{--Redis Creditional Mode crud  --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.redis*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Redis Credentials')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.redis*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.redis.credential.index') }} ">
+                                <a href="{{ route('admin.redis.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Redis Credentials ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End Redis Creditional Mode crud  --}}
+
+                {{--pusher Creditional Mode crud  --}}
+                <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.pusher*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Pusher Credentials')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.pusher*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.pusher.credential.index') }} ">
+                                <a href="{{ route('admin.pusher.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Pusher Credentials ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End pusher Creditional Mode crud  --}}
+
+                   {{-- Job Type Mode crud  --}}
+                   <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.type*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Jobs Type')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.type*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.type.index') }} ">
+                                <a href="{{ route('admin.type.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Job Type ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                   {{-- End Job Type Mode crud  --}}
+                   {{-- Feature Mode crud  --}}
+                   <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.feature*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Features')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.feature*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.feature.index') }} ">
+                                <a href="{{ route('admin.feature.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Features ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                   {{-- End Feature Mode crud  --}}
+                   {{-- Budget Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.budget.type*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Budget Type')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.budget.type*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.budget.type.index') }} ">
+                                    <a href="{{ route('admin.budget.type.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Budget Type')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End Budget Mode crud  --}}
+                    {{-- Degree Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.degree*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Degrees')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.degree*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.degree.index') }} ">
+                                    <a href="{{ route('admin.degree.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Degrees ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End Degree Mode crud  --}}
+                    {{-- World countries Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.world.country*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('World Countries')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.world.country*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.world.country.index') }} ">
+                                    <a href="{{ route('admin.world.country.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add World country')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- World cities Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.world.city*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('World Cities')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.world.city*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.world.city.index') }} ">
+                                    <a href="{{ route('admin.world.city.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add World City ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End World cities Mode crud  --}}
+
+                    {{-- World Languag Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.world.language*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('World Languags')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.world.language*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.world.language.index') }} ">
+                                    <a href="{{ route('admin.world.language.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add World Languag ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- End World language Mode crud  --}}
+
+                       {{-- Language Level Mode crud  --}}
+                    <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.language.level*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Language Levels')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.language.level*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.language.level.index') }} ">
+                                    <a href="{{ route('admin.language.level.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Add Language Levels ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                       {{-- End Language Level Mode crud  --}}   
+                  
+                  {{-- Project Stage Mode crud  --}}
+                  <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.project*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Project Stages')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.project*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.project.index') }} ">
+                                <a href="{{ route('admin.project.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Project Stage ')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End Project Stage Mode crud  --}}
+                  {{-- Tag Crud --}}
+                  <li class="sidebar-menu-item sidebar-dropdown">
+                    <a href="javascript:void(0)" class="{{ menuActive('admin.tag*', 3) }}">
+                        <i class="menu-icon las la-life-ring"></i>
+                        <span class="menu-title">@lang('Tags')</span>
+                    </a>
+                    <div class="sidebar-submenu {{ menuActive('admin.tag*', 2) }} ">
+                        <ul>
+                            
+                            <li class="sidebar-menu-item {{ menuActive('admin.tag.index') }} ">
+                                <a href="{{ route('admin.tag.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Tags')</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                  {{-- End Tag Crud --}}
 
                    {{-- category Mode crud  --}}
                 <li class="sidebar__menu-header">@lang('Settings')</li>

@@ -78,14 +78,13 @@
                                                     <div class="col-md-8" style="text-align:left">
 
                                                         <h4 class="pname-c">
-
-                                                            {{$proposal->user->full_name}}
+                                                            {{$proposal->user ? $proposal->user->full_name : ''}}
 
                                                         </h4>
 
-                                                        <p class="pdesination-c"> {{$proposal->user->job_title}} </p>
+                                                        <p class="pdesination-c"> {{$proposal->user ? $proposal->user->job_title : ''}} </p>
 
-                                                        <p class="plocation"><span style="margin-right: 60px;">{{$proposal->user->location }}</span></p>
+                                                        <p class="plocation"><span style="margin-right: 60px;">{{$proposal->user ? $proposal->user->location : '' }}</span></p>
 
 
                                                     </div>
@@ -98,16 +97,16 @@
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Rate Per Hour</p>
 
-                                                            <p class="perhourprice">${{$proposal->user->rate_per_hour}} / Per Hour</p>
+                                                            <p class="perhourprice">${{$proposal->user ?$proposal->user->rate_per_hour : ''}} / Per Hour</p>
 
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Total Earnings</p>
-                                                        <p class="perhourprice">$120k + earned</p>
+                                                        <p class="perhourprice">Coming Soon</p>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Job Success Rate</p>
-                                                        <p class="perhourprice">90%</p>
+                                                        <p class="perhourprice">Coming Soon</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,10 +136,11 @@
                                         </div>
                                         <!--Product Description End-->
                                         <!--Skills Section Start-->
+                                        @if ($proposal->user)
                                         <div class="row skills-c">
                                             <div class="col-md-6 col-lg-6" style="text-align: left;">
 
-                                                <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
+                                                <h2>Has {{count($proposal->user ? $proposal->user->skills : collect([]))}} relevant skills to your job</h2>
 
                                                 @foreach($proposal->user->skills as $skill)
 
@@ -176,6 +176,8 @@
                                             </div>
                                             @endif
                                         </div>
+                                        @endif
+                                        
                                         <hr>
                                     </div>
                                     @endforeach
@@ -265,11 +267,11 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <p class="rateperh">Total Earnings</p>
-                                                            <p class="perhourprice">$120k + earned</p>
+                                                            <p class="perhourprice">Coming Soon</p>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <p class="rateperh">Job Success Rate</p>
-                                                            <p class="perhourprice">90%</p>
+                                                            <p class="perhourprice">Coming Soon</p>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithAll($query){
 
-        return $query->with('categories')->with('languages')->with('basicProfile')->with('experiences')->with('education')->with('skills')->with('portfolios');
+        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios');
 
     }
 
@@ -353,6 +353,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo(Country::class);
     }
+  
     public function user_basic()
     {
         return $this->hasOne(UserBasic::class);

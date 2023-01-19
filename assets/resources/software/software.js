@@ -10,6 +10,9 @@ let manual_title_field='<input type="text" name="module_title[]" id="" class="fo
 let manual_title_label="(switch to add manual title)";
 let select_module_title_label="(switch to select title)";
 let select_module_title='';
+let default_lead_image=$("input[name='default_lead_image_id']");
+let lead_image_div=$('#lead_image_upload_div_id');
+let default_lead_image_div=$('#default_lead_image_div');
 
 "use strict";
 $(document).ready(function () {
@@ -29,6 +32,20 @@ $(document).ready(function () {
     tags: true
   });
   
+  $('#lead_image_type_id').on('change', function(){
+    var lead_image_type = $(this).val();
+    if(lead_image_type=='Default'){
+
+        default_lead_image_div.show();
+        lead_image_div.hide();
+
+    }
+    else{
+      lead_image_div.show();
+      default_lead_image_div.hide();
+    }
+
+  });
 
   $("#add-more-service").click(function () {
     add_on_service_row_number+=1;
@@ -246,6 +263,7 @@ function validateUrl(value){
       text: 'Please Enter Valid Banner Video URL',
     })
   }else{
+    
     previewVideo(value);
 
   }
@@ -503,25 +521,34 @@ function baannerForm() {
               position: "topRight",
             });
           }
-          if (
-            $("#lead_image").val().length < 1 &&
-            !$("input[name='dynamic_banner_image']").attr("value")
-          ) 
-            {
-            
-              e.preventDefault();
-              console.log($("input[name='dynamic_banner_image']").attr("value"));
-
-              $("#lead_image").after(
-                '<span class="error text-danger">This field is required</span>'
-              );
-
+         
+              if($('#lead_image_type_id').val()=='Custom' &&  $("#lead_image").val().length < 1 &&
+                  !$("input[name='dynamic_banner_image']").attr("value")){
+                  e.preventDefault();
+                  let lead_image_message="Please Upload Your Custom Lead Image";
+                  $("#lead_image").after(
+                    '<span class="error text-danger " style="margin-top:5px !important;">'+lead_image_message+'</span>'
+                  );
+                  
+                  iziToast.error({
+                    message: lead_image_message,
+                    position: "topRight",
+                  });
+              }
+              if($('#lead_image_type_id').val()=='Default' && $('input:radio[name="default_lead_image_id"]:checked').length < 1){
+                e.preventDefault();
+                let lead_image_message="Please Select an image from default lead images";
+                $("#default_lead_img_error").after(
+                  `<span class="error text-danger">`+lead_image_message+`</span>`
+                );
+                
               iziToast.error({
-                message: "Lead Image is required",
+                message: lead_image_message,
                 position: "topRight",
               });
+            }
 
-          }
+          
           if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
             iziToast.error({
               message: "Technology Logos are required",

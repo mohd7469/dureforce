@@ -9,7 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class JobType extends Model
 {
     use HasFactory,SoftDeletes;
-    protected $fillable = ['title','module_id'];
+    protected $fillable = ['title','module_id','is_active'];
+    public static  $OneTime = 1;
+    public static  $ONGoing = 2;
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);

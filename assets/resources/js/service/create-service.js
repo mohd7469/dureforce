@@ -5,7 +5,9 @@ let selector = $(".attribute-selector");
 let back = $(".back");
 let front = $(".front");
 let add_on_service_row_number='';
-
+let default_lead_image=$("input[name='default_lead_image_id']");
+let lead_image_div=$('#lead_image_upload_div_id');
+let default_lead_image_div=$('#default_lead_image_div');
 "use strict";
 $(document).ready(function () {
   var service_id=$('#service_id').val();
@@ -34,6 +36,22 @@ $(document).ready(function () {
   //     back.show();
   //   }
   // }
+
+  $('#lead_image_type_id').on('change', function(){
+    var lead_image_type = $(this).val();
+    if(lead_image_type=='Default'){
+
+        default_lead_image_div.show();
+        lead_image_div.hide();
+
+    }
+    else{
+      lead_image_div.show();
+      default_lead_image_div.hide();
+    }
+
+  });
+
 
   $("#add-more-service").click(function () {
     addOnServiceContainer.append(addOnServiceRow());
@@ -136,6 +154,7 @@ function removeExtraService(row) {
     row.remove();
   }
 }
+
 $("#category").on("change", function () {
   var category = $(this).val();
   $.ajax({
@@ -161,6 +180,7 @@ $("#category").on("change", function () {
     },
   });
 });
+
 $(document).on("change", ".custom-file-input", function () {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -420,24 +440,36 @@ function baannerForm() {
           message: "Background Image is required",
           position: "topRight",
         });
-        if(
-            $("#lead_image").val().length < 1 &&
-            !$("input[name='dynamic_banner_image']").attr("value")
-          ) {
-            e.preventDefault();
-            console.log($("input[name='dynamic_banner_image']").attr("value"));
-    
-            $("#lead_image").after(
-              '<span class="error text-danger " style="margin-top:5px !important;">This field is required</span>'
-            );
-            iziToast.error({
-              message: "Lead Image is required",
-              position: "topRight",
-            });
-        }
+        
       }
 
       
+      if($('#lead_image_type_id').val()=='Custom' &&  $("#lead_image").val().length < 1 &&
+          !$("input[name='dynamic_banner_image']").attr("value")){
+        e.preventDefault();
+        let lead_image_message="Please Upload Your Custom Lead Image";
+        $("#lead_image").after(
+          '<span class="error text-danger " style="margin-top:5px !important;">'+lead_image_message+'</span>'
+        );
+        
+        iziToast.error({
+          message: lead_image_message,
+          position: "topRight",
+        });
+    }
+    if($('#lead_image_type_id').val()=='Default' && $('input:radio[name="default_lead_image_id"]:checked').length < 1){
+      e.preventDefault();  
+      let lead_image_message="Please Select an image from default lead images";
+        $("#default_lead_img_error").after(
+          `<span class="error text-danger">`+lead_image_message+`</span>`
+        );
+        
+      iziToast.error({
+        message: lead_image_message,
+        position: "topRight",
+      });
+    }
+
       if($("input:checkbox[name='technology_logos[]']:checked").length <= 0){
         iziToast.error({
           message: "Technology Logos are required",
@@ -574,8 +606,8 @@ function validateAddOnRows(element, e) {
 
 }
 function deleteAddOnRow(row_id){
-  $(row_id).remove();
-  add_on_service_row_number-=1;
+    $(row_id).remove();
+    add_on_service_row_number-=1;
 }
 function addOnServiceRow() {
   return `<div class="row add-ons" id="add-on-row-id-`+add_on_service_row_number+`">
@@ -588,12 +620,12 @@ function addOnServiceRow() {
             <div class="col-xl-4 col-lg-4 col-sm-12 col-xs-12 form-group">
                 <label>Per Hour Rate</label>
                 <input type="number" class="form-control add_on_price" name="service_add_ons[`+add_on_service_row_number+`][rate_per_hour]"  
-                    placeholder="per hour rate" id="add_on_price" step="any" >
+                    placeholder="per hour rate" id="add_on_price" step="any" oninput="this.value = Math.abs(this.value)">
             </div>
           
             <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12  form-group">
               <label>Estimated Delivery Time</label>
-              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours">
+              <input type="number" class="form-control add-on-delivery"  name="service_add_ons[`+add_on_service_row_number+`][estimated_delivery_time]"   placeholder="Enter Number of Hours" oninput="this.value = Math.abs(this.value)">
               
           </div>  
           

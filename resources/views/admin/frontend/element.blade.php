@@ -46,6 +46,7 @@
                                                             <small class="mt-2 text-facebook">@lang('Supported files'):
                                                                 <b>@lang('jpeg'), @lang('jpg'), @lang('png')</b>.
                                                                 @if(@$section->element->images->$imgKey->size)
+                                                               
                                                                     | @lang('Will be resized to'):
                                                                     <b>{{@$section->element->images->$imgKey->size}}</b>
                                                                     @lang('px').
@@ -155,7 +156,7 @@
 
                                     <label>@lang('Tag')*</label>
                                     <select class="form-control select2" name="tag[]" multiple="multiple"
-                                            required="">
+                                            >
                                         @if(!empty(@$data->data_values->tag))
                                             @foreach( @$data->data_values->tag  as $name)
                                                 <option value="{{$name}}" selected="true">{{__($name)}}</option>

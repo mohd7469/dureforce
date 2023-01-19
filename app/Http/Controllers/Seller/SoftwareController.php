@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClientRequest;
 use App\Http\Requests\OverviewRequest;
 use App\Http\Requests\ReviewRequest;
+use App\Http\Requests\SoftwareProposalRequest;
 use App\Models\Attribute;
 use App\Models\EntityField;
 use App\Models\Features;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Log;
 class SoftwareController extends Controller
 {
     use DeleteEntity, CreateOrUpdateEntity;
-
+    public $activeTemplate='';
     public function __construct()
     {
         $this->activeTemplate = activeTemplate();
@@ -45,21 +46,23 @@ class SoftwareController extends Controller
     {
         try {
             $pageTitle = "Create software";
-            $completedOverview = $completedBanner = $completedPricing = $completedRequirements = $completedReview = '';
+            $empty='';
+            $completed='completed';
+            $completedOverview = $completedBanner = $completedPricing = $completedProposal =$completedRequirements = $completedReview = $empty;
 
             $features = Features::latest()->get();
             $software = null;
 
             if ($id) {
                 $software = Software::WithAll()->findOrFail($id);
+                $completedOverview = $software->title ? $completed : $empty;
+                $completedPricing = $software->price > 0 ? $completed : $empty;
+                $completedBanner = $software->banner ? $completed : $empty;
+                $completedProposal = $software->defaultProposal ? $completed : $empty;
+                $completedRequirements = $software->requirement_for_client ? $completed : $empty;
+                $completedReview = $software->number_of_simultaneous_projects > 0 ? $completed : $empty;
 
-                $completedOverview = $software->title ? 'completed' : '';
-                $completedPricing = $software->price > 0 ? 'completed' : '';
-                $completedBanner = $software->banner ? 'completed' : '';
-                $completedRequirements = $software->requirement_for_client ? 'completed' : '';
-                $completedReview = $software->number_of_simultaneous_projects > 0 ? 'completed' : '';
             }
-            // dd($completedOverview,$completedPricing,$completedBanner,$completedRequirements,$completedReview);
             Log::info(["features" => $features]);
 
             return view($this->activeTemplate . 'user.seller.software.create', compact(
@@ -68,6 +71,7 @@ class SoftwareController extends Controller
                 'completedOverview',
                 'completedPricing',
                 'completedBanner',
+                'completedProposal',
                 'completedRequirements',
                 'completedReview',
                 'software'
@@ -149,7 +153,33 @@ class SoftwareController extends Controller
             Log::error($exp->getMessage());
         }
     }
+    public function storeProposal(SoftwareProposalRequest $request){
+        try {
 
+            $softwareId = $request->get('software_id');
+            if (empty($request->get('software_id'))) {
+                $notify[] = ['error', 'Recently Created Software is missing.'];
+                return redirect()->route('user.software.create', ['view' => 'step-1'])->withNotify($notify);
+            }
+
+            $software = Software::FindOrFail($softwareId);
+
+            if ($software->banner) {
+
+                $this->saveProposal($request, $software, Attribute::SOFTWARE);
+                $notify[] = ['success', 'Software Proposal Saved Successfully.'];
+                Log::info(["Software" => $software]);
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-5'])->withNotify($notify);
+                
+            } else {
+                $notify[] = ['error', 'Please complete the software banners step first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
+            }
+        } catch (\Exception $exp) {
+            Log::error([$exp->getMessage()]);
+        }
+
+    }
     public function storeRequirements(ClientRequest $request)
     {
         try {
@@ -162,15 +192,15 @@ class SoftwareController extends Controller
 
             $software = Software::FindOrFail($softwareId);
 
-            if (!$software->banner) {
+            if (!$software->defaultProposal) {
                 $notify[] = ['error', 'Please complete the software banners first.'];
-                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-4'])->withNotify($notify);
             }
 
             $this->saveRequirements($request, $software, Attribute::SOFTWARE);
             Log::info(["Software" => $software]);
             $notify[] = ['success', 'Software Requirements Saved Successfully.'];
-            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-5'])->withNotify($notify);
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-6'])->withNotify($notify);
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
         }
@@ -218,7 +248,6 @@ class SoftwareController extends Controller
 
         
     }
-
 
     public function softwareFileDownload($softwareId)
     {
@@ -290,14 +319,25 @@ class SoftwareController extends Controller
     public function destroy($id)
     {
         try {
-            $software = Software::find($id)->delete();
-//        $this->deleteEntity(Software::class, 'software', $id);
-            Log::info(["Software" => $software]);
+            $software = Software::withAll()->find($id);
+            Log::info(["Software Deleted " => $software]);
 
-            $notify[] = ['success', 'software has been uploaded.'];
+            $software->deliverable()->detach();
+            $software->tags()->detach();
+            $software->softwareSteps()->delete();
+            // $software->features()->delete();
+            $this->deleteBannerLogos($software);
+            $software->banner()->delete();
+            $software->modules()->delete();
+            $software->delete();
+
+            $notify[] = ['success', 'Software has been deleted successfully.'];
             return back()->withNotify($notify);
         } catch (\Exception $exp) {
+            
             Log::error($exp->getMessage());
+            $notify[] = ['error', 'Failled to delete Software'];
+            return redirect()->back()->withNotify($notify);
         }
     }
 

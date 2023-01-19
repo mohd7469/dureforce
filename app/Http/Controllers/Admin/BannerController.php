@@ -88,7 +88,7 @@ class BannerController extends Controller
     	$pageTitle = "InActive Banner";
     	$emptyMessage = "No data found";
     	$banners = Banner::where('document_type', 'Background')->where('is_active', 0)->latest()->paginate(getPaginate());
-    	return view('admin.banner.inActive', compact('pageTitle', 'emptyMessage', 'banners'));
+    	return view('admin.banner.inactive', compact('pageTitle', 'emptyMessage', 'banners'));
     }
 
     public function active()
@@ -124,10 +124,6 @@ class BannerController extends Controller
         $notify[] = ['success', 'Banner has been inActive'];
         return redirect()->back()->withNotify($notify);
     }
-    public function destroy($id)
-    {
-        $this->deleteEntity(Banner::class,'job', $id);
-        $notify[] = ['success', 'Job has been deleted'];
-        return back()->withNotify($notify);
-    }
+    
+    
 }

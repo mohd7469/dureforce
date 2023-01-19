@@ -6,6 +6,7 @@ use App\Models\AdminNotification;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Deliverable;
+use App\Models\DeliveryMode;
 use App\Models\Deposit;
 use App\Models\Features;
 use App\Models\Frontend;
@@ -18,6 +19,7 @@ use App\Models\Software\Software;
 use App\Models\Software\SoftwareDefaultStep;
 use App\Models\SupportTicket;
 use App\Models\Tag;
+use App\Models\ProjectLength;
 use App\Models\User;
 use App\Models\Withdrawal;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -70,6 +72,8 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['ranks'] = Rank::where('status', 1)->get();
         $viewShare['features'] = Features::latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
+        $viewShare['delivery_modes'] = DeliveryMode::latest()->get();
+
         $viewShare['software_module_titles'] = SoftwareDefaultStep::latest()->get();
 
         $viewShare['tags'] = Tag::latest()->get();
@@ -111,6 +115,10 @@ class AppServiceProvider extends ServiceProvider
                 'bannerInactive' => Banner::where('document_type', 'Background')->where('is_active', 0)->count(),
                 'technologyLogoActive' => Banner::where('document_type', 'Technology Logo')->where('is_active', 1)->count(),
                 'technologyLogoInactive' => Banner::where('document_type', 'Technology Logo')->where('is_active', 0)->count(),
+                'leadingImageActive' => Banner::where('document_type', 'Leading Image')->where('is_active', 1)->count(),
+                'leadingImageInactive' => Banner::where('document_type', 'Leading Image')->where('is_active', 0)->count(),
+                'projectLengthActive' => ProjectLength::where('is_active', 1)->count(),
+                'projectLengthInactive' => ProjectLength::where('is_active', 0)->count(),
 
             ]);
         });

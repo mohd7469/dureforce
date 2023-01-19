@@ -30,9 +30,13 @@ class Job extends Model
         "hourly_end_range",
         "project_length_id",
         "expected_start_date",
-        "status_id"
+        "status_id",
+        "module_id",
+        "module_type",
+        "is_private"
 
     ];
+
     public const STATUSES = [
         'DRAFT'  =>  17,
         'PENDING'  =>  18,

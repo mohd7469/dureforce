@@ -32,7 +32,7 @@
                                 </div>
                             </td>
                             <td data-label="@lang('Category / SubCategory')">
-                                <span class="font-weight-bold">{{__($banner->category->name)}}</span>
+                                <span class="font-weight-bold">{{($banner->category->name ?? '')}}</span>
                                 <br>
                                 @if($banner->sub_category_id)
                                     <span>{{__($banner->subCategory->name)}}</span>
@@ -79,7 +79,7 @@
                                 <td>
                                     <form action="{{route('admin.banner.destroy', [$banner->id])}}" method="POST" >
                                         @csrf
-                                        <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1"  type="submit">Delete</button>
+                                        <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1 disabled"  type="submit">Delete</button>
                                     </form>
                                 </td>
                                 
@@ -180,7 +180,13 @@
     </div>
 </div>
 @endsection
-
+<style>
+    .disabled{
+        pointer-events: none;
+        cursor: default;
+    }
+   
+</style>
 
 
 @push('script')
@@ -189,7 +195,9 @@
     $('.bannerinactive').on('click', function () {
         var modal = $('#inactiveBy');
         modal.find('input[name=id]').val($(this).data('id'))
+        $('.disabled').addClass('disabled');
         modal.modal('show');
+
     });
 
     $('.banneractive').on('click', function () {

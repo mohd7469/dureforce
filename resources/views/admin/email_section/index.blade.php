@@ -16,7 +16,10 @@
     position: relative;
     right: 49px;
 }
-
+a.disabled{
+        pointer-events: none;
+        cursor: default;
+    }
 
 </style>
 <div class="row">
@@ -99,7 +102,7 @@
                                
                                     {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a> --}}
                                
-                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                    <a type="submit"  href="{{route('admin.email.delete', $email->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a>
                                     <td data-label="@lang('Action')">

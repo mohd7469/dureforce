@@ -95,7 +95,6 @@
     </div>
 </div>
 
-
 <script src="{{asset($activeTemplateTrue.'frontend/js/jquery-3.5.1.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/swiper-bundle.min.js')}}"></script>
@@ -105,6 +104,7 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
+<script src="{{asset($activeTemplateTrue.'frontend/js/sweet-alert.js')}}"></script>
 
 @stack('script-lib')
 @stack('script')

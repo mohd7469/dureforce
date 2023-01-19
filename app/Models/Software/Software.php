@@ -10,9 +10,11 @@ use App\Models\DeliveryMode;
 use App\Models\EntityLogo;
 use App\Models\ExtraSoftware;
 use App\Models\Features;
+use App\Models\Job;
 use App\Models\Milestone;
 use App\Models\ModuleBanner;
 use App\Models\ModuleChatUser;
+use App\Models\ModuleProposal;
 use App\Models\OptionalImage;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
@@ -142,7 +144,7 @@ class Software extends Model
 
     public function banner()
     {
-        return $this->morphOne(ModuleBanner::class,'module')->with('background');
+        return $this->morphOne(ModuleBanner::class,'module')->with('background')->with('defaultLeadImage');
     }
     public function status()
     {
@@ -201,5 +203,20 @@ class Software extends Model
     public function chatUsers()
     {
         return $this->morphMany(ModuleChatUser::class, 'module');
+    }
+
+    public function defaultProposal(){
+        return $this->morphOne(ModuleProposal::class, 'module');
+    }
+    
+    public function Job()
+    {
+        return $this->morphOne(Job::class,'module');
+    }
+
+    function isBooked(){
+        $user=auth()->user();
+        return $this->Job()->where('user_id',$user->id)->exists() ? true:false;
+        
     }
 }

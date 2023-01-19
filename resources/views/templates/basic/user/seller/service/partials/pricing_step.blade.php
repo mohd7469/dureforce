@@ -22,16 +22,16 @@ if (!empty($service)) {
 
                 <div class="col-lg-4 form-group">
                     <label>@lang('Per Hour Rate')*</label>
-                    <input type="number" step="any"  class="form-control" name="price"  id="price"  step="any"
+                    <input type="number" step="any"  class="form-control" name="price"  id="price"  oninput="this.value = Math.abs(this.value)"
                         value="{{ old('price',  floatval(@$service->rate_per_hour) ?: "Enter per hour rate") }}" placeholder="@lang('Enter Eg. $50')"
                        min="0" >
                 </div>
                 <div class="col-lg-4 form-group">
                     <label>@lang('Estimated Delivery Time')*</label>
-                    <input type="number" name="delivery_time" step="any" class="form-control mt-1" id="delivery"
+                    <input type="number" name="delivery_time" step="1" min="0"  class="form-control mt-1" id="delivery"
                         value="{{ old('delivery_time', @$service->estimated_delivery_time) }}"
                         placeholder="@lang('Enter Hours')"
-                           min="0"
+                        oninput="this.value = Math.abs(this.value)"
                     >
                 </div>
                 <div class=" col-lg-4">
@@ -85,13 +85,16 @@ if (!empty($service)) {
                                     <label>@lang('Per Hour Rate')</label>
                                     <input type="number" class="form-control add_on_price" value="{{ floatval($extra->rate_per_hour) ?: 'Enter add on price' }}"
                                         name="service_add_ons[{{$exKey}}][rate_per_hour]"  placeholder="@lang('Per hour rate')"
+                                        oninput="this.value = Math.abs(this.value)"
                                         step="any">
                                 </div>
 
                                 <div class="col-xl-3 col-lg-3 form-group">
                                     <label>@lang(' Estimated Delivery Time ')</label>
                                         <input type="number" class="form-control add-on-delivery" value="{{ $extra->estimated_delivery_time ?: 'Enter delivery' }}"
-                                        name="service_add_ons[{{$exKey}}][estimated_delivery_time]" id="add_on_delivery"  placeholder="@lang('Enter Days')">
+                                        name="service_add_ons[{{$exKey}}][estimated_delivery_time]" id="add_on_delivery"  placeholder="@lang('Enter Days')"
+                                        oninput="this.value = Math.abs(this.value)"
+                                        >
                                 </div>
                                     @if($exKey>0)
                                         <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
@@ -117,13 +120,13 @@ if (!empty($service)) {
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang('Per Hour Rate')</label>
                                 <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
-                                    placeholder="@lang('Per hour rate')" id="add_on_price"  >
+                                    placeholder="@lang('Per hour rate')" id="add_on_price" oninput="this.value = Math.abs(this.value)" >
                             </div>
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang(' Estimated Delivery Time ')</label>
                                     <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
-                                    placeholder="@lang('Enter Hours')" >
+                                    placeholder="@lang('Enter Hours')" oninput="this.value = Math.abs(this.value)">
                             </div>
                         </div>
 

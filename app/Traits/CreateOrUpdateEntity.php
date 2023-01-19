@@ -4,12 +4,15 @@ namespace App\Traits;
 
 use App\Models\AdminNotification;
 use App\Models\Attribute;
+use App\Models\BannerLogo;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
+use App\Models\Module;
 use App\Models\ModuleBanner;
 use App\Models\OptionalImage;
 use App\Models\Service;
 use App\Models\ServiceAttribute;
+use App\Models\ServiceFee;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
 use App\Models\Software\Software;
@@ -19,6 +22,8 @@ use App\Models\SoftwareAttribute;
 use App\Models\SoftwareProvidingStep;
 use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Stmt\TryCatch;
 
 trait CreateOrUpdateEntity {
 
@@ -209,8 +214,6 @@ trait CreateOrUpdateEntity {
                 }
             }
 
-
-
         });
         $this->updateStatus($request,$model);
 
@@ -218,31 +221,45 @@ trait CreateOrUpdateEntity {
     }
 
     public function uploadBanner($model,$file,$banner_type){
-        $banner=null;
-        $path = imagePath()['attachments']['path'];
-
-        $model->banner()->delete();
-        $filename = uploadAttachments($file, $path);
-        $file_extension = getFileExtension($file);
-        $url = $path . '/' . $filename;
-        $uploaded_name = $file->getClientOriginalName();
-        $banner=$model->banner()->create([
-            'banner_type' => $banner_type,
-            'name' => $filename,
-            'uploaded_name' => $uploaded_name,
-            'url'           => $url,
-            'type' =>$file_extension,    
-        ]);
-        return $banner;
+        try {
+            $banner=null;
+            $path = imagePath()['attachments']['path'];
+    
+            // $model->banner()->delete();
+            $filename = uploadAttachments($file, $path);
+            $file_extension = getFileExtension($file);
+            $url = $path . '/' . $filename;
+            $uploaded_name = $file->getClientOriginalName();
+            $banner=$model->banner()->create([
+                'banner_type' => $banner_type,
+                'name' => $filename,
+                'uploaded_name' => $uploaded_name,
+                'url'           => $url,
+                'type' =>$file_extension,
+                'default_lead_image_id' => null    
+            ]);
+            return $banner;
+        } catch (\Throwable $th) {
+            Log::error(["Error In Uploading Banner: ". $th->getMessage()]);
+            throw $th;
+        }
+        
         
     }
-    
+    public function deleteBannerLogos($model){
+        $model->load('banner');
+        if($model->banner){
+            BannerLogo::where('module_banner_id',$model->banner->id)->delete();
+
+        }
+
+    }
     public function saveBanner($request, $model, $type = Attribute::SERVICE, $imageStorePath = 'service', $optionalImageStorePath="") : bool 
     {   
-        
         if(($request->type)) {
-            try {
+            DB::beginTransaction();
 
+            try {
                 if($request->type == ModuleBanner::$Static){
                     if($request->hasFile('image')){
                         $model->banner()->delete();
@@ -253,15 +270,30 @@ trait CreateOrUpdateEntity {
                 }
                 elseif($request->type == ModuleBanner::$Dynamic)
                 {
+                    
+                    if($request->has('dynamic_banner_image') || $request->has('default_lead_image_id')){
+                        
+                        if($model->banner){
+                            $this->deleteBannerLogos($model);
+                            $model->banner()->delete();
+                            $model->save();
+                        }
 
-                    if($request->hasFile('dynamic_banner_image')){
-                        $model->banner()->delete();
-                        $banner=$this->uploadBanner($model,$request->dynamic_banner_image,$request->type);
+                        if($request->has('dynamic_banner_image')){
+                            $banner=$this->uploadBanner($model,$request->dynamic_banner_image,$request->type);
+                        }
+                        else{
+                            $banner=$model->banner()->create(
+                            [
+                                'default_lead_image_id' => $request->default_lead_image_id,
+                                'banner_type' => $request->type,
+                            ]);
+                        }
+                        $banner->lead_image_type=$request->lead_image_type;
                         $banner->banner_background_id   = $request->banner_background_id;
                         $banner->banner_heading  =  $request->banner_heading;
                         $banner->banner_introduction = $request->banner_introduction;
                         $banner->save();
-                        
 
                     }
                     elseif($model->banner){
@@ -275,7 +307,8 @@ trait CreateOrUpdateEntity {
                     else{
 
                     }
-
+                    $model->save();
+                    $model->load('banner');
                     if($request->has('technology_logos')){
                         if($model->technologyLogos)
                             $model->technologyLogos()->delete();
@@ -294,15 +327,47 @@ trait CreateOrUpdateEntity {
 
                 }
                 $this->updateStatus($request,$model);
+                DB::commit();
 
             } catch (\Exception $exp) {
+                DB::rollBack();
+                Log::error([$exp->getMessage()]);
                 return false;
             }
         }
 
         return true;
     }
-    
+    public function saveProposal($request, $model, $type = Attribute::SERVICE): bool
+    {
+        DB::beginTransaction();
+        try {
+
+            if( $model->defaultProposal)
+            {
+                $model->defaultProposal()->delete();
+            }
+            
+            $model_default_proposal=$model->defaultProposal()->create($request->all());
+            $model_default_proposal->user_id=auth()->user()->id;
+            $model_default_proposal->service_fees_id= ServiceFee::find(Module::$Job)->id;
+            $model_default_proposal->save();
+            if ($request->has('uploaded_files')) {
+                $prposal_attachments=json_decode($request->uploaded_files,true);
+                $model_default_proposal->attachments()->createMany($prposal_attachments);
+            }
+            DB::commit();
+            $this->updateStatus($request,$model);
+            return true;
+        } catch (\Throwable $th) {
+
+            DB::rollBack();
+            Log::error(["Error In Saving Proposal: ". $th->getMessage()]);
+            return false;
+            //throw $th;
+        }
+       
+    }
     public function saveRequirements($request, $model, $type = Attribute::SERVICE): bool
     {
         DB::transaction(function () use ($request, $model, $type) {

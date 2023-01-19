@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LanguageLevel extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
 
     protected $fillable = [
@@ -17,5 +18,9 @@ class LanguageLevel extends Model
     public function language()
     {
         return $this->hasMany(Language::class);
+    }
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
     }
 }

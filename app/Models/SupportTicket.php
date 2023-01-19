@@ -22,8 +22,10 @@ class SupportTicket extends Model
         Log::info(["Previous URL"=>url()->previous()]);
         Log::info(["Request data"=>\Request::all()]);
     }
+    
     public function getFullnameAttribute()
     {
+
         return $this->name;
     }
 

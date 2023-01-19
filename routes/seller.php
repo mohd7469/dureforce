@@ -55,6 +55,16 @@ Route::name('seller.')->group(function () {
 
                 });
 
+                
+
+            });
+
+            Route::name('service.')->prefix('service')->group(function () {
+                Route::post('/store-proposal', [\App\Http\Controllers\Seller\ServiceController::class,'storeProposal'] )->name('store.proposal');
+            });
+
+            Route::name('software.')->prefix('software')->group(function () {
+                Route::post('/store-proposal', [\App\Http\Controllers\Seller\SoftwareController::class,'storeProposal'] )->name('store.proposal');
             });
 
         });

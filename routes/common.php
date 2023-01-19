@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\ServiceController;
 use App\Http\Controllers\Seller\SoftwareController;
@@ -31,6 +32,8 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
     });
 
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
+    Route::post('/file-upload', 'FileUploadController@uploadFile')->name('file.upload');
+
 
 
     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');

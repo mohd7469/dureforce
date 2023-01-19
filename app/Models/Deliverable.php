@@ -25,7 +25,7 @@ class Deliverable extends Model
         static::saving(function ($model)  {
             $model->slug = \Str::slug($model->name);
         });
-        static::addGlobalScope(new ActiveScope);
+         static::addGlobalScope(new ActiveScope);
 
     }
     public function module()

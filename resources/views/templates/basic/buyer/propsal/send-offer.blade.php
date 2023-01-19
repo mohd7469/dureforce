@@ -11,10 +11,11 @@
     <div class="">
       @if(session('success'))
 
-      <div class="alert alert-success" style="float: right" role="alert">
-        {{session('success')}}
-      </div>
-  @endif
+        <div class="alert alert-success" style="float: right" role="alert">
+          {{session('success')}}
+        </div>
+
+      @endif
 
         <div class="card-body p-0 d-flex align-items-center">
          
@@ -136,17 +137,17 @@
         <p class="text-muted fs-15px mt-1">Add project milestones and pay in installments as each milestone is completed to your satisfaction. Due dates will be set in Coordinated Universal Time (UTC).</p>
         <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-12">
-            <label><h6>Milestone Description</h6></label>
+            <label><h6>Milestone Description*</h6></label>
             <input type="text" name="milestone[0][description]" class="form-control"  value=""  id="milestone.0.description" placeholder="" >
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
-            <label><h6>Due Date (Optional)</h6></label>
-            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="">
+            <label><h6>Due Date*</h6></label>
+            <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="" id="milestone.0.due_date">
            
           </div>
           <div class="col-lg-3 col-md-6 col-sm-12">
-            <label><h6>Deposit Amount</h6></label>
-            <input type="number" name="milestone[0][deposit_amount]" class="form-control text-end"  min="0">
+            <label><h6>Deposit Amount*</h6></label>
+            <input type="number" name="milestone[0][deposit_amount]" class="form-control text-end"  min="0" id="milestone.0.deposit_amount">
           </div>
         </div>
     </div>
@@ -226,7 +227,7 @@
     var index = 0;
     $("#add").click(function(){
         ++index;
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+index+'][description]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+index+'][due_date]" class="form-control" placeholder=""></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+index+'][deposit_amount]" class="form-control text-end" ></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i style="color:red" class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+index+'][description]" class="form-control" placeholder="" id="milestone.'+index+'.description"></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+index+'][due_date]" class="form-control" placeholder="" id="milestone.'+index+'.due_date"></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+index+'][deposit_amount]" class="form-control text-end" id="milestone.'+index+'.deposit_amount"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i style="color:red" class="fa fa-trash"></i></button></div></div>');
 
     });
 
@@ -357,7 +358,7 @@
     function byProject() {
         var decider = document.getElementById('switch');
         if(decider.checked){
-            alert('check');
+            // alert('check');
         } else {
           $("#milestone").hide();
           $("#amount").show();

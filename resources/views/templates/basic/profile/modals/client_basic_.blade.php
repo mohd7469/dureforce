@@ -1,5 +1,6 @@
 <div class="modal fade" id="clientBasicModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+       
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
@@ -52,7 +53,6 @@
                          id="about"
                          >{{ $basicProfile->about }}</textarea>
                    </div>
-                   {{-- location --}}
                    <div class="row">
                    <div class="col-md-6">
                       <label class="mt-4"
@@ -72,9 +72,11 @@
                             Select Location
                          </option>
                          @foreach ($cities as $city)
+                       
                          <option
                          value="{{$city->id}}"
                          {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                         
                          >
                          {{$city->name}}
                          </option>
@@ -95,20 +97,48 @@
                          >
                              Select Country
 
-                         </option>
+                           </option>
 
-                         @foreach ($countries as $country)
-                             <option
-                             value="{{$country->id}}"
-                             {{ $country->id == auth()->user()->country_id ? 'selected' : '' }}
-                             >
-                             {{$country->name}}
-                             </option>
-                         @endforeach
+                           @foreach ($countries as $country)
+                              <option
+                              value="{{$country->id}}"
+                              {{ $country->id == auth()->user()->country_id ? 'selected' : '' }}
+                              >
+                              {{$country->name}}
+                              </option>
+                           @endforeach
 
-                     </select>
-                     
-                 </div>
+                        </select>
+                     </div>
+                     {{-- City --}}
+                     <div class="col-md-6">
+                        <label class="mt-4"
+                           >City
+                        <span class="imp"
+                           >*</span
+                           ></label
+                           >
+                        <select
+                           name="city_id"
+                           class="form-control select-lang"
+                           id="location_city_id"
+                           >
+                           <option
+                              value=""
+                              >
+                              Select Location
+                           </option>
+                           @foreach ($cities as $city)
+                           <option
+                           value="{{$city->id}}"
+                           {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                           >
+                           {{$city->name}}
+                           </option>
+                           @endforeach
+                        </select>
+                     </div>
+                   
                   <div class="col-md-12">
                      <label class="mt-4"
                         >Phone
