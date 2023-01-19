@@ -48,8 +48,8 @@
                                             </thead>
                                             <tbody>
                                                 <td>${{$user->rate_per_hour}} / Per Hour</td>
-                                                <td>$120k + earned</td>
-                                                <td>90%</td>
+                                                <td>Coming Soon</td>
+                                                <td>Coming Soon</td>
                                             </tbody>
                                         </table>
                                     </div>
