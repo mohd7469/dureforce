@@ -7,6 +7,7 @@ use App\Models\JobType;
 use App\Models\Proposal;
 use App\Models\Service;
 use App\Models\Software\Software;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +30,7 @@ class SoftwareController extends Controller
             $job=Job::create([
                 "user_id"   => $user->id,
                 "job_type_id"   => JobType::$OneTime,
-                "country_id"    => null,
+                "country_id"    =>  $software->user->country_id,
                 "category_id"   => $software->category_id,
                 "sub_category_id" => $software->sub_category_id ,
                 "rank_id"       => null ,
@@ -41,7 +42,7 @@ class SoftwareController extends Controller
                 "hourly_start_range"    => null ,
                 "hourly_end_range"  => null ,
                 "project_length_id" => null ,
-                "expected_start_date"   => null,
+                "expected_start_date"   => Carbon::now(),
                 "status_id" => Job::$Approved,
                 "module_id" => $software->id,
                 "module_type" => get_class($software),
@@ -56,7 +57,8 @@ class SoftwareController extends Controller
             DB::commit();
             Log::info('Software Booked SuccessFully');
             $notify[] = ['success','Software Booked SuccessFully'];
-            return redirect()->back()->withNotify($notify);
+            return redirect()->route('buyer.job.single.view',$job->uuid)->withNotify($notify);
+
 
         } catch (\Throwable $th) {
             DB::rollBack();
