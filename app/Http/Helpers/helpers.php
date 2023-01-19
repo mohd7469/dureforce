@@ -116,6 +116,7 @@ function getNumber($length = 8)
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
 {
+    
     $filename = '';
     try {
 
@@ -140,6 +141,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
         try {
 
             $properties = $blobClient->GetContainerProperties($container);
+            
         } catch (ServiceException $e) {
             error($e);
             $blobClient->createContainer($container, $createContainerOptions);

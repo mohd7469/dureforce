@@ -1,5 +1,6 @@
 <div class="modal fade" id="clientBasicModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
+       
        <div class="modal-content">
           <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
@@ -53,19 +54,48 @@
                          >{{ $basicProfile->about }}</textarea>
                    </div>
                    <div class="row">
-                     {{-- Country --}}
-                     <div class="col-md-6">
-                                          
-                        <label class="mt-4">Location *  </label>
-                        <select
-                           name="country_id"
-                           class="form-control select-lang"
-                           id="country_id"
-                           >
-                           <option
-                              value=""
-                           >
-                              Select Country
+                   <div class="col-md-6">
+                      <label class="mt-4"
+                         >City
+                      <span class="imp"
+                         >*</span
+                         ></label
+                         >
+                      <select
+                         name="city_id"
+                         class="form-control select-lang"
+                         id="languages"
+                         >
+                         <option
+                            value=""
+                            >
+                            Select Location
+                         </option>
+                         @foreach ($cities as $city)
+                       
+                         <option
+                         value="{{$city->id}}"
+                         {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                         
+                         >
+                         {{$city->name}}
+                         </option>
+                         @endforeach
+                      </select>
+                   </div>
+                   {{-- location --}}
+                   <div class="col-md-6">
+                                        
+                     <label class="mt-4">Location *  </label>
+                     <select
+                         name="country_id"
+                         class="form-control select-lang"
+                         id="country_id"
+                         >
+                         <option
+                             value=""
+                         >
+                             Select Country
 
                            </option>
 

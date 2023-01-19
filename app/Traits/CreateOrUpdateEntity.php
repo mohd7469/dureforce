@@ -7,10 +7,12 @@ use App\Models\Attribute;
 use App\Models\BannerLogo;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
+use App\Models\Module;
 use App\Models\ModuleBanner;
 use App\Models\OptionalImage;
 use App\Models\Service;
 use App\Models\ServiceAttribute;
+use App\Models\ServiceFee;
 use App\Models\ServiceProjectStep;
 use App\Models\ServiceStep;
 use App\Models\Software\Software;
@@ -347,6 +349,9 @@ trait CreateOrUpdateEntity {
             }
             
             $model_default_proposal=$model->defaultProposal()->create($request->all());
+            $model_default_proposal->user_id=auth()->user()->id;
+            $model_default_proposal->service_fees_id= ServiceFee::find(Module::$Job)->id;
+            $model_default_proposal->save();
             if ($request->has('uploaded_files')) {
                 $prposal_attachments=json_decode($request->uploaded_files,true);
                 $model_default_proposal->attachments()->createMany($prposal_attachments);

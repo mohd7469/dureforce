@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\Buyer\HomeController;
+use App\Http\Controllers\Buyer\ServiceController;
+use App\Http\Controllers\Buyer\SoftwareController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +43,13 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                     Route::get('/view', [\App\Http\Controllers\Buyer\ProfileController::class,'getUserProfile'])->name('view');
                     Route::post('/update_picture', [\App\Http\Controllers\Buyer\ProfileController::class,'updateProfilePicture'])->name('update.picture');
 
+                });
+                Route::name('service.')->prefix('service')->group(function () {
+                    Route::get('/book/{uuid}', [ServiceController::class,'bookService'])->name('book');
+                });
+
+                Route::name('software.')->prefix('software')->group(function () {
+                    Route::get('/book/{uuid}', [SoftwareController::class,'bookSoftware'])->name('book');
                 });
 
                 Route::name('job.')->group(function(){

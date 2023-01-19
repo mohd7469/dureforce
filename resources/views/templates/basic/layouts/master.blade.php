@@ -92,7 +92,8 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/wow.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{asset($activeTemplateTrue.'frontend/js/sweet-alert.js')}}"></script>
+
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 @stack('script-lib')
 @stack('script')

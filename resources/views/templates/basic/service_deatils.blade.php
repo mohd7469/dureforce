@@ -246,13 +246,12 @@
                                                         <a href="{{ route('user.service.create', [$service->id])}}"
                                                            class="standard-btn mr-15">@lang('Edit Service')</a>
                                                     @else
-                                                        {{-- <a href="javascript:void(0)" data-bs-toggle="modal"
-                                                        data-bs-target="#depoModal" class="standard-btn mr-15">@lang('Book
-                                                        Developer')</a> --}}
-                                                        <a href="{{url('coming-soon')}}"
-                                                           class="standard-btn mr-15">@lang('Book
-                                                        Developer')</a>
-
+                                                        
+                                                        
+                                                        <a href="{{$service->isBooked() ? '#' : route('buyer.service.book',$service->uuid)}}" 
+                                                            class="standard-btn mr-15">@lang( $service->isBooked() ? 'Booked Service' : 'Create Booking Job')</a>
+                                                            
+                                                       
                                                         <a href="{{route('chat.start.message',[$service->uuid,'Service'])}}"
 
                                                            class="standard-btn">@lang('Message')</a>
@@ -295,7 +294,7 @@
 {{--@dd($service->defaultProposal->toArray())--}}
                                 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                     @if (!empty($service->defaultProposal))
-<div class="row">
+                                    <div class="row">
                                         <div class="item-details-thumb-area2 col-lg-9 col-xl-9 col-md-9">
                                             <div class="service_subtitle1">Proposal</div>
                                             <div class="service_subtitle3">
@@ -393,8 +392,9 @@
 @push('script')
     <script>
         $(document).ready(function () {
-            fetchSkills();
 
+            
+            fetchSkills();
 
             $("#readless").hide();
             var maxLength = 700;
@@ -432,7 +432,44 @@
         const genRand = (len) => {
             return Math.random().toString(36).substring(2, len + 2);
         }
+        $(document).on("click","a[name='book_service_btn']", function (e) {
+            e.preventDefault();
+            BookServiceConfirmation($(this).attr('href'));
+        });
+        function BookServiceConfirmation(book_service_route){
+            const swalWithBootstrapButtons = Swal.mixin(   
+            {
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
 
+            swalWithBootstrapButtons.fire({
+            title: 'Are you sure you want to book service ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Book Service!',
+            cancelButtonText: 'No, Cancel!',
+            reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    window.location.replace(book_service_route);
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Service Booking has been cancelled :)',
+                        'error'
+                    )
+                }
+            })
+        }
         function populateSkills(data) {
             var selected_skills = $('#job_skills').val();
             console.log(selected_skills);

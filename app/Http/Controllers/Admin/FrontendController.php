@@ -69,7 +69,7 @@ class FrontendController extends Controller
 
     public function frontendContent(Request $request, $key)
     {
-
+    
         $purifier = new \HTMLPurifier();
         $valInputs = $request->except('_token', 'image_input', 'key', 'status', 'type', 'id');
 
@@ -149,7 +149,9 @@ class FrontendController extends Controller
 
     public function frontendElement($key, $id = null)
     {
+        
         $section = @getPageSections()->$key;
+       
         if (!$section) {
             return abort(404);
         }
@@ -158,6 +160,7 @@ class FrontendController extends Controller
         $pageTitle = $section->name . ' Items';
         if ($id) {
             $data = Frontend::findOrFail($id);
+           
 
             return view('admin.frontend.element', compact('section', 'key', 'pageTitle', 'data'));
         }

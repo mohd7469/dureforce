@@ -35,6 +35,7 @@ use PhpParser\Node\Stmt\TryCatch;
 
 class JobController extends Controller
 {
+    public $activeTemplate;
     public function __construct()
     {
         $this->activeTemplate = activeTemplate();
@@ -46,15 +47,15 @@ class JobController extends Controller
 
         $data['countries'] = World::Countries();
 
-        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
+        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
+        $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
 
-        $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
+        $data['deliverables'] = Deliverable::where('is_active',1)->OnlyJob()->select(['id', 'name', 'slug'])->get();
 
         $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
 
@@ -188,7 +189,7 @@ class JobController extends Controller
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
                 "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
-                'status_id' => 1
+                "status_id" => Job::STATUSES['PENDING']
             ]);
 
 

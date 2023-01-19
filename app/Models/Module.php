@@ -50,5 +50,8 @@ class Module extends Model
     {
         return $this->hasMany(LanguageLevel::class,'module_id');
     }
-
+    public function project_length()
+    {
+        return $this->hasMany(ProjectLength::class,'module_id');
+    }
 }
