@@ -12,7 +12,7 @@
                         @csrf
                         <div class="row">
                            
-                            <input type="hidden" name="module_id">
+                            {{-- <input type="hidden" name="module_id">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label class="font-weight-normal">@lang('Type')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="module_id" id="type" >
@@ -23,7 +23,7 @@
                                           
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="col-md-12">
                                 <div class="form-group ">
                                     <label class="form-control-label font-weight-normal">@lang('Title')<span class="text-danger">*</span></label>
