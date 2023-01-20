@@ -112,11 +112,11 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Total Earnings</p>
-                                                        <p class="perhourprice">$120k + earned</p>
+                                                        <p class="perhourprice">Coming Soon</p>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <p class="rateperh">Job Success Rate</p>
-                                                        <p class="perhourprice">90%</p>
+                                                        <p class="perhourprice">Coming Soon</p>
                                                     </div>
                                                 </div>
                                             </div>

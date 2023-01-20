@@ -47,15 +47,15 @@ class JobController extends Controller
 
         $data['countries'] = World::Countries();
 
-        $data['job_types'] = JobType::OnlyJob()->select(['id', 'title'])->get();
+        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
         $data['categories'] = Category::select(['id', 'name'])->get();
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
-        $data['budget_types'] = BudgetType::OnlyJob()->select(['id', 'title', 'slug'])->get();
+        $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
 
-        $data['deliverables'] = Deliverable::OnlyJob()->select(['id', 'name', 'slug'])->get();
+        $data['deliverables'] = Deliverable::where('is_active',1)->OnlyJob()->select(['id', 'name', 'slug'])->get();
 
         $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
 

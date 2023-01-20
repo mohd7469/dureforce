@@ -247,16 +247,11 @@
                                                            class="standard-btn mr-15">@lang('Edit Service')</a>
                                                     @else
                                                         
-                                                        @if ($service->isBooked())
-                                                            <a href="#" 
-                                                                class="standard-btn mr-15">@lang('Booked Service')</a>
+                                                        
+                                                        <a href="{{$service->isBooked() ? '#' : route('buyer.service.book',$service->uuid)}}" 
+                                                            class="standard-btn mr-15">@lang( $service->isBooked() ? 'Booked Service' : 'Create Booking Job')</a>
                                                             
-                                                        @else
-                                                            <a href="{{route('buyer.service.book',$service->uuid)}}" name="book_service_btn"  
-                                                                class="standard-btn mr-15">@lang('Book Service')</a>
-                                                        @endif
-                                                    
-
+                                                       
                                                         <a href="{{route('chat.start.message',[$service->uuid,'Service'])}}"
 
                                                            class="standard-btn">@lang('Message')</a>

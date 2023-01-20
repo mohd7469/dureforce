@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ServiceController;
+use App\Http\Controllers\Buyer\SoftwareController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,10 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 });
                 Route::name('service.')->prefix('service')->group(function () {
                     Route::get('/book/{uuid}', [ServiceController::class,'bookService'])->name('book');
+                });
+
+                Route::name('software.')->prefix('software')->group(function () {
+                    Route::get('/book/{uuid}', [SoftwareController::class,'bookSoftware'])->name('book');
                 });
 
                 Route::name('job.')->group(function(){
