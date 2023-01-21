@@ -33,7 +33,7 @@ class Category extends Model
     public static function getSubCategories(int $categoryId)
     {
         return SubCategory::where('category_id', $categoryId)
-//            ->where('status', self::ACTIVE)
+            //->where('status', self::ACTIVE)
             ->get();
     }
 
