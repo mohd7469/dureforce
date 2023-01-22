@@ -120,20 +120,20 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
-                            <input type="text" class="form-control form-control-lg" name="name"
-                                   placeholder="@lang("Enter Name")" maxlength="50">
-                        </div>
-                            </div>
-                            
+
                             <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Host')</label>
                             <input type="text" class="form-control form-control-lg" name="host"
-                                   placeholder="@lang("Enter Host")" maxlength="50" >
+                                   placeholder="@lang("Enter Scheme")" maxlength="50" >
                         </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-control-label font-weight-bold">@lang('Scheme')</label>
+                                    <input type="text" class="form-control form-control-lg" name="scheme"
+                                           placeholder="For example tls, tcp" maxlength="50">
+                                </div>
                             </div>
                           
                         </div> 
@@ -149,41 +149,41 @@
                             <div class="col-md-6">  
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Passrod')</label>
-                            <input type="password" class="form-control form-control-lg" name="password"
+                            <input type="text" class="form-control form-control-lg" name="password"
                                    placeholder="@lang("Enter Passrod")" maxlength="50">
                         </div>
                             </div>
                         </div>  
 
-                        <div class="row">
-                            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Database')</label>
-                            <input type="text" class="form-control form-control-lg" name="database"
-                                   placeholder="@lang("Enter Database")" maxlength="50">
-                        </div>
-                            </div>
-                            <div class="col-md-6">   
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Prefix')</label>
-                            <input type="text" class="form-control form-control-lg" name="prefix"
-                                   placeholder="@lang("Enter Prefix")" maxlength="50">
-                        </div>
-                            </div>
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-6">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Database')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="database"--}}
+{{--                                   placeholder="@lang("Enter Database")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">   --}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Prefix')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="prefix"--}}
+{{--                                   placeholder="@lang("Enter Prefix")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
 
-                        </div>  
+{{--                        </div>  --}}
 
 
 
-                        <div class="row">
-                            <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Client')</label>
-                            <input type="text" class="form-control form-control-lg" name="client"
-                                   placeholder="@lang("Enter Client")" maxlength="50">
-                        </div>
-                            </div>
-                        </div>  
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-12">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Client')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="client"--}}
+{{--                                   placeholder="@lang("Enter Client")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
+{{--                        </div>  --}}
                       
 
 

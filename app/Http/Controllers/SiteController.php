@@ -45,7 +45,6 @@ class SiteController extends Controller
         $softwares = Software::Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
         $jobs = Job::where('status_id', Job::$Approved)->with(['skill', 'proposal', 'country', 'user', 'category'])->orderBy('created_at', 'DESC')->limit(20)->get();
 
-        Redis::set('softwares', json_encode($softwares));
 
         $sellers = User::whereHas(
             'roles', function ($q) {

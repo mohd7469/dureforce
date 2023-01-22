@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Config;
+
 class RedisCacheConfiguration extends ServiceProvider
 {
     /**
@@ -24,19 +25,18 @@ class RedisCacheConfiguration extends ServiceProvider
     public function boot()
     {
 
-         $pusher_credentials = getRedisCacheCredentials();
-         if ($pusher_credentials) {
-             $config = array(
-                 'driver' => 'pusher',
-                 'app_id'       => $pusher_credentials->name,
-                 'key'       => $pusher_credentials->host,
-                 'secret'   => $pusher_credentials->password,
-             );
-             Config::set('broadcasting.connections.pusher', $config);
-             Config::set('broadcasting.default', 'pusher');
-             Config::set('broadcasting.connections.pusher.options.cluster', $pusher_credentials->port);
+        $redis_credentials = getRedisCacheCredentials();
+        if ($redis_credentials) {
 
-         }
+            Config::set('database.redis.cache.host', $redis_credentials->host);
+            Config::set('database.redis.cache.password', $redis_credentials->password);
+            Config::set('database.redis.cache.port', $redis_credentials->port);
 
+            Config::set('database.redis.default.host', $redis_credentials->host);
+            Config::set('database.redis.default.password', $redis_credentials->password);
+            Config::set('database.redis.default.port', $redis_credentials->port);
+            Config::set('database.redis.default.client', 'predis');
+            Config::set('database.redis.default.scheme', $redis_credentials->prefix);
+        }
     }
 }
