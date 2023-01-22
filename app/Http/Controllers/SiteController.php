@@ -23,6 +23,7 @@ use App\Models\UserCompany;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Validator;
 
 
@@ -35,20 +36,23 @@ class SiteController extends Controller
 
     public function index()
     {
+
+
         $pageTitle = "Home";
         $emptyMessage = "No data found";
-        $services =[];
-       $services = Service::Active()->Featured()->whereIn('status_id',[Service::STATUSES['APPROVED'],Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags' ])->get();
+        $services = Service::Active()->Featured()->whereIn('status_id', [Service::STATUSES['APPROVED'], Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
 
-        $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
-        $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->limit(20)->get();
-        
+        $softwares = Software::Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
+        $jobs = Job::where('status_id', Job::$Approved)->with(['skill', 'proposal', 'country', 'user', 'category'])->orderBy('created_at', 'DESC')->limit(20)->get();
+
+        Redis::set('softwares', json_encode($softwares));
+
         $sellers = User::whereHas(
-            'roles', function($q){
-                $q->where('name', 'Freelancer');
-            }
-        )->with('followers','basicProfile')->limit(20)->inRandomOrder()->get();
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers','jobs'));
+            'roles', function ($q) {
+            $q->where('name', 'Freelancer');
+        }
+        )->with('followers', 'basicProfile')->limit(20)->inRandomOrder()->get();
+        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers', 'jobs'));
     }
 
     public function service()
@@ -135,7 +139,7 @@ class SiteController extends Controller
         })->where('user_id', $software->user_id)->count();
 
         $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
-        
+
         $activeUser = Auth::user();
         $softwareGetRating = null;
         $softwareUser = User::where('id', $software->user_id)->firstOrFail();
