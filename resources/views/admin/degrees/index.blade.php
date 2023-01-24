@@ -120,6 +120,7 @@ th.tlst {
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($degrees) }}
             </div>
         </div>
     </div>
