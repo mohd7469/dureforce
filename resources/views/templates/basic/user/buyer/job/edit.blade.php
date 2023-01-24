@@ -142,7 +142,7 @@
                                             {{-- Weekly Range start --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range {{$job->budget_type_id == \App\Models\BudgetType::$hourly ? '' : 'hide'}}"  >
                                                 
-                                                <label>@lang('Weekly Range(Starting)')*</label>
+                                                <label>@lang('Hourly Rate(Starting)')*</label>
                                                 <input type="number" class="form-control" name="hourly_start_range" value="{{$job->hourly_start_range}}" step="any" placeholder="" >
 
                                             </div>
@@ -150,7 +150,7 @@
                                             {{-- Weekly Range end --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group weekly_range {{$job->budget_type_id == \App\Models\BudgetType::$hourly ? '' : 'hide'}}">
                                                 
-                                                <label>@lang('Weekly Range(Ending)')*</label>
+                                                <label>@lang('Hourly Rate(Ending)')*</label>
                                                 <div class="input-group mb-3">
                                                     <input type="number" step="any" class="form-control" name="hourly_end_range" value="{{$job->hourly_end_range}}" placeholder="" >
                                                 </div>
@@ -187,9 +187,9 @@
 
                                               {{-- dod --}}
                                         <div class=" col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                            <label>@lang('Defination of Done(DOD)')*</label>
+                                            <label>@lang('Definition of Done(DOD)')*</label>
                                                 <div class="input-group mb-3">
-                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Defination of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
+                                                    <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select Definition of Done" style="width: 100%;" tabindex="-1" aria-hidden="true" name="dod[]" id="dod" >
                                                         @foreach($data['dods'] as $item)
                                                             <option value="{{__($item->id)}}" {{in_array($item->id,$job->dod->pluck('id')->toArray()) ? 'selected' :''}}>{{__($item->title)}}</option>
                                                         @endforeach

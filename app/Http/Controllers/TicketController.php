@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class TicketController extends Controller
@@ -164,54 +165,72 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        $request_data = [];
-        parse_str($request->data, $request_data);
-        $user = auth()->user();
+        try{
+            $request_data = [];
+            parse_str($request->data, $request_data);
+            $user = auth()->user();
 
-        do {
-            $ticket_no = rand(1, 1000000000);
-            $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
-        } while ($ticket_exists);
+            do {
+                $ticket_no = rand(1, 1000000000);
+                $ticket_exists = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+            } while ($ticket_exists);
 
-        $ticket =SupportTicket::create([
-            "user_id"=>$user->id,
-            "role_id"=>$user->last_role_activity,
-            "priority_id"=>$request_data['priority_id'],
-            "status_id"=>SupportTicket::$Open,
-            "ticket_no"=>$ticket_no,
-            "subject"=>$request_data['subject'],
-            "message"=>$request_data['message'],
-        ]);
-        if ($request->hasFile('file')) {
+            $ticket =SupportTicket::create([
+                "user_id"=>$user->id,
+                "role_id"=>$user->last_role_activity,
+                "priority_id"=>$request_data['priority_id'],
+                "status_id"=>SupportTicket::$Open,
+                "ticket_no"=>$ticket_no,
+                "subject"=>$request_data['subject'],
+                "message"=>$request_data['message'],
+            ]);
+            if ($request->hasFile('file')) {
 
-            foreach ($request->file as $file) {
-                $path = imagePath()['attachments']['path'];
-                try {
-                    
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $uploaded_name = $file->getClientOriginalName();
-                
-                    $ticket->attachments()->create([
+                foreach ($request->file as $file) {
+                    $path = imagePath()['attachments']['path'];
+                    try {
 
-                        'name' => $filename,
-                        'uploaded_name' => $uploaded_name,
-                        'url'           => $url,
-                        'type' =>$file_extension,
-                        'is_published' =>1
+                        $filename = uploadAttachments($file, $path);
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        $uploaded_name = $file->getClientOriginalName();
 
-                    ]);
+                        $ticket->attachments()->create([
 
-                } catch (\Exception $exp) {
-                    $notify[] = ['error', 'Document could not be uploaded.'];
-                    return back()->withNotify($notify);
+                            'name' => $filename,
+                            'uploaded_name' => $uploaded_name,
+                            'url'           => $url,
+                            'type' =>$file_extension,
+                            'is_published' =>1
+
+                        ]);
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Document could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
                 }
-
             }
+            $notify[] = ['success', 'ticket created successfully!'];
+            $mac_address = shell_exec('getmac');
+
+            Log::info(["Ticket" => $ticket]);
+            Log::info(["Request" => $request->all()]);
+            Log::info(["IP" => $request->ip()]);
+            Log::info(["MAC" => $mac_address]);
+            return response()->json(['redirect' => route('ticket')]);
+
         }
-        $notify[] = ['success', 'ticket created successfully!'];
-        return response()->json(['redirect' => route('ticket')]);
+        catch (\Exception $exp) {
+            Log::error(["Request" => $request->all()]);
+            Log::error(["IP" => $request->ip()]);
+            Log::error(["MAC" => $mac_address]);
+            Log::error(["exception" => $exp->getMessage()]);
+            $notify[] = ['error', 'Technical error occurred.'];
+            return back()->withNotify($notify);
+        }
+
     }
 
     public function storeComment(Request $request,$ticket_no)
