@@ -65,7 +65,6 @@ class ChatController extends Controller
             $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
             if(!$message->wasRecentlyCreated && $message->wasChanged()){
                 event(new MessageEditedEvent($message, $message->user,$chat_module));
-
             }
             else
                 event(new NewMessageEvent($message, $message->user,$chat_module));

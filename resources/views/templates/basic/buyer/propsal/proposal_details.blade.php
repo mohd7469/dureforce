@@ -69,56 +69,60 @@
                             <div class="mainTabs">
 
                                 <div class="tab">
+                                    
                                     @if($proposal->bid_type=='Project')
-                                    <button class="tablinks active" >By Project
-                                    </button>
+                                        <button class="tablinks active" >By Project
+                                        </button>
                                     @endif
+
                                     @if($proposal->bid_type=='Milestone')
-                                    <button class="tablinks active" >By Milestone</button>
+                                        <button class="tablinks active" >By Milestone</button>
                                     @endif
 
                                 </div>
+
                                 @if($proposal->bid_type=='Project')
-                                <div id="tab1" class="tabcontent1" style="display: block;">
-                                    <form>
-                                        <ul class="method_l">
-                                            <li>
-                                                <p class="lable-c">Project Start Date</p>
-                                                <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}" readonly>
-                                            </li>
-                                            <li>
-                                                <p class="lable-c">Project End Date</p>
-                                                <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}" readonly>
-                                            </li>
-                                        </ul>
+                                    <div id="tab1" class="tabcontent1" style="display: block;">
+                                        <form>
+                                            <ul class="method_l">
+                                                <li>
+                                                    <p class="lable-c">Project Start Date</p>
+                                                    <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}" readonly>
+                                                </li>
+                                                <li>
+                                                    <p class="lable-c">Project End Date</p>
+                                                    <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}" readonly>
+                                                </li>
+                                            </ul>
 
-                                    </form>
-                                </div>
+                                        </form>
+                                    </div>
                                 @endif
-                                @if($proposal->bid_type=='Milestone')
-                                <div id="tab2" class="tabcontent1" style="display: block;">
-                                    <ul class="method_l method_2">
-                                        @foreach($proposal->milestone as $miles)
-                                        <li>
-                                            <p class="lable-c">Milestone Description</p>
-                                            <input type="text" placeholder="{{$miles->description ?? ''}}" readonly>
-                                        </li>
-                                        <li>
-                                            <p class="lable-c">Start Date</p>
-                                            <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}" readonly>
-                                        </li>
-                                        <li>
-                                            <p class="lable-c">Due Date</p>
-                                            <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}" readonly>
-                                        </li>
-                                        <li>
-                                            <p class="lable-c">Amount</p>
-                                            <input type="text" placeholder="{{$miles->amount ?? ''}}" readonly>
-                                        </li>
 
-                                        @endforeach
-                                    </ul>
-                                </div>
+                                @if($proposal->bid_type=='Milestone')
+                                    <div id="tab2" class="tabcontent1" style="display: block;">
+                                        <ul class="method_l method_2">
+                                            @foreach($proposal->milestone as $miles)
+                                            <li>
+                                                <p class="lable-c">Milestone Description</p>
+                                                <input type="text" placeholder="{{$miles->description ?? ''}}" readonly>
+                                            </li>
+                                            <li>
+                                                <p class="lable-c">Start Date</p>
+                                                <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}" readonly>
+                                            </li>
+                                            <li>
+                                                <p class="lable-c">Due Date</p>
+                                                <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}" readonly>
+                                            </li>
+                                            <li>
+                                                <p class="lable-c">Amount</p>
+                                                <input type="text" placeholder="{{$miles->amount ?? ''}}" readonly>
+                                            </li>
+
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 @endif
 
 
@@ -127,9 +131,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> <input type="submit"
-                                                                                                 value="Withdraw Proposal"
-                                                                                                 class="btn_withdrw-c">
+                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
+                            <input type="submit" value="Withdraw Proposal" class="btn_withdrw-c">
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
@@ -173,6 +176,7 @@
                     <div class="about-client-c">
                         <p class="abt-client">About the Client</p>
                         <ul class="client_listing-c">
+                            
                             <li>
                                 <img src="{{ !empty($proposal->user->basicProfile->profile_picture)? $proposal->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
                                 <div class="about_client">
@@ -180,21 +184,26 @@
                                     <p class="client_date">Member since {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </div>
                             </li>
+
                             <li>
                                 <i class="fa fa-map-marker"></i> <span class="location_c"> {{isset($proposal->module->user->country->name) ? $proposal->module->user->country->name: ''}}</span>
                                 &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ date('h:i a', strtotime($proposal->module->created_at))}} local time</span>
                             </li>
+
                             <li>
                                 <p class="payment_c">Payment method verified</p>
                                 <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating"> 4.98 of 32
                                     reviews </p>
                             </li>
+
                             <li>
                                 <span class="no_jobs">{{getClientJobsCount($proposal->module->user_id)}}</span> <span class="jb_p">Jobs posted</span>
                             </li>
+
                             <li>
                                 <span class="no_jobs">{{getClientOpenJobsCount($proposal->module->user_id)}}</span> <span class="jb_p">Open jobs </span>
                             </li>
+
                         </ul>
 
                     </div>
