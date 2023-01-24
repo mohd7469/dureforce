@@ -1,3 +1,4 @@
+
 @extends('admin.layouts.app')
 @section('panel')
     <div class="row">
@@ -182,7 +183,7 @@
                                     </a>
                                         <form action="{{route('admin.service.destroy', [$service->id])}}" method="POST" style="margin-left: 5px">
                                             @csrf
-                                            <button  data-toggle="tooltip" title="" data-original-title="@lang('Delete')"  onclick="return confirm('Are you sure you want to delete.')"  class="btn btn--danger text-white" type="submit"><i class="fa fa-trash-alt"></i></button>
+                                            <button  data-toggle="tooltip" title="" data-original-title="@lang('Delete')"  onclick="return confirm('Are you sure you want to delete.')"  class="btn btn--danger text-white" style="pointer-events: none;cursor: default;" type="submit"><i class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </div>
 

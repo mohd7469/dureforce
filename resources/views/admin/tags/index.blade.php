@@ -107,10 +107,7 @@ th.tlst {
                                         </button>
                                     @endif
                                     </span>
-                                    
-                              
-             
-                               
+
                             </td>
                         </tr>
                         {{-- @empty --}}
@@ -123,6 +120,7 @@ th.tlst {
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($tags) }}
             </div>
         </div>
     </div>

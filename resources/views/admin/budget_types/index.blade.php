@@ -126,6 +126,7 @@ th.tlst {
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($budgetTypes) }}
             </div>
         </div>
     </div>
