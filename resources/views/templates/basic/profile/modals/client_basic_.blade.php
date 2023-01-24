@@ -54,35 +54,7 @@
                          >{{ $basicProfile->about }}</textarea>
                    </div>
                    <div class="row">
-                   <div class="col-md-6">
-                      <label class="mt-4"
-                         >City
-                      <span class="imp"
-                         >*</span
-                         ></label
-                         >
-                      <select
-                         name="city_id"
-                         class="form-control select-lang"
-                         id="languages"
-                         >
-                         <option
-                            value=""
-                            >
-                            Select Location
-                         </option>
-                         @foreach ($cities as $city)
-                       
-                         <option
-                         value="{{$city->id}}"
-                         {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
-                         
-                         >
-                         {{$city->name}}
-                         </option>
-                         @endforeach
-                      </select>
-                   </div>
+                   
                    {{-- location --}}
                    <div class="col-md-6">
                                         
