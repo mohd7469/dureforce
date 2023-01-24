@@ -134,7 +134,7 @@
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link {{ \Route::is('profile.portfolio') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
+                                            <a class="nav-link {{ \Route::is('profile.portfolio')  || \Route::is('seller.profile.portfolio') || \Route::is('seller.profile.portfolio.view') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#edu">Education & Certifications</a>
@@ -283,7 +283,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {{-- portfolio list --}}
                             <div class="tab-pane container  {{ \Route::is('profile.portfolio') ? 'active' : 'fade' }}" id="set">
                                 
                                 <div class="row section-heading-border justify-content-center align-items-center" style="
@@ -308,11 +308,16 @@
                                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:85px;">
 
                                             <div class="card" style="width: 18rem;height:220px;">
-                                                <img class="card-img-top" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                               
+                                                <a href="{{route('seller.profile.portfolio.view',$portfolio->uuid)}}">
+                                                    <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                </a>
+
                                                 <div class="card-body">
                                                     <h3 class="card-title">{{$portfolio->name}}</h3>
                                                     <p class="card-text">{{$portfolio->description}}</p>
                                                 </div>
+
                                             </div>
 
                                         </div>
@@ -321,6 +326,32 @@
                                     
                                 </div>
                             </div>
+
+                            {{-- add New Portfolio --}}
+                            <div class="tab-pane container  {{ \Route::is('seller.profile.portfolio') ? 'active' : 'fade' }}" id="set">
+                                
+                                <div class="row section-heading-border " style="
+                                    margin-bottom: 23px;">
+                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12"> <b>My Portfolio > Add New</b></div>
+                                    <div class="sep-solid"></div>
+                                </div>
+
+                                <div class="row portfolio">
+                                    @include( $activeTemplate . 'portfolio.index',['skills' => $skills])
+                                </div>
+                            </div>
+                            
+                            @if (\Route::is('seller.profile.portfolio.view'))
+                                {{-- View Portfolio --}}
+                                <div class="tab-pane container  {{ \Route::is('seller.profile.portfolio.view') ? 'active' : 'fade' }}" id="set">
+                                    
+                                    @include( $activeTemplate . 'portfolio.view',['user_portfolio' => $user_portfolio])
+                                    
+                                </div>
+                            @endif
+
+                            
+
 
                             {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
@@ -359,6 +390,7 @@
                                 </div>
 
                             </div>
+                            {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
                                 <h3>Coming Soon</h3>
                                 {{-- <div class="row"> --}}
@@ -864,6 +896,22 @@
         </div>
 
 @endsection
+@push('style')
+
+<style>
+    .sep-solid {
+        border-top: 2px solid #c5e0e0;
+        margin-top: 18px;
+    }
+    .portfolio-img{
+        
+        height: 220px;
+        width: 100%;
+    }
+</style>
+
+    
+@endpush
 @push('script-lib')
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
@@ -947,6 +995,11 @@
 
         $('#skills').select2({
             tags: true
+        });
+
+        $('#portfolio_skills').select2({
+            tags: true,
+            maximumSelectionLength: 15
         });
 
         $('#skills').select2({
