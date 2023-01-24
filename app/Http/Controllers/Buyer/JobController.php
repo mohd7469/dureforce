@@ -189,7 +189,7 @@ class JobController extends Controller
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
                 "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
-                "status_id" => Job::STATUSES['PENDING']
+                "status_id" => Job::$Pending
             ]);
 
 
