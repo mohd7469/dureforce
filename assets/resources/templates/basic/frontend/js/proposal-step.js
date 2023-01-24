@@ -68,11 +68,11 @@ function displayInfoAlertMessage(message)
   });
 }
 $(function() {
-  uploaded_files= JSON.parse($('#uploaded_files_input_id').val());
+    uploaded_files= JSON.parse($('#uploaded_files_input_id').val());
     var form_data='';
     var action_url=file_upload_url;
     var dropzone = new Dropzone('#demo-upload', {
-         url:action_url,
+          url:action_url,
           autoProcessQueue: true,
           parallelUploads: 1,
           dictDefaultMessage: "your custom message",

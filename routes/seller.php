@@ -24,7 +24,9 @@ Route::name('seller.')->group(function () {
                 Route::post('/education/edit/{id}', [\App\Http\Controllers\Seller\ProfileController::class,'editEducation'])->name('education.edit');
                 Route::post('/profile/skills', [\App\Http\Controllers\Seller\ProfileController::class,'saveSkills'])->name('skills.save');
                 Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view')->middleware('is-profile-completed');
-                Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserPortfolio'])->name('portfolio');
+                Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio');
+                Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio.view');
+
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
                 Route::post('/portfolio/validate', [\App\Http\Controllers\Seller\ProfileController::class,'validateUserPortfolio'])->name('portfolio.validate');
                 Route::get('/password-security', [\App\Http\Controllers\Seller\ProfileController::class,'getpassword'])->name('password.security');
