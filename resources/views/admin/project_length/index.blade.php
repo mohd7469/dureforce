@@ -107,6 +107,7 @@
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($project_lengths) }}
             </div>
         </div>
     </div>

@@ -95,6 +95,7 @@
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($banners) }}
             </div>
         </div>
     </div>
