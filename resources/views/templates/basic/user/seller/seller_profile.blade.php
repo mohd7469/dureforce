@@ -134,7 +134,7 @@
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link {{ \Route::is('profile.portfolio')  || \Route::is('seller.profile.portfolio') || \Route::is('seller.profile.portfolio.view') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
+                                            <a class="nav-link {{ \Route::is('profile.portfolio')  || \Route::is('seller.profile.portfolio') || \Route::is('seller.profile.portfolio.view') ||  \Route::is('seller.profile.portfolio.edit') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#edu">Education & Certifications</a>
@@ -286,9 +286,12 @@
                             {{-- portfolio list --}}
                             <div class="tab-pane container  {{ \Route::is('profile.portfolio') ? 'active' : 'fade' }}" id="set">
                                 
-                                <div class="row section-heading-border justify-content-center align-items-center" style="
-                                    margin-bottom: 23px;">
-                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Portfolio</b></div>
+                                <div class="row section-heading-border justify-content-center align-items-center" style="margin-bottom: 23px;">
+                                    
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> 
+                                        <b>My Portfolio</b>
+                                    </div>
+
                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <a href="{{route('seller.profile.portfolio')}}">
@@ -299,6 +302,7 @@
                                         @endif
                                         
                                     </div>
+
                                 </div>
 
                                 <div class="row portfolio">
@@ -308,7 +312,14 @@
                                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-bottom:85px;">
 
                                             <div class="card" style="width: 18rem;height:220px;">
-                                               
+                                                <span class="text-right"  style="position: absolute;top:0;right:0;">
+
+                                                    <a href="{{route('seller.profile.portfolio.view',$portfolio->uuid)}}"  class="view-portfolio"><i class="fa fa-eye" style="color:white;margin-right: 10px;"></i></a>
+                                                    <a href="{{route('seller.profile.portfolio.edit',$portfolio->uuid)}}"  class="edit-portfolio"><i class="fa fa-edit" style="color:white;margin-right: 10px;"></i></a>
+                                                    <a href="{{route('seller.profile.portfolio.delete',$portfolio->uuid)}}" class="delete-portfolio"><i class="fa fa-trash" style="color: red;margin-right: 8px;"></i></a>
+
+                                                </span>
+
                                                 <a href="{{route('seller.profile.portfolio.view',$portfolio->uuid)}}">
                                                     <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
                                                 </a>
@@ -337,22 +348,25 @@
                                 </div>
 
                                 <div class="row portfolio">
-                                    @include( $activeTemplate . 'portfolio.index',['skills' => $skills])
+                                    @include( $activeTemplate . 'portfolio.create',['skills' => $skills])
                                 </div>
                             </div>
-                            
+
+                            {{-- View Portfolio --}}
                             @if (\Route::is('seller.profile.portfolio.view'))
                                 {{-- View Portfolio --}}
                                 <div class="tab-pane container  {{ \Route::is('seller.profile.portfolio.view') ? 'active' : 'fade' }}" id="set">
-                                    
                                     @include( $activeTemplate . 'portfolio.view',['user_portfolio' => $user_portfolio])
-                                    
                                 </div>
                             @endif
 
+                            {{-- Edit Portfolio --}}
+                            @if (\Route::is('seller.profile.portfolio.edit'))
+                                <div class="tab-pane container  {{ \Route::is('seller.profile.portfolio.edit') ? 'active' : 'fade' }}" id="set">                         
+                                    @include( $activeTemplate . 'portfolio.edit',['skills' => $skills,'user_portfolio' => $user_portfolio])
+                                </div>
+                            @endif
                             
-
-
                             {{-- Education --}}
                             <div class="tab-pane container fade" id="edu">
                                 
@@ -935,6 +949,7 @@
     let edit_profile_picture_btn=$('#profile-pic-edit-btn');
     var token= $('input[name=_token]').val();
     var profile_picture_form = $('#profile_picture_form');
+    var delete_portfolio=$('.delete-portfolio');
     
     $(document).ready(function() {
         
@@ -949,9 +964,14 @@
 
         });
 
+        delete_portfolio.click(function(e){
+            e.preventDefault();
+            deletePortfolioConfirmation($(this).attr('href'));       
+        });
         edit_profile_picture_btn.click(function(e){
             $('#profile_pic_id').click();
         });
+
         add_edu_btn.click(function(e){
             education_form.attr('action', "{{route('seller.profile.education.add')}}");
             education_form[0].reset();
@@ -1002,12 +1022,50 @@
             maximumSelectionLength: 15
         });
 
+        $('#edit_portfolio_skills').select2({
+            tags: true,
+            maximumSelectionLength: 15
+        });
+
         $('#skills').select2({
             dropdownParent: $('#editprofile')
         });
 
     });
+    function deletePortfolioConfirmation(delete_portfolio_route){
+            const swalWithBootstrapButtons = Swal.mixin(   
+            {
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
 
+            swalWithBootstrapButtons.fire({
+            title: 'Are you sure you want to delete portfolio ?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete Portfolio!',
+            cancelButtonText: 'No, Cancel!',
+            reverseButtons: true
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    window.location.replace(delete_portfolio_route);
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Portfolio delete  has been cancelled :)',
+                        'error'
+                    )
+                }
+            })
+        }
     function updateProfilePicture(){
         
         // var profile_file=$('input[type=file]')[0].files[0];
