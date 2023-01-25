@@ -513,6 +513,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('category/update', 'CategoryController@update')->name('category.update');
             Route::get('sub/category', 'CategoryController@subCategoryIndex')->name('category.subcategory.index');
             Route::post('sub/category/store', 'CategoryController@subCategoryStore')->name('category.subcategory.store');
+            Route::post('sub/category/activeBy', 'CategoryController@activeBy')->name('category.subcategory.activeBy');
+        Route::post('sub/category/inactiveBy', 'CategoryController@inactiveBy')->name('category.subcategory.inactiveBy');
             Route::post('sub/category/update', 'CategoryController@subCategoryUpdate')->name('category.subcategory.update');
         
             Route::get('/category/delete/{id}', 'CategoryController@delete')->name('category.delete');
