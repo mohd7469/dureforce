@@ -349,7 +349,7 @@ function getSoftwareFee($software){
 }
 function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
     
-    $query=BannerBackground::where('document_type',$type);
+    $query=BannerBackground::where('document_type',$type)->where('is_active',true);
     
     if($model->category_id){
        
