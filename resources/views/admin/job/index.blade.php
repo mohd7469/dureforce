@@ -56,7 +56,7 @@
                                 @endif
 
                              <td data-label="@lang('Delivery Time')">
-                               <span class="font-weight-bold">{{($job->project_length->name)}}</span>
+                               <span class="font-weight-bold">{{($job->project_length->name ?? '')}}</span>
                             </td>
 
                             <td data-label="@lang('Status')">
