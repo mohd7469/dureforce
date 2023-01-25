@@ -63,7 +63,7 @@
 
                                     <div class="article">
                                     <p>{{ !empty($user->basicProfile->about) ? $user->basicProfile->about : ""}}</p>
-{{--                                        <a id="clickme">Read more</a>--}}
+                                        {{--                                        <a id="clickme">Read more</a>--}}
 
                                     </div>
                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
@@ -439,6 +439,7 @@
                         @endif
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    
                     <div class="modal-body modal-body-profile">
                         <form action="" id="form-basic-save">
                             @csrf
@@ -451,7 +452,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xl-12">
-                                    <div class="input-group mb-3 select2_element">
+                                    <div class=" mb-3 select2_element">
                                         <label for="title">Category *</label>
                                         <select
                                             name="category_id[]"
@@ -516,7 +517,7 @@
 
                                     <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-xs-12 form-group editpro">
                                         <label>@lang('Core Skills & Expertise')</label>
-                                        <div class="input-group mb-3 select2_element">
+                                        <div class=" mb-3 select2_element">
                                             <select
                                                 class="form-control select2 select2-hidden-accessible"
                                                 name="skills[]"
