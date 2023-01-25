@@ -182,6 +182,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SystemMailConfiguration::class,
         App\Providers\PusherConfiguration::class,
+        App\Providers\RedisCacheConfiguration::class,
     ],
 
     /*

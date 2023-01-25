@@ -22,22 +22,21 @@ class RedisSystemCredentialController extends Controller
     }
     public function store(Request $request)
     {
-      
         $request->validate([
-            'name' => 'required',
+            'scheme' => 'required',
             'host' => 'required',
             'port' => 'required',
             'password' => 'required',
         ]);
         $credential = new SystemCredential;
-        $credential->name = $request->name;
+//        $credential->name = $request->name;
         $credential->host = $request->host;
         $credential->port = $request->port;
         $credential->password = $request->password;
-        $credential->database = $request->database;
-        $credential->prefix = $request->prefix;
-        $credential->client = $request->client;
-        $credential->type = 'redis';
+//        $credential->database = $request->database;
+        $credential->prefix = $request->scheme;
+//        $credential->client = $request->client;
+        $credential->type = SystemCredential::Type_Redis;
         
         $credential->is_active = $request->is_active ? 1 : 0;
         $credential->save();
@@ -48,20 +47,27 @@ class RedisSystemCredentialController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'scheme' => 'required',
             'host' => 'required',
             'port' => 'required',
             'password' => 'required',
         ]);
         $credential = SystemCredential::find($request->id);
-        $credential->name = $request->name;
+
+        //        $credential->name = $request->name;
         $credential->host = $request->host;
         $credential->port = $request->port;
         $credential->password = $request->password;
-        $credential->database = $request->database;
-        $credential->prefix = $request->prefix;
-        $credential->client = $request->client;
-        $credential->type = 'redis';
+//        $credential->database = $request->database;
+        $credential->prefix = $request->scheme;
+//        $credential->client = $request->client;
+        $credential->type = SystemCredential::Type_Redis;
+        
+        $credential->is_active = $request->is_active ? 1 : 0;
+        
+        $credential->host = $request->host;
+        $credential->port = $request->port;
+        $credential->password = $request->password;
         
         $credential->is_active = $request->is_active ? 1 : 0;
         $credential->save();
