@@ -24,6 +24,7 @@ use App\Models\ModuleBanner;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Khsing\World\Models\Language as ModelsLanguage;
 use PHPMailer\PHPMailer\Exception;
@@ -1430,6 +1431,17 @@ function getPusherCredentials()
     }
 
 }
+function getRedisCacheCredentials()
+{
+    try {
+        $system_redis_config = SystemCredential::where('is_active', true)->where('type', 'redis')->first();
+        return $system_redis_config;
+    } catch (\Exception $exp) {
+        Log::error(["redis cache error"=>$exp->getMessage()]);
+        return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
 
 function getUserRoleId()
 {
@@ -1604,3 +1616,27 @@ function dateDiffInDays($date1, $date2)
       // 24 * 60 * 60 = 86400 seconds
       return abs(round($diff / 86400));
   }
+
+
+
+function getRedisData($model,$key){
+    $redis_data =  json_decode(Redis::get($key));
+    if ($redis_data){
+        return $redis_data;
+    }
+    else{
+        $model_data = $model::all();
+        Redis::set($key, json_encode($model_data));
+        return $model_data;
+    }
+}
+function storeRedisData($model,$key){
+    $model_data = $model::all();
+    if ($model_data){
+        Redis::set($key, json_encode($model_data));
+        return true;
+    }
+    else{
+        return false;
+    }
+}

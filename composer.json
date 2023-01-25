@@ -28,6 +28,7 @@
         "mollie/laravel-mollie": "^2.14",
         "opcodesio/log-viewer": "^1.7",
         "phpmailer/phpmailer": "^6.6",
+        "predis/predis": "^2.1",
         "pusher/pusher-php-server": "^7.2",
         "razorpay/razorpay": "^2.5",
         "sendgrid/sendgrid": "^7.6",
