@@ -110,6 +110,7 @@ a.disabled{
                 </div>
             </div>
             <div class="card-footer py-4">
+                {{ paginateLinks($delivers) }}
             </div>
         </div>
     </div>

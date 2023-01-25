@@ -110,12 +110,12 @@ class JobController extends Controller
             $user = Auth::user();
             $custom_messages = [
 
-                'hourly_start_range.required_if' => 'Weekly range start field is required when budget type is hourly',
+                'hourly_start_range.required_if' => 'Hourly Rate start field is required when budget type is hourly',
                 'country_id.required' => 'Job location is required',
-                'hourly_end_range.required_if' => 'Weekly range end field is required when budget type is hourly',
+                'hourly_end_range.required_if' => 'Hourly Rate end field is required when budget type is hourly',
                 'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
-                'hourly_start_range.gt' => 'Weekly range start field should be greater than zero',
-                'hourly_end_range.gte' => 'Weekly range end field value should be greater or equal to weekly start range',
+                'hourly_start_range.gt' => 'Hourly Rate start field should be greater than zero',
+                'hourly_end_range.gte' => 'Hourly Rate end field value should be greater or equal to weekly start range',
 
 
             ];
@@ -189,7 +189,7 @@ class JobController extends Controller
                 "hourly_end_range" => isset($request_data['hourly_end_range']) ? $request_data['hourly_end_range'] : null,
                 "project_length_id" => $request_data['project_length_id'],
                 "expected_start_date" => $request_data['expected_start_date'],
-                "status_id" => Job::STATUSES['PENDING']
+                "status_id" => Job::$Pending
             ]);
 
 

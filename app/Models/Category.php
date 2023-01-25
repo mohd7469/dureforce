@@ -27,13 +27,13 @@ class Category extends Model
 
     public static function getByType(int $type)
     {
-        return self::where('type_id', $type)->where('status', self::ACTIVE)->get();
+        return self::where('is_active', self::ACTIVE)->get();
     }
 
     public static function getSubCategories(int $categoryId)
     {
         return SubCategory::where('category_id', $categoryId)
-//            ->where('status', self::ACTIVE)
+            //->where('status', self::ACTIVE)
             ->get();
     }
 

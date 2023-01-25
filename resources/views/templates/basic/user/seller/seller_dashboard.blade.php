@@ -180,12 +180,6 @@
                                                                             <a href="{{route('service.view',[$service->uuid])}}" class="btn--action mr-2" style=" margin-right: 8px;"><i class="fa fa-eye"></i></a>
                                                                         @endif
                                                                         
-                                                                        <form action="{{ route('user.service.create', [$service->id]) }}"
-                                                                                method="get">
-                                                                            @csrf
-                                                                            <button class="btn--action" type="submit"><i
-                                                                                        class="fa fa-edit"></i></button>
-                                                                        </form>
 
                                                                         <form
                                                                             action="{{ route('user.service.destroy', [$service->id]) }}"
@@ -198,7 +192,14 @@
                                                                         </form>
 
                                                                     </div>
+                                                                     <form action="{{ route('user.service.create', [$service->id]) }}"
+                                                                                method="get">
+                                                                            @csrf
+                                                                            <button class="btn--action" type="submit"><i
+                                                                                        class="fa fa-edit"></i></button>
+                                                                        </form>
                                                                 </td>
+                                                                
                                                             </tr>
                                                         @empty
                                                             <tr>

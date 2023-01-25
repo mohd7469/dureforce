@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Portfolio\StorePortfolioRequest;
 use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Degree;
@@ -20,6 +21,7 @@ use App\Models\UserExperiences;
 use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 use Khsing\World\Models\Country;
 
 class ProfileController extends Controller
@@ -29,6 +31,7 @@ class ProfileController extends Controller
      *
      * @return void
      */
+    public $activeTemplate;
     public function __construct()
     {
         $this->activeTemplate = activeTemplate();
@@ -165,7 +168,7 @@ class ProfileController extends Controller
      *
      * @return void
      */
-    public function getUserProfile()
+    public function getUserProfile(Request $request ,$uuid='')
     {
         $pageTitle = 'Seller Profile';
         $user = User::withAll()->find(auth()->user()->id);
@@ -182,7 +185,11 @@ class ProfileController extends Controller
         $language_levels = LanguageLevel::select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
         $degrees = Degree::select('id', 'title')->get();
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios'));
+        $user_portfolio = '';
+        if($uuid){
+            $user_portfolio=UserPortFolio::where('uuid',$uuid)->first();
+        }
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios','user_portfolio'));
     }
     
     /**
@@ -370,7 +377,6 @@ class ProfileController extends Controller
     public function getUserPortfolio()
     {
         $skills=Skills::select('id','name')->get();
-
         return view($this->activeTemplate.'portfolio.index',compact('skills'));
     }
 
@@ -381,80 +387,44 @@ class ProfileController extends Controller
      * @param  mixed $request
      * @return void
      */
-    public function saveUserPortfolio(Request $request)
+    public function saveUserPortfolio(StorePortfolioRequest $request)
     {
         DB::beginTransaction();
         try {
+
             $request_data = [];
-            parse_str($request->data, $request_data);
+            $request_data=$request->all();
             $request_data['user_id'] = auth()->user()->id;
-            $portfolio=UserPortFolio::create(
+            $id= $request->has('id') ? $request->id :''; 
+            $portfolio=UserPortFolio::updateOrCreate(['id' => $id],
                 $request_data
             );
             if($request->has('skills'))
-                $portfolio->skills()->attach($request_data['skills']);
+                $portfolio->skills()->sync($request_data['skills']);
 
-            if ($request->hasFile('file')) {
-                $path = imagePath()['attachments']['path'];
-                foreach ($request->file as $file) {
-
-
-                        $filename = uploadAttachments($file, $path);
-
-                        $file_extension = getFileExtension($file);
-                        $url = $path . '/' . $filename;
-                        
-                        $portfolio->attachments()->create([
-
-                            'name' => $filename,
-                            'uploaded_name' => $file->getClientOriginalName(),
-                            'url'           => $url,
-                            'type' =>$file_extension,
-                            'is_published' =>1
-
-                        ]);
+            if ($request->has('uploaded_files')) {
+                if(!$portfolio->wasRecentlyCreated && $portfolio->wasChanged()){
+                    $portfolio->attachments()->delete();
                 }
+                $attachments=json_decode($request->uploaded_files,true);
+                $portfolio->attachments()->createMany($attachments);
             }
+
             DB::commit();
-            return response()->json(["success" => "User Portfolio Added Successfully ",'redirect' =>route('seller.profile.view')], 200);
+            $notify[] = ['success', 'Portfolio has been added successfully.'];
+            Log::info(["portfolio" => $portfolio]);
+            return redirect()->route('profile.portfolio',auth()->user()->uuid)->withNotify($notify);
 
         } catch (\Exception $exp) {
-            return response()->json(['error' => $exp->getMessage()]);
+
+            Log::error(["portfolio" => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Add Portfolio.'];
             return back()->withNotify($notify);
 
         }
     }
     
-    /**
-     * validateUserPortfolio
-     *
-     * @param  mixed $request
-     * @return void
-     */
-    public function validateUserPortfolio(Request $request)
-    {
-        $request_data = [];
-        parse_str($request->data, $request_data);
-        
-        $rules = [
-            'name' => 'required',
-            'completion_date' => 'required|date|before:today|after:' . Config('settings.minimum_system_start_date'),
-            'skills' => 'nullable|array|max:15',
-            'skills.*' =>'exists:skills,id',
-            'project_url' => 'nullable',
-            'description' => 'nullable',
-            'video_url'   => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-            'project_url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"]
-        ];
-
-        $validator = Validator::make($request_data, $rules);
-        if ($validator->fails()) {
-            return response()->json(["error" => $validator->errors()]);
-        } 
-        else
-            return response()->json(["validated" => "Portfolio Data Is Valid"]);
-    }
+    
     
     public function getpassword(){
         return view( 'templates.basic.user.seller.new_password');
@@ -536,6 +506,25 @@ class ProfileController extends Controller
             return response()->json(['errors'=>['Failled to update profile picture']]);
     }
 
-        
+    
+
+    public function deletePortfolio($uuid){
+        try {
+
+            $user_portfolio=UserPortFolio::where('uuid',$uuid)->firstOrFail();
+            $user_portfolio->attachments()->delete();
+            $user_portfolio->skills()->detach();
+            $user_portfolio->delete();
+            $notify[] = ['success', 'Portfolio Deleted Successfully'];
+            return redirect()->route('profile.portfolio',auth()->user()->uuid)->withNotify($notify);
+
+        }
+        catch (\Exception $exp) {
+            Log::error([" Portfolio Edit " => $exp->getMessage() ]);
+            $notify[] = ['errors', 'Failled To Fetch  Portfolio.'];
+            return back()->withNotify($notify);
+
+        }
+    }
 
 }
