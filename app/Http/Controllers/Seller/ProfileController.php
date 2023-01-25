@@ -395,14 +395,17 @@ class ProfileController extends Controller
             $request_data = [];
             $request_data=$request->all();
             $request_data['user_id'] = auth()->user()->id;
-
-            $portfolio=UserPortFolio::create(
+            $id= $request->has('id') ? $request->id :''; 
+            $portfolio=UserPortFolio::updateOrCreate(['id' => $id],
                 $request_data
             );
             if($request->has('skills'))
-                $portfolio->skills()->attach($request_data['skills']);
+                $portfolio->skills()->sync($request_data['skills']);
 
             if ($request->has('uploaded_files')) {
+                if(!$portfolio->wasRecentlyCreated && $portfolio->wasChanged()){
+                    $portfolio->attachments()->delete();
+                }
                 $attachments=json_decode($request->uploaded_files,true);
                 $portfolio->attachments()->createMany($attachments);
             }
@@ -421,35 +424,7 @@ class ProfileController extends Controller
         }
     }
     
-    /**
-     * validateUserPortfolio
-     *
-     * @param  mixed $request
-     * @return void
-     */
-    public function validateUserPortfolio(Request $request)
-    {
-        $request_data = [];
-        parse_str($request->data, $request_data);
-        
-        $rules = [
-            'name' => 'required',
-            'completion_date' => 'required|date|before:today|after:' . Config('settings.minimum_system_start_date'),
-            'skills' => 'nullable|array|max:15',
-            'skills.*' =>'exists:skills,id',
-            'project_url' => 'nullable',
-            'description' => 'nullable',
-            'video_url'   => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-            'project_url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"]
-        ];
-
-        $validator = Validator::make($request_data, $rules);
-        if ($validator->fails()) {
-            return response()->json(["error" => $validator->errors()]);
-        } 
-        else
-            return response()->json(["validated" => "Portfolio Data Is Valid"]);
-    }
+    
     
     public function getpassword(){
         return view( 'templates.basic.user.seller.new_password');
@@ -531,6 +506,25 @@ class ProfileController extends Controller
             return response()->json(['errors'=>['Failled to update profile picture']]);
     }
 
-        
+    
+
+    public function deletePortfolio($uuid){
+        try {
+
+            $user_portfolio=UserPortFolio::where('uuid',$uuid)->firstOrFail();
+            $user_portfolio->attachments()->delete();
+            $user_portfolio->skills()->detach();
+            $user_portfolio->delete();
+            $notify[] = ['success', 'Portfolio Deleted Successfully'];
+            return redirect()->route('profile.portfolio',auth()->user()->uuid)->withNotify($notify);
+
+        }
+        catch (\Exception $exp) {
+            Log::error([" Portfolio Edit " => $exp->getMessage() ]);
+            $notify[] = ['errors', 'Failled To Fetch  Portfolio.'];
+            return back()->withNotify($notify);
+
+        }
+    }
 
 }
