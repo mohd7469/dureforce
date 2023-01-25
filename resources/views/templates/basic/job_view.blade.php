@@ -161,7 +161,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                     <li><span>Est. Project Duration</span>
-                                                        <p>{{$job->project_length->name}}</p>
+                                                        <p>{{$job->project_length->name ?? ''}}</p>
                                                     </li>
                                                 </ul>
                                                 <ul class="sidebar-title2">

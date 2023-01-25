@@ -7,6 +7,7 @@ use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -62,6 +63,25 @@ class CategoryController extends Controller
         $subCategorys = SubCategory::with('category')->latest()->paginate(getPaginate());
         
         return view('admin.category.sub_index', compact('subCategorys', 'pageTitle', 'emptyMessage', 'categorys'));
+    }
+
+    public function activeBy(Request $request)
+    {
+        $SubCategory = SubCategory::findOrFail($request->id);
+        $SubCategory->is_active = 1;
+        $SubCategory->created_at = Carbon::now();
+        $SubCategory->save();
+        $notify[] = ['success', 'Sub Category has been Activated'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function inActiveBy(Request $request)
+    {
+        $SubCategory = SubCategory::findOrFail($request->id);
+        $SubCategory->is_active = 0;
+        $SubCategory->created_at = Carbon::now();
+        $SubCategory->save();
+        $notify[] = ['success', 'Sub Category has been inActive'];
+        return redirect()->back()->withNotify($notify);
     }
 
 

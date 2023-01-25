@@ -39,8 +39,8 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
- //     'debug' => true,
+//    'debug' => (bool) env('APP_DEBUG', false),
+      'debug' => true,
 
 
 
@@ -182,6 +182,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\SystemMailConfiguration::class,
         App\Providers\PusherConfiguration::class,
+        App\Providers\RedisCacheConfiguration::class,
     ],
 
     /*

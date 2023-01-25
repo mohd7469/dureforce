@@ -8,13 +8,13 @@
                         <table class="table table--light style--two">
                             <thead>
                             <tr>
-                                <th>@lang('Name')</th>
+                                <!-- <th>@lang('Name')</th> -->
                                 <th>@lang('Host')</th>
                                 <th>@lang('Port')</th>
                                 <th>@lang('Password')</th>
-                                <th>@lang('Database')</th>
+                                <!-- <th>@lang('Database')</th> -->
                                 <th>@lang('Prefix')</th>
-                                <th>@lang('Client')</th>
+                                <!-- <th>@lang('Client')</th> -->
                                 <th>@lang('Type')</th>
                                 <th>@lang('Status')</th>
                                 <th>@lang('Action')</th>
@@ -25,8 +25,8 @@
                              @forelse($syscreds as $syscred) 
                            
                                 <tr>
-                                    <td data-label="@lang('name')"><span
-                                                class="font-weight-bold">{{$syscred->name}}</span></td>
+                                    <!-- <td data-label="@lang('name')"><span
+                                                class="font-weight-bold">{{$syscred->name}}</span></td> -->
                                     <td data-label="@lang('host')">
                                         <span class="font-weight-bold">{{$syscred->host}}</span>
                                     </td>
@@ -36,15 +36,15 @@
                                     <td data-label="@lang('password')">
                                         <span class="font-weight-bold">{{$syscred->password}}</span>
                                     </td>
-                                    <td data-label="@lang('database')">
+                                    <!-- <td data-label="@lang('database')">
                                         <span class="font-weight-bold">{{$syscred->database}}</span>
-                                    </td>
+                                    </td> -->
                                     <td data-label="@lang('prefix')">
                                         <span class="font-weight-bold">{{$syscred->prefix}}</span>
                                     </td>
-                                    <td data-label="@lang('client')">
+                                    <!-- <td data-label="@lang('client')">
                                         <span class="font-weight-bold">{{$syscred->client}}</span>
-                                    </td>
+                                    </td> -->
                                     <td data-label="@lang('type')">
                                         <span class="font-weight-bold">{{$syscred->type}}</span>
                                     </td>
@@ -101,7 +101,9 @@
                         </table>
                     </div>
                 </div>
-                
+                <div class="card-footer py-4">
+                {{ paginateLinks($syscreds) }}
+            </div>
             </div>
         </div>
     </div>
@@ -120,20 +122,20 @@
                     @csrf
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
-                            <input type="text" class="form-control form-control-lg" name="name"
-                                   placeholder="@lang("Enter Name")" maxlength="50">
-                        </div>
-                            </div>
-                            
+
                             <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Host')</label>
                             <input type="text" class="form-control form-control-lg" name="host"
-                                   placeholder="@lang("Enter Host")" maxlength="50" >
+                                   placeholder="@lang("Enter Scheme")" maxlength="50" >
                         </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-control-label font-weight-bold">@lang('Scheme')</label>
+                                    <input type="text" class="form-control form-control-lg" name="scheme"
+                                           placeholder="For example tls, tcp" maxlength="50">
+                                </div>
                             </div>
                           
                         </div> 
@@ -149,41 +151,41 @@
                             <div class="col-md-6">  
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Passrod')</label>
-                            <input type="password" class="form-control form-control-lg" name="password"
-                                   placeholder="@lang("Enter Passrod")" maxlength="50">
+                            <input type="text" class="form-control form-control-lg" name="password"
+                                   placeholder="@lang("Enter Passwrod")" maxlength="50">
                         </div>
                             </div>
                         </div>  
 
-                        <div class="row">
-                            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Database')</label>
-                            <input type="text" class="form-control form-control-lg" name="database"
-                                   placeholder="@lang("Enter Database")" maxlength="50">
-                        </div>
-                            </div>
-                            <div class="col-md-6">   
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Prefix')</label>
-                            <input type="text" class="form-control form-control-lg" name="prefix"
-                                   placeholder="@lang("Enter Prefix")" maxlength="50">
-                        </div>
-                            </div>
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-6">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Database')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="database"--}}
+{{--                                   placeholder="@lang("Enter Database")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-6">   --}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Prefix')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="prefix"--}}
+{{--                                   placeholder="@lang("Enter Prefix")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
 
-                        </div>  
+{{--                        </div>  --}}
 
 
 
-                        <div class="row">
-                            <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Client')</label>
-                            <input type="text" class="form-control form-control-lg" name="client"
-                                   placeholder="@lang("Enter Client")" maxlength="50">
-                        </div>
-                            </div>
-                        </div>  
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-12">--}}
+{{--                        <div class="form-group">--}}
+{{--                            <label for="name" class="form-control-label font-weight-bold">@lang('Client')</label>--}}
+{{--                            <input type="text" class="form-control form-control-lg" name="client"--}}
+{{--                                   placeholder="@lang("Enter Client")" maxlength="50">--}}
+{{--                        </div>--}}
+{{--                            </div>--}}
+{{--                        </div>  --}}
                       
 
 
@@ -221,19 +223,20 @@
                     <input type="hidden" name="is_active">
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label font-weight-bold">@lang('Name')</label>
-                            <input type="text" class="form-control form-control-lg" name="name"
-                                   placeholder="@lang("Enter Name")" maxlength="50">
-                        </div>
-                            </div>
                             
                             <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Host')</label>
                             <input type="text" class="form-control form-control-lg" name="host"
-                                   placeholder="@lang("Enter Host")" maxlength="50" >
+                                   placeholder="@lang("Enter Scheme")" maxlength="50" >
+                        </div>
+                            </div>
+
+                            <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name" class="form-control-label font-weight-bold">@lang('Scheme')</label>
+                            <input type="text" class="form-control form-control-lg" name="scheme"
+                                   placeholder="@lang("For example tls, tcp")" maxlength="50">
                         </div>
                             </div>
                           
@@ -251,20 +254,20 @@
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Passwrod')</label>
                             <input type="password" class="form-control form-control-lg" name="password"
-                                   placeholder="@lang("Enter Passrod")" maxlength="50">
+                                   placeholder="@lang("Enter Passwrod")" maxlength="50">
                         </div>
                             </div>
                         </div>    
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Database')</label>
                             <input type="text" class="form-control form-control-lg" name="database"
                                    placeholder="@lang("Enter Database")" maxlength="50">
                         </div>
-                            </div>
-                            <div class="col-md-6">   
+                            </div> -->
+                            <!-- <div class="col-md-6">   
                         <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Prefix')</label>
                             <input type="text" class="form-control form-control-lg" name="prefix"
@@ -272,12 +275,12 @@
                         </div>
                             </div>
 
-                        </div>  
-                        <div class="form-group">
+                        </div>   -->
+                        <!-- <div class="form-group">
                             <label for="name" class="form-control-label font-weight-bold">@lang('Client')</label>
                             <input type="text" class="form-control form-control-lg" name="client"
                                    placeholder="@lang("Enter Client")" maxlength="50">
-                        </div>
+                        </div> -->
 
                       
 
@@ -395,7 +398,7 @@
             modal.find('input[name=port]').val($(this).data('port'));
             modal.find('input[name=password]').val($(this).data('password'));
             modal.find('input[name=database]').val($(this).data('database'));
-            modal.find('input[name=prefix]').val($(this).data('prefix'));
+            modal.find('input[name=prefix]').val($(this).data('scheme'));
             modal.find('input[name=client]').val($(this).data('client'));
             var data = $(this).data('status');
             if (data == 1) {

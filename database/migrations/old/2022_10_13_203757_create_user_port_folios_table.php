@@ -16,10 +16,10 @@ class CreateUserPortFoliosTable extends Migration
         Schema::create('user_portfolios', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->string('name');
-            $table->text('description');
-            $table->string('project_url');
-            $table->string('video_url');
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->string('project_url')->nullable();
+            $table->string('video_url')->nullable();
             $table->date('completion_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
