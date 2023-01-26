@@ -28,6 +28,15 @@ class RedisSystemCredentialController extends Controller
             'port' => 'required',
             'password' => 'required',
         ]);
+        $credentialSections= SystemCredential::where('is_active', 1)->get();
+        if ($credentialSections) {
+            foreach($credentialSections as $credentialSection){
+                $credentialSection->is_active = 0;
+                $credentialSection->save();
+
+            }
+         
+        }
         $credential = new SystemCredential;
 //        $credential->name = $request->name;
         $credential->host = $request->host;
@@ -80,6 +89,15 @@ class RedisSystemCredentialController extends Controller
     public function activeBy(Request $request)
     {
         $credential = SystemCredential::findOrFail($request->id);
+        $credentialSections= SystemCredential::where('is_active', 1)->get();
+        if ($credentialSections) {
+            foreach($credentialSections as $credentialSection){
+                $credentialSection->is_active = 0;
+                $credentialSection->save();
+
+            }
+         
+        }
         $credential->is_active = 1;
         $credential->created_at = Carbon::now();
         $credential->save();
