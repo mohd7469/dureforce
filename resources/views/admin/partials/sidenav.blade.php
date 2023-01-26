@@ -726,6 +726,14 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         <span class="menu-title">@lang('Sub Category')</span>
                                     </a>
                                 </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive('admin.category.subcategory.index') }} ">
+                                    <a href="{{ route('admin.skill.category.index') }}"
+                                        class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Sub Category')</span>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>
