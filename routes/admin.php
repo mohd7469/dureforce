@@ -514,12 +514,20 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('sub/category', 'CategoryController@subCategoryIndex')->name('category.subcategory.index');
             Route::post('sub/category/store', 'CategoryController@subCategoryStore')->name('category.subcategory.store');
             Route::post('sub/category/activeBy', 'CategoryController@activeBy')->name('category.subcategory.activeBy');
-        Route::post('sub/category/inactiveBy', 'CategoryController@inactiveBy')->name('category.subcategory.inactiveBy');
+            Route::post('sub/category/inactiveBy', 'CategoryController@inactiveBy')->name('category.subcategory.inactiveBy');
             Route::post('sub/category/update', 'CategoryController@subCategoryUpdate')->name('category.subcategory.update');
         
             Route::get('/category/delete/{id}', 'CategoryController@delete')->name('category.delete');
             Route::get('/sub/category/delete/{id}', 'CategoryController@deleteSubCategory')->name('category.subcategory.delete');
         });
+
+        // skill category
+        Route::get('skill/category/index', 'SkillCategoryController@index')->name('skill.category.index');
+          Route::get('skill/category/create', 'SkillCategoryController@Create')->name('skill.category.create');
+          Route::post('skill/category/store', 'SkillCategoryController@store')->name('skill.category.store');
+          Route::get('skill/category/edit/{id}', 'SkillCategoryController@editdetails')->name('skill.category.edit');
+          Route::post('skill/category/update/{id}', 'SkillCategoryController@update')->name('skill.category.update');
+          Route::get('/skill/category/delete/{id}', 'SkillCategoryController@delete')->name('skill.category.delete');
 
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');
