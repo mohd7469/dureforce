@@ -416,7 +416,7 @@ class UserController extends Controller
 
     public function category(Request $request)
     {
-        $sub_category = SubCategory::where('category_id', $request->category)->get();
+        $sub_category = SubCategory::where('category_id', $request->category)->where('is_active',1)->get();
         if ($sub_category->isEmpty()) {
             return response()->json(['error' => "Sub category not available under this category"]);
         } else {

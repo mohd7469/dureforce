@@ -162,7 +162,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
             $category = Category::find($id);
             $category->delete();
-            $notify[] = ['success', 'CategoryDetail deleted successfully'];
+            $notify[] = ['success', 'Category deleted successfully'];
             DB::commit();
             return back()->withNotify($notify);
 
@@ -181,7 +181,7 @@ class CategoryController extends Controller
             DB::beginTransaction();
             $subCategory = SubCategory::find($id);
             $subCategory->delete();
-            $notify[] = ['success', 'Sub CategoryDetail deleted successfully'];
+            $notify[] = ['success', 'Sub Category deleted successfully'];
             
             DB::commit();
             return back()->withNotify($notify);
