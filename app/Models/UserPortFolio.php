@@ -17,7 +17,8 @@ class UserPortFolio extends Model
         'video_url',
         'name',
         'completion_date',
-        'role'
+        'role',
+        'is_draft'
        
     ];
     protected static function boot()
