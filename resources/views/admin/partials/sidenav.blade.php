@@ -731,7 +731,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <a href="{{ route('admin.skill.category.index') }}"
                                         class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
-                                        <span class="menu-title">@lang('Sub Category')</span>
+                                        <span class="menu-title">@lang('Attributes')</span>
                                     </a>
                                 </li>
                             </ul>

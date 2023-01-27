@@ -49,7 +49,7 @@ class JobController extends Controller
 
         $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
-        $data['categories'] = Category::select(['id', 'name'])->get();
+        $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
 
         $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
 
@@ -244,7 +244,7 @@ class JobController extends Controller
     {
         try {
             $job = Job::withAll()->where('uuid', $uuid)->first();
-            $sub_category = SubCategory::where('category_id', $job->category->id)->select(['id', 'name'])->get();
+            $sub_category = SubCategory::where('category_id', $job->category->id)->where('is_active',1)->select(['id', 'name'])->get();
             $data = $this->getJobData();
             $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
             $data['sub_categories'] = $sub_category;
