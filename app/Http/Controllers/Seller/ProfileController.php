@@ -393,6 +393,7 @@ class ProfileController extends Controller
         try {
 
             $request_data = [];
+
             $request_data=$request->all();
             $request_data['user_id'] = auth()->user()->id;
             $id= $request->has('id') ? $request->id :''; 
@@ -406,14 +407,31 @@ class ProfileController extends Controller
                 if(!$portfolio->wasRecentlyCreated && $portfolio->wasChanged()){
                     $portfolio->attachments()->delete();
                 }
+                
                 $attachments=json_decode($request->uploaded_files,true);
-                $portfolio->attachments()->createMany($attachments);
+                if($attachments)
+                    $portfolio->attachments()->createMany($attachments);
             }
 
             DB::commit();
-            $notify[] = ['success', 'Portfolio has been added successfully.'];
-            Log::info(["portfolio" => $portfolio]);
-            return redirect()->route('profile.portfolio',auth()->user()->uuid)->withNotify($notify);
+            if($request_data['submit']=='preview'){
+                if($portfolio->wasRecentlyCreated ){
+                    $portfolio->is_draft=true;
+                    $portfolio->save();
+                }
+                
+                $notify[] = ['success', 'Portfolio preview updated successfully.'];
+                Log::info(["portfolio" => $portfolio]);
+                return redirect()->route('seller.profile.portfolio.view',$portfolio->uuid)->withNotify($notify);
+            }
+            else{
+                $portfolio->is_draft=false;
+                $portfolio->save();
+                $notify[] = ['success', 'Portfolio has been added successfully.'];
+                Log::info(["portfolio" => $portfolio]);
+                return redirect()->route('profile.portfolio',auth()->user()->uuid)->withNotify($notify);
+            }
+            
 
         } catch (\Exception $exp) {
 

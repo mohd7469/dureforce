@@ -123,8 +123,9 @@
             {{-- btns --}}
             <div  class="row float-right">
                 <div class="inner">
-                    <button type="button" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn add_details">Preview</button>
-                    <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Save Project</button>
+                    
+                    <button type="submit" name="submit" value="preview" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn add_details">Preview</button>
+                    <button type="submit" name="submit" value="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Save Project</button>
 
                 </div>
                 

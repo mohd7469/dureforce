@@ -382,6 +382,7 @@ trait CreateOrUpdateEntity {
         return true;
 
     }
+    
     public function updateStatus($request, $model){
         if($request->action == 'save_project'){
             $model->status_id=$model::STATUSES['DRAFT'];
