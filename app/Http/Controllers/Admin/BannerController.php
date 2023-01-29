@@ -27,8 +27,51 @@ class BannerController extends Controller
     public function bannerCreate()
     {
     	$pageTitle = "Create Banner";
-        $categories = Category::select('id', 'name')->get();
+        $categories = Category::where('is_active',1)->select('id', 'name')->get();
     	return view('admin.banner.create', compact('pageTitle','categories'));
+    }
+    public function bannerEdit($id)
+    {
+    	$pageTitle = "Edit Banner";
+        $banner = Banner::findOrFail($id);
+        $categories = Category::where('is_active',1)->select('id', 'name')->get();
+        $subCategories = SubCategory::where('category_id',$banner->category_id)->where('is_active',1)->select('id', 'name')->get();
+    	return view('admin.banner.edit', compact('pageTitle','categories','banner','subCategories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'category' => 'required',
+            'sub_category' => 'required',
+            'subject' => 'required',
+            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
+        ]);
+        $banner  = Banner::findOrFail($id);
+        if ($request->hasFile('image')) {
+            try {
+                $path = imagePath()['attachments']['path'];
+                $file = $request->image;
+                $file_original_name = $file->getClientOriginalName();
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+            } catch (\Exception $exp) {
+                $notify[] = ['error', 'Image could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+            $banner->name = $filename;
+            $banner->uploaded_name  = $file_original_name;
+            $banner->url = $url;
+            $banner->type = $file_extension;
+        }
+        $banner->category_id = $request->category;
+        $banner->sub_category_id = $request->sub_category;
+        $banner->document_type = 'Background';
+        $banner->subject = $request->subject;
+        $banner->save();
+        $notify[] = ['success', 'Your Banner has been Created.'];
+        return redirect()->route('admin.banner.index')->withNotify($notify);
     }
 
     public function store(Request $request)
