@@ -76,6 +76,11 @@
                                     <i class="las la-check"></i>
                                     </button>
                                 @endif
+
+                                <a  href="{{route('admin.banner.edit', $banner->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('Edit')" data-id="">
+                                        <i class="las la-edit"></i>
+                                </a>
+
                                 <td>
                                     <form action="{{route('admin.banner.destroy', [$banner->id])}}" method="POST" >
                                         @csrf

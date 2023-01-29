@@ -183,7 +183,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             //Manage banner
             Route::get('banner/index', 'BannerController@index')->name('banner.index');
             Route::get('banner/create', 'BannerController@bannerCreate')->name('banner.create');
+            Route::get('banner/edit/{id}', 'BannerController@bannerEdit')->name('banner.edit');
             Route::post('banner/store', 'BannerController@store')->name('banner.store');
+            Route::post('banner/update/{id}', 'BannerController@update')->name('banner.update');
             Route::get('banner/inActive', 'BannerController@inActive')->name('banner.inActive');
             Route::get('banner/active', 'BannerController@active')->name('banner.active');
             Route::post('banner/inactiveBy', 'BannerController@inactiveBy')->name('banner.inactiveBy');
@@ -339,7 +341,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             //Manage technology logo
             Route::get('techlogo/index', 'TechnologyLogoController@index')->name('techlogo.index');
             Route::get('techlogo/create', 'TechnologyLogoController@bannerCreate')->name('techlogo.create');
+            Route::get('techlogo/edit/{id}', 'TechnologyLogoController@bannerEdit')->name('techlogo.edit');
             Route::post('techlogo/store', 'TechnologyLogoController@store')->name('techlogo.store');
+            Route::post('techlogo/update/{id}', 'TechnologyLogoController@update')->name('techlogo.update');
             Route::get('techlogo/inActive', 'TechnologyLogoController@inActive')->name('techlogo.inActive');
             Route::get('techlogo/active', 'TechnologyLogoController@active')->name('techlogo.active');
             Route::post('techlogo/inactiveBy', 'TechnologyLogoController@inactiveBy')->name('techlogo.inactiveBy');
@@ -353,7 +357,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         //Manage lead images logo
         Route::get('leadImages/index', 'LeadImagesController@index')->name('leadImages.index');
         Route::get('leadImages/create', 'LeadImagesController@bannerCreate')->name('leadImages.create');
+        Route::get('leadImages/edit/{id}', 'LeadImagesController@bannerEdit')->name('leadImages.edit');
         Route::post('leadImages/store', 'LeadImagesController@store')->name('leadImages.store');
+        Route::post('leadImages/update/{id}', 'LeadImagesController@update')->name('leadImages.update');
         Route::get('leadImages/inActive', 'LeadImagesController@inActive')->name('leadImages.inActive');
         Route::get('leadImages/active', 'LeadImagesController@active')->name('leadImages.active');
         Route::post('leadImages/inactiveBy', 'LeadImagesController@inactiveBy')->name('leadImages.inactiveBy');
