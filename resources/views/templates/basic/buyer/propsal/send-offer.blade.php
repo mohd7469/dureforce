@@ -199,7 +199,7 @@
             <label class="form-check-label fs-14px" for="exampleCheck1">Yes,I understand and agree to the <span>DF Terms of Service</span>,including the <span>User Agreement </span> and <span>Privacy Policy</span></label>
         </div>
         <div class="d-flex align-items-center">
-            <button class="btn-purple-outline">Cancel</button>
+            <a href="{{route('buyer.job.all.proposals',$propsal_to_send_offer->job->uuid)}}"> <button type="button" class="btn-purple-outline">Cancel</button></a>
             <button type="submit" class="btn-purple ml-2">Continue</button>
 
         </div>
