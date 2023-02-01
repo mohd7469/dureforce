@@ -21,6 +21,6 @@ class DeliveryMode extends Model
         return $this->morphTo();
     }
     public function scopeActive($query){
-        return $query->where('is_active',true);
+        return $query->where('is_active',1);
     }
 }

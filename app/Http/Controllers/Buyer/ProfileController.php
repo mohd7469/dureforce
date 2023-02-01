@@ -308,7 +308,7 @@ class ProfileController extends Controller
         $basicProfile = $user->basicProfile;
         $user_languages = $user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $language_levels = LanguageLevel::where('is_active',1)->select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
        
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
@@ -327,8 +327,8 @@ class ProfileController extends Controller
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
-        $degrees = Degree::select('id', 'title')->get();
+        $language_levels = LanguageLevel::where('is_active',1)->select('id', 'name')->get();
+        $degrees = Degree::where('is_active',1)->select('id', 'title')->get();
         $basicProfile = $user->basicProfile ? $user->basicProfile : new UserBasic();
         $userexperiences = $user->experiences ? $user->experiences : new UserExperiences();
         $usereducations = $user->education ? $user->education : new UserEducation();
