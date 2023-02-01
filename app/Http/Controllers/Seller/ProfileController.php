@@ -182,9 +182,9 @@ class ProfileController extends Controller
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
         $languages = WorldLanguage::select('id', 'iso_language_name')->get();
-        $language_levels = LanguageLevel::select('id', 'name')->get();
+        $language_levels = LanguageLevel::where('is_active',1)->select('id', 'name')->get();
         $categories = Category::select('id', 'name')->get();
-        $degrees = Degree::select('id', 'title')->get();
+        $degrees = Degree::where('is_active',1)->select('id', 'title')->get();
         $user_portfolio = '';
         if($uuid){
             $user_portfolio=UserPortFolio::where('uuid',$uuid)->first();
