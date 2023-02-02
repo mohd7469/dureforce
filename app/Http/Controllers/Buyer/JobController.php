@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\DOD;
@@ -28,6 +29,7 @@ use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
@@ -45,9 +47,18 @@ class JobController extends Controller
     {
         $data = [];
 
-        $data['countries'] = World::Countries();
+//        $data['countries'] = World::Countries();
+//        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
-        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
+        $is_active=1;
+
+
+        $data['countries'] = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
+        $data['job_types'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
+
+
+
+
 
         $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
 
