@@ -12,4 +12,7 @@ class WorldLanguage extends Model
     public $timestamps = false;
     protected $fillable = ['iso_language_name','native_name','iso2','iso3'];
 
+    public static $Model_Name_Space = "App\Models\WorldLanguage";
+    public static $Redis_key = "languages";
+
 }

@@ -97,7 +97,9 @@ class ProposalController extends Controller
         try {
             $job = Job::where('uuid', $uuid)->withAll()->first();
             $skill_categories = SkillCategory::select('name', 'id')->get();
-            $delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
+            //$delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
+            $is_active=1;
+            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,$is_active);
             foreach ($skill_categories as $skillCat) {
                 $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
             }

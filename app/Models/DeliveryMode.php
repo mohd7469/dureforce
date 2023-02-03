@@ -10,7 +10,8 @@ class DeliveryMode extends Model
     use HasFactory;
     protected $fillable = ['title','slug','module_id','module_type','is_active'];
 
-
+    public static $Model_Name_Space = "App\Models\DeliveryMode";
+    public static $Redis_key = "delivery_modes";
 
     public function proposal()
     {

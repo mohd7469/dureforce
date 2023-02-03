@@ -48,7 +48,7 @@ class JobController extends Controller
         $data = [];
 
         // $data['countries'] = World::Countries();
-        // $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
+        //$data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
         // $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
         // $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
         // $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
@@ -56,9 +56,11 @@ class JobController extends Controller
         // $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
         // $data['project_stages'] = ProjectStage::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
+ 
         $is_active=1;
         $data['countries'] = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
-        $data['categories'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
+        $data['job_types'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
+        $data['categories'] = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
         $data['experience_levels'] = getRedisData(Rank::$Model_Name_Space,Rank::$Redis_key);
         $data['budget_types'] = getRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,$is_active);
         $data['deliverables'] = getRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,$is_active);
@@ -66,7 +68,7 @@ class JobController extends Controller
         $data['project_stages'] = getRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,$is_active);
         $data['dods'] = getRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,$is_active);
 
-        // $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+        //  $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
 
 
         return $data;

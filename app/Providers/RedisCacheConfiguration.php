@@ -27,6 +27,8 @@ class RedisCacheConfiguration extends ServiceProvider
 
         $redis_credentials = getRedisCacheCredentials();
         if ($redis_credentials) {
+            
+            Config::set('database.redis.client',"predis");
 
             Config::set('database.redis.cache.host', $redis_credentials->host);
             Config::set('database.redis.cache.password', $redis_credentials->password);

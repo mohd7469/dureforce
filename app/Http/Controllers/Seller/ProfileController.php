@@ -171,20 +171,28 @@ class ProfileController extends Controller
     public function getUserProfile(Request $request ,$uuid='')
     {
         $pageTitle = 'Seller Profile';
+        $is_active = 1;
         $user = User::withAll()->find(auth()->user()->id);
-        $skills=Skills::select('id','name')->get();
+        //$skills=Skills::select('id','name')->get();
+        $skills = getRedisData(Skills::$Model_Name_Space,Skills::$Redis_key);
         $userskills=$user->skills;
         $user_experience = $user->experiences;
         $user_education  = $user->education;
         $user_portfolios = $user->portfolios; 
         $countries = Country::select('id', 'name')->get();
+        // $countries = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
-        $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        // $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+        $languages = getRedisData(WorldLanguage::$Model_Name_Space,WorldLanguage::$Redis_key);
         $language_levels = LanguageLevel::where('is_active',1)->select('id', 'name')->get();
-        $categories = Category::select('id', 'name')->get();
-        $degrees = Degree::where('is_active',1)->select('id', 'title')->get();
+        // $language_levels = getRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key);
+        // $categories = Category::select('id', 'name')->get();
+        $categories = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
+        //$degrees = Degree::where('is_active',1)->select('id', 'title')->get();
+        $degrees = getRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,$is_active);
+
         $user_portfolio = '';
         if($uuid){
             $user_portfolio=UserPortFolio::where('uuid',$uuid)->first();
