@@ -26,7 +26,6 @@ Route::name('seller.')->group(function () {
                 Route::get('/view', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('view')->middleware('is-profile-completed');
 
                 Route::get('/portfolio', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio');
-                Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio.view');
                 Route::get('/portfolio/edit/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio.edit');
                 Route::get('/portfolio/delete/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'deletePortfolio'])->name('portfolio.delete');
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');

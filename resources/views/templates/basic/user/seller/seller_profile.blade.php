@@ -134,7 +134,7 @@
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link {{ \Route::is('profile.portfolio')  || \Route::is('seller.profile.portfolio') || \Route::is('seller.profile.portfolio.view') ||  \Route::is('seller.profile.portfolio.edit') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
+                                            <a class="nav-link {{ \Route::is('profile.portfolio')  || \Route::is('seller.profile.portfolio') || \Route::is('profile.portfolio.view') ||  \Route::is('seller.profile.portfolio.edit') ? 'active' : '' }}" data-bs-toggle="tab" href="#set">Portfolio</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#edu">Education & Certifications</a>
@@ -316,14 +316,14 @@
                                                 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                                     <span class="text-right"  style="position: absolute;top:0;right:0;">
 
-                                                        <a href="{{route('seller.profile.portfolio.view',$portfolio->uuid)}}"  class="view-portfolio"><i class="fa fa-eye" style="color:white;margin-right: 10px;"></i></a>
+                                                        <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"  class="view-portfolio"><i class="fa fa-eye" style="color:white;margin-right: 10px;"></i></a>
                                                         <a href="{{route('seller.profile.portfolio.edit',$portfolio->uuid)}}"  class="edit-portfolio"><i class="fa fa-edit" style="color:white;margin-right: 10px;"></i></a>
                                                         <a href="{{route('seller.profile.portfolio.delete',$portfolio->uuid)}}" class="delete-portfolio"><i class="fa fa-trash" style="color: red;margin-right: 8px;"></i></a>
 
                                                     </span>
                                                 @endif
 
-                                                <a href="{{route('seller.profile.portfolio.view',$portfolio->uuid)}}">
+                                                <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}">
                                                     <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
                                                 </a>
 
@@ -356,9 +356,9 @@
                             </div>
 
                             {{-- View Portfolio --}}
-                            @if (\Route::is('seller.profile.portfolio.view'))
+                            @if (\Route::is('profile.portfolio.view'))
                                 {{-- View Portfolio --}}
-                                <div class="tab-pane container  {{ \Route::is('seller.profile.portfolio.view') ? 'active' : 'fade' }}" id="set">
+                                <div class="tab-pane container  {{ \Route::is('profile.portfolio.view') ? 'active' : 'fade' }}" id="set">
                                     @include( $activeTemplate . 'portfolio.view',['user_portfolio' => $user_portfolio])
                                 </div>
                             @endif
