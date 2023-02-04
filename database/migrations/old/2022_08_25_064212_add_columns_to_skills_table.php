@@ -14,7 +14,7 @@ class AddColumnsToSkillsTable extends Migration
     public function up()
     {
         Schema::table('skills', function (Blueprint $table) {
-            $table->enum('skill_type',['Frontend','Backend','Relational','Non Relational'])->nullable();
+            $table->string('skill_type')->nullable();
             $table->unsignedBigInteger('module_id')->index()->nullable();
             $table->unsignedBigInteger('skill_category_id')->index()->nullable();
 
