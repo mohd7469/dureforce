@@ -401,6 +401,9 @@
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Support')</span>
                                     </a>
+                                    <a href="{{ route('profile.switch') }}" class="d-flex align-items-center px-3 py-2">
+                                        <span class="dropdown-menu__caption">{{ getLastLoginRoleId()==App\Models\Role::$Freelancer ? 'Switch as Client' : 'Switch as Freelancer'}} </span>
+                                    </a>
                                     <a href="{{ route('user.logout') }}"
                                         class="d-flex align-items-center px-3 py-2">
                                         <span class="dropdown-menu__caption">@lang('Logout')</span>
