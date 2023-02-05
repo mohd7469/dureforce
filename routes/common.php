@@ -31,6 +31,8 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         Route::get('/software/details/{uuid}', [SoftwareController::class,'show'])->name('view');
     });
 
+    Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('profile.portfolio.view');
+
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
     Route::post('/file-upload', 'FileUploadController@uploadFile')->name('file.upload');
 

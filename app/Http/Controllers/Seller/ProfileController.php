@@ -187,6 +187,7 @@ class ProfileController extends Controller
         $degrees = Degree::where('is_active',1)->select('id', 'title')->get();
         $user_portfolio = '';
         if($uuid){
+            
             $user_portfolio=UserPortFolio::where('uuid',$uuid)->first();
         }
         return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios','user_portfolio'));

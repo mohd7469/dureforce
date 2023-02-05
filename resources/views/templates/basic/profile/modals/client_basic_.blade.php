@@ -124,6 +124,7 @@
                         placeholder=""
                         id="phone"
                         value="{{$basicProfile->phone_number}}"
+                        class="num_filed"
                         />
                   </div>
                    </div>

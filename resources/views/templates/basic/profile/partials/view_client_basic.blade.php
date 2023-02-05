@@ -168,9 +168,16 @@
 
        
         "use strict";
-        
-        
 
+        $(".num_filed").on('keydown',function(e){
+            
+            if(e.keyCode == 189) {
+                
+                return false;
+            }
+        });
+        
+        
         $("#img-upload").on('change',function(){
             $('#form-basic-save').submit();
         });
