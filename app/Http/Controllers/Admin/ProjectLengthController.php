@@ -28,7 +28,7 @@ class ProjectLengthController extends Controller
     public function bannerCreate()
     {
     	$pageTitle = "Create Project length";
-        $modules = ProjectLength::select('id', 'name')->get();
+        $modules = Module::select('id', 'name')->get();
     	return view('admin.project_length.create', compact('pageTitle','modules'));
     }
 
