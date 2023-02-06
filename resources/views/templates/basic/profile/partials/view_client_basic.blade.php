@@ -170,8 +170,7 @@
         "use strict";
 
         $(".num_filed").on('keydown',function(e){
-            
-            if(e.keyCode == 189) {
+            if(e.keyCode == 189 || e.keyCode ==109) {
                 
                 return false;
             }

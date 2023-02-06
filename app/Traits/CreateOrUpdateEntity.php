@@ -260,6 +260,7 @@ trait CreateOrUpdateEntity {
             DB::beginTransaction();
 
             try {
+                $this->deleteBannerLogos($model);
                 if($request->type == ModuleBanner::$Static){
                     if($request->hasFile('image')){
                         $model->banner()->delete();
@@ -274,7 +275,7 @@ trait CreateOrUpdateEntity {
                     if($request->has('dynamic_banner_image') || $request->has('default_lead_image_id')){
                         
                         if($model->banner){
-                            $this->deleteBannerLogos($model);
+                            
                             $model->banner()->delete();
                             $model->save();
                         }
@@ -323,9 +324,11 @@ trait CreateOrUpdateEntity {
                     $model->banner()->create([
                         'banner_type' => $request->type ,
                         'video_url'   => $request->video_url,
+                        'lead_image_type' => null
                     ]);
 
                 }
+                
                 $this->updateStatus($request,$model);
                 DB::commit();
 
