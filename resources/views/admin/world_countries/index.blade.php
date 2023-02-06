@@ -65,10 +65,9 @@ th.tlst {
                             
                         @foreach($worldCountries as $worldCountry)
                         <tr>
-                            
                             <td data-label="@lang('County')">
                                 <div class="user">
-                                    <span class="">{{$worldCountry->continent[0]->name ?? ''}}</span>
+                                    <span class="">{{$worldCountry->continent->name ?? ''}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Name')">

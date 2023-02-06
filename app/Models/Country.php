@@ -10,6 +10,7 @@ class Country extends Model
     use HasFactory;
     protected $table = 'world_countries';
 
+    protected $fillable= ['continent_id'];
     public function job(){
 
         return  $this->belongsTo(Job::class);
@@ -20,7 +21,7 @@ class Country extends Model
     }
     public function continent()
     {
-        return $this->hasMany(Continent::class,'id');
+        return $this->belongsTo(Continent::class,'continent_id');
     }
 
  
