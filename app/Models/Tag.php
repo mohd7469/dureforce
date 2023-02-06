@@ -42,6 +42,12 @@ class Tag extends Model
         return ["id", "name"];
     }
 
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active',1);
+    }
+
     public static function topTags(int $typeId)
     {
         return Tag::select(self::defaultSelect())->whereHas('tagsAssociates', function (Builder $builder) use ($typeId) {
@@ -51,4 +57,5 @@ class Tag extends Model
                 ->limit(10);
         }) ->limit(25)->get();
     }
+
 }
