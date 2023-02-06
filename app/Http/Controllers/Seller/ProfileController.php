@@ -22,7 +22,9 @@ use App\Models\UserPortFolio;
 use App\Models\WorldLanguage;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
-use Khsing\World\Models\Country;
+use App\Models\Country;
+
+//use Khsing\World\Models\Country;
 
 class ProfileController extends Controller
 {
@@ -179,8 +181,8 @@ class ProfileController extends Controller
         $user_experience = $user->experiences;
         $user_education  = $user->education;
         $user_portfolios = $user->portfolios; 
-        $countries = Country::select('id', 'name')->get();
-        // $countries = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
+        //$countries = Country::select('id', 'name')->get();
+         $countries = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;
