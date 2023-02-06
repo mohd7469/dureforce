@@ -26,13 +26,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code2')</label>
+                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code2')<span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" name="iso2" value="{{$worldLanguage->iso2}}" >
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code3')</label>
+                                    <label class="form-control-label font-weight-bold">@lang('Language Name Code3')<span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" name="iso3" value="{{$worldLanguage->iso3}}" >
                                 </div>
                             </div>

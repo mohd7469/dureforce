@@ -47,8 +47,8 @@ class WorldLanguageController extends Controller
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
-            'iso2' => 'max:2',
-            'iso3' => 'max:3',
+            'iso2' => 'required|max:2',
+            'iso3' => 'required|max:3',
     
         ]);
         try {
@@ -58,8 +58,8 @@ class WorldLanguageController extends Controller
     
         $worldLanguage->iso_language_name = $request->iso_language_name;
         $worldLanguage->native_name = $request->native_name;
-        $worldLanguage->iso2 = $request->iso2 ? $request->iso2 : null;
-        $worldLanguage->iso3 = $request->iso3 ? $request->iso3 : null;
+        $worldLanguage->iso2 = $request->iso2;
+        $worldLanguage->iso3 = $request->iso3;
        
         $worldLanguage->save();
         DB::commit();
@@ -94,8 +94,8 @@ class WorldLanguageController extends Controller
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
-            'iso2' => 'max:2',
-            'iso3' => 'max:3',
+            'iso2' => 'required|max:2',
+            'iso3' => 'required|max:3',
         ]);
         try {
             DB::beginTransaction();
