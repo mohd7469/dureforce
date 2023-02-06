@@ -15,7 +15,7 @@ class ModuleBanner extends Model
 
     public static $Static  = 'Static'  ;
     public static $Dynamic = 'Dynamic' ;
-    public static $Video   = 'Video'   ;
+    public static $Video   ='Video';
 
     public const LEAD_IMAGES_TYPES = [
         'DEFAULT'   => 'Default',

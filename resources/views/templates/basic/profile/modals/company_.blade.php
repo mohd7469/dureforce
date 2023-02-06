@@ -36,7 +36,7 @@
                                 <div class="col-md-6">
                                     <label class="mt-4">Phone *</label>
                                     <input type="number" name="phone" value="{{ old('number', @$user->company->number) }}"
-                                        placeholder="3948203"  />
+                                        placeholder="3948203"  class="num_filed"/>
                                 </div>
 
                                 <div class="col-md-6">
