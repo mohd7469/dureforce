@@ -82,7 +82,7 @@ class ServiceController extends Controller
             $completed='completed';
             $completedOverview = $completedPricing = $completedBanner = $completedRequirements =  $completedReview = $completedProposal=$empty ;
 
-            $features = Features::latest()->get();
+            $features = Features::Active()->latest()->get();
 
             $attributes = EntityField::with('attributes')->Entity(EntityField::SERVICE)->where('status', true)->get();
 
