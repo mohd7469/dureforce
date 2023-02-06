@@ -58,8 +58,8 @@ class WorldLanguageController extends Controller
     
         $worldLanguage->iso_language_name = $request->iso_language_name;
         $worldLanguage->native_name = $request->native_name;
-        $worldLanguage->iso2 = $request->iso2;
-        $worldLanguage->iso3 = $request->iso3;
+        $worldLanguage->iso2 = $request->iso2 ? $request->iso2 : null;
+        $worldLanguage->iso3 = $request->iso3 ? $request->iso3 : null;
        
         $worldLanguage->save();
         DB::commit();
