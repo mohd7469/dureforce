@@ -15,6 +15,7 @@ class CreateSubAttributesTable extends Migration
     {
         Schema::create('sub_attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('skill_category_id')->index()->nullable();
             $table->string('title')->nullable();
             $table->unsignedBigInteger('module_id')->index();
             $table->boolean('is_active')->default(true)->nullable();
@@ -23,6 +24,8 @@ class CreateSubAttributesTable extends Migration
             $table->foreign('module_id')
                 ->references('id')
                 ->on('modules');
+
+            $table->foreign('skill_category_id')->references('id')->on('skill_categories');
         });
     }
 

@@ -78,14 +78,16 @@
 
 
 </div>
-
-<div class="row portfolio">
-    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 text-right">
-        
-        <a href="{{route('seller.profile.portfolio.edit',$user_portfolio->uuid)}}"   class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Edit Portfolio</a>
-        
+@if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+    <div class="row portfolio">
+        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 text-right">
+            
+            <a href="{{route('seller.profile.portfolio.edit',$user_portfolio->uuid)}}"   class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">Edit Portfolio</a>
+            
+        </div>
     </div>
-</div>
+@endif
+
 
 @push('style')
     <style>
