@@ -37,8 +37,8 @@ class ProjectLengthController extends Controller
         $this->validate($request, [
             'project_name' => 'required',
             'project_descr' => 'required',
-            'start_range' => 'required',
-            'end_range' => 'required',
+            'start_range' => 'required|gt:0',
+            'end_range' => 'required|gt:0',
             'project_type' => 'required',
             'module' => 'required',
 
