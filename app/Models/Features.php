@@ -14,4 +14,11 @@ class Features extends Model
     {
         return self::limit($limit)->get();
     }
+
+
+
+    public function scopeActive($query)
+    {
+        return $query->where('is_active',1);
+    }
 }
