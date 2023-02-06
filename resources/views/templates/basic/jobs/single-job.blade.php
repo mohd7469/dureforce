@@ -154,26 +154,35 @@
                                                         <p>{{$job->budgetType->title ? $job->budgetType->title : ''}}</p>
                                                     </li>
                                                 </ul>
+                                                @if ($job->project_length)
                                                 <ul class="sidebar-title2">
                                                     <li><span>Est. Project Duration</span>
                                                         <p>{{$job->project_length ? $job->project_length->name : ''}}</p>
                                                     </li>
                                                 </ul>
+                                                @endif
+                                                
                                                 <ul class="sidebar-title2">
                                                     <li><span>Project Start Date:</span>
                                                         <p>{{$job->expected_start_date ? $job->expected_start_date  : ''}}</p>
                                                     </li>
                                                 </ul>
-                                                <ul class="sidebar-title2">
-                                                    <li><span>Project Stage</span>
-                                                        <p>{{$job->projectStage ? $job->projectStage->title  : ''}}</p>
-                                                    </li>
-                                                </ul>
-                                                <ul class="sidebar-title2">
-                                                    <li><span>Experience Level</span>
-                                                        <p>{{$job->rank ?  $job->rank->level : ''}}</p>
-                                                    </li>
-                                                </ul>
+                                                @if ($job->projectStage)
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Project Stage</span>
+                                                            <p>{{$job->projectStage ? $job->projectStage->title  : ''}}</p>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+
+                                                @if ($job->rank)
+                                                    <ul class="sidebar-title2">
+                                                        <li><span>Experience Level</span>
+                                                            <p>{{$job->rank ?  $job->rank->level : ''}}</p>
+                                                        </li>
+                                                    </ul>
+                                                @endif
+                                               
 
                                                 <div class="widget-btn- mt-20 cstm-btn">
                                                     <a href="{{route('buyer.job.all.proposals',$job->uuid)}}"    class="standard-btn ">View Proposals ({{$job->proposal->count()}})</a>

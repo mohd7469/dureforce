@@ -47,8 +47,8 @@ class WorldLanguageController extends Controller
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
-            'iso2' => 'max:2',
-            'iso3' => 'max:3',
+            'iso2' => 'required|max:2',
+            'iso3' => 'required|max:3',
     
         ]);
         try {
@@ -94,8 +94,8 @@ class WorldLanguageController extends Controller
            
             'iso_language_name' => 'required',
             'native_name' => 'required',
-            'iso2' => 'max:2',
-            'iso3' => 'max:3',
+            'iso2' => 'required|max:2',
+            'iso3' => 'required|max:3',
         ]);
         try {
             DB::beginTransaction();

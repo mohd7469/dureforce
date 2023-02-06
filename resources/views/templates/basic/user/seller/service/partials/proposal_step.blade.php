@@ -61,13 +61,13 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                                    <small  class="form-text text-dark">Min. Hours Per Week</small>
+                                    <small  class="form-text text-dark">Min. Hours Per Week *</small>
                                     <input type="integer" class="form-control" step="any" id="start_hour_limit" name="start_hour_limit" oninput="this.value = Math.abs(this.value)" value="{{old('start_hour_limit',$proposal['start_hour_limit']) }}">
 
                                 </div>
                                 <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                                    <small  class="form-text text-dark">Max. Hours Per Week</small>
+                                    <small  class="form-text text-dark">Max. Hours Per Week *</small>
                                     <input type="integer" step="any" class="form-control" id="end_hour_limit" name="end_hour_limit" oninput="this.value = Math.abs(this.value)" value="{{old('end_hour_limit',$proposal['end_hour_limit']) }}">
 
                                 </div>

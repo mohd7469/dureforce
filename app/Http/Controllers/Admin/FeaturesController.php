@@ -60,7 +60,8 @@ class FeaturesController extends Controller
        
         $feature->name = $request->name;
         $feature->slug = $request->slug;
-       
+        $feature->is_active = true;
+
         // $dod->module_id = 1;
        
         $feature->save();
