@@ -14,6 +14,9 @@ class Category extends Model
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $fillable = ['name','status'];
 
+    public static $Model_Name_Space = "App\Models\Category";
+    public static $Redis_key = "categories";
+
     const ServiceType = 1;
     const SoftwareType = 2;
     const JobType = 3;

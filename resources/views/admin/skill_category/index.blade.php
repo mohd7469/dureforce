@@ -62,7 +62,7 @@ th.tlst {
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.skill.category.create') }} " class="btn btn-primary btn-sm float-right">Create skill Category</a>
+        <a href="{{ route('admin.skill.category.create') }} " class="btn btn-primary btn-sm float-right">Create Attribute</a>
     </div>
 </div>
 <br>

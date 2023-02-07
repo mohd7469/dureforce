@@ -12,6 +12,9 @@ class DOD extends Model
 
     use HasFactory;
     protected $fillable = ['title','module_id','is_active'];
+
+    public static $Model_Name_Space = "App\Models\DOD";
+    public static $Redis_key = "dods";
     
     protected static function boot()
     {

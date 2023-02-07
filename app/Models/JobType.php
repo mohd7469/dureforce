@@ -12,6 +12,10 @@ class JobType extends Model
     protected $fillable = ['title','module_id','is_active'];
     public static  $OneTime = 1;
     public static  $ONGoing = 2;
+
+    public static $Model_Name_Space = "App\Models\JobType";
+    public static $Redis_key = "job_types";
+
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);
