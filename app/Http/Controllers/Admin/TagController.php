@@ -58,11 +58,7 @@ class TagController extends Controller
         
         $tag->name = $request->name;
         $tag->slug = $request->slug;
-        $tag->is_active = true;
-
-        
-       
-        // $dod->module_id = 1;
+        $tag->is_active = 1;
        
         $tag->save();
 
