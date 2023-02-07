@@ -25,6 +25,14 @@ class SkillCategory extends Model
         return $this->hasMany(Skills::class, 'skill_category_id');
 
     }
+
+    public function subAttribute()
+    {
+
+        return $this->hasOne(SubAttributes::class, 'skill_category_id');
+
+    }
+
     protected static function boot()
     {
         

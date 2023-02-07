@@ -539,6 +539,16 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
           Route::post('skill/category/update/{id}', 'SkillCategoryController@update')->name('skill.category.update');
           Route::get('/skill/category/delete/{id}', 'SkillCategoryController@delete')->name('skill.category.delete');
 
+        // sub attribute
+        Route::get('sub/attribute/index', 'SubAttributesController@index')->name('sub.attribute.index');
+          Route::get('sub/attribute/create', 'SubAttributesController@Create')->name('sub.attribute.create');
+          Route::post('sub/attribute/store', 'SubAttributesController@store')->name('sub.attribute.store');
+          Route::get('sub/attribute/edit/{id}', 'SubAttributesController@editdetails')->name('sub.attribute.edit');
+          Route::post('sub/attribute/active', 'SubAttributesController@activeBy')->name('sub.attribute.active');
+          Route::post('sub/attribute/inactive', 'SubAttributesController@inactiveBy')->name('sub.attribute.inactive');
+          Route::post('sub/attribute/update/{id}', 'SubAttributesController@update')->name('sub.attribute.update');
+          Route::get('/sub/attribute/delete/{id}', 'SubAttributesController@delete')->name('sub.attribute.delete');  
+
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');
         Route::post('credential/store', 'SystemCredentialController@store')->name('credential.store');

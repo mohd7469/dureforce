@@ -54,4 +54,8 @@ class Module extends Model
     {
         return $this->hasMany(ProjectLength::class,'module_id');
     }
+    public function sub_attribute()
+    {
+        return $this->hasMany(SubAttributes::class,'module_id');
+    }
 }

@@ -728,11 +728,19 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     </a>
                                 </li>
                                 <li
-                                    class="sidebar-menu-item {{ menuActive('admin.category.subcategory.index') }} ">
+                                    class="sidebar-menu-item {{ menuActive('admin.skill.category.index') }} ">
                                     <a href="{{ route('admin.skill.category.index') }}"
                                         class="nav-link">
                                         <i class="menu-icon las la-dot-circle"></i>
                                         <span class="menu-title">@lang('Attributes')</span>
+                                    </a>
+                                </li>
+                                <li
+                                    class="sidebar-menu-item {{ menuActive('admin.sub.attribute.index') }} ">
+                                    <a href="{{ route('admin.sub.attribute.index') }}"
+                                        class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Sub Attributes')</span>
                                     </a>
                                 </li>
                             </ul>
