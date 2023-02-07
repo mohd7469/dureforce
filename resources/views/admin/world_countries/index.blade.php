@@ -131,7 +131,7 @@ th.tlst {
                                <a  href="{{route('admin.world.country.edit', $worldCountry->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                    <i class="las la-edit"></i>
                                </a>
-                                <a type="submit" disabled  href="{{route('admin.world.country.delete', $worldCountry->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?">
+                                <a type="submit" disabled  href="{{route('admin.world.country.delete', $worldCountry->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" style="pointer-events: none;cursor: default;" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?">
                                    <i class="las la-trash"></i>
                                </a> 
                           

@@ -177,7 +177,7 @@ class ProfileController extends Controller
         $user_experience = $user->experiences;
         $user_education  = $user->education;
         $user_portfolios = $user->portfolios; 
-        $countries = Country::select('id', 'name')->get();
+        $countries = Country::select('id', 'name')->orderBy('name', 'asc')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
         $basicProfile=$user->basicProfile;
         $user_languages=$user->languages;

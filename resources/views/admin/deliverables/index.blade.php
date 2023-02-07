@@ -39,7 +39,6 @@ a.disabled{
                             
                             <th>@lang('Status')</th>
                             <th>@lang('Action')</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -80,7 +79,7 @@ a.disabled{
                                     <a type="submit"  href="{{route('admin.deliverable.delete', $deliverable->id)}}" class="icon-btn btn--danger ml-1 editbtn-c disabled " id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
-                                    <td data-label="@lang('Action')">
+                                    <!-- <td data-label="@lang('Action')"> -->
                                         @if($deliverable->is_active == 1)
                                             <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$deliverable->id}}">
                                                 <i class="las la-check "></i>
@@ -93,7 +92,7 @@ a.disabled{
                                             </button>
                                         @endif
                                         <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                                    </td>
+                                    <!-- </td> -->
                               
              
                                
