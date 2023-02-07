@@ -35,6 +35,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
 
                     </li>
                 @endif
+
                 @if (in_array('9', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.users*', 3) }}">
@@ -1749,6 +1750,16 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </a>
                     </li>
                 @endif
+                    @if (in_array('9', $staffAccess))
+                        <li class="sidebar-menu-item">
+                            <a href="/admin/flush-redis-db" class="{{ menuActive('admin.users*', 3) }}">
+                                <i class="menu-icon las la-users"></i>
+                                <span class="menu-title">@lang('Flush Redis Data')</span>
+
+                            </a>
+
+                        </li>
+                    @endif
 
                 @if (in_array('32', $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.request.report') }}">
