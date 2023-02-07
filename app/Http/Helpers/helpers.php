@@ -7,6 +7,7 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use Illuminate\Support\Facades\Redis;
 use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
@@ -1618,19 +1619,38 @@ function dateDiffInDays($date1, $date2)
   }
 
 
+function getRedisData($model,$key,$condition=null){
 
-function getRedisData($model,$key){
-    $redis_data =  json_decode(Redis::get($key));
-    if ($redis_data){
-        return $redis_data;
-    }
-    else{
-        $model_data = $model::all();
-        Redis::set($key, json_encode($model_data));
+    try {
+        $redis_data =  json_decode(Redis::get($key));
+        if ($redis_data){
+            return $redis_data;
+        }
+        else{
+            $query = $model::query();
+
+            $query->when(($condition!=null), function ($q) use ($condition) {
+                return $q->where('is_active', $condition);
+            });
+            $model_data = $query->get();
+            Redis::set($key, json_encode($model_data));
+            return $model_data;
+        }
+
+    } catch (\Exception $e) {
+        $query = $model::query();
+
+        $query->when(($condition!=null), function ($q) use ($condition) {
+            return $q->where('is_active', $condition);
+        });
+        $model_data = $query->get();
+
         return $model_data;
     }
+
 }
 function storeRedisData($model,$key){
+
     $model_data = $model::all();
     if ($model_data){
         Redis::set($key, json_encode($model_data));
