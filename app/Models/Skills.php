@@ -43,6 +43,10 @@ class Skills extends Model
         return $this->belongsTo(ModuleSkill::class, 'skill_id');
     }
 
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
 
     public function categories()
     {
