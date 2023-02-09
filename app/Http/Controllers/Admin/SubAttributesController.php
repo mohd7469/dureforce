@@ -19,7 +19,7 @@ class SubAttributesController extends Controller
         try {
             $pageTitle = "Sub Attribute List";
             $emptyMessage = "No data found";
-            $subAttributes = SubAttributes::latest()->paginate(getPaginate());
+            $subAttributes = SubAttributes::with('skillCategory')->latest()->paginate(getPaginate());
             return view('admin.sub_attribute.index', compact('pageTitle','subAttributes'));
         }catch (\Exception $exp) {
            

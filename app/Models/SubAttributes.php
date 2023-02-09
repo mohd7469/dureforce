@@ -35,6 +35,6 @@ class SubAttributes extends Model
 
     public function skillCategory()
     {
-        return $this->belongsTo(skillCategory::class, 'skill_category_id');
+        return $this->belongsTo(SkillCategory::class, 'skill_category_id');
     }
 }
