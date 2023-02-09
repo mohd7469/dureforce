@@ -58,4 +58,8 @@ class Module extends Model
     {
         return $this->hasMany(SubAttributes::class,'module_id');
     }
+    public function skills()
+    {
+        return $this->hasMany(Skills::class,'module_id');
+    }
 }
