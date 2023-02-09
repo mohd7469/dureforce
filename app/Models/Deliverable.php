@@ -28,6 +28,7 @@ class Deliverable extends Model
          static::addGlobalScope(new ActiveScope);
 
     }
+    
     public function module()
     {
         return $this->belongsTo(Module::class, 'module_id');
