@@ -12,17 +12,30 @@
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <div class="form-group ">
-                                    <label class="form-control-label font-weight-normal">@lang('Name')<span class="text-danger">*</span></label>
+                                    <label class="form-control-label font-weight-normal">@lang('Title')<span class="text-danger">*</span></label>
                                     <input class="form-control" type="text" name="name" value="{{ $Skill->name }}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
+                        {{-- Module --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Skill Type')<span class="text-danger">*</span></label>
+                                <label>@lang('Attribute')<span class="text-danger">*</span></label>
+                                <select class="form-control" name="skill_category" >
+                                    <option selected="" disabled="">@lang('Select Attribute')</option>
+                                    @foreach($SkillCategorys as $SkillCategory)
+                                        <option value="{{ ($SkillCategory->id) }}" {{ $SkillCategory->id == $Skill->skill_category_id ? 'selected' : '' }}>{{__($SkillCategory->name)}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                <label>@lang('Sub Attribute')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="skill_type" >
-                                    <option selected="" disabled="">@lang('Select Skill Type')</option>
+                                    <option selected="" disabled="">@lang('Select Sub Attribute')</option>
                                         <option value="Frontend" {{ $Skill->skill_type == 'Frontend' ? 'selected' : '' }}>Frontend</option>
                                         <option value="Backend" {{ $Skill->skill_type == 'Backend' ? 'selected' : '' }}>Backend</option>
                                         <option value="Non Relational" {{ $Skill->skill_type == 'Non Relational' ? 'selected' : '' }}>Non Relational</option>
@@ -30,18 +43,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                        {{-- Module --}}
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Skill Category')<span class="text-danger">*</span></label>
-                                <select class="form-control" name="skill_category" >
-                                    <option selected="" disabled="">@lang('Select Skill Category')</option>
-                                    @foreach($SkillCategorys as $SkillCategory)
-                                        <option value="{{ ($SkillCategory->id) }}" {{ $SkillCategory->id == $Skill->skill_category_id ? 'selected' : '' }}>{{__($SkillCategory->name)}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        
 
                         <div class="row">
                             {{-- Module --}}
