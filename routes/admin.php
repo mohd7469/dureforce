@@ -549,6 +549,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
           Route::post('sub/attribute/update/{id}', 'SubAttributesController@update')->name('sub.attribute.update');
           Route::get('/sub/attribute/delete/{id}', 'SubAttributesController@delete')->name('sub.attribute.delete');  
 
+          // Skills
+        Route::get('skill/index', 'SkillController@index')->name('skill.index');
+        Route::get('skill/create', 'SkillController@Create')->name('skill.create');
+        Route::post('skill/store', 'SkillController@store')->name('skill.store');
+        Route::get('skill/edit/{id}', 'SkillController@editdetails')->name('skill.edit');
+        Route::post('skill/update/{id}', 'SkillController@update')->name('skill.update');
+        Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');  
+
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');
         Route::post('credential/store', 'SystemCredentialController@store')->name('credential.store');
