@@ -21,62 +21,68 @@
         <Label>{{$user_portfolio->role}}</Label>
     </div>
     <div class="sep-solid"></div>
+    
+    @if ($user_portfolio->attachments->isNotEmpty())
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
+            <Label>Project Images</Label>
+            <div class="row">
 
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
-        <Label>Project Images</Label>
-        <div class="row">
+                @if ($user_portfolio->attachments->isNotEmpty())
+                    
+                    @foreach ($user_portfolio->attachments as $item)
+                        <div class="col-md-3 ">
+                            <img alt="User Pic" src="{{ $item->url }}" id="profile-image1" class=" img-responsive" alt="Portfolio image not found">    
+                        </div>
+                    @endforeach
+                    
+                @endif
 
-            @if ($user_portfolio->attachments->isNotEmpty())
-                
-                @foreach ($user_portfolio->attachments as $item)
-                    <div class="col-md-3 ">
-                        <img alt="User Pic" src="{{ $item->url }}" id="profile-image1" class=" img-responsive" alt="Portfolio image not found">    
-                    </div>
-                @endforeach
-                
-            @endif
-
-        </div>
-       
-
-    </div>
-    <div class="sep-solid"></div>
-
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
-        <Label>Skills</Label>
-        <div class="tags-container">
-
-            @foreach($user_portfolio->skills as $item)
-                <span  class=" grey_badge  skill_badge skills badge-secondary">{{$item->name}}</span>
-            @endforeach    
-            
-        </div>
+            </div>
         
-       
-    </div>
-    <div class="sep-solid"></div>
 
-
+        </div>
+        <div class="sep-solid"></div>
+    @endif
+    
+    @if ($user_portfolio->skills->isNotEmpty())
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
+            <Label>Skills</Label>
+            <div class="tags-container">
+                @foreach($user_portfolio->skills as $item)
+                    <span  class=" grey_badge  skill_badge skills badge-secondary">{{$item->name}}</span>
+                @endforeach    
+            </div>
+        </div>
+        <div class="sep-solid"></div>
+    @endif
+    
     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
         <Label>Completion Date</Label>
         <label for="">{{$user_portfolio->completion_date}}</label>
     </div>
     <div class="sep-solid"></div>
+    
+    @if ($user_portfolio->video_url || $user_portfolio->project_url)
+        <div class="row">
+            
+            @if ($user_portfolio->video_url)
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2 mb-f">
+                    <Label>Youtube Url</Label>
+                    <label for="">{{$user_portfolio->video_url}}</label>
+                </div>
+            @endif
 
-    <div class="row">
-        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2 mb-f">
-            <Label>Youtube Url</Label>
-            <label for="">{{$user_portfolio->video_url}}</label>
+            @if ($user_portfolio->project_url)
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2 mb-f">
+                    <Label>Public Url</Label>
+                    <label for="">{{$user_portfolio->project_url}}</label>
+                </div>
+            @endif
+            
         </div>
-        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2 mb-f">
-            <Label>Public Url</Label>
-            <label for="">{{$user_portfolio->project_url}}</label>
-        </div>
-    </div>
-    <div class="sep-solid"></div>
-
-
-
+        <div class="sep-solid"></div>
+    @endif
+    
 </div>
 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
     <div class="row portfolio">

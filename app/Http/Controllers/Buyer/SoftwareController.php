@@ -27,7 +27,7 @@ class SoftwareController extends Controller
            
             $user=auth()->user();
             $software=Software::with('defaultProposal.attachments')->where('uuid',$uuid)->firstOrFail();
-            $job=Job::create(
+            $job=Job::updateOrCreate(
                 [
                     "user_id"   => $user->id,
                     "module_id" => $software->id,
