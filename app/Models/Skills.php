@@ -16,6 +16,9 @@ class Skills extends Model
     use HasFactory,SoftDeletes;
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $table="skills";
+
+    public static $Model_Name_Space = "App\Models\Skills";
+    public static $Redis_key = "categories";
     /**
      * The "type" of the auto-incrementing ID.
      *
@@ -40,6 +43,10 @@ class Skills extends Model
         return $this->belongsTo(ModuleSkill::class, 'skill_id');
     }
 
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'module_id');
+    }
 
     public function categories()
     {

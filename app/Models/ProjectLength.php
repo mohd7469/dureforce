@@ -9,6 +9,9 @@ class ProjectLength extends Model
 {
     use HasFactory;
 
+    public static $Model_Name_Space = "App\Models\ProjectLength";
+    public static $Redis_key = "project_length";
+
     public function scopeOnlyJob($query)
     {
         return $query->where('module_id',Module::$Job);

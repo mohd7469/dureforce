@@ -2,6 +2,10 @@
 @section('panel')
 
 <style>
+    a.disabled{
+        pointer-events: none;
+        cursor: default;
+    }
 .icon-btn i {
     font-size: 22px;
 }
@@ -11,17 +15,54 @@
     /* background: red; */
     display: inline-block;
 }
-
-a.disabled{
-        pointer-events: none;
-        cursor: default;
-    }
+.tickbtn {
+    padding: 5.5px 7px;
+    float: right;
+}
+a.icon-btn{
+    float: right;
+    
+}
+.table td{
+    white-space: revert !important;
+}
+table .user .name {
+    width: calc(100% - 40px);
+    padding-left: 10px;
+}
+.icon-btn i {
+    font-size: 22px;
+}
+.editbtn-c {
+    width: 35px;
+    height: 35px;
+    /* background: red; */
+    display: inline-block;
+}
+.tickbtn {
+    padding: 5.5px 7px;
+    float: right;
+}
+.table td{
+    white-space: revert !important;
+}
+.icon-btn{
+    float: right;
+}
+table{
+    table-layout: fixed;
+}
+th.tlst {
+    text-align: right !important;
+    position: relative;
+    padding-right: 6% !important;
+}
 
 </style>
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.deliverable.create') }} " class="btn btn-primary btn-sm float-right">Create Deliverable Detail</a>
+        <a href="{{ route('admin.sub.attribute.create') }} " class="btn btn-primary btn-sm float-right">Create Sub Attribute</a>
     </div>
 </div>
 <br>
@@ -34,67 +75,66 @@ a.disabled{
                         <thead>
                         <tr>
                             
-                            <th>@lang('Name')</th>
-                            <th>@lang('Slug')</th>
-                            
+                            <th>@lang('Skill Category')</th>
+                            <th>@lang('Title')</th>
+                            <th>@lang('Module')</th>
                             <th>@lang('Status')</th>
-                            <th>@lang('Action')</th>
+                            <th class="tlst">@lang('Action')</th>
+                            
                         </tr>
                         </thead>
                         <tbody>
                             
                             
-                        @foreach($deliverables as $deliverable)
+                        @foreach($subAttributes as $subAttribute)
                         <tr>
                             
+                             <td data-label="@lang('Skill Category')">
+                                <div class="user">
+                                    <span class="name">{{$subAttribute->skillCategory->name ?? ''}}</span>
+                                </div>
+                            </td>
                             <td data-label="@lang('Title')">
                                 <div class="user">
-                                    <span class="name">{{$deliverable->name}}</span>
+                                    <span class="name">{{$subAttribute->title ?? ''}}</span>
                                 </div>
                             </td>
-                            <td data-label="@lang('Description')">
+                            <td data-label="@lang('Slug')">
                                 <div class="user">
-                                    <span class="name">{{$deliverable->slug}}</span>
+                                    <span class="name">{{$subAttribute->module->name ?? ''}}</span>
                                 </div>
                             </td>
-                            
-                           
-
-                            <td data-label="@lang('Status')">
-                                @if($deliverable->is_active == 1)
+                            <td data-label="@lang('Status')"> 
+                                @if($subAttribute->is_active == 1)
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
-                                @elseif($deliverable->is_active == 0)
+                                @elseif($subAttribute->is_active == 0)
                                     <span class="font-weight-normal badge--danger">@lang('InActice')</span>
                                 @endif
                             </td>
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.deliverable.edit', $deliverable->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.sub.attribute.edit', $subAttribute->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
-                               
-                                     {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
-                               
-                                    <a type="submit"  href="{{route('admin.deliverable.delete', $deliverable->id)}}" class="icon-btn btn--danger ml-1 editbtn-c disabled " id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
-                                        <i class="las la-trash"></i>
-                                    </a> 
-                                    <!-- <td data-label="@lang('Action')"> -->
-                                        @if($deliverable->is_active == 1)
-                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$deliverable->id}}">
+
+                                    <div data-label="@lang('Action')">
+                                        @if($subAttribute->is_active == 1)
+                                            <button class="icon-btn btn--danger  ml-1 bannerinactive active  tickbtn" id="banneractive " data-toggle="tooltip" title="" data-original-title="@lang('InActive')" data-id="{{$subAttribute->id}}">
                                                 <i class="las la-check "></i>
                                             </button>
                                         @endif
         
-                                        @if($deliverable->is_active == 0)
-                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$deliverable->id}}">
+                                        @if($subAttribute->is_active == 0)
+                                            <button class="icon-btn btn--success ml-1 banneractive inactive tickbtn " id="bannerinactive" data-toggle="tooltip" title="" data-original-title="@lang('Active')" data-id="{{$subAttribute->id}}">
                                             <i class="las la-times"></i>
                                             </button>
                                         @endif
-                                        <!-- <a href="#" class="icon-btn ml-1" data-toggle="tooltip" data-original-title="@lang('Details')">@lang('Details')</a> -->
-                                    <!-- </td> -->
-                              
-             
+                                    </div>
+                               
+                                     <a type="submit"  href="{{route('admin.sub.attribute.delete', $subAttribute->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                        <i class="las la-trash"></i>
+                                    </a> 
                                
                             </td>
                         </tr>
@@ -108,34 +148,7 @@ a.disabled{
                 </div>
             </div>
             <div class="card-footer py-4">
-                {{ paginateLinks($deliverables) }}
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- The Modal -->
-<div class="container">
-    <div
-            class="modal fade"
-            id="bannerModal"
-            tabindex="-1"
-            aria-labelledby="emailVerifyLabel"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img alt="User Pic" src="" id="profile-image-invite"
-                                             class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{ paginateLinks($subAttributes) }}
             </div>
         </div>
     </div>
@@ -151,12 +164,12 @@ a.disabled{
                     </button>
             </div>
             
-            <form action="{{ route('admin.deliverable.inactive') }}" method="POST">
+            <form action="{{ route('admin.sub.attribute.inactive') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to inactive this Deliverables Details?')</p>
+                    <p>@lang('Are you sure to inactive this Sub Attribute?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -177,12 +190,12 @@ a.disabled{
                     </button>
             </div>
             
-            <form action="{{ route('admin.deliverable.active') }}" method="POST">
+            <form action="{{ route('admin.sub.attribute.active') }}" method="POST">
                 @csrf
                 @method('POST')
                 <input type="hidden" name="id">
                 <div class="modal-body">
-                    <p>@lang('Are you sure to active this Deliverables Details?')</p>
+                    <p>@lang('Are you sure to active this Sub Attribute?')</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn--secondary" data-dismiss="modal">@lang('Close')</button>
@@ -193,27 +206,12 @@ a.disabled{
     </div>
 </div>
 
-
 @endsection
-
-
-
 @push('script')
 <script>
     'use strict';
     var deleteLinks = document.querySelectorAll('.delete');
-
-for (var i = 0; i < deleteLinks.length; i++) {
-    deleteLinks[i].addEventListener('click', function(event) {
-        event.preventDefault();
-
-        var choice = confirm(this.getAttribute('data-confirm'));
-
-        if (choice) {
-            window.location.href = this.getAttribute('href');
-        }
-    });
-}
+ 
     $('.bannerinactive').on('click', function () {
         
         var modal = $('#inactiveBy');
@@ -227,17 +225,7 @@ for (var i = 0; i < deleteLinks.length; i++) {
         modal.modal('show');
     });
 
-    $('.bannerModal').on('click', function () {
-            var url = $(this).data('url');
-            console.log(url);
-            if(url != null){
-                $("#profile-image-invite").attr('src',url);
-            }else{
-                $("#profile-image-invite").attr('src','/assets/images/default.png');
-            }
-            $('#bannerModal').modal('show');
-    });
-
-
 </script>
 @endpush
+
+

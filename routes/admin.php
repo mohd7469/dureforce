@@ -26,6 +26,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware('admin')->group(function () {
 
+        Route::get('flush-redis-db', 'AdminController@flushRedisDb')->name('profile');
+
+
+
         Route::get('profile', 'AdminController@profile')->name('profile');
         Route::post('profile', 'AdminController@profileUpdate')->name('profile.update');
         Route::get('password', 'AdminController@password')->name('password');
@@ -534,6 +538,24 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
           Route::get('skill/category/edit/{id}', 'SkillCategoryController@editdetails')->name('skill.category.edit');
           Route::post('skill/category/update/{id}', 'SkillCategoryController@update')->name('skill.category.update');
           Route::get('/skill/category/delete/{id}', 'SkillCategoryController@delete')->name('skill.category.delete');
+
+        // sub attribute
+        Route::get('sub/attribute/index', 'SubAttributesController@index')->name('sub.attribute.index');
+          Route::get('sub/attribute/create', 'SubAttributesController@Create')->name('sub.attribute.create');
+          Route::post('sub/attribute/store', 'SubAttributesController@store')->name('sub.attribute.store');
+          Route::get('sub/attribute/edit/{id}', 'SubAttributesController@editdetails')->name('sub.attribute.edit');
+          Route::post('sub/attribute/active', 'SubAttributesController@activeBy')->name('sub.attribute.active');
+          Route::post('sub/attribute/inactive', 'SubAttributesController@inactiveBy')->name('sub.attribute.inactive');
+          Route::post('sub/attribute/update/{id}', 'SubAttributesController@update')->name('sub.attribute.update');
+          Route::get('/sub/attribute/delete/{id}', 'SubAttributesController@delete')->name('sub.attribute.delete');  
+
+          // Skills
+        Route::get('skill/index', 'SkillController@index')->name('skill.index');
+        Route::get('skill/create', 'SkillController@Create')->name('skill.create');
+        Route::post('skill/store', 'SkillController@store')->name('skill.store');
+        Route::get('skill/edit/{id}', 'SkillController@editdetails')->name('skill.edit');
+        Route::post('skill/update/{id}', 'SkillController@update')->name('skill.update');
+        Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');  
 
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');

@@ -12,24 +12,24 @@
                         <div class="row">
                             {{-- Name --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="project_name">@lang('Name')*</label>
+                                <label for="project_name">@lang('Name')<span class="text-danger">*</span></label>
                                     <input type="text" name="project_name" class="form-control">
                             </div>
                             {{-- Description --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="project_descr">@lang('Description')*</label>
+                                <label for="project_descr">@lang('Description')<span class="text-danger">*</span></label>
                                     <input type="text" name="project_descr" class="form-control">
                             </div>
                         </div>
                         <div class="row">
                             {{-- Start Range --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="start_range">@lang('Start Range')*</label>
+                                <label for="start_range">@lang('Start Range')<span class="text-danger">*</span></label>
                                 <input type="number" name="start_range" class="form-control">
                             </div>
                             {{-- End Range --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="end_range">@lang('End Range')*</label>
+                                <label for="end_range">@lang('End Range')<span class="text-danger">*</span></label>
                                 <input type="number" name="end_range" class="form-control">
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                         <div class="row">
                             {{-- Type --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Category')*</label>
+                                <label>@lang('Project Type')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="project_type" >
                                     <option selected="" disabled="">@lang('Select Project Type')</option>
                                         <option value="Weeks">Weeks</option>
@@ -48,7 +48,7 @@
                             </div>
                             {{-- Module --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label>@lang('Module')*</label>
+                                <label>@lang('Module')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="module" >
                                     <option selected="" disabled="">@lang('Select Module')</option>
                                     @foreach($modules as $module)

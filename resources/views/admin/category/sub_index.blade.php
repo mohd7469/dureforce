@@ -49,7 +49,7 @@
                                             data-category_id="{{$subCategory->category_id}}" >
                                             <i class="las la-edit"></i>
                                         </a>
-                                        <a type="submit"  href="{{route('admin.category.subcategory.delete', $subCategory->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                        <a type="submit"  href="{{route('admin.category.subcategory.delete', $subCategory->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete" style="pointer-events: none;cursor: default;" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                             <i class="las la-trash"></i>
                                         </a>
                                             @if($subCategory->is_active == 1)

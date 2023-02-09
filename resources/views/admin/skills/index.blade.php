@@ -62,7 +62,7 @@ th.tlst {
 <div class="row">
     <div class="col-lg-12">
      
-        <a href="{{ route('admin.skill.category.create') }} " class="btn btn-primary btn-sm float-right">Create Attribute</a>
+        <a href="{{ route('admin.skill.create') }} " class="btn btn-primary btn-sm float-right">Create Skills</a>
     </div>
 </div>
 <br>
@@ -74,39 +74,48 @@ th.tlst {
                     <table class="table table--light style--two">
                         <thead>
                         <tr>
-                            
                             <th>@lang('Name')</th>
-                            <th>@lang('Slug')</th>
+                            <th>@lang('Skill Type')</th>
+                            <th>@lang('Skill Category')</th>
+                            <th>@lang('Module')</th>
                             <th class="tlst">@lang('Action')</th>
-                            
                         </tr>
                         </thead>
                         <tbody>
                             
                             
-                        @foreach($skill_categories as $skill_category)
+                        @foreach($Skills as $Skill)
                         <tr>
                             
-                            <td data-label="@lang('Name')">
+                             <td data-label="@lang('Name')">
                                 <div class="user">
-                                    <span class="name">{{$skill_category->name ?? ''}}</span>
+                                    <span class="name">{{$Skill->name ?? ''}}</span>
+                                </div>
+                            </td>
+                            <td data-label="@lang('Skill Type')">
+                                <div class="user">
+                                    <span class="name">{{$Skill->skill_type ?? ''}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Slug')">
                                 <div class="user">
-                                    <span class="name">{{$skill_category->slug ?? ''}}</span>
+                                    <span class="name">{{$Skill->skill_categories->name  ?? ''}}</span>
                                 </div>
                             </td>
+                            <td data-label="@lang('Slug')">
+                                <div class="user">
+                                    <span class="name">{{$Skill->module->name ?? ''}}</span>
+                                </div>
+                            </td>
+
                             
                             <td data-label="@lang('Action')">
                                
-                                    <a  href="{{route('admin.skill.category.edit', $skill_category->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
+                                    <a  href="{{route('admin.skill.edit', $Skill->id)}}" class="icon-btn btn--success ml-1  editbtn-c" id="" data-toggle="tooltip1" title="" data-original-title="@lang('InActive')" data-id="">
                                         <i class="las la-edit"></i>
                                     </a>
                                
-                                     {{-- <a href="#" class="delete" data-confirm="Are you sure to delete this item?">Delete</a>  --}}
-                               
-                                     <a type="submit"  href="{{route('admin.skill.category.delete', $skill_category->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
+                                     <a type="submit"  href="{{route('admin.skill.delete', $Skill->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
                                         <i class="las la-trash"></i>
                                     </a> 
                                
@@ -122,12 +131,12 @@ th.tlst {
                 </div>
             </div>
             <div class="card-footer py-4">
-                {{ paginateLinks($skill_categories) }}
+                {{ paginateLinks($Skills) }}
             </div>
         </div>
     </div>
 </div>
-
 @endsection
+
 
 
