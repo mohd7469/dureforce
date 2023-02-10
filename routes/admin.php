@@ -558,6 +558,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');  
         Route::get('skill/attribute', 'SkillController@attribute')->name('skill.attribute');
 
+        // Category Attribute
+        Route::get('category/attribute/index', 'CategoryAttributeController@index')->name('category.attribute.index');
+        Route::get('category/attribute/create', 'CategoryAttributeController@Create')->name('category.attribute.create');
+        Route::post('category/attribute/store', 'CategoryAttributeController@store')->name('category.attribute.store');
+        Route::get('category/attribute/edit/{id}', 'CategoryAttributeController@editdetails')->name('category.attribute.edit');
+        Route::post('category/attribute/update/{id}', 'CategoryAttributeController@update')->name('category.attribute.update');
+        Route::get('/category/attribute/delete/{id}', 'CategoryAttributeController@delete')->name('category.attribute.delete');  
+        Route::get('category/attribute/attribute', 'CategoryAttributeController@attribute')->name('category.attribute.attribute');
+
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');
         Route::post('credential/store', 'SystemCredentialController@store')->name('credential.store');
