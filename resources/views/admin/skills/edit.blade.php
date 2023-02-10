@@ -45,7 +45,7 @@
                         <div class="row">
                             {{-- Sub Attribute --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
-                                <label for="subAttributes">@lang('Sub Attribute')*</label>
+                                <label for="subAttributes">@lang('Sub Attribute')<span class="text-danger">*</span></label>
                                     <select name="sub_attribute" class="form-control mySubAttr" id="subAttributes" >
                                     @foreach($subAttributes as $subAttribute)
                                         <option value="{{ ($subAttribute->title) }}" {{ $subAttribute->id == $Skill->skill_category_id ? 'selected' : '' }}>{{__($subAttribute->title)}}</option>
