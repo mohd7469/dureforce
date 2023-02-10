@@ -556,6 +556,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('skill/edit/{id}', 'SkillController@editdetails')->name('skill.edit');
         Route::post('skill/update/{id}', 'SkillController@update')->name('skill.update');
         Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');  
+        Route::get('skill/attribute', 'SkillController@attribute')->name('skill.attribute');
 
         //Email Creditional Route
         Route::get('credential', 'SystemCredentialController@index')->name('credential.index');

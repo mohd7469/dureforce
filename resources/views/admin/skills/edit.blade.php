@@ -22,7 +22,7 @@
                         {{-- Module --}}
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label>@lang('Attribute')<span class="text-danger">*</span></label>
-                                <select class="form-control" name="skill_category" >
+                                <select class="form-control" name="skill_category" id="category">
                                     <option selected="" disabled="">@lang('Select Attribute')</option>
                                     @foreach($SkillCategorys as $SkillCategory)
                                         <option value="{{ ($SkillCategory->id) }}" {{ $SkillCategory->id == $Skill->skill_category_id ? 'selected' : '' }}>{{__($SkillCategory->name)}}</option>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                 <label>@lang('Sub Attribute')<span class="text-danger">*</span></label>
                                 <select class="form-control" name="skill_type" >
@@ -41,9 +41,18 @@
                                         <option value="Non Relational" {{ $Skill->skill_type == 'Non Relational' ? 'selected' : '' }}>Non Relational</option>
                                 </select>
                             </div>
+                        </div> -->
+                        <div class="row">
+                            {{-- Sub Attribute --}}
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
+                                <label for="subAttributes">@lang('Sub Attribute')*</label>
+                                    <select name="sub_attribute" class="form-control mySubAttr" id="subAttributes" >
+                                    @foreach($subAttributes as $subAttribute)
+                                        <option value="{{ ($subAttribute->title) }}" {{ $subAttribute->id == $Skill->skill_category_id ? 'selected' : '' }}>{{__($subAttribute->title)}}</option>
+                                    @endforeach
+                                    </select>
+                            </div>
                         </div>
-
-                        
 
                         <div class="row">
                             {{-- Module --}}
@@ -80,6 +89,41 @@
 @push('script')
 
 <script>
+
+    function fetchSubCategories(category)
+    {
+        $.ajax({
+            type:"GET",
+            url:"{{route('admin.skill.attribute')}}",
+            data: {category : category},
+            success:function(data){
+                console.log(data);
+                var html = '';
+                if(data.error){
+                    $("#subAttributes").empty(); 
+                    html += `<option value="" selected disabled>${data.error}</option>`;
+                    $(".mySubAttr").html(html);
+                }
+                else{
+                    $("#subAttributes").empty(); 
+                    html += `<option value="" selected disabled>@lang('Select Sub Attribute')</option>`;
+                    $.each(data, function(index, item) {
+                        html += `<option value="${item.title}">${item.title}</option>`;
+                        $(".mySubAttr").html(html);
+                    });
+                }
+            }
+        });  
+    }
+
+    $('#category').on('change', function(){
+        var category = $(this).val();
+
+        fetchSubCategories(category);
+        // fetchSkills(category);
+        
+         
+    });
 
 </script>
 
