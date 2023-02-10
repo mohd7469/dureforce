@@ -93,6 +93,7 @@ th.tlst {
                             </td>
                             <td data-label="@lang('Sub Category')">
                                 <div class="user">
+
                                     <span class="name">{{$categoryAttribute->sub_category ? $categoryAttribute->sub_category->name:''}}</span>
                                 </div>
                             </td>

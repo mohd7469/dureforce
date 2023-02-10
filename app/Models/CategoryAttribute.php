@@ -17,22 +17,22 @@ class CategoryAttribute extends Model
 
     public static function scopeWithAll($query){
 
-        return $query->with('category')->with('subCategory')->with('skill');
+        return $query->with('category')->with('sub_category')->with('skill');
 
     }
 
     public function category()
     {
-        return $this->hasOne(Category::class, 'id');
+        return $this->hasOne(Category::class, 'id','category_id');
     }
 
-    public function subCategory()
+    public function sub_category()
     {
-        return $this->hasOne(SubCategory::class, 'id');
+        return $this->hasOne(SubCategory::class, 'id','sub_category_id');
     }
     public function skill()
     {
-        return $this->hasOne(Skills::class, 'id');
+        return $this->hasOne(Skills::class, 'id','skills_id');
     }
 
 }
