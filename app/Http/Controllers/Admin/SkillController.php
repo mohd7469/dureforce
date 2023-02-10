@@ -51,7 +51,7 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'skill_type' => 'required',
+            'sub_attribute' => 'required',
             'skill_category' => 'required',
         ]);
 
@@ -59,7 +59,7 @@ class SkillController extends Controller
             DB::beginTransaction();
             $Skills = new Skills();
             $Skills->name = $request->name;
-            $Skills->skill_type  = $request->skill_type;
+            $Skills->skill_type  = $request->sub_attribute;
             $Skills->skill_category_id  = $request->skill_category;
             $Skills->module_id = $request->module;
             $Skills->save();
@@ -90,9 +90,11 @@ class SkillController extends Controller
             $Skill = Skills::findOrFail($id);
             $modules = Module::select('id', 'name')->get();
             $SkillCategorys = SkillCategory::select('id', 'name')->get();
+            $subAttributes = SubAttributes::where('skill_category_id',$Skill->skill_category_id)->select('id', 'title')->get();
+
             $pageTitle = "Manage All Skills Details";
             $emptyMessage = 'No shortcode available';
-            return view('admin.skills.edit', compact('Skill', 'pageTitle', 'modules',  'SkillCategorys','emptyMessage'));
+            return view('admin.skills.edit', compact('Skill', 'pageTitle', 'modules',  'SkillCategorys','emptyMessage','subAttributes'));
         }catch (\Exception $exp) {
            
             Log::error($exp->getMessage());
@@ -107,7 +109,7 @@ class SkillController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'skill_type' => 'required',
+            'sub_attribute' => 'required',
             'skill_category' => 'required',
         ]);
 
@@ -115,7 +117,7 @@ class SkillController extends Controller
             DB::beginTransaction(); 
             $Skills = Skills::findOrFail($id);
             $Skills->name = $request->name;
-            $Skills->skill_type  = $request->skill_type;
+            $Skills->skill_type  = $request->sub_attribute;
             $Skills->skill_category_id  = $request->skill_category;
             $Skills->module_id = $request->module;
             $Skills->save();
@@ -149,6 +151,16 @@ class SkillController extends Controller
             Log::error($exp->getMessage());
             $notify[] = ['error', 'An error occured'];
             return back()->withNotify($notify);
+        }
+    }
+
+    public function attribute(Request $request)
+    {
+        $sub_attribute = SubAttributes::where('skill_category_id', $request->category)->get();
+        if ($sub_attribute->isEmpty()) {
+            return response()->json(['error' => "Sub attribute not available under this attribute"]);
+        } else {
+            return response()->json($sub_attribute);
         }
     }
 
