@@ -291,8 +291,11 @@ Route::name('user.')->prefix('user')->group(function () {
     });
 });
 
-Route::get('/contact', 'SiteController@contact')->name('contact');
-Route::post('/contact', 'SiteController@contactSubmit');
+Route::middleware('auth')->group(function (){
+    Route::get('/contact', 'SiteController@contact')->name('contact');
+    Route::post('/contact', 'SiteController@contactSubmit');
+});
+
 Route::get('/change/{lang?}', 'SiteController@changeLanguage')->name('lang');
 Route::get('/cookie/accept', 'SiteController@cookieAccept')->name('cookie.accept');
 Route::get('blog', 'SiteController@blog')->name('blog');
