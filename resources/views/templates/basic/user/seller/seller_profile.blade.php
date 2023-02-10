@@ -316,8 +316,8 @@
                                                 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                                     <span class="text-right"  style="position: absolute;top:0;right:0;">
 
-                                                        <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"  class="view-portfolio"><i class="fa fa-eye" style="color:white;margin-right: 10px;"></i></a>
-                                                        <a href="{{route('seller.profile.portfolio.edit',$portfolio->uuid)}}"  class="edit-portfolio"><i class="fa fa-edit" style="color:white;margin-right: 10px;"></i></a>
+                                                        <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"  class="view-portfolio"><i class="fa fa-eye" style="color:#7F007F;margin-right: 10px;"></i></a>
+                                                        <a href="{{route('seller.profile.portfolio.edit',$portfolio->uuid)}}"  class="edit-portfolio"><i class="fa fa-edit" style="color:#7F007F;margin-right: 10px;"></i></a>
                                                         <a href="{{route('seller.profile.portfolio.delete',$portfolio->uuid)}}" class="delete-portfolio"><i class="fa fa-trash" style="color: red;margin-right: 8px;"></i></a>
 
                                                     </span>
