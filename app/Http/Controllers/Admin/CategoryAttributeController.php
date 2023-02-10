@@ -21,10 +21,11 @@ class CategoryAttributeController extends Controller
         try {
             $pageTitle = "Category Attribute List";
             $emptyMessage = "No data found";
-            $categoryAttributes = CategoryAttribute::latest()->paginate(getPaginate());
+            $categoryAttributes = CategoryAttribute::WithAll()->latest()->paginate(getPaginate());
+
             return view('admin.skill_attributes.index', compact('pageTitle','categoryAttributes'));
         }catch (\Exception $exp) {
-           
+
             Log::error($exp->getMessage());
             $notify[] = ['error', 'An error occured'];
             return back()->withNotify($notify);

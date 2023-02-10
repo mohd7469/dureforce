@@ -88,17 +88,17 @@ th.tlst {
                             
                              <td data-label="@lang('Category')">
                                 <div class="user">
-                                    <span class="name">{{$categoryAttribute->category_id ?? ''}}</span>
+                                    <span class="name">{{$categoryAttribute->category ? $categoryAttribute->category->name:''}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Sub Category')">
                                 <div class="user">
-                                    <span class="name">{{$categoryAttribute->sub_category_id ?? ''}}</span>
+                                    <span class="name">{{$categoryAttribute->sub_category ? $categoryAttribute->sub_category->name:''}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Skills')">
                                 <div class="user">
-                                    <span class="name">{{$categoryAttribute->skills_id  ?? ''}}</span>
+                                    <span class="name">{{$categoryAttribute->skill ? $categoryAttribute->skill->name:''}}</span>
                                 </div>
                             </td>
                             <td data-label="@lang('Action')">
