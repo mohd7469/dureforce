@@ -27,8 +27,13 @@ class SoftwareController extends Controller
            
             $user=auth()->user();
             $software=Software::with('defaultProposal.attachments')->where('uuid',$uuid)->firstOrFail();
-            $job=Job::create([
-                "user_id"   => $user->id,
+            $job=Job::updateOrCreate(
+                [
+                    "user_id"   => $user->id,
+                    "module_id" => $software->id,
+                    "module_type" => get_class($software),
+                ],
+                [
                 "job_type_id"   => JobType::$OneTime,
                 "country_id"    =>  $software->user->country_id,
                 "category_id"   => $software->category_id,
@@ -44,8 +49,6 @@ class SoftwareController extends Controller
                 "project_length_id" => null ,
                 "expected_start_date"   => Carbon::now(),
                 "status_id" => Job::$Approved,
-                "module_id" => $software->id,
-                "module_type" => get_class($software),
                 "is_private" => true,
 
             ]);

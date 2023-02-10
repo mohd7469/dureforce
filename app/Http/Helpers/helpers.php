@@ -7,6 +7,7 @@ use App\Models\EmailTemplate;
 use App\Models\Extension;
 use App\Models\Frontend;
 use App\Models\GeneralSetting;
+use Illuminate\Support\Facades\Redis;
 use App\Models\Role;
 use App\Models\SmsTemplate;
 use App\Models\EmailLog;
@@ -117,7 +118,7 @@ function getNumber($length = 8)
 //moveable
 function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
 {
-    
+
     $filename = '';
     try {
 
@@ -142,7 +143,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
         try {
 
             $properties = $blobClient->GetContainerProperties($container);
-            
+
         } catch (ServiceException $e) {
             error($e);
             $blobClient->createContainer($container, $createContainerOptions);
@@ -236,12 +237,12 @@ function addTechnologyLogos($model,$logos){
     $banner=$model->banner;
     $model->technologyLogos()->createMany(
         collect($logos)->map(function($item) use ($banner){
-          
+
             $banner_logo=
-            [
-                'module_banner_id' => $banner->id,
-                'banner_background_id' => $item
-            ];
+                [
+                    'module_banner_id' => $banner->id,
+                    'banner_background_id' => $item
+                ];
             return $banner_logo;
         })->toArray()
     );
@@ -254,12 +255,12 @@ function getBannerType($model){
         }
     }
     return ModuleBanner::$Static;
-} 
+}
 
 function isStaticBanner($model){
     if($model){
         if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Static ? 'block' : 'none';
+            return  $model->banner->banner_type == ModuleBanner::$Static ? 'block' : 'none';
         }
     }
     return 'block';
@@ -268,7 +269,7 @@ function isStaticBanner($model){
 function isDynamicBanner($model){
     if($model){
         if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? 'block' : 'none';
+            return  $model->banner->banner_type == ModuleBanner::$Dynamic ? 'block' : 'none';
         }
     }
     return 'none';
@@ -277,7 +278,7 @@ function isDynamicBanner($model){
 function isVideoBanner($model){
     if($model){
         if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Video ? 'block' : 'none';
+            return  $model->banner->banner_type == ModuleBanner::$Video ? 'block' : 'none';
         }
     }
     return 'none';
@@ -295,7 +296,7 @@ function previewServiceRoute($service){
 function bannerTypeStatic($model){
     if($model){
         if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Static ? true : false;
+            return  $model->banner->banner_type == ModuleBanner::$Static ? true : false;
         }
     }
     return false;
@@ -304,7 +305,7 @@ function bannerTypeStatic($model){
 function bannerTypeDynamic($model){
     if($model){
         if($model->banner){
-           return  $model->banner->banner_type == ModuleBanner::$Dynamic ? true : false;
+            return  $model->banner->banner_type == ModuleBanner::$Dynamic ? true : false;
         }
     }
     return false;
@@ -330,7 +331,7 @@ function getVideoBannerURL($model,$type='preview_video'){
         }
     }
     return $url;
-   
+
 }
 function getServiceFee($software){
     if($software){
@@ -349,11 +350,11 @@ function getSoftwareFee($software){
     return '';
 }
 function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
-    
+
     $query=BannerBackground::where('document_type',$type)->where('is_active',true);
-    
+
     if($model->category_id){
-       
+
         $query= $query->where('category_id',$model->category_id);
     }
 
@@ -390,7 +391,7 @@ function IsDefaultLeadImage($model,$type){
             }
 
         }
-        
+
     }
     return 'none';
 }
@@ -418,7 +419,7 @@ function getServiceProposalData($model){
 }
 
 function getSoftwareProposalData($model){
-    
+
     $proposal['fixed_bid_amount']   = '';
     $proposal['amount_receive']    = '';
     $proposal['project_start_date']  = '';
@@ -448,7 +449,7 @@ function isCustomSelected($model,$type){
             }
 
         }
-        
+
     }
     return '';
 }
@@ -780,7 +781,7 @@ function siteName()
 function isSelectedTag($tag_id,$service_tags){
     $service_tags=$service_tags->pluck('id')->toArray();
     if(in_array($tag_id,$service_tags)){
-        
+
         return "selected";
     }
     else{
@@ -1520,14 +1521,14 @@ function getProficiencyLevelName($id)
 {
     return LanguageLevel::where('id',$id)->first()->name;
 
-} 
+}
 
 function getUserEducation($obj)
 {
     $degree_title=Degree::find($obj->degree_id)->first()->title;
     $education= $obj->school_name.'  '. $degree_title.', '. $obj->field_of_study.' '.Carbon::parse($obj->start_date)->format('Y') ;
     if(!$obj->is_enrolled)
-     $education.='-'.Carbon::parse($obj->end_date)->format('Y');
+        $education.='-'.Carbon::parse($obj->end_date)->format('Y');
     else
         $education.='-PRESENT';
     return $education.'</br>';
@@ -1537,9 +1538,9 @@ function getDegreeSession($obj)
 {
     $session= Carbon::parse($obj->start_date)->format(config('settings.date_format','m/d/Y')) ;
     if(!$obj->is_enrolled)
-     $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
+        $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
     else
-    $session.=' - PRESENT';
+        $session.=' - PRESENT';
     return $session;
 }
 
@@ -1547,9 +1548,9 @@ function getExperienceSession($obj)
 {
     $session= Carbon::parse($obj->start_date)->format(config('settings.date_format','m/d/Y')) ;
     if(!$obj->is_working)
-     $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
+        $session.=' - '.Carbon::parse($obj->end_date)->format(config('settings.date_format','m/d/Y'));
     else
-    $session.=' - PRESENT';
+        $session.=' - PRESENT';
     return $session;
 }
 
@@ -1565,7 +1566,7 @@ function getProposelBid($proposal,$job)
     $propsal_amount='';
     $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
     return '$'.$propsal_amount;
-    
+
 
 }
 
@@ -1607,36 +1608,70 @@ function getYearMonthDays($timestamp){
     return $month_name.' '. $day.', '. $year;
 
 }
-function dateDiffInDays($date1, $date2) 
-  {
-      // Calculating the difference in timestamps
-      $diff = strtotime($date2) - strtotime($date1);
-  
-      // 1 day = 24 hours
-      // 24 * 60 * 60 = 86400 seconds
-      return abs(round($diff / 86400));
-  }
+function dateDiffInDays($date1, $date2)
+{
+    // Calculating the difference in timestamps
+    $diff = strtotime($date2) - strtotime($date1);
+
+    // 1 day = 24 hours
+    // 24 * 60 * 60 = 86400 seconds
+    return abs(round($diff / 86400));
+}
 
 
+function getRedisData($model,$key,$condition=null){
 
-function getRedisData($model,$key){
-    $redis_data =  json_decode(Redis::get($key));
-    if ($redis_data){
-        return $redis_data;
-    }
-    else{
-        $model_data = $model::all();
-        Redis::set($key, json_encode($model_data));
+    try {
+        $redis_data =  json_decode(Redis::get($key));
+        if ($redis_data){
+            return $redis_data;
+        }
+        else{
+            $query = $model::query();
+
+            $query->when(($condition!=null), function ($q) use ($condition) {
+                return $q->where('is_active', $condition);
+            });
+            $model_data = $query->get();
+            Redis::set($key, json_encode($model_data));
+            return $model_data;
+        }
+
+    } catch (\Exception $e) {
+        $query = $model::query();
+
+        $query->when(($condition!=null), function ($q) use ($condition) {
+            return $q->where('is_active', $condition);
+        });
+        $model_data = $query->get();
+
         return $model_data;
     }
+
 }
-function storeRedisData($model,$key){
-    $model_data = $model::all();
-    if ($model_data){
-        Redis::set($key, json_encode($model_data));
-        return true;
+
+function storeRedisData($model,$key,$condition=null){
+
+    try{
+        $query = $model::query();
+
+        $query->when(($condition!=null), function ($q) use ($condition) {
+            return $q->where('is_active', $condition);
+        });
+        $model_data = $query->get();
+
+        if ($model_data){
+            Redis::set($key, json_encode($model_data));
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
-    else{
+    catch (\Exception $e){
         return false;
     }
+
+
 }

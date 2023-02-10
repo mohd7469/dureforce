@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Category;
+use App\Models\Country;
 use App\Models\Deliverable;
 use App\Models\DeliveryMode;
 use App\Models\DOD;
@@ -28,6 +29,7 @@ use App\Models\SubCategory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Khsing\World\World;
@@ -45,24 +47,28 @@ class JobController extends Controller
     {
         $data = [];
 
-        $data['countries'] = World::Countries();
-
-        $data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
-
-        $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
-
-        $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
-
-        $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
-
-        $data['deliverables'] = Deliverable::where('is_active',1)->OnlyJob()->select(['id', 'name', 'slug'])->get();
-
-        $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
+        // $data['countries'] = World::Countries();
+        //$data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
+        // $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
+        // $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
+        // $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
+        // $data['deliverables'] = Deliverable::where('is_active',1)->OnlyJob()->select(['id', 'name', 'slug'])->get();
+        // $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
+        // $data['project_stages'] = ProjectStage::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
 
 
-        $data['project_stages'] = ProjectStage::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
+        $is_active=1;
+        $data['countries'] = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
+        $data['job_types'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
+        $data['categories'] = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
+        $data['experience_levels'] = getRedisData(Rank::$Model_Name_Space,Rank::$Redis_key);
+        $data['budget_types'] = getRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,$is_active);
+        $data['deliverables'] = getRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,$is_active);
+        $data['project_length'] = getRedisData(ProjectLength::$Model_Name_Space,ProjectLength::$Redis_key,$is_active);
+        $data['project_stages'] = getRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,$is_active);
+        $data['dods'] = getRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,$is_active);
 
-        $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
+        //  $data['dods'] = DOD::OnlyJob()->select(['id', 'title'])->get();
 
 
         return $data;

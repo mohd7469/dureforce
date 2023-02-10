@@ -270,7 +270,9 @@ function validateUrl(value){
 }
 $('#video_preview').on("click", function (e) {
   e.preventDefault();
-  validateUrl($("#video_url").val());
+  if($("#pages div#banner3").css("display") == "block"){
+    validateUrl($("#video_url").val());
+  }
 });
 $("#video_url").on("focusout", function (e) {
   e.preventDefault();
@@ -281,10 +283,13 @@ $("#video_url").on("focusout", function (e) {
 $("#video_url").keypress(function(e)
 {   
     e.preventDefault();
-    if(e.which == 13)
-    {
-      validateUrl($(this).val());
+    if($("#pages div#banner3").css("display") == "block"){
+        if(e.which == 13)
+        {
+          validateUrl($(this).val());
+        }
     }
+    
 
 });
 

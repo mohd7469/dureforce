@@ -26,8 +26,14 @@ class ServiceController extends Controller
             $user=auth()->user();
             $service=Service::with('defaultProposal.attachments')->with('skills')->with('deliverable')->where('uuid',$uuid)->firstOrFail();
             
-            $job=Job::create([
-                "user_id"   => $user->id,
+            $job=Job::updateOrCreate(
+                [
+                    "user_id"   => $user->id,
+                    "module_id" => $service->id,
+                    "module_type" => get_class($service),
+
+                ],
+                [
                 "job_type_id"   => JobType::$OneTime,
                 "country_id"    => $service->user->country_id,
                 "category_id"   => $service->category_id,
@@ -43,8 +49,6 @@ class ServiceController extends Controller
                 "project_length_id" => null ,
                 "expected_start_date"   => Carbon::now(),
                 "status_id" => Job::$Approved,
-                "module_id" => $service->id,
-                "module_type" => get_class($service),
                 "is_private" => true,
 
             ]);

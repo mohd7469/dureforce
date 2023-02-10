@@ -12,6 +12,6 @@ class Continent extends Model
 
     public function country()
     {
-        return $this->belongsTo(Country::class, 'continent_id');
+        return $this->hasOne(Country::class, 'continent_id');
     }
 }

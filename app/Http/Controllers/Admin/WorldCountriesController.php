@@ -20,7 +20,7 @@ class WorldCountriesController extends Controller
         $worldCountries = Country::with('continent')->latest()->paginate(getPaginate());  
         return view('admin.world_countries.index', compact('pageTitle','worldCountries'));
     }catch (\Exception $exp) {
-        
+
         Log::error($exp->getMessage());
         $notify[] = ['error', 'An error occured'];
         return back()->withNotify($notify);
@@ -47,7 +47,6 @@ class WorldCountriesController extends Controller
             'full_name'=> 'required',
             'capital'=> 'required',
             'code'=> 'required|max:4',
-            'capital'=> 'required',
             'code_alpha3' => 'max:6',
             'code_numeric'=> 'required|max:6',
             'currency_code'=> 'required|max:3',
@@ -101,6 +100,7 @@ class WorldCountriesController extends Controller
     }
     }
     public function update(Request $request, $id){
+
         $this->validate($request, [
            
             'continent'=> 'required',
@@ -108,7 +108,7 @@ class WorldCountriesController extends Controller
             'full_name'=> 'required',
             'capital'=> 'required',
             'code'=> 'required|max:4',
-            'capital'=> 'required',
+
             'code_alpha3' => 'max:6',
             'code_numeric'=> 'required|max:6',
             'currency_code'=> 'required|max:3',

@@ -70,13 +70,13 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['language'] = Language::all();
         $viewShare['categorys'] = Category::where('is_active', 1)->orderby('id', 'DESC')->inRandomOrder()->get();
         $viewShare['ranks'] = Rank::where('status', 1)->get();
-        $viewShare['features'] = Features::where('is_active', 1)->latest()->get();
+        $viewShare['features'] = Features::Active()->latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
-        $viewShare['delivery_modes'] = DeliveryMode::latest()->get();
+        $viewShare['delivery_modes'] = DeliveryMode::Active()->latest()->get();
 
-        $viewShare['software_module_titles'] = SoftwareDefaultStep::latest()->get();
+        $viewShare['software_module_titles'] = SoftwareDefaultStep::Active()->latest()->get();
 
-        $viewShare['tags'] = Tag::latest()->get();
+        $viewShare['tags'] = Tag::Active()->latest()->get();
 
 
         $viewShare['fservices'] = Service::where('status_id', 1)->whereHas('category', function ($q) {

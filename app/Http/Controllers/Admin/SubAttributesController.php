@@ -4,20 +4,23 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Module;
 use App\Models\SkillCategory;
+use App\Models\SubAttributes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
-class SkillCategoryController extends Controller
+class SubAttributesController extends Controller
 {
     public function index()
     {
         try {
-            $pageTitle = "Attribute List";
+            $pageTitle = "Sub Attribute List";
             $emptyMessage = "No data found";
-            $skill_categories = SkillCategory::latest()->paginate(getPaginate());
-            return view('admin.skill_category.index', compact('pageTitle','skill_categories'));
+            $subAttributes = SubAttributes::with('skillCategory')->latest()->paginate(getPaginate());
+            return view('admin.sub_attribute.index', compact('pageTitle','subAttributes'));
         }catch (\Exception $exp) {
            
             Log::error($exp->getMessage());
@@ -30,8 +33,10 @@ class SkillCategoryController extends Controller
     {
         try {
             
-            $pageTitle = "Create Attribute";
-            return view('admin.skill_category.create', compact('pageTitle'));
+            $pageTitle = "Create Sub Attribute";
+            $modules = Module::select('id', 'name')->get();
+            $SkillCategorys = SkillCategory::select('id', 'name')->get();
+            return view('admin.sub_attribute.create', compact('pageTitle','modules','SkillCategorys'));
         }catch (\Exception $exp) {
             
             Log::error($exp->getMessage());
@@ -44,19 +49,23 @@ class SkillCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'skill_category' => 'required',
+            'title' => 'required',
+            'module' => 'required',
         ]);
 
         try {
             DB::beginTransaction();
-            $skill_categories = new SkillCategory();
-            $skill_categories->name = $request->name;
-            $skill_categories->slug = $request->slug;
-            $skill_categories->save();
+            $subAttributes = new SubAttributes();
+            $subAttributes->skill_category_id  = $request->skill_category;
+            $subAttributes->title = $request->title;
+            $subAttributes->module_id = $request->module;
+            $subAttributes->is_active = 1;
+            $subAttributes->save();
             DB::commit();
-            Log::info(["skillCategory" => $skill_categories]);
-            $notify[] = ['success', 'Your Attribute detail has been Created.'];
-            return redirect()->route('admin.skill.category.index')->withNotify($notify);
+            Log::info(["SubAttributes" => $subAttributes]);
+            $notify[] = ['success', 'Your Sub Attribute detail has been Created.'];
+            return redirect()->route('admin.sub.attribute.index')->withNotify($notify);
         }catch (\Exception $exp) {
             DB::rollback();
             Log::error($exp->getMessage());
@@ -66,9 +75,9 @@ class SkillCategoryController extends Controller
 
     }
 
-    public function show(SkillCategory $skill_categories)
+    public function show(SubAttributes $subAttributes)
     {
-        return $skill_categories;
+        return $subAttributes;
 
     }
 
@@ -77,10 +86,12 @@ class SkillCategoryController extends Controller
     {
         try {
             
-            $skill_category = SkillCategory::findOrFail($id);
-            $pageTitle = "Manage All Attribute Details";
+            $subAttribute = SubAttributes::findOrFail($id);
+            $modules = Module::select('id', 'name')->get();
+            $SkillCategorys = SkillCategory::select('id', 'name')->get();
+            $pageTitle = "Manage All Sub Attribute Details";
             $emptyMessage = 'No shortcode available';
-            return view('admin.skill_category.edit', compact('pageTitle', 'skill_category','emptyMessage'));
+            return view('admin.sub_attribute.edit', compact('subAttribute', 'pageTitle', 'modules',  'SkillCategorys','emptyMessage'));
         }catch (\Exception $exp) {
            
             Log::error($exp->getMessage());
@@ -94,19 +105,23 @@ class SkillCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'skill_category' => 'required',
+            'title' => 'required',
+            'module' => 'required',
         ]);
 
         try {
             DB::beginTransaction(); 
-            $skill_categories = SkillCategory::findOrFail($id);
-            $skill_categories->name = $request->name;
-            $skill_categories->slug = $request->slug;
-            $skill_categories->save();
+            $subAttributes = SubAttributes::findOrFail($id);
+            $subAttributes->skill_category_id  = $request->skill_category;
+            $subAttributes->title = $request->title;
+            $subAttributes->module_id = $request->module;
+            $subAttributes->is_active = 1;
+            $subAttributes->save();
             DB::commit();
-            Log::info(["skillCategory" => $skill_categories]);
-            $notify[] = ['success', 'Attribute detail has been updated'];
-            return redirect()->route('admin.skill.category.index')->withNotify($notify);
+            Log::info(["SubAttributes" => $subAttributes]);
+            $notify[] = ['success', 'Sub Attribute detail has been updated'];
+            return redirect()->route('admin.sub.attribute.index')->withNotify($notify);
         }
         catch (\Exception $exp) {
             DB::rollback();
@@ -120,12 +135,12 @@ class SkillCategoryController extends Controller
     {
         try {
             DB::beginTransaction();
-        $skillCategory = SkillCategory::find($id);
+        $subAttributes = SubAttributes::find($id);
        
-        $skillCategory->delete();
+        $subAttributes->delete();
         DB::commit();
-        Log::info(["skillCategory" => $skillCategory]);
-        $notify[] = ['success', 'Attribute deleted successfully'];
+        Log::info(["subAttributes" => $subAttributes]);
+        $notify[] = ['success', 'Sub Attribute deleted successfully'];
         return back()->withNotify($notify);
         }
         catch (\Exception $exp) {
@@ -136,7 +151,26 @@ class SkillCategoryController extends Controller
         }
     }
 
-    public function destroy(SkillCategory $skill_categories)
+    public function activeBy(Request $request)
+    {
+        $SubAttribute = SubAttributes::findOrFail($request->id);
+        $SubAttribute->is_active = 1;
+        $SubAttribute->created_at = Carbon::now();
+        $SubAttribute->save();
+        $notify[] = ['success', 'Sub Attribute has been Activated'];
+        return redirect()->back()->withNotify($notify);
+    }
+    public function inActiveBy(Request $request)
+    {
+        $SubAttribute = SubAttributes::findOrFail($request->id);
+        $SubAttribute->is_active = 0;
+        $SubAttribute->created_at = Carbon::now();
+        $SubAttribute->save();
+        $notify[] = ['success', 'Sub Attribute has been inActive'];
+        return redirect()->back()->withNotify($notify);
+    }
+
+    public function destroy(SubAttributes $skill_categories)
     {
         $skill_categories->delete();
 
