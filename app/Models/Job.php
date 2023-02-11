@@ -90,7 +90,7 @@ class Job extends Model
 
     public function category()
     {
-    	return $this->belongsTo(Category::class, 'category_id')->where('status', Category::ACTIVE);
+    	return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function status()
