@@ -16,7 +16,7 @@
                             <div class="container">
                                 @include('templates.basic.jobs.breadcrum',['job'=>$job])
                                 <div class="item-details-content" style="padding-top: 0px;">
-                                    <h2 class="title">{{$job->category->name}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
+                                    <h2 class="title">{{$job->category ? $job->category->name : ''}} > {{ $job->subCategory ? $job->subCategory->name:'' }}</h2>
                                     
                                     <input type="hidden" value="{{$job->category_id}}" id="category_id">
                                     <input type="hidden" {{$job->sub_category_id}} id="sub_category_id">
