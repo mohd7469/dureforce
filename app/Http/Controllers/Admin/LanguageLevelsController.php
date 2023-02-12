@@ -65,6 +65,7 @@ class LanguageLevelsController extends Controller
         Log::info(["languageLavel" => $languageLavel]);
         
         $notify[] = ['success', 'Your Language Lavel has been Created.'];
+        storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
         return redirect()->route('admin.language.level.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -105,6 +106,7 @@ class LanguageLevelsController extends Controller
         DB::commit();
         Log::info(["languageLavel" => $languageLavel]);
         $notify[] = ['success', 'Language Level detail has been updated'];
+        storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
         return redirect()->route('admin.language.level.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -130,6 +132,7 @@ class LanguageLevelsController extends Controller
         DB::commit();
         Log::info(["languageLavel" => $languageLavel]);
         $notify[] = ['success', 'Language Level deleted successfully'];
+        storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -149,6 +152,7 @@ class LanguageLevelsController extends Controller
         DB::commit();
         Log::info(["languageLavel" => $languageLavel]);
         $notify[] = ['success', 'Language Level has been Activated'];
+        storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -168,6 +172,7 @@ class LanguageLevelsController extends Controller
         DB::commit();
         Log::info(["languageLavel" => $languageLavel]);
         $notify[] = ['success', 'Language Level has been inActive'];
+        storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

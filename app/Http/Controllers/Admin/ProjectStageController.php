@@ -69,6 +69,7 @@ class ProjectStageController extends Controller
         Log::info(["project" => $project]);
         
         $notify[] = ['success', 'Your Project detail detail has been Created.'];
+        storeRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,ProjectStage::$Is_Active);
         return redirect()->route('admin.project.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -108,6 +109,7 @@ class ProjectStageController extends Controller
         Log::info(["project" => $project]);
 
         $notify[] = ['success', 'Project Details has been updated'];
+        storeRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,ProjectStage::$Is_Active);
         return redirect()->route('admin.project.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -128,6 +130,7 @@ class ProjectStageController extends Controller
         DB::commit();
         Log::info(["project" => $project]);
         $notify[] = ['success', 'Project stage deleted successfully'];
+        storeRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,ProjectStage::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -151,6 +154,7 @@ class ProjectStageController extends Controller
         DB::commit();
         Log::info(["project" => $project]);
         $notify[] = ['success', 'Project stage has been Activated'];
+        storeRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,ProjectStage::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -171,6 +175,7 @@ class ProjectStageController extends Controller
         DB::commit();
         Log::info(["project" => $project]);
         $notify[] = ['success', 'Project stage has been inActive'];
+        storeRedisData(ProjectStage::$Model_Name_Space,ProjectStage::$Redis_key,ProjectStage::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

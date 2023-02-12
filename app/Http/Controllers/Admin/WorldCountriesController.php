@@ -76,6 +76,7 @@ class WorldCountriesController extends Controller
         Log::info(["worldCountries" => $worldCountries]);
         
         $notify[] = ['success', 'Your world country detail has been Created.'];
+        storeRedisData(Country::$Model_Name_Space,Country::$Redis_key,Country::$Is_Active);
         return redirect()->route('admin.world.country.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -138,6 +139,7 @@ class WorldCountriesController extends Controller
         DB::commit();
         Log::info(["worldCountries" => $worldCountries]);
         $notify[] = ['success', 'World country detail has been updated'];
+        storeRedisData(Country::$Model_Name_Space,Country::$Redis_key,Country::$Is_Active);
         return redirect()->route('admin.world.country.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -157,6 +159,7 @@ class WorldCountriesController extends Controller
         DB::commit();
         Log::info(["worldCountry" => $worldCountry]);
         $notify[] = ['success', 'World Country deleted successfully'];
+        storeRedisData(Country::$Model_Name_Space,Country::$Redis_key,Country::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {

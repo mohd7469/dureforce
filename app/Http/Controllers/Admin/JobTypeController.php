@@ -68,6 +68,7 @@ class JobTypeController extends Controller
         Log::info(["type" => $type]);
         
         $notify[] = ['success', 'Your Job Type detail has been Created.'];
+        storeRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,JobType::$Is_Active);
         return redirect()->route('admin.type.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -110,6 +111,7 @@ class JobTypeController extends Controller
         DB::commit();
         Log::info(["type" => $type]);
         $notify[] = ['success', 'Job Type detail has been updated'];
+        storeRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,JobType::$Is_Active);
         return redirect()->route('admin.type.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -129,6 +131,7 @@ class JobTypeController extends Controller
         DB::commit();
         Log::info(["type" => $type]);
         $notify[] = ['success', 'Job Type deleted successfully'];
+        storeRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,JobType::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -149,6 +152,7 @@ class JobTypeController extends Controller
         DB::commit();
         Log::info(["type" => $type]);
         $notify[] = ['success', 'Job Type has been Activated'];
+        storeRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,JobType::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -169,6 +173,7 @@ class JobTypeController extends Controller
         DB::commit();
         Log::info(["type" => $type]);
         $notify[] = ['success', 'Job Type has been inActive'];
+        storeRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,JobType::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

@@ -16,6 +16,7 @@ class Category extends Model
 
     public static $Model_Name_Space = "App\Models\Category";
     public static $Redis_key = "categories";
+    public static $Is_Active = 1;
 
     const ServiceType = 1;
     const SoftwareType = 2;

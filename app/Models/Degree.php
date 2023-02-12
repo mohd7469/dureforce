@@ -11,4 +11,5 @@ class Degree extends Model
     protected $fillable = ['title','slug','is_active'];
     public static $Model_Name_Space = "App\Models\Degree";
     public static $Redis_key = "degrees";
+    public static $Is_Active = 1;
 }

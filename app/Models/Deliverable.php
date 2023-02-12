@@ -16,6 +16,7 @@ class Deliverable extends Model
 
     public static $Model_Name_Space = "App\Models\Deliverable";
     public static $Redis_key = "deliverables";
+    public static $Is_Active = 1;
 
     public function scopeOnlyJob($query)
     {

@@ -67,6 +67,7 @@ class DegreeController extends Controller
         Log::info(["degree" => $degree]);
         
         $notify[] = ['success', 'Your Degree detail has been Created.'];
+        storeRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,Degree::$Is_Active);
         return redirect()->route('admin.degree.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -109,6 +110,7 @@ class DegreeController extends Controller
         DB::commit();
         Log::info(["degree" => $degree]);
         $notify[] = ['success', 'Degree detail has been updated'];
+        storeRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,Degree::$Is_Active);
         return redirect()->route('admin.degree.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -128,6 +130,7 @@ class DegreeController extends Controller
         DB::commit();
         Log::info(["degree" => $degree]);
         $notify[] = ['success', 'Degree deleted successfully'];
+        storeRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,Degree::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -148,6 +151,7 @@ class DegreeController extends Controller
         DB::commit();
         Log::info(["degree" => $degree]);
         $notify[] = ['success', 'Degree has been Activated'];
+        storeRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,Degree::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -168,6 +172,7 @@ class DegreeController extends Controller
         DB::commit();
         Log::info(["degree" => $degree]);
         $notify[] = ['success', 'Degree has been inActive'];
+        storeRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,Degree::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

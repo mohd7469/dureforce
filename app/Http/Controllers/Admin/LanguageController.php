@@ -49,6 +49,7 @@ class LanguageController extends Controller
         $language->save();
 
         $notify[] = ['success', 'Create successfully'];
+        storeRedisData(Language::$Model_Name_Space,Language::$Redis_key,Language::$Is_Active);
         return back()->withNotify($notify);
     }
 
@@ -74,6 +75,7 @@ class LanguageController extends Controller
         $language->save();
 
         $notify[] = ['success', 'Update successfully'];
+        storeRedisData(Language::$Model_Name_Space,Language::$Redis_key,Language::$Is_Active);
         return back()->withNotify($notify);
     }
 
