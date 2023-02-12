@@ -66,6 +66,7 @@ class BudgetTypeController extends Controller
         Log::info(["budgetType" => $budgetType]);
         
         $notify[] = ['success', 'Your Budget Type detail has been Created.'];
+        storeRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,BudgetType::$Is_Active);
         return redirect()->route('admin.budget.type.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -110,6 +111,7 @@ class BudgetTypeController extends Controller
         DB::commit();
         Log::info(["budgetType" => $budgetType]);
         $notify[] = ['success', 'Budget Type detail has been updated'];
+        storeRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,BudgetType::$Is_Active);
         return redirect()->route('admin.budget.type.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -129,6 +131,7 @@ class BudgetTypeController extends Controller
         DB::commit();
         Log::info(["budgetType" => $budgetType]);
         $notify[] = ['success', 'Budget Type deleted successfully'];
+        storeRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,BudgetType::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -149,6 +152,7 @@ class BudgetTypeController extends Controller
         DB::commit();
         Log::info(["budgetType" => $budgetType]);
         $notify[] = ['success', 'Budget Type has been Activated'];
+        storeRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,BudgetType::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -169,6 +173,7 @@ class BudgetTypeController extends Controller
         DB::commit();
         Log::info(["budgetType" => $budgetType]);
         $notify[] = ['success', 'Budget Type has been inActive'];
+        storeRedisData(BudgetType::$Model_Name_Space,BudgetType::$Redis_key,BudgetType::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

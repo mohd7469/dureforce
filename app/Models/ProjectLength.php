@@ -11,6 +11,7 @@ class ProjectLength extends Model
 
     public static $Model_Name_Space = "App\Models\ProjectLength";
     public static $Redis_key = "project_length";
+    public static $Is_Active = 1;
 
     public function scopeOnlyJob($query)
     {

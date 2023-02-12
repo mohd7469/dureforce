@@ -52,6 +52,7 @@ class ProjectLengthController extends Controller
         $projectLength->module_id = $request->module;
         $projectLength->save();
         $notify[] = ['success', 'Your Project length has been Created.'];
+        storeRedisData(ProjectLength::$Model_Name_Space,ProjectLength::$Redis_key,ProjectLength::$Is_Active);
         return redirect()->route('admin.projectLength.index')->withNotify($notify);
     }
 
@@ -88,6 +89,7 @@ class ProjectLengthController extends Controller
         $banner->created_at = Carbon::now();
         $banner->save();
         $notify[] = ['success', 'Project length has been Activated'];
+        storeRedisData(ProjectLength::$Model_Name_Space,ProjectLength::$Redis_key,ProjectLength::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
 
@@ -101,12 +103,14 @@ class ProjectLengthController extends Controller
         $banner->created_at = Carbon::now();
         $banner->save();
         $notify[] = ['success', 'Project length has been inActive'];
+        storeRedisData(ProjectLength::$Model_Name_Space,ProjectLength::$Redis_key,ProjectLength::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     public function destroy($id)
     {
         $this->deleteEntity(ProjectLength::class,'job', $id);
         $notify[] = ['success', 'Project length has been deleted'];
+        storeRedisData(ProjectLength::$Model_Name_Space,ProjectLength::$Redis_key,ProjectLength::$Is_Active);
         return back()->withNotify($notify);
     }
 }

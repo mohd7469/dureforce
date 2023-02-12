@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Predis\Command\Redis\STRLEN;
 
 class BudgetType extends Model
 {
@@ -16,6 +17,7 @@ class BudgetType extends Model
     public static $fixed = 2;
     public static $Model_Name_Space = "App\Models\BudgetType";
     public static $Redis_key = "budget_types";
+    public static $Is_Active =1;
 
     public function scopeOnlyJob($query)
     {

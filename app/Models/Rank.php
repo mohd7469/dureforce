@@ -13,6 +13,7 @@ class Rank extends Model
     protected $table = "ranks";
     public static $Model_Name_Space = "App\Models\Rank";
     public static $Redis_key = "experience_levels";
+    public static $Is_Active = 1;
 
     public function jobs()
     {
