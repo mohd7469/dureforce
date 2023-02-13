@@ -130,7 +130,7 @@
             </ul>
             <ul class="sidebar-title2">
                 <li><span>Est. Project Duration</span>
-                    <p>{{$job->project_length->name ? ''}}</p>
+                    <p>{{$job->project_length->name ?? ''}}</p>
                 </li>
             </ul>
             <ul class="sidebar-title2">
@@ -140,12 +140,12 @@
             </ul>
             <ul class="sidebar-title2">
                 <li><span>Project Stage</span>
-                    <p>{{$job->projectStage->title ? $job->projectStage->title  : ''}}</p>
+                    <p>{{$job->projectStage->title ?? ''}}</p>
                 </li>
             </ul>
             <ul class="sidebar-title2">
                 <li><span>Experience Level</span>
-                    <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                    <p>{{$job->rank->level ?? ''}}</p>
                 </li>
             </ul>
 
