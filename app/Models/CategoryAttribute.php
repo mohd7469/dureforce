@@ -12,6 +12,10 @@ class CategoryAttribute extends Model
     use HasFactory,SoftDeletes;
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $table="category_attributes";
+
+    public static $Model_Name_Space = "App\Models\CategoryAttribute";
+    public static $Redis_key = "categoryAttribute";
+    public static $Is_Active = 1;
     
     protected $fillable = ['category_id','sub_category_id','skills_id'];
 

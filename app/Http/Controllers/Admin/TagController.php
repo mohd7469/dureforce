@@ -65,6 +65,7 @@ class TagController extends Controller
         DB::commit();
         Log::info(["tag" => $tag]);
         $notify[] = ['success', 'Your Tag detail has been Created.'];
+        storeRedisData(Tag::$Model_Name_Space,Tag::$Redis_key,Tag::$Is_Active);
         return redirect()->route('admin.tag.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -105,6 +106,7 @@ class TagController extends Controller
         DB::commit();
         Log::info(["tag" => $tag]);
         $notify[] = ['success', 'Job Tag has been updated'];
+        storeRedisData(Tag::$Model_Name_Space,Tag::$Redis_key,Tag::$Is_Active);
         return redirect()->route('admin.tag.index')->withNotify($notify);
             }
             catch (\Exception $exp) {
@@ -124,6 +126,7 @@ class TagController extends Controller
         DB::commit();
         Log::info(["tag" => $tag]);
         $notify[] = ['success', 'Tag deleted successfully'];
+        storeRedisData(Tag::$Model_Name_Space,Tag::$Redis_key,Tag::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -145,6 +148,7 @@ class TagController extends Controller
         DB::commit();
         Log::info(["tag" => $tag]);
         $notify[] = ['success', 'Tag has been Activated'];
+        storeRedisData(Tag::$Model_Name_Space,Tag::$Redis_key,Tag::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -165,6 +169,7 @@ class TagController extends Controller
         DB::commit();
         Log::info(["tag" => $tag]);
         $notify[] = ['success', 'Tag has been inActive'];
+        storeRedisData(Tag::$Model_Name_Space,Tag::$Redis_key,Tag::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

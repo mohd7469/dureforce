@@ -62,6 +62,7 @@ class DeliverableController extends Controller
         Log::info(["deliverable" => $deliverable]);
         
         $notify[] = ['success', 'Your Deliverable Detail has been Created.'];
+        storeRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,Deliverable::$Is_Active);
         return redirect()->route('admin.deliverable.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -101,6 +102,7 @@ class DeliverableController extends Controller
         DB::commit();
         Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable detail has been updated'];
+        storeRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,Deliverable::$Is_Active);
         return redirect()->route('admin.deliverable.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -126,6 +128,7 @@ class DeliverableController extends Controller
         
         Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable Detail deleted successfully'];
+        storeRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,Deliverable::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -147,6 +150,7 @@ class DeliverableController extends Controller
         DB::commit();
         Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable Detail has been Activated'];
+        storeRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,Deliverable::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -167,6 +171,7 @@ class DeliverableController extends Controller
         DB::commit();
         Log::info(["deliverable" => $deliverable]);
         $notify[] = ['success', 'Deliverable Detail has been inActive'];
+        storeRedisData(Deliverable::$Model_Name_Space,Deliverable::$Redis_key,Deliverable::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

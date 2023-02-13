@@ -19,6 +19,8 @@ class Skills extends Model
 
     public static $Model_Name_Space = "App\Models\Skills";
     public static $Redis_key = "categories";
+    public static $Is_Active = 1;
+
     /**
      * The "type" of the auto-incrementing ID.
      *

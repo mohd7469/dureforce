@@ -65,6 +65,7 @@ class DeliverModeController extends Controller
         Log::info(["deliver" => $deliver]);
         
         $notify[] = ['success', 'Your Deliver Mode Detail has been Created.'];
+        storeRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,DeliveryMode::$Is_Active);
         return redirect()->route('admin.deliver.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -107,6 +108,7 @@ class DeliverModeController extends Controller
         DB::commit();
         Log::info(["deliver" => $deliver]);
         $notify[] = ['success', 'Deliver Mode detail has been updated'];
+        storeRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,DeliveryMode::$Is_Active);
         return redirect()->route('admin.deliver.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -126,6 +128,7 @@ class DeliverModeController extends Controller
         DB::commit();
         Log::info(["deliver" => $deliver]);
         $notify[] = ['success', 'Deliver Mode Detail deleted successfully'];
+        storeRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,DeliveryMode::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -147,6 +150,7 @@ class DeliverModeController extends Controller
         DB::commit();
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Deliver Mode Detail has been Activated'];
+        storeRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,DeliveryMode::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -168,6 +172,7 @@ class DeliverModeController extends Controller
         DB::commit();
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Deliver Mode Detail has been inActive'];
+        storeRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,DeliveryMode::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

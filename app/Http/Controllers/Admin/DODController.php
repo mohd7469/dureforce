@@ -62,6 +62,7 @@ class DODController extends Controller
         Log::info(["dod" => $dod]);
         
         $notify[] = ['success', 'Your Dods Detail has been Created.'];
+        storeRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,DOD::$Is_Active);
         return redirect()->route('admin.dod.index')->withNotify($notify);
     }catch (\Exception $exp) {
         DB::rollback();
@@ -101,6 +102,7 @@ class DODController extends Controller
         DB::commit();
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Dods detail has been updated'];
+        storeRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,DOD::$Is_Active);
         return redirect()->route('admin.dod.index')->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -127,6 +129,7 @@ class DODController extends Controller
         
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'DOD Detail deleted successfully'];
+        storeRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,DOD::$Is_Active);
         return back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -151,6 +154,7 @@ class DODController extends Controller
         
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Dods Detail has been Activated'];
+        storeRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,DOD::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {
@@ -173,6 +177,7 @@ class DODController extends Controller
         DB::commit();
         Log::info(["dod" => $dod]);
         $notify[] = ['success', 'Dods Detail has been inActive'];
+        storeRedisData(DOD::$Model_Name_Space,DOD::$Redis_key,DOD::$Is_Active);
         return redirect()->back()->withNotify($notify);
     }
     catch (\Exception $exp) {

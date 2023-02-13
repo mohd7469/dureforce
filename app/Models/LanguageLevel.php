@@ -10,6 +10,9 @@ class LanguageLevel extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public static $Model_Name_Space = "App\Models\LanguageLevel";
+    public static $Redis_key = "languageLevel";
+    public static $Is_Active = 1;
 
     protected $fillable = [
         'name'

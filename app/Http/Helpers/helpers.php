@@ -38,7 +38,6 @@ use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 
 function sidebarVariation()
 {
-
     /// for sidebar
     $variation['sidebar'] = 'bg_img';
 

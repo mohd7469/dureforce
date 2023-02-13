@@ -35,6 +35,7 @@ class CategoryController extends Controller
         $category->is_active = $request->is_active ? 1 : 0;
         $category->save();
         $notify[] = ['success', 'Category has been created'];
+        storeRedisData(Category::$Model_Name_Space,Category::$Redis_key,Category::$Is_Active);
         return back()->withNotify($notify);
     }
 
@@ -51,6 +52,7 @@ class CategoryController extends Controller
         $category->is_active = $request->is_active ? 1 : 0;
         $category->save();
         $notify[] = ['success', 'Category has been updated'];
+        storeRedisData(Category::$Model_Name_Space,Category::$Redis_key,Category::$Is_Active);
         return back()->withNotify($notify);
     }
 
@@ -163,6 +165,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
             $category->delete();
             $notify[] = ['success', 'Category deleted successfully'];
+            storeRedisData(Category::$Model_Name_Space,Category::$Redis_key,Category::$Is_Active);
             DB::commit();
             return back()->withNotify($notify);
 

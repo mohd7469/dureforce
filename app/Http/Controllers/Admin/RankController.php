@@ -30,6 +30,7 @@ class RankController extends Controller
         $rank->status = $request->status ? 1 : 0;
         $rank->save();
         $notify[] = ['success', 'Rank has been created.'];
+        storeRedisData(Rank::$Model_Name_Space,Rank::$Redis_key,Rank::$Is_Active);
         return back()->withNotify($notify);
     }
 
@@ -46,6 +47,7 @@ class RankController extends Controller
         $rank->status = $request->status ? 1 : 0;
         $rank->save();
         $notify[] = ['success', 'Rank has been updated.'];
+        storeRedisData(Rank::$Model_Name_Space,Rank::$Redis_key,Rank::$Is_Active);
         return back()->withNotify($notify);
     }
 
