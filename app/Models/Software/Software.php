@@ -197,7 +197,7 @@ class Software extends Model
 
     public function messages()
     {
-        return $this->morphMany(ChatMessage::class, 'module')->with('user');
+        return $this->morphMany(ChatMessage::class, 'module')->with('user')->with('attachment');
     }
 
     public function chatUsers()
