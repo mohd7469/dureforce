@@ -73,9 +73,9 @@ class ChatController extends Controller
             } 
            
             
-            $attachments=$request->attachments;
+            $file=$request->attachment;
 
-            foreach ($attachments as $file) {
+            if($file) {
                 
                 $path = imagePath()['attachments']['path'];
         
