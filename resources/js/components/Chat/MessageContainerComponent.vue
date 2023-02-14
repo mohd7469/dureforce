@@ -115,6 +115,14 @@
                     </div>
                 </div>
 
+
+            </div>
+           
+                
+            <div class="mb-2 mt-5" v-for="n in number_of_attachments" :key="n">
+                <div class="progress" :id="'progress_bar'+n" v-show="progress_bar_show">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div>
             </div>
 
         </div>
@@ -146,7 +154,7 @@
                 </div>
                 <div class="col-md-2  ">
                     
-                    <input type="file" name="attachment" ref="attachment" multiple class="d-none" id="message_attachments">
+                    <input type="file" name="attachment" ref="attachment" multiple class="d-none" id="message_attachments" @change="uploadFiles">
 
                     <div class=" row ">
                         
@@ -189,7 +197,10 @@
                     module_id : '',
                     attachments:[]
                 },
-                errors:[]
+                errors:[],
+                uploadPercentage:20,
+                number_of_attachments:0,
+                progress_bar_show:false
             }
         },
         mounted() {
@@ -228,34 +239,51 @@
             selectAttachments(){
                 
                 document.getElementById("message_attachments").click()
+            },
+            async uploadFiles(){
+                this.progress_bar_show=true;
                 let attachments = this.$refs.attachment.files;
                 let message_form = new FormData();
-                
-                for (let index = 0; index < attachments.length; index++) {
-                    message_form.append('attachments['+index+']',attachments[index]);
-                }
-                if(this.message_form.message !=' ' || message_form.attachments.length > 0){
+                    
+                this.$nextTick(() => {
+                    this.number_of_attachments=attachments.length;
+                });
 
-                    message_form.append('message',this.message_form.message);
-                    message_form.append('send_to_id',this.active_user.send_to_user.id);
-                    message_form.append('module_id',this.active_user.module_id);
-                    message_form.append('module_type',this.active_user.module_type);
+                message_form.append('message',this.message_form.message);
+                message_form.append('send_to_id',this.active_user.send_to_user.id);
+                message_form.append('module_id',this.active_user.module_id);
+                message_form.append('module_type',this.active_user.module_type);
+                let headers= {'Content-Type': 'multipart/form-data'};
 
-                    let headers= {'Content-Type': 'multipart/form-data'};
+                setTimeout(() => {
+                    for (let index = 0; index < attachments.length; index++) {
+                    
+                        let progress_bar_index=index+1;
+                        let element_id='progress_bar'+progress_bar_index;
+                        console.log(document.getElementById(element_id));
+                        document.getElementById(element_id).classList.remove('invisible');
+                        document.getElementById(element_id).className='progress';
+                        message_form.append('attachment',attachments[index]);
 
-                    axios.post('../chat/save/message',message_form,headers)
-                    .then(res=>{
-                        this.$emit('newMessage');
+                        axios.post('../chat/save/message',message_form,headers)
+                        .then(res=>{
                         
-                    }).catch((error) => {
-                        const errors = error.response.data.errors;
-                        for (let field of Object.keys(errors)) {
-                            this.errors.push(errors[field][0]);
-                        }
-                    });
-                    this.message_form.message='';
-                    this.message_form.id='';
-                }
+                            this.$emit('newMessage');
+                            document.getElementById(element_id).className='invisible';
+
+                            
+                        }).catch((error) => {
+                            console.log(error);
+                            const errors = error.response.data.errors;
+                            for (let field of Object.keys(errors)) {
+                                this.errors.push(errors[field][0]);
+                            }
+                        });
+                   
+                    }
+                }, 90);
+
+               
                 
             },
             deleteMessage(message_id)
@@ -297,6 +325,7 @@
             }
 
         },
+        
         components: {
         },
     }
@@ -305,6 +334,10 @@
 
 
 <style scoped>
+.invisible {
+    visibility: hidden;
+}
+
 .icon {
     background-color: transparent;
     color: darkgray;
