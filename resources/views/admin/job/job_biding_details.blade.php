@@ -6,7 +6,11 @@
                 <div class="card-body p-0">
                     <div class="p-3 bg--white">
                         <div class="mt-10">
-                            <h4>@lang('Amount') - {{getAmount($jobBidingDetails->price)}} {{$general->cur_text}}</h4>
+                            <h4>
+                                <!-- @lang('Amount') - {{getAmount($jobBidingDetails->price)}} {{$general->cur_text}} -->
+                                @lang('Amount') - {{ $jobBidingDetails->budget_type_id == \App\Models\BudgetType::$hourly ? 'Hourly:$'.$jobBidingDetails->hourly_start_range."-$" .$jobBidingDetails->hourly_end_range : "Fixed:$".$jobBidingDetails->fixed_amount    }}
+
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -31,7 +35,10 @@
 
                          <li class="list-group-item d-flex justify-content-between align-items-center">
                             @lang('Balance')
-                            <span class="font-weight-bold">{{getAmount($jobBidingDetails->user->balance)}}  {{__($general->cur_text)}}</span>
+                            <span class="font-weight-bold">
+                                <!-- {{getAmount($jobBidingDetails->user->balance)}}  {{__($general->cur_text)}} -->
+                                {{ $jobBidingDetails->budget_type_id == \App\Models\BudgetType::$hourly ? 'Hourly:$'.$jobBidingDetails->hourly_start_range."-$" .$jobBidingDetails->hourly_end_range : "Fixed:$".$jobBidingDetails->fixed_amount    }}
+                            </span>
                         </li>
                     </ul>
                 </div>
