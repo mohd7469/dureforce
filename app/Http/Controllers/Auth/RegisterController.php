@@ -51,8 +51,9 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $pageTitle = "Sign Up";
-        $info = json_decode(json_encode(getIpInfo()), true);
-        $mobile_code = @implode(',', $info['code']);
+//        $info = json_decode(json_encode(getIpInfo()), true);
+
+        $mobile_code =null;
         // $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
         $countries = Country::orderBy('name', 'ASC')->get();
         return view($this->activeTemplate . 'user.auth.register', compact('pageTitle', 'mobile_code', 'countries'));
@@ -152,8 +153,8 @@ class RegisterController extends Controller
         $ip = $_SERVER["REMOTE_ADDR"];
         $userLogin = new UserLogin();
         $info = json_decode(json_encode(getIpInfo()), true);
-        $userLogin->longitude = @implode(',', $info['long']);
-        $userLogin->latitude = @implode(',', $info['lat']);
+//        $userLogin->longitude = @implode(',', $info['long']);
+//        $userLogin->latitude = @implode(',', $info['lat']);
 
         $userAgent = osBrowser();
         $userLogin->user_id = $user->id;

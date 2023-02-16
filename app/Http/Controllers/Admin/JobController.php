@@ -178,7 +178,10 @@ class JobController extends Controller
     {
         $pageTitle = "Job Biding List";
         $emptyMessage = "No data found";
-        $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
+        $jobBidings=Job::where('uuid',$id)->with('user')->latest()->paginate(getPaginate());
+        // $jobBidings = $job->proposal->where('is_shortlisted',false);
+        // dd($jobBidings);
+        // $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
         return view('admin.job.job_biding', compact('pageTitle', 'emptyMessage', 'jobBidings'));
     }
 
@@ -186,7 +189,7 @@ class JobController extends Controller
     public function jobBidingDetails($id)
     {
         $pageTitle = "Job Biding Details";
-        $jobBidingDetails = JobBiding::where('id', $id)->firstOrFail();
+        $jobBidingDetails = Job::where('id', $id)->firstOrFail();
         return view('admin.job.job_biding_details', compact('pageTitle', 'jobBidingDetails'));
     }
 
