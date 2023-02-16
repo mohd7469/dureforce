@@ -22,9 +22,9 @@
                             @forelse($transactions as $trx)
                             <tr>
                                 <td data-label="@lang('User')">
-                                    <span class="font-weight-bold">{{ $trx->user->fullname }}</span>
+                                    <span class="font-weight-bold">{{ $trx->user->fullname ?? '' }}</span>
                                     <br>
-                                    <span class="small"> <a href="{{ route('admin.users.detail', $trx->user_id) }}"><span>@</span>{{ $trx->user->username }}</a> </span>
+                                    <span class="small"> <a href="{{ route('admin.users.detail', $trx->user_id) }}"><span>@</span>{{ $trx->user->username ?? ''}}</a> </span>
                                 </td>
 
                                 <td data-label="@lang('Trx')">

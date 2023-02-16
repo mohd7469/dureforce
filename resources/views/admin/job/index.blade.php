@@ -122,7 +122,7 @@
                             <td>
                                 <form action="{{route('admin.job.destroy', [$job->id])}}" method="POST" >
                                     @csrf
-                                    <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1"  type="submit">Delete</button>
+                                    <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1 ancher-delete-link-disabled"  type="submit">Delete</button>
                                 </form>
                                 
                             </td>

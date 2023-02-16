@@ -3011,6 +3011,11 @@ p, li, a {
 .btn-outline--dark:hover {
     background-color: #10163A;
 }
+/* ancher delete button disabled */
+.ancher-delete-link-disabled{
+    pointer-events: none;
+    cursor: default;
+}
 
 /* btn shadow css start */
 .btn--shadow-default {

@@ -25,16 +25,18 @@
                                             <span class="font-weight-bold">{{ __($attribute->name) }}</span>
                                         </td>
                                         <td data-label="@lang('Status')">
-                                            @if ($attribute->entityField->type == 1)
-                                                <span class="badge badge-success">@lang('Software')</span>
-                                            @elseif($attribute->entityField->type == 2)
-                                                <span class="badge badge-info">@lang('Service')</span>
-                                            @else
-                                                <span class="badge badge-danger">@lang('Job')</span>
+                                            @if(isset($attribute->entityField->type))
+                                                @if ($attribute->entityField->type == 1)
+                                                    <span class="badge badge-success">@lang('Software')</span>
+                                                @elseif($attribute->entityField->type == 2)
+                                                    <span class="badge badge-info">@lang('Service')</span>
+                                                @else
+                                                    <span class="badge badge-danger">@lang('Job')</span>
+                                                @endif
                                             @endif
                                         </td>
                                         <td data-label="@lang('Title')">
-                                            {{ __($attribute->entityField->name) }}
+                                            {{ __($attribute->entityField->name ?? '') }}
                                         </td>
 
                                         <td data-label="@lang('Status')">
