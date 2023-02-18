@@ -31,7 +31,9 @@
                     
                         <div class="form-group pt-3">
                             <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                            <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
+                            <small id="emailHelp" class="form-text text-muted">20% Service Fee 
+                                {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
+                            </small><br>
                             <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',(float)$proposal['hourly_bid_rate'])*0.20 }}</span>
                         </div>
 
