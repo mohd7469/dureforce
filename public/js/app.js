@@ -6183,6 +6183,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6199,7 +6201,8 @@ __webpack_require__.r(__webpack_exports__);
       messages: [],
       active_user: {},
       pusher_obj: {},
-      channel: {}
+      channel: {},
+      is_child_data_loaded: false
     };
   },
   methods: {
@@ -6233,6 +6236,7 @@ __webpack_require__.r(__webpack_exports__);
         module_type: this.active_user.module_type
       }).then(function (response) {
         _this2.messages = response.data.messages;
+        _this2.is_child_data_loaded = true;
       });
     },
     userPuserChannel: function userPuserChannel() {
@@ -57633,26 +57637,30 @@ var render = function () {
               "div",
               { staticClass: "row" },
               [
-                _c("ChatUsers", {
-                  attrs: { users: _vm.users },
-                  on: {
-                    userChange: function ($event) {
-                      return _vm.setCurrentUser($event)
-                    },
-                  },
-                }),
+                _vm.is_child_data_loaded
+                  ? _c("ChatUsers", {
+                      attrs: { users: _vm.users },
+                      on: {
+                        userChange: function ($event) {
+                          return _vm.setCurrentUser($event)
+                        },
+                      },
+                    })
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("Messages", {
-                  attrs: {
-                    messages: _vm.messages,
-                    active_user: _vm.active_user,
-                  },
-                  on: {
-                    newMessage: function ($event) {
-                      return _vm.getActiveUserChat(true)
-                    },
-                  },
-                }),
+                _vm.is_child_data_loaded
+                  ? _c("Messages", {
+                      attrs: {
+                        messages: _vm.messages,
+                        active_user: _vm.active_user,
+                      },
+                      on: {
+                        newMessage: function ($event) {
+                          return _vm.getActiveUserChat(true)
+                        },
+                      },
+                    })
+                  : _vm._e(),
               ],
               1
             ),
