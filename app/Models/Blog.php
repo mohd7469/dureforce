@@ -12,7 +12,6 @@ class Blog extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'blogs';
     public const Model_NameSpace = "App\Models\Blog";
-    public static $attachment_path = "attachments";
     protected $fillable = [
         'title',
         'description',

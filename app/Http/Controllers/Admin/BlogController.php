@@ -20,7 +20,7 @@ class BlogController extends Controller
     {
     	$pageTitle = "Manage All Blog";
     	$emptyMessage = "No data found";
-    	$blogs = Blog::where('is_active', '1')->latest()->paginate(getPaginate());
+    	$blogs = Blog::latest()->paginate(getPaginate());
     	return view('admin.blog.index', compact('pageTitle', 'emptyMessage', 'blogs'));
     }
     public function create()
@@ -86,6 +86,7 @@ class BlogController extends Controller
                     $file_extension = getFileExtension($file);
                     $url = $path . '/' . $filename;
                     $uploaded_name = $file->getClientOriginalName();
+                    
                     $blog->attachments()->create([
                         'name' => $filename,
                         'uploaded_name' => $uploaded_name,

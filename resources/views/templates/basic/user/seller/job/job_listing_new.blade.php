@@ -31,6 +31,14 @@
                                             <a class="nav-link {{$saved_job}}" data-bs-toggle="tab"
                                             href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab"
+                                            href="#My_jobs_tab">My Jobs (5)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab"
+                                            href="#Contracts_tab">Contracts (5)</a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="row inner-cs">
@@ -186,6 +194,29 @@
                                             <!----------- ===== Job Experties Container  ==== ------------->   
                                             @endforeach
                                     </div>
+                                    <!-- My jobs -->
+                                    <div class="tab-pane {{$saved_job}}" id="My_jobs_tab">
+                                            <br>
+                                            <br>
+                                            <div class="details-scs">
+                                               <h2>Coming Soon</h2>
+                                            </div> 
+                                            <hr>
+                                    </div>
+                                    <!-- End My Jobs -->
+                                    <!-- Contracts -->
+                                    <div class="tab-pane" id="Contracts_tab">
+                                            <br>
+                                            <br>
+                                            <div class="details-scs">
+                                                <ul class="methods-s">
+                                                    <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
+                                                    <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                </ul>
+                                            </div> 
+                                            <hr>
+                                    </div>
+                                    <!-- End Contracts -->
                                 </form>
                                 <!--===  Bio Profile Section End ===-->
                             </div>
