@@ -22,7 +22,8 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label">@lang('Description')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="description" >
+                                    <!-- <input class="form-control" type="text" name="description" > -->
+                                    <textarea class="form-control" name="description" cols="30" rows="10"></textarea>
                                 </div>
                             </div>
                         </div>

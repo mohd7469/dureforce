@@ -16,6 +16,7 @@
                         <tr>
                             <th>@lang('Title')</th>
                             <th>@lang('Description')</th>
+                            <th>@lang('Image')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Action')</th>
                             <th></th>
@@ -23,6 +24,7 @@
                         </thead>
                         <tbody>
                         @forelse($blogs as $blog)
+
                         <tr>
                             <td data-label="@lang('Title')">
                                 <div class="user">
@@ -34,11 +36,11 @@
                                     <span class="name">{{__(str_limit($blog->description, 20))}}</span>
                                 </div>
                             </td>
-                            <!-- <td data-label="@lang('Image')">
-                                <a class="bannerModal" id="image_url" data-url="{{$blog->url}}" >
-                                    <img src="{{ isset($blog->url) ? ($blog->url) : asset('assets\images\default.png')}}" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" >
+                            <td data-label="@lang('Image')">
+                                <a class="bannerModal" id="image_url" data-url="" >
+                                    <img src="asset('assets\images\default.png')" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" >
                                 </a>
-                            </td> -->
+                            </td>
                             <td data-label="@lang('Status')">
                                 @if($blog->is_active == 1)
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
@@ -120,6 +122,32 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div class="container">
+    <div
+            class="modal fade"
+            id="bannerModal"
+            tabindex="-1"
+            aria-labelledby="emailVerifyLabel"
+            aria-hidden="true"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img alt="User Pic" src="" id="profile-image-invite"
+                                             class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="inactiveBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

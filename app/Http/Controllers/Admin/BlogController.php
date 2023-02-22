@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attachment;
 use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
 use App\Models\Blog;
@@ -20,7 +21,7 @@ class BlogController extends Controller
     {
     	$pageTitle = "Manage All Blog";
     	$emptyMessage = "No data found";
-    	$blogs = Blog::latest()->paginate(getPaginate());
+    	$blogs = Blog::with('attachments')->latest()->paginate(getPaginate());
     	return view('admin.blog.index', compact('pageTitle', 'emptyMessage', 'blogs'));
     }
     public function create()
@@ -41,32 +42,32 @@ class BlogController extends Controller
             'description' => 'required',
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
-        $banner  = Blog::findOrFail($id);
+        
+        $blog  = Blog::findOrFail($id);
         if ($request->hasFile('image')) {
             try {
-                foreach ($request->file('image') as $file) {
-                    $path = imagePath()['attachments']['path'];
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $uploaded_name = $file->getClientOriginalName();
-                    $banner->attachments()->create([
-                        'name' => $filename,
-                        'uploaded_name' => $uploaded_name,
-                        'url'           => $url,
-                        'type' =>$file_extension,
-                        'is_published' =>1
-                    ]);
-                 }
+                $file = $request->file('image');
+                $path = imagePath()['attachments']['path'];
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                $uploaded_name = $file->getClientOriginalName();
+                $blog->attachments()->create([
+                    'name' => $filename,
+                    'uploaded_name' => $uploaded_name,
+                    'url'           => $url,
+                    'type' =>$file_extension,
+                    'is_published' =>1
+                ]);
             }
             catch (\Exception $exp) {
                 $notify[] = ['error', 'Document could not be uploaded.'];
                 return back()->withNotify($notify);
             }
         }
-        $banner->title = $request->title;
-        $banner->description = $request->description;
-        $banner->save();
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+        $blog->save();
         $notify[] = ['success', 'Your Blog has been Created.'];
         return redirect()->route('admin.blog.index')->withNotify($notify);
     }
@@ -77,32 +78,32 @@ class BlogController extends Controller
             'description' => 'required',
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
-        $blog  = new Blog();
+        $blog = Blog::create([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
         if ($request->hasFile('image')) {
-            try {
-                foreach ($request->file('image') as $file) {
-                    $path = imagePath()['attachments']['path'];
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $uploaded_name = $file->getClientOriginalName();
-                    
-                    $blog->attachments()->create([
-                        'name' => $filename,
-                        'uploaded_name' => $uploaded_name,
-                        'url'           => $url,
-                        'type' =>$file_extension,
-                        'is_published' =>1
-                    ]);
-                 }
+        try {
+                $file = $request->file('image');
+                $path = imagePath()['attachments']['path'];
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                $uploaded_name = $file->getClientOriginalName();
+                $blog->attachments()->create([
+                    'name' => $filename,
+                    'uploaded_name' => $uploaded_name,
+                    'url'           => $url,
+                    'type' =>$file_extension,
+                    'is_published' =>1
+                ]);
             }
             catch (\Exception $exp) {
                 $notify[] = ['error', 'Document could not be uploaded.'];
                 return back()->withNotify($notify);
             }
         }
-        $blog->title = $request->title;
-        $blog->description = $request->description;
+        
         $blog->save();
         $notify[] = ['success', 'Your Blog has been Created.'];
         return redirect()->route('admin.blog.index')->withNotify($notify);

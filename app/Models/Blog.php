@@ -23,6 +23,10 @@ class Blog extends Model
     {
         return $query->where('is_active',1);
     }
+    public function documents()
+    {
+        return $this->morphMany(Blog::class, 'module');
+    }
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');
     }

@@ -14,15 +14,16 @@
                             <div class="col-md-6">
                                 <div class="form-group ">
                                     <label class="form-control-label">@lang('Title')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="title" value="{{$blog->subject}}">
+                                    <input class="form-control" type="text" name="title" value="{{$blog->title}}">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group ">
-                                    <label class="form-control-label">@lang('Title')<span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text" name="description" value="{{$blog->description}}">
+                                    <label class="form-control-label">@lang('Description')<span class="text-danger">*</span></label>
+                                    <!-- <input class="form-control" type="text" name="description" value="{{$blog->description}}"> -->
+                                    <textarea class="form-control" name="description" id="basics" cols="30" rows="10">{!! $blog->description !!}</textarea>
                                 </div>
                             </div>
                         </div>
