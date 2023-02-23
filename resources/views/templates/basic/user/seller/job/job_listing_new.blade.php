@@ -199,7 +199,48 @@
                                             <br>
                                             <br>
                                             <div class="details-scs">
-                                               <h2>Coming Soon</h2>
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-11 col-lg-11">
+                                                            
+                                                            <a href="#" class="col-md-10 col-lg-10"><strong>My Job Block chain Developer.</strong></a>
+                                                            
+                                                        </div>
+                                                        <div class="col-md-1 col-lg-1">
+                                                            <a href="#"><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <ul class="jb-detail-l">
+                                                        <li>FixedPrice </li>
+                                                        <li>Expert</li>
+                                                        <li>Est . Budget : 2500.00</li>
+                                                        <li>Est. Time:  less than Week</li>
+                                                        <li>Posted 28 days ago</li>
+                                                    </ul>
+                                                    <p class="offer-d"> Avalanche, the fastest smart contracts platform, is the best place to build your Web3 Dapp. Blazingly-fast, low-cost &amp; it's eco-friendly. The Best place to build decentralized apps. Blazingly Fast. Web3 Like Never Before. Scale Infinitely.
+                                                    </p>
+                                                    <br>
+                                                    <a href="#"><strong> More.....</strong></a>
+                                                </div>
+                                                <!--Skills Section Start-->
+                                                <div class="row skills-c">
+                                                    <div class="col-md-12">
+                                                        <ul class="skills-listing">
+                                                            <li>javascript</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                    <!--Skills Section End-->
+                                                <p class="proposals-s">Proposals: <strong>1+</strong></p>
+                                                <ul class="methods-s">
+                                                    <li><img src="#" alt="Tick"> Payment Method Verified</li>
+                                                    <li><img src="#" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                    <li><img src="#" alt="Tick">Bahrain</li>
+                                                </ul>
+
                                             </div> 
                                             <hr>
                                     </div>
@@ -209,10 +250,48 @@
                                             <br>
                                             <br>
                                             <div class="details-scs">
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-md-11 col-lg-11">
+                                                            
+                                                            <a href="#" class="col-md-10 col-lg-10"><strong>Contract Job Block chain Developer.</strong></a>
+                                                            
+                                                        </div>
+                                                        <div class="col-md-1 col-lg-1">
+                                                            <a href="#"><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                            </a>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <ul class="jb-detail-l">
+                                                        <li>FixedPrice </li>
+                                                        <li>Expert</li>
+                                                        <li>Est . Budget : 2500.00</li>
+                                                        <li>Est. Time:  less than Week</li>
+                                                        <li>Posted 28 days ago</li>
+                                                    </ul>
+                                                    <p class="offer-d"> Avalanche, the fastest smart contracts platform, is the best place to build your Web3 Dapp. Blazingly-fast, low-cost &amp; it's eco-friendly. The Best place to build decentralized apps. Blazingly Fast. Web3 Like Never Before. Scale Infinitely.
+                                                    </p>
+                                                    <br>
+                                                    <a href="#"><strong> More.....</strong></a>
+                                                </div>
+                                                <!--Skills Section Start-->
+                                                <div class="row skills-c">
+                                                    <div class="col-md-12">
+                                                        <ul class="skills-listing">
+                                                            <li>javascript</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                    <!--Skills Section End-->
+                                                <p class="proposals-s">Proposals: <strong>1+</strong></p>
                                                 <ul class="methods-s">
-                                                    <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
-                                                    <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                    <li><img src="#" alt="Tick"> Payment Method Verified</li>
+                                                    <li><img src="#" alt="Tick"> $100k+ <strong>Spent</strong></li>
+                                                    <li><img src="#" alt="Tick">Bahrain</li>
                                                 </ul>
+
                                             </div> 
                                             <hr>
                                     </div>
