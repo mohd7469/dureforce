@@ -45,7 +45,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -62,7 +62,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -79,7 +79,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -110,7 +110,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -127,7 +127,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -144,7 +144,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -175,7 +175,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -192,7 +192,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -209,7 +209,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -239,7 +239,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -256,7 +256,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
@@ -273,7 +273,7 @@
                                 <td>
                                     <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
                                 </td>
-                                <td><a href="#"
+                                <td><a href="{{route('buyer.contract_detail')}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
