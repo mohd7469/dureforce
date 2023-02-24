@@ -1719,6 +1719,25 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
+                <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.blog*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Blogs')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.blog*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.blog.index') }} ">
+                                    <a href="{{ route('admin.blog.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Blog ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+
 
                 @if (in_array('28', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">

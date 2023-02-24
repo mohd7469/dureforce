@@ -172,6 +172,9 @@
     .header-short-menu {
         padding: 10px 40px;
     }
+    .sub-nav {
+        width: 100.5%;
+    }
     .sub-nav li {
     display: inline-table;
     margin: -21px 30px;

@@ -577,6 +577,7 @@
         }
         .sub-nav {
             padding: 12px 0px 20px;
+            width: 92.5%;
 
         }
         .sub-nav li {

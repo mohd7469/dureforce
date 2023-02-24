@@ -12,6 +12,10 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
     
     Route::middleware(['verified','is-client'])->group(function () {
 
+        Route::view('/contract', 'templates.basic.buyer.contract.contract-list');
+        Route::view('/contract_detail', 'templates.basic.buyer.contract.contract_details')->name('contract_detail');
+
+
         Route::name('basic.')->prefix('buyer')->group(function () {
             Route::middleware(['verified','is-client'])->group(function () {
                 Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile')->middleware('is-profile-completed');
