@@ -175,6 +175,9 @@
             padding: 12px 0px 20px;
 
         }
+        .sub-nav {
+            width: 100.5%;
+        }
         .sub-nav li {
             margin: 0px 15px;
             display: inline-table;
