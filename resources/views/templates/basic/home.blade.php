@@ -583,7 +583,7 @@
             margin: 0px 15px;
             display: inline-table;
             /* margin: 0 13px; */
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
         .listing-jb-container{
