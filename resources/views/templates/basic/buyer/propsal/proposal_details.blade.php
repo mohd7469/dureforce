@@ -10,16 +10,18 @@
                     <div class="btm-c">
                         <p class="heading_cover_l">Cover Letter</p>
                         <p class="prop_description">{{$proposal->cover_letter}}</p>
-                        @if($proposal->attachment->count() > 1)
-                        <p class="heading-att">Attachments </p>
-                        @else
-                        <p class="heading-att">Attachment </p>
-                        @endif
-                        @isset($proposal->attachment)
+                       
+
+                        @if(count($proposal->attachment)>0)
+                            @if(count($proposal->attachment)>1)
+                                <p class="heading-att">Attachments </p>
+                            @else
+                                <p class="heading-att">Attachment </p>
+                            @endif
                             @foreach($proposal->attachment as $files)
                                 <span class="attacment_file">{{$files->uploaded_name}}</span>
                             @endforeach
-                        @endisset
+                        @endif
                     </div>
                     <!---Cover Letter Section End--->
 

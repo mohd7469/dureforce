@@ -2,14 +2,15 @@
     <div class="modal-dialog">
        
        <div class="modal-content">
-          <div class="modal-header">
+          
+         <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+         </div>
+
           <div class="modal-body">
             {{-- {{ route('profile.basics.save') }} --}}
-             <form action="" method="POST" id="form-basic-save" class="form-basic-save"
-                enctype="multipart/form-data">
+             <form action="" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
                 @csrf
                 <div>
                    {{-- <label class="mt-4">Profile Picture</label>
