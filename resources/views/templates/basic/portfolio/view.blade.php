@@ -9,18 +9,26 @@
         <Label>{{$user_portfolio->name}}</Label>
     </div>
     <div class="sep-solid"></div>
+    @if ($user_portfolio->description)
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
+            <Label>Project Description</Label>
+            <Label>{{$user_portfolio->description}}</Label>
+        </div>
+        <div class="sep-solid"></div>
 
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
-        <Label>Project Description</Label>
-        <Label>{{$user_portfolio->description}}</Label>
-    </div>
-    <div class="sep-solid"></div>
+    @endif
 
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
-        <Label>What was your Role in the Project?</Label>
-        <Label>{{$user_portfolio->role}}</Label>
-    </div>
-    <div class="sep-solid"></div>
+    @if ($user_portfolio->role)
+        
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
+            <Label>What was your Role in the Project?</Label>
+            <Label>{{$user_portfolio->role}}</Label>
+        </div>
+        <div class="sep-solid"></div>
+
+    @endif
+
+    
     
     @if ($user_portfolio->attachments->isNotEmpty())
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
