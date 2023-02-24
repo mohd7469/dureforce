@@ -14,7 +14,7 @@
                     <!-- <li class="short-menu-close-btn-area">
                         <button type="button" class="short-menu-close-btn">@lang('Close')</button>
                     </li> -->
-                    @foreach(\App\Models\Category::where('is_active',1)->get() as $category)
+                    @foreach(\App\Models\SubCategory::where('is_active',1)->limit(10)->get() as $category)
                         <li class="nav-item">
 
                             <a href="{{$goto}}?category_id={{$category->id}}&category_name={{$category->name}}">{{__($category->name)}}</a>
@@ -33,6 +33,9 @@
     .flex-start{
         justify-content: flex-start;
     }
+    .sub-nav {
+        width: 100.5%;
+    }
 
     .ul-margin{
         margin-left: -63px;
@@ -47,7 +50,7 @@
 
     .sub-nav li {
         display: inline-table;
-        margin: -21px 30px;
+        /* margin: -21px 10px; */
         font-size: 13px;
         font-weight: 600;
     }
