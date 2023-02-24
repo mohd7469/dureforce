@@ -146,7 +146,7 @@
         .sub-nav li {
             display: inline-table;
             margin: -21px 15px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
 
