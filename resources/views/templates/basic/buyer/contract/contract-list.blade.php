@@ -1,7 +1,7 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
     <div class="container-fluid">
-        <h2 class="all_p_heading">All Proposals</h2>
+        <h2 class="all_p_heading">All Contracts</h2>
 
         <div class="all_propsal_container">
 
@@ -38,6 +38,7 @@
                                 </td>
                                 <td>
                                     <span class="badge badge--info">Submitted</span>
+                                        <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -54,7 +55,8 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Archived</span>
+                                    <span class="badge badge--primary">Archived</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -71,7 +73,7 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Active</span>
+                                    <span class="badge badge--danger">Active</span>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -119,7 +121,8 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Archived</span>
+                                    <span class="badge badge--primary">Archived</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -136,7 +139,8 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Active</span>
+                                    <span class="badge badge--danger">Active</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -168,6 +172,7 @@
                                 </td>
                                 <td>
                                     <span class="badge badge--info">Submitted</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -184,7 +189,8 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Archived</span>
+                                    <span class="badge badge--primary">Archived</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -201,7 +207,7 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Active</span>
+                                    <span class="badge badge--danger">Active</span>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -232,6 +238,7 @@
                                 </td>
                                 <td>
                                     <span class="badge badge--info">Submitted</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -248,7 +255,7 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Archived</span>
+                                    <span class="badge badge--primary">Archived</span>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -265,7 +272,8 @@
                                     <h2 class="per_heading">Python Development</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Active</span>
+                                    <span class="badge badge--danger">Active</span>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
                                     <p class="job_price">230.00</p>
@@ -289,11 +297,15 @@
 @endsection
 
     <style>
+        .contract-rating{
+            width: 60px;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
         ul.allp_nav {
             padding: 0px 0px 15px 24px;
             border-bottom: 1px solid #CBDFDF;
         }
-
         ul.allp_nav li {
             float: left;
             display: inline-block;
