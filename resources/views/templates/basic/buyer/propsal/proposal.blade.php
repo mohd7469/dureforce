@@ -69,14 +69,15 @@
                                     <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
                                         
                                         <div class="profile-border-bottom ">
-                                            <b>Applicant</b><br>
-
-                                            Applicant
-                                            {{$user->full_name}} has applied to or been 
-                                            invited to your or your company's job
-                                            Looking for an  experienced logo
-                                            designer.<br>
-
+                                            
+                                            <b>Applicant</b>
+                                            <br>
+                                               <p> {{$user->full_name}} 
+                                                has applied to or been 
+                                                invited to your <span class="job-title-color">{{$proposal->job->title}}</span> job.</p>
+                                            <br>
+                                                
+                                           
                                             <button class="btn-sm view-pfoile-btn mt-3 mb-3 ">
                                                <a href="{{route('seller.profile',$user->uuid)}}">View Profile</a>
                                             </button>
@@ -108,7 +109,7 @@
                                         <div class="profile-border-bottom ">
                                             <b>Hours per week</b><br>
                                             <b>More than 30 hrs/week</b><br>
-                                            <b>Languages</b><br>
+                                            <b>{{ $user->languages->count() > 1 ? 'Languages' : 'Language'}}</b><br>
                                             @foreach ($user->languages as $item)
                                             {{getLanaguageName($item->language_id)}}: {{getProficiencyLevelName($item->language_level_id)}}<br>
                                             @endforeach

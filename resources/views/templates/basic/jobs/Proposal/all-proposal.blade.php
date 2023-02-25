@@ -324,7 +324,7 @@
                                                         <div class="attachment">
                                                             <div class="service_subtitle2 mt-20 heading-text">
 
-
+                                                                @if (count($short_listed_proposal->attachment)>0)
                                                                 <h2> Attachments</h2>
                                                                 <div class="row">
                                                                     @foreach($short_listed_proposal->attachment as $document)
@@ -337,12 +337,14 @@
 
                                                                     @endforeach
                                                                 </div>
+                                                                @endif
+                                                                
 
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                            @endisset
+                                                @endisset
                                                 <!--Skills Section End-->
                                             </div>
                                             <hr>
