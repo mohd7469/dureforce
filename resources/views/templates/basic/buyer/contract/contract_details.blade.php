@@ -2,88 +2,192 @@
 @section('content')
 
         <div class="container-fluid">
-            <p class="propsal-h">All Proposals > Name</p>
+            <p class="propsal-h">All Contracts > Debug php-fpm on AWS <span> <img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating" style="width: 60px;"></span></p>
             <div class="main_con_p">
                 <div class="prosal-left-con">
                     <!---Cover Letter Section Start--->
-                    <h3 class="heading_proposal">Proposal Details</h3>
+                    <h3 class="heading_proposal">Job Description</h3>
                     <div class="btm-c">
-                        <p class="heading_cover_l">Cover Letter</p>
                         <p class="prop_description">
                         Build Verification Test is a set of tests run on every new build to 
                         verify that build is testable before it is released to test team for 
                         further testing. These test cases are core functionality test cases 
                         that ensure application is stable and can be tested thoroughly.
                         </p>
+                        <p><a href="" class="view_origin">View Original Job Post</a></p>
+                        <p><a href="" class="view_origin">View Original Proposals</a></p>
                     </div>
                     <!---Cover Letter Section End--->
 
 
                     <!---Job DetailsSection Start--->
-                    <h3 class="heading_proposal jdc">Job Details</h3>
+                    <h3 class="heading_proposal jdc">Milestone Timeline</h3>
                     <div class="btm-c">
-                        <p class="heading_cover_l">Python Development</p>
-                        <p class="posted_date_c">Posted on: 2023-01-28 20:36:32
-                        <p>
+                        <p class="posted_date_c">Milestone Name<p>
                         <p class="prop_description">
-                        Build Verification Test is a set of tests run on every new 
-                        build to verify that build is testable before it is released 
-                        to test team for further testing. These test cases are core 
-                        functionality test cases that ensure application is stable 
-                        and can be tested thoroughly.
+                        This is short description for the Milestone 1. 
+                        This is short description for the Milestone 1.
                         </p>
-                        <a href="#" class="btn_viewjob">View Job Posting</a>
+                        <p class="posted_date_c">$425.00<p>
+                        <p class="prop_description">Paid on: May 02 2022 <p>
+
+                        <p class="posted_date_c">Milestone Name<p>
+                        <p class="prop_description">
+                        This is short description for the Milestone 1. 
+                        This is short description for the Milestone 1.
+                        </p>
+                        <p class="posted_date_c">$425.00<p>
+                        <p class="prop_description">Paid on: May 02 2022 <p>    
                     </div>
                     <!---Job Details Section End--->
 
+                    <!---Your message and file Terms Start--->
+                    <h3 class="heading_proposal jdc">Messages and Files</h3>
+                    <div class="btm-c">
+                        <div class="pt_con">
+                            <ul class="client_listing-c">
+                                <li style="border-top: none;">
+                                    <img src="http://127.0.0.1:8000/assets/images/default.png" alt="client">
+                                    <div class="about_client" style="margin-left:-20px;margin-top:15px;">
+                                        <b class="client_name">Arslan Ayoub</b>
+                                        <span class="client_date">April 20 2022 - 9:01 AM</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-subtitle mb-2">Hi Martin. See the samples here.</h5>
+                                            
+                                            <div class="file_heading_proposal">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <i class="fa fa-file" style="font-size:24px"></i>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p><span class="file-text">Requirements.zip</span></p>
+                                                        <p class="file-size">
+                                                            300 KB
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <i class='far fa-comment-dots' style='font-size:24px'></i>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                    <!---Your Proposed Terms Start--->
-                    <h3 class="heading_proposal jdc">Your Proposed Terms</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt_con">
+                            <ul class="client_listing-c">
+                                <li style="border-top: none;">
+                                    <img src="http://127.0.0.1:8000/assets/images/default.png" alt="client">
+                                    <div class="about_client" style="margin-left:-20px;margin-top:15px;">
+                                        <b class="client_name">Arslan Ayoub</b>
+                                        <span class="client_date">April 20 2022 - 9:01 AM</span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-11">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-subtitle mb-2">Hi Martin. See the samples here.</h5>
+                                            
+                                            <div class="file_heading_proposal">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <i class="fa fa-file" style="font-size:24px"></i>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <p><span class="file-text">Requirements.zip</span></p>
+                                                        <p class="file-size">
+                                                            300 KB
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <i class='far fa-comment-dots' style='font-size:24px'></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!---Your message and file Terms End--->
+
+
+                    <!---Your Feedback Terms Start--->
+                    <h3 class="heading_proposal jdc">Your Feedback for Amna Kareem</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <span class="fm-c"> Proposed Fixed Amount </span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="am_price">$230.00 </span>
+                                <div class="col-md-12">
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                    <p class="prop_description">
+                                    Build Verification Test is a set of tests run on every new build to 
+                                    verify that build is testable before it is released to test team for 
+                                    further testing. These test cases are core functionality test cases 
+                                    that ensure application is stable and can be tested thoroughly.
+                                    </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!---Your Proposed Terms End--->
 
+                    <!---Your Proposed Terms Start--->
+                    <h3 class="heading_proposal jdc">Amna Kareem’s Feedback for You</h3>
+                    <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <span class="fm-c"> You’ll Recieve </span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="am_price">$184.00 </span>
+                                <div class="col-md-12">
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                    <p class="prop_description">
+                                    It was pleasure working with Martin! Looking forward to working with him once again.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!---Your Proposed Terms End--->
 
 
                 </div>
                 <div class="prosal-right-con">
+
                     <div class="p_amount_con">
                         <ul class="listing_ps">
-                            <li><span class="p_fcs">Proposed Amount</span> <span class="p_price">$230.00</span></li>
-                            <li><span class="p_fcs">Net Amount</span> <span class="p_price">$184.00</span></li>
-                            <li><span class="p_fcs">Status</span> 
-                            <!-- <span class="btn_sbmitd">Submitted</span> -->
-                                <span class="badge badge--info badge_color">Draft</span>
-                            </li>
-                            <li><span class="p_fcs">Job Type</span> <span class="p_pricess">
-                                Job
-                            </span></li>
-                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">0 Days</span></li>
-                            <li><span class="p_fcs">Mode of Delivery</span> <span class="p_days">Hourly</span></li>
+                            <li><span class="p_fcs" style="font-weight: 500;">Contract Summary</span></li>
+                            <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">Fixed</span></li>
+                            <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">22-04-2022</span></li>
+                            <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">26-05-2022</span></li>
                         </ul>
                     </div>
-
+                    <br>
+                    <div class="p_amount_con">
+                        <ul class="listing_ps">
+                            <li><span class="p_fcs" style="font-weight: 500;">Billing</span></li>
+                            <li class="right-navbar-li"><span>Paid Out</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Funded (Escrow Protection) </span> <span class="p_days">$0.00</span></li>
+                            <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">Hourly</span></li>
+                            <li>
+                                    <center><a href="" class="btn navbar-burron">Re-Hire Amna</a></center>
+                            </li>
+                        </ul>
+                    </div>
                     <!----About client--->
                     <div class="about-client-c">
                         <p class="abt-client">About the Client</p>
@@ -109,11 +213,17 @@
                             </li>
 
                             <li>
-                                <span class="no_jobs">19</span> <span class="jb_p">Jobs posted</span>
+                                <span class="no_jobs">22</span> <span class="jb_p">Jobs</span>
                             </li>
 
                             <li>
-                                <span class="no_jobs">11</span> <span class="jb_p">Open jobs </span>
+                                <span class="no_jobs">$100k+</span> <span class="jb_p">Total Earned </span>
+                            </li>
+                            <li>
+                                <span class="no_jobs">563</span> <span class="jb_p">Total Hours Worked </span>
+                            </li>
+                            <li>
+                                    <center><a href="" class="btn navbar-burron">View Profile</a></center>
                             </li>
 
                         </ul>
@@ -130,7 +240,47 @@
 
 
 <style>
-
+    .navbar-burron{
+        width: 96%;
+        font-size: 12px;
+        background-color: #007f7f !important;
+        color: #fff !important;
+        border-radius: 5px !important;
+    }
+    .right-navbar-li{
+        border: none !important;
+    }
+    .file-text{
+        margin: -5px 0 0 0px;
+        font-size: 13px;
+    }
+    .file_heading_proposal {
+        width: 40%;
+        background: #F3F6F6;
+        border-radius: 4px 4px 0px 0px;
+        padding: 17px 25px 17px 20px;
+        font-weight: 600;
+        font-size: 18px !important;
+        line-height: 25px;
+        color: #000000;
+    }
+    .file-size{
+        margin-top: -15px;
+        font-size: 12px;
+        font-weight: initial;
+    }
+    .view_origin{
+        /* View Original Job Post */
+    width: 166px;
+    height: 18px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height */
+    color: #007F7F;
+    }
     p.propsal-h {
         font-weight: 400;
         font-size: 20px;
