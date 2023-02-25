@@ -348,6 +348,7 @@ function getSoftwareFee($software){
     }
     return '';
 }
+
 function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
 
     $query=BannerBackground::where('document_type',$type)->where('is_active',true);
@@ -372,6 +373,7 @@ function selectedBackgroundImage($model,$banner_background_id,$column){
     }
     return '';
 }
+
 function getLeadImageUrl($model){
     if($model){
         if($model->banner){
@@ -382,6 +384,7 @@ function getLeadImageUrl($model){
         }
     }
 }
+
 function IsDefaultLeadImage($model,$type){
     if($model){
         if($model->banner){

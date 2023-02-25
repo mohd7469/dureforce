@@ -92,9 +92,7 @@ class CommonProfileController extends Controller
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
             'about' => 'required|string',
-             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            
-            // 'phone_number' => ['required', new PhoneNumberValidate],
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
             'languages.*.language_level_id' => 'required',
@@ -193,6 +191,7 @@ class CommonProfileController extends Controller
     public function getUserProfile($id=null)
     {
         try {
+
             $pageTitle = 'Seller Profile';
             $user_id = $id == null ? auth()->user()->uuid :$id;
             $user = User::withAll()->where('uuid',$user_id)->firstOrFail();

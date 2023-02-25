@@ -22,6 +22,10 @@
                                     <div class="justify-content-center" >
 
                                         <div class="row">
+                                            @php
+                                                $files=$job->documents;
+                                            @endphp
+                                            <input type="hidden" value="{{json_encode($files)}}" name="uploaded_files" id="uploaded_files_input_id">
 
                                             {{-- Job Title --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
@@ -89,7 +93,28 @@
                                             </div>
 
                                         </div>
-                                        
+                                        {{-- uploaded files preview --}}
+                                        <div>
+                                            <table class="table table-bordered" id="uploaded_file_table_id">
+                                                <tbody id="file_name_div">
+                                                    @foreach ( $files  as $item)
+                                                        <tr>
+                                                            <td><a href="{{$item->url}}" download>{{$item->uploaded_name}}</a></td>
+                                                            <td class="text-center">{{$item->type}}</td>
+                                                            <td class="text-center" id="DeleteButton">
+                                                                <span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <a href="{{$item->url}}" download><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-download"  ></i></span></a>
+
+                                                            </td>
+                        
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            
+                                        </div>
                                         <div class="row">
 
                                             {{-- Category --}}
@@ -298,16 +323,11 @@
 
 @push('script')
 <script>
+    var action_url="{{route('file.upload') }}";
     function loadFiles()
     {
-        var documents=JSON.parse($('#job_documents').val());
-        for (const item of documents) {
-            var mockFile = { name: item.uploaded_name, size: 12345 };
-            myDropzone.options.addedfile.call(myDropzone, mockFile);
-            // myDropzone.options.thumbnail.call(myDropzone, mockFile, item.url);
-        }
-       
-        
+        var documents=JSON.parse($('#uploaded_files_input_id').val());
+        uploaded_files=documents;
     }
     function fetchSubCategories(category)
     {
@@ -412,6 +432,25 @@
             tags: true
         });
         loadFiles();
+
+        $('#job_form_data').submit(function (e) {
+            
+            e.preventDefault();
+            var form = $('#job_form_data')[0];
+            var form_data = new FormData(form);
+            form_data.append("file", JSON.stringify(uploaded_files));
+            submitCreateFormData(form_data);
+
+        });
+        
+        $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
+      
+            let file_index=$(this).closest("tr").index();
+            uploaded_files.splice(file_index, 1);
+            $(this).closest("tr").remove();
+            $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+
+        });
     });
 
     bkLib.onDomLoaded(function() {

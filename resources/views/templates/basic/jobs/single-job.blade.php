@@ -85,7 +85,7 @@
                                                         <div>
                                                         @if($job->documents->count()>0)
                                                             <div class="service_subtitle2 mt-20" >
-                                                                        Attachments
+                                                               {{ $job->documents->count()<2 ? 'Attachment':'Attachments'}}
                                                             </div>
 
                                                             @foreach($job->documents as $decumentUrl)
