@@ -84,7 +84,7 @@
                       <!----== Client Job Information Section Start ==----->
         
                       <div class="cp-info-container">
-                         <div class="cp-info-box">
+                        <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
                             <p class="cp-jt">
 
@@ -98,9 +98,10 @@
                               
                             </p>
                          </div>
+
                          <div class="cp-info-box">
                             <p class="cp--jbh">City</p>
-                            <p class="cp-jt" id="city_id" value{{$basicProfile->city_id}}>
+                            <p class="cp-jt"  value{{$basicProfile->city_id}}>
                                 @foreach ($cities as $city)
                                 @if($city->id == $basicProfile->city_id)
                                     {{$city->name}}
@@ -113,9 +114,6 @@
                             <p class="cp--jbh">Phone</p>
                             <p class="cp-jt" id="phone" >{{$basicProfile->phone_number}}</p>
                          </div>
-        
-        
-                        
         
                       </div>
 
@@ -136,13 +134,10 @@
        
                         <div class="cp-info-box">
                            <p class="cp--jbh">Proficiency Level</p>
-                           @foreach ($user_languages_level_ as $level )
-                           <p class="cp-jt">{{$level->name }}</p>
+                            @foreach ($user_languages_level_ as $level )
+                                <p class="cp-jt">{{$level->name }}</p>
                             @endforeach
                         </div>
-       
-       
-
        
                      </div>
         
@@ -166,9 +161,7 @@
 @push('script')
     <script>
 
-       
         "use strict";
-
         $(".num_filed").on('keydown',function(e){
             if(e.keyCode == 189 || e.keyCode ==109) {
                 
