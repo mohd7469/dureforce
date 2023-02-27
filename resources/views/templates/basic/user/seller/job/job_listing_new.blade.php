@@ -112,7 +112,7 @@
                                                     <div class="col-md-12">
                                                             <ul class="skills-listing">
                                                                 @foreach($job->skill as $job_skill)
-                                                                <li>{{$job_skill->name}}</li>
+                                                                    <li style="margin-top:5px">{{$job_skill->name}}</li>
                                                                 @endforeach
                                                             </ul>
                                                     </div>
