@@ -6,10 +6,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::name('seller.')->group(function () {
-    
+
     Route::middleware(['verified','is-freelancer'])->group(function () {
         
         Route::namespace('Seller')->prefix('seller')->group(function () {
+
+            Route::view('/service-list', 'templates.basic.services.service-list');
+            Route::view('/software-list', 'templates.basic.software.software-list');
 
             Route::get('/offer-view/{uuid}',        [\App\Http\Controllers\Seller\JobController::class,'OfferView'] )->name('offer.view');
 
