@@ -328,8 +328,8 @@
                                                 </a>
 
                                                 <div class="card-body">
-                                                    <h3 class="card-title">{{$portfolio->name}}</h3>
-                                                    <p class="card-text">{{$portfolio->description}}</p>
+                                                    <h3 class="card-title">{{ substr($portfolio->name,0,23)}}{{'...'}}</h3>
+                                                    <span class="card-text">{{ substr($portfolio->description, 0,  26)}}</span><a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"><strong class="portfolio-desc"> More...</strong></a>
                                                 </div>
 
                                             </div>
@@ -917,6 +917,9 @@
 @push('style')
 
 <style>
+    .portfolio-desc{
+        margin-left: 4px;
+    }
     .sep-solid {
         border-top: 2px solid #c5e0e0;
         margin-top: 18px;

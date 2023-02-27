@@ -6,7 +6,9 @@
     top:50%;
     left:5%
 }
-
+.attr{
+    margin-top: 5px;
+}
 .upload_icon{
     position: absolute;
     left: 8%;
