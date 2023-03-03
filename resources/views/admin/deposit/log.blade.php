@@ -61,10 +61,10 @@
                                     {{ showDateTime($deposit->created_at) }}<br>{{ diffForHumans($deposit->created_at) }}
                                 </td>
                                 <td data-label="@lang('User')">
-                                    <span class="font-weight-bold">{{ $deposit->user->fullname }}</span>
+                                    <span class="font-weight-bold">{{ $deposit->user->fullname ?? '' }}</span>
                                     <br>
                                     <span class="small">
-                                    <a href="{{ route('admin.users.detail', $deposit->user_id) }}"><span>@</span>{{ $deposit->user->username }}</a>
+                                    <a href="{{ route('admin.users.detail', $deposit->user_id) }}"><span>@</span>{{ $deposit->user->username ?? '' }}</a>
                                     </span>
                                 </td>
                                 <td data-label="@lang('Amount')">

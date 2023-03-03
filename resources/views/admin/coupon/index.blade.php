@@ -64,7 +64,7 @@
                                             data-status="{{$coupon->status}}">
                                             <i class="las la-edit"></i>
                                         </a>
-                                         <a href="javascript:void(0)" class="icon-btn btn--danger ml-1 deleteCoupon"
+                                         <a href="javascript:void(0)" class="icon-btn btn--danger ml-1 deleteCoupon ancher-delete-link-disabled"
                                             data-id="{{$coupon->id}}" >
                                              <i class="las la-trash"></i>
                                         </a>

@@ -199,9 +199,19 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('banner/destroy/{id}', 'BannerController@destroy')->name('banner.destroy');
  
         });
+
+        //Manage blogs
+        Route::get('blog/index', 'BlogController@index')->name('blog.index');
+        Route::get('blog/create', 'BlogController@create')->name('blog.create');
+        Route::get('blog/edit/{id}', 'BlogController@edit')->name('blog.edit');
+        Route::post('blog/store', 'BlogController@store')->name('blog.store');
+        Route::post('blog/update/{id}', 'BlogController@update')->name('blog.update');
+        Route::post('blog/inactiveBy', 'BlogController@inactiveBy')->name('blog.inactiveBy');
+        Route::post('blog/activeBy', 'BlogController@activeBy')->name('blog.activeBy');
+        Route::get('blog/details/{uuid}', 'BlogController@details')->name('blog.details');
         //Email template
         
-        //   Route::middleware('staffaccess:35')->group(function () {
+        //Route::middleware('staffaccess:35')->group(function () {
             //Manage banner
             Route::get('email/index', 'EmailController@index')->name('email.index');
             Route::get('email/create', 'EmailController@emailCreate')->name('email.create');

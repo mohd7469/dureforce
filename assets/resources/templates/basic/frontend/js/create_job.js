@@ -1,24 +1,30 @@
 var token= $('input[name=_token]').val();
 var myDropzone='';
-function submitCreateFormData(data)
-{
-  var action_url=$("#job_form_data").attr('action');
-  $.ajax({
-      type:"POST",
-      url:action_url,
-      data: {data : data,_token:token},
-      success:function(data){
-          var html = '';
-          if(data.error){
-              
-            displayErrorMessage(data.error);
+var uploaded_files=Array();
 
-          }
-          else{
-              window.location.replace(data.redirect);
-          }
-      }
-  });  
+function submitCreateFormData(form_data)
+{
+    var action_url=$("#job_form_data").attr('action');
+    $.ajax({
+        type:"POST",
+        url:action_url,
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success:function(data){
+            var html = '';
+            if(data.errors){
+              console.log(data);
+              displayErrorMessage(data.errors);
+            }
+            else{
+                window.location.replace(data.redirect);
+            }
+        }
+    });  
 }
 function displayAlertMessage(message)
 {
@@ -61,107 +67,83 @@ function displayInfoAlertMessage(message)
 }
 
 $(function() {
-  var form_data='';
-  var action_url=$("#job_form_data").attr('action');
-    var dropzone = new Dropzone('#demo-upload', {
-      url:action_url,
-      autoProcessQueue: false,
-        parallelUploads: 4,
-        dictDefaultMessage: "your custom message",
-        thumbnailHeight: 60,
-        thumbnailWidth: 60,
-        maxFiles: 4,
-        uploadMultiple:true,
-        maxFilesize: 3,
-        acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
-        filesizeBase: 1000,
-        addRemoveLinks: true,
-        init: function() {
-          
-          this.on("sendingmultiple", function(file, xhr, formData) {
-            formData.append("_token",token);
-            formData.append("data", form_data);
-          });
-          
-          this.on("complete", function(file, xhr, formData) {
-           
-          });
-
-          this.on("successmultiple", function(files, response) {
-
-              if(response.error)
-              {
-                displayErrorMessage(response.error);
-              }
-              else{
-                window.location.replace(response.redirect);
-
-              }
-
-                
-          });
-
-          myDropzone = this;
   
-          $("#job_form_data").submit(function (e) {
-            form_data= $(this).serialize();
-              e.preventDefault();
-              e.stopPropagation(); 
-              var validate_url=$('#job_validate_url').val();
-              $.ajax({
-                  type:"POST",
-                  url:validate_url,
-                  data: {data : form_data,_token:token},
-                  success:function(data){
-
-                      if(data.validated){
-
-                          if(myDropzone.getQueuedFiles().length>0){
-                            myDropzone.processQueue();
-                          }
-                          else
-                          {
-                            submitCreateFormData(form_data);
-                          }
-
-                      }
-                      else{
-                        console.log(data);
-                        if(data.redirect)
-                        {
-                        
-                          window.location.replace(data.redirect);
-                        }
-                        displayErrorMessage(data.error);
-
-                      }
-                  }
-              });
-          }); 
-        },
-        thumbnail: function(file, dataUrl) {
-       
-
-          if (file.previewElement) {
+  var dropzone = new Dropzone('#demo-upload', {
+    url:action_url,
+    autoProcessQueue: true,
+    parallelUploads: 1,
+    dictDefaultMessage: "your custom message",
+    thumbnailHeight: 120,
+    thumbnailWidth: 120,
+    maxFiles: 6,
+    uploadMultiple:false,
+    acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+    filesizeBase: 1000,
+    addRemoveLinks: false,
+    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+    init: function() {
         
+        this.on("addedfile", function (file) {
+            var _this = this;
+            
+        });
 
-            file.previewElement.classList.remove("dz-file-preview");
-            var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
-            for (var i = 0; i < images.length; i++) {
-              var thumbnailElement = images[i];
-              thumbnailElement.alt = file.name;
-              thumbnailElement.src = dataUrl;
-            }
-            setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
-          }
+        this.on("sending", function(file, xhr, formData) {
+            formData.append("_token",token);
+        });
+
+        this.on("error", function (file, response) {
+            
+            var _this = this;
+            _this.removeFile(file);
+            let errors=response.errors;
+            
+            Object.entries(errors).forEach(([key, value]) => {
+                displayAlertMessage(value);
+            });
+        });
+
+        this.on("success", function (file, response) {
+            var _this = this;
+            _this.removeFile(file);
+            uploaded_files.push(response.uploaded_file);
+            addFile(response.uploaded_file);
+        });
+
+        this.on("complete", function(file, xhr, formData) {
+            
+        });
+
+        myDropzone = this;
+
+    },
+    thumbnail: function(file, dataUrl) {
+    
+
+        if (file.previewElement) {
+    
+
+        file.previewElement.classList.remove("dz-file-preview");
+        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+        for (var i = 0; i < images.length; i++) {
+            var thumbnailElement = images[i];
+            thumbnailElement.alt = file.name;
+            thumbnailElement.src = dataUrl;
         }
-      
-      });
-      
-      
-      
+        setTimeout(function() { file.previewElement.classList.add("dz-image-preview"); }, 1);
+        }
+    }
+    
 });
 
+});
+
+ function addFile(file){
+
+      $('#file_name_div').append('<tr><td>'+file.uploaded_name+'</td><td class="text-center">'+file.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td><td class="text-center">'+
+      '<a href="'+file.url+'" download><span class="badge badge-primary badge-pill guide-lines-lbl"><i class="fa fa-download "></i></span></a></td></tr>');
+      $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+}
 
 function switchBudgetFileds(budget_type)
 {

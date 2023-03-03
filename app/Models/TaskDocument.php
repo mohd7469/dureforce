@@ -9,6 +9,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class TaskDocument extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $fillable = [
+        'uploaded_name',
+        'url',
+        'name',
+        'type',
+        'is_published',
+        'section_type',
+        'section_id'
+    ];
+    
     public function module()
     {
         return $this->morphTo();

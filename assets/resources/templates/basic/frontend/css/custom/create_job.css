@@ -23,6 +23,9 @@
     color: #7F007F;
     background-color: transparent
 }
+.badge{
+    color: #007f7f !important;
+}
 .dropzone .dz-preview .dz-details {
     z-index: 20;
     position: absolute;
