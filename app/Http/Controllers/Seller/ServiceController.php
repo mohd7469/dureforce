@@ -61,8 +61,11 @@ class ServiceController extends Controller
 
             $pageTitle = "Service details";
             $service = Service::withAll()->where('uuid', $uuid)->firstOrFail();
-            $service->views += 1;
-            $service->save();
+
+            if(Auth::user()->id !=$service->created_by){
+                $service->views += 1;
+                $service->save();
+            }
             $related_services = Service::withAll()->where('category_id', $service->category_id)->where('sub_category_id', $service->sub_category_id)->where('id', '<>', $service->id)->where('status_id', Service::STATUSES['APPROVED'])->latest()->limit(4)->get();
             $selected_skills = $service->skills ? implode(',', $service->skills->pluck('id')->toArray()) : '';
             $emptyMessage="No Data Found";
@@ -89,7 +92,7 @@ class ServiceController extends Controller
             $service = null;
 
             if ($id) {
-                $service = Service::with('serviceSteps', 'addOns', 'category', 'subCategory')->findOrFail($id);
+                $service = Service::withAll()->findOrFail($id);
                 $completedOverview = $service->skills()->count() > 0 ? $completed : $empty;
                 $completedPricing = $service->rate_per_hour > 0 ? $completed : $empty;
                 $completedBanner = $service->banner ? $completed : $empty;

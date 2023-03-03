@@ -131,15 +131,14 @@
                                                 </div>
                                                 @if ($service->addOns->isNotEmpty())
                                                     <div class="item-details-thumb-area2">
-                                                        <div class="service_subtitle1">Add-Ons</div>
+                                                        <div class="service_subtitle1">{{ $service->addOns->count()>1 ? 'Add-Ons' : 'Add-On'}}</div>
                                                         <div class="service_subtitle3">
                                                             <ul class="service-table-title">
                                                                 <li>
-                                                                    <p>@lang('Add-On Name & Description')</p>
-                                                                    <p>@lang('Per Hour')</p>
-                                                                    <p>@lang('Estimated Delivery Time')</p>
-                                                                    <p></p>
-                                                                    <p></p>
+                                                                    <p class="text-left" style="width:33.3%">@lang('Add-On Name & Description')</p>
+                                                                    <p class="text-center" style="width:33.3%">@lang('Per Hour')</p>
+                                                                    <p class="text-right" style="width:33.3%">@lang('Estimated Delivery Time')</p>
+                                                                   
                                                                 </li>
                                                             </ul>
 
@@ -147,13 +146,10 @@
 
                                                                 @foreach ($service->addOns as $extra)
                                                                     <li>
-
-                                                                        <div style="width: 30%;">{{ __($extra->title) }}</div>
-                                                                        <div style="width: 18%;">{{ showAmount($extra->rate_per_hour) }}</div>
-                                                                        <div style="width: 18%;">{{ $extra->estimated_delivery_time }}
+                                                                        <div class="text-left" style="width:33.3%">{{ __($extra->title) }}</div>
+                                                                        <div class="text-center" style="width:33.3%">{{ $extra->rate_per_hour}}</div>
+                                                                        <div class="text-right" style="width:33.3%">{{ $extra->estimated_delivery_time }}
                                                                             Days
-                                                                        </div>
-                                                                        <div style="width: 18%;">
                                                                         </div>
                                                                     </li>
                                                                 @endforeach

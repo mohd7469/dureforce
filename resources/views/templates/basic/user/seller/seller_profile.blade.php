@@ -454,6 +454,8 @@
                                         <input type="text" class="form-control" name="designation" placeholder="Freelance DevOps Engineer" value="{{$user->job_title}}">
                                     </div>
                                 </div>
+                               
+
                                 <div class="col-xl-12">
                                     <div class=" mb-3 select2_element">
                                         <label for="title">Category *</label>

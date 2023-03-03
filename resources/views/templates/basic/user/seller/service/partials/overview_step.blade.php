@@ -34,7 +34,7 @@
 
                         @if ($service && count($service->tags)>0)
                             @foreach ($tags as $tag)
-                                <option {{isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
+                                <option {{ isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
                             @endforeach
                         @else
                             @foreach ($tags as $tag)
