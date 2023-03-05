@@ -19,7 +19,7 @@ var data = [
   {
     id: 3,
     text: " Apply to jobs posted by clients",
-    url: "/job",
+    url: "/jobs-listing-old",
     icon: "fa-suitcase",
     heading: "Jobs",
     searchText: null,
@@ -63,7 +63,7 @@ $(document).ready(function () {
 
 $(".search-select-header").on("select2:select", function (e) {
   var data = e.params.data;
-
+  console.log(data);
   window.location = `${data.url}?title=${data.searchText}`;
 });
 
