@@ -202,7 +202,7 @@
                                                     <button data-toggle="tooltip" title=""
                                                         onclick="return confirm('Are you sure you want to delete.')"
                                                         data-original-title="@lang('Delete')"
-                                                        class="btn btn--danger text-white disabled" type="submit"><i
+                                                        class="btn btn--danger text-white disabled ancher-delete-link-disabled" type="submit"><i
                                                             class="fa fa-trash-alt"></i></button>
                                                 </form>
                                             </div>

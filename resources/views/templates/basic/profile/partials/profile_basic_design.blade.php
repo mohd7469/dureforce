@@ -1535,7 +1535,9 @@
                                                             <div class="card w-100 bg-light">
                                                                 <div class="card-body form-group pt-3">
                                                                     <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                                                                    <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
+                                                                    <small  class="form-text text-muted">20% Service Fee 
+                                                                        {{-- <a href="#" class="link-space">Explain this</a> --}}
+                                                                    </small><br>
                                                                     <span class="pt-2 text-dark">$12.00</span>
                                                                 </div>
                                                                 Dureforce Service Fee                                   </div>

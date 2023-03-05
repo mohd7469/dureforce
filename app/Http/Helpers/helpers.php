@@ -1624,11 +1624,13 @@ function dateDiffInDays($date1, $date2)
 function getRedisData($model,$key,$condition=null){
 
     try {
+
         $redis_data =  json_decode(Redis::get($key));
         if ($redis_data){
             return $redis_data;
         }
         else{
+
             $query = $model::query();
 
             $query->when(($condition!=null), function ($q) use ($condition) {

@@ -189,15 +189,14 @@ if (!empty($service)) {
                                                             class="fa fa-trash"></i></button>
                                                 </div>
                                             @endif
-                                            <label for="">Step Name</label>
+                                            <label for="">Step Name *</label>
                                             <input type="text" name="steps[]"
                                                 id="step-first"
                                                 placeholder="E.g. Initial Requirements" class="form-control step"
                                                 value="{{ $item->name }}" />
                                             <div class="mt-2">
-                                                <label for="description">Step Description</label>
+                                                <label for="description">Step Description * </label>
                                                 <textarea type="text" name="description[]" id="discription-first" placeholder="This is a short description." class="form-control description">{{ $item->description ?? '' }}</textarea>
-                                                <br />
                                                 <br />
                                             </div>
                                         </div>

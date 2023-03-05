@@ -193,7 +193,6 @@ class ProfileController extends Controller
         $categories = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
         //$degrees = Degree::where('is_active',1)->select('id', 'title')->get();
         $degrees = getRedisData(Degree::$Model_Name_Space,Degree::$Redis_key,$is_active);
-
         $user_portfolio = '';
         if($uuid){
             

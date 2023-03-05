@@ -62,21 +62,32 @@
                                                
                                                 <div class="row item-details-content">
                                                     <div class="service_subtitle1 mt-20">{{ $pageTitle }}</div>
-                                                    <div class="service_subtitle2">
-                                                        Description
-                                                    </div>
-                                                    <div class="sep-solid"></div>
-                                                    <div class="product-desc-content">
-                                                        {!! $software->description !!}
-                                                    </div>
                                                     
-                                                    <div class="service_subtitle2">
-                                                        Software Application
-                                                    </div>
-                                                    <div class="sep-solid"></div>
-                                                    <div class="product-desc-content">
-                                                        {!! $software->software_application !!}
-                                                    </div>
+                                                    @if ($software->description)
+                                                        
+                                                        <div class="service_subtitle2">
+                                                            Description
+                                                        </div>
+
+                                                        <div class="sep-solid"></div>
+                                                        <div class="product-desc-content">
+                                                            {!! $software->description !!}
+                                                        </div>
+                                                        
+                                                    @endif
+
+                                                    
+
+                                                    @if ($software->software_application)
+                                                        <div class="service_subtitle2">
+                                                            Software Application
+                                                        </div>
+                                                        <div class="sep-solid"></div>
+                                                        <div class="product-desc-content">
+                                                            {!! $software->software_application !!}
+                                                        </div>
+                                                    @endif
+                                                   
 
                                                    
                                                     <div class="service_subtitle2 mt-20">

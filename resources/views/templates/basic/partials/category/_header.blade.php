@@ -33,6 +33,9 @@
     .flex-start{
         justify-content: flex-start;
     }
+    .sub-nav {
+        width: 100.5%;
+    }
 
     .sub-nav {
         width: 100.5%;

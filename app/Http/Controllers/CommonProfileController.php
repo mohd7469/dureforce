@@ -191,7 +191,6 @@ class CommonProfileController extends Controller
     public function getUserProfile($id=null)
     {
         try {
-
             $pageTitle = 'Seller Profile';
             $user_id = $id == null ? auth()->user()->uuid :$id;
             $user = User::withAll()->where('uuid',$user_id)->firstOrFail();
@@ -248,7 +247,7 @@ class CommonProfileController extends Controller
             'languages.*.language_id.required'    => 'Please Select at least one Language',
             'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
         ];
-        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+        if (getLastLoginRoleId() == Role::$Freelancer) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }

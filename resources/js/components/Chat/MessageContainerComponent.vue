@@ -243,28 +243,31 @@
             async uploadFiles(){
                 this.progress_bar_show=true;
                 let attachments = this.$refs.attachment.files;
-                let message_form = new FormData();
+               
                     
                 this.$nextTick(() => {
                     this.number_of_attachments=attachments.length;
                 });
 
-                message_form.append('message',this.message_form.message);
-                message_form.append('send_to_id',this.active_user.send_to_user.id);
-                message_form.append('module_id',this.active_user.module_id);
-                message_form.append('module_type',this.active_user.module_type);
+               
                 let headers= {'Content-Type': 'multipart/form-data'};
 
                 setTimeout(() => {
                     for (let index = 0; index < attachments.length; index++) {
                     
+                        let message_form = new FormData();
+                        message_form.append('message',this.message_form.message);
+                        message_form.append('send_to_id',this.active_user.send_to_user.id);
+                        message_form.append('module_id',this.active_user.module_id);
+                        message_form.append('module_type',this.active_user.module_type);
+
                         let progress_bar_index=index+1;
                         let element_id='progress_bar'+progress_bar_index;
                         console.log(document.getElementById(element_id));
                         document.getElementById(element_id).classList.remove('invisible');
                         document.getElementById(element_id).className='progress';
-                        message_form.append('attachment',attachments[index]);
-
+                        message_form.set('attachment',attachments[index]);
+                        console.log(message_form);
                         axios.post('../chat/save/message',message_form,headers)
                         .then(res=>{
                         
@@ -282,9 +285,7 @@
                    
                     }
                 }, 90);
-
-               
-                
+ 
             },
             deleteMessage(message_id)
             {
