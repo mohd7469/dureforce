@@ -414,14 +414,73 @@
                             {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
                                 <div class="row">
-                                <div class="quote">
-                                        <blockquote class="blockquote">
+                                    <div class="quote">
+                                        <blockquote class="blockquote" >
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                         </blockquote>
-                                <p class="cite"><b>Simon King</b> <br>
-                                    Director Marketing, Global Solutions Ltd</p>
-                                </div>
+                                        <hr class="divider">
+                                        <div class="row ">
+                                            <table class="table table-borderless table-spacing">
+                                                <tbody class="text-center">
+                                                    <tr>
+                                                        <td ><b>{{trans('Quality')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Communication')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td ><b>{{trans('Expertise')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Professionalism')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <hr class="divider">
+                                        <p class="cite">
+                                            
+                                            <b>Simon King</b> 
+                                            
+                                            <br>
+                                                Director Marketing, Global Solutions Ltd
+                                            <br>
+                                            
+                                            
+                                            <i class="fab fa-solid fa-linkedin"></i>
+                                           <span class="see-profile">
+                                            
+                                            See LinkedIn Profile </span>
+                                            
+                                                
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -922,6 +981,10 @@
 @push('style')
 
 <style>
+    .table-spacing{
+        margin-bottom: -8px !important;
+    }
+    
     .portfolio-desc{
         margin-left: 4px;
     }
@@ -933,6 +996,19 @@
         
         height: 220px;
         width: 100%;
+    }
+    .testmonials-review-star{
+        padding: 3px;
+        color: #F09959;
+    }
+    .quote{
+        height:auto;
+    }
+    .see-profile{
+        color:#0077B5;
+    }
+    .divider{
+        color: #DCDCDC
     }
 </style>
 

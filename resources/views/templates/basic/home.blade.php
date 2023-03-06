@@ -532,7 +532,7 @@
         .button-review-color {
             color: #007F7F;
         }
-
+        
         .job-list-price-button {
             background: #7F007F;
             font-size: 12px;
