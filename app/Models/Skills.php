@@ -18,7 +18,8 @@ class Skills extends Model
     protected $table="skills";
 
     public static $Model_Name_Space = "App\Models\Skills";
-    public static $Redis_key = "categories";
+
+    public static $Redis_key = "skills";
     public static $Is_Active = 1;
 
     /**

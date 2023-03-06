@@ -21,6 +21,7 @@ class Tag extends Model
     public const TAG_TYPE_SERVICE = 1;
     public const TAG_TYPE_SOFTWARE = 2;
     public const TAG_TYPE_BLOG = 3;
+
     protected $keyType = 'integer';
 
     protected $table="tags";
@@ -32,7 +33,7 @@ class Tag extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name','slug','is_active'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

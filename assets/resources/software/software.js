@@ -250,8 +250,14 @@ function proPicURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+function youtube_parser(url){
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  var match = url.match(regExp);
+  return (match&&match[7].length==11)? match[7] : false;
+}
 function previewVideo(url){
-  url=url.replace("watch?v=", "embed/");
+  url=youtube_parser(url);
+  url="https://www.youtube.com/embed/"+url;
   $("#preview_video").attr('src', url);
 
 }

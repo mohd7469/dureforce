@@ -324,12 +324,16 @@
                                                 @endif
 
                                                 <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}">
-                                                    <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @if ($portfolio->video_url)
+                                                        <iframe src="{{portfolioVideoUrl($portfolio->video_url)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:18rem;height:220px"></iframe>
+                                                    @else
+                                                        <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @endif
                                                 </a>
 
                                                 <div class="card-body">
-                                                    <h3 class="card-title">{{$portfolio->name}}</h3>
-                                                    <p class="card-text">{{$portfolio->description}}</p>
+                                                    <h3 class="card-title">{{ substr($portfolio->name,0,23)}}{{'...'}}</h3>
+                                                    <span class="card-text">{{ substr($portfolio->description, 0,  26)}}</span><a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"><strong class="portfolio-desc"> More...</strong></a>
                                                 </div>
 
                                             </div>
@@ -409,17 +413,75 @@
                             </div>
                             {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
-                                <h3>Coming Soon</h3>
-                                {{-- <div class="row"> --}}
-                                {{-- <div class="quote">
-                                        <blockquote class="blockquote">
+                                <div class="row">
+                                    <div class="quote">
+                                        <blockquote class="blockquote" >
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                         </blockquote>
-                                <p class="cite"><b>Simon King</b> <br>
-                                    Director Marketing, Global Solutions Ltd</p>
+                                        <hr class="divider">
+                                        <div class="row ">
+                                            <table class="table table-borderless table-spacing">
+                                                <tbody class="text-center">
+                                                    <tr>
+                                                        <td ><b>{{trans('Quality')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Communication')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td ><b>{{trans('Expertise')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Professionalism')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <hr class="divider">
+                                        <p class="cite">
+                                            
+                                            <b>Simon King</b> 
+                                            
+                                            <br>
+                                                Director Marketing, Global Solutions Ltd
+                                            <br>
+                                            
+                                            
+                                            <i class="fab fa-solid fa-linkedin"></i>
+                                           <span class="see-profile">
+                                            
+                                            See LinkedIn Profile </span>
+                                            
+                                                
+                                        </p>
+                                    </div>
                                 </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -454,6 +516,8 @@
                                         <input type="text" class="form-control" name="designation" placeholder="Freelance DevOps Engineer" value="{{$user->job_title}}">
                                     </div>
                                 </div>
+                               
+
                                 <div class="col-xl-12">
                                     <div class=" mb-3 select2_element">
                                         <label for="title">Category *</label>
@@ -917,6 +981,13 @@
 @push('style')
 
 <style>
+    .table-spacing{
+        margin-bottom: -8px !important;
+    }
+    
+    .portfolio-desc{
+        margin-left: 4px;
+    }
     .sep-solid {
         border-top: 2px solid #c5e0e0;
         margin-top: 18px;
@@ -925,6 +996,19 @@
         
         height: 220px;
         width: 100%;
+    }
+    .testmonials-review-star{
+        padding: 3px;
+        color: #F09959;
+    }
+    .quote{
+        height:auto;
+    }
+    .see-profile{
+        color:#0077B5;
+    }
+    .divider{
+        color: #DCDCDC
     }
 </style>
 

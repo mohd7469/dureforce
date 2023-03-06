@@ -119,8 +119,11 @@
                                                 <div class="row skills-c">
                                                     <div class="col-md-12">
                                                             <ul class="skills-listing">
-                                                                @foreach($job->skill as $job_skill)
-                                                                <li>{{$job_skill->name}}</li>
+                                                                @foreach($job->skill as $key=>$job_skill)
+                                                                    @if ($key>=15)
+                                                                        @break
+                                                                    @endif
+                                                                    <li style="margin-top:5px">{{$job_skill->name}}</li>
                                                                 @endforeach
                                                             </ul>
                                                     </div>

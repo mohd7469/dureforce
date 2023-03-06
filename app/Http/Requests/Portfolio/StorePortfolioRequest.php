@@ -13,6 +13,7 @@ class StorePortfolioRequest extends FormRequest
      */
     public function authorize()
     {
+        
         return true;
     }
 
@@ -23,6 +24,7 @@ class StorePortfolioRequest extends FormRequest
      */
     public function rules()
     {
+        
         return [
             'name' => 'required',
             'completion_date' => 'required|date|before:today|after:' . Config('settings.minimum_system_start_date'),
