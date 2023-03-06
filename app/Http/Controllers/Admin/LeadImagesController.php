@@ -218,6 +218,7 @@ class LeadImagesController extends Controller
             'id' => 'required|exists:banner_backgrounds,id'
         ]);
         try {
+            DB::beginTransaction();
             $banner = Banner::findOrFail($request->id);
             $banner->is_active = 1;
             $banner->created_at = Carbon::now();
@@ -240,6 +241,7 @@ class LeadImagesController extends Controller
             'id' => 'required|exists:banner_backgrounds,id'
         ]);
         try {
+            DB::beginTransaction();
             $banner = Banner::findOrFail($request->id);
             $banner->is_active = 0;
             $banner->created_at = Carbon::now();
@@ -263,7 +265,6 @@ class LeadImagesController extends Controller
             $notify[] = ['success', 'Leading Image has been deleted'];
             return back()->withNotify($notify);
         }catch (\Exception $exp) {
-            DB::rollback();
             Log::error($exp->getMessage());
             $notify[] = ['error', 'An error occured'];
             return back()->withNotify($notify);
