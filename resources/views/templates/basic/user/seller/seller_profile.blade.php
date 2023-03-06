@@ -324,7 +324,11 @@
                                                 @endif
 
                                                 <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}">
-                                                    <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @if ($portfolio->video_url)
+                                                        <iframe src="{{portfolioVideoUrl($portfolio->video_url)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:18rem;height:220px"></iframe>
+                                                    @else
+                                                        <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @endif
                                                 </a>
 
                                                 <div class="card-body">
@@ -409,9 +413,8 @@
                             </div>
                             {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
-                                <h3>Coming Soon</h3>
-                                {{-- <div class="row"> --}}
-                                {{-- <div class="quote">
+                                <div class="row">
+                                <div class="quote">
                                         <blockquote class="blockquote">
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
@@ -419,7 +422,7 @@
                                 <p class="cite"><b>Simon King</b> <br>
                                     Director Marketing, Global Solutions Ltd</p>
                                 </div>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                     </div>

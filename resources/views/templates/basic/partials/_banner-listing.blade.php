@@ -36,6 +36,8 @@ if ($folder == 'service') {
             @if ($model->banner->banner_type==\App\Models\ModuleBanner::$Video)
             
                 <div id="videoContainer" >
+                  
+                   
                     <iframe src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:345px;height:250px"></iframe>
                 </div>
             @else

@@ -9,8 +9,12 @@
                             style="padding-left: 20px;">{{isset($job->country) ? $job->country->name: 'World Wide'}}</span></h6>
                 <p class="card-text mt-3" style="font-size: 12px;">{{\Illuminate\Support\Str::limit($job->description, 50, $end='...more')}}</p>
                 <p class="skills-cont">
-                    @foreach($job->skill as $job_skill)
-                    <button class=" btn-sm-job-list btn-skill-job-list mt-1" style="font-size: 12px;">{{$job_skill->name}}</button>
+                    @foreach($job->skill as $key=>$job_skill)
+                        @if($key>=6)
+                            @break;
+                        @endif
+
+                        <button class=" btn-sm-job-list btn-skill-job-list mt-1" style="font-size: 12px;">{{$job_skill->name}}</button>
                     @endforeach
                 </p>
                 <div class="row">

@@ -15,7 +15,7 @@ class AddRoleInUserPortfoliosTable extends Migration
     {
         Schema::table('user_portfolios', function (Blueprint $table) {
             $table->uuid('uuid')->after('id')->index('id')->unique()->nullable();
-            $table->mediumText('role')->after('description');
+            $table->mediumText('role')->nullable()->after('description');
         });
     }
 

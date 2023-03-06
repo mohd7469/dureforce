@@ -320,13 +320,39 @@ function getFile($model){
     return '';
 }
 
+function getYoutubeIdFromUrl($url) {
+    $parts = parse_url($url);
+    if(isset($parts['query'])){
+        parse_str($parts['query'], $qs);
+        if(isset($qs['v'])){
+            return $qs['v'];
+        }else if(isset($qs['vi'])){
+            return $qs['vi'];
+        }
+    }
+    if(isset($parts['path'])){
+        $path = explode('/', trim($parts['path'], '/'));
+        return $path[count($path)-1];
+    }
+    return false;
+}
+
+function portfolioVideoUrl($portfolio_video_url){
+
+    $youtube_id=getYoutubeIdFromUrl($portfolio_video_url);
+    $url="https://www.youtube.com/embed/".$youtube_id;
+    return $url;
+}
+
 function getVideoBannerURL($model,$type='preview_video'){
     $url="";
     if($model){
         if($model->banner){
             $url=$model->banner->video_url;
-            if($type == 'preview_video' )
-                $url = str_replace('watch?v=', 'embed/', $url);
+            if($type == 'preview_video' ){
+                $youtube_id=getYoutubeIdFromUrl($url);
+                $url="https://www.youtube.com/embed/".$youtube_id;
+            }
         }
     }
     return $url;
