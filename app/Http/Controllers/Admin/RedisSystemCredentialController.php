@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SystemCredential;
 use App\Models\SystemMailConfiguration;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -14,11 +15,18 @@ class RedisSystemCredentialController extends Controller
     //
     public function index()
     {
-        $pageTitle = "System Redis credential list";
-        // $emptyMessage = "No data found";
-        $syscreds = SystemCredential::where('type','redis')->latest()->paginate(getPaginate());
-        
-        return view('admin.redis_system_credentials.index', compact('syscreds', 'pageTitle'));
+        try {
+            $pageTitle = "System Redis credential list";
+            // $emptyMessage = "No data found";
+            $syscreds = SystemCredential::where('type','redis')->latest()->paginate(getPaginate());
+            Log::info($syscreds);
+            return view('admin.redis_system_credentials.index', compact('syscreds', 'pageTitle'));
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+                return back()->withNotify($notify);
+        }
     }
     public function store(Request $request)
     {
@@ -37,20 +45,26 @@ class RedisSystemCredentialController extends Controller
             }
          
         }
-        $credential = new SystemCredential;
-//        $credential->name = $request->name;
-        $credential->host = $request->host;
-        $credential->port = $request->port;
-        $credential->password = $request->password;
-//        $credential->database = $request->database;
-        $credential->prefix = $request->scheme;
-//        $credential->client = $request->client;
-        $credential->type = SystemCredential::Type_Redis;
-        
-        $credential->is_active = $request->is_active ? 1 : 0;
-        $credential->save();
-        $notify[] = ['success', 'Redis Credential has been created'];
-        return back()->withNotify($notify);
+        try {
+            DB::beginTransaction();
+            $credential = new SystemCredential;
+            $credential->host = $request->host;
+            $credential->port = $request->port;
+            $credential->password = $request->password;
+            $credential->prefix = $request->scheme;
+            $credential->type = SystemCredential::Type_Redis;
+            $credential->is_active = $request->is_active ? 1 : 0;
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Redis Credential has been created'];
+            return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function update(Request $request)
@@ -61,27 +75,30 @@ class RedisSystemCredentialController extends Controller
             'port' => 'required',
             'password' => 'required',
         ]);
-        $credential = SystemCredential::find($request->id);
-
-        //        $credential->name = $request->name;
-        $credential->host = $request->host;
-        $credential->port = $request->port;
-        $credential->password = $request->password;
-//        $credential->database = $request->database;
-        $credential->prefix = $request->scheme;
-//        $credential->client = $request->client;
-        $credential->type = SystemCredential::Type_Redis;
-        
-        $credential->is_active = $request->is_active ? 1 : 0;
-        
-        $credential->host = $request->host;
-        $credential->port = $request->port;
-        $credential->password = $request->password;
-        
-        $credential->is_active = $request->is_active ? 1 : 0;
-        $credential->save();
-        $notify[] = ['success', 'Redis Credential has been created'];
-        return back()->withNotify($notify);
+        try {
+            DB::beginTransaction();
+            $credential = SystemCredential::find($request->id);
+            $credential->host = $request->host;
+            $credential->port = $request->port;
+            $credential->password = $request->password;
+            $credential->prefix = $request->scheme;
+            $credential->type = SystemCredential::Type_Redis;
+            $credential->is_active = $request->is_active ? 1 : 0;
+            $credential->host = $request->host;
+            $credential->port = $request->port;
+            $credential->password = $request->password;
+            $credential->is_active = $request->is_active ? 1 : 0;
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Redis Credential has been created'];
+            return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
     
 
