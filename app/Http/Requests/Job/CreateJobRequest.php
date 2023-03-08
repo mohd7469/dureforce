@@ -35,7 +35,7 @@ class CreateJobRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'sub_category_id' => 'exists:sub_categories,id',
             'project_stage_id' => 'exists:project_stages,id',
-            'expected_start_date' => 'required||after_or_equal:' . Carbon::now()->format('d-m-Y'),
+            'expected_start_date' => 'required|after_or_equal:' . Carbon::now()->format('d-m-Y'),
             'project_length_id' => 'exists:project_lengths,id',
             'rank_id' => 'required|exists:ranks,id',
             'budget_type_id' => 'required|exists:budget_types,id',
