@@ -5,8 +5,16 @@
                 <div class="card">
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
-                            <img src="{{ $software->banner ? getLeadImageUrl($software) : asset('assets/images/default.png','590x300') }}"
+                            
+                            @if ($software->banner->banner_type==\App\Models\ModuleBanner::$Video)
+                                <div id="videoContainer" >
+                                    <iframe src="{{getVideoBannerURL($software)}}" title="Banner Video" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:345px;height:250px"></iframe>
+                                </div>
+                            @else
+                                <img src="{{ $software->banner ? getLeadImageUrl($software) : asset('assets/images/default.png','590x300') }}"
                                  alt="@lang('image')">
+                            @endif
+                            
                         </a>
                     </div>
 
