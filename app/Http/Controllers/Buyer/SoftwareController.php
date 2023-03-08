@@ -55,6 +55,8 @@ class SoftwareController extends Controller
             $software_proposal_attachments=$software->defaultProposal->attachments;
             $software_proposal=$software->defaultProposal->toArray();
             $software_proposal['bid_type'] = Proposal::$by_project;
+            $software_proposal['status_id']= Proposal::STATUSES['SUBMITTED'];
+
             $job_proposal=$job->proposal()->create($software_proposal);
             $job_proposal->attachment()->createMany($software_proposal_attachments->toArray());
             DB::commit();

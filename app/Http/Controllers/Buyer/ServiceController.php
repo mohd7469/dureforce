@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BudgetType;
 use App\Models\Job;
 use App\Models\JobType;
+use App\Models\Proposal;
 use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -59,7 +60,10 @@ class ServiceController extends Controller
             $job->skill()->saveMany($skills);
 
             $service_proposal=$service->defaultProposal;
-            $job_proposal=$job->proposal()->create($service_proposal->toArray());
+            $proposal=$service_proposal->toArray();
+            $proposal['status_id']=Proposal::STATUSES['SUBMITTED'];
+            $job_proposal=$job->proposal()->create($proposal);
+            
             $job_proposal->attachment()->createMany($service_proposal->attachments->toArray());
             DB::commit();
             Log::info('Service Booked SuccessFully');
