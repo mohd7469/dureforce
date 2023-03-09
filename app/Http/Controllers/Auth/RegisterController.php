@@ -55,7 +55,7 @@ class RegisterController extends Controller
 
         $mobile_code =null;
         // $countries = json_decode(file_get_contents(resource_path('views/partials/country.json')));
-        $countries = Country::orderBy('name', 'ASC')->get();
+        $countries = Country::WithOutManual()->orderBy('name', 'ASC')->get();
         return view($this->activeTemplate . 'user.auth.register', compact('pageTitle', 'mobile_code', 'countries'));
     }
 

@@ -53,7 +53,7 @@ class JobController extends Controller
 
         $is_active=1;
         $data['countries'] = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
-        $data['countries'] =  collect($data['countries'])->sortby('name')->toArray();
+        $data['countries'] =  $data['countries']->sortby('name');
         $data['job_types'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
         $data['categories'] = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
         $data['experience_levels'] = getRedisData(Rank::$Model_Name_Space,Rank::$Redis_key);
