@@ -119,7 +119,7 @@
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="{{ route('seller.jobs.listing') }}"
-                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Jobs')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{url('coming-soon')}}"
@@ -171,7 +171,7 @@
                                         <button class="nav-button" class="" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Services')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('service') }}"
@@ -192,7 +192,7 @@
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Softwares')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('software') }}"
