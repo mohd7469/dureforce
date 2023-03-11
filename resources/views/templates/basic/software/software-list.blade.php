@@ -1,7 +1,7 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
     <div class="container-fluid">
-        <h2 class="all_p_heading">My Software</h2>
+        <h2 class="all_p_heading">My Softwares</h2>
 
         <div class="all_propsal_container">
 
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="booked_software"> 
-                    <center><h2>Comming Soon</h2></center>
+                    <center><h2>Coming Soon</h2></center>
                 </div>
 
             </div>

@@ -7,13 +7,13 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalServices}})</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalServices ?? ''}})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#draft_service">Draft Services ({{$totalDraftServices}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" href="#bokked_service">Booked Services ()</a>
+                    <a class="nav-link " data-bs-toggle="tab" href="#bokked_service">Booked Services (0)</a>
                 </li>
             </ul>
 
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="bokked_service"> 
-                    <center><h2>Comming Soon</h2></center>
+                    <center><h2>Coming Soon</h2></center>
                 </div>
 
             </div>
