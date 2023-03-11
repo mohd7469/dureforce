@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Portfolio\StorePortfolioRequest;
+use App\Http\Requests\StoreTestimonialRequest;
 use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Degree;
@@ -23,6 +24,7 @@ use App\Models\WorldLanguage;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use App\Models\Country;
+use App\Models\UserTestimonial;
 
 //use Khsing\World\Models\Country;
 
@@ -550,6 +552,20 @@ class ProfileController extends Controller
             Log::error([" Portfolio Edit " => $exp->getMessage() ]);
             $notify[] = ['errors', 'Failled To Fetch  Portfolio.'];
             return back()->withNotify($notify);
+
+        }
+    }
+
+    public function requestForTestimonial(StoreTestimonialRequest $request){
+        
+        try {
+            $request->merge(['user_id' => Auth::user()->id]);
+            UserTestimonial::create($request->all());
+            return response()->json(['success'=>'Tesitmonial request generated successfully']);
+
+        } catch (\Throwable $th) {
+            Log::info("Error In requestForTestimonial " .$th->getMessage());
+            return response()->json(['error'=>'Failled to generate testimonial request']);
 
         }
     }
