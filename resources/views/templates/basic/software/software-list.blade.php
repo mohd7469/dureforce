@@ -7,13 +7,13 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All (7)</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalSoftwares}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_software">Draft Software (5)</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#draft_software">Draft Software ({{$totalDraftSoftwares}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" href="#booked_software">Booked Software (6)</a>
+                    <a class="nav-link " data-bs-toggle="tab" href="#booked_software">Booked Software (0)</a>
                 </li>
             </ul>
 
@@ -29,91 +29,43 @@
                         <th>Status</th>
                         <th>Action</th>
                         </thead>
+                        @forelse($softwares as $software)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
+                                    <h2 class="per_heading">{{$software->title}}</h2>
+                                    <p class="per_jobs_d">Created on {{$software->created_at}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$software->category->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$software->subCategory->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{ __(showAmount($software->price)) }}</p>
                                 </td>
                                 <td>
-                                <span class="badge badge--info">Draft</span>
+                                    @if($software->status_id == 22)
+                                    <span class="badge badge--info">Draft</span>
+                                    @else
+                                    <span class="badge badge--success">Approved</span>
+                                    @endif
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
+                                <td>
+                                    <a href="{{ route('software.view', [$software->uuid]) }}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--info">Draft</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @empty
+                            <div class="empty-message-box bg--gray">
+                                <div class="icon"><i class="las la-frown"></i></div>
+                                <p class="caption">{{ __($emptyMessage) }}</p>
+                            </div>
+                        @endforelse 
                     </table>
+                    <nav>
+                        {{ $softwares->links() }}
+                    </nav>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane" id="draft_software"> 
@@ -126,49 +78,42 @@
                         <th>Status</th>
                         <th>Action</th>
                         </thead>
+                        @forelse($draftSoftwares as $software)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
+                                    <h2 class="per_heading">{{$software->title}}</h2>
+                                    <p class="per_jobs_d">Created on {{$software->created_at}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$software->category->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$software->subCategory->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{ __(showAmount($software->price)) }}</p>
                                 </td>
                                 <td>
-                                <span class="badge badge--info">Draft</span>
+                                    @if($software->status_id == 22)
+                                    <span class="badge badge--info">Draft</span>
+                                    @else
+                                    <span class="badge badge--success">Approved</span>
+                                    @endif
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
+                                <td><a href="{{ route('software.view', [$software->uuid]) }}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--info">Draft</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @empty
+                            <div class="empty-message-box bg--gray">
+                                <div class="icon"><i class="las la-frown"></i></div>
+                                <p class="caption">{{ __($emptyMessage) }}</p>
+                            </div>
+                        @endforelse
                     </table>
+                    <nav>
+                        {{ $draftSoftwares->links() }}
+                    </nav>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="booked_software"> 

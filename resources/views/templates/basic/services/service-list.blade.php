@@ -111,6 +111,9 @@
                             </div>
                         @endforelse 
                     </table>
+                    <nav>
+                        {{ $draftServices->links() }}
+                    </nav>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="bokked_service"> 
