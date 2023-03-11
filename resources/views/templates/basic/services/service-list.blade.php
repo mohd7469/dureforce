@@ -7,13 +7,13 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All (7)</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalServices}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_service">Draft Services (5)</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#draft_service">Draft Services ({{$totalDraftServices}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" href="#bokked_service">Booked Services (6)</a>
+                    <a class="nav-link " data-bs-toggle="tab" href="#bokked_service">Booked Services ()</a>
                 </li>
             </ul>
 
@@ -29,91 +29,43 @@
                         <th>Status</th>
                         <th>Action</th>
                         </thead>
+                        @forelse($services as $service)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
+                                    <h2 class="per_heading">{{$service->title}}</h2>
+                                    <p class="per_jobs_d">Created on {{$service->created_at}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$service->category->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$service->subCategory->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{ __($general->cur_sym) }}{{ __(showAmount($service->rate_per_hour)) }}</p>
                                 </td>
                                 <td>
-                                <span class="badge badge--info">Draft</span>
+                                    @if($service->status_id == 17)
+                                    <span class="badge badge--info">Draft</span>
+                                    @else
+                                    <span class="badge badge--success">Approved</span>
+                                    @endif
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
+                                <td>
+                                    <a href="{{$service->uuid ?route('service.view',[$service->uuid]) : '#'}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--info">Draft</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @empty
+                            <div class="empty-message-box bg--gray">
+                                <div class="icon"><i class="las la-frown"></i></div>
+                                <p class="caption">{{ __($emptyMessage) }}</p>
+                            </div>
+                        @endforelse    
                     </table>
+                    <nav>
+                        {{ $services->links() }}
+                    </nav>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane" id="draft_service"> 
@@ -126,104 +78,43 @@
                         <th>Status</th>
                         <th>Action</th>
                         </thead>
+                        @forelse($draftServices as $service)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
+                                    <h2 class="per_heading">{{$service->title}}</h2>
+                                    <p class="per_jobs_d">Created on {{$service->created_at}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$service->category->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="per_jobs_d">Microservices</p>
+                                    <p class="per_jobs_d">{{$service->subCategory->name}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{ __($general->cur_sym) }}{{ __(showAmount($service->rate_per_hour)) }}</p>
                                 </td>
                                 <td>
-                                <span class="badge badge--info">Draft</span>
+                                    @if($service->status_id == 17)
+                                    <span class="badge badge--info">Draft</span>
+                                    @else
+                                    <span class="badge badge--success">Approved</span>
+                                    @endif
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
+                                <td><a href="{{$service->uuid ?route('service.view',[$service->uuid]) : '#'}}"
                                        class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--info">Draft</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @empty
+                            <div class="empty-message-box bg--gray">
+                                <div class="icon"><i class="las la-frown"></i></div>
+                                <p class="caption">{{ __($emptyMessage) }}</p>
+                            </div>
+                        @endforelse 
                     </table>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="bokked_service"> 
-                    <table>
-                        <thead>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Sub - Category</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        </thead>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                    </table>
+                    <center><h2>Comming Soon</h2></center>
                 </div>
 
             </div>

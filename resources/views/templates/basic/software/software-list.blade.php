@@ -172,58 +172,7 @@
                 </div>
 
                 <div class="listing_table_con card-body tab-pane " id="booked_software"> 
-                    <table>
-                        <thead>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Sub - Category</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                        </thead>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Build multiply Jira cloud service demo</h2>
-                                    <p class="per_jobs_d">Created on 30 Sep 2022</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d">Microservices</p>
-                                </td>
-                                <td>
-                                    <p class="per_jobs_d"></p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                <span class="badge badge--primary">Booked</span>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                    </table>
+                    <center><h2>Comming Soon</h2></center>
                 </div>
 
             </div>
