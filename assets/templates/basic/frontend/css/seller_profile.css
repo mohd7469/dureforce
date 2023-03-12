@@ -420,7 +420,7 @@ button.standard-btn-sm-exp{
     border-radius:11.25rem;
 
 }
-#addexperience .btn-save,#addeducation .btn-save {
+#addexperience,#addtestmonial .btn-save,#addeducation .btn-save {
     background-color: #7f007f;
     border-radius: 5px;
     border: 1px solid #7f007f;
@@ -429,14 +429,14 @@ button.standard-btn-sm-exp{
     font-size: 13px;
     width: 5rem !important;
 }
-#addexperience .btn-cancel,#addeducation .btn-cancel {
+#addexperience,#addtestmonial .btn-cancel,#addeducation .btn-cancel {
     color:   #7F007F ;
     padding: 6px 2px;
     font-size: 13px;
     width: 5rem !important;
 }
 
-#addexperience .btnclose ,#addeducation .btnclose
+#addexperience,#addtestmonial .btnclose ,#addeducation .btnclose
 {
     box-sizing: content-box;
     width: 1em;
