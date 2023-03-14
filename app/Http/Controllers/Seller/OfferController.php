@@ -24,9 +24,9 @@ class OfferController extends Controller
             ModuleOffer::where('uuid',$uuid)->update([
                 'status_id'  => ModuleOffer::STATUSES['ACCEPTED']
             ]);
+            
             $chat_module=$module_offer->module;
             $chat_message=ChatMessage::Create([
-
                 'send_to_id'    => $module_offer->offer_send_by_id,
                 'module_id'     => $chat_module->id,
                 'module_type'   => 'App\Models\Job',
@@ -52,7 +52,6 @@ class OfferController extends Controller
     public function rejectOffer($uuid){
         try{
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
-
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', "Offer can't be rejected"];
                 return back()->withNotify($notify);

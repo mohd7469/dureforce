@@ -126,7 +126,7 @@
                                                     {{-- <a href="" class="btn-products-s">Shortlist</a>
                                                     <a href="#" class="btn-products-s">Message</a> --}}
                                                     <a href="{{route('seller.profile',$offer->proposal->user->uuid)}}" class="btn-products-s">View Profile</a>
-                                                    <a href="{{route('buyer.offer.detail',$offer->uuid)}}" class="btn-products-s phire">View Offer</a>
+                                                    <a href="{{route('offer.detail',$offer->uuid)}}" class="btn-products-s phire">View Offer</a>
                                                     {{-- <a href="#" class="btn-products-s phire">Hire</a> --}}
                                                 </div>
                                             </div>

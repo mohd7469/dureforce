@@ -36,8 +36,7 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
     Route::post('/file-upload', 'FileUploadController@uploadFile')->name('file.upload');
 
-
-
+    Route::get('/offer-detail/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerDetail'])->name('offer.detail');
     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
     Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
     Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
