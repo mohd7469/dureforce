@@ -70,7 +70,11 @@
                     {{$support_ticket->message}}
                 </div>
                 @if (count($support_ticket->attachments)>0)
-                    <p class="font-attach">Attachments</p>
+                    @if (count($support_ticket->attachments)==1)
+                        <p class="font-attach">Attachment</p>
+                    @else
+                        <p class="font-attach">Attachments</p>
+                    @endif
                     @foreach($support_ticket->attachments as $decumentUrl)
                         <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
                             <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
@@ -95,7 +99,11 @@
                                 {{$support_message->message}}
                             </div>
                             @if (count($support_message->attachments)>0)
-                                <p class="font-attach">Attachments</p>
+                                @if (count($support_message->attachments)==1)
+                                    <p class="font-attach">Attachment</p>
+                                @else
+                                    <p class="font-attach">Attachments</p>
+                                @endif
                                 @foreach($support_message->attachments as $decumentUrl)
                                     <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
                                         <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
@@ -113,11 +121,15 @@
                                 {{$support_message->message}}
                             </div>
                             @if (count($support_message->attachments)>0)
-                                <p class="font-attach">Attachments</p>
-                                @foreach($support_message->attachments as $decumentUrl)
-                                    <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
-                                        <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
-                                @endforeach
+                                @if (count($support_message->attachments)==1)
+                                    <p class="font-attach">Attachment</p>
+                                @else
+                                    <p class="font-attach">Attachments</p>
+                                @endif
+                                    @foreach($support_message->attachments as $decumentUrl)
+                                        <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
+                                            <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                    @endforeach
                             @endif
                         @endif
                     @endforeach
