@@ -5,24 +5,40 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmailTemplate;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Models\GeneralSetting;
 
 class EmailTemplateController extends Controller
 {
     public function index()
     {
-        $pageTitle = 'Email Templates';
-        $emptyMessage = 'No templates available';
-        $email_templates = EmailTemplate::get();
-        return view('admin.email_template.index', compact('pageTitle', 'emptyMessage', 'email_templates'));
+        try {
+            $pageTitle = 'Email Templates';
+            $emptyMessage = 'No templates available';
+            $email_templates = EmailTemplate::get();
+            Log::info(["email_templates" => $email_templates]);
+            return view('admin.email_template.index', compact('pageTitle', 'emptyMessage', 'email_templates'));
+        }catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function edit($id)
     {
-        $email_template = EmailTemplate::findOrFail($id);
-        $pageTitle = $email_template->name;
-        $emptyMessage = 'No shortcode available';
-        return view('admin.email_template.edit', compact('pageTitle', 'email_template','emptyMessage'));
+        try {
+            $email_template = EmailTemplate::findOrFail($id);
+            $pageTitle = $email_template->name;
+            $emptyMessage = 'No shortcode available';
+            Log::info(["email_templates" => $email_template]);
+            return view('admin.email_template.edit', compact('pageTitle', 'email_template','emptyMessage'));
+        }catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function update(Request $request, $id)
@@ -31,21 +47,36 @@ class EmailTemplateController extends Controller
             'subject' => 'required',
             'email_body' => 'required',
         ]);
-        $email_template = EmailTemplate::findOrFail($id);
-        $email_template->subj = $request->subject;
-        $email_template->email_body = $request->email_body;
-        $email_template->email_status = $request->email_status ? 1 : 0;
-        $email_template->save();
-
-        $notify[] = ['success', $email_template->name . ' template has been updated.'];
-        return back()->withNotify($notify);
+        try {
+            DB::beginTransaction();
+            $email_template = EmailTemplate::findOrFail($id);
+            $email_template->subj = $request->subject;
+            $email_template->email_body = $request->email_body;
+            $email_template->email_status = $request->email_status ? 1 : 0;
+            $email_template->save();
+            DB::commit();
+            Log::info(["email_template" => $email_template]);
+            $notify[] = ['success', $email_template->name . ' template has been updated.'];
+            return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
 
     public function emailSetting()
     {
-        $pageTitle = 'Email Configuration';
-        return view('admin.email_template.email_setting', compact('pageTitle'));
+        try {
+            $pageTitle = 'Email Configuration';
+            return view('admin.email_template.email_setting', compact('pageTitle'));
+        }catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function emailSettingUpdate(Request $request)
@@ -82,18 +113,34 @@ class EmailTemplateController extends Controller
             $request->merge(['name' => 'mailjet']);
             $data = $request->only('name', 'public_key', 'secret_key');
         }
-        $general = GeneralSetting::first();
-        $general->mail_config = $data;
-        $general->save();
-        $notify[] = ['success', 'Email configuration has been updated.'];
-        return back()->withNotify($notify);
+        try {
+            DB::beginTransaction();
+            $general = GeneralSetting::first();
+            $general->mail_config = $data;
+            $general->save();
+            DB::commit();
+            Log::info(["general" => $general]);
+            $notify[] = ['success', 'Email configuration has been updated.'];
+            return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
 
     public function emailTemplate()
     {
-        $pageTitle = 'Global Email Template';
-        return view('admin.email_template.email_template', compact('pageTitle'));
+        try {
+            $pageTitle = 'Global Email Template';
+            return view('admin.email_template.email_template', compact('pageTitle'));
+        }catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function emailTemplateUpdate(Request $request)
@@ -101,14 +148,22 @@ class EmailTemplateController extends Controller
         $request->validate([
             'email_from' => 'required|email',
         ]);
-
-        $general = GeneralSetting::first();
-        $general->email_from = $request->email_from;
-        $general->email_template = $request->email_template;
-        $general->save();
-
-        $notify[] = ['success', 'Global email template has been updated.'];
-        return back()->withNotify($notify);
+        try {
+            DB::beginTransaction();
+            $general = GeneralSetting::first();
+            $general->email_from = $request->email_from;
+            $general->email_template = $request->email_template;
+            $general->save();
+            DB::commit();
+            Log::info(["general" => $general]);
+            $notify[] = ['success', 'Global email template has been updated.'];
+            return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function sendTestMail(Request $request)

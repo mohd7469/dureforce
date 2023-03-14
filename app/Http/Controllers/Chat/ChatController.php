@@ -49,7 +49,7 @@ class ChatController extends Controller
         $module_id=$request->module_id;
         $module_type=$request->module_type;
         $chat_module=$module_type::findOrFail($module_id);
-        $messages=$chat_module->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
+        $messages=$chat_module->messages()->with('offer')->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
         return response()->json(['messages' => $messages]);
     }
 
@@ -204,4 +204,5 @@ class ChatController extends Controller
 
         return redirect()->route('chat.inbox');
     }
+
 }

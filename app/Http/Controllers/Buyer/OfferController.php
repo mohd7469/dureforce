@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Buyer;
 
+use App\Events\MessageEditedEvent;
+use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\Notifications\SendNotificationsMail;
+use App\Models\ChatMessage;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\ModuleOffer;
@@ -17,6 +20,7 @@ use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class OfferController extends Controller
 {
@@ -30,6 +34,7 @@ class OfferController extends Controller
         $pageTitle = "Job Offers";
         return view('templates.basic.jobs.offers.all-offers',compact('pageTitle','offers','job','short_listed_proposals'));
     }
+    
     public function sendOffer(Request $request)
     {
         $request_data = $request->all();
@@ -117,6 +122,22 @@ class OfferController extends Controller
                      }
                 }
 
+                $chat_module=$job;
+                $view_offer_route=route('offer.detail',$job->uuid);
+                $chat_message=ChatMessage::Create([
+                    'send_to_id'    => $module_offer->offer_send_to_id,
+                    'module_id'     => $chat_module->id,
+                    'module_type'   => 'App\Models\Job',
+                    'is_attachment' => false,
+                    'sender_id'     => Auth::user()->id,
+                    'role'          => "client",
+                    'message'       => "<b>I am sending you the  offer for </b><br>".$job->description,
+                    'offer_id'     =>  $module_offer->id,
+                    'is_view_offer_message' =>true
+                ]);
+
+                event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
                 return response()->json(["redirect" => route('buyer.offer.sent',$module_offer->id)]);
@@ -131,6 +152,7 @@ class OfferController extends Controller
             }
         }
     }
+    
     public function offerSent($offer_id)
     {
         $offer=ModuleOffer::with('module.user','module.user.user_basic')->find($offer_id);
@@ -164,5 +186,44 @@ class OfferController extends Controller
         }
        
 
+    }
+
+   
+
+    public function withdrawOffer($uuid){
+        try {
+            $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
+
+            if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
+                $notify[] = ['error', 'Offer cannot be withdrawn'];
+                return back()->withNotify($notify);
+
+            }
+            ModuleOffer::where('uuid',$uuid)->update([
+                'status_id'  => ModuleOffer::STATUSES['WITHDRAW']
+            ]);
+            $chat_module=$module_offer->module;
+            $chat_message=ChatMessage::Create([
+                
+                'send_to_id'    => $module_offer->offer_send_to_id,
+                'module_id'     => $chat_module->id,
+                'module_type'   => 'App\Models\Job',
+                'is_attachment' => false,
+                'sender_id'     => Auth::user()->id,
+                'role'          => "client",
+                'message'       => "Offer has been withdraw",
+                'offer_id'     =>  $module_offer->id,
+                'is_view_offer_message' =>true
+            ]);
+    
+            event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+            $notify[] = ['success', 'Offer has been withdrawn'];
+            return back()->withNotify($notify);
+        } catch (\Throwable $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'Failled to Withdraw Offer'];
+            return back()->withNotify($notify);
+        }
+        
     }
 }

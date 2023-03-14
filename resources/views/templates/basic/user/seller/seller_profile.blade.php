@@ -413,15 +413,86 @@
                             </div>
                             {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
+                                
+                                <div class="row section-heading-border justify-content-center align-items-center">
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Testimonials</b></div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addtestmonial" id="add-testmonial-btn">
+                                                Request For Testimonial
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 <div class="row">
-                                <div class="quote">
-                                        <blockquote class="blockquote">
+                                    <div class="quote">
+                                        <blockquote class="blockquote" >
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                             Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
                                         </blockquote>
-                                <p class="cite"><b>Simon King</b> <br>
-                                    Director Marketing, Global Solutions Ltd</p>
-                                </div>
+                                        <hr class="divider">
+                                        <div class="row ">
+                                            <table class="table table-borderless table-spacing">
+                                                <tbody class="text-center">
+                                                    <tr>
+                                                        <td ><b>{{trans('Quality')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Communication')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td ><b>{{trans('Expertise')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
+                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                        <td><b>{{trans('Professionalism')}}</b></td>
+                                                        <td>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                        <hr class="divider">
+                                        <p class="cite">
+                                            
+                                            <b>Simon King</b> 
+                                            
+                                            <br>
+                                                Director Marketing, Global Solutions Ltd
+                                            <br>
+                                            
+                                            
+                                            <i class="fab fa-solid fa-linkedin"></i>
+                                           <span class="see-profile">
+                                            
+                                            See LinkedIn Profile </span>
+                                            
+                                                
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -730,6 +801,61 @@
             </div>
         </div>
 
+          {{-- Add Experience Model --}}
+          <div class="modal fade" id="addtestmonial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-profile">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Testimonial Request</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-body-profile">
+
+                        <form action="{{route('seller.profile.testimonial.request')}}" id="testimonial_request_form" method="post">
+            
+                            @csrf
+
+                            <div class="row">
+                                
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Client Name *</label>
+                                        <input type="text" class="form-control" name="client_name" placeholder="Sajid Mehmood" id="client_name_id">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Client Email *</label>
+                                        <input type="email" class="form-control" name="client_email" placeholder="client@gmail.com" id="client_email_id">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="title">Client LinkedIn Profile URL *</label>
+                                        <input type="text" class="form-control" name="client_linkedin_url" placeholder="www.linkedin.com/client234" id="client_linkiedin_url_id">
+                                    </div>
+                                </div>
+                              
+                                
+                            </div>
+
+                            <div class="d-flex flex-row-reverse">
+
+                                <button type="submit" class="btn-save" id="testimonial-request-btn">Request</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
+
         {{-- Education Model --}}
         <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-profile">
@@ -895,7 +1021,7 @@
                                                 name="description"
                                                 id="edu_description"
                                                 placeholder="Add Description  "
-                                                style="min-height: 90px !important"
+                                                style="min-height: 90px !important;width:100%"
                                         ></textarea>
                                         </div>
                                         
@@ -922,6 +1048,10 @@
 @push('style')
 
 <style>
+    .table-spacing{
+        margin-bottom: -8px !important;
+    }
+    
     .portfolio-desc{
         margin-left: 4px;
     }
@@ -933,6 +1063,19 @@
         
         height: 220px;
         width: 100%;
+    }
+    .testmonials-review-star{
+        padding: 3px;
+        color: #F09959;
+    }
+    .quote{
+        height:auto;
+    }
+    .see-profile{
+        color:#0077B5;
+    }
+    .divider{
+        color: #DCDCDC
     }
 </style>
 
@@ -954,10 +1097,14 @@
     let user_basic_form=$('#form-basic-save');
     let experience_form=$('#experience_form');
     let education_form=$('#education_form');
+    let testimonial_request_form=$('#testimonial_request_form');
+
     let row_index= $('#languages_basics').val();
     let exp_btn=$('#exp-btn');
     let add_exp_btn=$('#add-exp-btn');
     let add_edu_btn=$('#add-edu-btn');
+    let testimonial_req_btn=$('#testimonial-request-btn');
+
     let edit_profile_picture_btn=$('#profile-pic-edit-btn');
     var token= $('input[name=_token]').val();
     var profile_picture_form = $('#profile_picture_form');
@@ -991,6 +1138,16 @@
             $('#edu_description').empty();
         });
 
+    
+
+        testimonial_request_form.submit(function (e) {
+
+            e.preventDefault();
+            e.stopPropagation(); 
+            RequestForTestimonial();
+
+        });
+        
         user_basic_form.submit(function (e) {
             e.preventDefault();
             e.stopPropagation(); 
@@ -1159,8 +1316,8 @@
     function displayAlertMessage(message)
     {
         iziToast.error({
-        message: message.toString().replace(',',' and '),
-        position: "topRight",
+            message: message.toString().replace(',',' and '),
+            position: "topRight",
         });
     }
     function loadProfileBasicsData()
@@ -1189,7 +1346,36 @@
             $(div_to_remove).remove();
         }
     }
+    function RequestForTestimonial(){
+        let form_data = new FormData(testimonial_request_form[0]);
+       
+        $.ajax({
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:"{{route('seller.profile.testimonial.request')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
 
+                if(response.success){
+                    notify('success', response.success);
+                    testimonial_request_form[0].reset();
+                    $('#addtestmonial').modal('hide');
+                }
+                else if(response.error){
+                    notify('error', response.error);
+                    displayErrorMessage(response.errors);
+                }
+                else{
+                    displayErrorMessage(response.errors);
+                }
+
+            }
+        });
+    }
     function saveUserBasic() {
         // var profile_file=$('input[type=file]')[0].files[0];
         let form_data = new FormData(user_basic_form[0]);
