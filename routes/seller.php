@@ -62,6 +62,12 @@ Route::name('seller.')->group(function () {
 
                 });
 
+                Route::name('offer.')->prefix('service')->group(function () {
+                   
+                    Route::get('/accept-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'acceptOffer'] )->name('accept');
+                    Route::get('/reject-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'rejectOffer'] )->name('reject');
+
+                });
                 
 
             });
