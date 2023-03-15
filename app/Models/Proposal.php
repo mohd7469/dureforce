@@ -27,7 +27,7 @@ class Proposal extends Model
     {
 
         parent::boot();
-        static::saving(function ($model) {
+        static::creating(function ($model) {
             $uuid = Str::uuid()->toString();
             $model->uuid = $uuid;
         });
@@ -47,7 +47,7 @@ class Proposal extends Model
     }
     public function module()
     {
-        return $this->morphTo()->withTrashed();
+        return $this->morphTo('module')->withTrashed();
     }
     public function delivery_mode()
     {
