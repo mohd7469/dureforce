@@ -27,18 +27,18 @@
                                             <a class="nav-link {{$search_job}}"  data-bs-toggle="tab"
                                             href="#Search_tab">Search</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <!-- <li class="nav-item">
                                             <a class="nav-link {{$saved_job}}" data-bs-toggle="tab"
                                             href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
-                                        </li>
+                                        </li> -->
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab"
                                             href="#My_jobs_tab">My Jobs (5)</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <!-- <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab"
                                             href="#Contracts_tab">Contracts (5)</a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </div>
                                 <div class="row inner-cs">
@@ -201,51 +201,7 @@
                                     <div class="tab-pane {{$saved_job}}" id="My_jobs_tab">
                                             <br>
                                             <br>
-                                            <div class="details-scs">
-                                                <div class="row">
-                                                    <div class="row">
-                                                        <div class="col-md-11 col-lg-11">
-                                                            
-                                                            <a href="#" class="col-md-10 col-lg-10"><strong>My Job Block chain Developer.</strong></a>
-                                                            
-                                                        </div>
-                                                        <div class="col-md-1 col-lg-1">
-                                                            <a href="#"><i class="fas fa-heart" style="color: #7F007F; "></i>
-                                                            </a>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <ul class="jb-detail-l">
-                                                        <li>FixedPrice </li>
-                                                        <li>Expert</li>
-                                                        <li>Est . Budget : 2500.00</li>
-                                                        <li>Est. Time:  less than Week</li>
-                                                        <li>Posted 28 days ago</li>
-                                                    </ul>
-                                                    <p class="offer-d"> Avalanche, the fastest smart contracts platform, is the best place to build your Web3 Dapp. Blazingly-fast, low-cost &amp; it's eco-friendly. The Best place to build decentralized apps. Blazingly Fast. Web3 Like Never Before. Scale Infinitely.
-                                                    </p>
-                                                    <br>
-                                                    <a href="#"><strong> More.....</strong></a>
-                                                </div>
-                                                <!--Skills Section Start-->
-                                                <div class="row skills-c">
-                                                    <div class="col-md-12">
-                                                        <ul class="skills-listing">
-                                                            <li>javascript</li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                    <!--Skills Section End-->
-                                                <p class="proposals-s">Proposals: <strong>1+</strong></p>
-                                                <ul class="methods-s">
-                                                    <li><img src="#" alt="Tick"> Payment Method Verified</li>
-                                                    <li><img src="#" alt="Tick"> $100k+ <strong>Spent</strong></li>
-                                                    <li><img src="#" alt="Tick">Bahrain</li>
-                                                </ul>
-
-                                            </div> 
-                                            <hr>
+                                            <center><h2>Coming Soon</h2></center> 
                                     </div>
                                     <!-- End My Jobs -->
                                     <!-- Contracts -->
