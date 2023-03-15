@@ -32,6 +32,7 @@ Route::name('seller.')->group(function () {
                 Route::get('/portfolio/edit/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('portfolio.edit');
                 Route::get('/portfolio/delete/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'deletePortfolio'])->name('portfolio.delete');
                 Route::post('/portfolio/save', [\App\Http\Controllers\Seller\ProfileController::class,'saveUserPortfolio'])->name('portfolio.store');
+                Route::post('/testimonial/request', [\App\Http\Controllers\Seller\ProfileController::class,'requestForTestimonial'])->name('testimonial.request');
 
                 Route::get('/password-security', [\App\Http\Controllers\Seller\ProfileController::class,'getpassword'])->name('password.security');
                 Route::post('/seller/password/change', [\App\Http\Controllers\Seller\ProfileController::class,'sellerprofilePasswordChange'])->name('seller.password.change');
@@ -61,6 +62,12 @@ Route::name('seller.')->group(function () {
 
                 });
 
+                Route::name('offer.')->prefix('service')->group(function () {
+                   
+                    Route::get('/accept-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'acceptOffer'] )->name('accept');
+                    Route::get('/reject-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'rejectOffer'] )->name('reject');
+
+                });
                 
 
             });

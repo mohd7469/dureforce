@@ -64,8 +64,11 @@
                                 </a>
 
                             </span>
-                            <span v-else>
-                                {{message.message}}
+                            <span v-else >
+                                <span v-html="message.message">
+                                    
+                                </span>
+                                <span  v-if="message.is_view_offer_message" class="text-success c-pointer" @click="$event=>viewOfferDetails(message.offer.uuid)">View offer details</span>
 
                             </span>
                         </div>
@@ -100,9 +103,12 @@
                                 </a>
 
                             </span>
-                            <span v-else>
-                                {{message.message}}
-
+                            <span v-else >
+                                <span v-html="message.message">
+                                    
+                                </span>
+                                <span  v-if="message.is_view_offer_message" class="text-success c-pointer" @click="$event=>viewOfferDetails(message.offer.uuid)">View offer details</span>
+                               
                             </span>
                         </div>
 
@@ -307,6 +313,11 @@
                 this.message_form.message=message.message;
 
             },
+            viewOfferDetails(uuid){
+               
+                let redirect_url='/offer-detail/'+uuid;
+                window.location.replace(redirect_url);
+            },
             viewModuleDetail(){
                 let redirect_url='';
                 if(this.active_user.model == 'Software'){
@@ -335,6 +346,9 @@
 
 
 <style scoped>
+.c-pointer{
+    cursor: pointer;
+}
 .invisible {
     visibility: hidden;
 }
@@ -600,9 +614,9 @@ color: rgba(255,255,255,0.6);
 }
 .msg_time_send{
     position: absolute;
-    right:0;
+    right: 0;
+    bottom: -23px;
     font-size: 10px;
-    top: 41px;
 }
 .msg_head{
     position: relative;
