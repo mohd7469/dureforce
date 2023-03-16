@@ -172,7 +172,7 @@ class OfferController extends Controller
     public function offerSuccessfullySubmitted(){
         return "Successfully Submitted !";
     }
-
+    
     public function offerDetail($id)
     {
         try {

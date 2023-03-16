@@ -5,11 +5,12 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class ModuleOffer extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
     protected $table="module_offers";
     public static $EMAIL_TEMPLATE="offer_sent";
     protected $guarded = ['id'];
@@ -86,5 +87,8 @@ class ModuleOffer extends Model
         return $this->belongsTo(Status::class, 'status_id');
 
     }
-
+    public function contract()
+    {
+        return $this->hasone(Contract::class, 'module_offer_id');
+    }
 }
