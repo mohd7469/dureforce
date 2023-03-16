@@ -5,14 +5,32 @@ namespace App\Http\Controllers\Seller;
 use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
+use App\Models\Contract;
 use App\Models\ModuleOffer;
 use BeyondCode\QueryDetector\Outputs\Log;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log as FacadesLog;
 
 class OfferController extends Controller
 {
+    
+    private function createContract($module_offer){
+        try {
+
+            $module_offer->contract()->create([
+                'start_date' => Carbon::now(),
+                'status_id'  =>  Contract::STATUSES['In_Progress'],
+                'contract_total_amount' => $module_offer->offer_amount,
+            ]);
+           
+        }catch (\Throwable $th) {
+            FacadesLog::error($th->getMessage());
+           
+        }
+    }
+
     public function acceptOffer($uuid){
         try{
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
@@ -39,6 +57,7 @@ class OfferController extends Controller
             ]);
 
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+            $this->createContract($module_offer);
             $notify[] = ['success', 'Offer has been accepted'];
             return back()->withNotify($notify);
         }

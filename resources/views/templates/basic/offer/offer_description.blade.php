@@ -10,7 +10,7 @@
                 <a href="{{route('seller.offer.accept',$offer->uuid)}}" class="offer-width ">Accept Offer</a>
                 <a href="{{route('seller.offer.reject',$offer->uuid)}}" class="offer-width ">Reject Offer</a>
             @elseif (getLastLoginRoleId()==App\Models\Role::$Client && $offer->status_id == App\Models\ModuleOffer::STATUSES['PENDING'])
-                <a href="{{ route('offer.withdraw',$offer->uuid) }}" class="offer-width">Withdraw Offer</a>
+                <a href="{{ route('buyer.offer.withdraw',$offer->uuid) }}" class="offer-width">Withdraw Offer</a>
             @elseif($offer->status_id == App\Models\ModuleOffer::STATUSES['ACCEPTED'])
                 <a href="{{'#'}}" class="offer-width">View Contract</a>
             @else
