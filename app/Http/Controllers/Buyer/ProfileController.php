@@ -316,7 +316,7 @@ class ProfileController extends Controller
 
     }
 
-    public function buyerProfile($uuid)
+    public function buyerProfile($uuid=null)
     {
 
         if($uuid){
