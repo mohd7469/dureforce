@@ -56,7 +56,7 @@ class ModuleOffer extends Model
 
     public static function scopewithAll($query)
     {
-        return $query->with('moduleMilestones')->with('proposal.user')->with('attachments')->with('module')->with('sendToUser')->with('sendbyUser')->with('status');
+        return $query->with('moduleMilestones')->with('proposal.user')->with('attachments')->with('module')->with('sendToUser')->with('sendbyUser')->with('status')->with('contract');
     }
     public function moduleMilestones()
     {
@@ -71,7 +71,7 @@ class ModuleOffer extends Model
     }
     public function module()
     {
-        return $this->morphTo();
+        return $this->morphTo('module')->with('category');
     }
 
     public function sendToUser()
