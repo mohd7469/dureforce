@@ -59,6 +59,7 @@
                                <span class="font-weight-bold">{{($job->project_length->name ?? '')}}</span>
                             </td>
 
+                            
                             <td data-label="@lang('Status')">
                                 @if($job->status->id == 2)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
