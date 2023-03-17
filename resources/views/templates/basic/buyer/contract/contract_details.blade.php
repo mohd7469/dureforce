@@ -9,13 +9,10 @@
                     <h3 class="heading_proposal">Job Description</h3>
                     <div class="btm-c">
                         <p class="prop_description">
-                        Build Verification Test is a set of tests run on every new build to 
-                        verify that build is testable before it is released to test team for 
-                        further testing. These test cases are core functionality test cases 
-                        that ensure application is stable and can be tested thoroughly.
+                        {{$contract->offer->module->description}}
                         </p>
-                        <p><a href="" class="view_origin">View Original Job Post</a></p>
-                        <p><a href="" class="view_origin">View Original Proposals</a></p>
+                        <p><a href="{{route('single.view',$contract->offer->module->uuid)}}" class="view_origin">View Original Job Post</a></p>
+                        <p><a href="{{route('proposal.show',$contract->offer->proposal->uuid)}}" class="view_origin">View Original Proposals</a></p>
                     </div>
                     <!---Cover Letter Section End--->
 
@@ -169,66 +166,116 @@
                     <div class="p_amount_con">
                         <ul class="listing_ps">
                             <li><span class="p_fcs" style="font-weight: 500;">Contract Summary</span></li>
-                            <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">Fixed</span></li>
+                            <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">{{ $contract->offer->payment_type }}</span></li>
                             <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
-                            <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">22-04-2022</span></li>
-                            <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">26-05-2022</span></li>
+                            <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
+                            <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">{{ $contract->end_date ? getFormattedDate($contract->end_date,'d-m-Y') : ''}}</span></li>
                         </ul>
                     </div>
                     <br>
                     <div class="p_amount_con">
                         <ul class="listing_ps">
                             <li><span class="p_fcs" style="font-weight: 500;">Billing</span></li>
-                            <li class="right-navbar-li"><span>Paid Out</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Paid Out</span> <span class="p_days">{{$contract->contract_paid_amount}}</span></li>
                             <li class="right-navbar-li"><span>Funded (Escrow Protection) </span> <span class="p_days">$0.00</span></li>
-                            <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{$contract->contract_total_amount}}</span></li>
                             <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">Hourly</span></li>
-                            <li>
-                                    <center><a href="" class="btn navbar-burron">Re-Hire Amna</a></center>
-                            </li>
+                            
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                <li>
+                                    <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendbyUser->full_name}}</a></center>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                     <!----About client--->
-                    <div class="about-client-c">
-                        <p class="abt-client">About the Client</p>
-                        <ul class="client_listing-c">
-                            
-                            <li>
-                                <img src="{{ !empty($proposal->user->basicProfile->profile_picture)? $proposal->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
-                                <div class="about_client">
-                                    <p class="client_name">Arslan Ayoub</p>
-                                    <p class="client_date">Member since Jan 28, 2023</p>
-                                </div>
-                            </li>
+                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                        <div class="about-client-c">
+                            <p class="abt-client">{{ 'About the Client' }}</p>
+                            <ul class="client_listing-c">
+                                
+                                <li>
+                                    <img src="{{ !empty($contract->offer->sendbyUser->basicProfile->profile_picture)? $contract->offer->sendbyUser->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
+                                    <div class="about_client">
+                                        <p class="client_name">{{$contract->offer->sendbyUser->full_name}}</p>
+                                        <p class="client_date">Member since {{getFormattedDate($contract->offer->sendbyUser->created_at,'M d,Y')}}</p>
+                                    </div>
+                                </li>
 
-                            <li>
-                                <i class="fa fa-map-marker"></i> <span class="location_c"> Pakistan</span>
-                                &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> 08:36 pm local time</span>
-                            </li>
+                                <li>
+                                    <i class="fa fa-map-marker"></i> <span class="location_c"> {{$contract->offer->sendbyUser->location}}</span>
+                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> 08:36 pm local time</span>
+                                </li>
 
-                            <li>
-                                <p class="payment_c">Payment method verified</p>
-                                <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating"> 4.98 of 32
-                                    reviews </p>
-                            </li>
+                                <li>
+                                    <p class="payment_c">Payment method verified</p>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating"> 4.98 of 32
+                                        reviews </p>
+                                </li>
 
-                            <li>
-                                <span class="no_jobs">22</span> <span class="jb_p">Jobs</span>
-                            </li>
+                                <li>
+                                    <span class="no_jobs">22</span> <span class="jb_p">Jobs</span>
+                                </li>
 
-                            <li>
-                                <span class="no_jobs">$100k+</span> <span class="jb_p">Total Earned </span>
-                            </li>
-                            <li>
-                                <span class="no_jobs">563</span> <span class="jb_p">Total Hours Worked </span>
-                            </li>
-                            <li>
-                                    <center><a href="" class="btn navbar-burron">View Profile</a></center>
-                            </li>
+                                <li>
+                                    <span class="no_jobs">$100k+</span> <span class="jb_p">Total Earned </span>
+                                </li>
+                                <li>
+                                    <span class="no_jobs">563</span> <span class="jb_p">Total Hours Worked </span>
+                                </li>
+                                <li>
+                                        <center><a href="{{route('buyer.profile',[$contract->offer->sendbyUser->uuid,'profile' => 'step-1'])}}" class="btn navbar-burron">View Profile</a></center>
+                                </li>
 
-                        </ul>
+                            </ul>
 
-                    </div>
+                        </div>
+                    @else
+                        <div class="about-client-c">
+                            <p class="abt-client">{{ 'About the Freelancer' }}</p>
+                            <ul class="client_listing-c">
+                                
+                                <li>
+                                    <img src="{{ !empty($contract->offer->sendToUser->basicProfile->profile_picture)? $contract->offer->sendToUser->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
+                                    <div class="about_client">
+                                        <p class="client_name">{{$contract->offer->sendToUser->full_name}}</p>
+                                        <p class="client_date">Member since {{getFormattedDate($contract->offer->sendToUser->created_at,'M d,Y')}}</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-map-marker"></i> <span class="location_c"> {{$contract->offer->sendToUser->location}}</span>
+                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> 08:36 pm local time</span>
+                                </li>
+
+                                <li>
+                                    <p class="payment_c">Payment method verified</p>
+                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating"> 4.98 of 32
+                                        reviews </p>
+                                </li>
+
+                                <li>
+                                    <span class="no_jobs">22</span> <span class="jb_p">Jobs</span>
+                                </li>
+
+                                <li>
+                                    <span class="no_jobs">$100k+</span> <span class="jb_p">Total Earned </span>
+                                </li>
+                                <li>
+                                    <span class="no_jobs">563</span> <span class="jb_p">Total Hours Worked </span>
+                                </li>
+                                <li>
+                                        <center><a href="{{route('seller.profile',[$contract->offer->sendToUser->uuid])}}" class="btn navbar-burron">View Profile</a></center>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                  
+
+                    @endif
+                    
+
 
                 </div>
 

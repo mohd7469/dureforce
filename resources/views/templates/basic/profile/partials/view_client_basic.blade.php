@@ -29,9 +29,12 @@
                 <div class="client-info-section">
                        <p class="cp-basic">Basic Details</p>
                        <div style="float:right">
-                        <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#clientBasicModal">
-                            Edit
-                        </button>
+                        @if (getLastLoginRoleId()==App\Models\Role::$Client)
+                            <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#clientBasicModal">
+                                Edit
+                            </button>
+                        @endif
+                        
                        </div>
         
                         <!----== Client Info Section Start ==----->

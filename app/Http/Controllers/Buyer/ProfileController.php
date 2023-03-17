@@ -316,12 +316,16 @@ class ProfileController extends Controller
 
     }
 
-    public function buyerProfile()
+    public function buyerProfile($uuid)
     {
 
-
+        if($uuid){
+            $user=User::where('uuid',$uuid)->first();
+        }
+        else{
+            $user=auth()->user();
+        }
         $skills = Skills::select('id', 'name')->get();
-        $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
