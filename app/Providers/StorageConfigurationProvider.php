@@ -38,7 +38,7 @@ class StorageConfigurationProvider extends ServiceProvider
                     'prefix'    => null,
                 ]
             ]);
-            Log::info(["successfully assigned storage credentials"=>$storage_credentials]);
+//            Log::info(["successfully assigned storage credentials"=>$storage_credentials]);
         }
     }
 }
