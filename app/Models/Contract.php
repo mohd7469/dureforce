@@ -21,7 +21,7 @@ class Contract extends Model
     ];
     
     public static function scopeWithAll($query){
-        return $query->with('offer');
+        return $query->with('offer')->with('status');
     }
 
     protected static function boot()
@@ -38,5 +38,9 @@ class Contract extends Model
     public function offer()
     {
         return $this->belongsTo(ModuleOffer::class, 'module_offer_id')->WithAll();
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 }
