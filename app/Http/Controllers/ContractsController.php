@@ -11,7 +11,7 @@ class ContractsController extends Controller
 {
     public function  index(){
         $user=Auth::user();
-        $contracts=Contract::wherehas('offer',function ($query) use ($user){
+        $contracts=Contract::whereHas('offer',function ($query) use ($user){
             $last_role_id=getLastLoginRoleId();
             if ( $last_role_id  == Role::$Freelancer ) {
                 $query->where('offer_send_to_id','=',$user->id);
