@@ -98,13 +98,13 @@ class ProposalController extends Controller
             $job = Job::where('uuid', $uuid)->withAll()->first();
             $skill_categories = SkillCategory::select('name', 'id')->get();
             //$delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
-            $is_active=1;
-            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,$is_active);
+            $is_active = 1;
+            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space, DeliveryMode::$Redis_key, $is_active);
             foreach ($skill_categories as $skillCat) {
                 $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
             }
             $pageTitle = "Proposal";
-            Log::info(['Job'=>$job]);
+            Log::info(['Job' => $job]);
             return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
 
 
@@ -198,7 +198,7 @@ class ProposalController extends Controller
             }
 
             DB::commit();
-            Log::info(["Proposal"=>$proposal]);
+            Log::info(["Proposal" => $proposal]);
 
             return response()->json(["redirect" => route('seller.jobs.listing'), "message" => "Proposal submitted"]);
 
