@@ -183,6 +183,7 @@ return [
         App\Providers\SystemMailConfiguration::class,
         App\Providers\PusherConfiguration::class,
         App\Providers\RedisCacheConfiguration::class,
+        App\Providers\StorageConfigurationProvider::class,
     ],
 
     /*
