@@ -11,6 +11,7 @@ use BeyondCode\QueryDetector\Outputs\Log;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log as FacadesLog;
 
 class OfferController extends Controller
@@ -33,6 +34,7 @@ class OfferController extends Controller
 
     public function acceptOffer($uuid){
         try{
+            DB::beginTransaction();
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', 'Offer cannot be accepted'];
@@ -58,10 +60,12 @@ class OfferController extends Controller
 
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
             $this->createContract($module_offer);
+            DB::commit();
             $notify[] = ['success', 'Offer has been accepted'];
             return back()->withNotify($notify);
         }
         catch (\Throwable $exp) {
+            DB::rollBack();
             FacadesLog::error($exp->getMessage());
             $notify[] = ['error', 'Failled to Accept Offer'];
             return back()->withNotify($notify);
@@ -70,6 +74,8 @@ class OfferController extends Controller
 
     public function rejectOffer($uuid){
         try{
+            
+            DB::beginTransaction();
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', "Offer can't be rejected"];
@@ -95,11 +101,13 @@ class OfferController extends Controller
             ]);
 
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+            DB::commit();
             $notify[] = ['success', 'Offer has been rejected'];
             return back()->withNotify($notify);
 
         }
         catch (\Throwable $exp) {
+            DB::rollBack();
             FacadesLog::error($exp->getMessage());
             $notify[] = ['error', 'Failled to Reject Offer'];
             return back()->withNotify($notify);

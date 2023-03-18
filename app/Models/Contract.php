@@ -30,6 +30,7 @@ class Contract extends Model
         static::saving(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
+            $model->contract_id=generateUniqueRandomNumber();
         });
 
     }
