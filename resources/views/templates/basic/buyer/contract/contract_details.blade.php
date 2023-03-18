@@ -2,7 +2,7 @@
 @section('content')
 
         <div class="container-fluid">
-            <p class="propsal-h">All Contracts > Debug php-fpm on AWS <span> <img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating" style="width: 60px;"></span></p>
+            <p class="propsal-h">All Contracts > {{$contract->offer->module->title}} <span> <img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating" style="width: 60px;"></span></p>
             <div class="main_con_p">
                 <div class="prosal-left-con">
                     <!---Cover Letter Section Start--->
@@ -18,24 +18,29 @@
 
 
                     <!---Job DetailsSection Start--->
-                    <h3 class="heading_proposal jdc">Milestone Timeline</h3>
-                    <div class="btm-c">
-                        <p class="posted_date_c">Milestone Name<p>
-                        <p class="prop_description">
-                        This is short description for the Milestone 1. 
-                        This is short description for the Milestone 1.
-                        </p>
-                        <p class="posted_date_c">$425.00<p>
-                        <p class="prop_description">Paid on: May 02 2022 <p>
-
-                        <p class="posted_date_c">Milestone Name<p>
-                        <p class="prop_description">
-                        This is short description for the Milestone 1. 
-                        This is short description for the Milestone 1.
-                        </p>
-                        <p class="posted_date_c">$425.00<p>
-                        <p class="prop_description">Paid on: May 02 2022 <p>    
-                    </div>
+                   
+                        <h3 class="heading_proposal jdc">Milestone Timeline</h3>
+                        <div class="btm-c">
+                            
+                            @if ($contract->offer->moduleMilestones->count() > 0)
+                                
+                                @foreach ($contract->offer->moduleMilestones as $milestone)
+                                    <p class="posted_date_c">{{$milestone->description}}<p>
+                                    <p class="posted_date_c">${{$milestone->amount}}<p>
+                                    @if($milestone->is_paid)
+                                        <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
+                                    @endif
+                                @endforeach
+                                
+                            @else
+                                <p class="posted_date_c">Pay as Whole Project<p>
+                                <p class="posted_date_c">${{$contract->contract_total_amount}}<p>
+                                <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                                
+                            @endif
+                            
+                        </div>
+                    
                     <!---Job Details Section End--->
 
                     <!---Your message and file Terms Start--->
@@ -125,7 +130,7 @@
 
 
                     <!---Your Feedback Terms Start--->
-                    <h3 class="heading_proposal jdc">Your Feedback for Amna Kareem</h3>
+                    <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendbyUser->full_name}}</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -144,7 +149,7 @@
                     <!---Your Proposed Terms End--->
 
                     <!---Your Proposed Terms Start--->
-                    <h3 class="heading_proposal jdc">Amna Kareem’s Feedback for You</h3>
+                    <h3 class="heading_proposal jdc">{{$contract->offer->sendbyUser->full_name}} Feedback for You</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -166,6 +171,7 @@
                     <div class="p_amount_con">
                         <ul class="listing_ps">
                             <li><span class="p_fcs" style="font-weight: 500;">Contract Summary</span></li>
+                            <li class="right-navbar-li"><span>Contract#</span> <span class="p_days">{{ $contract->contract_id }}</span></li>
                             <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">{{ $contract->offer->payment_type }}</span></li>
                             <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
                             <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
@@ -181,9 +187,11 @@
                             <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{$contract->contract_total_amount}}</span></li>
                             <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">Hourly</span></li>
                             
-                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                            @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                 <li>
-                                    <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendbyUser->full_name}}</a></center>
+                                   
+                                        <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendToUser->full_name}}</a></center>
+                                   
                                 </li>
                             @endif
                         </ul>
@@ -223,9 +231,9 @@
                                 <li>
                                     <span class="no_jobs">563</span> <span class="jb_p">Total Hours Worked </span>
                                 </li>
-                                <li>
+                                {{-- <li>
                                         <center><a href="{{route('buyer.profile',[$contract->offer->sendbyUser->uuid,'profile' => 'step-1'])}}" class="btn navbar-burron">View Profile</a></center>
-                                </li>
+                                </li> --}}
 
                             </ul>
 
@@ -275,8 +283,6 @@
 
                     @endif
                     
-
-
                 </div>
 
 
