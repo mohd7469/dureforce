@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContractsController;
 use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\ServiceController;
@@ -31,15 +32,24 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         Route::get('/software/details/{uuid}', [SoftwareController::class,'show'])->name('view');
     });
 
+    Route::name('contracts.')->group(function () {
+
+        Route::get('/contract',  [ContractsController::class,'index'])->name('index');
+        Route::get('/contract_detail/{uuid}',  [ContractsController::class,'show'])->name('show');
+        
+    });
+
+    
     Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('profile.portfolio.view');
 
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
     Route::post('/file-upload', 'FileUploadController@uploadFile')->name('file.upload');
 
-
-
+    Route::get('/offer-detail/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerDetail'])->name('offer.detail');
     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
     Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');
+    Route::get('profile/view/{uuid}', 'Buyer\ProfileController@buyerProfile')->name('buyer.profile');
+
     Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
     
 });

@@ -99,12 +99,15 @@
                                             </table>
                                         </div>
 
-                                        <div class="profile-border-bottom ">
-                                            You or your team 
-                                            ended <b>{{$user->full_name}}</b> contract 
-                                            <span class="job-title-color">Responsive Web Design Project</span> 
-                                            on October 20, 2017
-                                        </div>
+                                        @if ($contract)
+                                            <div class="profile-border-bottom ">
+                                                You or your team 
+                                                ended <b>{{$user->full_name}}</b> contract 
+                                                <span class="job-title-color">{{$contract->module->title}}</span> 
+                                                on {{ $contract->contract->end_date ? getFormattedDate($contract->contract->end_date,'M d,Y') : ''}}
+                                            </div>
+                                        @endif
+                                        
 
                                         <div class="profile-border-bottom ">
                                             <b>Hours per week</b><br>

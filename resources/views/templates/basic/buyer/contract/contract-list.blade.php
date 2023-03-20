@@ -7,16 +7,16 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All({{$contracts->count()}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#active_contrat">Active (5)</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#active_contrat">Active ({{$contracts_active->count()}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" href="#pending_contract">Pending (6)</a>
+                    <a class="nav-link " data-bs-toggle="tab" href="#pending_contract">Paused ({{$contracts_paused->count()}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" href="#completed_contract">Completed (6)</a>
+                    <a class="nav-link " data-bs-toggle="tab" href="#completed_contract">Completed ({{$contracts_completed->count()}})</a>
                 </li>
             </ul>
 
@@ -31,61 +31,27 @@
                         <th>Start / End Dates</th>
                         <th>Action</th>
                         </thead>
-                        
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--info">Submitted</span>
-                                        <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--primary">Archived</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--danger">Active</span>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                         
+                            @foreach ($contracts as $contract)
+                                <tr>
+                                    <td>
+                                        <h2 class="per_heading">{{$contract->offer->module->title}}</h2>
+                                    </td>
+                                    <td>
+                                        <span class="badge {{$contract->status->color}}" >{{$contract->status->name}}</span>
+                                            <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                    </td>
+                                    <td>
+                                        <p class="job_price">{{$contract->contract_total_amount}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
+                                    </td>
+                                    <td><a href="{{route('contracts.show',$contract->uuid)}}"
+                                        class="view_propasal_per">View</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                           
                     </table>
                 </div>
 
@@ -99,59 +65,26 @@
                         <th>Action</th>
                         </thead>
                         
+                        @foreach ($contracts_active as $contract)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Oracle Development</h2>
+                                    <h2 class="per_heading">{{$contract->offer->module->title}}</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Submitted</span>
+                                    <span class="badge {{$contract->status->color}}" >{{$contract->status->name}}</span>
+                                        <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
+                                <td><a href="{{route('contracts.show',$contract->uuid)}}"
+                                    class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--primary">Archived</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--danger">Active</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @endforeach
                          
                     </table>
                 </div>
@@ -166,59 +99,26 @@
                         <th>Action</th>
                         </thead>
                         
+                        @foreach ($contracts_paused as $contract)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Web Development</h2>
+                                    <h2 class="per_heading">{{$contract->offer->module->title}}</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Submitted</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                    <span class="badge {{$contract->status->color}}" >{{$contract->status->name}}</span>
+                                        <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
+                                <td><a href="{{route('contracts.show',$contract->uuid)}}"
+                                    class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--primary">Archived</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--danger">Active</span>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                        @endforeach
                          
                     </table>
                 </div>
@@ -232,59 +132,26 @@
                         <th>Action</th>
                         </thead>
                         
+                        @foreach ($contracts_completed as $contract)
                             <tr>
                                 <td>
-                                    <h2 class="per_heading">Android Development</h2>
+                                    <h2 class="per_heading">{{$contract->offer->module->title}}</h2>
                                 </td>
                                 <td>
-                                    <span class="badge badge--info">Submitted</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                    <span class="badge {{$contract->status->color}}" >{{$contract->status->name}}</span>
+                                        <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">230.00</p>
+                                    <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
+                                <td><a href="{{route('contracts.show',$contract->uuid)}}"
+                                    class="view_propasal_per">View</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--primary">Archived</span>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">Python Development</h2>
-                                </td>
-                                <td>
-                                    <span class="badge badge--danger">Active</span>
-                                    <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
-                                </td>
-                                <td>
-                                    <p class="job_price">230.00</p>
-                                </td>
-                                <td>
-                                    <p class="job_price">Apr 22, 2022 - May 26, 2022</p>
-                                </td>
-                                <td><a href="{{route('buyer.contract_detail')}}"
-                                       class="view_propasal_per">View</a>
-                                </td>
-                            </tr>
+                         @endforeach
                          
                     </table>
                 </div>
@@ -301,6 +168,9 @@
             width: 60px;
             margin-left: 10px;
             margin-top: 5px;
+        }
+        .badge--primary {
+            width: auto !important;
         }
         ul.allp_nav {
             padding: 0px 0px 15px 24px;

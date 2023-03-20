@@ -143,7 +143,7 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Saved Jobs')</span>
                                             </a>
-                                            <a href="#"
+                                            <a href="{{route('contracts.index')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>

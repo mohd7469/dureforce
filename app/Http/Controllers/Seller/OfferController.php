@@ -5,16 +5,36 @@ namespace App\Http\Controllers\Seller;
 use App\Events\NewMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
+use App\Models\Contract;
 use App\Models\ModuleOffer;
 use BeyondCode\QueryDetector\Outputs\Log;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log as FacadesLog;
 
 class OfferController extends Controller
 {
+    
+    private function createContract($module_offer){
+        try {
+
+            $module_offer->contract()->create([
+                'start_date' => Carbon::now(),
+                'status_id'  =>  Contract::STATUSES['In_Progress'],
+                'contract_total_amount' => $module_offer->offer_amount,
+            ]);
+           
+        }catch (\Throwable $th) {
+            FacadesLog::error($th->getMessage());
+           
+        }
+    }
+
     public function acceptOffer($uuid){
         try{
+            DB::beginTransaction();
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', 'Offer cannot be accepted'];
@@ -24,9 +44,9 @@ class OfferController extends Controller
             ModuleOffer::where('uuid',$uuid)->update([
                 'status_id'  => ModuleOffer::STATUSES['ACCEPTED']
             ]);
+            
             $chat_module=$module_offer->module;
             $chat_message=ChatMessage::Create([
-
                 'send_to_id'    => $module_offer->offer_send_by_id,
                 'module_id'     => $chat_module->id,
                 'module_type'   => 'App\Models\Job',
@@ -39,10 +59,13 @@ class OfferController extends Controller
             ]);
 
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+            $this->createContract($module_offer);
+            DB::commit();
             $notify[] = ['success', 'Offer has been accepted'];
             return back()->withNotify($notify);
         }
         catch (\Throwable $exp) {
+            DB::rollBack();
             FacadesLog::error($exp->getMessage());
             $notify[] = ['error', 'Failled to Accept Offer'];
             return back()->withNotify($notify);
@@ -51,8 +74,9 @@ class OfferController extends Controller
 
     public function rejectOffer($uuid){
         try{
+            
+            DB::beginTransaction();
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
-
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', "Offer can't be rejected"];
                 return back()->withNotify($notify);
@@ -77,11 +101,13 @@ class OfferController extends Controller
             ]);
 
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+            DB::commit();
             $notify[] = ['success', 'Offer has been rejected'];
             return back()->withNotify($notify);
 
         }
         catch (\Throwable $exp) {
+            DB::rollBack();
             FacadesLog::error($exp->getMessage());
             $notify[] = ['error', 'Failled to Reject Offer'];
             return back()->withNotify($notify);

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropsalStoreRequest;
 use App\Models\BudgetType;
+use App\Models\Contract;
 use App\Models\Job;
 use App\Models\User;
 use App\Models\JobType;
 use App\Models\Milestone;
+use App\Models\ModuleOffer;
 use App\Models\Proposal;
 use App\Models\ProposalAttachment;
 use http\Env\Response;
@@ -77,14 +79,19 @@ class ProposalController extends Controller
         try {
             $proposal=Proposal::where('uuid',$proposal_uuid)->withAll()->first();
             $job=$proposal->module;
+            
+            $client_id=$job->user_id;
             $user=$proposal->user;
+
+            $contract=ModuleOffer::whereHas('contract',function ($query) {
+                $query->where('status_id',Contract::STATUSES['Completed']);
+               
+            })->where('offer_send_to_id',$user->id)->where('offer_send_by_id',$client_id)->latest()->first();
             $user_skills=$user->skills;
             $propsal_attachments=$proposal->attachment;
             $pageTitle = "View a Proposal";
-
-            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments','user_skills','job'));
+            return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments','user_skills','job','contract'));
             
-
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
             $notify[] = ['error', 'Failled to view proposal'];

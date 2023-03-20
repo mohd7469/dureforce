@@ -73,7 +73,9 @@
             <h2 class="text-dark">Hello <?php echo $service->user->username; ?></h2>
             <p class="text-dark">
             Hey Congratulations !
-                You have successfully created a service on [durefore link]. 
+                You have successfully created a service on 
+                 
+                <a href="<?php echo $service_url ?>">View Service</a>
                 Good Luck!
             </p>
             
@@ -81,7 +83,7 @@
             <p class="text-dark">
                 Thank you,
                 <br>
-                The DureForce Team
+                The dureforce team
             </p>
 
             <br>
