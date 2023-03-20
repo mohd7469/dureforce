@@ -36,8 +36,14 @@ class ServiceController extends BaseController
         $pageTitle = "Service";
         $emptyMessage = "No data found";
 
-        return view($this->activeTemplate . 'services.service-list', compact('pageTitle', 'services', 'emptyMessage','draftServices','totalServices','totalDraftServices'));
-        // return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage','draftServices'));
+        if (getLastLoginRoleId() == Role::$Freelancer){
+            return view($this->activeTemplate . 'services.service-list', compact('pageTitle', 'services', 'emptyMessage','draftServices','totalServices','totalDraftServices'));
+
+        }
+        else{
+             return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage','draftServices'));
+        }
+
     }
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

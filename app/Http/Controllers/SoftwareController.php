@@ -43,8 +43,16 @@ class SoftwareController extends BaseController
         $pageTitle = "Software";
         $emptyMessage = "No data found";
         $request->merge(['is_software_filter' => true]);
-        return view($this->activeTemplate . 'software.software-list', compact('pageTitle', 'softwares', 'emptyMessage','totalSoftwares','draftSoftwares','totalDraftSoftwares'));
-        // return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage','totalSoftwares','draftSoftwares','totalDraftSoftwares'));
+
+
+        if (getLastLoginRoleId() == Role::$Freelancer){
+            return view($this->activeTemplate . 'software.software-list', compact('pageTitle', 'softwares', 'emptyMessage','totalSoftwares','draftSoftwares','totalDraftSoftwares'));
+
+        }
+        else{
+             return view($this->activeTemplate . 'software.listing', compact('pageTitle', 'softwares', 'emptyMessage','totalSoftwares','draftSoftwares','totalDraftSoftwares'));
+
+        }
     }    /**
      * Display a listing of the resource.
      *
