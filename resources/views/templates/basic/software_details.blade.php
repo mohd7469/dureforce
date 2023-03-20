@@ -80,7 +80,7 @@
 
                                                     @if ($software->software_application)
                                                         <div class="service_subtitle2">
-                                                            Software Application 12
+                                                            Software Application
                                                         </div>
                                                         <div class="sep-solid"></div>
                                                         <div class="product-desc-content">
