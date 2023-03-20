@@ -179,7 +179,7 @@
                <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                   <div class="form-group pt-3">
                      <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
-                     <small  class="form-text text-dark">Mode of Devlivery *</small>
+                     <small  class="form-text text-dark">Mode of Delivery *</small>
                      <select name="delivery_mode_id" id="delivery_mode_id" class="form-control">
                         <option value="">Select Mode Of Delivery</option>
                         @foreach ($delivery_modes as $mode)
