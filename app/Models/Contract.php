@@ -15,9 +15,9 @@ class Contract extends Model
     protected $guarded = ['id'];
 
     public const STATUSES = [
-        'In_Progress'  =>  34,
-        'Terminated' =>  35,
-        'Completed' =>  36
+        'In_Progress'  =>  33,
+        'Terminated' =>  34,
+        'Completed' =>  35
     ];
     
     public static function scopeWithAll($query){
