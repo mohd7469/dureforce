@@ -15,13 +15,13 @@ class Contract extends Model
     protected $guarded = ['id'];
 
     public const STATUSES = [
-        'In_Progress'  =>  34,
-        'Terminated' =>  35,
-        'Completed' =>  36
+        'In_Progress'  =>  33,
+        'Terminated' =>  34,
+        'Completed' =>  35
     ];
     
     public static function scopeWithAll($query){
-        return $query->with('offer');
+        return $query->with('offer')->with('status');
     }
 
     protected static function boot()
@@ -30,6 +30,7 @@ class Contract extends Model
         static::saving(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
+            $model->contract_id=generateUniqueRandomNumber();
         });
 
     }
@@ -37,5 +38,9 @@ class Contract extends Model
     public function offer()
     {
         return $this->belongsTo(ModuleOffer::class, 'module_offer_id')->WithAll();
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 }

@@ -70,11 +70,7 @@
                     {{$support_ticket->message}}
                 </div>
                 @if (count($support_ticket->attachments)>0)
-                    @if (count($support_ticket->attachments)==1)
-                        <p class="font-attach">Attachment</p>
-                    @else
-                        <p class="font-attach">Attachments</p>
-                    @endif
+                    <p class="font-attach">Attachments</p>
                     @foreach($support_ticket->attachments as $decumentUrl)
                         <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
                             <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
@@ -99,11 +95,7 @@
                                 {{$support_message->message}}
                             </div>
                             @if (count($support_message->attachments)>0)
-                                @if (count($support_message->attachments)==1)
-                                    <p class="font-attach">Attachment</p>
-                                @else
-                                    <p class="font-attach">Attachments</p>
-                                @endif
+                                <p class="font-attach">Attachments</p>
                                 @foreach($support_message->attachments as $decumentUrl)
                                     <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
                                         <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
@@ -121,15 +113,11 @@
                                 {{$support_message->message}}
                             </div>
                             @if (count($support_message->attachments)>0)
-                                @if (count($support_message->attachments)==1)
-                                    <p class="font-attach">Attachment</p>
-                                @else
-                                    <p class="font-attach">Attachments</p>
-                                @endif
-                                    @foreach($support_message->attachments as $decumentUrl)
-                                        <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
-                                            <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
-                                    @endforeach
+                                <p class="font-attach">Attachments</p>
+                                @foreach($support_message->attachments as $decumentUrl)
+                                    <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
+                                        <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                @endforeach
                             @endif
                         @endif
                     @endforeach
@@ -147,7 +135,7 @@
         @if($support_ticket->status_id != \App\Models\SupportTicket::$Closed)
             <!---Comments Box-->
             <div class="comment-box">
-                <p class="comment-f">Comment</p>
+                <p class="comment-f">Comment <span class="text-danger">*</span></p>
                 <form action="{{route('admin.ticket.comment.store',$support_ticket->ticket_no)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <textarea  placeholder="Add Comment" name="message" class="comment-box"></textarea>
@@ -179,7 +167,7 @@
 
     <script>
         $(document).ready(function() {
-            
+
             $(document).on('click', '.delete-btn', function(e) {
                 filename=jQuery(this).attr("id");
                 $('#file_detail_'+filename).remove();
@@ -195,9 +183,9 @@
                 }
                 $('#comment_file').get(0).files=dt.files;
             });
-          
+
         });
-        
+
         function writeFileName()
         {
             $('#file_name_div').empty();
@@ -207,16 +195,16 @@
                 file=$('#comment_file').get(0).files[index];
                 $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/\./g,'_')+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
             }
-            
+
         }
-        
+
     </script>
 
 @endpush
 
 @push('style')
     <style>
-        
+
         .posted-date{
             padding-left: 0px !important;
         }
@@ -244,7 +232,7 @@
         .sub-nav li {
             display: inline-table;
             margin: -21px 30px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
         }
         /***/

@@ -1609,7 +1609,14 @@ function getProposelBid($proposal,$job)
 
 
 }
-
+function generateUniqueRandomNumber(){
+    $min = 100000;
+    $max = 999999;
+    $timestamp = time();
+    mt_srand($timestamp);
+    $random_number = mt_rand($min,$max);
+    return $random_number;
+}
 function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);

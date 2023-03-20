@@ -32,8 +32,8 @@
                                         <td data-label="@lang('Proposals')">
                                             <a href="{{route('buyer.job.all.proposals',$job->uuid)}}">{{ $job->proposal->count() }}</a>
                                         </td>
-                                        <td data-label="@lang('Messages')">
-                                            <span class="badge {{$job->model_color}}"> {{ $job->model == '' ? 'Job' : $job->model }}</span>
+                                        <td data-label="@lang('Types')">
+                                            <span class="badge {{$job->model_color}}"> {{ $job->model == '' ? 'Normal' : $job->model }}</span>
                                            
                                         </td>
 {{--                                        <td data-label="@lang('Hired')">--}}

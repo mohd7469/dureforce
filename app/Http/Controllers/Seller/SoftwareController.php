@@ -288,7 +288,13 @@ class SoftwareController extends Controller
             $software->save();
             $related_softwares = Software::withAll()->where('category_id', $software->category_id)->where('sub_category_id', $software->sub_category_id)->where('id', '<>', $software->id)->where('status_id', Software::STATUSES['APPROVED'])->latest()->limit(4)->get();
             Log::info(["Software" => $software, "Related Software" => $related_softwares]);
-            return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'related_softwares', 'emptyMessage'));
+            $is_software_steps = false;
+            foreach ($software->softwareSteps as $key => $step) {
+                if($step->name != '' || $step->description!= ''){
+                    $is_software_steps=true;
+                }
+            }
+            return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'related_softwares', 'emptyMessage','is_software_steps'));
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
         }
