@@ -56,26 +56,26 @@ class="review-form"
                 <hr/>
             <div class="row">
                 <div class="col-md-4 ">
-                    <a class="btn service--btns btn-secondary float-left  mt-20 w-100"
+                    <a class="btn service--btns btn-secondary float-left  mt-20 "
                         href="?view=step-5">@lang('BACK')</a>
                 </div>
                 <div class="col-md-8 text-right">
 
-                    {{-- <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                    {{-- <button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
                         CANCEL 
                     </button>--}}
 
-                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
-                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
                         @lang('Preview Service')
                     </button> </a>
 
-                    <button class="btn service--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
+                    <button class="btn service--btns btn-secondary float-left  mt-20 "  name="action" type="submit" value="save_project">
                         @lang('Save Project')
                      </button> 
                    
-                    <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 w-100" value="submit_for_review">@lang('Submit For Review')</button>
+                    <button type="submit" name="action" class="btn btn-save-continue btn-primary float-left mt-20 " value="submit_for_review">@lang('Submit For Review')</button>
                 </div>  
             </div>
 

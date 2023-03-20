@@ -13,6 +13,7 @@
                             <th>@lang('Category / SubCategory')</th>
                             <th>@lang('Budget')</th>
                             <th>@lang('Delivery Time')</th>
+                            <th>@lang('Type')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
                             <th>@lang('Action')</th>
@@ -55,11 +56,15 @@
                                 </td>
                                 @endif
 
+
                              <td data-label="@lang('Delivery Time')">
                                <span class="font-weight-bold">{{($job->project_length->name ?? '')}}</span>
                             </td>
+                            <td data-label="@lang('Types')">
+                                <span class="badge {{$job->model_color}}"> {{ $job->model == '' ? 'Normal' : $job->model }}</span>
 
-                            <td data-label="@lang('Status')">
+                            </td>
+                                <td data-label="@lang('Status')">
                                 @if($job->status->id == 2)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                     <br>

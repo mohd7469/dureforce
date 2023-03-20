@@ -184,7 +184,9 @@ function uploadFile($file, $location, $size = null, $old = null)
 function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
 {
     $filename = '';
-    $connectionString = env('AZURE_STORAGE_SAS_URL');
+//    $connectionString = env('AZURE_STORAGE_SAS_URL');
+    $connectionString = Config('filesystems.disks.azure.sas_url');
+//    dd($connectionString);
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
     \Illuminate\Support\Facades\Log::info($connectionString);
@@ -1086,8 +1088,8 @@ function menuActive($routeName, $type = null)
 
 function imagePath()
 {
-    $url = getenv('AZURE_STORAGE_URL');
-
+//    $url = getenv('AZURE_STORAGE_URL');
+    $url = Config('filesystems.disks.azure.url');
     $data['message'] = [
         'path' => 'assets/images/job',
         'size' => '590x300',
@@ -1460,6 +1462,16 @@ function getPusherCredentials()
     }
 
 }
+function getStorageCredentials()
+{
+    try {
+        $system_pusher_config = SystemCredential::where('is_active', true)->where('type', SystemCredential::Type_Storage)->first();
+        return $system_pusher_config;
+    } catch (\Exception $exp) {
+        return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
 function getRedisCacheCredentials()
 {
     try {
@@ -1597,7 +1609,14 @@ function getProposelBid($proposal,$job)
 
 
 }
-
+function generateUniqueRandomNumber(){
+    $min = 100000;
+    $max = 999999;
+    $timestamp = time();
+    mt_srand($timestamp);
+    $random_number = mt_rand($min,$max);
+    return $random_number;
+}
 function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);

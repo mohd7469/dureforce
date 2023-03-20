@@ -1,11 +1,13 @@
 <?php
 
+use App\Traits\DatabaseOperations;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUserTestimonialsTable extends Migration
 {
+    use DatabaseOperations;
     /**
      * Run the migrations.
      *
@@ -28,8 +30,7 @@ class CreateUserTestimonialsTable extends Migration
             $table->boolean('is_approved')->nullable()->default(false);
             $table->uuid('token')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
-            $table->timestamps();
-            $table->softDeletes();
+            $this->addCommonDBFields($table);
 
         });
     }
