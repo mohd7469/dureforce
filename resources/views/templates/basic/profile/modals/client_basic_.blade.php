@@ -192,7 +192,7 @@
                             </div>
                             {{-- proficiency level --}}
                             <div
-                               class="{{ $key > 0 ? 'col-md-6' : 'col-md-6'  }} col-sm-12"
+                                 class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
                                >
                                <label class="mt-4"
                                   >Profeciency
@@ -221,13 +221,13 @@
                                </select>
                             </div>
                             {{-- delete btn --}}
-                            {{-- @if ($key > 0)
+                            @if ($key > 0)
                             <div class="col-md-1" style="margin-top:20px; ">
-                               <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5"
+                               <button type="button" class="btn btn-danger btn-delete col-md-1 "
                                   onclick="removerow('#moreLanguage-row-{{$key}}')"><i
                                   class="fa fa-trash"></i></button>
                             </div>
-                            @endif --}}
+                            @endif
                          </div>
                       </div>
                       {{-- --- --}}
@@ -355,4 +355,9 @@
     position: relative;
     left: 120px;
 }
+.btn-delete
+   {
+    margin-top: 37px;
+}
+
  </style>

@@ -44,7 +44,7 @@
                                         <p class="job_price">{{$contract->contract_total_amount}}</p>
                                     </td>
                                     <td>
-                                        <p class="job_price">{{getFormattedDate($contract->created_at,'M d,Y')}} - {{ $contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : ''}}</p>
+                                        <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                     </td>
                                     <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                         class="view_propasal_per">View</a>
@@ -78,7 +78,7 @@
                                     <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">{{getFormattedDate($contract->created_at,'M d,Y')}} - {{ $contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : ''}}</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
@@ -112,7 +112,7 @@
                                     <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">{{getFormattedDate($contract->created_at,'M d,Y')}} - {{ $contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : ''}}</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
@@ -145,7 +145,7 @@
                                     <p class="job_price">{{$contract->contract_total_amount}}</p>
                                 </td>
                                 <td>
-                                    <p class="job_price">{{getFormattedDate($contract->created_at,'M d,Y')}} - {{ $contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : ''}}</p>
+                                    <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>

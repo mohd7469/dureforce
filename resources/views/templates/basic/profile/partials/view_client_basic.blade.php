@@ -129,7 +129,7 @@
 
                         <div class="cp-info-box">
                            <p class="cp--jbh">Language</p>
-                           @foreach ($user_languages_ as $language )
+                           @foreach ($user_v1languages as $language )
                               <p class="cp-jt">{{$language->iso_language_name }}</p>
                            @endforeach
                            
@@ -137,7 +137,7 @@
        
                         <div class="cp-info-box">
                            <p class="cp--jbh">Proficiency Level</p>
-                            @foreach ($user_languages_level_ as $level )
+                            @foreach ($user_v1ProficiencyLevels as $level )
                                 <p class="cp-jt">{{$level->name }}</p>
                             @endforeach
                         </div>
