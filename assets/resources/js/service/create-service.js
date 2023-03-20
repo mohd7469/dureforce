@@ -384,6 +384,7 @@ function overviewFormValidation() {
 
   });
 }
+
 function baannerForm() {
   $(".banner-form").submit(function (e) {
   
@@ -490,6 +491,7 @@ function baannerForm() {
     }
   });
 }
+
 function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();
