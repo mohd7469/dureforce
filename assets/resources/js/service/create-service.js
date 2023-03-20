@@ -129,12 +129,12 @@ function addSteps() {
           <button id="removeRow" type="button" class="btn btn-danger" style="float: right;  margin-bottom:1rem"><i class="fa fa-trash"></i></button>
   </div>
   <div class="col-xl-12 col-lg-12 form-group" >
-             <label for="">Step Name</label>
+             <label for="">Step Name *</label>
                 <div class="col-xl-12 col-lg-12 form-group">
                     <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control"  />
                 </div>
                 <div>
-                <label for="discription">Step Description</label>
+                <label for="discription">Step Description *</label>
                 <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
                     ></textarea>
                 <br />
