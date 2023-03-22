@@ -45,21 +45,21 @@ class ProposalController extends Controller
      */
     public function index($type = null)
     {
-        try {
-
-            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->get();
-            $submitted_proposals = $proposals->where('status_id', Proposal::STATUSES['SUBMITTED']);
-            $archived_proposals = $proposals->where('status_id', Proposal::STATUSES['ARCHIVED']);
-            $active_proposals = $proposals->where('status_id', Proposal::STATUSES['ACTIVE']);
+//        try {
+            $proposalsAll = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id);
+            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->paginate(getPaginate());
+            $submitted_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['SUBMITTED'])->paginate(getPaginate());
+            $archived_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ARCHIVED'])->paginate(getPaginate());
+            $active_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ACTIVE'])->paginate(getPaginate());
 
             Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
             return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json(["error" => "There is a technical error"]);
+//        } catch (\Exception $e) {
+//            Log::error($e->getMessage());
+//            return response()->json(["error" => "There is a technical error"]);
 
-        }
+//        }
 
 
     }
