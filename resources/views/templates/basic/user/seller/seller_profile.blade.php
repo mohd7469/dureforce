@@ -712,8 +712,9 @@
 
             </div>
         </div>
+        
         {{-- Add Experience Model --}}
-        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="ExperienceModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
@@ -801,9 +802,9 @@
             </div>
         </div>
 
-          {{-- Add Experience Model --}}
-          <div class="modal fade" id="addtestmonial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-profile">
+        {{-- Add Testimonial Request Model --}}
+        <div class="modal fade" id="addtestmonial" tabindex="-1" aria-labelledby="TestimonialModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
                         <h5 class="modal-title" id="exampleModalLabel">Testimonial Request</h5>
@@ -817,28 +818,69 @@
 
                             <div class="row">
                                 
-                                <div class="col-xl-12">
-                                    <div class="form-group">
-                                        <label for="title">Client Name *</label>
-                                        <input type="text" class="form-control" name="client_name" placeholder="Sajid Mehmood" id="client_name_id">
+                                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row">
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Client Name *</label>
+                                            <input type="text" class="form-control" name="client_name" placeholder="Sajid Mehmood" id="client_name_id">
+                                        </div>
                                     </div>
-                                </div>
+    
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Business Email Address *</label>
+                                            <input type="email" class="form-control" name="client_email" placeholder="client@gmail.com" id="client_email_id">
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Client LinkedIn Profile URL *</label>
+                                            <input type="text" class="form-control" name="client_linkedin_url" placeholder="www.linkedin.com/client234" id="client_linkiedin_url_id">
+                                        </div>
+                                    </div>
 
-                                <div class="col-xl-12">
-                                    <div class="form-group">
-                                        <label for="title">Client Email *</label>
-                                        <input type="email" class="form-control" name="client_email" placeholder="client@gmail.com" id="client_email_id">
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Project Type</label>
+                                            <input type="text" class="form-control" name="project_type" placeholder="Ex.Marketing Brand" id="project_type_id">
+                                        </div>
                                     </div>
-                                </div>
+                                    <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Message To Client</label>
+                                            <textarea  class="form-control text_area" name="message_to_client" placeholder="I am requesting for brief testimonial about the project maternity care" id="message_to_client_id"></textarea>
+                                        </div>
+                                    </div>
 
-                                <div class="col-xl-12">
-                                    <div class="form-group">
-                                        <label for="title">Client LinkedIn Profile URL *</label>
-                                        <input type="text" class="form-control" name="client_linkedin_url" placeholder="www.linkedin.com/client234" id="client_linkiedin_url_id">
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 ">
+                                    <div class="text-center">
+                                        <img src="{{asset('assets\images\seller\testimonial-2.jpg')}}" class="rounded" alt="..." style="height:100px">
+                                    </div>
+                                    <div class="mt-3 ">
+                                        <strong >
+                                            Strengthen your profile with client testimonials
+                                        </strong>
+
+                                        <ul class="list-group pmd-list pmd-card-list border-0 mt-1 ">
+                                            <li class="list-group-item d-flex border-0" >
+                                                <i class="fa fa-check green" aria-hidden="true" ></i>
+                                                <span class="media-body">Showcase your skills and success from clients outside dureforce</span>
+                                            </li>
+                                            <li class="list-group-item d-flex border-0">
+                                                <i class="fa fa-check green" aria-hidden="true"></i>
+                                                <div class="media-body">your clients will get an email within instructions for submitting your success story</div>
+                                            </li>
+                                            <li class="list-group-item d-flex border-0"> 
+                                                <i class="fa fa-check green" aria-hidden="true"></i>
+                                                <div class="media-body">The testimonial will display on your profile once it's verified by dureforce</div>
+                                            </li>
+                                            
+                                        </ul>
                                     </div>
                                 </div>
-                              
-                                
+                               
                             </div>
 
                             <div class="d-flex flex-row-reverse">
@@ -855,9 +897,8 @@
             </div>
         </div>
 
-
         {{-- Education Model --}}
-        <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="EducationModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
@@ -1048,10 +1089,20 @@
 @push('style')
 
 <style>
+    .text_area{
+        min-height: 200px !important
+    }
     .table-spacing{
         margin-bottom: -8px !important;
     }
-    
+    .bg_color{
+        background-color: lightcyan
+    }
+    .green{
+        color:green;
+        margin-top:3px;
+        margin-right:6px;
+    }
     .portfolio-desc{
         margin-left: 4px;
     }
