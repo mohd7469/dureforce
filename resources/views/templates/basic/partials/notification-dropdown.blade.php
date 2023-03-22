@@ -1,9 +1,10 @@
 <span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
-                                            <i class="las la-bell icon-lg"><span class="pulse--primary"></span></i>
+{{--                                            <span class="pulse--primary"></span>--}}
+                                            <i class="las la-bell icon-lg"></i>
                                         </div>
                                     </span>
-<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-right">
+<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; overflow-x: hidden;" >
     <div class="dropdown-menu__header">
         <span class="caption">@lang('Notification')</span>
         {{--                                                @if($adminNotifications->count() > 0)--}}
@@ -12,7 +13,7 @@
         {{--                                                    <p>@lang('No unread notification found')</p>--}}
         {{--                                                @endif--}}
     </div>
-    <div class="dropdown-menu__body" data-bs-spy="scroll">
+    <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll" >
         @for($i=1; $i<=10; $i++)
             <a href="#" class="dropdown-menu__item">
                 <div class="navbar-notifi">
