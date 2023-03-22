@@ -27,10 +27,10 @@
                                             <a class="nav-link {{$search_job}}"  data-bs-toggle="tab"
                                             href="#Search_tab">Search</a>
                                         </li>
-                                        <!-- <li class="nav-item">
+                                        <li class="nav-item">
                                             <a class="nav-link {{$saved_job}}" data-bs-toggle="tab"
                                             href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
-                                        </li> -->
+                                        </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab"
                                             href="#My_jobs_tab">My Jobs (5)</a>
