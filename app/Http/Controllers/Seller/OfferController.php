@@ -22,6 +22,7 @@ class OfferController extends Controller
 
             $module_offer->contract()->create([
                 'start_date' => Carbon::now(),
+                'end_date' => $module_offer->expire_at,
                 'status_id'  =>  Contract::STATUSES['In_Progress'],
                 'contract_total_amount' => $module_offer->offer_amount,
             ]);

@@ -42,6 +42,7 @@ class OfferController extends Controller
             'uploaded_files ' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
             'description' => 'required',
             'accept_privacy_policy' => 'required',
+            'offer_expire_at'       => 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y'),
         ];
 
         if ($request_data['fix_payment_offer_type']==ModuleOffer::Fix_Payment_Offer_Type['BY_PROJECT']) {
@@ -63,6 +64,9 @@ class OfferController extends Controller
            
             DB::beginTransaction();
             try {
+
+                $offer_expire_at=$request_data['offer_expire_at'];
+
                 $proposal=Proposal::with('user')->find($request_data['proposal_id']);
                 $module_offer = new ModuleOffer;
                 $module_offer->offer_amount = $request_data['offer_ammount'];
@@ -83,7 +87,7 @@ class OfferController extends Controller
                         $offered_amount+=$ModuleOfferMilestone['deposit_amount'];
                         $ModuleOfferMilestone['is_paid']=false;
                         $ModuleOfferMilestone['module_offer_id']=$module_offer->id;
-
+                        $offer_expire_at=$ModuleOfferMilestone['due_date'];
                         ModuleOfferMilestone::create(
                             [
                                 'description' =>$ModuleOfferMilestone['description'],
@@ -121,7 +125,14 @@ class OfferController extends Controller
     
                      }
                 }
-
+                if($offer_expire_at)
+                {
+                    $module_offer->expire_at=$offer_expire_at;
+                }
+                else{
+                    $module_offer->expire_at=Carbon::now()->addDays(config('settings.offer_expire_days'));
+                }
+                $module_offer->save();
                 $chat_module=$job;
                 $view_offer_route=route('offer.detail',$job->uuid);
                 $chat_message=ChatMessage::Create([
@@ -152,9 +163,9 @@ class OfferController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
+                Log::info("Error",[$exception->getMessage()]);
                 return response()->json(['error' => $exception->getMessage()]);
-                $notify[] = ['errors', 'Failled To Send Offer .'];
-                return back()->withNotify($notify);
+                
 
 
             }

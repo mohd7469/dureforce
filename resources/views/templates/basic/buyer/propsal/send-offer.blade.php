@@ -114,14 +114,28 @@
     <hr>
     <div  id="amount">
      
-        <div class="form-row">
-          <div class="col-lg-3 col-md-6 col-sm-12">
-            <h6 class="color-green mt-3">Pay by Fixed Price</h6>
-          <div class="d-flex">
-            <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
-            <span class="ml-2 per-hour"></span>
+        <div class="form-row ">
+          <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                
+                <h6 class="color-green mt-3">Pay by Fixed Price</h6>
+                
+                <div class="d-flex">
+                    <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
+                    <span class="ml-2 per-hour"></span>
+
+                </div>
+
+          
           </div>
-          <!-- <p class="text-muted fs-15px mt-1">This is the price you and Dumitru G’s have agreed upon  </p> -->
+
+          <div class="col-lg-3 col-md-6 col-sm-12">
+              
+            <h6 class="color-green mt-3">Offer Expire Date</h6>
+            <div class="d-flex">
+              <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control text-end " value="">
+            </div>
+
           </div>
         
     </div>
