@@ -1,7 +1,8 @@
 <span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
-{{--                                            <span class="pulse--primary"></span>--}}
-                                            <i class="las la-bell icon-lg"></i>
+                                            <i class="las la-bell icon-lg" ></i>
+                                            <span class="pulse--primary"></span>
+
                                         </div>
                                     </span>
 <div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; overflow-x: hidden;" >
@@ -232,6 +233,7 @@
     }
     .pulse--primary {
         display: block;
+        margin-right: 139px;
         position: absolute;
         top: 3px;
         right: 7px;
