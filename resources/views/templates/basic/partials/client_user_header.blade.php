@@ -239,7 +239,8 @@
                                 
                                     <div class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
-                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
+{{--                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>--}}
+                                        @include($activeTemplate.'partials.notification-dropdown')
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))
@@ -374,6 +375,8 @@
         </div> -->
     </div>
 </header>
+
+@include('partials.notify')
 <style>
     .sub-nav ul {
         margin: 0;
@@ -731,7 +734,7 @@
             margin-right: 27px;
             float: left;
         }
-        .dropdown-menu {
+        .dropdown-menu_notification  {
             pointer-events: none;
             -webkit-transform-origin: 50% 0;
             -ms-transform-origin: 50% 0;
@@ -760,6 +763,17 @@
     }     
     .collapse:not(.show){
         display: inline;
-    } 
-        
+    }
+
+
+
 </style>
+<script src=
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src=
+        "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+</script>
+<script src=
+        "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+</script>
