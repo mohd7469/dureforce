@@ -7,6 +7,10 @@ use App\Http\Controllers\Seller\ServiceController;
 use App\Http\Controllers\Seller\SoftwareController;
 
 Route::middleware(['verified','is-profile-completed','auth'])->group(function () {
+    Route::prefix('notification')->group(function () {
+        Route::get('all', [\App\Http\Controllers\Seller\UserController::class, 'notification'])->name('list');
+
+    });
     Route::prefix('ticket')->group(function () {
         Route::get('/', 'TicketController@supportTicket')->name('ticket');
         Route::post('/ticket-validation', 'TicketController@validateTicket')->name('ticket.validate');
