@@ -14,7 +14,7 @@
             @elseif($offer->status_id == App\Models\ModuleOffer::STATUSES['ACCEPTED'])
                 <a href="{{route('contracts.show',$offer->contract->uuid)}}" class="offer-width">View Contract</a>
             @else
-                {{-- <a href="{{'#'}}" class="offer-width">Resend Offer</a> --}}
+                <a href="{{'#'}}" class="offer-width">Resend Offer</a>
             @endif
             
 
