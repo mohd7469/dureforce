@@ -10,7 +10,7 @@
                     <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalServices ?? ''}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_service">Draft Services ({{$totalDraftServices}})</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#draft_service">Draft Services ({{$totalDraftServices ?? ''}})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " data-bs-toggle="tab" href="#bokked_service">Booked Services (0)</a>
@@ -44,11 +44,29 @@
                                 <td>
                                     <p class="job_price">{{ __($general->cur_sym) }}{{ __(showAmount($service->rate_per_hour)) }}</p>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if($service->status_id == 17)
                                     <span class="badge badge--info">Draft</span>
                                     @else
                                     <span class="badge badge--success">Approved</span>
+                                    @endif
+                                </td> -->
+                                <td data-label="@lang('Status')">
+                                    @if($service->status_id == 19)
+                                        <span class="badge badge--success">@lang('Approved')</span>
+                                        <br>
+                                    @elseif($service->status_id == 20)
+                                        <span class="badge badge--danger">@lang('Canceled')</span>
+                                        <br>
+                                    @elseif($service->status_id == 18)
+                                        <span class="badge badge--primary">@lang('Pending')</span>
+                                        <br>
+                                    @elseif($service->status_id == 17)
+                                        <span class="badge badge--warning">@lang('Draft')</span>
+                                        <br>
+                                    @elseif($service->status_id == 21)
+                                        <span class="badge badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                        <br>    
                                     @endif
                                 </td>
                                 <td>
@@ -93,11 +111,29 @@
                                 <td>
                                     <p class="job_price">{{ __($general->cur_sym) }}{{ __(showAmount($service->rate_per_hour)) }}</p>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if($service->status_id == 17)
                                     <span class="badge badge--info">Draft</span>
                                     @else
                                     <span class="badge badge--success">Approved</span>
+                                    @endif
+                                </td> -->
+                                <td data-label="@lang('Status')">
+                                    @if($service->status_id == 19)
+                                        <span class="badge badge--success">@lang('Approved')</span>
+                                        <br>
+                                    @elseif($service->status_id == 20)
+                                        <span class="badge badge--danger">@lang('Canceled')</span>
+                                        <br>
+                                    @elseif($service->status_id == 18)
+                                        <span class="badge badge--primary">@lang('Pending')</span>
+                                        <br>
+                                    @elseif($service->status_id == 17)
+                                        <span class="badge badge--warning">@lang('Draft')</span>
+                                        <br>
+                                    @elseif($service->status_id == 21)
+                                        <span class="badge badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                        <br>    
                                     @endif
                                 </td>
                                 <td><a href="{{$service->uuid ?route('service.view',[$service->uuid]) : '#'}}"

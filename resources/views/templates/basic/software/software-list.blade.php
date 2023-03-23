@@ -7,10 +7,10 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalSoftwares}})</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All ({{$totalSoftwares ?? ''}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#draft_software">Draft Software ({{$totalDraftSoftwares}})</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#draft_software">Draft Software ({{$totalDraftSoftwares ?? ''}})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " data-bs-toggle="tab" href="#booked_software">Booked Software (0)</a>
@@ -44,11 +44,29 @@
                                 <td>
                                     <p class="job_price">{{ __(showAmount($software->price)) }}</p>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if($software->status_id == 22)
                                     <span class="badge badge--info">Draft</span>
                                     @else
                                     <span class="badge badge--success">Approved</span>
+                                    @endif
+                                </td> -->
+                                <td data-label="@lang('Status')">
+                                    @if($software->status_id == 24)
+                                        <span class="badge badge--success">@lang('Approved')</span>
+                                        <br>
+                                    @elseif($software->status_id == 25)
+                                        <span class="badge badge--danger">@lang('Canceled')</span>
+                                        <br>
+                                    @elseif($software->status_id == 23)
+                                        <span class="badge badge--primary">@lang('Pending')</span>
+                                        <br>
+                                    @elseif($software->status_id == 22)
+                                        <span class="badge badge--warning">@lang('Draft')</span>
+                                        <br>
+                                    @elseif($software->status_id == 26)
+                                        <span class="badge badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                        <br>    
                                     @endif
                                 </td>
                                 <td>
@@ -93,11 +111,29 @@
                                 <td>
                                     <p class="job_price">{{ __(showAmount($software->price)) }}</p>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     @if($software->status_id == 22)
                                     <span class="badge badge--info">Draft</span>
                                     @else
                                     <span class="badge badge--success">Approved</span>
+                                    @endif
+                                </td> -->
+                                <td data-label="@lang('Status')">
+                                    @if($software->status_id == 24)
+                                        <span class="badge badge--success">@lang('Approved')</span>
+                                        <br>
+                                    @elseif($software->status_id == 25)
+                                        <span class="badge badge--danger">@lang('Canceled')</span>
+                                        <br>
+                                    @elseif($software->status_id == 23)
+                                        <span class="badge badge--primary">@lang('Pending')</span>
+                                        <br>
+                                    @elseif($software->status_id == 22)
+                                        <span class="badge badge--warning">@lang('Draft')</span>
+                                        <br>
+                                    @elseif($software->status_id == 26)
+                                        <span class="badge badge--info" style="background-color: rgba(255, 155, 220, 0.1);border: 1px solid #7367f0;color: #7367f0;padding: 2px 15px;border-radius: 999px;">@lang('Under Review')</span>
+                                        <br>    
                                     @endif
                                 </td>
                                 <td><a href="{{ route('software.view', [$software->uuid]) }}"
