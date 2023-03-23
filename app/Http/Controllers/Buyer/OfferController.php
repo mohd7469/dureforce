@@ -176,6 +176,7 @@ class OfferController extends Controller
     {
         
         try {
+
             DB::beginTransaction();
             $offer=ModuleOffer::with('module.user','module.user.user_basic')->find($offer_id);
             $user_email = User::where('id',$offer->offer_send_to_id )->first();
@@ -187,6 +188,7 @@ class OfferController extends Controller
             Mail::to($user_email->email)->send(new SendNotificationsMail($data,ModuleOffer::$EMAIL_TEMPLATE));
             $notify[] = ['success', 'Offer sent Successfully'];
             return view('templates.basic.offer.offer_sent',compact('offer'));
+            
         } 
         catch (\Throwable $exp) {
             DB::rollBack();
