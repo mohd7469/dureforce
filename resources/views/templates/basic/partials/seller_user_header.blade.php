@@ -134,10 +134,10 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Saved Jobs')</span>
                                             </a>
-                                            <a href="{{route('contracts.index')}}"
+                                            <!-- <a href="{{route('contracts.index')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
                                 </li>
@@ -164,6 +164,14 @@
                                             <a href="{{ route('seller.proposal.index','archived_proposals') }}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Archived Proposals')</span>
+                                            </a>
+                                            <a href="{{route('offers.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Offers')</span>
+                                            </a>
+                                            <a href="{{route('contracts.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
                                             </a>
                                         </div>
                                     </div>    

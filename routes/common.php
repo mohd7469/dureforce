@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContractsController;
+use App\Http\Controllers\OffersController;
 use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\ServiceController;
@@ -49,6 +50,9 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');
     Route::post('/file-upload', 'FileUploadController@uploadFile')->name('file.upload');
 
+    Route::name('offers.')->group(function () {
+        Route::get('/offer',  [OffersController::class,'index'])->name('index');
+    });
     Route::get('/offer-detail/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerDetail'])->name('offer.detail');
     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
     Route::get('/user-profile/{id?}', 'CommonProfileController@getUserProfile')->name('seller.profile');

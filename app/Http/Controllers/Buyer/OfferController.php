@@ -24,6 +24,20 @@ use Illuminate\Support\Facades\Log;
 
 class OfferController extends Controller
 {
+    public function index()
+    {
+        try {
+
+            $offer=ModuleOffer::withAll()->where('uuid',$id)->first();
+            $pageTitle = "Offer Detail";
+            return view('templates.basic.offer.offer_description',compact('offer'));
+            
+        } catch (\Throwable $th) {
+           return redirect()->back()->withErrors(['Error' => "Failled To Fetch Offer"]);
+        }
+       
+
+    }
     public function jobOffers($job_uuid)
     {
        
