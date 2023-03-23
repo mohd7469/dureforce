@@ -86,6 +86,10 @@
                         @endforeach
                         @endif
                     </table>
+
+                    <div class="card-footer py-4">
+                        {{ paginateLinks($proposals) }}
+                    </div>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane {{ $type=="submitted_proposals" ? 'active' : ''}}" id="submitted_proposals"> 
@@ -138,6 +142,9 @@
                         @endforeach
                         @endif
                     </table>
+                    <div class="card-footer py-4">
+                        {{ paginateLinks($submitted_proposals) }}
+                    </div>
                 </div>
 
                 <div class="listing_table_con card-body tab-pane {{ $type=="archived_proposals" ? 'active' : ''}}" id="draft_proposals"> 
@@ -190,6 +197,9 @@
                         @endforeach
                         @endif
                     </table>
+                    <div class="card-footer py-4">
+                        {{ paginateLinks($archived_proposals) }}
+                    </div>
                 </div>
                 <div class="listing_table_con card-body tab-pane {{ $type=="active_proposals" ? 'active' : ''}}" id="active_proposals"> 
                     <table>
@@ -241,6 +251,9 @@
                         @endforeach
 
                     </table>
+                    <div class="card-footer py-4">
+                        {{ paginateLinks($active_proposals) }}
+                    </div>
                 </div>
 
             </div>
