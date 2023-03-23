@@ -26,7 +26,7 @@ class DashboardController extends Controller
  
         if( getLastLoginRoleId() == Role::$Freelancer )
         {
-            $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate());
+            $services = Service::where('user_id', $user->id)->with('category')->latest('id')->paginate(getPaginate(10));
             // $totalService = Service::where('user_id', $user->id)->count();
             // $totalSoftware = Software::where('user_id', $user->id)->count();
             // $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
@@ -43,7 +43,7 @@ class DashboardController extends Controller
         }    
         elseif ( getLastLoginRoleId() == Role::$Client ) 
         {
-            $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
+            $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate(10));
             // $totaltransactions = Transaction::where('user_id', $user->id)->count();
             // $totalJob = Job::where('user_id', $user->id)->count();
             // $serviceBookings = Booking::where('user_id', $user->id)->where('status', '!=', 0)->whereNotNull('service_id')->count();

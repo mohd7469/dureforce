@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Portfolio\StorePortfolioRequest;
 use App\Http\Requests\StoreTestimonialRequest;
+use App\Mail\TestimonialEmail;
 use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Degree;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use App\Models\Country;
 use App\Models\UserTestimonial;
+use Illuminate\Support\Facades\Mail;
 
 //use Khsing\World\Models\Country;
 
@@ -555,19 +557,46 @@ class ProfileController extends Controller
 
         }
     }
-
+   
     public function requestForTestimonial(StoreTestimonialRequest $request){
         
         try {
+
+            DB::beginTransaction();
             $request->merge(['user_id' => Auth::user()->id]);
-            UserTestimonial::create($request->all());
+            $user_testimonial=UserTestimonial::create($request->all());
+            Mail::to($user_testimonial->client_email)->send(new TestimonialEmail($user_testimonial));
+            DB::commit();
+
             return response()->json(['success'=>'Tesitmonial request generated successfully']);
 
         } catch (\Throwable $th) {
+
+            DB::rollback();
             Log::info("Error In requestForTestimonial " .$th->getMessage());
             return response()->json(['error'=>'Failled to generate testimonial request']);
 
         }
     }
 
+    public function testimonialResponse(Request $request){
+        
+        try {
+
+            $user_testimonial=UserTestimonial::with('user')->where('token',$request->token)->firstOrFail();
+            // $user_testimonial->token=null;
+            $user_testimonial->save();
+            $user=$user_testimonial->user;
+
+            return view('responses\testimonial_response',compact('user_testimonial','user'));
+
+        }
+        catch (\Throwable $th) {
+
+            Log::info("Error In Recieving Testimonial Response " .$th->getMessage());
+            return "Server Error Please try again";
+
+        }
+
+    }
 }
