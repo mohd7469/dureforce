@@ -13,12 +13,13 @@ class OffersController extends Controller
         $user=Auth::user();
         $last_role_id=getLastLoginRoleId();
         if ( $last_role_id  == Role::$Freelancer ) {
-            $offers=ModuleOffer::withAll()->where('offer_send_to_id','=',$user->id)->where('is_active',1)->get();
+            $offers=ModuleOffer::withAll()->where('offer_send_to_id','=',$user->id)->where('is_active',1)->paginate(getPaginate());
+            $total = count($offers);
         }
         else if( $last_role_id == Role::$Client ){
-            $offers=ModuleOffer::withAll()->where('offer_send_by_id','=',$user->id)->where('is_active',1)->get();
+            $offers=ModuleOffer::withAll()->where('offer_send_by_id','=',$user->id)->where('is_active',1)->paginate(getPaginate());
+            $total = count($offers);
         }
-
-        return view('templates.basic.offer.offer_listing',compact('offers','last_role_id'));
+        return view('templates.basic.offer.offer_listing',compact('offers','last_role_id','total'));
     }
 }
