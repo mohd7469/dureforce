@@ -7,7 +7,7 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All(0)</a>
+                    <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All({{ $total ?? ''}})</a>
                 </li>
             </ul>
 
@@ -18,6 +18,7 @@
                         <thead>
                         <th>Title</th>
                         <th>Type</th>
+                        <th>Status</th>
                         <th>Offer Amount</th>
                         <th>Offer Expires</th>
                         <th>Action</th>
@@ -28,11 +29,14 @@
                                         @if($last_role_id == 2)
                                         <h2 class="per_heading">{{$offer->sendToUser->job_title}}</h2>
                                         @else
-                                        <h2 class="per_heading">{{$offer->sendToUser->job_title}}</h2>
+                                        <h2 class="per_heading">{{$offer->sendbyUser->job_title}}</h2>
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="badge badge--primary" >{{$offer->payment_type ?? ''}}</span>
+                                        <span >{{$offer->payment_type ?? ''}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge--primary">{{$offer->status->name ?? ''}}</span>
                                     </td>
                                     <td>
                                         <p class="job_price">${{$offer->offer_amount ?? ''}}</p>
@@ -48,7 +52,10 @@
                            
                     </table>
                 </div>
-
+                
+            </div>
+            <div class="card-footer">
+                    {{ paginateLinks($offers) }}
             </div>
 
 
