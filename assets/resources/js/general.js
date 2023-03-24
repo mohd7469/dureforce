@@ -100,6 +100,14 @@ function setCatgoryNameIntoFilter() {
     $("#category_search_selected").text(urlParams.get("category_name"));
   }
 }
+function showPassword(){
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 // $(".select2-custom").select2({
 //   placeholder:'Type Skills and Enter press',
 //   allowClear: true

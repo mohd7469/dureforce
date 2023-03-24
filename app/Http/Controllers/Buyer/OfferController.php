@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Log;
 
 class OfferController extends Controller
 {
+
     public function jobOffers($job_uuid)
     {
        
@@ -176,6 +177,7 @@ class OfferController extends Controller
     {
         
         try {
+
             DB::beginTransaction();
             $offer=ModuleOffer::with('module.user','module.user.user_basic')->find($offer_id);
             $user_email = User::where('id',$offer->offer_send_to_id )->first();
@@ -187,6 +189,7 @@ class OfferController extends Controller
             Mail::to($user_email->email)->send(new SendNotificationsMail($data,ModuleOffer::$EMAIL_TEMPLATE));
             $notify[] = ['success', 'Offer sent Successfully'];
             return view('templates.basic.offer.offer_sent',compact('offer'));
+            
         } 
         catch (\Throwable $exp) {
             DB::rollBack();
@@ -204,10 +207,10 @@ class OfferController extends Controller
     public function offerDetail($id)
     {
         try {
-
+            $last_role_id=getLastLoginRoleId();
             $offer=ModuleOffer::withAll()->where('uuid',$id)->first();
             $pageTitle = "Offer Detail";
-            return view('templates.basic.offer.offer_description',compact('offer'));
+            return view('templates.basic.offer.offer_description',compact('offer','last_role_id'));
             
         } catch (\Throwable $th) {
            return redirect()->back()->withErrors(['Error' => "Failled To Fetch Offer"]);
