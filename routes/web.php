@@ -21,6 +21,8 @@ Route::middleware('response-portal')->group(function () {
     Route::get('/testimonial-response', [\App\Http\Controllers\Seller\ProfileController::class,'testimonialResponse'])->name('response.testimonial');
 });
 
+Route::post('/save-testimonial-response', [\App\Http\Controllers\Seller\ProfileController::class,'savetestimonialResponse'])->name('save.response.testimonial');
+
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {

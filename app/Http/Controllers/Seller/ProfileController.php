@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Portfolio\StorePortfolioRequest;
+use App\Http\Requests\StoreTestimonialClientResponseRequest;
 use App\Http\Requests\StoreTestimonialRequest;
 use App\Mail\TestimonialEmail;
 use App\Models\Attachment;
@@ -584,7 +585,7 @@ class ProfileController extends Controller
         try {
 
             $user_testimonial=UserTestimonial::with('user')->where('token',$request->token)->firstOrFail();
-            // $user_testimonial->token=null;
+            $user_testimonial->token=null;
             $user_testimonial->save();
             $user=$user_testimonial->user;
 
@@ -594,6 +595,20 @@ class ProfileController extends Controller
         catch (\Throwable $th) {
 
             Log::info("Error In Recieving Testimonial Response " .$th->getMessage());
+            return "Server Error Please try again";
+
+        }
+    }
+    public function savetestimonialResponse(StoreTestimonialClientResponseRequest $request){
+        try {
+            UserTestimonial::where('id',$request->user_testimonial_id)->update(
+                $request->only('client_response','communication_rating','expertise_rating','professionalism_rating','quality_rating')
+            );
+            return "Your response has been saved Thank You";
+        }
+        catch (\Throwable $th) {
+
+            Log::info("Error In Saving Testimonial Response " .$th->getMessage());
             return "Server Error Please try again";
 
         }
