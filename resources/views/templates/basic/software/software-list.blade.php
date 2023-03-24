@@ -82,7 +82,8 @@
                         @endforelse 
                     </table>
                     <nav>
-                        {{ $softwares->links() }}
+                        {{ paginateLinks($softwares) }}
+
                     </nav>
                 </div>
 
@@ -148,7 +149,8 @@
                         @endforelse
                     </table>
                     <nav>
-                        {{ $draftSoftwares->links() }}
+                        {{ paginateLinks($draftSoftwares) }}
+
                     </nav>
                 </div>
 
