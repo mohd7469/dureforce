@@ -26,9 +26,9 @@
                         @foreach ($offers as $offer)
                                 <tr>
                                     <td>
-                                        @if($last_role_id == 2)
+                                        @if($last_role_id == 1)
                                         <h2 class="per_heading">{{$offer->sendToUser->job_title}}</h2>
-                                        @else
+                                        @elseif($last_role_id == 2)
                                         <h2 class="per_heading">{{$offer->sendbyUser->job_title}}</h2>
                                         @endif
                                     </td>
