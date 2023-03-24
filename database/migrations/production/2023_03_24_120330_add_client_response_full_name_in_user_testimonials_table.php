@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddClientResponseFullNameInUserTestimonialsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('user_testimonials', function (Blueprint $table) {
+            $table->after('client_response',function($table) {
+                $table->string('client_response_full_name');
+                $table->string('client_response_role');
+                $table->string('client_response_company');
+                $table->string('client_response_linkedin_profile_url');
+            });
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('user_testimonials', function (Blueprint $table) {
+            $table->dropColumn(['client_response_full_name','client_response_role','client_response_company','client_response_linkedin_profile_url']);
+        });
+    }
+}

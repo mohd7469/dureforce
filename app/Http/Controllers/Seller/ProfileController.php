@@ -583,13 +583,12 @@ class ProfileController extends Controller
     public function testimonialResponse(Request $request){
         
         try {
-
             $user_testimonial=UserTestimonial::with('user')->where('token',$request->token)->firstOrFail();
             $user_testimonial->token=null;
             $user_testimonial->save();
             $user=$user_testimonial->user;
 
-            return view('responses\testimonial_response',compact('user_testimonial','user'));
+            return view('responses\testimonial_response_latest',compact('user_testimonial','user'));
 
         }
         catch (\Throwable $th) {
@@ -601,15 +600,31 @@ class ProfileController extends Controller
     }
     public function savetestimonialResponse(StoreTestimonialClientResponseRequest $request){
         try {
+            if(UserTestimonial::find($request->user_testimonial_id)->client_response != ''){
+                $notify[] = ['error', 'Your response has already been saved Thank You'];
+                return $notify;
+            }
             UserTestimonial::where('id',$request->user_testimonial_id)->update(
-                $request->only('client_response','communication_rating','expertise_rating','professionalism_rating','quality_rating')
+                $request->only(
+                    'client_response',
+                    'communication_rating',
+                    'expertise_rating',
+                    'professionalism_rating',
+                    'quality_rating',
+                    'client_response_full_name',
+                    'client_response_role',
+                    'client_response_company',
+                    'client_response_linkedin_profile_url'
+                )
             );
-            return "Your response has been saved Thank You";
+            $notify[] = ['success', 'Your response has been saved Thank You'];
+            return $notify;
         }
         catch (\Throwable $th) {
 
             Log::info("Error In Saving Testimonial Response " .$th->getMessage());
-            return "Server Error Please try again";
+            $notify[] = ['error', 'Server Error Please try again'];
+            return $notify;
 
         }
 
