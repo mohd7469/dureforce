@@ -3,6 +3,7 @@
         @foreach($softwares as $software)
             <div class="carousel-item active ">
                 <div class="card">
+                    
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
                             
