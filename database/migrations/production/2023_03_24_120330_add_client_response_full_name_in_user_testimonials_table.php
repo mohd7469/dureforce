@@ -14,12 +14,12 @@ class AddClientResponseFullNameInUserTestimonialsTable extends Migration
     public function up()
     {
         Schema::table('user_testimonials', function (Blueprint $table) {
-            $table->after('client_response',function($table) {
-                $table->string('client_response_full_name');
-                $table->string('client_response_role');
-                $table->string('client_response_company');
-                $table->string('client_response_linkedin_profile_url');
-            });
+
+                $table->string('client_response_full_name')->after('client_name')->nullable();
+                $table->string('client_response_role')->after('client_name')->nullable();
+                $table->string('client_response_company')->after('client_name')->nullable();
+                $table->string('client_response_linkedin_profile_url')->after('client_name')->nullable();
+
         });
     }
 
