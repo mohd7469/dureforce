@@ -27,9 +27,9 @@
                                 <tr>
                                     <td>
                                         @if($last_role_id == 1)
-                                        <h2 class="per_heading">{{$offer->sendToUser->job_title}}</h2>
+                                        <h2 class="per_heading">{{$offer->module->title}}</h2>
                                         @elseif($last_role_id == 2)
-                                        <h2 class="per_heading">{{$offer->sendbyUser->job_title}}</h2>
+                                        <h2 class="per_heading">{{$offer->module->title}}</h2>
                                         @endif
                                     </td>
                                     <td>
