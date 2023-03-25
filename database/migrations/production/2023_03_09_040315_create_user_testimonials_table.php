@@ -19,7 +19,7 @@ class CreateUserTestimonialsTable extends Migration
             $table->id();
             $table->uuid('uuid')->index()->nullable();
             $table->unsignedBigInteger('user_id')->index()->nullable();
-            $table->string('description')->nullable();
+            $table->string('client_response')->nullable();
             $table->string('client_email')->nullable();
             $table->string('client_name')->nullable();
             $table->string('client_linkedin_url')->nullable();
