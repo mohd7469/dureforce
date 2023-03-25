@@ -86,36 +86,44 @@
 
 </div>
 <!-- Weekly Limit  -->
-<div class="mt-3">
-  <input type="hidden" id="switch" onclick="byMilestone()">
+    <div class="mt-3">
+      <input type="hidden" id="switch" onclick="byMilestone()">
 
-    <h6 class="color-green">Deposit funds into Escrow</h6>
-    <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
-    
-          <div class="form-row">
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-check">
-                  {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="byProject()"> --}}
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="byProject()" checked>
+      <h6 class="color-green">Deposit funds into Escrow</h6>
+      <p class="text-muted fs-15px mt-1">Escrow is a neutral holding place that protects your deposit until work is approved.</p>
+          
+      <div class="form-row">
+        
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          
+          <div class="form-check">
+              {{-- <input type="radio" class="form-check-input" id="exampleCheck1" name="" onclick="byProject()"> --}}
+              <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund" onclick="byProject()" checked>
 
-                  <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
-              <div class="form-check">
-                  <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund"  onclick="byMilestone()">
-                  <label class="form-check-label fs-14px" for="exampleCheck1">Deposit a lesser amount to cover the first milestone</label>
-              </div>
-            </div>
-            
+              <label class="form-check-label fs-14px" for="exampleCheck1">Deposit for the whole project</label>
           </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="exampleCheck1" name="deposit_fund"  onclick="byMilestone()">
+              <label class="form-check-label fs-14px" for="exampleCheck1">Deposit a lesser amount to cover the first milestone</label>
+            </div>
+
+        </div>
+        
+      </div>
       
     </div>
-    <hr>
-    <div  id="amount">
+      <hr>
+      <div  id="amount">
      
-        <div class="form-row ">
+        <div class="form-row">
+
           <div class="row">
+
             <div class="col-lg-3 col-md-6 col-sm-12">
                 
                 <h6 class="color-green mt-3">Pay by Fixed Price</h6>
@@ -125,21 +133,23 @@
                     <span class="ml-2 per-hour"></span>
 
                 </div>
+            </div>
 
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              
+              <h6 class="color-green mt-3">Offer Expire Date</h6>
+              <div class="d-flex">
+                <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control text-end " value="">
+              </div>
+  
+            </div>
           
           </div>
 
-          <div class="col-lg-3 col-md-6 col-sm-12">
-              
-            <h6 class="color-green mt-3">Offer Expire Date</h6>
-            <div class="d-flex">
-              <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control text-end " value="">
-            </div>
-
-          </div>
+         
         
-    </div>
-    </div>
+        </div>
+      </div>
     <hr>
 
     <!-- start date  -->
@@ -179,9 +189,9 @@
         <h6 class="fw-bold mt-3">How do fixed-price contracts work?</h5>
         <br>
         <p class="">Before work begins, agree on milestones with your freelancer. Milestones help to break up larger projects into manageable chunks. Pre-fund milestones by<br> 
-        depositing money into escrow. Once the work has been delivered, you can release your payment to the freelancer.<br>
-        Over the course of the contract, your freelancer will submit milestones for review and the funds in escrow will be released upon your approval. Failing to respond to<br>
-        a milestone submission within 14 days is deemed approval and the escrowed funds will be automatically released to your freelancer.</p>
+          depositing money into escrow. Once the work has been delivered, you can release your payment to the freelancer.<br>
+          Over the course of the contract, your freelancer will submit milestones for review and the funds in escrow will be released upon your approval. Failing to respond to<br>
+          a milestone submission within 14 days is deemed approval and the escrowed funds will be automatically released to your freelancer.</p>
       </div>
     </div>
     <hr>

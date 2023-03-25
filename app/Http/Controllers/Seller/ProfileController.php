@@ -598,11 +598,21 @@ class ProfileController extends Controller
 
         }
     }
+
+    public function thankYou(){
+        // $user_testimonial = UserTestimonial::find(3);
+        // $user=User::find(1);
+        // $response_url =route('response.testimonial',['token' => $user_testimonial->token]);
+        // return view('layout_email\testimonial\testimonial',compact('user_testimonial','user','response_url'));
+
+    }
+
     public function savetestimonialResponse(StoreTestimonialClientResponseRequest $request){
         try {
             if(UserTestimonial::find($request->user_testimonial_id)->client_response != ''){
-                $notify[] = ['error', 'Your response has already been saved Thank You'];
-                return $notify;
+                $message = 'Your response has already been saved Thank You';
+                return view('responses\thank_you')->with('message');
+
             }
             UserTestimonial::where('id',$request->user_testimonial_id)->update(
                 $request->only(
@@ -617,8 +627,8 @@ class ProfileController extends Controller
                     'client_response_linkedin_profile_url'
                 )
             );
-            $notify[] = ['success', 'Your response has been saved Thank You'];
-            return $notify;
+            $message = 'Your response has been saved Thank You';
+            return view('responses\thank_you')->with('message');
         }
         catch (\Throwable $th) {
 
