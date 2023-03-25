@@ -88,7 +88,7 @@
                     </table>
 
                     <div class="card-footer py-4">
-                        {{ paginateLinks($proposals) }}
+                        {{ paginateLinks($services) }}
                     </div>
                 </div>
 

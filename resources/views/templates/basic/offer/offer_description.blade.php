@@ -106,7 +106,27 @@
           </div>
           
           <!---Contact Details Section End-->
-          
+              <!---Job DetailsSection Start--->
+    @if($last_role_id == \App\Models\Role::$Freelancer AND $offer->moduleMilestones->count() > 0)
+    <hr>
+    <h3 class="heading_proposal jdc">Milestone Timeline</h3>
+        <div class="btm-c">
+            
+
+                
+                @foreach ($offer->moduleMilestones as $milestone)
+                    <p class="posted_date_c">{{$milestone->description}}<p>
+                    <p class="posted_date_c">${{$milestone->amount}}<p>
+                    @if($milestone->is_paid)
+                        <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
+                    @endif
+                @endforeach
+            
+            
+            
+        </div>
+        @endif
+    <!---Job Details Section End--->
          
 
     </div>
