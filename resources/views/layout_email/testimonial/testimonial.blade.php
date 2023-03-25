@@ -5,7 +5,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
     <title>Document</title>
+    
     <style>
         body {
             margin: 0;
@@ -21,6 +23,15 @@
             color: white;
             margin: 0;
             font-weight: 600;
+        }
+
+        .user_profile {
+            text-align: center;
+            width: 100%;
+            padding: 30px 0px;
+            background: #3690ff;
+            color: white;
+            margin: 0;
         }
 
         .img-logo {
@@ -69,7 +80,33 @@
         <div class="img-logo">
             <img src="<?php echo  getImage(imagePath()['logoIcon']['path'] . '/logo.png') ?>" alt="">
         </div>
+       
         <div class="content-main">
+            <div class="col-md-3" >
+                <div class="row user_profile" >
+                    
+                    <div class="col-md-4" style="width:15%;float:left">
+                        <img alt="User Pic" src="https://stgdureforcestg.blob.core.windows.net/attachments/6415cbaa8113f1679149994.png" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
+                    </div>
+
+                    <div class="col-md-8" style="text-align:left;width:85%;">
+
+                        <strong class="">
+                            {{$user->full_name}}
+
+                        </strong>
+
+                        <p class="" style="margin-top:4px;">{{$user->job_title}}</p>
+
+                        <p class="" style="margin-top:-12px;">{{$user->location}}</p>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <br>
             <h2 class="text-dark">Hello <?php echo $user_testimonial->client_name; ?></h2>
             <p class="text-dark">
                 <?php echo $user_testimonial->message_to_client; ?>
