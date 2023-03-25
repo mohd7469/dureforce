@@ -115,9 +115,9 @@
         </div>
         
       </div>
+      <hr>
       
     </div>
-      <hr>
       <div  id="amount">
      
         <div class="form-row">
@@ -150,7 +150,7 @@
         
         </div>
       </div>
-    <hr>
+    {{-- <hr> --}}
 
     <!-- start date  -->
     <div style="display: none" id="milestone">
