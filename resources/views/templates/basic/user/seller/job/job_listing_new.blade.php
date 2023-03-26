@@ -140,6 +140,9 @@
                                             <hr>
                                             <!----------- ===== Job Experties Container  ==== ------------->   
                                             @endforeach
+                                        <div>
+                                            {{ paginateLinks($jobs) }}
+                                        </div>
                                     </div>
                                     <div class="tab-pane {{$saved_job}}" id="Saved_jobs_tab">
                                             @foreach($user_saved_jobs as $job)
