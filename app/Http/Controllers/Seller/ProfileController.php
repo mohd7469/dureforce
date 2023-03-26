@@ -611,7 +611,7 @@ class ProfileController extends Controller
         try {
             if(UserTestimonial::find($request->user_testimonial_id)->client_response != ''){
                 $message = 'Your response has already been saved Thank You';
-                return view('responses\thank_you')->with('message');
+                return view('responses.thank_you')->with('message');
 
             }
             UserTestimonial::where('id',$request->user_testimonial_id)->update(
@@ -628,7 +628,7 @@ class ProfileController extends Controller
                 )
             );
             $message = 'Your response has been saved Thank You';
-            return view('responses\thank_you')->with('message');
+            return view('responses.thank_you')->with('message');
         }
         catch (\Throwable $th) {
 

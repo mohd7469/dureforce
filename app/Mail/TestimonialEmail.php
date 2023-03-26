@@ -39,6 +39,6 @@ class TestimonialEmail extends Mailable
     public function build()
     {
         
-        return $this->subject('Am requesting for testimonial')->view('layout_email\testimonial\testimonial');
+        return $this->subject('Am requesting for testimonial')->view('layout_email.testimonial.testimonial');
     }
 }
