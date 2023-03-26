@@ -584,7 +584,6 @@ class ProfileController extends Controller
         
         try {
             $user_testimonial=UserTestimonial::with('user')->where('token',$request->token)->firstOrFail();
-            $user_testimonial->token=null;
             $user_testimonial->save();
             $user=$user_testimonial->user;
 
@@ -609,11 +608,14 @@ class ProfileController extends Controller
 
     public function savetestimonialResponse(StoreTestimonialClientResponseRequest $request){
         try {
-            if(UserTestimonial::find($request->user_testimonial_id)->client_response != ''){
+            DB::beginTransaction();
+            if(UserTestimonial::find($request->user_testimonial_id)->token == ''){
                 $message = 'Your response has already been saved Thank You';
-                return view('responses.thank_you')->with('message');
+                return view('layout_email.testimonial.token-expired')->with('message');
 
             }
+            $request->merge(['token' => null]);
+
             UserTestimonial::where('id',$request->user_testimonial_id)->update(
                 $request->only(
                     'client_response',
@@ -624,14 +626,17 @@ class ProfileController extends Controller
                     'client_response_full_name',
                     'client_response_role',
                     'client_response_company',
-                    'client_response_linkedin_profile_url'
+                    'client_response_linkedin_profile_url',
+                    'token'
                 )
             );
+            DB::commit();
+
             $message = 'Your response has been saved Thank You';
             return view('responses.thank_you')->with('message');
         }
         catch (\Throwable $th) {
-
+            DB::rollback();
             Log::info("Error In Saving Testimonial Response " .$th->getMessage());
             $notify[] = ['error', 'Server Error Please try again'];
             return $notify;
