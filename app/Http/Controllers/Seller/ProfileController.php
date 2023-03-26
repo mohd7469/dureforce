@@ -588,7 +588,7 @@ class ProfileController extends Controller
             $user_testimonial->save();
             $user=$user_testimonial->user;
 
-            return view('responses\testimonial_response_latest',compact('user_testimonial','user'));
+            return view('responses.testimonial_response_latest',compact('user_testimonial','user'));
 
         }
         catch (\Throwable $th) {
