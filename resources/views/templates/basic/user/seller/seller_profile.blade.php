@@ -425,75 +425,94 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="quote">
-                                        <blockquote class="blockquote" >
-                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                        </blockquote>
-                                        <hr class="divider">
-                                        <div class="row ">
-                                            <table class="table table-borderless table-spacing">
-                                                <tbody class="text-center">
-                                                    <tr>
-                                                        <td ><b>{{trans('Quality')}}</b></td>
-                                                        <td>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        </td>
-                                                        <td><b>{{trans('Communication')}}</b></td>
-                                                        <td>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td ><b>{{trans('Expertise')}}</b></td>
-                                                        <td>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i></i>
-                                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        </td>
-                                                        <td><b>{{trans('Professionalism')}}</b></td>
-                                                        <td>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                    @foreach ($user->testimonials as $testimonial)
+                                    <div class="row">
 
-                                        </div>
-                                        <hr class="divider">
-                                        <p class="cite">
-                                            
-                                            <b>Simon King</b> 
-                                            
-                                            <br>
-                                                Director Marketing, Global Solutions Ltd
-                                            <br>
-                                            
-                                            
-                                            <i class="fab fa-solid fa-linkedin"></i>
-                                           <span class="see-profile">
-                                            
-                                            See LinkedIn Profile </span>
-                                            
+                                        <div class="quote">
+                                            <blockquote class="blockquote" >
+                                               {{ $testimonial->client_response}}
+                                            </blockquote>
+                                            <hr class="divider">
+                                            <div class="row ">
+                                                <table class="table table-borderless table-spacing">
+                                                    <tbody class="text-center">
+                                                        <tr>
+                                                            <td ><b>{{trans('Quality')}}</b></td>
+                                                            <td>
+
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<=$testimonial->quality_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                    @endif
+                                                                    
+                                                                @endfor
+                                                            
+                                                            </td>
+                                                            <td><b>{{trans('Communication')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<=$testimonial->communication_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                    @endif
+                                                                
+                                                                @endfor
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td ><b>{{trans('Expertise')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<=$testimonial->expertise_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                    @endif
+                                                                
+                                                                @endfor
+                                                            </td>
+                                                            <td><b>{{trans('Professionalism')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<=$testimonial->professionalism_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                @endif
+                                                                
+                                                            @endfor
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <hr class="divider">
+                                            <p class="cite">
                                                 
-                                        </p>
+                                                <b>{{$testimonial->client_name}}</b> 
+                                                
+                                                <br>
+                                                {{$testimonial->client_response_company}}
+                                                <br>
+                                                
+                                                <a href="{{$testimonial->client_linkedin_url}}">
+                                                    <i class="fab fa-solid fa-linkedin"></i>
+                                                    <span class="see-profile">See LinkedIn Profile </span>
+                                                </a>
+                                                
+                                                
+                                                    
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                    <br>
+
+                                    @endforeach
+                                   
                             </div>
                         </div>
                     </div>
