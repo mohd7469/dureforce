@@ -21,7 +21,7 @@ class ResponsePortalMiddleware
             return $next($request);
         }
         else{
-            return response(view('layout_email\testimonial\token-expired'));
+            return response(view('layout_email.testimonial.token-expired'));
         }
     }
 }
