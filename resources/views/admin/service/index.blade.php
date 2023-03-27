@@ -130,9 +130,9 @@
                                     @endif
 
                                     @if($service->status_id == 17)
-                                        <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
+                                        <!-- <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
                                             <i class="las la-check"></i>
-                                        </button>
+                                        </button> -->
                                         <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
                                             <i class="las la-check"></i>
                                         </button>
