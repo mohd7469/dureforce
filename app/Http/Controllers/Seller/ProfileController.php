@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Portfolio\StorePortfolioRequest;
+use App\Http\Requests\StoreTestimonialClientResponseRequest;
 use App\Http\Requests\StoreTestimonialRequest;
 use App\Mail\TestimonialEmail;
 use App\Models\Attachment;
@@ -582,19 +583,63 @@ class ProfileController extends Controller
     public function testimonialResponse(Request $request){
         
         try {
-
             $user_testimonial=UserTestimonial::with('user')->where('token',$request->token)->firstOrFail();
-            // $user_testimonial->token=null;
             $user_testimonial->save();
             $user=$user_testimonial->user;
 
-            return view('responses\testimonial_response',compact('user_testimonial','user'));
+            return view('responses.testimonial_response_latest',compact('user_testimonial','user'));
 
         }
         catch (\Throwable $th) {
 
             Log::info("Error In Recieving Testimonial Response " .$th->getMessage());
             return "Server Error Please try again";
+
+        }
+    }
+
+    public function thankYou(){
+        // $user_testimonial = UserTestimonial::find(3);
+        // $user=User::find(1);
+        // $response_url =route('response.testimonial',['token' => $user_testimonial->token]);
+        // return view('layout_email\testimonial\testimonial',compact('user_testimonial','user','response_url'));
+
+    }
+
+    public function savetestimonialResponse(StoreTestimonialClientResponseRequest $request){
+        try {
+            DB::beginTransaction();
+            if(UserTestimonial::find($request->user_testimonial_id)->token == ''){
+                $message = 'Your response has already been saved Thank You';
+                return view('layout_email.testimonial.token-expired')->with('message');
+
+            }
+            $request->merge(['token' => null]);
+
+            UserTestimonial::where('id',$request->user_testimonial_id)->update(
+                $request->only(
+                    'client_response',
+                    'communication_rating',
+                    'expertise_rating',
+                    'professionalism_rating',
+                    'quality_rating',
+                    'client_response_full_name',
+                    'client_response_role',
+                    'client_response_company',
+                    'client_response_linkedin_profile_url',
+                    'token'
+                )
+            );
+            DB::commit();
+
+            $message = 'Your response has been saved Thank You';
+            return view('responses.thank_you')->with('message');
+        }
+        catch (\Throwable $th) {
+            DB::rollback();
+            Log::info("Error In Saving Testimonial Response " .$th->getMessage());
+            $notify[] = ['error', 'Server Error Please try again'];
+            return $notify;
 
         }
 

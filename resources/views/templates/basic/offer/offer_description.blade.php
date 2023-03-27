@@ -107,12 +107,12 @@
           
           <!---Contact Details Section End-->
               <!---Job DetailsSection Start--->
-    @if($last_role_id == 1)     
-    <hr>         
+    @if($last_role_id == \App\Models\Role::$Freelancer AND $offer->moduleMilestones->count() > 0)
+    <hr>
     <h3 class="heading_proposal jdc">Milestone Timeline</h3>
         <div class="btm-c">
             
-            @if ($offer->moduleMilestones->count() > 0)
+
                 
                 @foreach ($offer->moduleMilestones as $milestone)
                     <p class="posted_date_c">{{$milestone->description}}<p>
@@ -122,8 +122,7 @@
                     @endif
                 @endforeach
             
-                
-            @endif
+            
             
         </div>
         @endif

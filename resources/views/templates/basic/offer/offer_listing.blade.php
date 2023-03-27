@@ -10,7 +10,9 @@
                     <a class="nav-link 'active'" aria-current="true" data-bs-toggle="tab" href="#all">All({{ $total ?? ''}})</a>
                 </li>
             </ul>
+            <?php
 
+            ?>
 
             <div class="tab-content">
                 <div class="listing_table_con card-body tab-pane active" id="all">
@@ -26,10 +28,10 @@
                         @foreach ($offers as $offer)
                                 <tr>
                                     <td>
-                                        @if($last_role_id == 1)
-                                        <h2 class="per_heading">{{$offer->sendToUser->job_title}}</h2>
-                                        @elseif($last_role_id == 2)
-                                        <h2 class="per_heading">{{$offer->sendbyUser->job_title}}</h2>
+                                        @if($last_role_id == App\Models\Role::$Freelancer)
+                                        <h2 class="per_heading">{{$offer->module->title}}</h2>
+                                        @elseif($last_role_id == App\Models\Role::$Client)
+                                        <h2 class="per_heading">{{$offer->module->title}}</h2>
                                         @endif
                                     </td>
                                     <td>

@@ -49,16 +49,14 @@ class JobController extends Controller
         $user = auth()->user();
         $user_saved_jobs = $user->save_job->where('status_id',Job::$Approved);
         $user_saved_jobs_ids = $user_saved_jobs->pluck('id')->toArray();
-
         $tabs = $category;
         if($tabs == 'saved-jobs')
         {
-        $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+        $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->paginate(getPaginate());
 
         }else{
         $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->paginate(getPaginate());
         }
-
         $categories = Category::with('subCategory')->get();
         if($category == null){
             $Categorytitle = Category::where('id',$categories->pluck('id')->first())->first();
