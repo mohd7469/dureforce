@@ -133,13 +133,15 @@
                                                 <ul class="methods-s">
                                                     <li><img src="/assets/images/job/tick-c.png" alt="Tick"> Payment Method Verified</li>
                                                     <li><img src="/assets/images/job/rating-c.png" alt="Tick"> $100k+ <strong>Spent</strong></li>
-                                                    <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li>
-                                                </ul>
+                                                    <li><img src="/assets/images/job/location-c.png" alt="Tick">{{isset($job->country) ? $job->country->name: 'World Wide'}}</li></ul>
 {{--                                                </a>--}}
                                             </div> 
                                             <hr>
                                             <!----------- ===== Job Experties Container  ==== ------------->   
                                             @endforeach
+                                        <div class="card-footer py-4">
+                                            {{ paginateLinks($jobs) }}
+                                        </div>
                                     </div>
                                     <div class="tab-pane {{$saved_job}}" id="Saved_jobs_tab">
                                             @foreach($user_saved_jobs as $job)

@@ -56,7 +56,7 @@ class JobController extends Controller
         $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
 
         }else{
-        $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->get();
+        $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->paginate(getPaginate());
         }
 
         $categories = Category::with('subCategory')->get();

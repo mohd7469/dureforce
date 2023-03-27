@@ -17,10 +17,10 @@ class ServiceController extends BaseController
     {
         $services = Service::where($this->applyFilters($request))
         ->with(['user', 'user.basicProfile','category', 'subCategory' ])
-            ->orderBy('id','desc');
+            ->orderBy('created_at','desc');
         $draftServices = Service::where($this->applyFilters($request))
         ->with(['user', 'user.basicProfile','category', 'subCategory' ])
-            ->orderBy('id','desc');
+            ->orderBy('created_at','desc');
         if (getLastLoginRoleId() == Role::$Freelancer){
             $services = $services->where('user_id', auth()->user()->id);
             $draftServices = $draftServices->where('user_id', auth()->user()->id)->where('status_id',Service::STATUSES['DRAFT']);

@@ -247,6 +247,7 @@
         animation-duration: .9s;
         animation-iteration-count: infinite;
         animation-timing-function: ease-out;
+        left: 26%;
     }
 
 </style>
