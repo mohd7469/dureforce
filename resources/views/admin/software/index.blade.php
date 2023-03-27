@@ -18,6 +18,7 @@
                                     <th>@lang('Status')</th>
                                     <th>@lang('Last Update')</th>
                                     <th>@lang('Action')</th>
+                                    <th colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,7 +114,7 @@
                                             {{ diffforhumans($software->updated_at) }}
                                         </td>
 
-                                        <td data-label="@lang('Action')">
+                                        <td data-label="@lang('Action')" colspan="2">
                                         @if($software->status_id == 23)
                                             <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
                                                 <i class="las la-check"></i>
@@ -144,9 +145,9 @@
                                         @endif
 
                                         @if($software->status_id == 22)
-                                            <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
+                                            <!-- <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Approved')">
                                                 <i class="las la-check"></i>
-                                            </button>
+                                            </button> -->
                                             <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$software->id}}" data-original-title="@lang('Pending')">
                                                 <i class="las la-check"></i>
                                             </button>
@@ -187,7 +188,8 @@
                                                 <i class="las la-times"></i>
                                             </button>
                                         @endif
-
+                                        </td>
+                                        <td>
                                          
 
                                             <div style="display: flex">
