@@ -602,6 +602,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('pusher-credential/update', 'PusherSystemCredentialController@update')->name('pusher.credential.update');
         Route::get('/pusher-credential/delete/{id}', 'PusherSystemCredentialController@delete')->name('pusher.credential.delete');
         
+         //Storage Creditional Route
+         Route::get('storage-credential', 'StorageSystemCredentialController@index')->name('storage.credential.index');
+         Route::post('storage-credential/store', 'StorageSystemCredentialController@store')->name('storage.credential.store');
+         Route::post('storage-credential/activeBy', 'StorageSystemCredentialController@activeBy')->name('storage.credential.activeBy');
+         Route::post('storage-credential/inactiveBy', 'StorageSystemCredentialController@inactiveBy')->name('storage.credential.inactiveBy');
+         Route::post('storage-credential/update', 'StorageSystemCredentialController@update')->name('storage.credential.update');
+         Route::get('/storage-credential/delete/{id}', 'StorageSystemCredentialController@delete')->name('storage.credential.delete');
+         
      
       
 
