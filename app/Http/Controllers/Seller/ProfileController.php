@@ -26,6 +26,7 @@ use App\Models\WorldLanguage;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use App\Models\Country;
+use App\Models\Role;
 use App\Models\UserTestimonial;
 use Illuminate\Support\Facades\Mail;
 
@@ -203,7 +204,15 @@ class ProfileController extends Controller
             
             $user_portfolio=UserPortFolio::where('uuid',$uuid)->first();
         }
-        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios','user_portfolio'));
+        if(getLastLoginRoleId()==Role::$Freelancer){
+            $testimonials= $user->testimonials;
+        }
+        else{
+
+            $testimonials = $user->testimonials()->Approved();
+
+        }
+        return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','skills','user','user_experience','user_education','cities','basicProfile','userskills','user_languages','languages','language_levels','categories','countries','degrees','user_portfolios','user_portfolio','testimonials'));
     }
     
     /**
