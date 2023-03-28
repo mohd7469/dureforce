@@ -149,7 +149,8 @@
                                 form--control" id="password" name="password"
                                 placeholder="@lang('Enter password')"
                                 required="">
-                                <i class="las la-eye input-icon" onclick="showPassword()"></i>
+                                <a class="las la-eye input-icon" id="unhide" onclick="showPassword()"></a>
+                                <a class="las la-eye-slash input-icon" id="hide" onclick="showPassword()" style="display: none" ></a>
                             </div>
 
                             <!-- <div class="col-lg-12 form-group">

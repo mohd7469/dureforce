@@ -104,8 +104,12 @@ function showPassword(){
   var x = document.getElementById("password");
   if (x.type === "password") {
     x.type = "text";
+    $('#hide').show();
+    $('#unhide').hide();
   } else {
     x.type = "password";
+    $('#hide').hide();
+    $('#unhide').show();
   }
 }
 // $(".select2-custom").select2({
