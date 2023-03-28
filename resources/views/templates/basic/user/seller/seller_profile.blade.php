@@ -425,7 +425,7 @@
                                     </div>
                                 </div>
 
-                                    @foreach ($user->testimonials as $testimonial)
+                                    @foreach ($testimonials as $testimonial)
                                     <div class="row">
 
                                         <div class="quote">
@@ -498,11 +498,20 @@
                                                 <br>
                                                 {{$testimonial->client_response_company}}
                                                 <br>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <a href="{{$testimonial->client_linkedin_url}}">
+                                                            <i class="fab fa-solid fa-linkedin"></i>
+                                                            <span class="see-profile">See LinkedIn Profile </span>
+        
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 float-right">
+                                                        <span class="float-right">{{$testimonial->is_approved ? "Approved" : "Not Approved"}} </span>
+
+                                                    </div>
+                                                </div>
                                                 
-                                                <a href="{{$testimonial->client_linkedin_url}}">
-                                                    <i class="fab fa-solid fa-linkedin"></i>
-                                                    <span class="see-profile">See LinkedIn Profile </span>
-                                                </a>
                                                 
                                                 
                                                     

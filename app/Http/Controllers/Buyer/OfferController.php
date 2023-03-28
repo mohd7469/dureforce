@@ -45,16 +45,26 @@ class OfferController extends Controller
             'accept_privacy_policy' => 'required',
             'offer_expire_at'       => 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y'),
         ];
+        if ($request_data['payment_type']==ModuleOffer::PAYMENT_TYPE['HOURLY']) {
+            
+            $rules ['rate_per_hour' ] = 'required|numeric|min:1';
+            $rules ['weekly_limit' ] = 'required|numeric|min:1';
+            $rules ['contract_title' ] = 'required';
+            $rules ['start_date' ] = 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y');
 
-        if ($request_data['fix_payment_offer_type']==ModuleOffer::Fix_Payment_Offer_Type['BY_PROJECT']) {
-            $rules ['offer_ammount' ] = 'required|numeric|min:1';
-        } else if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
-
-            $rules['milestone'] = 'required|array';
-            $rules['milestone.*.description'] = 'required';
-            $rules['milestone.*.due_date'] = 'required|date|after_or_equal:now';
-            $rules['milestone.*.deposit_amount'] = 'required|min:1';
-        } 
+        } else {
+            if ($request_data['fix_payment_offer_type']==ModuleOffer::Fix_Payment_Offer_Type['BY_PROJECT']) {
+                $rules ['offer_ammount' ] = 'required|numeric|min:1';
+            } else if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
+    
+                $rules['milestone'] = 'required|array';
+                $rules['milestone.*.description'] = 'required';
+                $rules['milestone.*.due_date'] = 'required|date|after_or_equal:now';
+                $rules['milestone.*.deposit_amount'] = 'required|min:1';
+            } 
+        }
+        
+        
         $validator = Validator::make($request_data, $rules);
        
 
@@ -70,40 +80,50 @@ class OfferController extends Controller
 
                 $proposal=Proposal::with('user')->find($request_data['proposal_id']);
                 $module_offer = new ModuleOffer;
-                $module_offer->offer_amount = $request_data['offer_ammount'];
                 $module_offer->description_of_work = $request_data['description'];
                 $module_offer->contract_title = $request_data['contract_title'];
-                $module_offer->payment_type = ModuleOffer::PAYMENT_TYPE['FIXED'];
+                $module_offer->payment_type = $request_data['payment_type'];
                 $module_offer->proposal_id = $request_data['proposal_id'];
                 $module_offer->offer_send_to_id=$proposal->user->id;
                
                 $job = Job::find($request_data['job_id']);
                 $job->moduleOffer()->save($module_offer);
-
-                if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
-
-                    $ModuleOfferMilestones = $request_data['milestone'];
-                    $offered_amount=0;
-                    foreach ($ModuleOfferMilestones as $ModuleOfferMilestone) {
-                        $offered_amount+=$ModuleOfferMilestone['deposit_amount'];
-                        $ModuleOfferMilestone['is_paid']=false;
-                        $ModuleOfferMilestone['module_offer_id']=$module_offer->id;
-                        $offer_expire_at=$ModuleOfferMilestone['due_date'];
-                        ModuleOfferMilestone::create(
-                            [
-                                'description' =>$ModuleOfferMilestone['description'],
-                                'module_offer_id' => $ModuleOfferMilestone['module_offer_id'],
-                                'due_date' => $ModuleOfferMilestone['due_date'],
-                                'amount'   => $ModuleOfferMilestone['deposit_amount'],
-                                'is_paid'  =>$ModuleOfferMilestone['is_paid']
-
-                            ]
-                        );
-                    }
-                    $module_offer->offer_amount = $offered_amount;
-                    $module_offer->save();
+                if ($request_data['payment_type']==ModuleOffer::PAYMENT_TYPE['HOURLY']) {
+                    
+                    $module_offer->rate_per_hour = $request_data['rate_per_hour'];
+                    $module_offer->weekly_limit  = $request_data['weekly_limit'];
+                    $module_offer->start_date    = $request_data['start_date'] ? $request_data['start_date'] : Carbon::now();
 
                 }
+                else{
+                    $module_offer->offer_amount = $request_data['offer_ammount'];
+                    if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
+
+                        $ModuleOfferMilestones = $request_data['milestone'];
+                        $offered_amount=0;
+                        foreach ($ModuleOfferMilestones as $ModuleOfferMilestone) {
+                            $offered_amount+=$ModuleOfferMilestone['deposit_amount'];
+                            $ModuleOfferMilestone['is_paid']=false;
+                            $ModuleOfferMilestone['module_offer_id']=$module_offer->id;
+                            $offer_expire_at=$ModuleOfferMilestone['due_date'];
+                            ModuleOfferMilestone::create(
+                                [
+                                    'description' =>$ModuleOfferMilestone['description'],
+                                    'module_offer_id' => $ModuleOfferMilestone['module_offer_id'],
+                                    'due_date' => $ModuleOfferMilestone['due_date'],
+                                    'amount'   => $ModuleOfferMilestone['deposit_amount'],
+                                    'is_paid'  =>$ModuleOfferMilestone['is_paid']
+    
+                                ]
+                            );
+                        }
+                        $module_offer->offer_amount = $offered_amount;
+                        $module_offer->save();
+    
+                    }
+                
+                }
+                
                 if(isset($request_data['uploaded_files'])){
                     foreach ($request_data['uploaded_files'] as $file) 
                     {

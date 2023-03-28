@@ -383,7 +383,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function testimonials()
     {
-        return $this->hasMany(UserTestimonial::class)->Approved();
+        return $this->hasMany(UserTestimonial::class);
     }
 
 }   
