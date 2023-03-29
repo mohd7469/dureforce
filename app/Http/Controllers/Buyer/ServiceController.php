@@ -66,7 +66,7 @@ class ServiceController extends Controller
             
             $job_proposal->attachment()->createMany($service_proposal->attachments->toArray());
             DB::commit();
-            Log::info('Service Booked SuccessFully');
+            Log::info(["ServiceBooked" => 'Service Booked SuccessFully']);
             $notify[] = ['success','Service Booked SuccessFully'];
             return redirect()->route('buyer.job.single.view',$job->uuid)->withNotify($notify);
 

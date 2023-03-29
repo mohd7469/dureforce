@@ -49,11 +49,11 @@
                             </td>
 
                             <td data-label="@lang('Budget')">
-                                @if($job->fixed_amount != '0.00')
+                                @if(!empty($job->fixed_amount ))
                                     <span class="font-weight-bold">{{__($job->fixed_amount)}}</span>
                                 @else
                                     <span class="font-weight-bold">{{__($job->hourly_start_range)}} @lang('to') {{__($job->hourly_end_range)}}</span>
-                                </td>
+                                   </td>
                                 @endif
 
 

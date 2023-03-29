@@ -1399,6 +1399,13 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <span class="menu-title">@lang('Add Pusher Credentials ')</span>
                                 </a>
                             </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.storage.credential.index') }} ">
+                                <a href="{{ route('admin.storage.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Storage Credentials ')</span>
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>

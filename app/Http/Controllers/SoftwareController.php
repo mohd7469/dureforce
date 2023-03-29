@@ -25,8 +25,8 @@ class SoftwareController extends BaseController
         $softwares = Software::with('category', 'subCategory')->PublicFeatured();
         $draftSoftwares = Software::with('category', 'subCategory')->PublicFeatured();
         if (getLastLoginRoleId() == Role::$Freelancer){
-            $softwares = $softwares->where('user_id', auth()->user()->id)->orderBy('id','desc');
-            $draftSoftwares = $draftSoftwares->where('user_id', auth()->user()->id)->Status(Software::STATUSES['DRAFT'])->orderBy('id','desc');
+            $softwares = $softwares->where('user_id', auth()->user()->id)->orderBy('created_at','desc');
+            $draftSoftwares = $draftSoftwares->where('user_id', auth()->user()->id)->Status(Software::STATUSES['DRAFT'])->orderBy('created_at','desc');
         }
         else{
             $softwares = $softwares->Active()->Status(Software::STATUSES['APPROVED']);
