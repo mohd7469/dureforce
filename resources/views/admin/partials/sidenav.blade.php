@@ -137,6 +137,61 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
+
+
+                        <li class="sidebar-menu-item sidebar-dropdown">
+                            <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
+                                <i class="menu-icon las la-tasks"></i>
+                                <span class="menu-title">@lang('Manage Testimonials')</span>
+                                @if ($jobPending > 0)
+                                    <span class="menu-badge pill bg--primary ml-auto">
+                                    <i class="fa fa-exclamation"></i>
+                                </span>
+                                @endif
+                            </a>
+                            <div class="sidebar-submenu {{ menuActive('admin.job*', 2) }} ">
+                                <ul>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.index') }} ">
+                                        <a href="{{ route('admin.testimonial.index') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('All')</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.pending') }} ">
+                                        <a href="{{ route('admin.testimonial.pending') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Pending')</span>
+                                            @if ($jobPending)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+
+                                        </a>
+                                    </li>
+
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.approved') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Approved')</span>
+                                            @if ($jobApproved)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $jobApproved }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                 @if (in_array('7', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
