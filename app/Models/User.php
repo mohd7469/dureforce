@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithAll($query){
 
-        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios')->with('v1languages')->with('v1ProficiencyLevels');
+        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios')->with('v1languages')->with('v1ProficiencyLevels')->with('testimonials');
 
     }
 
@@ -380,6 +380,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function supportTickets()
     {
         return $this->hasMany(SupportTicket::class);
+    }
+    public function testimonials()
+    {
+        return $this->hasMany(UserTestimonial::class);
     }
 
 }   

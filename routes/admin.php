@@ -200,6 +200,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
  
         });
 
+
+        //testimonil
+        Route::get('testimonial/index', 'TestimonialController@index')->name('testimonial.index');
+        Route::get('testimonial/closed', 'TestimonialController@closed')->name('testimonial.closed');
+        Route::get('testimonial/pending', 'TestimonialController@pending')->name('testimonial.pending');
+        Route::get('testimonial/approved', 'TestimonialController@approved')->name('testimonial.approved');
+        Route::get('testimonial/cancel', 'TestimonialController@cancel')->name('testimonial.cancel');
+        
         //Manage blogs
         Route::get('blog/index', 'BlogController@index')->name('blog.index');
         Route::get('blog/create', 'BlogController@create')->name('blog.create');
@@ -602,6 +610,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('pusher-credential/update', 'PusherSystemCredentialController@update')->name('pusher.credential.update');
         Route::get('/pusher-credential/delete/{id}', 'PusherSystemCredentialController@delete')->name('pusher.credential.delete');
         
+         //Storage Creditional Route
+         Route::get('storage-credential', 'StorageSystemCredentialController@index')->name('storage.credential.index');
+         Route::post('storage-credential/store', 'StorageSystemCredentialController@store')->name('storage.credential.store');
+         Route::post('storage-credential/activeBy', 'StorageSystemCredentialController@activeBy')->name('storage.credential.activeBy');
+         Route::post('storage-credential/inactiveBy', 'StorageSystemCredentialController@inactiveBy')->name('storage.credential.inactiveBy');
+         Route::post('storage-credential/update', 'StorageSystemCredentialController@update')->name('storage.credential.update');
+         Route::get('/storage-credential/delete/{id}', 'StorageSystemCredentialController@delete')->name('storage.credential.delete');
+         
      
       
 

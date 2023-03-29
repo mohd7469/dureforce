@@ -85,8 +85,7 @@ class Kernel extends HttpKernel
         'checkStatusApi' => \App\Http\Middleware\CheckStatusApi::class,
         'demo' => \App\Http\Middleware\Demo::class,
         'is-profile-completed' => \App\Http\Middleware\isProfileCompleted::class,
-
-
+        'response-portal' => \App\Http\Middleware\ResponsePortalMiddleware::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,

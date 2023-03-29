@@ -30,7 +30,7 @@
                                             {{-- Job Title --}}
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Title')*</label>
-                                                <input type="text" name="title" maxlength="30" value="{{$job->title}}" class="form-control" placeholder="@lang("Enter Title")" ="">
+                                                <input type="text" name="title" maxlength="255" value="{{$job->title}}" class="form-control" placeholder="@lang("Enter Title")" ="">
                                             </div>
 
                                             {{-- Job Type --}}

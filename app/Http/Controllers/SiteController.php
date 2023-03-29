@@ -42,7 +42,7 @@ class SiteController extends Controller
         $emptyMessage = "No data found";
         $services = Service::Active()->Featured()->whereIn('status_id', [Service::STATUSES['APPROVED'], Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
 
-        $softwares = Software::Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
+        $softwares = Software::withAll()->Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
         $jobs = Job::where('status_id', Job::$Approved)->with(['skill', 'proposal', 'country', 'user', 'category'])->orderBy('created_at', 'DESC')->limit(20)->get();
 
 

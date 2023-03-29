@@ -17,19 +17,19 @@ class ServiceController extends BaseController
     {
         $services = Service::where($this->applyFilters($request))
         ->with(['user', 'user.basicProfile','category', 'subCategory' ])
-            ->inRandomOrder();
+            ->orderBy('created_at','desc');
         $draftServices = Service::where($this->applyFilters($request))
         ->with(['user', 'user.basicProfile','category', 'subCategory' ])
-            ->inRandomOrder();
+            ->orderBy('created_at','desc');
         if (getLastLoginRoleId() == Role::$Freelancer){
             $services = $services->where('user_id', auth()->user()->id);
             $draftServices = $draftServices->where('user_id', auth()->user()->id)->where('status_id',Service::STATUSES['DRAFT']);
         }
         else{
-            $services = $services->where('status_id', Service::STATUSES['APPROVED']);
+            $services = $services->where('status_id', Service::STATUSES['APPROVED'])->orderBy('id','desc');
             $draftServices = $draftServices->where('status_id', Service::STATUSES['DRAFT']);
         }
-        $services = $services->paginate(getPaginate())->withQueryString();
+        $services = $services->paginate(10)->withQueryString();
         $totalServices = $services->count();
         $draftServices = $draftServices->paginate(getPaginate())->withQueryString();
         $totalDraftServices = $draftServices->count();

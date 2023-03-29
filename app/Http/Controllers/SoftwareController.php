@@ -24,20 +24,18 @@ class SoftwareController extends BaseController
     {
         $softwares = Software::with('category', 'subCategory')->PublicFeatured();
         $draftSoftwares = Software::with('category', 'subCategory')->PublicFeatured();
-
         if (getLastLoginRoleId() == Role::$Freelancer){
-            $softwares = $softwares->where('user_id', auth()->user()->id);
-            $draftSoftwares = $draftSoftwares->where('user_id', auth()->user()->id)->Status(Software::STATUSES['DRAFT']);
+            $softwares = $softwares->where('user_id', auth()->user()->id)->orderBy('created_at','desc');
+            $draftSoftwares = $draftSoftwares->where('user_id', auth()->user()->id)->Status(Software::STATUSES['DRAFT'])->orderBy('created_at','desc');
         }
         else{
             $softwares = $softwares->Active()->Status(Software::STATUSES['APPROVED']);
             $draftSoftwares = $draftSoftwares->Active()->Status(Software::STATUSES['DRAFT']);
         }
-        $softwares = $softwares->where($this->applyFilters($request))->with('tags', 'user')->inRandomOrder()->paginate(getPaginate())->withQueryString();
+        $softwares = $softwares->where($this->applyFilters($request))->with('tags', 'user')->paginate(10)->withQueryString();
         $totalSoftwares = $softwares->count();
-        $draftSoftwares = $draftSoftwares->where($this->applyFilters($request))->with('tags', 'user')->inRandomOrder()->paginate(getPaginate())->withQueryString();
+        $draftSoftwares = $draftSoftwares->where($this->applyFilters($request))->with('tags', 'user')->paginate(10)->withQueryString();
         $totalDraftSoftwares = $draftSoftwares->count();
-
 
 
         $pageTitle = "Software";

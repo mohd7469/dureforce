@@ -14,7 +14,9 @@
             @elseif($offer->status_id == App\Models\ModuleOffer::STATUSES['ACCEPTED'])
                 <a href="{{route('contracts.show',$offer->contract->uuid)}}" class="offer-width">View Contract</a>
             @else
-                <a href="{{'#'}}" class="offer-width">Resend Offer</a>
+                @if (getLastLoginRoleId()==App\Models\Role::$Client)
+                    <a href="{{route('buyer.send.offer',$offer->proposal->uuid)}}" class="offer-width">Resend Offer</a>
+                @endif    
             @endif
             
 
@@ -76,12 +78,17 @@
                 </li>
                 <li>
                     <p>Start Date</p>
-                    <p>September 1 , 2022</p>
+                    @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
+                        <p>{{getFormattedDate($offer->start_date,'d-m-Y')}}</p>
+                        @else
+                        <p>{{getFormattedDate($offer->created_at,'d-m-Y')}}</p>
+
+                    @endif
                 </li>
                 @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
                     <li>
                         <p>Hourly Rate</p>
-                        <p>$30.00/hr</p>
+                        <p>{{$offer->rate_per_hour}}</p>
                     </li>
                 @else
                 
@@ -101,12 +108,36 @@
                     <p>Manual time Allowed</p>
                     <p>Yes</p>
                 </li>
+                <li>
+                    <p>Offer Type</p>
+                    <p>{{$offer->payment_type}}</p>
+                </li>
             </ul>
 
           </div>
           
           <!---Contact Details Section End-->
-          
+              <!---Job DetailsSection Start--->
+    @if($last_role_id == \App\Models\Role::$Freelancer AND $offer->moduleMilestones->count() > 0)
+    <hr>
+    <h3 class="heading_proposal jdc">Milestone Timeline</h3>
+        <div class="btm-c">
+            
+
+                
+                @foreach ($offer->moduleMilestones as $milestone)
+                    <p class="posted_date_c">{{$milestone->description}}<p>
+                    <p class="posted_date_c">${{$milestone->amount}}<p>
+                    @if($milestone->is_paid)
+                        <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
+                    @endif
+                @endforeach
+            
+            
+            
+        </div>
+        @endif
+    <!---Job Details Section End--->
          
 
     </div>

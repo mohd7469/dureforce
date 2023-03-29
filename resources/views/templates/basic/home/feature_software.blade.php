@@ -1,12 +1,12 @@
 <div id="carouselFeatureSoftware" class="carousel" data-bs-ride="carousel">
     <div class="carousel-inner">
         @foreach($softwares as $software)
+            @if($software->banner != null)
             <div class="carousel-item active ">
                 <div class="card">
                     
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
-                            
                             @if ($software->banner->banner_type==\App\Models\ModuleBanner::$Video)
                                 <div id="videoContainer" >
                                     <iframe src="{{getVideoBannerURL($software)}}" title="Banner Video" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:345px;height:250px"></iframe>
@@ -52,6 +52,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         @endforeach
     </div>
     <span class="seeall"><a href="{{ route('software') }}">See All</a></span>

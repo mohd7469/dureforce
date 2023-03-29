@@ -49,6 +49,9 @@
                     </div>
                 @endforelse
             </div>
+            <div class="card-footer py-4">
+                {{ paginateLinks($services) }}
+            </div>
         </div>
     </section>
 

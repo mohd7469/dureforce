@@ -29,7 +29,9 @@ class UserTestimonial extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withAll();
     }
-
+    public function scopeApproved($query){
+        return $query->where('is_approved',true);
+    }
 }
