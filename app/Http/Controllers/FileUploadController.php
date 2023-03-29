@@ -22,7 +22,7 @@ class FileUploadController extends Controller
                 'url'           => $url,
                 'type' =>$file_extension,
             ];
-            Log::error(["Dropzone File Uploaded Successfully "]);
+            Log::info(["Dropzone File Uploaded Successfully "]);
             return response()->json(['uploaded_file' =>$upload_file]);
 
         } catch (\Throwable $th) {
