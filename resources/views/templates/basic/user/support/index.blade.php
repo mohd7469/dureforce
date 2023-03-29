@@ -66,7 +66,7 @@
                                 <tr>
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
                                     <td><a href="{{route('ticket.view',$ticket->ticket_no)}}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
-                                    <td class="sub">{{$ticket->subject}}</td>
+                                    <td class="sub">{{Str::limit($ticket->subject,30)}}</td>
                                     <td>{{$ticket->supportMessage->count()}}</td>
 
 
