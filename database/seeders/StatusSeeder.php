@@ -49,10 +49,16 @@ class StatusSeeder extends Seeder
             ["id"=>29, "name"=>"Submitted", "slug"=>"submitted-proposal", "type"=>"App\\Models\\Proposal", "color"=>'badge--success', "module_id"=>Module::$Job],
             ["id"=>30, "name"=>"Archived", "slug"=>"archive-proposal", "type"=>"App\\Models\\Proposal", "color"=>'badge--success', "module_id"=>Module::$Job],
             ["id"=>31, "name"=>"Active", "slug"=>"active-proposal", "type"=>"App\\Models\\Proposal", "color"=>'badge--primary', "module_id"=>Module::$Job],
+            
             ["id"=>32, "name"=>"Pending", "slug"=>"pending", "type"=>"App\\Models\\ModuleOffer", "color"=>'badge--primary', "module_id"=>Module::$Job],
-            ["id"=>33, "name"=>"In Progress", "slug"=>"in_progress", "type"=>"App\\Models\\Contract", "color"=>'badge--primary', "module_id"=>Module::$Job],
-            ["id"=>34, "name"=>"Terminated", "slug"=>"terminated", "type"=>"App\\Models\\Contract", "color"=>'badge--primary', "module_id"=>Module::$Job],
-            ["id"=>35, "name"=>"Completed", "slug"=>"completed", "type"=>"App\\Models\\Contract", "color"=>'badge--primary', "module_id"=>Module::$Job],
+            ["id"=>33, "name"=>"In Progress", "slug"=>"in_progress", "type"=>"App\\Models\\Contract", "color"=>'badge--info', "module_id"=>Module::$Job],
+            ["id"=>34, "name"=>"Terminated", "slug"=>"terminated", "type"=>"App\\Models\\Contract", "color"=>'badge--warning', "module_id"=>Module::$Job],
+            ["id"=>35, "name"=>"Completed", "slug"=>"completed", "type"=>"App\\Models\\Contract", "color"=>'badge--success', "module_id"=>Module::$Job],
+
+            ["id"=>36, "name"=>"Requested", "slug"=>"requested", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--primary', "module_id"=>null],
+            ["id"=>37, "name"=>"Waiting For Approval", "slug"=>"waiting_approval", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--info', "module_id"=>null],
+            ["id"=>38, "name"=>"Accepted", "slug"=>"accepted", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--success', "module_id"=>null],
+            ["id"=>39, "name"=>"Rejected", "slug"=>"rejected", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--warning', "module_id"=>null],
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Status::truncate();

@@ -21,7 +21,8 @@
          
             <div class="image-div">
                 <img class="card-img-top image-ui" src="{{ !empty($propsal_to_send_offer->user->basicProfile->profile_picture)? $propsal_to_send_offer->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
-                {{-- <span class="logged-in">●</span> --}}
+                <span class="{{ $propsal_to_send_offer->user->is_session_active ? 'logged-in' : 'logged-out'}}">●</span>   
+               
 
               </div>
                <div>
@@ -29,7 +30,7 @@
               <h6>{{$propsal_to_send_offer->user->job_title}}</h6>
                 <div class="d-flex justify-content-between responsive-card-section mt-2">
                   <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$propsal_to_send_offer->user->location }}</p>
-                  <!-- <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>1:20PM Local time</p> -->
+                   <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>{{ date('H:i',strtotime($propsal_to_send_offer->user->last_activity_at)) }} Local time</p> 
                 </div>
                </div>
         </div>
@@ -104,7 +105,7 @@
           <div class="d-flex">
             <input type="text" class="form-control text-end" placeholder="20.00" name="rate_per_hour"><span class="ml-2 per-hour">/ hr</span>
           </div>
-          <p class="text-muted fs-15px mt-1">Domitri G profile rate is 20/hr</p>
+          <p class="text-muted fs-15px mt-1">{{$propsal_to_send_offer->user->full_name}} profile rate is {{$propsal_to_send_offer->user->rate_per_hour}}/hr</p>
         </div>
         
       </div>
@@ -275,14 +276,14 @@
                 
       <h6 class="color-green mt-3">Offer Expire Date</h6>
       <div class="d-flex">
-        <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control text-end " value="">
+        <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control" value="">
       </div>
 
     </div>
     <hr>
     <div>
       <h6 class="color-green">Description*</h6>
-        <textarea class=" p-3 border-grey text-area-responsive" value="" id="description" name="description" rows="3" ></textarea>
+        <textarea class=" p-3 border-grey text-area-responsive" value="" id="description" name="description" rows="3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate."></textarea>
     </div>
 
     <div>
