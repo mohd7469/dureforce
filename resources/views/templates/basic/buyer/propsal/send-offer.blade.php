@@ -405,12 +405,15 @@
       $(document).on('click', '.delete-btn', function(e) {
 
           filename=jQuery(this).attr("id");
+          filename = filename.replace(/[^\w]/gi, "_");
+          console.log(filename);
           $('#file_detail_'+filename).remove();
           var original_file_name=$(this).attr("data-id");
           const dt = new DataTransfer();
           var number_of_files=$('#offer_files').get(0).files.length;
           for (let index = 0; index < number_of_files; index++) {
               file=$('#offer_files').get(0).files[index];
+              console.log(file.name);
               if(file.name!=original_file_name)
               {
                   dt.items.add(file);
@@ -497,7 +500,9 @@
         var form= new FormData();
         for (let index = 0; index < number_of_files; index++) {
             file=$('#offer_files').get(0).files[index];
-            $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/\./g,'_')+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+         
+
+            $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
         }
         
     }

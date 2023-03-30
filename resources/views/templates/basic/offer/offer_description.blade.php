@@ -31,7 +31,7 @@
                 <p class="offer-pdesti">{{$offer->sendToUser->job_title}}</p>
                 <ul class="offer-location">
                     <li>{{$offer->sendToUser->location }}</li>
-                    <li>Time -o- clock</li>
+                    <li>{{ date('H:i',strtotime($offer->sendToUser->last_activity_at)) }} Time -o- clock</li>
                 </ul>
                 </div>
             </div>
