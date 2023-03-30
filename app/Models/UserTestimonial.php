@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\DatabaseOperations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -9,7 +10,7 @@ use Illuminate\Support\Str;
 
 class UserTestimonial extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory,SoftDeletes,DatabaseOperations;
 
     protected $guarded = ['id','uuid','is_approved','token'];
     
@@ -24,8 +25,15 @@ class UserTestimonial extends Model
             $model->token = $token;
         });
 
-
     }
+
+    public const STATUSES = [
+        'Requested'  =>  36,
+        'WaitingApproval' =>  37,
+        'Accepted' =>  38,
+        'Rejected' =>  39
+
+    ];
 
     public function user()
     {

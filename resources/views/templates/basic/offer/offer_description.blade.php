@@ -31,7 +31,7 @@
                 <p class="offer-pdesti">{{$offer->sendToUser->job_title}}</p>
                 <ul class="offer-location">
                     <li>{{$offer->sendToUser->location }}</li>
-                    <li>Time -o- clock</li>
+                    <li>{{ date('H:i',strtotime($offer->sendToUser->last_activity_at)) }} Time -o- clock</li>
                 </ul>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
                     <li>
                         <p>Hourly Rate</p>
-                        <p>{{$offer->rate_per_hour}}</p>
+                        <p>${{$offer->rate_per_hour}}/hr</p>
                     </li>
                 @else
                 
