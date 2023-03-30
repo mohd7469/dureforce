@@ -207,8 +207,15 @@ class CommonProfileController extends Controller
             $user_portfolios = $user->portfolios; 
             $categories = Category::select('id', 'name')->get();
             $degrees = Degree::select('id', 'title')->get();
-
-            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages'));
+            if(getLastLoginRoleId()==Role::$Freelancer){
+                $testimonials= $user->testimonials;
+            }
+            else{
+    
+                $testimonials = $user->testimonials()->Approved();
+    
+            }
+            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages','testimonials'));
         } catch (\Throwable $th) {
             //throw $th;
         }

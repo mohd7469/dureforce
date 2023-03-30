@@ -246,7 +246,7 @@ class ProposalController extends Controller
                     'milestones.*.description' => 'string|required',
                     'milestones.*.start_date' => 'date|required|after_or_equal:now',
                     'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
-                    'milestones.*.amount' => 'string|required',
+                    'milestones.*.amount' => 'string|required|min:1',
                     'total_project_price' => 'required',
                     'amount_receive' => 'required',
                     'cover_letter' => 'required|string|min:20'
