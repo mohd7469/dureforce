@@ -53,6 +53,17 @@ h6{
 .card-border{
     border:1px solid #CBDFDF !important;
 }
+.ml{
+    margin-left: 18px;
+}
+.margin-left-responsive-media{
+    margin-left: -2px;
+
+}
+.milestoneButton{
+    color:#7F007F !important;
+    background-color:transparent;
+}
 .logged-in {
     color: #4cd137;
     position: absolute;
@@ -80,6 +91,17 @@ h6{
     /* background: repeat; */
     background-repeat: no-repeat;
 }
+.clock-icon-class{
+    background: url(/assets/images/job/clock-icon.png);
+    background-size: 13px;
+    margin-right: 7px;
+    color: transparent;
+    width: 20px;
+    height: 25px;
+    /* background: repeat; */
+    background-repeat: no-repeat;
+}
+
 .card{
     white-space: nowrap;
 }

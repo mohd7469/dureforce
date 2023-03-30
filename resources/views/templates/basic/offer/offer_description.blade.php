@@ -88,7 +88,7 @@
                 @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
                     <li>
                         <p>Hourly Rate</p>
-                        <p>{{$offer->rate_per_hour}}</p>
+                        <p>${{$offer->rate_per_hour}}/hr</p>
                     </li>
                 @else
                 

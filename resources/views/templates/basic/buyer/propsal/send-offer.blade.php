@@ -29,8 +29,8 @@
                 <h4 class="card-title color-purple">{{$propsal_to_send_offer->user->full_name}}</h4>
               <h6>{{$propsal_to_send_offer->user->job_title}}</h6>
                 <div class="d-flex justify-content-between responsive-card-section mt-2">
-                  <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$propsal_to_send_offer->user->location }}</p>
-                   <p class="responsive-fonts"><i class="fa fa-clock-o icon-class margin-left-responsive-media" aria-hidden="true"></i>{{ date('H:i',strtotime($propsal_to_send_offer->user->last_activity_at)) }} Local time</p> 
+                    <p class="responsive-fonts"><i class="fa fa-map-marker icon-class" aria-hidden="true"></i>{{$propsal_to_send_offer->user->location }}</p>
+                   <p class="responsive-fonts ml"><i class="fa fa-clock clock-icon-class margin-left-responsive-media" aria-hidden="true"></i>{{ date('H:i',strtotime($propsal_to_send_offer->user->last_activity_at)) }} Local time</p> 
                 </div>
                </div>
         </div>
@@ -103,7 +103,13 @@
         <div class="col-lg-3 col-md-6 col-sm-12">
           <h6 class="color-green mt-3">Pay By the hour </h6>
           <div class="d-flex">
-            <input type="text" class="form-control text-end" placeholder="20.00" name="rate_per_hour"><span class="ml-2 per-hour">/ hr</span>
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">$</div>
+              </div>
+
+                <input type="text" class="form-control text-end" placeholder="rate/hr" name="rate_per_hour">
+            </div>
           </div>
           <p class="text-muted fs-15px mt-1">{{$propsal_to_send_offer->user->full_name}} profile rate is {{$propsal_to_send_offer->user->rate_per_hour}}/hr</p>
         </div>
@@ -119,7 +125,7 @@
           <div class="col-lg-3 col-md-6 col-sm-12">
             <div class="form-group">
               <div class="d-flex">
-                <input type="number" class="form-control text-end" placeholder="20.00" name="weekly_limit" ><span class="ml-2 per-hour">Hrs/Week</span>
+                <input type="number" class="form-control text-end" placeholder="hrs/week" name="weekly_limit" >
               </div>
               <p class="text-muted fs-15px mt-1">$800.0 max/week</p>
 
@@ -206,8 +212,17 @@
                   <h6 class="color-green mt-3">Pay by Fixed Price</h6>
                   
                   <div class="d-flex">
-                      <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
-                      <span class="ml-2 per-hour"></span>
+                    <div class="input-group mb-2">
+                      <div class="input-group-prepend">
+                        <div class="input-group-text">$</div>
+                      </div>
+
+                        <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
+                      <p class="text-muted fs-15px mt-1"> This is the price you and {{$propsal_to_send_offer->user->full_name}} have agreed upon  </p>
+
+                       
+                    </div>
+                      
   
                   </div>
               </div>
@@ -241,7 +256,13 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <label><h6>Deposit Amount*</h6></label>
-              <input type="number" name="milestone[0][deposit_amount]" class="form-control text-end"  min="0" id="milestone.0.deposit_amount">
+              <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                </div>
+                <input type="number" name="milestone[0][deposit_amount]" class="form-control text-end"  min="0" id="milestone.0.deposit_amount">
+
+              </div>
             </div>
           </div>
       </div>
@@ -343,7 +364,7 @@
 
     $("#add").click(function(){
         ++index;
-        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+index+'][description]" class="form-control" placeholder="" id="milestone.'+index+'.description"></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+index+'][due_date]" class="form-control" placeholder="" id="milestone.'+index+'.due_date"></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="number" name="milestone['+index+'][deposit_amount]" class="form-control text-end" id="milestone.'+index+'.deposit_amount"></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i style="color:red" class="fa fa-trash"></i></button></div></div>');
+        $("#dynamicTable").append('<div class="row row-line mt-10"><div class="col-lg-3 col-md-6 col-sm-12"><input type="text" name="milestone['+index+'][description]" class="form-control" placeholder="" id="milestone.'+index+'.description"></div><div class="col-lg-3 col-md-6 col-sm-12"><input type="date" name="milestone['+index+'][due_date]" class="form-control" placeholder="" id="milestone.'+index+'.due_date"></div><div class="col-lg-3 col-md-6 col-sm-12"><div class="input-group mb-2"><div class="input-group-prepend"><div class="input-group-text">$</div></div><input type="number" name="milestone['+index+'][deposit_amount]" class="form-control text-end" id="milestone.'+index+'.deposit_amount"></div></div></div><div class="col-lg-1 col-md-1 col-sm-1 mt-2"><button type="button" class="deleteButton remove-tr"><i style="color:red" class="fa fa-trash"></i></button></div></div>');
 
     });
 
@@ -484,7 +505,7 @@
     function byMilestone() {
         var decider = document.getElementById('switch');
         if(decider.checked){
-            alert('check');
+            // alert('check');
         } else {
           $("#milestone").show();
           $('#fix_payment_offer_type').val('by_milestone');
