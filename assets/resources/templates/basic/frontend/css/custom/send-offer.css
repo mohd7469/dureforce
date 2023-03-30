@@ -54,11 +54,18 @@ h6{
     border:1px solid #CBDFDF !important;
 }
 .logged-in {
-    color: #007F7F;
+    color: #4cd137;
     position: absolute;
-    right:33px;
+    right:39px;
     bottom: 0;
-    font-size: 21px;
+    font-size: 30px;
+  }
+  .logged-out {
+    color: #c23616;
+    position: absolute;
+    right:39px;
+    bottom: 0;
+    font-size: 30px;
   }
   .fs-23px:before{
     font-size: 55px;
