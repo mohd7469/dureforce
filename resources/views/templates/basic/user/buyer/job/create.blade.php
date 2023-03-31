@@ -215,7 +215,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Expected Start Date')*</label>
                                                     <div class="input-group mb-3">
-                                                    <input type="date" class="form-control" name="expected_start_date" value="" placeholder="" >
+                                                    <input type="date" class="form-control" name="expected_start_date" value="" placeholder="" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                             </div>
 

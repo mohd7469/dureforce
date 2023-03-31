@@ -803,11 +803,11 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" >
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" min="1900-01-01" max="2099-12-31">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" >
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" min="1900-01-01" max="2099-12-31">
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">

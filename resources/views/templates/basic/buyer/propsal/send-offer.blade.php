@@ -141,7 +141,7 @@
         <div class="col-lg-3 col-md-6 col-sm-12">
         
           <label><h6>Start Date (Optional)</h6></label>
-          <input type="date" class="form-control" placeholder="" name="start_date">
+          <input type="date" class="form-control" placeholder="" name="start_date" min="1900-01-01" max="2099-12-31">
         
         </div>
        
@@ -251,7 +251,7 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
               <label><h6>Due Date*</h6></label>
-              <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="" id="milestone.0.due_date">
+              <input type="date" name="milestone[0][due_date]" class="form-control" placeholder="" value="" id="milestone.0.due_date" min="1900-01-01" max="2099-12-31">
              
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12">
@@ -297,7 +297,7 @@
                 
       <h6 class="color-green mt-3">Offer Expire Date</h6>
       <div class="d-flex">
-        <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control" value="">
+        <input type="date" name="offer_expire_at" id="offer_expire_at_id" class="form-control" value="" min="1900-01-01" max="2099-12-31">
       </div>
 
     </div>
