@@ -63,7 +63,7 @@
              <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6 col-xs-6">
                <label>@lang('Project Start Date')*</label>
                <div class="input-group mb-3">
-               <input type="date" class="form-control" name="project_start_date" value="" >
+               <input type="date" class="form-control" name="project_start_date" value="" min="1900-01-01" max="2099-12-31">
                </div>
             </div>
 
@@ -71,7 +71,7 @@
             <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6 col-xs-6" >
                <label>@lang('Project End Date')*</label>
                <div class="input-group mb-3">
-               <input type="date" class="form-control" name="project_end_date" value=""  >
+               <input type="date" class="form-control" name="project_end_date" value=""  min="1900-01-01" max="2099-12-31">
                </div>
             </div>
 
@@ -92,7 +92,7 @@
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Start Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date" >
+                        <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date" min="1900-01-01" max="2099-12-31">
                         </div>
                      </div>
       
@@ -100,7 +100,7 @@
                      <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                         <label>@lang('Due Date')*</label>
                         <div class="input-group mb-3">
-                        <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date" >
+                        <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date" min="1900-01-01" max="2099-12-31">
                         </div>
                      </div>
       

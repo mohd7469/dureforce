@@ -27,9 +27,14 @@
                                                     <a class="nav-link {{$search_job}}"  data-bs-toggle="tab"
                                                        href="#Search_tab">Search</a>
                                                 </li>
+
                                                 <li class="nav-item">
                                                     <a class="nav-link {{$saved_job}}" data-bs-toggle="tab"
                                                        href="#Saved_jobs_tab">Saved Jobs ({{count($user_saved_jobs)}})</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-bs-toggle="tab"
+                                                    href="#My_jobs_tab">My Jobs (5)</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -191,6 +196,13 @@
                                                     <!----------- ===== Job Experties Container  ==== ------------->
                                                 @endforeach
                                             </div>
+                                             <!-- My jobs -->
+                                            <div class="tab-pane {{$saved_job}}" id="My_jobs_tab">
+                                                    <br>
+                                                    <br>
+                                                    <center><h2>Coming Soon</h2></center> 
+                                            </div>
+                                            <!-- End My Jobs -->
                                         </form>
                                         <!--===  Bio Profile Section End ===-->
                                     </div>
