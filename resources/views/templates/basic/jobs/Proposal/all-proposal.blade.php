@@ -351,7 +351,6 @@
                                             @endforeach
                                         </div>
                                 </div>
-</
 
                         </div>
 

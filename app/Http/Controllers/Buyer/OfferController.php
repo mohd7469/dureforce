@@ -45,6 +45,10 @@ class OfferController extends Controller
             'accept_privacy_policy' => 'required',
             'offer_expire_at'       => 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y'),
         ];
+        $custom_messages = [
+
+            'description.required' => 'description of work field is required',
+        ];
         if ($request_data['payment_type']==ModuleOffer::PAYMENT_TYPE['HOURLY']) {
             
             $rules ['rate_per_hour' ] = 'required|numeric|min:1';
@@ -65,7 +69,7 @@ class OfferController extends Controller
         }
         
         
-        $validator = Validator::make($request_data, $rules);
+        $validator = Validator::make($request_data, $rules,$custom_messages);
        
 
         if ($validator->fails()) {

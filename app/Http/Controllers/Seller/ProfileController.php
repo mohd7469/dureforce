@@ -573,7 +573,7 @@ class ProfileController extends Controller
         try {
 
             DB::beginTransaction();
-            $request->merge(['user_id' => Auth::user()->id]);
+            $request->merge(['user_id' => Auth::user()->id , 'status_id' => UserTestimonial::STATUSES['Requested']]);
             $user_testimonial=UserTestimonial::create($request->all());
             Mail::to($user_testimonial->client_email)->send(new TestimonialEmail($user_testimonial));
             DB::commit();
@@ -623,7 +623,7 @@ class ProfileController extends Controller
                 return view('layout_email.testimonial.token-expired')->with('message');
 
             }
-            $request->merge(['token' => null]);
+            $request->merge(['token' => null , 'status_id' => UserTestimonial::STATUSES['WaitingApproval']]);
 
             UserTestimonial::where('id',$request->user_testimonial_id)->update(
                 $request->only(
@@ -636,7 +636,8 @@ class ProfileController extends Controller
                     'client_response_role',
                     'client_response_company',
                     'client_response_linkedin_profile_url',
-                    'token'
+                    'token',
+                    'status_id'
                 )
             );
             DB::commit();

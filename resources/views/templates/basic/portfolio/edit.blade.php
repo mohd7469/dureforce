@@ -1,6 +1,6 @@
 
 <div class="row section-heading-border " style="margin-bottom: 23px;">
-    
+    @if ($user_portfolio)
     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12"> <b>My Portfolio > {{$user_portfolio->name}}</b></div>
     <div class="sep-solid"></div>
 
@@ -102,7 +102,7 @@
             {{-- Completion Date --}}
             <div class="col-md-12 col-sm-12 col-lg-12"> 
                 <label >Completion Date *</label>
-                <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date"  value="{{old('completion_date',$user_portfolio->completion_date)}}"  >
+                <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date"  value="{{old('completion_date',$user_portfolio->completion_date)}}"  min="1900-01-01" max="2099-12-31">
             </div>
 
             {{-- urls --}}
@@ -152,6 +152,10 @@
             </div>
         </div>
     </div>
+    @else
+        <h3>Portfolio Not Found</h3>
+    @endif
+    
 </div>
 
 @push('style')
