@@ -1188,6 +1188,8 @@
                                                                     >
                                                                     <input
                                                                         type="date"
+                                                                        min="1900-01-01"
+                                                                        max="2099-12-31"
                                                                         name="start_date_job[]"
                                                                         id="start_date"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
@@ -1209,6 +1211,8 @@
                                                                     <input
                                                                         class="end-date-job-0"
                                                                         id="end-date-job"
+                                                                        min="1900-01-01" 
+                                                                        max="2099-12-31"
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
@@ -1384,6 +1388,8 @@
                                                                 >
                                                                 <input
                                                                     type="date"
+                                                                    min="1900-01-01" 
+                                                                    max="2099-12-31"
                                                                     name="start_date_institute[]"
                                                                     id="from_date"
                                                                     onchange="setMinDateInsti($(this), $('.end-date-insti'))"
@@ -1403,6 +1409,8 @@
                                                                 >
                                                                 <input
                                                                     type="date"
+                                                                    min="1900-01-01" 
+                                                                    max="2099-12-31"
                                                                     class="start_date_job[]"
                                                                     name="end_date_institute[]"
                                                                     id="to_date"
@@ -1963,11 +1971,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" >
+                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" >
+                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -2016,11 +2024,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">

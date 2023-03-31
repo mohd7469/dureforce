@@ -49,7 +49,7 @@
                                     <select
                                             name="country_id"
                                             class="form-control select-lang"
-                                            id="country_id"
+                                            id="sec_country_id"
                                             >
                                             <option
                                                 value=""
@@ -77,7 +77,7 @@
                                     <select
                                         name="city_id"
                                         class="form-control select-lang"
-                                        id="city_id"
+                                        id="payment_city_id"
                                             >
                                             <option value="">Select City</option>
         
@@ -113,3 +113,5 @@
      </div>
   </div>
 </div>
+
+

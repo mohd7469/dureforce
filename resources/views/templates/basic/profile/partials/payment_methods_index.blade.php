@@ -127,7 +127,7 @@
             $(".modal-body #cvv_code").val(cvv_code);
             $(".modal-body #expiration_date").val(expiration_date);
 
-            $(".modal-body #country_id").val(country_id);
+            $(".modal-body #sec_country_id").val(country_id);
             $(".modal-body #city_id").val(city_id);
             $(".modal-body #address").val(address);
 
@@ -136,6 +136,36 @@
            
         })
     });
+</script>
+
+<script>
+    $("#sec_country_id").on('change',function(){
+        getCountryCities($(this).val(),'#payment_city_id');
+    });
+    function getCountryCities(country_id,select_field_id)
+    {
+        $.ajax({
+            type:"GET",
+            url:"{{route('get-cities')}}",
+            data: {country_id : country_id},
+            success:function(data){
+                if(data.cities)
+                {    
+                    
+                    $(select_field_id).empty();
+                    $(select_field_id).append(
+                        `<option>Select City</option>
+                        ${data.cities?.map((city) => {
+                            return ` <option value="${city.id}"> ${city.name}</option>`;
+                    })}`);
+                }
+                else{
+                    alert("Wrong Country Id");        
+                }
+            }
+        }); 
+
+    }
 </script>
 @endpush
 
