@@ -73,7 +73,7 @@
                             <div class="col-lg-6 form-group hover-input-popup">
                                 {{-- <label for="password">@lang('Password')*</label> --}}
                                 <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter password")">
-                                
+
                             @if($general->secure_password)
                                     <div class="input-popup">
                                       <p class="error lower">@lang('1 small letter minimum')</p>
