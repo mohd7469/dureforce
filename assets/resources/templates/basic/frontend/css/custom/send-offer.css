@@ -64,43 +64,43 @@ h6{
     color:#7F007F !important;
     background-color:transparent;
 }
-.logged-in {
-    color: #4cd137;
+.login-status {
     position: absolute;
-    right:39px;
+    right: 39px;
     bottom: 0;
     font-size: 30px;
   }
+  
+  .logged-in {
+    color: #4cd137;
+  }
+  
   .logged-out {
     color: #c23616;
-    position: absolute;
-    right:39px;
-    bottom: 0;
-    font-size: 30px;
   }
   .fs-23px:before{
     font-size: 55px;
   }
-.icon-class{
-    background: url(/assets/images/job/location-icon.png);
+  .icon-class,
+  .clock-icon-class {
     background-size: 13px;
     margin-right: 7px;
     color: transparent;
+    /* background: repeat; */
+    background-repeat: no-repeat;
+  }
+  
+  .icon-class {
+    background-image: url(/assets/images/job/location-icon.png);
     width: 16px;
     height: 20px;
-    /* background: repeat; */
-    background-repeat: no-repeat;
-}
-.clock-icon-class{
-    background: url(/assets/images/job/clock-icon.png);
-    background-size: 13px;
-    margin-right: 7px;
-    color: transparent;
+  }
+  
+  .clock-icon-class {
+    background-image: url(/assets/images/job/clock-icon.png);
     width: 20px;
     height: 25px;
-    /* background: repeat; */
-    background-repeat: no-repeat;
-}
+  }
 
 .card{
     white-space: nowrap;

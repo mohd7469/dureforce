@@ -40,6 +40,11 @@ class UserTestimonial extends Model
         return $this->belongsTo(User::class, 'user_id')->withAll();
     }
     public function scopeApproved($query){
-        return $query->where('is_approved',true);
+        return $query->where('status_id',self::STATUSES['Accepted']);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+
     }
 }
