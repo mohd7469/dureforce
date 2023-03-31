@@ -80,7 +80,7 @@
                                         id="city_id"
                                             >
                                             <option value="">Select City</option>
-        
+
                                             @foreach ($cities as $city)
                                                 <option value="{{$city->id}}"
                                                 {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
