@@ -9,6 +9,7 @@
     <h6 class="fw-bold my-2 offer-letter-alignment-top">Send Offer</h5>
   <div class="card card-border p-3">
     <div class="">
+
       @if(session('success'))
 
         <div class="alert alert-success" style="float: right" role="alert">
@@ -21,7 +22,7 @@
          
             <div class="image-div">
                 <img class="card-img-top image-ui" src="{{ !empty($propsal_to_send_offer->user->basicProfile->profile_picture)? $propsal_to_send_offer->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
-                <span class="{{ $propsal_to_send_offer->user->is_session_active ? 'logged-in' : 'logged-out'}}">●</span>   
+                <span class="login-status {{ $propsal_to_send_offer->user->is_session_active ? 'logged-in' : 'logged-out'}}">●</span>   
                
 
               </div>
@@ -111,7 +112,7 @@
                 <input type="text" class="form-control text-end" placeholder="rate/hr" name="rate_per_hour">
             </div>
           </div>
-          <p class="text-muted fs-15px mt-1">{{$propsal_to_send_offer->user->full_name}} profile rate is {{$propsal_to_send_offer->user->rate_per_hour}}/hr</p>
+          <p class="text-muted fs-15px mt-1">{{$propsal_to_send_offer->user->full_name}} profile rate is ${{$propsal_to_send_offer->user->rate_per_hour}}/hr</p>
         </div>
         
       </div>
@@ -217,7 +218,7 @@
                         <div class="input-group-text">$</div>
                       </div>
 
-                        <input type="number" name="offer_ammount" id="offer_ammount" class="form-control text-end " value="">
+                        <input type="number" name="offer_ammount"  class="form-control text-end " value="">
                       <p class="text-muted fs-15px mt-1"> This is the price you and {{$propsal_to_send_offer->user->full_name}} have agreed upon  </p>
 
                        
@@ -303,8 +304,8 @@
     </div>
     <hr>
     <div>
-      <h6 class="color-green">Description*</h6>
-        <textarea class=" p-3 border-grey text-area-responsive" value="" id="description" name="description" rows="3" placeholder="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate."></textarea>
+      <h6 class="">Description of Work*</h6>
+        <textarea class=" p-3 border-grey text-area-responsive" value="" id="description" name="description" rows="3" placeholder="Start writing description here...."></textarea>
     </div>
 
     <div>
