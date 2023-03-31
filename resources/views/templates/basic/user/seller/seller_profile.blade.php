@@ -507,7 +507,7 @@
                                                         </a>
                                                     </div>
                                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 float-right">
-                                                        <span class="float-right">{{$testimonial->is_approved ? "Approved" : "Not Approved"}} </span>
+                                                        <span class="float-right">{{$testimonial->status->name}} </span>
 
                                                     </div>
                                                 </div>

@@ -1,6 +1,6 @@
 
 <div class="row section-heading-border " style="margin-bottom: 23px;">
-    
+    @if ($user_portfolio)
     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12"> <b>My Portfolio > {{$user_portfolio->name}}</b></div>
     <div class="sep-solid"></div>
 
@@ -152,6 +152,10 @@
             </div>
         </div>
     </div>
+    @else
+        <h3>Portfolio Not Found</h3>
+    @endif
+    
 </div>
 
 @push('style')
