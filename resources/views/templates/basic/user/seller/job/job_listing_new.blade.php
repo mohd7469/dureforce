@@ -75,6 +75,7 @@
                                             <div class="tab-pane {{$search_job}}" id="Search_tab">
                                                 <p class="jb-found">{{count($jobs)}} jobs found</p>
                                                 @foreach($jobs as $job)
+                                                @if(!in_array($job->id, $user_saved_jobs_ids))
                                                     <div class="details-scs">
                                                         {{--                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
                                                         <div class="row">
@@ -128,6 +129,7 @@
                                                     </div>
                                                     <hr>
                                                     <!----------- ===== Job Experties Container  ==== ------------->
+                                                @endif    
                                                 @endforeach
                                                 <div class="card-footer py-4">
                                                     {{ paginateLinks($jobs) }}
