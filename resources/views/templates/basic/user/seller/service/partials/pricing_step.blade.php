@@ -114,19 +114,19 @@ if (!empty($service)) {
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>Title</label>
-                                <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title"/>
+                                <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title" onfocusout="validPrice()"/>
                             </div>
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang('Per Hour Rate')</label>
                                 <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
-                                    placeholder="@lang('Per hour rate')" id="add_on_price" oninput="this.value = Math.abs(this.value)" >
+                                    placeholder="@lang('Per hour rate')" id="add_on_price" oninput="this.value = Math.abs(this.value)" onfocusout="validPrice()">
                             </div>
 
                             <div class="col-xl-4 col-lg-4 form-group">
                                 <label>@lang(' Estimated Delivery Time ')</label>
                                     <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
-                                    placeholder="@lang('Enter Hours')" oninput="this.value = Math.abs(this.value)">
+                                    placeholder="@lang('Enter Hours')" oninput="this.value = Math.abs(this.value)" onfocusout="validPrice()">
                             </div>
                         </div>
 
@@ -235,5 +235,38 @@ if (!empty($service)) {
         {{-- </div> --}}
     </div>
 </form>
+
+<script>
+function validPrice(){
+    var title, titleLength;
+    title=$('#extra_title').val();
+    titleLength=title.length;
+    console.log(titleLength);
+    var prhour, prhourLength;
+    prhour=$('#add_on_price').val();
+    prhourLength=prhour.length;
+    console.log(prhourLength);
+    var delivery, deliveryLength;
+    delivery=$('#add_on_delivery').val();
+    deliveryLength=delivery.length;
+    console.log(deliveryLength);
+    if(titleLength>0 || prhourLength>0 || deliveryLength>0){
+        $('#extra_title').prop('required',true);
+        $('#add_on_price').prop('required',true);
+        $('#add_on_delivery').prop('required',true);
+
+    }
+    if(titleLength < 1 && prhourLength < 1 && deliveryLength < 1){
+        console.log("here inside");
+        $('#extra_title').prop('required',false);
+        $('#add_on_price').prop('required',false);
+        $('#add_on_delivery').prop('required',false);
+    }
+
+
+
+
+}
+</script>
 
 

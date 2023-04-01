@@ -131,11 +131,11 @@ function addSteps() {
   <div class="col-xl-12 col-lg-12 form-group" >
              <label for="">Step Name *</label>
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control"  />
+                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control step2"  />
                 </div>
                 <div>
                 <label for="discription">Step Description *</label>
-                <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
+                <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control description2"
                     ></textarea>
                 <br />
                 <br />
@@ -591,6 +591,16 @@ function pricingFormValidation() {
       }
     });
 
+    $(".step2").each(function () {
+      if ($.trim($(this).val()).length < 1) {
+        e.preventDefault();
+        $(this).after(
+            '<span class="error text-danger">This field is required</span>'
+        );
+        showValidationError('Add Another step name field is required');
+      }
+    });
+
     $(".description").each(function () {
       if ($.trim($(this).val()).length < 1) {
         e.preventDefault();
@@ -598,6 +608,16 @@ function pricingFormValidation() {
           '<span class="error text-danger">This field is required</span>'
         );
         showValidationError('step description field is required');
+      }
+    });
+
+    $(".description2").each(function () {
+      if ($.trim($(this).val()).length < 1) {
+        e.preventDefault();
+        $(this).after(
+            '<span class="error text-danger">This field is required</span>'
+        );
+        showValidationError('Add Another step description field is required');
       }
     });
   });
