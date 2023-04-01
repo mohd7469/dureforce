@@ -214,11 +214,11 @@ if (!empty($service)) {
 
                 <hr>
                 <div class="row">
-                    <div class="col-md-6 ">
+                    <div class="col-md-3 ">
                         <a class="btn service--btns btn-back btn-secondary float-left  mt-20 "
                             href="?view=step-1">@lang('BACK')</a>
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-9 text-right">
                         <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
     
