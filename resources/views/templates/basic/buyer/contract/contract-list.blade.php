@@ -41,7 +41,7 @@
                                             <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                     </td>
                                     <td>
-                                        <p class="job_price">${{$contract->contract_total_amount}}</p>
+                                        <p class="job_price">${{$contract->contract_total_amount ?? 0}}</p>
                                     </td>
                                     <td>
                                         <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
@@ -75,7 +75,7 @@
                                         <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">${{$contract->contract_total_amount}}</p>
+                                    <p class="job_price">${{$contract->contract_total_amount ?? 0}}</p>
                                 </td>
                                 <td>
                                     <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
@@ -109,7 +109,7 @@
                                         <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">${{$contract->contract_total_amount}}</p>
+                                    <p class="job_price">${{$contract->contract_total_amount ?? 0}}</p>
                                 </td>
                                 <td>
                                     <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
@@ -142,7 +142,7 @@
                                         <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
                                 </td>
                                 <td>
-                                    <p class="job_price">${{$contract->contract_total_amount}}</p>
+                                    <p class="job_price">${{$contract->contract_total_amount ?? 0}}</p>
                                 </td>
                                 <td>
                                     <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>

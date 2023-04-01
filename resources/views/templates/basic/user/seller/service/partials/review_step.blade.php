@@ -55,11 +55,11 @@ class="review-form"
                 <br>
                 <hr/>
             <div class="row">
-                <div class="col-md-4 ">
+                <div class="col-md-3 ">
                     <a class="btn service--btns btn-secondary float-left  mt-20 "
                         href="?view=step-5">@lang('BACK')</a>
                 </div>
-                <div class="col-md-8 text-right">
+                <div class="col-md-9 text-right">
 
                     {{-- <button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
                         CANCEL 
