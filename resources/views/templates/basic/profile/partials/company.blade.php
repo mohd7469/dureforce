@@ -139,7 +139,7 @@ z-index: 1;
       <div class="cp-profile_c_main">
         <form action="{{route('buyer.profile.update.picture')}}" method="post" enctype="multipart/form-data" id="image_change">
             @csrf
-            <div class="profile-img-buyer col-md-12" style="background-color: transparent;">
+            <div class="profile-img-buyer col-md-4" style="background-color: transparent;">
                 <input type="file" name="company_logo" id="img-upload" accept="image/png, image/gif, image/jpeg" class="imgInp imgInp-after " onchange="previewCompanyFile(this)" autocomplete="on">
                 <img class="card-img-top image-ui" width="100" height="100" id="preview-img-company" src="{{ !empty($user->company->logo)? $user->company->logo: getImage('assets/images/default.png') }}" alt="">
                 
