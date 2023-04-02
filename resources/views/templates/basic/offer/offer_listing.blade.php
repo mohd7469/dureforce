@@ -41,7 +41,11 @@
                                         <span class="badge badge--primary">{{$offer->status->name ?? ''}}</span>
                                     </td>
                                     <td>
-                                        <p class="job_price">${{$offer->offer_amount ?? ''}}</p>
+                                        @if($offer->payment_type == 'Fixed')
+                                        <p class="job_price">{{isset($offer->offer_amount) ? '$'.$offer->offer_amount : ''}}</p>
+                                        @else
+                                        <p class="job_price">{{isset($offer->rate_per_hour) ? '$'.$offer->rate_per_hour : ''}}</p>
+                                        @endif
                                     </td>
                                     <td>
                                         <p class="job_price">{{$offer->expire_at ? getFormattedDate($offer->expire_at,'M d,Y') : ''}}</p>

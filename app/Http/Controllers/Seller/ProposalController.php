@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rules\Date;
 use function activeTemplate;
 use function back;
 use function dd;
@@ -244,9 +244,40 @@ class ProposalController extends Controller
                 $rules = [
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'milestones.*.description' => 'string|required',
-                    'milestones.*.start_date' => 'date|required|after_or_equal:now',
-                    'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
-                    'milestones.*.amount' => 'string|required|min:1',
+                    // 'milestones.*.start_date' => 'date|required|after_or_equal:now',
+                    'milestones.*.start_date' => [
+                        'date',
+                        'required',
+                        'after_or_equal:now',
+                        function ($attribute, $value, $fail) use ($request_data) {
+                            $milestoneIndex = (int) substr($attribute, 11, -11);
+
+                            if ($milestoneIndex > 1) {
+                                $previousMilestoneEndDate = $request_data['milestones'][$milestoneIndex-1]['end_date'];
+                                if ($previousMilestoneEndDate >= $value) {
+
+                                    $fail('The start date of milestone '.$milestoneIndex.' must be after the end date of the previous milestone.');
+                                }
+
+                            }
+                        }
+                    ],
+                    'milestones.*.end_date' => [
+                        'date',
+                        'required',
+                        'after_or_equal:milestones.*.start_date', // check that end date is after start date
+                        function ($attribute, $value, $fail) use ($request_data) {
+                            $previousMilestoneIndex = (int) substr($attribute, 11, -11);
+                            if ($previousMilestoneIndex > 1) {
+                                $previousMilestoneEndDate = $request_data['milestones'][$previousMilestoneIndex-1]['end_date'];
+                                if ($previousMilestoneEndDate >= $value) {
+                                    $fail('The start date of the next milestone must be after the end date of the previous milestone.');
+                                }
+                            }
+                        },
+                    ],
+                    // 'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
+                    'milestones.*.amount' => 'string|required',
                     'total_project_price' => 'required',
                     'amount_receive' => 'required',
                     'cover_letter' => 'required|string|min:20'

@@ -72,7 +72,6 @@ class SupportTicketController extends Controller
             "message"=>$request['message'],
         ]);
         if ($request->hasFile('comment_attachment')) {
-
             try {
                 foreach ($request->file('comment_attachment') as $file) {
                     $path = imagePath()['attachments']['path'];
@@ -81,7 +80,6 @@ class SupportTicketController extends Controller
                     $file_extension = getFileExtension($file);
                     $url = $path . '/' . $filename;
                     $uploaded_name = $file->getClientOriginalName();
-
                     $message->attachments()->create([
 
                         'name' => $filename,
@@ -117,6 +115,7 @@ class SupportTicketController extends Controller
     {
         try {
             $support_ticket=SupportTicket::where('ticket_no',$ticket)->with('user.basicProfile','status','priority','attachments')->firstOrFail();
+            // dd($support_ticket);
             $pageTitle = "Support Ticket Details";
             $statuses = Status::where('type','App\Models\SupportTicket')->get();
             $priorties = Status::where('type','priority')->get();

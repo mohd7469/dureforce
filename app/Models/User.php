@@ -374,7 +374,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function save_job()
     {
-        return $this->belongsToMany(Job::class, 'user_saved_jobs');
+        return $this->belongsToMany(Job::class, 'user_saved_jobs')->orderBy('id','DESC');
     }
 
     public function supportTickets()

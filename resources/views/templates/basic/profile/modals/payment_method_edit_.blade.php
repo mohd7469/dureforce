@@ -37,7 +37,7 @@
                                     <label class="mt-4">Expiry Date *</label>
                                     <input type="date" name="expiration_date" id="expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required   />
+                                    placeholder="" required   min="1900-01-01" max="2099-12-31"/>
                                 </div>
 
                                 <div class="col-md-6">
@@ -49,7 +49,7 @@
                                     <select
                                             name="country_id"
                                             class="form-control select-lang"
-                                            id="country_id"
+                                            id="sec_country_id"
                                             >
                                             <option
                                                 value=""
@@ -77,10 +77,10 @@
                                     <select
                                         name="city_id"
                                         class="form-control select-lang"
-                                        id="city_id"
+                                        id="payment_city_id"
                                             >
                                             <option value="">Select City</option>
-        
+
                                             @foreach ($cities as $city)
                                                 <option value="{{$city->id}}"
                                                 {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
@@ -113,3 +113,5 @@
      </div>
   </div>
 </div>
+
+

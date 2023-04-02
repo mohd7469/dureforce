@@ -49,7 +49,7 @@
                             <div class="dropdown actions-icon" v-if="active_user.send_to_user.id!=message.sender_id">
                                 <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
-                                <ul class="dropdown-menu">
+                                <ul class="dropdown-menu seller"  >
                                     <li v-if="!message.attachment"><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
                                     <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
                                 </ul>
@@ -352,7 +352,11 @@
 .invisible {
     visibility: hidden;
 }
-
+ul.dropdown-menu.seller{
+    position: absolute !important; 
+    inset: 0px 0px auto -132px !important; margin: 0px ; 
+    transform: translate3d(0px, 32.8px, 0px) !important;
+}
 .icon {
     background-color: transparent;
     color: darkgray;

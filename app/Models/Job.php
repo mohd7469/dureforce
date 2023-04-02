@@ -230,7 +230,7 @@ class Job extends Model
     }
     public function save_job()
     {
-        return $this->belongsToMany(User::class, 'user_saved_jobs');
+        return $this->belongsToMany(User::class, 'user_saved_jobs')->orderBy('id','DESC');
     }
 
 }

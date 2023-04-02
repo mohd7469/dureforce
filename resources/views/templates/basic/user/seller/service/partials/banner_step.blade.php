@@ -218,11 +218,11 @@
 
                     <hr/>
                     <div class="row">
-                        <div class="col-md-6 ">
+                        <div class="col-md-5 ">
                             <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 "
                                 href="?view=step-2" type="button">@lang('BACK')</a>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col-md-7 text-right">
                             <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
         
