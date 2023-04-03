@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Models\AdminNotification;
 use App\Models\Banner;
 use App\Models\Category;
@@ -22,6 +23,7 @@ use App\Models\Tag;
 use App\Models\ProjectLength;
 use App\Models\User;
 use App\Models\Withdrawal;
+use App\Models\UserTestimonial;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Pagination\Paginator;
@@ -119,6 +121,10 @@ class AppServiceProvider extends ServiceProvider
                 'leadingImageInactive' => Banner::where('document_type', 'Leading Image')->where('is_active', 0)->count(),
                 'projectLengthActive' => ProjectLength::where('is_active', 1)->count(),
                 'projectLengthInactive' => ProjectLength::where('is_active', 0)->count(),
+                'requestedTestimonials'=> UserTestimonial::where('status_id', 36)->count(),
+                'acceptedTestimonials'=> UserTestimonial::where('status_id', 38)->count(),
+                'waitingTestimonials'=> UserTestimonial::where('status_id', 37)->count(),
+                'rejectedTestimonials'=> UserTestimonial::where('status_id', 39)->count(),
 
             ]);
         });
