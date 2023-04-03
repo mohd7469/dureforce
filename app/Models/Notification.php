@@ -23,7 +23,7 @@ class Notification extends Model
     ];
 
     public const URL = [
-        "INVITATION" => "offer-detail/",
+        "INVITATION" => "seller/invitation/listing",
     ];
     public const NOTIFICATION_TYPE = [
         "INVITATION" => "invitation",
