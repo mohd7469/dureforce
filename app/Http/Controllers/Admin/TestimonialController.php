@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\UserTestimonial;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
@@ -86,7 +87,9 @@ class TestimonialController extends Controller
     {
         $pageTitle = "Testimonial Details";
         $testimonial = UserTestimonial::where('uuid', $uuid)->firstOrFail();
-        return view('admin.testimonial.details', compact('pageTitle', 'testimonial'));
+        $useId=$testimonial->user_id;
+        $user=User::where('id',$useId)->firstOrFail();
+        return view('admin.testimonial.details', compact('pageTitle', 'testimonial','user'));
     }
 
 }
