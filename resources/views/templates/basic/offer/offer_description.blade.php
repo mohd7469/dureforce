@@ -32,7 +32,8 @@
                             <p class="offer-pdesti">{{$offer->sendToUser->job_title}}</p>
                             <ul class="offer-location">
                                 <li>{{$offer->sendToUser->location }}</li>
-                               <li>{{date('H:i A',strtotime($offer->sendToUser->last_activity_at)) }}</li>
+                               <li>{{date('h:i a',strtotime($offer->sendToUser->last_activity_at)) }}</li>
+
                             </ul>
                         </div>
                     </div>
