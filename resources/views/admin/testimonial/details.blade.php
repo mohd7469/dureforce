@@ -14,7 +14,7 @@
 </div>
 <br>
 <div class="row mb-none-30">
-    <div class="col-md-8 col-lg-8 col-xs-8 col-sm-12 col-xs-12 mb-30">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-12 col-xs-12 mb-30">
         <div class="item-details-area">
             <div class="item-details-box">
 
@@ -38,37 +38,25 @@
                         
                         <div class="sep-solid"></div>
                         <div class="product-desc-content" >
-
+                        @if(!empty($user->first_name) || !empty($user->last_name))
                         <div class="service_subtitle2 mt-20 dod-text">
-                            <p>Client Name</p>
+                            <p>Freelancer Name</p>
 
                                 
-                                <span> {{$testimonial->client_name}}</span>
-                                
-
+                                <span> {{$user->first_name}} {{$user->last_name}}</span>
                         </div>
-
+                            @endif
+                            @if(!empty($user->email))
                             <div class="service_subtitle2 mt-20 dod-text">
-                                <p>Client Email</p>
+                                <p>Freelancer Email</p>
 
 
-                                <span> {{$testimonial->client_email}}</span>
-
-
+                                <span> {{$user->email}}</span>
                             </div>
-                    
-
-                        <div class="service_subtitle2 mt-20 dod-text">
-                            <p> LinkedIn Url</p>
-
-                                <span>{{$testimonial->client_linkedin_url }}</span>
-
-                        </div>
+                            @endif
 
 
-
-
-                        </div>
+                    </div>
                         
                         <div class="sep-solid mt-10 " ></div>
                         
@@ -83,10 +71,65 @@
                 </div>
         </div>
     </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-12 col-xs-12 mb-30">
+        <div class="item-details-area">
+            <div class="item-details-box">
+
+                <div class="item-details-thumb-area item-details-footer-v mt-0">
+
+                    <div class="row" >
+
+                        <div class="col-md-5 col-lg-5 col-xs-5 col-sm-12 col-xs-12">
+
+                            <div class="left ">
+                                <h3 class="title">
+                                    Client Details
+                                </h3>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div >
+                        <div class="sep-solid"></div>
+                        <div class="product-desc-content" >
+                            @if(!empty($testimonial->client_response_full_name))
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p>Client Name</p>
+
+
+                                <span> {{$testimonial->client_response_full_name}}</span>
+                            </div>
+                            @endif
+                                @if(!empty($testimonial->client_email))
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p> Client Email</p>
+
+                                <span>{{$testimonial->client_email }}</span>
+
+                            </div>
+                                @endif
+                        </div>
+
+                        <div class="sep-solid mt-10 " ></div>
+
+                    </div>
+
+
+
+                    <div id="form_attributes">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row mb-none-30">
-    <div class="col-md-8 col-lg-8 col-xs-8 col-sm-12 col-xs-12 mb-30">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-12 col-xs-12 mb-30">
         <div class="item-details-area">
             <div class="item-details-box">
 
@@ -141,18 +184,7 @@
 
                                                                 </div>
 
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Active Status</p>
 
-
-                                                                    <span> @if($testimonial->is_active == 1)
-                                                                            Active
-                                                                        @else Inactive
-                                                                        @endif
-                                                                    </span>
-
-
-                                                                </div>
 
 
                                                                 <div class="service_subtitle2 mt-20 dod-text">
@@ -180,91 +212,111 @@
                                                 </div>
                                             </div>
                                         </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-12 col-xs-12 mb-30">
+        <div class="item-details-rea">
+            <div class="item-details-box">
+
+                <div class="item-details-thumb-area item-details-footer-v mt-0">
+
+                    <div class="row" >
+
+                        <div class="col-md-6 col-lg-6 col-xs-6 col-sm-12 col-xs-12">
+
+                            <div class="left ">
+                                <h3 class="title">
+                                    Client Response Details
+                                </h3>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div>
+                        <div class="sep-solid"></div>
+                        <div class="product-desc-content" >
+
+
+                            @if(!empty($testimonial->client_response))
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p>Client Response</p>
+
+
+                                <span> {{$testimonial->client_response}}</span>
+                            </div>
+                            @endif
+
+
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p>Quality Rating</p>
+                                @for ($index=0;$index<5;$index++)
+                                    @if ($index<$testimonial->quality_rating)
+                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                    @else
+                                        <i class="fa fa-solid fa-star "></i>
+                                    @endif
+
+                                @endfor
+
+                            </div>
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p>Communication Rating</p>
+                                @for ($index=0;$index<5;$index++)
+                                    @if ($index<$testimonial->communication_rating)
+                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                    @else
+                                        <i class="fa fa-solid fa-star "></i>
+                                    @endif
+
+                                @endfor
+
+                            </div>
+                            <div class="service_subtitle2 mt-20 dod-text">
+                                <p>Experties Rating</p>
+                                @for ($index=0;$index<5;$index++)
+                                    @if ($index<$testimonial->expertise_rating)
+                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                    @else
+                                        <i class="fa fa-solid fa-star "></i>
+                                    @endif
+
+                                @endfor
+
+                            </div>
+                                <div class="service_subtitle2 mt-20 dod-text">
+                                    <p>Professionalism Rating</p>
+                                    @for ($index=0;$index<5;$index++)
+                                        @if ($index<$testimonial->professionalism_rating)
+                                            <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                        @else
+                                            <i class="fa fa-solid fa-star "></i>
+                                        @endif
+
+                                    @endfor
+
+                                </div>
+
+
+
+
+                        </div>
+
+                        <div class="sep-solid mt-10 " ></div>
+
+                    </div>
+
+
+
+                    <div id="form_attributes">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                                     </div>
 
-                                    <div class="row mb-none-30">
-                                        <div class="col-md-8 col-lg-8 col-xs-8 col-sm-12 col-xs-12 mb-30">
-                                            <div class="item-details-area">
-                                                <div class="item-details-box">
-
-                                                    <div class="item-details-thumb-area item-details-footer-v mt-0">
-
-                                                        <div class="row" >
-
-                                                            <div class="col-md-5 col-lg-5 col-xs-5 col-sm-12 col-xs-12">
-
-                                                                <div class="left ">
-                                                                    <h3 class="title">
-                                                                        Client Details
-                                                                    </h3>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-
-                                                        <div >
-                                                            <div class="sep-solid"></div>
-                                                            <div class="product-desc-content" >
-
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Client Name</p>
-
-
-                                                                    <span> {{$testimonial->client_response_full_name}}</span>
-
-
-                                                                </div>
-
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Client Response</p>
-
-
-                                                                    <span> {{$testimonial->client_response}}</span>
-
-
-                                                                </div>
-
-
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p> Response LinkedIn Url</p>
-
-                                                                    <span>{{$testimonial->client_response_linkedin_profile_url }}</span>
-
-                                                                </div>
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Quality Rating</p>
-                                                                    <span> {{$testimonial->quality_rating}}</span>
-                                                                </div>
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Communication Rating</p>
-                                                                    <span> {{$testimonial->communication_rating}}</span>
-                                                                </div>
-                                                                <div class="service_subtitle2 mt-20 dod-text">
-                                                                    <p>Experties Rating</p>
-                                                                    <span> {{$testimonial->expertise_rating}}</span>
-                                                                </div>
-
-
-
-
-                                                            </div>
-
-                                                            <div class="sep-solid mt-10 " ></div>
-
-                                                        </div>
-
-
-
-                                                        <div id="form_attributes">
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
             <div class="widget-btn- mt-20 cstm-btn text-cent">
                 @if($testimonial->status->id == 36)
@@ -384,9 +436,15 @@
         modal.modal('show');
     });
 </script>
+    <style>
+        .testmonials-review-star{
+            padding: 3px;
+            color: #F09959;
+        }
+    </style>
 @endpush
 @push('breadcrumb-plugins')
-    <a href="{{ route('admin.job.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i class="la la-fw la-backward"></i>@lang('Go Back')</a>
+    <a href="{{ route('admin.testimonial.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i class="la la-fw la-backward"></i>@lang('Go Back')</a>
 @endpush
 @push('script')
 <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
