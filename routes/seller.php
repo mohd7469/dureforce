@@ -68,6 +68,12 @@ Route::name('seller.')->group(function () {
                     Route::get('/reject-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'rejectOffer'] )->name('reject');
 
                 });
+                Route::name('invitation.')->prefix('invitation')->group(function () {
+
+                    Route::get('/listing',  [App\Http\Controllers\Buyer\InviteFreelancerController::class,'userInvitations'] )->name('list');
+
+
+                });
                 
 
             });
