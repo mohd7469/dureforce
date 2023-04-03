@@ -1724,3 +1724,14 @@ function storeRedisData($model,$key,$condition=null){
 
 
 }
+
+function getBaseUrl(){
+    try {
+        $baseUrl = request()->getSchemeAndHttpHost() . '/';
+        return $baseUrl;
+    }
+    catch (\Exception $e){
+        return "www.dureforce.com/";
+    }
+
+}

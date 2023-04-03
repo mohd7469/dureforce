@@ -22,6 +22,13 @@ class Notification extends Model
         "deleted_at"
     ];
 
+    public const URL = [
+        "INVITATION" => "offer-detail/",
+    ];
+    public const NOTIFICATION_TYPE = [
+        "INVITATION" => "invitation",
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -5,8 +5,22 @@
             <!---Top Container Start-->
             <div class="offer-top-container">
 
+
                 <div class="offerright">
-                    <a href="#" class="offer-width">Withdraw Offer</a>
+                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && $offer->status_id == App\Models\ModuleOffer::STATUSES['PENDING'])
+                        <a href="{{route('seller.offer.accept',$offer->uuid)}}" class="offer-width ">Accept Offer</a>
+                        <a href="{{route('seller.offer.reject',$offer->uuid)}}" class="offer-width ">Reject Offer</a>
+                    @elseif (getLastLoginRoleId()==App\Models\Role::$Client && $offer->status_id == App\Models\ModuleOffer::STATUSES['PENDING'])
+                        <a href="{{ route('buyer.offer.withdraw',$offer->uuid) }}" class="offer-width">Withdraw Offer</a>
+                    @elseif($offer->status_id == App\Models\ModuleOffer::STATUSES['ACCEPTED'])
+                        <a href="{{route('contracts.show',$offer->contract->uuid)}}" class="offer-width">View Contract</a>
+                    @else
+                        @if (getLastLoginRoleId()==App\Models\Role::$Client)
+                            <a href="{{route('buyer.send.offer',$offer->proposal->uuid)}}" class="offer-width">Resend Offer</a>
+                        @endif
+                    @endif
+
+
                     <a href="#" class="offerclick"><img src="/assets/images/job/menuc.png" alt="img"></a>
                 </div>
 
