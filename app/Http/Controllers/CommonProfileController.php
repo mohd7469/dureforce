@@ -20,6 +20,7 @@ use App\Models\User;
 use Khsing\World\Models\City;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CommonProfileController extends Controller
@@ -217,7 +218,7 @@ class CommonProfileController extends Controller
             }
             return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages','testimonials'));
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::info("error in common user profile",[$th->getMessage()]);
         }
         
     }

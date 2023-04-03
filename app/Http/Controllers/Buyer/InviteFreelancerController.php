@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Buyer;
 
+use App\Helpers\NotificationHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\Notifications\SendNotificationsMail;
 use App\Models\InviteFreelancer;
 use App\Models\Job;
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
@@ -54,6 +56,17 @@ class InviteFreelancerController extends Controller
 
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
 
+            $users= array($request['user_id']);
+            $title = "You have received an invitation to interview for the job ".$job->title;
+            $body = $job->description;
+            $payload = $job;
+            $url = Notification::URL['INVITATION'];
+            $notification_type = Notification::NOTIFICATION_TYPE['INVITATION'];
+
+            $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
+
+            $saved_notification = NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
+
             return response()->json(["success" => "Invitation sent Successfully"]);
 
         } catch (\Exception $exp) {
@@ -68,6 +81,17 @@ class InviteFreelancerController extends Controller
              $invited_freelancers = InviteFreelancer::where('job_id',$job->id)->with('user')->get();
 
             return view('templates.basic.jobs.invitation.invited-freelancer')->with('invited_freelancers',$invited_freelancers);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+    }
+    public function userInvitations(){
+
+        try {
+             $invitations = InviteFreelancer::IsActive()->where('user_id',auth()->user()->id)->with('job')->paginate(10);
+            return view('templates.basic.user.seller.invitation.invite_listing')->with('invitations',$invitations);
 
         } catch (\Exception $exp) {
             DB::rollback();

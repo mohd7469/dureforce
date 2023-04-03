@@ -4,6 +4,7 @@
             @if($software->banner != null)
             <div class="carousel-item active ">
                 <div class="card">
+                    
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
                             @if ($software->banner->banner_type==\App\Models\ModuleBanner::$Video)

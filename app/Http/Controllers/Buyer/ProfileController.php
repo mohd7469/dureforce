@@ -575,6 +575,7 @@ class ProfileController extends Controller
 
         $rules = [
             'name' => 'required',
+            'country_id' => 'required',
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'vat' => 'required|string|min:5|max:15',
