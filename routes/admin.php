@@ -203,10 +203,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
         //testimonil
         Route::get('testimonial/index', 'TestimonialController@index')->name('testimonial.index');
-        Route::get('testimonial/closed', 'TestimonialController@closed')->name('testimonial.closed');
         Route::get('testimonial/pending', 'TestimonialController@pending')->name('testimonial.pending');
         Route::get('testimonial/approved', 'TestimonialController@approved')->name('testimonial.approved');
-        Route::get('testimonial/cancel', 'TestimonialController@cancel')->name('testimonial.cancel');
+        Route::get('testimonial/reject', 'TestimonialController@rejected')->name('testimonial.reject');
+        Route::get('testimonial/waiting', 'TestimonialController@waiting')->name('testimonial.waiting');
+        Route::post('testimonial/closedBy', 'TestimonialController@closedBy')->name('testimonial.closedBy');
+        Route::post('testimonial/approvedBy', 'TestimonialController@approvedBy')->name('testimonial.approvedBy');
+        Route::get('testimonial/details/{id}', 'TestimonialController@details')->name('testimonial.details');
         
         //Manage blogs
         Route::get('blog/index', 'BlogController@index')->name('blog.index');
