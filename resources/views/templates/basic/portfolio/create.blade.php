@@ -393,7 +393,7 @@
                             thumbnailWidth: 120,
                             maxFiles: 6,
                             uploadMultiple:false,
-                            acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+                            acceptedFiles: ".jpg,.png,.jpeg",
                             filesizeBase: 1000,
                             addRemoveLinks: false,
                             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
