@@ -28,7 +28,7 @@ class StoreTestimonialRequest extends FormRequest
             'client_name' => 'required',
             'client_email' => 'required|unique:user_testimonials,client_email',
             'client_linkedin_url' => ['required','unique:user_testimonials,client_linkedin_url',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-            'message_to_client' =>  'min:50| max:200',
+            'message_to_client' =>  'min:'.config('settings.testimonial_min_text_length').'| max:'.config('settings.testimonial_max_text_length'),
         ];
     }
     public function messages()

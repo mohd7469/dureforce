@@ -56,8 +56,8 @@ class StatusSeeder extends Seeder
             ["id"=>35, "name"=>"Completed", "slug"=>"completed", "type"=>"App\\Models\\Contract", "color"=>'badge--success', "module_id"=>Module::$Job],
 
             ["id"=>36, "name"=>"Requested", "slug"=>"requested", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--primary', "module_id"=>null],
-            ["id"=>37, "name"=>"Waiting For Approval", "slug"=>"waiting_approval", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--info', "module_id"=>null],
-            ["id"=>38, "name"=>"Accepted", "slug"=>"accepted", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--success', "module_id"=>null],
+            ["id"=>37, "name"=>"Waiting For Approval", "slug"=>"waiting_approval", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--dark', "module_id"=>null],
+            ["id"=>38, "name"=>"Verified", "slug"=>"accepted", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--info', "module_id"=>null],
             ["id"=>39, "name"=>"Rejected", "slug"=>"rejected", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--warning', "module_id"=>null],
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
