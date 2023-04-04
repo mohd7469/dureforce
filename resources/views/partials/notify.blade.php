@@ -4,9 +4,12 @@
 @if(session()->has('notify') )
 
     @foreach(session('notify') as $msg)
+        
         <script>
             "use strict";
-            iziToast.{{ $msg[0] }}({message:"{{ __($msg[1]) }}", position: "topRight"}); 
+            notify("{{$msg[0] }}","{{ __($msg[1]) }}");
+
+            // iziToast.{{ $msg[0] }}({message:"{{ __($msg[1]) }}", position: "topRight"}); 
         </script>
     @endforeach
 
