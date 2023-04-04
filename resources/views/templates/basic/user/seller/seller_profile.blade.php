@@ -430,7 +430,7 @@
 
                                         <div class="quote">
                                             <blockquote class="blockquote" >
-                                               {{ $testimonial->client_response}}
+                                               {{ $testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->message_to_client :$testimonial->client_response }}
                                             </blockquote>
                                             <hr class="divider">
                                             <div class="row ">
@@ -441,10 +441,10 @@
                                                             <td>
 
                                                                 @for ($index=0;$index<5;$index++)
-                                                                    @if ($index<=$testimonial->quality_rating)
+                                                                    @if ($index<$testimonial->quality_rating)
                                                                         <i class="fa fa-solid fa-star testmonials-review-star"></i>
                                                                     @else
-                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
                                                                     @endif
                                                                     
                                                                 @endfor
@@ -453,10 +453,10 @@
                                                             <td><b>{{trans('Communication')}}</b></td>
                                                             <td>
                                                                 @for ($index=0;$index<5;$index++)
-                                                                    @if ($index<=$testimonial->communication_rating)
+                                                                    @if ($index<$testimonial->communication_rating)
                                                                         <i class="fa fa-solid fa-star testmonials-review-star"></i>
                                                                     @else
-                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
                                                                     @endif
                                                                 
                                                                 @endfor
@@ -466,10 +466,10 @@
                                                             <td ><b>{{trans('Expertise')}}</b></td>
                                                             <td>
                                                                 @for ($index=0;$index<5;$index++)
-                                                                    @if ($index<=$testimonial->expertise_rating)
+                                                                    @if ($index<$testimonial->expertise_rating)
                                                                         <i class="fa fa-solid fa-star testmonials-review-star"></i>
                                                                     @else
-                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
                                                                     @endif
                                                                 
                                                                 @endfor
@@ -477,10 +477,10 @@
                                                             <td><b>{{trans('Professionalism')}}</b></td>
                                                             <td>
                                                                 @for ($index=0;$index<5;$index++)
-                                                                    @if ($index<=$testimonial->professionalism_rating)
+                                                                    @if ($index<$testimonial->professionalism_rating)
                                                                         <i class="fa fa-solid fa-star testmonials-review-star"></i>
                                                                     @else
-                                                                        <i class="fa fa-solid fa-star "></i>
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
                                                                 @endif
                                                                 
                                                             @endfor
@@ -493,22 +493,33 @@
                                             <hr class="divider">
                                             <p class="cite">
                                                 
-                                                <b>{{$testimonial->client_name}}</b> 
+                                                <b>{{$testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->client_name : $testimonial->client_response_full_name}}</b> 
+                                                @if ($testimonial->status_id !=  App\Models\UserTestimonial::STATUSES['Requested'])
+                                                    <br>
+                                                    {{$testimonial->client_response_company}}
+                                                @endif
                                                 
-                                                <br>
-                                                {{$testimonial->client_response_company}}
                                                 <br>
                                                 <div class="row">
                                                     <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                                                        <a href="{{$testimonial->client_linkedin_url}}">
+                                                        <a href="{{$testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->client_linkedin_url :  $testimonial->client_response_linkedin_url}}">
                                                             <i class="fab fa-solid fa-linkedin"></i>
                                                             <span class="see-profile">See LinkedIn Profile </span>
         
                                                         </a>
                                                     </div>
-                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 float-right">
-                                                        <span class="float-right">{{$testimonial->status ? $testimonial->status->name : 'N/A'}} </span>
-                                                    </div>
+                                                    @if ($testimonial->status)
+                                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 float-right mb-3 mr-3">
+                                                            <span class="float-right p-2 badge {{$testimonial->status->color }}">
+                                                                @if ($testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Accepted'])
+                                                                    <img src="/assets/images/job/tick-c.png" alt="verified icon not found" style="height: 20px;width:20px;">
+                                                                @endif
+                                                                {{$testimonial->status ? $testimonial->status->name : 'N/A'}}
+                                                            </span>
+
+                                                        </div>
+                                                    @endif
+                                                   
                                                 </div>
                                                 
                                                 
@@ -849,34 +860,34 @@
                                     <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label for="title">Client Name *</label>
-                                            <input type="text" class="form-control" name="client_name" placeholder="Sajid Mehmood" id="client_name_id">
+                                            <input type="text" class="form-control" name="client_name" placeholder="write client name " id="client_name_id">
                                         </div>
                                     </div>
     
                                     <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label for="title">Business Email Address *</label>
-                                            <input type="email" class="form-control" name="client_email" placeholder="client@gmail.com" id="client_email_id">
+                                            <input type="email" class="form-control" name="client_email" placeholder="write client business email" id="client_email_id">
                                         </div>
                                     </div>
     
                                     <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label for="title">Client LinkedIn Profile URL *</label>
-                                            <input type="text" class="form-control" name="client_linkedin_url" placeholder="www.linkedin.com/client234" id="client_linkiedin_url_id">
+                                            <input type="text" class="form-control" name="client_linkedin_url" placeholder="write client linkedin profile url" id="client_linkiedin_url_id">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label for="title">Project Type</label>
-                                            <input type="text" class="form-control" name="project_type" placeholder="Ex.Marketing Brand" id="project_type_id">
+                                            <input type="text" class="form-control" name="project_type" placeholder="write project type" id="project_type_id">
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label for="title">Message To Client</label>
-                                            <textarea  class="form-control text_area" name="message_to_client" placeholder="I am requesting for brief testimonial about the project maternity care" id="message_to_client_id"></textarea>
+                                            <textarea  class="form-control text_area" name="message_to_client" placeholder="write message for client" id="message_to_client_id"></textarea>
                                         </div>
                                     </div>
 
@@ -1145,6 +1156,10 @@
     .testmonials-review-star{
         padding: 3px;
         color: #F09959;
+    }
+    .review-star{
+        padding: 3px;
+        color: rgb(215, 212, 212);
     }
     .quote{
         height:auto;

@@ -31,7 +31,7 @@ class AddStatusIdInUserTestimonialsTable extends Migration
     public function down()
     {
         Schema::table('user_testimonials', function (Blueprint $table) {
-            $table->dropColumn(['status_id','created_by','updated_by','deleted_by']);
+//            $table->dropColumn(['status_id','created_by','updated_by','deleted_by']);
         });
     }
 }

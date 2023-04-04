@@ -161,10 +161,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <li class="sidebar-menu-item {{ menuActive('admin.testimonial.pending') }} ">
                                         <a href="{{ route('admin.testimonial.pending') }}" class="nav-link">
                                             <i class="menu-icon las la-dot-circle"></i>
-                                            <span class="menu-title">@lang('Pending')</span>
-                                            @if ($jobPending)
+                                            <span class="menu-title">@lang('Requested')</span>
+                                            @if ($requestedTestimonials)
                                                 <span
-                                                        class="menu-badge pill bg--primary ml-auto">{{ $jobPending }}</span>
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $requestedTestimonials }}</span>
                                             @else
                                                 <span
                                                         class="menu-badge pill bg--primary ml-auto">0
@@ -178,9 +178,37 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                         <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
                                             <i class="menu-icon las la-dot-circle"></i>
                                             <span class="menu-title">@lang('Approved')</span>
-                                            @if ($jobApproved)
+                                            @if ($acceptedTestimonials)
                                                 <span
-                                                        class="menu-badge pill bg--primary ml-auto">{{ $jobApproved }}</span>
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $acceptedTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.waiting') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Waiting')</span>
+                                            @if ($waitingTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $waitingTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.reject') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Rejected')</span>
+                                            @if ($rejectedTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $rejectedTestimonials }}</span>
                                             @else
                                                 <span
                                                         class="menu-badge pill bg--primary ml-auto">0

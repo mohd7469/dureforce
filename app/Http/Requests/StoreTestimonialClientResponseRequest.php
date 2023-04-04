@@ -28,7 +28,7 @@ class StoreTestimonialClientResponseRequest extends FormRequest
             'client_response_role' => 'required',
             'client_response_company' => 'required',
             'client_response_linkedin_profile_url' => ['required','unique:user_testimonials,client_response_linkedin_profile_url',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
-            'client_response' => 'required|max:500|min:100',
+            'client_response' => 'required|min:'.config('settings.testimonial_min_text_length').'| max:'.config('settings.testimonial_max_text_length'),
             'communication_rating' => 'required',
             'expertise_rating'  => 'required',
             'professionalism_rating' => 'required',
