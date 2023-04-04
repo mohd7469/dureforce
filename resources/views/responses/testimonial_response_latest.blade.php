@@ -113,19 +113,19 @@
                                     <div class="row mt-2">
                                         <div class="col-md-6 col-sm-12 col-lg-6">
                                             <label for="">Full Name *</label>
-                                            <input type="text" name="client_response_full_name" id=""  value="{{old('client_response_full_name')}}"></textarea>
+                                            <input type="text" name="client_response_full_name" id=""  value="{{old('client_response_full_name')}}" placeholder="write your name  ">
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-lg-6">
                                             <label for="">Role / Designation *</label>
-                                            <input type="text" name="client_response_role" id=""  value="{{old('client_response_role')}}"></textarea>
+                                            <input type="text" name="client_response_role" id=""  value="{{old('client_response_role')}}" placeholder="write your role  ">
                                         </div>
-                                        <div class="col-md-6 col-sm-12 col-lg-6">
+                                        <div class="col-md-6 col-sm-12 col-lg-6 mt-2">
                                             <label for="">Company *</label>
-                                            <input type="text" name="client_response_company" id=""  value="{{old('client_response_company')}}"></textarea>
+                                            <input type="text" name="client_response_company" id=""  value="{{old('client_response_company')}}" placeholder="write your company name  ">
                                         </div>
-                                        <div class="col-md-6 col-sm-12 col-lg-6">
+                                        <div class="col-md-6 col-sm-12 col-lg-6 mt-2">
                                             <label for="">LinkedIn Profile URL *</label>
-                                            <input type="text" name="client_response_linkedin_profile_url" id=""  value="{{old('client_response_linkedin_profile_url')}}"></textarea>
+                                            <input type="text" name="client_response_linkedin_profile_url" id=""  value="{{old('client_response_linkedin_profile_url')}}" placeholder="write your linkedin profile url ">
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-lg-6 mt-2">
                                             <label for="">Quality *</label>
@@ -276,14 +276,14 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-sm-12 col-lg-6 mt-2">
-                                            <label for="">Comment * (Maximum 500 words - This will be public)</label>
+                                            <label for="">Comment * (Maximum {{config('settings.testimonial_max_text_length')}} words - This will be public)</label>
                                         </div>
                                         <br>
                                         <div class="col-md-12 col-sm-12 col-lg-12 mt-2">
                                             <label for="">{{$user_testimonial->message_to_client}}</label>
                                         </div>
                                         <div class="col-md-12 col-sm-12 col-lg-12">
-                                            <textarea class="text_area " name="client_response" id="" >{{old('client_response')}}</textarea>
+                                            <textarea class="text_area " name="client_response" id="" placeholder="write testimonial here">{{old('client_response')}}</textarea>
                                         </div>
                                         <div class="float-right mt-4 mb-2">
                                             <button class="submit-btn" type="submit">Submit</button>
