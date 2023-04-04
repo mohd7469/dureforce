@@ -95,7 +95,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                    <li><span>Experience Level</span>
-                                                         <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                                                         <p>{{$job->rank->level ?? ''}}</p>
                                                    </li>
                                                 </ul>
 
