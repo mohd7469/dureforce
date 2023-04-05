@@ -42,7 +42,7 @@
                                     <td>
                                         <p class="job_price">{{$invitation->created_at ? getFormattedDate($invitation->created_at,'M d,Y') : ''}}</p>
                                     </td>
-                                    <td><a href="#"
+                                    <td><a href="{{route('seller.invitation.show',$invitation->uuid)}}"
                                         class="view_propasal_per">View</a>
                                     </td>
                                 </tr>
@@ -53,7 +53,7 @@
                 
             </div>
             <div class="card-footer">
-{{--                    {{ paginateLinks($invitation) }}--}}
+                {{ paginateLinks($invitations) }}
             </div>
 
 
