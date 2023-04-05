@@ -98,4 +98,17 @@ class InviteFreelancerController extends Controller
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
+
+    public function  show($uuid){
+        $InviteFreelancer=InviteFreelancer::with(['job','job.proposal','user'])->where('uuid',$uuid)->first();
+        $proposal = $InviteFreelancer->job->proposal->where('user_id',auth()->user()->id)->first();
+
+        $proposal_submitted = false;
+        if (!empty($proposal)){
+
+            $proposal_submitted = true;
+        }
+
+        return view('templates.basic.user.seller.invitation.invite_details',compact('InviteFreelancer','proposal_submitted','proposal'));
+    }
 }

@@ -95,7 +95,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                    <li><span>Experience Level</span>
-                                                         <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                                                         <p>{{$job->rank->level ?? ''}}</p>
                                                    </li>
                                                 </ul>
 
@@ -194,7 +194,7 @@
                                   <a role="button" href="{{route('seller.jobs.listing')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Proposal')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button>
                               </div>
                           </div>
                         </form>

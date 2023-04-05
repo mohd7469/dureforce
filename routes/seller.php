@@ -71,6 +71,7 @@ Route::name('seller.')->group(function () {
                 Route::name('invitation.')->prefix('invitation')->group(function () {
 
                     Route::get('/listing',  [App\Http\Controllers\Buyer\InviteFreelancerController::class,'userInvitations'] )->name('list');
+                    Route::get('/invitation_detail/{uuid}',  [App\Http\Controllers\Buyer\InviteFreelancerController::class,'show'])->name('show');
 
 
                 });
