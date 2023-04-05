@@ -262,7 +262,7 @@
                                                 <a href="{{route('buyer.job.index')}}"> <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button></a>
                                             </div>
                                             <div class="inner">
-                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_btn_job">@lang('Create Job')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -396,7 +396,7 @@
             tags: true
         });
         $('#job_form_data').submit(function (e) {
-            
+            $('#submit_btn_job').attr("disabled", true);
             e.preventDefault();
             var form = $('#job_form_data')[0];
             var form_data = new FormData(form);

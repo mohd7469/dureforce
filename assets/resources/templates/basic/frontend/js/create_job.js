@@ -17,6 +17,8 @@ function submitCreateFormData(form_data)
         success:function(data){
             var html = '';
             if(data.errors){
+            $('#submit_btn_job').attr("disabled", false);
+
               console.log(data);
               displayErrorMessage(data.errors);
             }
