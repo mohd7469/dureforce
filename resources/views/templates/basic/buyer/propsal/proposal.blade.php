@@ -111,7 +111,7 @@
 
                                         <div class="profile-border-bottom ">
                                             <b>Hours per week</b><br>
-                                            <b>More than 30 hrs/week</b><br>
+                                            More than 30 hrs/week<br>
                                             <b>{{ $user->languages->count() > 1 ? 'Languages' : 'Language'}}</b><br>
                                             @foreach ($user->languages as $item)
                                             {{getLanaguageName($item->language_id)}}: {{getProficiencyLevelName($item->language_level_id)}}<br>

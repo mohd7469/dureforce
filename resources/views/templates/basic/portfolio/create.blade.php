@@ -84,7 +84,7 @@
         <div class="row mt-2">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                 <label>Public URL</label>
-                <input type="text" name="project_url" id="detail_project_url" class="form-control" value="{{old('project_url')}}">
+                <input type="text" name="project_url" id="detail_project_url" class="form-control" value="{{old('project_url')}}" placeholder="Add public url">
             </div>
             
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group"> 
