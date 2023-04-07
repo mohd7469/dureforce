@@ -511,7 +511,7 @@
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
-                <h2 class="heading">Explore Trending Dure Force Publications</h2>
+                <h2 class="heading">Explore Trending dureforce Publications</h2>
             </article>
             @include($activeTemplate . 'home.publications')
         </div>
@@ -532,7 +532,7 @@
         .button-review-color {
             color: #007F7F;
         }
-
+        
         .job-list-price-button {
             background: #7F007F;
             font-size: 12px;
@@ -577,13 +577,14 @@
         }
         .sub-nav {
             padding: 12px 0px 20px;
+            width: 92.5%;
 
         }
         .sub-nav li {
             margin: 0px 15px;
             display: inline-table;
             /* margin: 0 13px; */
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
         .listing-jb-container{
@@ -603,7 +604,7 @@
             float: left;
         }
         .sub-nav{
-            width: 82.5%;
+            width: 100.5%;
         }
         .t-sbh {
             width: 130px;

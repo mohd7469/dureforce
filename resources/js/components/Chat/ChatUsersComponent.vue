@@ -1,4 +1,4 @@
-<template>
+<template >
     
     <div class="col-md-4 border-right-custom div-diemension">
         

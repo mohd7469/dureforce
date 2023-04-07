@@ -19,10 +19,10 @@
                                 @forelse($logs as $log)
                                     <tr>
                                         <td data-label="@lang('User')">
-                                            <span class="font-weight-bold">{{ $log->user->fullname }}</span>
+                                            <span class="font-weight-bold">{{ $log->user->fullname ?? '' }}</span>
                                                 <br>
                                             <span class="small">
-                                                <a href="{{ route('admin.users.detail', $log->user_id) }}"><span>@</span>{{ $log->user->username }}</a>
+                                                <a href="{{ route('admin.users.detail', $log->user_id) }}"><span>@</span>{{ $log->user->username ?? '' }}</a>
                                             </span>
                                         </td>
                                         <td data-label="@lang('Sent')">

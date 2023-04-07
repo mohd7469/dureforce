@@ -218,19 +218,19 @@
 
                     <hr/>
                     <div class="row">
-                        <div class="col-md-6 ">
-                            <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                        <div class="col-md-5 ">
+                            <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 "
                                 href="?view=step-2" type="button">@lang('BACK')</a>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+                        <div class="col-md-7 text-right">
+                            <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
         
-                            <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                            <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
                             Preview Service
                             </button></a>
                             <button type="submit"
-                                class="btn btn-save-continue btn-primary float-left mt-20 w-100" >@lang('SAVE AND
+                                class="btn btn-save-continue btn-primary float-left mt-20 " >@lang('SAVE AND
                                 CONTINUE')</button>
                         </div>
                     </div>

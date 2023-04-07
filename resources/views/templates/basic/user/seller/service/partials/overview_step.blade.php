@@ -34,7 +34,7 @@
 
                         @if ($service && count($service->tags)>0)
                             @foreach ($tags as $tag)
-                                <option {{isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
+                                <option {{ isSelectedTag($tag->id,$service->tags)}} > {{ $tag->name }}</option>
                             @endforeach
                         @else
                             @foreach ($tags as $tag)
@@ -134,9 +134,9 @@
             <div class="row">
                 <div class="col-md-6"></div>
                 <div class="col-md-6 text-right">
-                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
-                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 w-100">@lang('SAVE AND CONTINUE')</button>
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 ">@lang('SAVE AND CONTINUE')</button>
                 </div>
             </div>
 

@@ -21,7 +21,7 @@
 
                 @foreach ($software->tags as $tag)
                     
-                    <a href="tags/{{ $tag->id }}"
+                    <a href="javascript:;"
                         class=" grey_badge  custom_badge badge-secondary">{{ $tag->name }}</a>
                    
                 @endforeach

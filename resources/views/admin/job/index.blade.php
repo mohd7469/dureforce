@@ -13,6 +13,7 @@
                             <th>@lang('Category / SubCategory')</th>
                             <th>@lang('Budget')</th>
                             <th>@lang('Delivery Time')</th>
+                            <th>@lang('Type')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Last Update')</th>
                             <th>@lang('Action')</th>
@@ -48,18 +49,22 @@
                             </td>
 
                             <td data-label="@lang('Budget')">
-                                @if($job->fixed_amount != '0.00')
+                                @if(!empty($job->fixed_amount ))
                                     <span class="font-weight-bold">{{__($job->fixed_amount)}}</span>
                                 @else
                                     <span class="font-weight-bold">{{__($job->hourly_start_range)}} @lang('to') {{__($job->hourly_end_range)}}</span>
-                                </td>
+                                   </td>
                                 @endif
+
 
                              <td data-label="@lang('Delivery Time')">
                                <span class="font-weight-bold">{{($job->project_length->name ?? '')}}</span>
                             </td>
+                            <td data-label="@lang('Types')">
+                                <span class="badge {{$job->model_color}}"> {{ $job->model == '' ? 'Normal' : $job->model }}</span>
 
-                            <td data-label="@lang('Status')">
+                            </td>
+                                <td data-label="@lang('Status')">
                                 @if($job->status->id == 2)
                                     <span class="font-weight-normal badge--success">@lang('Approved')</span>
                                     <br>
@@ -122,7 +127,7 @@
                             <td>
                                 <form action="{{route('admin.job.destroy', [$job->id])}}" method="POST" >
                                     @csrf
-                                    <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1"  type="submit">Delete</button>
+                                    <button  data-toggle="tooltip" title="" onclick="return confirm('Are you sure you want to delete.')"  data-original-title="@lang('Delete')" class="icon-btn btn--danger ml-1 ancher-delete-link-disabled"  type="submit">Delete</button>
                                 </form>
                                 
                             </td>

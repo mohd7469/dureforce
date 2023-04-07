@@ -316,12 +316,16 @@ class ProfileController extends Controller
 
     }
 
-    public function buyerProfile()
+    public function buyerProfile($uuid='')
     {
 
-
+        if($uuid){
+            $user=User::where('uuid',$uuid)->first();
+        }
+        else{
+            $user=auth()->user();
+        }
         $skills = Skills::select('id', 'name')->get();
-        $user = auth()->user();
         $user = User::withAll()->find($user->id);
         $categories = Category::select('id', 'name')->get();
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
@@ -334,14 +338,18 @@ class ProfileController extends Controller
         $usereducations = $user->education ? $user->education : new UserEducation();
         $userskills = $user->skills ? $user->skills : new UserSkill();
         $user_languages = $user->languages ? $user->languages : [];
+        $user_v1languages = $user->v1languages ? $user->v1languages : collect([]);
+        $user_v1ProficiencyLevels = $user->v1ProficiencyLevels ? $user->v1ProficiencyLevels : collect([]);
 
+
+      
         $user_languages_ = WorldLanguage::whereIn('id', $user_languages->pluck('language_id')->toArray())->get();
         $user_languages_level_ = LanguageLevel::whereIn('id', $user_languages->pluck('language_level_id')->toArray())->get();
         $user_country_ = $user->company? Country::where('id', $user->company->country_id)->first():null;
         $user_loc_ = $user->company ? Country::where('id', $user->company->country_id)->first() : null;
 
 
-        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills', 'usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_', 'user_country_'));
+        return view($this->activeTemplate . 'profile.buyer.signup_basic', compact('categories', 'user_loc_', 'cities', 'languages', 'language_levels', 'user', 'basicProfile', 'user_languages', 'countries', 'userexperiences', 'userskills', 'usereducations', 'skills', 'degrees', 'user_languages_', 'user_languages_level_', 'user_country_','user_v1languages','user_v1ProficiencyLevels'));
     }
 
     public function buyerprofilePasswordChange(Request $request)
@@ -567,6 +575,7 @@ class ProfileController extends Controller
 
         $rules = [
             'name' => 'required',
+            'country_id' => 'required',
             'email' => 'email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'vat' => 'required|string|min:5|max:15',

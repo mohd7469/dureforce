@@ -17,17 +17,23 @@ class Tag extends Model
      *
      * @var string
      */
-
+    
     public const TAG_TYPE_SERVICE = 1;
     public const TAG_TYPE_SOFTWARE = 2;
     public const TAG_TYPE_BLOG = 3;
+
     protected $keyType = 'integer';
 
     protected $table="tags";
+
+    public static $Model_Name_Space = "App\Models\Tag";
+    public static $Redis_key = "tags";
+    public static $Is_Active = 1;
+    
     /**
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name','slug','is_active'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

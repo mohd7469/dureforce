@@ -104,7 +104,7 @@ trait CreateOrUpdateEntity {
             }
             
             $tags=collect($request->tag)->map(function ($tag)  {
-                $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag]);
+                $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
                 return $tag->id;
             });
 

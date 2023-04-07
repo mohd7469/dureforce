@@ -1,3 +1,4 @@
+
 <div class="item-card col-3 bg-gray">
     <div class="item-card-thumb">
 
@@ -20,7 +21,7 @@
             {{-- Tag content --}}
             <div class="tags-container">
                 @foreach ($service->tags as $tag)
-                    <a href="tags/{{ $tag->id }}"
+                    <a href="javascript:;"
                        class=" grey_badge  custom_badge badge-secondary">{{ $tag->name }}
                     </a>
                 @endforeach

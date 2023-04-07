@@ -218,7 +218,7 @@
                                                                         {{-- <a href="#" ><i class="fa fa-edit icon-color" ></i></a> --}}
 
                                                                     {{--  @if($job->status->slug!= 'approved')  --}}
-                                                                        <a href="javascript:void(0)" class=" delete_btn" data-id="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal"><i class="fa fa-trash icon-color" style="margin-right:7px; "></i></a>
+                                                                        <a href="javascript:void(0)" class=" delete_btn" data-uuid="{{$job->uuid}}" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal"><i class="fa fa-trash icon-color" style="margin-right:7px; "></i></a>
                                                                     {{--  @endif  --}}
                                                                     @endif
                                                                 </td>
@@ -262,6 +262,28 @@
     </div>
 </section>
 
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="ModalLabel">@lang('Job Closed Confirmation')</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+               
+            <input type="hidden" name="job_id" id="job_id" value="">
+            <div class="modal-body">
+                <p>@lang('Are you sure to delete this job')</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
+                    <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
+            </div>
+                
+    </div>
+</div>
 
 <div id="detailModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -741,8 +763,54 @@ ul.jbs_nav_s {
 
 @push('script')
     <script>
+        
+        function displaySuccessMessage(message)
+        {
+            iziToast.success({
+                message: message,
+                position: "topRight",
+            });
+        }
+
         (function($){
             "use strict";
+
+            $('.delete_btn').on('click', function () {
+
+                var modal = $('#deleteConfirmationModal');
+                modal.find('input[name=job_id]').val($(this).data('uuid'));
+                modal.modal('show');
+
+            });
+
+            $('#confirmation_btn').on('click', function () {
+
+                let uuid=$('#job_id').val();
+                deleteJob(uuid);
+                var modal = $('#deleteConfirmationModal');
+                modal.modal('hide');
+
+            });
+
+            function deleteJob(uuid)
+            {
+                $.ajax({
+                    type:"GET",
+                    url:"/buyer/job/destroy/"+uuid,
+                    data: {},
+                    success:function(data){
+                        
+                        if(data.error){
+                        
+                        }
+                        else{
+                            $('#'+uuid).remove();
+                            displaySuccessMessage(data.message);
+                        }
+                    }
+                });  
+            }
+
             $('.approveBtn').on('click', function() {
                 var modal = $('#detailModal');
                 var feedback = $(this).data('admin_feedback');

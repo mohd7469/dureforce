@@ -199,9 +199,30 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('banner/destroy/{id}', 'BannerController@destroy')->name('banner.destroy');
  
         });
+
+
+        //testimonil
+        Route::get('testimonial/index', 'TestimonialController@index')->name('testimonial.index');
+        Route::get('testimonial/pending', 'TestimonialController@pending')->name('testimonial.pending');
+        Route::get('testimonial/approved', 'TestimonialController@approved')->name('testimonial.approved');
+        Route::get('testimonial/reject', 'TestimonialController@rejected')->name('testimonial.reject');
+        Route::get('testimonial/waiting', 'TestimonialController@waiting')->name('testimonial.waiting');
+        Route::post('testimonial/closedBy', 'TestimonialController@closedBy')->name('testimonial.closedBy');
+        Route::post('testimonial/approvedBy', 'TestimonialController@approvedBy')->name('testimonial.approvedBy');
+        Route::get('testimonial/details/{id}', 'TestimonialController@details')->name('testimonial.details');
+        
+        //Manage blogs
+        Route::get('blog/index', 'BlogController@index')->name('blog.index');
+        Route::get('blog/create', 'BlogController@create')->name('blog.create');
+        Route::get('blog/edit/{id}', 'BlogController@edit')->name('blog.edit');
+        Route::post('blog/store', 'BlogController@store')->name('blog.store');
+        Route::post('blog/update/{id}', 'BlogController@update')->name('blog.update');
+        Route::post('blog/inactiveBy', 'BlogController@inactiveBy')->name('blog.inactiveBy');
+        Route::post('blog/activeBy', 'BlogController@activeBy')->name('blog.activeBy');
+        Route::get('blog/details/{uuid}', 'BlogController@details')->name('blog.details');
         //Email template
         
-        //   Route::middleware('staffaccess:35')->group(function () {
+        //Route::middleware('staffaccess:35')->group(function () {
             //Manage banner
             Route::get('email/index', 'EmailController@index')->name('email.index');
             Route::get('email/create', 'EmailController@emailCreate')->name('email.create');
@@ -592,6 +613,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('pusher-credential/update', 'PusherSystemCredentialController@update')->name('pusher.credential.update');
         Route::get('/pusher-credential/delete/{id}', 'PusherSystemCredentialController@delete')->name('pusher.credential.delete');
         
+         //Storage Creditional Route
+         Route::get('storage-credential', 'StorageSystemCredentialController@index')->name('storage.credential.index');
+         Route::post('storage-credential/store', 'StorageSystemCredentialController@store')->name('storage.credential.store');
+         Route::post('storage-credential/activeBy', 'StorageSystemCredentialController@activeBy')->name('storage.credential.activeBy');
+         Route::post('storage-credential/inactiveBy', 'StorageSystemCredentialController@inactiveBy')->name('storage.credential.inactiveBy');
+         Route::post('storage-credential/update', 'StorageSystemCredentialController@update')->name('storage.credential.update');
+         Route::get('/storage-credential/delete/{id}', 'StorageSystemCredentialController@delete')->name('storage.credential.delete');
+         
      
       
 

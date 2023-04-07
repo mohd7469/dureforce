@@ -1,6 +1,7 @@
 
 <div class="row section-heading-border " style="margin-bottom: 23px;">
     
+    @if($user_portfolio)
     <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12"> <b>My Portfolio > {{$user_portfolio->name}}</b></div>
     <div class="sep-solid"></div>
     
@@ -9,18 +10,26 @@
         <Label>{{$user_portfolio->name}}</Label>
     </div>
     <div class="sep-solid"></div>
+    @if ($user_portfolio->description)
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
+            <Label>Project Description</Label>
+            <Label>{{$user_portfolio->description}}</Label>
+        </div>
+        <div class="sep-solid"></div>
 
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
-        <Label>Project Description</Label>
-        <Label>{{$user_portfolio->description}}</Label>
-    </div>
-    <div class="sep-solid"></div>
+    @endif
 
-    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
-        <Label>What was your Role in the Project?</Label>
-        <Label>{{$user_portfolio->role}}</Label>
-    </div>
-    <div class="sep-solid"></div>
+    @if ($user_portfolio->role)
+        
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 mb-f">
+            <Label>What was your Role in the Project?</Label>
+            <Label>{{$user_portfolio->role}}</Label>
+        </div>
+        <div class="sep-solid"></div>
+
+    @endif
+
+    
     
     @if ($user_portfolio->attachments->isNotEmpty())
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mt-2 ">
@@ -82,9 +91,12 @@
         </div>
         <div class="sep-solid"></div>
     @endif
+    @else
+        <h3>Portfolio Not Found</h3>
+    @endif
     
 </div>
-@if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+@if (getLastLoginRoleId()==App\Models\Role::$Freelancer && $user_portfolio)
     <div class="row portfolio">
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 text-right">
             

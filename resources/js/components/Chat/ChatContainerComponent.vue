@@ -7,10 +7,12 @@
                     <div class="card-body">
                         <div class="row">
                             <ChatUsers 
+                                v-if="is_child_data_loaded"
                                 v-bind:users="users"
                                 @userChange="setCurrentUser($event)"
                             ></ChatUsers>
                             <Messages 
+                                v-if="is_child_data_loaded"
                                 v-bind:messages="messages" 
                                 v-bind:active_user="active_user" 
                                 @newMessage="getActiveUserChat(true)"
@@ -43,6 +45,7 @@
               active_user: {}  ,
               pusher_obj:{},
               channel:{},
+              is_child_data_loaded:false
             };  
         },  
         methods: {  
@@ -68,6 +71,7 @@
             },
             getActiveUserChat(is_shift_users=false)
             {
+
                 if(is_shift_users)
                     this.shiftUsers(this.active_user);
                 axios.post('/chat/messages', {  
@@ -79,6 +83,8 @@
 
                 .then( response => {
                     this.messages=response.data.messages;
+                    this.is_child_data_loaded=true;
+
                    
                 }) ;
             },

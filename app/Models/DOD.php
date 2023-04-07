@@ -15,6 +15,7 @@ class DOD extends Model
 
     public static $Model_Name_Space = "App\Models\DOD";
     public static $Redis_key = "dods";
+    public static $Is_Active = 1;
     
     protected static function boot()
     {

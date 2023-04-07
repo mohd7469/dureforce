@@ -18,18 +18,17 @@ class SystemCredentialController extends Controller
     public function index()
     {
         try {
-           
-        $pageTitle = "System credential list";
-        // $emptyMessage = "No data found";
-        $emailcreds = SystemMailConfiguration::latest()->paginate(getPaginate());
-        
-        return view('admin.email_credentials.index', compact('emailcreds', 'pageTitle'));
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
-            return back()->withNotify($notify);
-    }
+            $pageTitle = "System credential list";
+            // $emptyMessage = "No data found";
+            $emailcreds = SystemMailConfiguration::latest()->paginate(getPaginate());
+            Log::info($emailcreds);
+            return view('admin.email_credentials.index', compact('emailcreds', 'pageTitle'));
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+                return back()->withNotify($notify);
+        }
     }
     public function store(Request $request)
     {
@@ -46,28 +45,27 @@ class SystemCredentialController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $credential = new SystemMailConfiguration;
-        $credential->mail_driver = $request->mail_driver;
-        $credential->mail_host = $request->mail_host;
-        $credential->mail_port = $request->mail_port;
-        $credential->mail_username = $request->mail_username;
-        $credential->mail_password = $request->mail_password;
-        $credential->mail_encryption = $request->mail_encryption;
-        $credential->mail_from_address = $request->mail_from_address;
-        $credential->mail_from_name = $request->mail_from_name;
-        
-        $credential->is_active = $request->is_active ? 1 : 0;
-        $credential->save();
-        DB::commit();
-        Log::info(["credential" => $credential]);
-        $notify[] = ['success', 'Email Credential has been created'];
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
+            $credential = new SystemMailConfiguration;
+            $credential->mail_driver = $request->mail_driver;
+            $credential->mail_host = $request->mail_host;
+            $credential->mail_port = $request->mail_port;
+            $credential->mail_username = $request->mail_username;
+            $credential->mail_password = $request->mail_password;
+            $credential->mail_encryption = $request->mail_encryption;
+            $credential->mail_from_address = $request->mail_from_address;
+            $credential->mail_from_name = $request->mail_from_name;
+            $credential->is_active = $request->is_active ? 1 : 0;
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Email Credential has been created'];
             return back()->withNotify($notify);
-    }
-        return back()->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 
     public function update(Request $request)
@@ -84,72 +82,68 @@ class SystemCredentialController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $credential = SystemMailConfiguration::find($request->id);
-        $credential->mail_driver = $request->mail_driver;
-        $credential->mail_host = $request->mail_host;
-        $credential->mail_port = $request->mail_port;
-        $credential->mail_username = $request->mail_username;
-        $credential->mail_password = $request->mail_password;
-        $credential->mail_encryption = $request->mail_encryption;
-        $credential->mail_from_address = $request->mail_from_address;
-        $credential->mail_from_name = $request->mail_from_name;
-        
-        $credential->is_active = $request->is_active ? 1 : 0;
-        $credential->save();
-        DB::commit();
-        Log::info(["credential" => $credential]);
-        $notify[] = ['success', 'Email Credential has been created'];
-        return back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
+            $credential = SystemMailConfiguration::find($request->id);
+            $credential->mail_driver = $request->mail_driver;
+            $credential->mail_host = $request->mail_host;
+            $credential->mail_port = $request->mail_port;
+            $credential->mail_username = $request->mail_username;
+            $credential->mail_password = $request->mail_password;
+            $credential->mail_encryption = $request->mail_encryption;
+            $credential->mail_from_address = $request->mail_from_address;
+            $credential->mail_from_name = $request->mail_from_name;
+            $credential->is_active = $request->is_active ? 1 : 0;
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Email Credential has been created'];
             return back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+                return back()->withNotify($notify);
+        }
     }
-    }
-    
-
-
     public function activeBy(Request $request)
     {
         try {
             DB::beginTransaction();
-        $credential = SystemMailConfiguration::findOrFail($request->id);
-        $credential->is_active = 1;
-        $credential->created_at = Carbon::now();
-        $credential->save();
-        DB::commit();
-        Log::info(["credential" => $credential]);
-        $notify[] = ['success', 'Email Credential has been Activated'];
-        return redirect()->back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
+            $credential = SystemMailConfiguration::findOrFail($request->id);
+            $credential->is_active = 1;
+            $credential->created_at = Carbon::now();
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Email Credential has been Activated'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
             return back()->withNotify($notify);
-    }
+        }
     }
     public function inActiveBy(Request $request)
     {
         try {
             DB::beginTransaction();
-        $credential = SystemMailConfiguration::findOrFail($request->id);
-        $credential->is_active = 0;
-        $credential->created_at = Carbon::now();
-        $credential->save();
-        DB::commit();
-        Log::info(["credential" => $credential]);
-        $notify[] = ['success', 'Email Credential has been inActive'];
-        return redirect()->back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        $notify[] = ['error', 'An error occured'];
-        return back()->withNotify($notify);
-    }
+            $credential = SystemMailConfiguration::findOrFail($request->id);
+            $credential->is_active = 0;
+            $credential->created_at = Carbon::now();
+            $credential->save();
+            DB::commit();
+            Log::info(["credential" => $credential]);
+            $notify[] = ['success', 'Email Credential has been inActive'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
     public function delete($id)
     {

@@ -54,7 +54,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Ticket No</th>
-                                <th>Subject</th>
+                                <th class="sub">Subject</th>
                                 <th>No. Comments</th>
                                 <th>Status</th>
                                 <th>Priority</th>
@@ -66,7 +66,7 @@
                                 <tr>
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
                                     <td><a href="{{route('ticket.view',$ticket->ticket_no)}}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
-                                    <td>{{$ticket->subject}}</td>
+                                    <td class="sub">{{Str::limit($ticket->subject,30)}}</td>
                                     <td>{{$ticket->supportMessage->count()}}</td>
 
 
@@ -140,12 +140,17 @@
         .header-short-menu {
             padding: 10px 40px;
         }
-
+        .sub-nav {
+            width: 100.5%;
+        }
         .sub-nav li {
             display: inline-table;
-            margin: -21px 30px;
-            font-size: 13px;
+            margin: -21px 15px;
+            font-size: 12px;
             font-weight: 600;
+        }
+        .sub{
+            width: 600px;
         }
 
         #Filters {

@@ -72,7 +72,7 @@
                                     <a href="{{route('admin.ads.edit', $advr->id)}}" class="icon-btn mr-2 edit" data-toggle="tooltip" title="@lang('Edit')">
                                         <i class="las la-edit text--shadow"></i>
                                     </a>
-                                    <a href="javascript:void(0)" data-id="{{$advr->id}}" class="icon-btn btn--danger delete" data-toggle="tooltip" title="@lang('Delete')">
+                                    <a href="javascript:void(0)" data-id="{{$advr->id}}" class="icon-btn btn--danger delete ancher-delete-link-disabled" data-toggle="tooltip" title="@lang('Delete')">
                                         <i class="las la-trash text--shadow"></i>
                                     </a>
                                 </td>

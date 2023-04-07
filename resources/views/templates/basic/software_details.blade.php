@@ -62,36 +62,47 @@
                                                
                                                 <div class="row item-details-content">
                                                     <div class="service_subtitle1 mt-20">{{ $pageTitle }}</div>
-                                                    <div class="service_subtitle2">
-                                                        Description
-                                                    </div>
-                                                    <div class="sep-solid"></div>
-                                                    <div class="product-desc-content">
-                                                        {!! $software->description !!}
-                                                    </div>
                                                     
-                                                    <div class="service_subtitle2">
-                                                        Software Application
-                                                    </div>
-                                                    <div class="sep-solid"></div>
-                                                    <div class="product-desc-content">
-                                                        {!! $software->software_application !!}
-                                                    </div>
+                                                    @if ($software->description)
+                                                        
+                                                        <div class="service_subtitle2">
+                                                            Description
+                                                        </div>
 
+                                                        <div class="sep-solid"></div>
+                                                        <div class="product-desc-content">
+                                                            {!! $software->description !!}
+                                                        </div>
+                                                        
+                                                    @endif
+
+                                                    
+
+                                                    @if ($software->software_application)
+                                                        <div class="service_subtitle2">
+                                                            Software Application
+                                                        </div>
+                                                        <div class="sep-solid"></div>
+                                                        <div class="product-desc-content">
+                                                            {!! $software->software_application !!}
+                                                        </div>
+                                                    @endif
                                                    
-                                                    <div class="service_subtitle2 mt-20">
-                                                        Software Providing Steps
-                                                    </div>
-                                                    <div class="sep-solid"></div>
-                                                    <div class="simpletext">
-                                                        @if ($software->softwareSteps->isNotEmpty())
+
+                                                   @if ($software->softwareSteps->count() > 0  && $is_software_steps)
+                                                        <div class="service_subtitle2 mt-20">
+                                                            Software Providing Steps
+                                                        </div>
+                                                        <div class="sep-solid"></div>
+                                                        <div class="simpletext">
                                                             @foreach ($software->softwareSteps as $softwareKey => $item)
                                                                 <h5> {{ $item->name }} </h5>
                                                                 {{ $item->description }}
 
                                                             @endforeach
-                                                        @endif
-                                                    </div>
+                                                        </div>
+                                                   @endif
+                                                    
                                                 </div>
                                             </div>
                                             
@@ -206,10 +217,49 @@
                                             <div class="widget custom-widget-software">
                                                 @if ($software && count($software->deliverable)>0)
                                                     @foreach ($software->deliverable as $delivery)
-                                                        <li><span> {{ $delivery->name }}</span>
-                                                            <span><i class="fa fa-regular fa fa-check"
-                                                            style="color: #4c9d97;font-size: 18px;"></i></span>
-                                                        </li>
+
+                                                        <div class="row" >
+                                                            <li style="width:100%">
+                                                                <div class="col-md-11">
+                                                                    <span> {{  $delivery->name }}</span>
+                                                                </div>
+
+                                                                <div class="col-md-1 ">
+                                                                    <span ><i class="fa fa-regular fa fa-check"
+                                                                        style="color: #4c9d97;font-size: 18px;"></i></span>
+                                                                </div>
+                                                            </li>
+
+                                                        </div>
+
+
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            
+                                        </ul>
+
+                                        <ul class="sidebar-title-software">
+                                            
+                                            <li class="bg">@lang('Features Included')</li>
+                                            <div class="widget custom-widget-software">
+                                                @if ($software && count($software->features)>0)
+                                                    @foreach ($software->features as $feature)
+                                                        
+                                                        <div class="row">
+                                                            <li>
+                                                                <div class="col-md-11">
+                                                                    <span> {{ $feature->name }}</span>
+                                                                </div>
+                                                                <div class="col-md-1">
+                                                                    <span><i class="fa fa-regular fa fa-check"
+                                                                        style="color: #4c9d97;font-size: 18px;"></i></span>
+                                                                </div>
+                                                            </li>
+
+                                                        </div>
+
+
                                                     @endforeach
                                                 @endif
                                             </div>
@@ -218,22 +268,8 @@
 
                                         
 
-                                        <ul class="sidebar-title-software">
-                                            <li class="bg">@lang('Features Included')</li>
-                                            <div class="widget custom-widget-software">
-                                                @if ($software && count($software->features)>0)
-                                                    @foreach ($software->features as $feature)
-                                                        <li><span> {{ $feature->name }}</span>
-                                                            <span><i class="fa fa-regular fa fa-check"
-                                                            style="color: #4c9d97;font-size: 18px;"></i></span>
-                                                        </li>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            
-                                        </ul>
-
                                         <div class="widget-btn mt-20">
+                                            
                                             @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                                 <a href="{{ route('user.software.create', [$software->id])}}"
                                                  class="standard-btn mr-15">@lang('Edit Software')</a>

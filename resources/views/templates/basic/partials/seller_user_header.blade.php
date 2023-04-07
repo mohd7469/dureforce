@@ -114,12 +114,12 @@
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 <li>
                                     <!-- <a href="{{ route('seller.jobs.listing') }}"
-                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')</a> -->
+                                        @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Jobs')</a> -->
                                     <div class="dropdown">
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="{{ route('seller.jobs.listing') }}"
-                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Jobs')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('seller.jobs.listing') }}"
@@ -134,9 +134,9 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Saved Jobs')</span>
                                             </a>
-                                            <a href="{{url('coming-soon')}}"
+                                            <a href="{{route('seller.invitation.list')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
-                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
+                                                <span class="dropdown-menu__caption">@lang('Invitation')</span>
                                             </a>
                                         </div>
                                     </div>
@@ -165,17 +165,25 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Archived Proposals')</span>
                                             </a>
+                                            <a href="{{route('offers.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Offers')</span>
+                                            </a>
+                                            <a href="{{route('contracts.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
+                                            </a>
                                         </div>
                                     </div>    
                                 </li>
                                 <li>
                                     <!-- <a href="{{ route('service') }}"
-                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Service')</a> -->
+                                        @if (request()->routeIs('service')) class="active" @endif>@lang('Services')</a> -->
                                     <div class="dropdown">
                                         <button class="nav-button" class="" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Services')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('service') }}"
@@ -191,12 +199,12 @@
                                 </li>
                                 <li>
                                     <!-- <a href="{{ route('software') }}"
-                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Software')</a> -->
+                                        @if (request()->routeIs('software')) class="active" @endif>@lang('Softwares')</a> -->
                                     <div class="dropdown">
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Softwares')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('software') }}"
@@ -245,7 +253,7 @@
                                         class="header-user-area d-flex flex-wrap align-items-center justify-content-between"
                                         >
                                         <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
-                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
+{{--                                        @include($activeTemplate.'partials.notification-dropdown')--}}
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))

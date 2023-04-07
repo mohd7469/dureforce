@@ -20,46 +20,46 @@ class JobController extends Controller
 
     public function index()
     {
-    	$pageTitle = "Manage All Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::latest()->withAll('user', 'category', 'subCategory','project_lengths')->paginate(getPaginate());
-    	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        $pageTitle = "Manage All Job";
+        $emptyMessage = "No data found";
+        $jobs = Job::latest()->withAll('user', 'category', 'subCategory', 'project_lengths')->paginate(getPaginate());
+        return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function details($uuid)
     {
-    	$pageTitle = "Job Details";
+        $pageTitle = "Job Details";
 
-        $job = Job::where('uuid',$uuid)->withAll()->first();
-        if(isset($job)){
+        $job = Job::where('uuid', $uuid)->withAll()->first();
+        if (isset($job)) {
             $skillCats = SkillCategory::select('name', 'id')->get();
             foreach ($skillCats as $skillCat) {
                 $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
             }
             $development_skils = Job::where('uuid', $uuid)->with(['skill.skill_categories'])->first();
             $data['selected_skills'] = $job->skill ? implode(',', $job->skill->pluck('id')->toArray()) : '';
-    
-        }else{
+
+        } else {
             $data['selected_skills'] = '';
         }
 
-    	return view('admin.job.details', compact('pageTitle', 'job', 'data'));
+        return view('admin.job.details', compact('pageTitle', 'job', 'data'));
     }
 
     public function pending()
     {
-    	$pageTitle = "Pending Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::where('status_id', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
-    	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        $pageTitle = "Pending Job";
+        $emptyMessage = "No data found";
+        $jobs = Job::where('status_id', 1)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+        return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function approved()
     {
-    	$pageTitle = "Approved Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::where('status_id', 2)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
-    	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        $pageTitle = "Approved Job";
+        $emptyMessage = "No data found";
+        $jobs = Job::where('status_id', 2)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+        return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
     public function closed()
@@ -72,10 +72,10 @@ class JobController extends Controller
 
     public function cancel()
     {
-    	$pageTitle = "Cancel Job";
-    	$emptyMessage = "No data found";
-    	$jobs = Job::where('status_id', 10)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
-    	return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
+        $pageTitle = "Cancel Job";
+        $emptyMessage = "No data found";
+        $jobs = Job::where('status_id', 10)->latest()->with('user', 'category', 'subCategory')->paginate(getPaginate());
+        return view('admin.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
     }
 
 
@@ -130,7 +130,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been approved'];
         // return redirect()->back()->withNotify($notify);
-    	return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        return redirect('admin/job/details/' . $job->uuid)->withNotify($notify);
     }
 
     public function detailCancelBy(Request $request)
@@ -144,7 +144,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been canceled'];
         // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        return redirect('admin/job/details/' . $job->uuid)->withNotify($notify);
     }
 
 
@@ -159,7 +159,7 @@ class JobController extends Controller
         $job->save();
         $notify[] = ['success', 'Job has been closed'];
         // return redirect()->back()->withNotify($notify);
-        return redirect('admin/job/details/'.$job->uuid)->withNotify($notify);
+        return redirect('admin/job/details/' . $job->uuid)->withNotify($notify);
     }
 
 
@@ -178,7 +178,10 @@ class JobController extends Controller
     {
         $pageTitle = "Job Biding List";
         $emptyMessage = "No data found";
-        $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
+        $jobBidings = Job::where('uuid', $id)->with('user')->latest()->paginate(getPaginate());
+        // $jobBidings = $job->proposal->where('is_shortlisted',false);
+        // dd($jobBidings);
+        // $jobBidings = JobBiding::where('job_id', $id)->with('user')->latest()->paginate(getPaginate());
         return view('admin.job.job_biding', compact('pageTitle', 'emptyMessage', 'jobBidings'));
     }
 
@@ -186,7 +189,7 @@ class JobController extends Controller
     public function jobBidingDetails($id)
     {
         $pageTitle = "Job Biding Details";
-        $jobBidingDetails = JobBiding::where('id', $id)->firstOrFail();
+        $jobBidingDetails = Job::where('id', $id)->firstOrFail();
         return view('admin.job.job_biding_details', compact('pageTitle', 'jobBidingDetails'));
     }
 
@@ -199,7 +202,7 @@ class JobController extends Controller
                 ->orWhereHas('user', function ($user) use ($search) {
                     $user->where('username', 'like', "%$search%");
                 });
-            });
+        });
         $pageTitle = '';
         switch ($scope) {
             case 'approved':

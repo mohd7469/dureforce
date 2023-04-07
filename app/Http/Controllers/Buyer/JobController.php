@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Job\CreateJobRequest;
 use App\Models\BudgetType;
 use App\Models\Category;
 use App\Models\Country;
@@ -47,18 +48,12 @@ class JobController extends Controller
     {
         $data = [];
 
-        // $data['countries'] = World::Countries();
-        //$data['job_types'] = JobType::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
-        // $data['categories'] = Category::where('is_active',1)->select(['id', 'name'])->get();
-        // $data['experience_levels'] = Rank::select(['id', 'level'])->orderBy('id', 'ASC')->get();
-        // $data['budget_types'] = BudgetType::where('is_active',1)->OnlyJob()->select(['id', 'title', 'slug'])->get();
-        // $data['deliverables'] = Deliverable::where('is_active',1)->OnlyJob()->select(['id', 'name', 'slug'])->get();
-        // $data['project_length'] = ProjectLength::where('is_active',1)->OnlyJob()->select(['id', 'name'])->get();
-        // $data['project_stages'] = ProjectStage::where('is_active',1)->OnlyJob()->select(['id', 'title'])->get();
+        
 
 
         $is_active=1;
         $data['countries'] = getRedisData(Country::$Model_Name_Space,Country::$Redis_key);
+        $data['countries'] =  collect($data['countries'])->sortby('name');
         $data['job_types'] = getRedisData(JobType::$Model_Name_Space,JobType::$Redis_key,$is_active);
         $data['categories'] = getRedisData(Category::$Model_Name_Space,Category::$Redis_key,$is_active);
         $data['experience_levels'] = getRedisData(Rank::$Model_Name_Space,Rank::$Redis_key);
@@ -109,76 +104,15 @@ class JobController extends Controller
     public function jobDataValidate(Request $request)
     {
 
-        try {
-            $request_data = [];
-            parse_str($request->data, $request_data);
-
-            $user = Auth::user();
-            $custom_messages = [
-
-                'hourly_start_range.required_if' => 'Hourly Rate start field is required when budget type is hourly',
-                'country_id.required' => 'Job location is required',
-                'hourly_end_range.required_if' => 'Hourly Rate end field is required when budget type is hourly',
-                'fixed_amount.required_if' => 'Fixed amount field is required when budget type is fixed',
-                'hourly_start_range.gt' => 'Hourly Rate start field should be greater than zero',
-                'hourly_end_range.gte' => 'Hourly Rate end field value should be greater or equal to weekly start range',
-
-
-            ];
-            $rules = [
-                'title' => 'required|string|max:150',
-                'description' => 'required|string|max:1000',
-                'country_id' => 'required',
-                'job_type_id' => 'required|exists:job_types,id',
-                'category_id' => 'required|exists:categories,id',
-                'sub_category_id' => 'exists:sub_categories,id',
-                'project_stage_id' => 'exists:project_stages,id',
-                'expected_start_date' => 'required||after_or_equal:' . Carbon::now()->format('d-m-Y'),
-                'project_length_id' => 'exists:project_lengths,id',
-                'rank_id' => 'required|exists:ranks,id',
-                'budget_type_id' => 'required|exists:budget_types,id',
-                'deliverables' => 'required|array',
-                'deliverables.*' => 'required|string|distinct|exists:deliverables,id',
-                'dod' => 'required|array',
-                'skills' => 'required|array',
-                'dod.*' => 'required|string|distinct|exists:d_o_d_s,id',
-            ];
-
-            if ($request_data['budget_type_id'] == BudgetType::$hourly) {
-                $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
-                $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
-            } elseif ($request_data['budget_type_id'] == BudgetType::$fixed) {
-                $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed . '|gt:0';
-            } else {
-
-            }
-            $validator = Validator::make($request_data, $rules, $custom_messages);
-            if ($validator->fails()) {
-
-                return response()->json(["error" => $validator->errors()]);
-
-            } else
-                Log::info(["Job Validate" => "Job Data Is Valid"]);
-
-            return response()->json(["validated" => "Job Data Is Valid"]);
-
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-        }
-
-
     }
 
-    public function store(Request $request)
+    public function store(CreateJobRequest $request)
     {
 
-        $request_data = [];
-        parse_str($request->data, $request_data);
+        $request_data = $request->all();
         $user = Auth::user();
         DB::beginTransaction();
         try {
-
-
             $job = Job::create([
                 "user_id" => $user->id,
                 "job_type_id" => $request_data['job_type_id'],
@@ -210,26 +144,8 @@ class JobController extends Controller
 
             $path = imagePath()['attachments']['path'];
 
-            if ($request->hasFile('file')) {
-
-                foreach ($request->file as $file) {
-
-                    $this->fileValidate($file);
-
-                    $filename = uploadAttachments($file, $path);
-
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $document = new TaskDocument;
-                    $document->name = $filename;
-                    $document->uploaded_name = $file->getClientOriginalName();
-                    $document->url = $url;
-                    $document->type = $file_extension;
-                    $document->is_published = "Active";
-                    $job->documents()->save($document);
-
-
-                }
+            if (isset($request_data['file'])) {
+                $job->documents()->createMany(json_decode($request_data['file'],true));
             }
             DB::commit();
             session()->put('notify', ["Job Created Successfully"]);
@@ -264,11 +180,10 @@ class JobController extends Controller
         }
     }
 
-    public function update(Request $request, $uuid)
+    public function update(CreateJobRequest $request, $uuid)
     {
 
-        $request_data = [];
-        parse_str($request->data, $request_data);
+        $request_data = $request->all();
         $user = Auth::user();
 
         try {
@@ -314,28 +229,9 @@ class JobController extends Controller
             }
 
             $job->documents()->delete();
-
-            if ($request->hasFile('file')) {
-
-                foreach ($request->file as $file) {
-
-                    $this->fileValidate($file);
-                    $filename = uploadAttachments($file, $path);
-
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $document = new TaskDocument;
-                    $document->name = $filename;
-                    $document->uploaded_name = $file->getClientOriginalName();
-                    $document->url = $url;
-                    $document->type = $file_extension;
-                    $document->is_published = "Active";
-                    $job->documents()->save($document);
-
-
-                }
+            if (isset($request_data['file'])) {
+                $job->documents()->createMany(json_decode($request_data['file'],true));
             }
-
             DB::commit();
             Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);

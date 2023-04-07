@@ -12,6 +12,7 @@ class DeliveryMode extends Model
 
     public static $Model_Name_Space = "App\Models\DeliveryMode";
     public static $Redis_key = "delivery_modes";
+    public static $Is_Active = 1;
 
     public function proposal()
     {

@@ -66,6 +66,7 @@ class SkillController extends Controller
             DB::commit();
             Log::info(["Skills" => $Skills]);
             $notify[] = ['success', 'Your Skills detail has been Created.'];
+            storeRedisData(Skills::$Model_Name_Space,Skills::$Redis_key,Skills::$Is_Active);
             return redirect()->route('admin.skill.index')->withNotify($notify);
         }catch (\Exception $exp) {
             DB::rollback();
@@ -124,6 +125,7 @@ class SkillController extends Controller
             DB::commit();
             Log::info(["Skills" => $Skills]);
             $notify[] = ['success', 'Skills detail has been updated'];
+            storeRedisData(Skills::$Model_Name_Space,Skills::$Redis_key,Skills::$Is_Active);
             return redirect()->route('admin.skill.index')->withNotify($notify);
         }
         catch (\Exception $exp) {
@@ -144,6 +146,7 @@ class SkillController extends Controller
         DB::commit();
         Log::info(["Skills" => $Skills]);
         $notify[] = ['success', 'Skills deleted successfully'];
+        storeRedisData(Skills::$Model_Name_Space,Skills::$Redis_key,Skills::$Is_Active);
         return back()->withNotify($notify);
         }
         catch (\Exception $exp) {

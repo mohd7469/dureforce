@@ -149,6 +149,8 @@
                                 form--control" id="password" name="password"
                                 placeholder="@lang('Enter password')"
                                 required="">
+                                <a class="las la-eye input-icon" id="unhide" onclick="showPassword()"></a>
+                                <a class="las la-eye-slash input-icon" id="hide" onclick="showPassword()" style="display: none" ></a>
                             </div>
 
                             <!-- <div class="col-lg-12 form-group">
@@ -640,7 +642,29 @@
     }     
     .collapse:not(.show){
         display: inline;
-    } 
-        
+    }
+    .input-icon {
+        position: absolute;
+        top: 44px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        /*background-color: #e3ebf1;*/
+        color: #5b6e88;
+        justify-content: center;
+        align-items: center;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        font-size: 20px;
+    }
+
 </style>
+
 

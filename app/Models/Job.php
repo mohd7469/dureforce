@@ -36,7 +36,31 @@ class Job extends Model
         "is_private"
 
     ];
+    protected const JOB_TYPES = [
+        'JOB'     => 'badge--primary',
+        'SERVICE'  =>'badge--success',
+        'SOFTWARE' =>'badge--danger',
+    ];
+    public function getModelAttribute() {
 
+        return  class_basename($this->attributes['module_type']);
+        
+    }
+
+    public function getModelColorAttribute() {
+
+        $model_color='';
+        $model=class_basename($this->attributes['module_type']);
+        if($model=='Software')
+            $model_color=self::JOB_TYPES['SOFTWARE'];
+        elseif($model=='Service')
+            $model_color=self::JOB_TYPES['SERVICE'];
+        else
+            $model_color=self::JOB_TYPES['JOB'];
+        
+        return 'badge '.$model_color;
+
+    }
     public const STATUSES = [
         'DRAFT'  =>  17,
         'PENDING'  =>  18,
@@ -163,7 +187,7 @@ class Job extends Model
 
     public function messages()
     {
-        return $this->morphMany(ChatMessage::class, 'module')->with('user');
+        return $this->morphMany(ChatMessage::class, 'module')->with('user')->with('attachment');
     }
 
     public function chatUsers()
@@ -206,7 +230,7 @@ class Job extends Model
     }
     public function save_job()
     {
-        return $this->belongsToMany(User::class, 'user_saved_jobs');
+        return $this->belongsToMany(User::class, 'user_saved_jobs')->orderBy('id','DESC');
     }
 
 }

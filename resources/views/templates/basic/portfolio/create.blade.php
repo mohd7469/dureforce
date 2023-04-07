@@ -77,7 +77,7 @@
         {{-- Completion Date --}}
         <div class="col-md-12 col-sm-12 col-lg-12"> 
             <label >Completion Date *</label>
-            <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date"  value="{{old('completion_date')}}"  >
+            <input type="date" class="form-control" id="completion_date" aria-describedby="emailHelp" placeholder="mm/dd/yy" name="completion_date"  value="{{old('completion_date')}}" min="1900-01-01" max="2099-12-31" >
         </div>
 
         {{-- urls --}}
@@ -393,7 +393,7 @@
                             thumbnailWidth: 120,
                             maxFiles: 6,
                             uploadMultiple:false,
-                            acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+                            acceptedFiles: ".jpg,.png,.jpeg",
                             filesizeBase: 1000,
                             addRemoveLinks: false,
                             headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},

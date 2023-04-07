@@ -119,7 +119,7 @@
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="{{ route('seller.jobs.listing') }}"
-                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Job')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('jobs.listing')) class="active" @endif>@lang('Jobs')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{url('coming-soon')}}"
@@ -134,10 +134,10 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Create Jobs')</span>
                                             </a>
-                                            <a href="{{url('coming-soon')}}"
+                                            <!-- <a href="{{route('contracts.index')}}"
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Contracts')</span>
-                                            </a>
+                                            </a> -->
                                         </div>
                                     </div>
                                 </li>
@@ -161,6 +161,14 @@
                                                 class="dropdown-menu__item d-flex align-items-center px-3 py-2">
                                                 <span class="dropdown-menu__caption">@lang('Shortlisted Sellers')</span>
                                             </a>
+                                            <a href="{{route('offers.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Offers')</span>
+                                            </a>
+                                            <a href="{{route('contracts.index')}}"
+                                                class="dropdown-menu__item d-flex align-items-center px-3 py-2">
+                                                <span class="dropdown-menu__caption">@lang('Contracts')</span>
+                                            </a>
                                         </div>
                                     </div>    
                                 </li>
@@ -171,7 +179,7 @@
                                         <button class="nav-button" class="" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Service')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('service')) class="active" @endif>@lang('Services')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('service') }}"
@@ -192,7 +200,7 @@
                                         <button class="nav-button" type="button" data-bs-toggle="dropdown" data-display="static"
                                             aria-haspopup="true" aria-expanded="false">
                                             <a href="#"
-                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Software')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
+                                            @if (request()->routeIs('software')) class="active" @endif>@lang('Softwares')<span class="header-user-icon"><i class="las la-caret-down"></i></span></a>
                                         </button>
                                         <div class="dropdown-menu dropdown-center-menu dropdown-menu--sm p-0 border-0 dropdown-menu-right">
                                             <a href="{{ route('software') }}"
@@ -239,7 +247,8 @@
                                 
                                     <div class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
-                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>
+{{--                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>--}}
+{{--                                        @include($activeTemplate.'partials.notification-dropdown')--}}
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))
@@ -374,6 +383,8 @@
         </div> -->
     </div>
 </header>
+
+@include('partials.notify')
 <style>
     .sub-nav ul {
         margin: 0;
@@ -731,7 +742,7 @@
             margin-right: 27px;
             float: left;
         }
-        .dropdown-menu {
+        .dropdown-menu_notification  {
             pointer-events: none;
             -webkit-transform-origin: 50% 0;
             -ms-transform-origin: 50% 0;
@@ -760,6 +771,17 @@
     }     
     .collapse:not(.show){
         display: inline;
-    } 
-        
+    }
+
+
+
 </style>
+<script src=
+        "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src=
+        "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js">
+</script>
+<script src=
+        "https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+</script>

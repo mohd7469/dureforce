@@ -113,26 +113,27 @@
 @push('script')
 
     <script>
-        $(document).ready(function() {
             
-            $(document).on('click', '.delete-btn', function(e) {
-                filename=jQuery(this).attr("id");
-                $('#file_detail_'+filename).remove();
-                var original_file_name=$(this).attr("data-id");
-                const dt = new DataTransfer();
-                var number_of_files=$('#comment_file').get(0).files.length;
-                for (let index = 0; index < number_of_files; index++) {
-                    file=$('#comment_file').get(0).files[index];
-                    if(file.name!=original_file_name)
-                    {
-                        dt.items.add(file);
-                    }
+        $(document).on('click', '.delete-btn', function(e) {
+
+            filename=jQuery(this).attr("id");
+            filename = filename.replace(/[^\w]/gi, "_");
+            console.log(filename);
+            $('#file_detail_'+filename).remove();
+            var original_file_name=$(this).attr("data-id");
+            const dt = new DataTransfer();
+            var number_of_files=$('#comment_file').get(0).files.length;
+            for (let index = 0; index < number_of_files; index++) {
+                file=$('#comment_file').get(0).files[index];
+                console.log(file.name);
+                if(file.name!=original_file_name)
+                {
+                    dt.items.add(file);
                 }
-                $('#comment_file').get(0).files=dt.files;
-            });
-          
+            }
+
+            $('#comment_file').get(0).files=dt.files;
         });
-        
         function writeFileName()
         {
             $('#file_name_div').empty();
@@ -140,7 +141,7 @@
             var form= new FormData();
             for (let index = 0; index < number_of_files; index++) {
                 file=$('#comment_file').get(0).files[index];
-                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/\./g,'_')+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
             }
             
         }
@@ -172,10 +173,13 @@
     .header-short-menu {
         padding: 10px 40px;
     }
+    .sub-nav {
+        width: 100.5%;
+    }
     .sub-nav li {
     display: inline-table;
-    margin: -21px 30px;
-    font-size: 13px;
+    margin: -21px 15px;
+    font-size: 12px;
     font-weight: 600;
     }
     /***/

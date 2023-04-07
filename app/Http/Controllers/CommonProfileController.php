@@ -20,6 +20,7 @@ use App\Models\User;
 use Khsing\World\Models\City;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class CommonProfileController extends Controller
@@ -92,9 +93,7 @@ class CommonProfileController extends Controller
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
             'designation' => 'required|string',
             'about' => 'required|string',
-             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            
-            // 'phone_number' => ['required', new PhoneNumberValidate],
+            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'city_id' => 'required|exists:world_cities,id',
             'languages' => 'required|array',
             'languages.*.language_level_id' => 'required',
@@ -209,10 +208,17 @@ class CommonProfileController extends Controller
             $user_portfolios = $user->portfolios; 
             $categories = Category::select('id', 'name')->get();
             $degrees = Degree::select('id', 'title')->get();
-
-            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages'));
+            if(getLastLoginRoleId()==Role::$Freelancer){
+                $testimonials= $user->testimonials;
+            }
+            else{
+    
+                $testimonials = $user->testimonials()->Approved();
+    
+            }
+            return view($this->activeTemplate.'user.seller.seller_profile',compact('pageTitle','userskills','degrees','countries','language_levels','languages','skills','user','user_experience','user_education','user_portfolios','categories','basicProfile','cities','user_languages','testimonials'));
         } catch (\Throwable $th) {
-            //throw $th;
+            Log::info("error in common user profile",[$th->getMessage()]);
         }
         
     }
@@ -249,7 +255,7 @@ class CommonProfileController extends Controller
             'languages.*.language_id.required'    => 'Please Select at least one Language',
             'languages.*.language_level_id.required'    => 'Please Select at least one Proficiency Level',
         ];
-        if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
+        if (getLastLoginRoleId() == Role::$Freelancer) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }

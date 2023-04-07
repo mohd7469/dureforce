@@ -130,9 +130,9 @@
                                     @endif
 
                                     @if($service->status_id == 17)
-                                        <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
+                                        <!-- <button class="icon-btn btn--success ml-2 approved" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Approved')">
                                             <i class="las la-check"></i>
-                                        </button>
+                                        </button> -->
                                         <button class="icon-btn btn--primary ml-2 pending" data-toggle="tooltip" data-id="{{$service->id}}" data-original-title="@lang('Pending')">
                                             <i class="las la-check"></i>
                                         </button>
@@ -183,7 +183,7 @@
                                     </a>
                                         <form action="{{route('admin.service.destroy', [$service->id])}}" method="POST" style="margin-left: 5px">
                                             @csrf
-                                            <button  data-toggle="tooltip" title="" data-original-title="@lang('Delete')"  onclick="return confirm('Are you sure you want to delete.')"  class="btn btn--danger text-white" style="pointer-events: none;cursor: default;" type="submit"><i class="fa fa-trash-alt"></i></button>
+                                            <button  data-toggle="tooltip" title="" data-original-title="@lang('Delete')"  onclick="return confirm('Are you sure you want to delete.')"  class="btn btn--danger text-white ancher-delete-link-disabled" style="pointer-events: none;cursor: default;" type="submit"><i class="fa fa-trash-alt"></i></button>
                                         </form>
                                     </div>
 

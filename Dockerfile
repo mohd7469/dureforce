@@ -24,6 +24,7 @@ RUN chmod 777 -R /html
 RUN composer install --no-interaction --prefer-dist --no-scripts 
 # --no-dev -o
 RUN php artisan migrate --path=database/migrations/production --force
+RUN php artisan db:seed --force
 
 RUN php artisan event:clear
 # RUN php artisan route:clear

@@ -65,6 +65,7 @@ class CategoryAttributeController extends Controller
             DB::commit();
             Log::info(["categoryAttributes" => $categoryAttributes]);
             $notify[] = ['success', 'Your Category Attribute detail has been Created.'];
+            storeRedisData(CategoryAttribute::$Model_Name_Space,CategoryAttribute::$Redis_key,CategoryAttribute::$Is_Active);
             return redirect()->route('admin.category.attribute.index')->withNotify($notify);
         }catch (\Exception $exp) {
             DB::rollback();
@@ -122,6 +123,7 @@ class CategoryAttributeController extends Controller
             DB::commit();
             Log::info(["categoryAttributes" => $categoryAttributes]);
             $notify[] = ['success', 'Category Attribute detail has been updated'];
+            storeRedisData(CategoryAttribute::$Model_Name_Space,CategoryAttribute::$Redis_key,CategoryAttribute::$Is_Active);
             return redirect()->route('admin.category.attribute.index')->withNotify($notify);
         }
         catch (\Exception $exp) {
@@ -142,6 +144,7 @@ class CategoryAttributeController extends Controller
         DB::commit();
         Log::info(["categoryAttributes" => $categoryAttributes]);
         $notify[] = ['success', 'Category Attribute deleted successfully'];
+        storeRedisData(CategoryAttribute::$Model_Name_Space,CategoryAttribute::$Redis_key,CategoryAttribute::$Is_Active);
         return back()->withNotify($notify);
         }
         catch (\Exception $exp) {

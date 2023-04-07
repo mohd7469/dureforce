@@ -2,14 +2,15 @@
     <div class="modal-dialog">
        
        <div class="modal-content">
-          <div class="modal-header">
+          
+         <div class="modal-header">
              <h5 class="modal-title" id="exampleModalLabel">Edit Basic Details</h5>
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
+         </div>
+
           <div class="modal-body">
             {{-- {{ route('profile.basics.save') }} --}}
-             <form action="" method="POST" id="form-basic-save" class="form-basic-save"
-                enctype="multipart/form-data">
+             <form action="" method="POST" id="form-basic-save" class="form-basic-save" enctype="multipart/form-data">
                 @csrf
                 <div>
                    {{-- <label class="mt-4">Profile Picture</label>
@@ -191,7 +192,7 @@
                             </div>
                             {{-- proficiency level --}}
                             <div
-                               class="{{ $key > 0 ? 'col-md-6' : 'col-md-6'  }} col-sm-12"
+                                 class="{{ $key > 0 ? 'col-md-5' : 'col-md-6'  }} col-sm-12"
                                >
                                <label class="mt-4"
                                   >Profeciency
@@ -220,13 +221,13 @@
                                </select>
                             </div>
                             {{-- delete btn --}}
-                            {{-- @if ($key > 0)
+                            @if ($key > 0)
                             <div class="col-md-1" style="margin-top:20px; ">
-                               <button type="button" class="btn btn-danger btn-delete col-md-1 mt-5"
+                               <button type="button" class="btn btn-danger btn-delete col-md-1 "
                                   onclick="removerow('#moreLanguage-row-{{$key}}')"><i
                                   class="fa fa-trash"></i></button>
                             </div>
-                            @endif --}}
+                            @endif
                          </div>
                       </div>
                       {{-- --- --}}
@@ -354,4 +355,9 @@
     position: relative;
     left: 120px;
 }
+.btn-delete
+   {
+    margin-top: 37px;
+}
+
  </style>

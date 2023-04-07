@@ -12,6 +12,7 @@ class Country extends Model
 
     public static $Model_Name_Space = "App\Models\Country";
     public static $Redis_key = "countries";
+    public static $Is_Active = 1;
 
     protected $fillable= ['continent_id'];
     
@@ -27,6 +28,9 @@ class Country extends Model
     {
         return $this->belongsTo(Continent::class,'continent_id');
     }
-
+    public function scopeWithOutManual($query)
+    {
+        return $query->where('is_manual',false);
+    }
  
 }

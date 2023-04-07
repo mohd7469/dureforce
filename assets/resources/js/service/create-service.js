@@ -129,13 +129,13 @@ function addSteps() {
           <button id="removeRow" type="button" class="btn btn-danger" style="float: right;  margin-bottom:1rem"><i class="fa fa-trash"></i></button>
   </div>
   <div class="col-xl-12 col-lg-12 form-group" >
-             <label for="">Step Name</label>
+             <label for="">Step Name *</label>
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control"  />
+                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control step2"  />
                 </div>
                 <div>
-                <label for="discription">Step Description</label>
-                <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
+                <label for="discription">Step Description *</label>
+                <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control description2"
                     ></textarea>
                 <br />
                 <br />
@@ -384,6 +384,7 @@ function overviewFormValidation() {
 
   });
 }
+
 function baannerForm() {
   $(".banner-form").submit(function (e) {
   
@@ -490,6 +491,7 @@ function baannerForm() {
     }
   });
 }
+
 function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();
@@ -589,6 +591,16 @@ function pricingFormValidation() {
       }
     });
 
+    $(".step2").each(function () {
+      if ($.trim($(this).val()).length < 1) {
+        e.preventDefault();
+        $(this).after(
+            '<span class="error text-danger">This field is required</span>'
+        );
+        showValidationError('Add Another step name field is required');
+      }
+    });
+
     $(".description").each(function () {
       if ($.trim($(this).val()).length < 1) {
         e.preventDefault();
@@ -596,6 +608,16 @@ function pricingFormValidation() {
           '<span class="error text-danger">This field is required</span>'
         );
         showValidationError('step description field is required');
+      }
+    });
+
+    $(".description2").each(function () {
+      if ($.trim($(this).val()).length < 1) {
+        e.preventDefault();
+        $(this).after(
+            '<span class="error text-danger">This field is required</span>'
+        );
+        showValidationError('Add Another step description field is required');
       }
     });
   });

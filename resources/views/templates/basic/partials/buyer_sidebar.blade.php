@@ -12,12 +12,12 @@
                         </li>
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.index') || request()->routeIs('buyer.job.edit') ?'open':''}}">
                             <a href="{{route('buyer.job.index')}}">
-                                <i class="las la-list"></i> <span class="title">@lang('Manage Job')</span>
+                                <i class="las la-list"></i> <span class="title">@lang('Manage Jobs')</span>
                             </a>
                         </li>
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.create')?'open':''}}">
                             <a href="{{route('buyer.job.create')}}">
-                                <i class="las la-plus"></i> <span class="title">@lang('Create Job')</span>
+                                <i class="las la-plus"></i> <span class="title">@lang('Create Jobs')</span>
                             </a>
                         </li>
                         

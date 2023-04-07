@@ -23,7 +23,7 @@
                                 <tr>
                                     <td>{{getFormattedDate($ticket->created_at,'d M Y')}}</td>
                                     <td><a href="{{ route('admin.ticket.view', $ticket->ticket_no) }}" style="color: #0060B6; text-decoration: none;"> #{{$ticket->ticket_no}}</a></td>
-                                    <td>{{$ticket->subject}}</td>
+                                    <td>{{Str::limit($ticket->subject,30)}}</td>
                                     <td>{{$ticket->supportMessage->count()}}</td>
 
 
@@ -101,7 +101,7 @@
         .sub-nav li {
             display: inline-table;
             margin: -21px 30px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
 

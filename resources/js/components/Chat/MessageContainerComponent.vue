@@ -30,7 +30,7 @@
             
         </div>
         
-        <div class="card-body msg_card_body" v-chat-scroll>
+        <div class="card-body msg_card_body " v-chat-scroll v-if="messages.length>0">
             
             <div v-for="message of messages" >
                 
@@ -49,12 +49,28 @@
                             <div class="dropdown actions-icon" v-if="active_user.send_to_user.id!=message.sender_id">
                                 <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                <ul class="dropdown-menu seller"  >
+                                    <li v-if="!message.attachment"><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
                                     <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
                                 </ul>
                             </div>
-                            {{message.message}}
+                            <span v-if="message.is_attachment">
+
+                                <a :href="message.attachment ? message.attachment.url: '#'" download>
+                                    {{message.message}}
+                                    <span class="badge badge-primary badge-pill delete-btn dc-b"  >
+                                        <i class="fa fa-download"  ></i>
+                                    </span>
+                                </a>
+
+                            </span>
+                            <span v-else >
+                                <span v-html="message.message">
+                                    
+                                </span>
+                                <span  v-if="message.is_view_offer_message" class="text-success c-pointer" @click="$event=>viewOfferDetails(message.offer.uuid)">View offer details</span>
+
+                            </span>
                         </div>
                         <b class="user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
                         <span class="msg_time">{{formattedDate(message.created_at)}}</span>
@@ -72,12 +88,28 @@
                                 <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li v-if="!message.attachment"><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
                                     <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
                                     
                                 </ul>
                             </div>
-                            {{message.message}}
+                            <span v-if="message.is_attachment">
+
+                                <a :href="message.attachment ? message.attachment.url: '#'" download>
+                                    {{message.message}}
+                                    <span class="badge badge-primary badge-pill delete-btn dc-b"  >
+                                        <i class="fa fa-download"  ></i>
+                                    </span>
+                                </a>
+
+                            </span>
+                            <span v-else >
+                                <span v-html="message.message">
+                                    
+                                </span>
+                                <span  v-if="message.is_view_offer_message" class="text-success c-pointer" @click="$event=>viewOfferDetails(message.offer.uuid)">View offer details</span>
+                               
+                            </span>
                         </div>
 
                         <b class="sender_user_name">{{message.user.first_name}} {{message.user.last_name}}</b>
@@ -89,9 +121,27 @@
                     </div>
                 </div>
 
+
             </div>
-            <div v-if="!messages.length">
-                    <strong>Messages Not Found</strong>
+           
+                
+            <div class="mb-2 mt-5" v-for="n in number_of_attachments" :key="n">
+                <div class="progress" :id="'progress_bar'+n" v-show="progress_bar_show">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body msg_card_body d-flex" v-else>
+            <div v-if="!messages.length" class="row justify-content-center align-self-center text-center">
+                
+                <div class="card text-center" style="width: 18rem;margin-left: 291px">
+                    <div class="card-body">
+                      <h5 class="card-title">Messages Not Found</h5>
+                      <p class="card-text">There is no chat with this user click refresh button if you want to reload</p>
+                      <button  class="btn btn-primary" @click="reloadMessages()">Refresh</button>
+                    </div>
+                  </div>
             </div>
         </div>
 
@@ -109,17 +159,19 @@
                 >
                 </div>
                 <div class="col-md-2  ">
+                    
+                    <input type="file" name="attachment" ref="attachment" multiple class="d-none" id="message_attachments" @change="uploadFiles">
+
                     <div class=" row ">
-                        <!-- <div class="col-md-6 actions "> -->
-                            <!-- <i class="fas fa-paperclip action_item" ></i> -->
-                        <!-- </div> -->
-                        <div class="col-md-6 ">
-                            <!-- <i class="fas fa-paperclip action_item" ></i> -->
+                        
+                        <div class="col-md-6 action_send" >
+                            <i class="fas fa-paperclip action_item" @click="selectAttachments()"></i>
                         </div>
+
                         <div class="col-md-6 action_send">
                             <i class="fas fa-location-arrow action_item " @click="sendMessage()"></i>
-
                         </div>
+
                     </div>
                     
                     
@@ -149,8 +201,12 @@
                     send_to_id : '',
                     module_type : '',
                     module_id : '',
+                    attachments:[]
                 },
-                errors:[]
+                errors:[],
+                uploadPercentage:20,
+                number_of_attachments:0,
+                progress_bar_show:false
             }
         },
         mounted() {
@@ -160,6 +216,9 @@
             formattedDate(date)
             {
                return moment(String(date)).format('hh:mm A')
+            },
+            reloadMessages(){
+                this.$emit('newMessage');
             },
             sendMessage(){
                 
@@ -183,6 +242,57 @@
                     this.message_form.id='';
                 }
             },
+            selectAttachments(){
+                
+                document.getElementById("message_attachments").click()
+            },
+            async uploadFiles(){
+                this.progress_bar_show=true;
+                let attachments = this.$refs.attachment.files;
+               
+                    
+                this.$nextTick(() => {
+                    this.number_of_attachments=attachments.length;
+                });
+
+               
+                let headers= {'Content-Type': 'multipart/form-data'};
+
+                setTimeout(() => {
+                    for (let index = 0; index < attachments.length; index++) {
+                    
+                        let message_form = new FormData();
+                        message_form.append('message',this.message_form.message);
+                        message_form.append('send_to_id',this.active_user.send_to_user.id);
+                        message_form.append('module_id',this.active_user.module_id);
+                        message_form.append('module_type',this.active_user.module_type);
+
+                        let progress_bar_index=index+1;
+                        let element_id='progress_bar'+progress_bar_index;
+                        console.log(document.getElementById(element_id));
+                        document.getElementById(element_id).classList.remove('invisible');
+                        document.getElementById(element_id).className='progress';
+                        message_form.set('attachment',attachments[index]);
+                        console.log(message_form);
+                        axios.post('../chat/save/message',message_form,headers)
+                        .then(res=>{
+                        
+                            this.$emit('newMessage');
+                            document.getElementById(element_id).className='invisible';
+
+                            
+                        }).catch((error) => {
+                            console.log(error);
+                            const errors = error.response.data.errors;
+                            for (let field of Object.keys(errors)) {
+                                this.errors.push(errors[field][0]);
+                            }
+                        });
+                   
+                    }
+                }, 90);
+ 
+            },
             deleteMessage(message_id)
             {
                 axios.delete('../chat/delete/message/'+message_id)
@@ -203,6 +313,11 @@
                 this.message_form.message=message.message;
 
             },
+            viewOfferDetails(uuid){
+               
+                let redirect_url='/offer-detail/'+uuid;
+                window.location.replace(redirect_url);
+            },
             viewModuleDetail(){
                 let redirect_url='';
                 if(this.active_user.model == 'Software'){
@@ -222,6 +337,7 @@
             }
 
         },
+        
         components: {
         },
     }
@@ -230,6 +346,17 @@
 
 
 <style scoped>
+.c-pointer{
+    cursor: pointer;
+}
+.invisible {
+    visibility: hidden;
+}
+ul.dropdown-menu.seller{
+    position: absolute !important; 
+    inset: 0px 0px auto -132px !important; margin: 0px ; 
+    transform: translate3d(0px, 32.8px, 0px) !important;
+}
 .icon {
     background-color: transparent;
     color: darkgray;
@@ -240,7 +367,9 @@
     right: 2px;
     top: -15px;
 }
-
+.dc-b{
+    color: #007F7F;
+}
 .actions-icon {
     background-color: transparent;
     color: darkgray;
@@ -251,7 +380,6 @@
     right: 0px;
     top: -15px;
 }
-
 
 .icon_position{
     margin-top: 12px
@@ -490,9 +618,9 @@ color: rgba(255,255,255,0.6);
 }
 .msg_time_send{
     position: absolute;
-    right:0;
+    right: 0;
+    bottom: -23px;
     font-size: 10px;
-    top: 41px;
 }
 .msg_head{
     position: relative;

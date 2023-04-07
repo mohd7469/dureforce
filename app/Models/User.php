@@ -61,7 +61,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function scopeWithAll($query){
 
-        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios');
+        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios')->with('v1languages')->with('v1ProficiencyLevels')->with('testimonials');
 
     }
 
@@ -143,6 +143,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function languages()
     {
         return $this->hasMany('App\Models\UserLanguage');
+    }
+
+    public function v1languages()
+    {
+        return $this->belongsToMany( WorldLanguage::class,'user_languages','user_id','language_id');
+    }
+    public function v1ProficiencyLevels()
+    {
+        return $this->belongsToMany( LanguageLevel::class,'user_languages','user_id','language_level_id');
     }
 
     public function rate()
@@ -365,12 +374,16 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function save_job()
     {
-        return $this->belongsToMany(Job::class, 'user_saved_jobs');
+        return $this->belongsToMany(Job::class, 'user_saved_jobs')->orderBy('id','DESC');
     }
 
     public function supportTickets()
     {
         return $this->hasMany(SupportTicket::class);
+    }
+    public function testimonials()
+    {
+        return $this->hasMany(UserTestimonial::class);
     }
 
 }   

@@ -64,7 +64,9 @@
                
                <div class="form-group pt-3">
                   <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                  <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
+                  <small id="emailHelp" class="form-text text-muted">20% Service Fee 
+                     {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
+                  </small><br>
                   <span class="pt-2 text-dark" id="system_fee"></span>
                </div>
 
@@ -94,13 +96,13 @@
                      <div class="row">
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small  class="form-text text-dark">Min. Hours Per Week</small>
+                           <small  class="form-text text-dark">Min. Hours Per Week *</small>
                            <input type="integer" class="form-control" step="any" id="start_hour_limit" name="start_hour_limit">
 
                         </div>
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
-                           <small  class="form-text text-dark">Max. Hours Per Week</small>
+                           <small  class="form-text text-dark">Max. Hours Per Week *</small>
                            <input type="integer" step="any" class="form-control" id="end_hour_limit" name="end_hour_limit">
 
                         </div>
@@ -114,7 +116,7 @@
             <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
                <div class="form-group pt-3">
                   <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
-                  <small id="emailHelp" class="form-text text-dark">Mode of Devlivery *</small>
+                  <small id="emailHelp" class="form-text text-dark">Mode of Delivery *</small>
                   <select name="delivery_mode_id" id="mode_of_delivery" class="form-control">
                      <option value="">Select Mode Of Delivery</option>
                      @foreach ($delivery_modes as $mode)

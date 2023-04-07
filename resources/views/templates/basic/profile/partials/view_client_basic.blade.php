@@ -29,9 +29,12 @@
                 <div class="client-info-section">
                        <p class="cp-basic">Basic Details</p>
                        <div style="float:right">
-                        <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#clientBasicModal">
-                            Edit
-                        </button>
+                        @if (getLastLoginRoleId()==App\Models\Role::$Client)
+                            <button type="button" class="btn btn-primary cstm-edit" data-bs-toggle="modal" data-bs-target="#clientBasicModal">
+                                Edit
+                            </button>
+                        @endif
+                        
                        </div>
         
                         <!----== Client Info Section Start ==----->
@@ -84,7 +87,7 @@
                       <!----== Client Job Information Section Start ==----->
         
                       <div class="cp-info-container">
-                         <div class="cp-info-box">
+                        <div class="cp-info-box">
                             <p class="cp--jbh">Location</p>
                             <p class="cp-jt">
 
@@ -98,9 +101,10 @@
                               
                             </p>
                          </div>
+
                          <div class="cp-info-box">
                             <p class="cp--jbh">City</p>
-                            <p class="cp-jt" id="city_id" value{{$basicProfile->city_id}}>
+                            <p class="cp-jt"  value{{$basicProfile->city_id}}>
                                 @foreach ($cities as $city)
                                 @if($city->id == $basicProfile->city_id)
                                     {{$city->name}}
@@ -114,9 +118,6 @@
                             <p class="cp-jt" id="phone" >{{$basicProfile->phone_number}}</p>
                          </div>
         
-        
-                        
-        
                       </div>
 
 
@@ -128,7 +129,7 @@
 
                         <div class="cp-info-box">
                            <p class="cp--jbh">Language</p>
-                           @foreach ($user_languages_ as $language )
+                           @foreach ($user_v1languages as $language )
                               <p class="cp-jt">{{$language->iso_language_name }}</p>
                            @endforeach
                            
@@ -136,13 +137,10 @@
        
                         <div class="cp-info-box">
                            <p class="cp--jbh">Proficiency Level</p>
-                           @foreach ($user_languages_level_ as $level )
-                           <p class="cp-jt">{{$level->name }}</p>
+                            @foreach ($user_v1ProficiencyLevels as $level )
+                                <p class="cp-jt">{{$level->name }}</p>
                             @endforeach
                         </div>
-       
-       
-
        
                      </div>
         
@@ -166,9 +164,7 @@
 @push('script')
     <script>
 
-       
         "use strict";
-
         $(".num_filed").on('keydown',function(e){
             if(e.keyCode == 189 || e.keyCode ==109) {
                 

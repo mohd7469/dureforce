@@ -5,24 +5,23 @@
 @section('content')
 
 <div class="categories_type_container">
-    <div class="header-short-menu">
-<div class="container-fluid">
-    <div class="row justify-content-center align-items-center flex-start">
-        <div class="nav-prev arrow" style="display: none;"></div>
-
-        <div class="col-lg-12 px-5 cat-nav">
-            <ul class="text-center main_nav" id="active">
-                @foreach($categories as $category)
-                    <li class="nav-item " >
-                      <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
-                    </li>
-                @endforeach
-            </ul>
+<!-- <div class="header-short-menu">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center flex-start">
+            <div class="nav-prev arrow" style="display: none;"></div>
+                <div class="col-lg-12 px-5 cat-nav">
+                    <ul class="text-center main_nav" id="active">
+                        @foreach($categories as $category)
+                            <li class="nav-item " >
+                            <a href="{{ route('seller.jobs.listing', ['category'=>$category->id]) }}"> {{$category->name}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
-</div>
+</div> -->
 
  <section class="container">
  <div>
@@ -175,11 +174,14 @@
             padding: 12px 0px 20px;
 
         }
+        .sub-nav {
+            width: 100.5%;
+        }
         .sub-nav li {
             margin: 0px 15px;
             display: inline-table;
             /* margin: 0 13px; */
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
         }
         .listing-jb-container{

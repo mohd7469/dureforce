@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rules\Date;
 use function activeTemplate;
 use function back;
 use function dd;
@@ -45,21 +45,21 @@ class ProposalController extends Controller
      */
     public function index($type = null)
     {
-        try {
-
-            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->get();
-            $submitted_proposals = $proposals->where('status_id', Proposal::STATUSES['SUBMITTED']);
-            $archived_proposals = $proposals->where('status_id', Proposal::STATUSES['ARCHIVED']);
-            $active_proposals = $proposals->where('status_id', Proposal::STATUSES['ACTIVE']);
+//        try {
+            $proposalsAll = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id);
+            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->paginate(getPaginate());
+            $submitted_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['SUBMITTED'])->paginate(getPaginate());
+            $archived_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ARCHIVED'])->paginate(getPaginate());
+            $active_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ACTIVE'])->paginate(getPaginate());
 
             Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
             return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
 
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json(["error" => "There is a technical error"]);
+//        } catch (\Exception $e) {
+//            Log::error($e->getMessage());
+//            return response()->json(["error" => "There is a technical error"]);
 
-        }
+//        }
 
 
     }
@@ -98,13 +98,13 @@ class ProposalController extends Controller
             $job = Job::where('uuid', $uuid)->withAll()->first();
             $skill_categories = SkillCategory::select('name', 'id')->get();
             //$delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
-            $is_active=1;
-            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space,DeliveryMode::$Redis_key,$is_active);
+            $is_active = 1;
+            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space, DeliveryMode::$Redis_key, $is_active);
             foreach ($skill_categories as $skillCat) {
                 $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
             }
             $pageTitle = "Proposal";
-            Log::info(['Job'=>$job]);
+            Log::info(['Job' => $job]);
             return view('templates.basic.jobs.Proposal.submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes'));
 
 
@@ -198,7 +198,7 @@ class ProposalController extends Controller
             }
 
             DB::commit();
-            Log::info(["Proposal"=>$proposal]);
+            Log::info(["Proposal" => $proposal]);
 
             return response()->json(["redirect" => route('seller.jobs.listing'), "message" => "Proposal submitted"]);
 
@@ -244,9 +244,40 @@ class ProposalController extends Controller
                 $rules = [
                     'delivery_mode_id' => 'required|exists:delivery_modes,id',
                     'milestones.*.description' => 'string|required',
-                    'milestones.*.start_date' => 'date|required|after_or_equal:now',
-                    'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
-                    'milestones.*.amount' => 'string|required',
+                    // 'milestones.*.start_date' => 'date|required|after_or_equal:now',
+                    'milestones.*.start_date' => [
+                        'date',
+                        'required',
+                        'after_or_equal:now',
+                        function ($attribute, $value, $fail) use ($request_data) {
+                            $milestoneIndex = (int) substr($attribute, 11, -11);
+
+                            if ($milestoneIndex > 1) {
+                                $previousMilestoneEndDate = $request_data['milestones'][$milestoneIndex-1]['end_date'];
+                                if ($previousMilestoneEndDate >= $value) {
+
+                                    $fail('The start date of milestone '.$milestoneIndex.' must be after the end date of the previous milestone.');
+                                }
+
+                            }
+                        }
+                    ],
+                    'milestones.*.end_date' => [
+                        'date',
+                        'required',
+                        'after_or_equal:milestones.*.start_date', // check that end date is after start date
+                        function ($attribute, $value, $fail) use ($request_data) {
+                            $previousMilestoneIndex = (int) substr($attribute, 11, -11);
+                            if ($previousMilestoneIndex > 1) {
+                                $previousMilestoneEndDate = $request_data['milestones'][$previousMilestoneIndex-1]['end_date'];
+                                if ($previousMilestoneEndDate >= $value) {
+                                    $fail('The start date of the next milestone must be after the end date of the previous milestone.');
+                                }
+                            }
+                        },
+                    ],
+                    // 'milestones.*.end_date' => 'date|required|after_or_equal:milestones.*.start_date',
+                    'milestones.*.amount' => 'integer|required|gt:0',
                     'total_project_price' => 'required',
                     'amount_receive' => 'required',
                     'cover_letter' => 'required|string|min:20'

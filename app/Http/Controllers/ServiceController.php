@@ -16,19 +16,34 @@ class ServiceController extends BaseController
     public function index(Request $request)
     {
         $services = Service::where($this->applyFilters($request))
-            ->with(['user', 'user.basicProfile' ])
-            ->inRandomOrder();
+        ->with(['user', 'user.basicProfile','category', 'subCategory' ])
+            ->orderBy('created_at','desc');
+        $draftServices = Service::where($this->applyFilters($request))
+        ->with(['user', 'user.basicProfile','category', 'subCategory' ])
+            ->orderBy('created_at','desc');
         if (getLastLoginRoleId() == Role::$Freelancer){
             $services = $services->where('user_id', auth()->user()->id);
+            $draftServices = $draftServices->where('user_id', auth()->user()->id)->where('status_id',Service::STATUSES['DRAFT']);
         }
         else{
-            $services = $services->where('status_id', Service::STATUSES['APPROVED']);
+            $services = $services->where('status_id', Service::STATUSES['APPROVED'])->orderBy('id','desc');
+            $draftServices = $draftServices->where('status_id', Service::STATUSES['DRAFT']);
         }
-        $services = $services->paginate(getPaginate())->withQueryString();
+        $services = $services->paginate(10)->withQueryString();
+        $totalServices = $services->count();
+        $draftServices = $draftServices->paginate(getPaginate())->withQueryString();
+        $totalDraftServices = $draftServices->count();
         $pageTitle = "Service";
         $emptyMessage = "No data found";
 
-        return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage'));
+        if (getLastLoginRoleId() == Role::$Freelancer){
+            return view($this->activeTemplate . 'services.service-list', compact('pageTitle', 'services', 'emptyMessage','draftServices','totalServices','totalDraftServices'));
+
+        }
+        else{
+             return view($this->activeTemplate . 'services.listing', compact('pageTitle', 'services', 'emptyMessage','draftServices'));
+        }
+
     }
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

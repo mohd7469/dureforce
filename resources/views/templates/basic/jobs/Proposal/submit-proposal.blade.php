@@ -34,8 +34,8 @@
                                        
                                           {{-- title and created at --}}
                                           <div class="left">
-                                             <p class="jb-title" >{{$job->title? $job->title : ''}}</p>
-                                             <span class="simpletext"> {{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</span> 
+                                             <p class="jb-title" ><b>{{$job->title? $job->title : ''}}</b></p>
+                                             <span class="simpletext"><b>Posted On :{{$job->created_at->format('Y-m-d') ? $job->created_at->format('Y-m-d') : '' }}</b></span> 
                                           </div>
                                           
                                           {{-- description and job post link --}}
@@ -95,7 +95,7 @@
                                                 </ul>
                                                 <ul class="sidebar-title2">
                                                    <li><span>Experience Level</span>
-                                                         <p>{{$job->rank->level ?  $job->rank->level : ''}}</p>
+                                                         <p>{{$job->rank->level ?? ''}}</p>
                                                    </li>
                                                 </ul>
 

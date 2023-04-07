@@ -16,28 +16,28 @@ class LanguageLevelsController extends Controller
     {
         try {
             DB::beginTransaction();
-    	$pageTitle = "Language Levels List";
-    	$emptyMessage = "No data found";
-        $languageLavels = LanguageLevel::with('module')->latest()->paginate(getPaginate());    
-        return view('admin.language_levels.index', compact('pageTitle','languageLavels'));
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $pageTitle = "Language Levels List";
+            $emptyMessage = "No data found";
+            $languageLavels = LanguageLevel::with('module')->latest()->paginate(getPaginate());    
+            return view('admin.language_levels.index', compact('pageTitle','languageLavels'));
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function Create()
     {
         try {
             DB::beginTransaction();
-    	$pageTitle = "Create Language Level";
-        $modules = Module::select('id', 'name')->get();
-        return view('admin.language_levels.create', compact('pageTitle','modules'));
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $pageTitle = "Create Language Level";
+            $modules = Module::select('id', 'name')->get();
+            return view('admin.language_levels.create', compact('pageTitle','modules'));
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function store(Request $request)
     {
@@ -51,40 +51,36 @@ class LanguageLevelsController extends Controller
         try {
             DB::beginTransaction();
        
-        $languageLavel  = new LanguageLevel();
-        
-       
-        $languageLavel->name = $request->title;
-        $languageLavel->slug = $request->slug;
-        $languageLavel->module_id = $request->module;
-       
-        // $dod->module_id = 1;
-       
-        $languageLavel->save();
-        DB::commit();
-        Log::info(["languageLavel" => $languageLavel]);
-        
-        $notify[] = ['success', 'Your Language Lavel has been Created.'];
-        return redirect()->route('admin.language.level.index')->withNotify($notify);
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel  = new LanguageLevel();
+            $languageLavel->name = $request->title;
+            $languageLavel->slug = $request->slug;
+            $languageLavel->module_id = $request->module;
+            // $dod->module_id = 1;
+            $languageLavel->save();
+            DB::commit();
+            Log::info(["languageLavel" => $languageLavel]);
+            $notify[] = ['success', 'Your Language Lavel has been Created.'];
+            storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
+            return redirect()->route('admin.language.level.index')->withNotify($notify);
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function editdetails($id){
         try {
             DB::beginTransaction();
-        $languageLavel = LanguageLevel::findOrFail($id);
-        $modules = Module::select('id', 'name')->get();
-        $pageTitle = "Manage All Language Levels Details";
-        $emptyMessage = 'No shortcode available';
-        return view('admin.language_levels.edit', compact('pageTitle', 'languageLavel','emptyMessage','modules'));
-    }catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel = LanguageLevel::findOrFail($id);
+            $modules = Module::select('id', 'name')->get();
+            $pageTitle = "Manage All Language Levels Details";
+            $emptyMessage = 'No shortcode available';
+            return view('admin.language_levels.edit', compact('pageTitle', 'languageLavel','emptyMessage','modules'));
+        }catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function update(Request $request, $id){
         $this->validate($request, [
@@ -95,23 +91,24 @@ class LanguageLevelsController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $languageLavel = LanguageLevel::findOrFail($id);
-    
-        $languageLavel->name = $request->title;
-        $languageLavel->slug = $request->slug;
-        $languageLavel->module_id = $request->module;
+            $languageLavel = LanguageLevel::findOrFail($id);
         
-        $languageLavel->save();
-        DB::commit();
-        Log::info(["languageLavel" => $languageLavel]);
-        $notify[] = ['success', 'Language Level detail has been updated'];
-        return redirect()->route('admin.language.level.index')->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel->name = $request->title;
+            $languageLavel->slug = $request->slug;
+            $languageLavel->module_id = $request->module;
+            
+            $languageLavel->save();
+            DB::commit();
+            Log::info(["languageLavel" => $languageLavel]);
+            $notify[] = ['success', 'Language Level detail has been updated'];
+            storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
+            return redirect()->route('admin.language.level.index')->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
 
     public function destroy($id)
@@ -124,56 +121,59 @@ class LanguageLevelsController extends Controller
     {
         try {
             DB::beginTransaction();
-        $languageLavel = LanguageLevel::find($id);
-       
-        $languageLavel->delete();
-        DB::commit();
-        Log::info(["languageLavel" => $languageLavel]);
-        $notify[] = ['success', 'Language Level deleted successfully'];
-        return back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel = LanguageLevel::find($id);
+        
+            $languageLavel->delete();
+            DB::commit();
+            Log::info(["languageLavel" => $languageLavel]);
+            $notify[] = ['success', 'Language Level deleted successfully'];
+            storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
+            return back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function activeBy(Request $request)
     {
         try {
             DB::beginTransaction();
-        $languageLavel = LanguageLevel::findOrFail($request->id);
-        $languageLavel->is_active = 1;
-        $languageLavel->created_at = Carbon::now();
-        $languageLavel->save();
-        DB::commit();
-        Log::info(["languageLavel" => $languageLavel]);
-        $notify[] = ['success', 'Language Level has been Activated'];
-        return redirect()->back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel = LanguageLevel::findOrFail($request->id);
+            $languageLavel->is_active = 1;
+            $languageLavel->created_at = Carbon::now();
+            $languageLavel->save();
+            DB::commit();
+            Log::info(["languageLavel" => $languageLavel]);
+            $notify[] = ['success', 'Language Level has been Activated'];
+            storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
     public function inActiveBy(Request $request)
     {
         try {
             DB::beginTransaction();
-        $languageLavel = LanguageLevel::findOrFail($request->id);
-        $languageLavel->is_active = 0;
-        $languageLavel->created_at = Carbon::now();
-        $languageLavel->save();
-        DB::commit();
-        Log::info(["languageLavel" => $languageLavel]);
-        $notify[] = ['success', 'Language Level has been inActive'];
-        return redirect()->back()->withNotify($notify);
-    }
-    catch (\Exception $exp) {
-        DB::rollback();
-        Log::error($exp->getMessage());
-        return response()->json(["error" => $exp]);
-    }
+            $languageLavel = LanguageLevel::findOrFail($request->id);
+            $languageLavel->is_active = 0;
+            $languageLavel->created_at = Carbon::now();
+            $languageLavel->save();
+            DB::commit();
+            Log::info(["languageLavel" => $languageLavel]);
+            $notify[] = ['success', 'Language Level has been inActive'];
+            storeRedisData(LanguageLevel::$Model_Name_Space,LanguageLevel::$Redis_key,LanguageLevel::$Is_Active);
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp]);
+        }
     }
 }

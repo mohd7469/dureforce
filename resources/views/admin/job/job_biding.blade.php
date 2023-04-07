@@ -30,7 +30,10 @@
                                     </td>
                                   
                                     <td data-label="@lang('Amount')">
-                                       <span class="font-weight-bold">{{ $general->cur_sym }}{{ getAmount($jobBiding->price) }}</span>
+                                       <span class="font-weight-bold"> 
+                                       {{ $jobBiding->budget_type_id == \App\Models\BudgetType::$hourly ? 'Hourly:$'.$jobBiding->hourly_start_range."-$" .$jobBiding->hourly_end_range : "Fixed:$".$jobBiding->fixed_amount    }}
+                                        <!-- {{ $general->cur_sym }}{{ getAmount($jobBiding->price) }} -->
+                                       </span>
                                     </td>
 
                                      <td data-label="@lang('Created At')">

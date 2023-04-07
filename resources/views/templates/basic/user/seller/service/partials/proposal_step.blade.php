@@ -31,7 +31,9 @@
                     
                         <div class="form-group pt-3">
                             <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                            <small id="emailHelp" class="form-text text-muted">20% Service Fee <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
+                            <small id="emailHelp" class="form-text text-muted">20% Service Fee 
+                                {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
+                            </small><br>
                             <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',(float)$proposal['hourly_bid_rate'])*0.20 }}</span>
                         </div>
 
@@ -81,7 +83,7 @@
                     <div class="col-md-6 col-lg-6 col-xl-6 col-sm-12 col-xs-12">
                         <div class="form-group pt-3">
                             <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
-                            <small id="emailHelp" class="form-text text-dark">Mode of Devlivery *</small>
+                            <small id="emailHelp" class="form-text text-dark">Mode of Delivery *</small>
                             <select name="delivery_mode_id" id="mode_of_delivery" class="form-control">
                                 <option value="">Select Mode Of Delivery</option>
                                 @foreach ($delivery_modes as $mode)
@@ -171,17 +173,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 ">
-                    <a class="btn service--btns btn-secondary float-left  mt-20 w-100" href="?view=step-3">@lang('BACK')</a>
+                <div class="col-md-3 ">
+                    <a class="btn service--btns btn-secondary float-left  mt-20 " href="?view=step-3">@lang('BACK')</a>
                 </div>
-                <div class="col-md-6 text-right">
-                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+                <div class="col-md-9 text-right">
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
 
-                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 w-100"  type="button">
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
                        Preview Service
                     </button> </a>
-                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 ">@lang('SAVE
                         AND
                         CONTINUE')</button>
                 </div>

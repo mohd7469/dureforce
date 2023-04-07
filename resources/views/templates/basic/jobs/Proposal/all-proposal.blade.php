@@ -117,7 +117,7 @@
                                                     <a href="{{route('chat.start.message',[$proposal->uuid,'Proposal'])}}" class="btn-products-s">Message</a>
                                                     <a href="{{route('buyer.proposal.show',$proposal->uuid)}}" class="btn-products-s">View Proposal</a>
                                                     @if ($proposal->offer)
-                                                        <a href="{{route('buyer.offer.detail',$proposal->offer->uuid)}}" class="btn-products-s">View Offer</a>
+                                                        <a href="{{route('offer.detail',$proposal->offer->uuid)}}" class="btn-products-s">View Offer</a>
                                                     @else
                                                         <a href="{{route('buyer.send.offer',$proposal->uuid)}}" class="btn-products-s">Send Offer</a>
 
@@ -324,7 +324,7 @@
                                                         <div class="attachment">
                                                             <div class="service_subtitle2 mt-20 heading-text">
 
-
+                                                                @if (count($short_listed_proposal->attachment)>0)
                                                                 <h2> Attachments</h2>
                                                                 <div class="row">
                                                                     @foreach($short_listed_proposal->attachment as $document)
@@ -337,19 +337,20 @@
 
                                                                     @endforeach
                                                                 </div>
+                                                                @endif
+                                                                
 
                                                             </div>
                                                         </div>
 
                                                     </div>
-                                            @endisset
+                                                @endisset
                                                 <!--Skills Section End-->
                                             </div>
                                             <hr>
                                             @endforeach
                                         </div>
                                 </div>
-</
 
                         </div>
 

@@ -137,6 +137,89 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
+
+
+                        <li class="sidebar-menu-item sidebar-dropdown">
+                            <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
+                                <i class="menu-icon las la-tasks"></i>
+                                <span class="menu-title">@lang('Manage Testimonials')</span>
+                                @if ($jobPending > 0)
+                                    <span class="menu-badge pill bg--primary ml-auto">
+                                    <i class="fa fa-exclamation"></i>
+                                </span>
+                                @endif
+                            </a>
+                            <div class="sidebar-submenu {{ menuActive('admin.job*', 2) }} ">
+                                <ul>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.index') }} ">
+                                        <a href="{{ route('admin.testimonial.index') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('All')</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.pending') }} ">
+                                        <a href="{{ route('admin.testimonial.pending') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Requested')</span>
+                                            @if ($requestedTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $requestedTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+
+                                        </a>
+                                    </li>
+
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.approved') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Approved')</span>
+                                            @if ($acceptedTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $acceptedTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.waiting') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Waiting')</span>
+                                            @if ($waitingTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $waitingTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-menu-item {{ menuActive('admin.testimonial.reject') }} ">
+                                        <a href="{{ route('admin.testimonial.approved') }}" class="nav-link">
+                                            <i class="menu-icon las la-dot-circle"></i>
+                                            <span class="menu-title">@lang('Rejected')</span>
+                                            @if ($rejectedTestimonials)
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">{{ $rejectedTestimonials }}</span>
+                                            @else
+                                                <span
+                                                        class="menu-badge pill bg--primary ml-auto">0
+                                            </span>
+                                            @endif
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
                 @if (in_array('7', $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
@@ -1317,11 +1400,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                    {{-- End Deliver Mode crud  --}}
                    
                    
-                {{-- System Email Creditional Mode crud  --}}
+                {{-- System All Admin Creditional Mode crud  --}}
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.credential*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Email Credentials')</span>
+                        <span class="menu-title">@lang('System Credentials')</span>
                     </a>
                     <div class="sidebar-submenu {{ menuActive('admin.credential*', 2) }} ">
                         <ul>
@@ -1332,53 +1415,30 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     <span class="menu-title">@lang('Add Email Credentials ')</span>
                                 </a>
                             </li>
-                            
-                        </ul>
-                    </div>
-                </li>
-                  {{-- End System Email Creditional Mode crud  --}}
-                
-                  {{--Redis Creditional Mode crud  --}}
-                <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.redis*', 3) }}">
-                        <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Redis Credentials')</span>
-                    </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.redis*', 2) }} ">
-                        <ul>
-                            
                             <li class="sidebar-menu-item {{ menuActive('admin.redis.credential.index') }} ">
                                 <a href="{{ route('admin.redis.credential.index') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Add Redis Credentials ')</span>
                                 </a>
                             </li>
-                            
-                        </ul>
-                    </div>
-                </li>
-                  {{-- End Redis Creditional Mode crud  --}}
-
-                {{--pusher Creditional Mode crud  --}}
-                <li class="sidebar-menu-item sidebar-dropdown">
-                    <a href="javascript:void(0)" class="{{ menuActive('admin.pusher*', 3) }}">
-                        <i class="menu-icon las la-life-ring"></i>
-                        <span class="menu-title">@lang('Pusher Credentials')</span>
-                    </a>
-                    <div class="sidebar-submenu {{ menuActive('admin.pusher*', 2) }} ">
-                        <ul>
-                            
                             <li class="sidebar-menu-item {{ menuActive('admin.pusher.credential.index') }} ">
                                 <a href="{{ route('admin.pusher.credential.index') }}" class="nav-link">
                                     <i class="menu-icon las la-dot-circle"></i>
                                     <span class="menu-title">@lang('Add Pusher Credentials ')</span>
                                 </a>
                             </li>
+
+                            <li class="sidebar-menu-item {{ menuActive('admin.storage.credential.index') }} ">
+                                <a href="{{ route('admin.storage.credential.index') }}" class="nav-link">
+                                    <i class="menu-icon las la-dot-circle"></i>
+                                    <span class="menu-title">@lang('Add Storage Credentials ')</span>
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>
                 </li>
-                  {{-- End pusher Creditional Mode crud  --}}
+                  {{-- End Admin all Creditional Mode crud  --}}
 
                    {{-- Job Type Mode crud  --}}
                    <li class="sidebar-menu-item sidebar-dropdown">
@@ -1718,6 +1778,25 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </a>
                     </li>
                 @endif
+
+                <li class="sidebar-menu-item sidebar-dropdown">
+                        <a href="javascript:void(0)" class="{{ menuActive('admin.blog*', 3) }}">
+                            <i class="menu-icon las la-life-ring"></i>
+                            <span class="menu-title">@lang('Blogs')</span>
+                        </a>
+                        <div class="sidebar-submenu {{ menuActive('admin.blog*', 2) }} ">
+                            <ul>
+                                
+                                <li class="sidebar-menu-item {{ menuActive('admin.blog.index') }} ">
+                                    <a href="{{ route('admin.blog.index') }}" class="nav-link">
+                                        <i class="menu-icon las la-dot-circle"></i>
+                                        <span class="menu-title">@lang('Blog ')</span>
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </li>
 
 
                 @if (in_array('28', $staffAccess))

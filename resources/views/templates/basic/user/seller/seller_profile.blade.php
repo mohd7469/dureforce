@@ -324,12 +324,16 @@
                                                 @endif
 
                                                 <a href="{{route('profile.portfolio.view',$portfolio->uuid)}}">
-                                                    <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @if ($portfolio->video_url)
+                                                        <iframe src="{{portfolioVideoUrl($portfolio->video_url)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:18rem;height:220px"></iframe>
+                                                    @else
+                                                        <img class="card-img-top portfolio-img" src="{{ $portfolio->attachments()->exists() ? $portfolio->attachments()->first()->url: asset('assets/images/seller/Rectangle 122.png')  }}" alt="Card image cap">
+                                                    @endif
                                                 </a>
 
                                                 <div class="card-body">
-                                                    <h3 class="card-title">{{$portfolio->name}}</h3>
-                                                    <p class="card-text">{{$portfolio->description}}</p>
+                                                    <h3 class="card-title">{{ substr($portfolio->name,0,23)}}{{'...'}}</h3>
+                                                    <span class="card-text">{{ substr($portfolio->description, 0,  26)}}</span><a href="{{route('profile.portfolio.view',$portfolio->uuid)}}"><strong class="portfolio-desc"> More...</strong></a>
                                                 </div>
 
                                             </div>
@@ -409,17 +413,125 @@
                             </div>
                             {{-- testnomials --}}
                             <div class="tab-pane container fade" id="tes">
-                                <h3>Coming Soon</h3>
-                                {{-- <div class="row"> --}}
-                                {{-- <div class="quote">
-                                        <blockquote class="blockquote">
-                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                            Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her! Very cooperative and provided us with the revision for our satisfaction. A highly professional attitude and excellent communicator, I will highly recommend her!
-                                        </blockquote>
-                                <p class="cite"><b>Simon King</b> <br>
-                                    Director Marketing, Global Solutions Ltd</p>
+                                
+                                <div class="row section-heading-border justify-content-center align-items-center">
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Testimonials</b></div>
+                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 d-flex flex-row-reverse">
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <button type="button" class="btn btn-sm standard-btn-sm-exp " data-bs-toggle="modal" data-bs-target="#addtestmonial" id="add-testmonial-btn">
+                                                Request For Testimonial
+                                            </button>
+                                        @endif
+                                    </div>
                                 </div>
-                                </div> --}}
+
+                                    @foreach ($testimonials as $testimonial)
+                                    <div class="row">
+
+                                        <div class="quote">
+                                            <blockquote class="blockquote" >
+                                               {{ $testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->message_to_client :$testimonial->client_response }}
+                                            </blockquote>
+                                            <hr class="divider">
+                                            <div class="row ">
+                                                <table class="table table-borderless table-spacing">
+                                                    <tbody class="text-center">
+                                                        <tr>
+                                                            <td ><b>{{trans('Quality')}}</b></td>
+                                                            <td>
+
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<$testimonial->quality_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
+                                                                    @endif
+                                                                    
+                                                                @endfor
+                                                            
+                                                            </td>
+                                                            <td><b>{{trans('Communication')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<$testimonial->communication_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
+                                                                    @endif
+                                                                
+                                                                @endfor
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td ><b>{{trans('Expertise')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<$testimonial->expertise_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
+                                                                    @endif
+                                                                
+                                                                @endfor
+                                                            </td>
+                                                            <td><b>{{trans('Professionalism')}}</b></td>
+                                                            <td>
+                                                                @for ($index=0;$index<5;$index++)
+                                                                    @if ($index<$testimonial->professionalism_rating)
+                                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                                    @else
+                                                                        <i class="fa fa-solid fa-star review-star"></i>
+                                                                @endif
+                                                                
+                                                            @endfor
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div>
+                                            <hr class="divider">
+                                            <p class="cite">
+                                                
+                                                <b>{{$testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->client_name : $testimonial->client_response_full_name}}</b> 
+                                                @if ($testimonial->status_id !=  App\Models\UserTestimonial::STATUSES['Requested'])
+                                                    <br>
+                                                    {{$testimonial->client_response_company}}
+                                                @endif
+                                                
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                                        <a href="{{$testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Requested'] ? $testimonial->client_linkedin_url :  $testimonial->client_response_linkedin_url}}">
+                                                            <i class="fab fa-solid fa-linkedin"></i>
+                                                            <span class="see-profile">See LinkedIn Profile </span>
+        
+                                                        </a>
+                                                    </div>
+                                                    @if ($testimonial->status)
+                                                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 float-right mb-3 mr-3">
+                                                            <span class="float-right p-2 badge {{$testimonial->status->color }}">
+                                                                @if ($testimonial->status_id ==  App\Models\UserTestimonial::STATUSES['Accepted'])
+                                                                    <img src="/assets/images/job/tick-c.png" alt="verified icon not found" style="height: 20px;width:20px;">
+                                                                @endif
+                                                                {{$testimonial->status ? $testimonial->status->name : 'N/A'}}
+                                                            </span>
+
+                                                        </div>
+                                                    @endif
+                                                   
+                                                </div>
+                                                
+                                                
+                                                
+                                                    
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    @endforeach
+                                   
                             </div>
                         </div>
                     </div>
@@ -454,6 +566,8 @@
                                         <input type="text" class="form-control" name="designation" placeholder="Freelance DevOps Engineer" value="{{$user->job_title}}">
                                     </div>
                                 </div>
+                               
+
                                 <div class="col-xl-12">
                                     <div class=" mb-3 select2_element">
                                         <label for="title">Category *</label>
@@ -636,8 +750,9 @@
 
             </div>
         </div>
+        
         {{-- Add Experience Model --}}
-        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addexperience" tabindex="-1" aria-labelledby="ExperienceModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
@@ -698,11 +813,11 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="startdate">Start Date *</label>
-                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" >
+                                    <input type="date" class="form-control" name="start_date" placeholder="Month, Year" id="exp_start_date" min="1900-01-01" max="2099-12-31">
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                                     <label for="Language">End Date  *</label>
-                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" >
+                                    <input type="date" class="form-control experience-end-date" name="end_date" placeholder="Month, Year" id="exp_end_date" min="1900-01-01" max="2099-12-31">
                                 </div>
                                 <div class="col-xl-12">
                                     <div class="form-group">
@@ -725,8 +840,103 @@
             </div>
         </div>
 
+        {{-- Add Testimonial Request Model --}}
+        <div class="modal fade" id="addtestmonial" tabindex="-1" aria-labelledby="TestimonialModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header editprofileheader">
+                        <h5 class="modal-title" id="exampleModalLabel">Testimonial Request</h5>
+                        <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body modal-body-profile">
+
+                        <form action="{{route('seller.profile.testimonial.request')}}" id="testimonial_request_form" method="post">
+            
+                            @csrf
+
+                            <div class="row">
+                                
+                                <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12 row">
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Client Name *</label>
+                                            <input type="text" class="form-control" name="client_name" placeholder="write client name " id="client_name_id">
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Business Email Address *</label>
+                                            <input type="email" class="form-control" name="client_email" placeholder="write client business email" id="client_email_id">
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Client LinkedIn Profile URL *</label>
+                                            <input type="text" class="form-control" name="client_linkedin_url" placeholder="write client linkedin profile url" id="client_linkiedin_url_id">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Project Type</label>
+                                            <input type="text" class="form-control" name="project_type" placeholder="write project type" id="project_type_id">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label for="title">Message To Client</label>
+                                            <textarea  class="form-control text_area" name="message_to_client" placeholder="write message for client" id="message_to_client_id"></textarea>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12 ">
+                                    <div class="text-center">
+                                        <img src="{{asset('assets\images\seller\testimonial-2.jpg')}}" class="rounded" alt="..." style="height:100px">
+                                    </div>
+                                    <div class="mt-3 ">
+                                        <strong >
+                                            Strengthen your profile with client testimonials
+                                        </strong>
+
+                                        <ul class="list-group pmd-list pmd-card-list border-0 mt-1 ">
+                                            <li class="list-group-item d-flex border-0" >
+                                                <i class="fa fa-check green" aria-hidden="true" ></i>
+                                                <span class="media-body">Showcase your skills and success from clients outside dureforce</span>
+                                            </li>
+                                            <li class="list-group-item d-flex border-0">
+                                                <i class="fa fa-check green" aria-hidden="true"></i>
+                                                <div class="media-body">your clients will get an email within instructions for submitting your success story</div>
+                                            </li>
+                                            <li class="list-group-item d-flex border-0"> 
+                                                <i class="fa fa-check green" aria-hidden="true"></i>
+                                                <div class="media-body">The testimonial will display on your profile once it's verified by dureforce</div>
+                                            </li>
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                               
+                            </div>
+
+                            <div class="d-flex flex-row-reverse">
+
+                                <button type="submit" class="btn-save" id="testimonial-request-btn">Request</button>
+                                <button type="button" class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+
+                            </div>
+
+                        </form>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
         {{-- Education Model --}}
-        <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addeducation" tabindex="-1" aria-labelledby="EducationModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
@@ -890,7 +1100,7 @@
                                                 name="description"
                                                 id="edu_description"
                                                 placeholder="Add Description  "
-                                                style="min-height: 90px !important"
+                                                style="min-height: 90px !important;width:100%"
                                         ></textarea>
                                         </div>
                                         
@@ -917,6 +1127,23 @@
 @push('style')
 
 <style>
+    .text_area{
+        min-height: 200px !important
+    }
+    .table-spacing{
+        margin-bottom: -8px !important;
+    }
+    .bg_color{
+        background-color: lightcyan
+    }
+    .green{
+        color:green;
+        margin-top:3px;
+        margin-right:6px;
+    }
+    .portfolio-desc{
+        margin-left: 4px;
+    }
     .sep-solid {
         border-top: 2px solid #c5e0e0;
         margin-top: 18px;
@@ -925,6 +1152,23 @@
         
         height: 220px;
         width: 100%;
+    }
+    .testmonials-review-star{
+        padding: 3px;
+        color: #F09959;
+    }
+    .review-star{
+        padding: 3px;
+        color: rgb(215, 212, 212);
+    }
+    .quote{
+        height:auto;
+    }
+    .see-profile{
+        color:#0077B5;
+    }
+    .divider{
+        color: #DCDCDC
     }
 </style>
 
@@ -946,10 +1190,14 @@
     let user_basic_form=$('#form-basic-save');
     let experience_form=$('#experience_form');
     let education_form=$('#education_form');
+    let testimonial_request_form=$('#testimonial_request_form');
+
     let row_index= $('#languages_basics').val();
     let exp_btn=$('#exp-btn');
     let add_exp_btn=$('#add-exp-btn');
     let add_edu_btn=$('#add-edu-btn');
+    let testimonial_req_btn=$('#testimonial-request-btn');
+
     let edit_profile_picture_btn=$('#profile-pic-edit-btn');
     var token= $('input[name=_token]').val();
     var profile_picture_form = $('#profile_picture_form');
@@ -983,6 +1231,16 @@
             $('#edu_description').empty();
         });
 
+    
+
+        testimonial_request_form.submit(function (e) {
+
+            e.preventDefault();
+            e.stopPropagation(); 
+            RequestForTestimonial();
+
+        });
+        
         user_basic_form.submit(function (e) {
             e.preventDefault();
             e.stopPropagation(); 
@@ -1151,8 +1409,8 @@
     function displayAlertMessage(message)
     {
         iziToast.error({
-        message: message.toString().replace(',',' and '),
-        position: "topRight",
+            message: message.toString().replace(',',' and '),
+            position: "topRight",
         });
     }
     function loadProfileBasicsData()
@@ -1181,7 +1439,36 @@
             $(div_to_remove).remove();
         }
     }
+    function RequestForTestimonial(){
+        let form_data = new FormData(testimonial_request_form[0]);
+       
+        $.ajax({
+            type:"POST",
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            url:"{{route('seller.profile.testimonial.request')}}",
+            data: form_data,
+            processData: false,
+            contentType: false,
+            success:function(response){
 
+                if(response.success){
+                    notify('success', response.success);
+                    testimonial_request_form[0].reset();
+                    $('#addtestmonial').modal('hide');
+                }
+                else if(response.error){
+                    notify('error', response.error);
+                    displayErrorMessage(response.errors);
+                }
+                else{
+                    displayErrorMessage(response.errors);
+                }
+
+            }
+        });
+    }
     function saveUserBasic() {
         // var profile_file=$('input[type=file]')[0].files[0];
         let form_data = new FormData(user_basic_form[0]);

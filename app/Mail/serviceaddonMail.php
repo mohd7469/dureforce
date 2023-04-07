@@ -15,6 +15,7 @@ class serviceaddonMail extends Mailable
     use Queueable, SerializesModels;
 
     public Service $service;
+    public $service_url;
     /*
      * Create a new message instance.
      *
@@ -23,6 +24,7 @@ class serviceaddonMail extends Mailable
     public function __construct($service)
     {
         $this->service = $service;
+        $this->service_url =route('service.view',$service->uuid);
     }
 
     /**

@@ -73,9 +73,9 @@
                                                         </div>
 
                                                         <div>
-                                                        @if($job->documents->count()>0)
+                                                        @if(count($job->documents) > 0)
                                                             <div class="service_subtitle2 mt-20" >
-                                                                        Attachments
+                                                                        {{ count($job->documents) < 2 ? 'Attachment': 'Attachments'}}
                                                             </div>
 
                                                             @foreach($job->documents as $decumentUrl)
@@ -96,12 +96,10 @@
                                                         Job Attributes
                                                     </div>
 
-                                                    
+                                                
                                                     <div id="form_attributes">
                                                        
                                                     </div>
-                                                    
-
                                                     
                                                 </div>
 

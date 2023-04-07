@@ -1192,6 +1192,8 @@
                                                                         type="date"
                                                                         name="start_date_job[]"
                                                                         id="ex_start_date"
+                                                                        min="1900-01-01" 
+                                                                        max="2099-12-31"
                                                                         onchange="setMinDateJob($(this), $('.end-date-job-0'))"
                                                                         value="{{\Carbon\Carbon::parse($Userexperience['start_date_job'])->format('d-m-Y') }}" 
                                                                         
@@ -1215,6 +1217,8 @@
                                                                     <input
                                                                         class="end-date-job-0"
                                                                         id="ex_end_date"
+                                                                        min="1900-01-01" 
+                                                                        max="2099-12-31"
                                                                         onchange="checkIfDateGreaterJob($(this))"
                                                                         type="date"
                                                                         name="end_date_job[]"
@@ -1389,6 +1393,8 @@
                                                                 >
                                                                 <input
                                                                     type="date"
+                                                                    min="1900-01-01" 
+                                                                    max="2099-12-31"
                                                                     name="start_date_institute[]"
                                                                     id="from_date"
                                                                     onchange="setMinDateInsti($(this), $('.end-date-insti'))"
@@ -1409,6 +1415,8 @@
                                                                 >
                                                                 <input
                                                                     type="date"
+                                                                    min="1900-01-01" 
+                                                                    max="2099-12-31"
                                                                     class="start_date_job[]"
                                                                     name="end_date_institute[]"
                                                                     id="to_date"
@@ -1535,7 +1543,9 @@
                                                             <div class="card w-100 bg-light">
                                                                 <div class="card-body form-group pt-3">
                                                                     <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                                                                    <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space">Explain this</a></small><br>
+                                                                    <small  class="form-text text-muted">20% Service Fee 
+                                                                        {{-- <a href="#" class="link-space">Explain this</a> --}}
+                                                                    </small><br>
                                                                     <span class="pt-2 text-dark">$12.00</span>
                                                                 </div>
                                                                 Dureforce Service Fee                                   </div>
@@ -1981,11 +1991,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">Start Date <span class="imp">*</span></label>
-                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" >
+                                                        <input type="date" class="date" name="start_date_job[]" onchange="setMinDateJob($(this), $('.end-date-job'))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">End Date <span class="imp">*</span></label>
-                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" >
+                                                        <input type="date" onchange="checkIfDateGreaterJob($(this))" class="end-date-job" name="end_date_job[]" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -2050,11 +2060,11 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">From Date <span class="imp">*</span></label>
-                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" >
+                                                        <input type="date" name="start_date_institute[]" onchange="setMinDateInsti($(this), $('.end-date-insti'))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="" class="mt-4">To Date <span class="imp">*</span></label>
-                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" >
+                                                        <input type="date" class="end-date-insti" name="end_date_institute[]" onchange="checkIfDateGreaterInsti($(this))" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">

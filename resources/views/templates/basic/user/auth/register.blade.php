@@ -73,7 +73,8 @@
                             <div class="col-lg-6 form-group hover-input-popup">
                                 {{-- <label for="password">@lang('Password')*</label> --}}
                                 <input type="password" class="form-control form--control" id="password" name="password" required="" placeholder="@lang("Enter password")">
-                                @if($general->secure_password)
+
+                            @if($general->secure_password)
                                     <div class="input-popup">
                                       <p class="error lower">@lang('1 small letter minimum')</p>
                                       <p class="error capital">@lang('1 capital letter minimum')</p>
@@ -275,6 +276,27 @@
         color: #fff;
         background-color: #007F7F;
         border-color: #007F7F;
+    }
+    .input-icon {
+        position: absolute;
+        top: 44px;
+        right: 20px;
+        width: 32px;
+        height: 32px;
+        /*background-color: #e3ebf1;*/
+        color: #5b6e88;
+        justify-content: center;
+        align-items: center;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        font-size: 20px;
     }
 </style>
 @endpush

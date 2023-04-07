@@ -49,25 +49,63 @@ class ChatController extends Controller
         $module_id=$request->module_id;
         $module_type=$request->module_type;
         $chat_module=$module_type::findOrFail($module_id);
-        $messages=$chat_module->messages()->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
-
+        $messages=$chat_module->messages()->with('offer')->whereIn('sender_id',[auth()->user()->id,$send_to_id])->whereIn('send_to_id',[auth()->user()->id,$send_to_id])->get();
         return response()->json(['messages' => $messages]);
     }
 
     public function saveMessage(Request $request)
     {
         try {
-            // dd($request->send_to_id,auth()->user()->id);
+            
             $module_id=$request->module_id;
             $module_type=$request->module_type;
             $chat_module=$module_type::findOrFail($module_id);
             $request->request->add(['sender_id' => auth()->user()->id,'role' => strtolower(getLastLoginRoleName())]);
-            $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
-            if(!$message->wasRecentlyCreated && $message->wasChanged()){
-                event(new MessageEditedEvent($message, $message->user,$chat_module));
+           
+            if($request->message){
+
+                $message=ChatMessage::updateOrCreate(['id' =>$request->id],$request->all());
+                if(!$message->wasRecentlyCreated && $message->wasChanged()){
+                    event(new MessageEditedEvent($message, $message->user,$chat_module));
+                }
+                else
+                    event(new NewMessageEvent($message, $message->user,$chat_module));
+            } 
+           
+            
+            $file=$request->attachment;
+
+            if($file) {
+                
+                $path = imagePath()['attachments']['path'];
+        
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                $uploaded_name = $file->getClientOriginalName();
+
+                $attachment_message=ChatMessage::Create([
+                    'send_to_id' => $request->send_to_id,
+                    'module_id' => $request->module_id,
+                    'module_type' => $request->module_type,
+                    'is_attachment' =>1,
+                    'sender_id' =>$request->sender_id,
+                    'role'  => $request->role,
+                    'message' => $uploaded_name
+                ]);
+                event(new NewMessageEvent($attachment_message, $attachment_message->user,$chat_module));
+
+                $attachment_message->attachment()->create([
+                    
+                    'name' => $filename,
+                    'uploaded_name' => $uploaded_name,
+                    'url'           => $url,
+                    'type' =>$file_extension,
+                    'is_published' =>1,
+
+                ]);
+
             }
-            else
-                event(new NewMessageEvent($message, $message->user,$chat_module));
 
             $chat_module->chatUsers()->firstOrNew(['sender_id'=> auth()->user()->id,'send_to_id' =>$request->send_to_id],[]);
          
@@ -81,7 +119,7 @@ class ChatController extends Controller
                 
             return response()->json(['message' => 'message successfully added']);
         } catch (\Throwable $th) {
-            return response()->json(['error' => 'Failled to send message']);
+            return response()->json(['error' => $th->getMessage()]);
 
         }
         
@@ -166,4 +204,5 @@ class ChatController extends Controller
 
         return redirect()->route('chat.inbox');
     }
+
 }

@@ -14,8 +14,17 @@ Route::get('coming-soon', function () {
 });
 
 
-Route::get('/jobs-listing-old', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
+Route::get('/jobs-listing-old{title?}', [\App\Http\Controllers\Seller\JobController::class,'index'] )->name('jobs.listing.old');
 Route::get('/job-skills', 'SkillCategoryController@getSkills')->name('job.skills');
+
+Route::middleware('response-portal')->group(function () {
+    Route::get('/testimonial-response', [\App\Http\Controllers\Seller\ProfileController::class,'testimonialResponse'])->name('response.testimonial');
+});
+
+Route::post('/save-testimonial-response', [\App\Http\Controllers\Seller\ProfileController::class,'savetestimonialResponse'])->name('save.response.testimonial');
+Route::get('/development-route', [\App\Http\Controllers\Seller\ProfileController::class,'thankYou'])->name('response.thank.you');
+
+
 // ---------------------------------------------------------------------------------------------------------------
 // latest routes dont change them
 Route::middleware('verified')->group(function () {

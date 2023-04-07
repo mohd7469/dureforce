@@ -38,7 +38,6 @@ use MicrosoftAzure\Storage\Blob\BlobRestProxy;
 
 function sidebarVariation()
 {
-
     /// for sidebar
     $variation['sidebar'] = 'bg_img';
 
@@ -185,7 +184,9 @@ function uploadFile($file, $location, $size = null, $old = null)
 function uploadAttachments($file, $location, $size = null, $old = null, $thumb = null)
 {
     $filename = '';
-    $connectionString = env('AZURE_STORAGE_SAS_URL');
+//    $connectionString = env('AZURE_STORAGE_SAS_URL');
+    $connectionString = Config('filesystems.disks.azure.sas_url');
+//    dd($connectionString);
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
     \Illuminate\Support\Facades\Log::info(env('APP_DEBUG'));
     \Illuminate\Support\Facades\Log::info($connectionString);
@@ -321,13 +322,39 @@ function getFile($model){
     return '';
 }
 
+function getYoutubeIdFromUrl($url) {
+    $parts = parse_url($url);
+    if(isset($parts['query'])){
+        parse_str($parts['query'], $qs);
+        if(isset($qs['v'])){
+            return $qs['v'];
+        }else if(isset($qs['vi'])){
+            return $qs['vi'];
+        }
+    }
+    if(isset($parts['path'])){
+        $path = explode('/', trim($parts['path'], '/'));
+        return $path[count($path)-1];
+    }
+    return false;
+}
+
+function portfolioVideoUrl($portfolio_video_url){
+
+    $youtube_id=getYoutubeIdFromUrl($portfolio_video_url);
+    $url="https://www.youtube.com/embed/".$youtube_id;
+    return $url;
+}
+
 function getVideoBannerURL($model,$type='preview_video'){
     $url="";
     if($model){
         if($model->banner){
             $url=$model->banner->video_url;
-            if($type == 'preview_video' )
-                $url = str_replace('watch?v=', 'embed/', $url);
+            if($type == 'preview_video' ){
+                $youtube_id=getYoutubeIdFromUrl($url);
+                $url="https://www.youtube.com/embed/".$youtube_id;
+            }
         }
     }
     return $url;
@@ -349,6 +376,7 @@ function getSoftwareFee($software){
     }
     return '';
 }
+
 function getImagesByCategory($model, $type=BannerBackground::BACKGROUND_TYPES['TECHNOLOGY_LOGO']){
 
     $query=BannerBackground::where('document_type',$type)->where('is_active',true);
@@ -373,6 +401,7 @@ function selectedBackgroundImage($model,$banner_background_id,$column){
     }
     return '';
 }
+
 function getLeadImageUrl($model){
     if($model){
         if($model->banner){
@@ -383,6 +412,7 @@ function getLeadImageUrl($model){
         }
     }
 }
+
 function IsDefaultLeadImage($model,$type){
     if($model){
         if($model->banner){
@@ -1058,8 +1088,8 @@ function menuActive($routeName, $type = null)
 
 function imagePath()
 {
-    $url = getenv('AZURE_STORAGE_URL');
-
+//    $url = getenv('AZURE_STORAGE_URL');
+    $url = Config('filesystems.disks.azure.url');
     $data['message'] = [
         'path' => 'assets/images/job',
         'size' => '590x300',
@@ -1432,6 +1462,16 @@ function getPusherCredentials()
     }
 
 }
+function getStorageCredentials()
+{
+    try {
+        $system_pusher_config = SystemCredential::where('is_active', true)->where('type', SystemCredential::Type_Storage)->first();
+        return $system_pusher_config;
+    } catch (\Exception $exp) {
+        return response()->json(["error" => $exp->getMessage()]);
+    }
+
+}
 function getRedisCacheCredentials()
 {
     try {
@@ -1569,7 +1609,14 @@ function getProposelBid($proposal,$job)
 
 
 }
-
+function generateUniqueRandomNumber(){
+    $min = 100000;
+    $max = 999999;
+    $timestamp = time();
+    mt_srand($timestamp);
+    $random_number = mt_rand($min,$max);
+    return $random_number;
+}
 function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);
@@ -1622,11 +1669,13 @@ function dateDiffInDays($date1, $date2)
 function getRedisData($model,$key,$condition=null){
 
     try {
+
         $redis_data =  json_decode(Redis::get($key));
         if ($redis_data){
             return $redis_data;
         }
         else{
+
             $query = $model::query();
 
             $query->when(($condition!=null), function ($q) use ($condition) {
@@ -1673,5 +1722,16 @@ function storeRedisData($model,$key,$condition=null){
         return false;
     }
 
+
+}
+
+function getBaseUrl(){
+    try {
+        $baseUrl = request()->getSchemeAndHttpHost() . '/';
+        return $baseUrl;
+    }
+    catch (\Exception $e){
+        return "www.dureforce.com/";
+    }
 
 }

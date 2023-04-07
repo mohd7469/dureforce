@@ -90,6 +90,18 @@
 
                                         </div>
 
+                                        {{-- uploaded files preview --}}
+                                        <div >
+                                           
+                                            <table class="table table-bordered" id="uploaded_file_table_id">
+                                                <tbody id="file_name_div">
+                                                    
+                                                </tbody>
+                                            </table>
+                                            
+                                            
+                                        </div>
+
                                         <div class="row">
 
                                             {{-- Category --}}
@@ -203,7 +215,7 @@
                                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
                                                 <label>@lang('Project Expected Start Date')*</label>
                                                     <div class="input-group mb-3">
-                                                    <input type="date" class="form-control" name="expected_start_date" value="" placeholder="" >
+                                                    <input type="date" class="form-control" name="expected_start_date" value="" placeholder="" min="1900-01-01" max="2099-12-31">
                                                     </div>
                                             </div>
 
@@ -239,7 +251,7 @@
                                             <small>(At least one skill is required)</small>
                                         </div>
                                         <div id="form_attributes" class="pt-1" >
-
+                                            
                                         </div>
 
 
@@ -281,6 +293,9 @@
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 
+<script>
+    var action_url="{{route('file.upload') }}";
+</script>
 
 @endpush
 
@@ -379,6 +394,23 @@
 
         $('.select2').select2({
             tags: true
+        });
+        $('#job_form_data').submit(function (e) {
+            
+            e.preventDefault();
+            var form = $('#job_form_data')[0];
+            var form_data = new FormData(form);
+            form_data.append("file", JSON.stringify(uploaded_files));
+            submitCreateFormData(form_data);
+
+        });
+        $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
+      
+            let file_index=$(this).closest("tr").index();
+            uploaded_files.splice(file_index, 1);
+            $(this).closest("tr").remove();
+            $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+
         });
 
     });

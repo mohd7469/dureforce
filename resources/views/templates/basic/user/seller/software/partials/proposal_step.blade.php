@@ -70,7 +70,7 @@
                            <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                               <label>@lang('Start Date')*</label>
                               <div class="input-group mb-3">
-                              <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date" >
+                              <input type="date" class="form-control" name="milestones[1][start_date]" value="" id="milestones.1.start_date" min="1900-01-01" max="2099-12-31">
                               </div>
                            </div>
             
@@ -78,7 +78,7 @@
                            <div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">
                               <label>@lang('Due Date')*</label>
                               <div class="input-group mb-3">
-                              <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date" >
+                              <input type="date" class="form-control" name="milestones[1][end_date]" value=""  id="milestones.1.end_date" min="1900-01-01" max="2099-12-31">
                               </div>
                            </div>
             
@@ -125,7 +125,9 @@
                      
                      <div class="form-group pt-3">
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                        <small  class="form-text text-muted">20% Service Fee <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a></small><br>
+                        <small  class="form-text text-muted">20% Service Fee 
+                           {{-- <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
+                        </small><br>
                         <span class="pt-2 text-dark" id="system_fee">
                            {{old('fixed_bid_amount',(float)$proposal['fixed_bid_amount'])*0.20 }}
                         </span>
@@ -157,7 +159,7 @@
                   <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">
                      <div class="form-group pt-3">
                         <label for="" ><strong class="text-dark">What is your mode of work delivery?</strong></label>
-                        <small  class="form-text text-dark">Mode of Devlivery *</small>
+                        <small  class="form-text text-dark">Mode of Delivery *</small>
                         <select name="delivery_mode_id" id="delivery_mode_id" class="form-control">
                            <option value="">Select Mode Of Delivery</option>
                            @foreach ($delivery_modes as $mode)

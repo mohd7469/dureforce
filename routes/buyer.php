@@ -12,6 +12,10 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
     
     Route::middleware(['verified','is-client'])->group(function () {
 
+        Route::view('/contract', 'templates.basic.buyer.contract.contract-list');
+        Route::view('/contract_detail', 'templates.basic.buyer.contract.contract_details')->name('contract_detail');
+
+
         Route::name('basic.')->prefix('buyer')->group(function () {
             Route::middleware(['verified','is-client'])->group(function () {
                 Route::get('/','Buyer\ProfileController@buyerProfile')->name('profile')->middleware('is-profile-completed');
@@ -68,12 +72,12 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
                 Route::get('job-offer-sent/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
-                Route::get('/offer-description/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerDetail'])->name('offer.detail');
                 
                 Route::get('job-offer-send-response', [\App\Http\Controllers\Buyer\OfferController::class,'offerSuccessfullySubmitted'])->name('offer.success.alert');
 
                 // Route::view('/send-offer/{uuid}','templates.basic.buyer.propsal.send-offer')->name('send.offer');
                 Route::get('send-offer/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'offerSend'] )->name('send.offer');
+                Route::get('/withdraw-offer/{uuid}',  [\App\Http\Controllers\Buyer\OfferController::class,'withdrawOffer'] )->name('offer.withdraw');
 
                 Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
                 Route::get('shortlist-proposal/{id}',    [\App\Http\Controllers\Buyer\ProposalController::class,'shortlist'] )->name('proposal.shortlist');
