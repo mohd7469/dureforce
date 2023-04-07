@@ -17,6 +17,8 @@ function displayAlertMessage(message)
 
 function displayErrorMessage(validation_errors)
 {
+    $('#submit_proposal_btn_id').attr("disabled", false);
+  
     $('input,select,textarea').removeClass('error-field');
     for (var error in validation_errors) { 
         var error_message=validation_errors[error];
@@ -108,6 +110,9 @@ $(function() {
             myDropzone = this;
     
             $("#propsal_form").submit(function (event) {
+
+              $('#submit_proposal_btn_id').attr("disabled", true);
+
               form_data= $(this).serialize();
                 event.preventDefault();
                 event.stopPropagation(); 
