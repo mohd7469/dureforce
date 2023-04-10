@@ -717,7 +717,13 @@
 
                             <div class="form-group col-lg-12 pt-2">
                                 <label for="exampleFormControlTextarea1">Message* </label>
-                                <textarea class="form-control" name="message" id="textAreaExample1" rows="4"></textarea>
+                                <textarea class="form-control" name="message" id="textAreaExample1" rows="4" >Hi there!
+
+I'm reaching out to invite you to apply for a job that I have posted. I think your skills and experience make you a great candidate for the role. Please take a look at the job post and let me know if you have any questions or would like to submit a proposal.
+
+Thanks,
+[Your Name]
+                                </textarea>
                                 <input type="hidden" id="user_id" name="user_id">
 
                             </div>
