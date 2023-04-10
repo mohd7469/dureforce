@@ -41,6 +41,7 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
 
         Route::get('/contract',  [ContractsController::class,'index'])->name('index');
         Route::get('/contract_detail/{uuid}',  [ContractsController::class,'show'])->name('show');
+        Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
         
     });
 
