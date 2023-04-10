@@ -33,4 +33,10 @@ class ContractsController extends Controller
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
         return view('templates.basic.buyer.contract.contract_details',compact('contract'));
     }
+
+    public function  feedback($uuid){
+        $user=Auth::user();
+        $contract=Contract::WithAll()->where('uuid',$uuid)->first();
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract'));
+    }
 }
