@@ -16,9 +16,6 @@ class AddStatusIdInUserTestimonialsTable extends Migration
     {
         Schema::table('user_testimonials', function (Blueprint $table) {
             $table->unsignedBigInteger('status_id')->nullable()->after('id');
-            $table->unsignedBigInteger('created_by')->index('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->index('updated_by')->nullable();
-            $table->unsignedBigInteger('deleted_by')->index('deleted_by')->nullable();
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
         });
     }
