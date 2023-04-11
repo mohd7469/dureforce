@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\LanguageLevel;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,7 @@ class ContractsController extends Controller
     public function  feedback($uuid){
         $user=Auth::user();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
-        return view('templates.basic.buyer.contract.contract_feedback',compact('contract'));
+        $langLevels=LanguageLevel::where('is_active',1)->get();
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels'));
     }
 }

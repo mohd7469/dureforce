@@ -53,33 +53,16 @@
                             <div>
                                 <p>Rate their English Proficiency. (Speaking and Comprehension) </p>
                                 <div>
+                                    @foreach($langLevels as $level)
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
+
+                                    <input class="form-check-input" type="checkbox" value="{{$level->id}}}" id="engProf" name="engProf" onclick="engProfCheck(this);">
                                     <label class="form-check-label" for="defaultCheck1">
-                                        Fluent
+                                        {{$level->name}}
                                     </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            Acceptable
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            Difficult to Understand
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            I don't Speak to this Freelancer
-                                        </label>
-                                    </div>
-
-
-                            </div>
+                                    @endforeach
+                                  </div>
 
                             </div>
 
