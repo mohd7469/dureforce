@@ -725,17 +725,5 @@ class UserController extends Controller
         }
 
     }
-    public function notification()
-    {
-        try {
 
-            $pageTitle = 'notifications';
-
-            return   view($this->activeTemplate.'user.notification', compact('pageTitle'));
-
-        } catch (\Exception $exp) {
-            $notify[] = ['error', 'There is a technical error in deleting redis data.'];
-            return back()->withNotify($notify);
-        }
-    }
 }

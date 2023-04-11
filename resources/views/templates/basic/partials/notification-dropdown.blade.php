@@ -1,34 +1,50 @@
+
+<?php
+$user_notifications = \App\Helpers\NotificationHelper::getUserNotification();
+$unread_notifications_count = $user_notifications->where('is_read',0)->count();
+?>
+
+
 <span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
                                             <i class="las la-bell icon-lg" ></i>
-                                            <span class="pulse--primary"></span>
+                                             @if( $unread_notifications_count> 0)
+                                                <span class="pulse--primary" style="margin-left: 8px!important;"></span>
+                                            @endif
 
                                         </div>
                                     </span>
-<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; overflow-x: hidden;" >
+<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; margin-left:-150px; overflow-x: hidden;" >
     <div class="dropdown-menu__header">
-        <span class="caption">@lang('Notification')</span>
-        {{--                                                @if($adminNotifications->count() > 0)--}}
-        {{--                                                    <p>@lang('You have') {{ $adminNotifications->count() }} @lang('unread notification')</p>--}}
-        {{--                                                @else--}}
-        {{--                                                    <p>@lang('No unread notification found')</p>--}}
-        {{--                                                @endif--}}
+        <div class="row">
+            <div class="col-md-7 col-lg-7 col-xl-7 col-sm-7 ">
+                <span class="caption">@lang('Notification')</span>
+
+            </div>
+            <div class="col-md-5 col-lg-5 col-xl-5 col-sm-5 ">
+                <a href="{{ route('notification.list') }}" style="font-size:14px!important; color:#7f007f;"><strong>@lang('View All')</strong></a>
+            </div>
+        </div>
+                                                        @if( $unread_notifications_count> 0)
+                                                            <p>@lang('You have') {{ $unread_notifications_count }} @lang('unread notification')</p>
+                                                        @else
+                                                            <p>@lang('No unread notification found')</p>
+                                                        @endif
     </div>
     <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll" >
-        @for($i=1; $i<=10; $i++)
+        @foreach($user_notifications as $notification)
+
             <a href="#" class="dropdown-menu__item">
                 <div class="navbar-notifi">
                     <div class="navbar-notifi__right">
-                        <h6 class="notifi__title">Title will be Here</h6>
-                        <span class="time"><i class="far fa-clock"></i> Date will be here</span>
+                        <h6 class="notifi__title">{{$notification['title']}}</h6>
+                        <span class="time"><i class="far fa-clock"></i> {{systemDateTimeFormat($notification['created_at'])}}</span>
                     </div>
                 </div><!-- navbar-notifi end -->
             </a>
-        @endfor
+        @endforeach
     </div>
-    <div class="dropdown-menu__footer">
-        <a href="{{ route('admin.notifications') }}" class="view-all-message">@lang('View all notification')</a>
-    </div>
+
 </div>
 <style>
     .message-notifi {
