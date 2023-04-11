@@ -44,11 +44,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
             </a>
         @endforeach
     </div>
-    <footer>
-    <div class="dropdown-menu__footer">
-        <a href="{{ route('admin.notifications') }}" class="view-all-message">@lang('View all notification')</a>
-    </div>
-    </footer>
+
 </div>
 <style>
     .message-notifi {
