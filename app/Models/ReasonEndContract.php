@@ -19,4 +19,10 @@ class ReasonEndContract extends BaseModel
     ];
 
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+
 }
