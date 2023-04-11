@@ -15,8 +15,8 @@ class NotificationController extends Controller
 
             $user = auth()->user();
             if ($user) {
-                $pageTitle = 'notifications';
-                $notifications = Notification::where('user_id', $user->id)->OrderByUnread()->take(16)->get();
+                $pageTitle = 'All Notifications';
+                $notifications = Notification::where('user_id', $user->id)->OrderByUnread()->paginate(16);
                 Log::info(["Notification" => $notifications]);
                 return view( 'templates.basic.user.notification', compact('pageTitle', 'notifications'));
             }
