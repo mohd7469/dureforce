@@ -36,6 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach (App\Models\UserPayment::where('user_id', auth()->id())->get() as $payments)
                         <tr class="pay-block">
                             <td class="card-num d-flex align-items-center">
                                 <figure class="my-0 m-3">
@@ -45,140 +46,285 @@
                                         <path d="M10.0997 9.25916H5.35645L5.31885 9.4791C9.00907 10.3541 11.4508 12.4687 12.4646 15.0098L11.4332 10.1519C11.2552 9.48255 10.7387 9.28275 10.0998 9.25942" fill="#F2AE14"></path>
                                     </svg>
                                 </figure>
+                                {{ $payments->card_number }}
                             </td>
-                            <td><b>Visa ending in 4563</b>
+                            <td><b>Expiry: {{ Carbon\Carbon::parse($payments->expiration_date)->format('d/m/Y') }}</b>
                             </td>
 
                             <td>
-                            <a class="btn btn-outline-secondary btn-primary " href="#">Primary</a>
+                                @if ($payments->is_primary == 1)
+                                    <b>Primary</b>
+                                @else
+
+                                <form method="GET"
+                                            action="{{ route('buyer.payment.change.status', $payments->id) }}"
+                                            style="margin-left: 2px; width: fit-content">
+                                            @csrf
+                                            @method('Make Primary')
+                                            <button class="btn btn-outline-secondary btn-primary"
+                                                onclick="return confirm('Are you sure you want to change payment method status?')"
+                                                type="submit">
+                                                Make Primary
+                                            </button>
+                                        </form>
+                                        
+                                @endif
                             </td>
+                            <td>
+                                    <div class="d-flex justify-content-center">
+                                        <a data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}" data-country_id="{{ $payments->country_id }}" data-payment_city_id="{{ $payments->city_id }}" data-address="{{ $payments->address }}"     
+                                            data-username="{{ $user->username }}"
+                                            class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
+                                        <form method="POST"
+                                            action="{{ route('buyer.payment.destroy', $payments->id) }}"
+                                            style="margin-left: 2px; width: fit-content">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-secondary icons"
+                                                onclick="return confirm('Are you sure you want to delete this payment method ?')"
+                                                type="submit">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
                         </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 <span>'Any available balance you have will be applied towars your total amount</span>
             </div>
         </div>
          
-        
-        <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-       <div class="modal-content">
-          <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">Add new billing method</h5>
-             
-             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="#" method="POST" id="payment_methods" enctype="multipart/form-data">
-                <input type="hidden" name="_token" value="uYLDjfCd7cpXMcXML6xKYy3l65J8vIFInZMRg3jM">                <div class="container-fluid welcome-body" id="">
-                   
-                    <div>
-                        <div id="company-container" class="company-c-style">
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Card</h5>
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="payment_methods" enctype="multipart/form-data">
+                    @csrf
+                    <div class="container-fluid welcome-body" id="">
+                        <div>
+                            <div id="company-container" class="company-c-style">
 
-                            <div id="">
+                                <div id="">
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Cardholder’s Name *  </label>
+                                        <input type="text" name="name_on_card" id="company-name" value=""
+                                            placeholder="Tidal Wave Inc." value="">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Card Number *  </label>
+                                        <input type="text" name="card_number" id="company-name"
+                                            placeholder="Tidal Wave Inc."  value="{{ old('card_number', @$userPayment->card_number) }}" placeholder=""
+                                            >
+                                    </div>
+                                    <div class="row">
+                                        
+                                    <div class="col-md-6">
+                                        <label class="mt-4">Expiry Date *</label>
+                                        <input type="date" name="expiration_date"
+                                        value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
+                                        placeholder="" required   min="1900-01-01" max="2099-12-31"/>
+                                    </div>
 
-                                <div class="row">
-                                <div class="col-md-12">
-                                    <label class="mt-4">Card Number </label>
-                                    <input type="text" name="card_number" id="card_number" value="" placeholder="Tidal Wave Inc.">
-                                </div>
-                                </div>    
-
-                                <div class="row">
-                                <div class="col-md-6">
-                                    <label class="mt-4">First name </label>
-                                    <input type="text" name="first_name" id="first_name" value="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="mt-4">First name </label>
-                                    <input type="text" name="last_name" id="last_name" value="">
-                                </div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-3">
-                                    <label class="mt-4">Expires on </label>
-                                    <input type="text" name="expire_on" id="expire-on" value="" placeholder="MM">
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="mt-4">- </label>
-                                    <input type="text" name="card_number" id="company-name" placeholder="YY" value="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="mt-4">Security code? </label>
-                                    <input type="text" name="security_code" id="company-name" value="">
-                                </div>
-                                </div>
-
-                                <div class="row">
-                                <div class="col-md-6">
-                                    <label class="mt-4">Country </label>
-                                    <select name="country_id" class="form-control select-lang" id="payment_method_country_id">
-                                        <option value="">
-                                                Select Country
-                                        <option value="92">
-                                                Pakistan
-                                        </option>
+                                    <div class="col-md-6">
+                                        <label class="mt-4">CVV * </label>
+                                        <input type="text" name="cvv_code"
+                                        value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required  />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mt-4">Country <span class="imp">*</span></label>
+                                        <select
+                                                name="country_id"
+                                                class="form-control select-lang client_payment_method_country_class"
+                                                id="client_payment_method_country_id"
+                                                >
+                                                <option
+                                                    value=""
+                                                >
+                                                    Select Country
+            
+                                                </option>
+                        
+                                                @foreach ($countries as $country)
+                                                    <option
+                                                    value="{{$country->id}}"
+                                                    {{ $country->id == @$userPayment->country_id ? 'selected' : '' }}
+                                                    >
+                                                    {{$country->name}}
+                                                    </option>
+                                                @endforeach
+            
+                                            </select>
+                                    </div>
+            
+                                    <div class="col-md-6">
+            
+                                        <label class="mt-4">City <span class="imp">*</span></label>
+                                        <select
+                                            name="city_id"
+                                            class="form-control select-lang client_payment_method_cities_class"
+                                            id="client_payment_method_cities"
+                                                >
+                                                <option value="">Select City</option>
+            
+                                                @foreach ($cities as $city)
+                                                    <option value="{{$city->id}}"
+                                                    {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
+                                                    >{{$city->name}}</option>
+                                                @endforeach
                                         </select>
-                                </div>
+                                        
+                                    </div>
+            
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Street Address <span class="imp">*</span></label>
+                                        <input name="address" placeholder="" value="{{ old('address', @$userPayment->address) }}"
+                                            required/>
+                                    </div>
+                                    </div>
+                        
+                                    
 
-                                <div class="col-md-12">
-                                    <label class="mt-4">Address line 1</label>
-                                    <input name="address_line_1" placeholder="" value="" required="">
                                 </div>
-        
-                                <div class="col-md-12">
-                                    <label class="mt-4">Address line 2 (Optional)</label>
-                                    <input name="address_line_2" placeholder="" value="" required="">
-                                </div>
-
-                                <div class="col-md-6">
-        
-                                    <label class="mt-4">City</span></label>
-                                    <select name="city_id" class="form-control select-lang" id="payment_method_cities">
-                                        <option value="">Select City</option>
-                                            <option value="120526">Abbottabad</option>
-                                            <option value="120165">Adilpur</option>
-                                            <option value="120525">Ahmadpur East</option>
-                                            <option value="120484">Chiniot</option>
-                                            <option value="120483">Chishtian</option>
-                                            <option value="194905">Chitral</option>
-                                            <option value="120429">Gojra</option>
-                                            <option value="120428">Gujar Khan</option>
-                                            <option value="237">Gujranwala</option>
-                                            <option value="120427">Gujrat</option>
-                                            <option value="120415">Haveli Lakha</option>
-                                            <option value="120411">Hujra Shah Muqim</option>
-                                    </select>
-                                </div>
-
-                                <div class="row">
-                                <div class="col-md-6">
-                                    <label class="mt-4">Postal code (optional)  </label>
-                                    <input type="text" name="postal_code" id="postal_code" placeholder="Tidal Wave Inc." value="">
-                                </div>
-                                </div>
-                               
-                                </div>
-                                <br>
-                      
-                                
-
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-continue btn-secondary">Save</button>
+                        </div>
+                        
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-continue btn-secondary">Save</button>
-                     </div>
-                    
-                </div>
-            </form>
+                </form>
+            </div>
+            </div>
         </div>
-   
-     </div>
-  </div>
-</div>    </div>
+    </div>
+    <!-- End save modal -->
+
+    <!-- start edit modal -->
+    <div class="modal fade" id="editPaymentModel" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Card</h5>
+                
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods_" enctype="multipart/form-data">
+                    @csrf
+                    
+                    <div class="container-fluid welcome-body" id="">
+                    
+                        <span class="cmnt pb-4" style="display:none">Complete your profile to search from thousands of skilled freelancers and
+                            request proposals.</span>
+                        <div>
+                            <div id="company-container" class="company-c-style">
+
+                                <div id="">
+                                    <input type="hidden" name="update_payment_id" id="payment_id" value="">
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Cardholder’s Name *  </label>
+                                        <input type="text" name="name_on_card" id="name_on_card" value="name_on_card"
+                                            placeholder="Tidal Wave Inc." >
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Card Number *  </label>
+                                        <input type="text" name="card_number" id="card_number" value="card_number"
+                                            placeholder="Tidal Wave Inc."  value="" placeholder=""
+                                            >
+                                    </div>
+                                    <div class="row">
+                                        
+                                    <div class="col-md-6">
+                                        <label class="mt-4">Expiry Date *</label>
+                                        <input type="date" name="expiration_date" id="expiration_date"
+                                        value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
+                                        placeholder="" required   min="1900-01-01" max="2099-12-31"/>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="mt-4">CVV * </label>
+                                        <input type="text" name="cvv_code" id="cvv_code" required  />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="mt-4">Country <span class="imp">*</span></label>
+                                        <select
+                                                name="country_id"
+                                                class="form-control select-lang client_payment_method_country_class"
+                                                id="edit_payment_country_id"
+                                                >
+                                                <option
+                                                    value=""
+                                                >
+                                                    Select Country
+            
+                                                </option>
+            
+                                                @foreach ($countries as $country)
+                                                    <option
+                                                    value="{{$country->id}}"
+                                                    {{ $country->id == @$userPayment->country_id ? 'selected' : '' }}
+                                                    
+                                                    >
+                                                    {{$country->name}}
+                                                    </option>
+                                                @endforeach
+            
+                                            </select>
+                                    </div>
+            
+                                    <div class="col-md-6">
+            
+                                        <label class="mt-4">City <span class="imp">*</span></label>
+                                        <select
+                                            name="city_id"
+                                            class="form-control select-lang client_payment_method_cities_class"
+                                            id="edit_payment_city_id"
+                                                >
+                                                <option value="">Select City</option>
+            
+                                                @foreach ($cities as $city)
+                                                    <option value="{{$city->id}}"
+                                                    {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
+                                                    >{{$city->name}}</option>
+                                                @endforeach
+                                        </select>
+                                        
+                                    </div>
+            
+                                    <div class="col-md-12">
+                                        <label class="mt-4">Street Address <span class="imp">*</span></label>
+                                        <input type="text" name="address" placeholder="" id="address"  value="{{ old('address', @$userPayment->address) }}"
+                                    
+                                        
+                                            required/>
+                                    </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-continue btn-secondary">Update</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
     
+        </div>
+    </div>
+    </div>
+    <!-- end edit modal -->
+</div>    
 </div>
                 </div>
                 <div class="prosal-right-con">
@@ -298,11 +444,11 @@
     }
 
     .prosal-left-con {
-        max-width: 1060px;
+        max-width: 950;
         display: inline-block;
         float: left;
-        padding: 20px 51px;
-        margin-left: 125px;
+        padding: 20px 20px;
+        margin-left: 55;
     }
 
     .main_con_p {
@@ -468,7 +614,7 @@
         margin-top: 100px;
         padding: 18px 30px;
         margin-right: 115px;
-        margin-left: -105px;
+        margin-left: -50px;
     }
 
     p.abt-client {
@@ -876,31 +1022,73 @@
 </style>
 
 @push('script')
-
     <script>
-        'use strict';
-        $('#defaultSearch').on('change', function () {
-            this.form.submit();
+        "use strict";
+        $(document).ready(function() {
+         $('.registerBtn').click(function() {
+            $("#cod_equipamento").val($(this).attr('data_value'));
         });
+    });
+  
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $(".editPayment").click(function () {
+            var payment_id = $(this).data('id');
+            var card_number = $(this).data('card_number');
+            var name_on_card = $(this).data('name_on_card');
+            var cvv_code = $(this).data('cvv_code');
+            var expiration_date = $(this).data('expiration_date');
+            var country_id = $(this).data('country_id');
+            var payment_city_id = $(this).data('payment_city_id');
+            var address = $(this).data('address');
+
+            $(".modal-body #payment_id").val(payment_id);
+            $(".modal-body #card_number").val(card_number);
+            $(".modal-body #name_on_card").val(name_on_card);
+            $(".modal-body #cvv_code").val(cvv_code);
+            $(".modal-body #expiration_date").val(expiration_date);
+
+            $(".modal-body #edit_payment_country_id").val(country_id);
+            $(".modal-body #edit_payment_city_id").val(payment_city_id);
+            $(".modal-body #address").val(address);
 
 
-        openCity('evt', 'tab1');
+            
+           
+        })
+    });
+</script>
 
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+<script>
+    $(".client_payment_method_country_class").on('change',function(){
+        getCountryCities($(this).val(),'.client_payment_method_cities_class');
+    });
+    function getCountryCities(country_id,select_field_id)
+    {
+        $.ajax({
+            type:"GET",
+            url:"{{route('get-cities')}}",
+            data: {country_id : country_id},
+            success:function(data){
+                if(data.cities)
+                {    
+                    
+                    $(select_field_id).empty();
+                    $(select_field_id).append(
+                        `<option>Select City</option>
+                        ${data.cities?.map((city) => {
+                            return ` <option value="${city.id}"> ${city.name}</option>`;
+                    })}`);
+                }
+                else{
+                    alert("Wrong Country Id");        
+                }
             }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
+        }); 
 
-
-    </script>
-
+    }
+</script>
 @endpush
