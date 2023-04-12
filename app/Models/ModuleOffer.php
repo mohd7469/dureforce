@@ -27,6 +27,13 @@ class ModuleOffer extends Model
     ];
 
 
+    public const NOTIFICATION = [
+        "INVITATION_TITLE" => "You have received an offer for the job ",
+        "INVITATION_URL" => "offer-detail/",
+        "INVITATION_TYPE" => "offer",
+    ];
+
+
     public const STATUSES = [
         
         'PENDING'  =>  11,

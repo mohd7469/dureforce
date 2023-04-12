@@ -9,7 +9,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
                                         <div class="d-flex flex-wrap align-items-center">
                                             <i class="las la-bell icon-lg" ></i>
                                              @if( $unread_notifications_count> 0)
-                                                <span class="pulse--primary" style="margin-left: 8px!important;"></span>
+                                                <span class="pulse--primary" style="margin-left: 7px!important;"></span>
                                             @endif
 
                                         </div>
@@ -256,7 +256,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #7367f0;
+        background: #7f007f;
         cursor: pointer;
         box-shadow: 0 0 0 rgba(115, 103, 240, 0.9);
         animation: pulse-primary 2s infinite;
