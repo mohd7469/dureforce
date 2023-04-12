@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class Notification extends BaseModel
 {
     use HasFactory;
     protected $table='notifications';
@@ -23,11 +23,15 @@ class Notification extends Model
     ];
 
     public const URL = [
-        "INVITATION" => "seller/invitation/listing",
+        "INVITATION" => "seller/invitation/invitation_detail/",
     ];
     public const NOTIFICATION_TYPE = [
         "INVITATION" => "invitation",
     ];
+
+    public function scopeOrderByUnread($query){
+        return $query->orderBy('is_read', 'DESC');
+    }
 
     public function user()
     {

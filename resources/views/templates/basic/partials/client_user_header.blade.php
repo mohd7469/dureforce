@@ -248,7 +248,7 @@
                                     <div class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
 {{--                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>--}}
-{{--                                        @include($activeTemplate.'partials.notification-dropdown')--}}
+                                        @include($activeTemplate.'partials.notification-dropdown')
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))
