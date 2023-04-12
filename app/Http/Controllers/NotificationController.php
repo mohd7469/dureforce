@@ -18,8 +18,23 @@ class NotificationController extends Controller
                 $pageTitle = 'All Notifications';
                 $notifications = Notification::where('user_id', $user->id)->OrderByUnread()->paginate(16);
                 Log::info(["Notification" => $notifications]);
-                return view( 'templates.basic.user.notification', compact('pageTitle', 'notifications'));
+                return view('templates.basic.user.notification', compact('pageTitle', 'notifications'));
             }
+        } catch (\Exception $exp) {
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'There is a technical error in deleting redis data.'];
+            return back()->withNotify($notify);
+
+        }
+
+    }
+
+    public function read($notification_uuid)
+    {
+        try {
+            $notification = Notification::where('uuid', $notification_uuid)->first()->update(['is_read' => true]);
+            Log::info(["View Single Notification" => $notification]);
+            return redirect($notification->url);
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
             $notify[] = ['error', 'There is a technical error in deleting redis data.'];

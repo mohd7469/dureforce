@@ -23,14 +23,14 @@ class Notification extends BaseModel
     ];
 
     public const URL = [
-        "INVITATION" => "seller/invitation/listing",
+        "INVITATION" => "seller/invitation/invitation_detail/",
     ];
     public const NOTIFICATION_TYPE = [
         "INVITATION" => "invitation",
     ];
 
     public function scopeOrderByUnread($query){
-        return $query->orderBy('is_read', 'desc');
+        return $query->orderBy('is_read', 'DESC');
     }
 
     public function user()

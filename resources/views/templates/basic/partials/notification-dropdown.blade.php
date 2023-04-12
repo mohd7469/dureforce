@@ -14,7 +14,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
 
                                         </div>
                                     </span>
-<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; margin-left:-150px; overflow-x: hidden;" >
+<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:270px; margin-left:-150px; overflow-x: hidden;" >
     <div class="dropdown-menu__header">
         <div class="row">
             <div class="col-md-7 col-lg-7 col-xl-7 col-sm-7 ">
@@ -34,7 +34,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
     <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll" >
         @foreach($user_notifications as $notification)
 
-            <a href="#" class="dropdown-menu__item">
+            <a href="{{ route('notification.read',$notification['uuid']) }}" class="dropdown-menu__item">
                 <div class="navbar-notifi">
                     <div class="navbar-notifi__right">
                         <h6 class="notifi__title">{{$notification['title']}}</h6>

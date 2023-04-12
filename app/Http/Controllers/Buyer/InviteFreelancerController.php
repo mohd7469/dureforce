@@ -60,12 +60,12 @@ class InviteFreelancerController extends Controller
             $title = "You have received an invitation to interview for the job ".$job->title;
             $body = $job->description;
             $payload = $job;
-            $url = Notification::URL['INVITATION'];
+            $url = Notification::URL['INVITATION'].$invitation->uuid;
             $notification_type = Notification::NOTIFICATION_TYPE['INVITATION'];
 
             $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
 
-            $saved_notification = NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
+            NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
 
             return response()->json(["success" => "Invitation sent Successfully"]);
 

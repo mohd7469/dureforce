@@ -11,6 +11,7 @@ use App\Http\Controllers\Seller\SoftwareController;
 Route::middleware(['verified','is-profile-completed','auth'])->group(function () {
     Route::name('notification.')->prefix('notification')->group(function () {
         Route::get('all', [NotificationController::class, 'notification'])->name('list');
+        Route::get('read/{notification_uuid}', [NotificationController::class, 'read'])->name('read');
 
     });
     Route::prefix('ticket')->group(function () {

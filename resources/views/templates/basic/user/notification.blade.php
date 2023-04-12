@@ -3,7 +3,7 @@
     <div class="notify__area center">
 
         @foreach($notifications as $notification)
-        <a class="notify__item @if($notification->read_status == 0) unread--notification @endif" href="{{ route('admin.notification.read',$notification->id) }}">
+        <a class="notify__item @if($notification->read_status == 0) unread--notification @endif" href="{{ route('notification.read',$notification['uuid']) }}">
 
             <div class="notify__content">
                 <h6 class="title">{{ __($notification->title) }}</h6>
