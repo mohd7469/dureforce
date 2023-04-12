@@ -32,7 +32,8 @@ class NotificationController extends Controller
     public function read($notification_uuid)
     {
         try {
-            $notification = Notification::where('uuid', $notification_uuid)->first()->update(['is_read' => true]);
+            $notification = Notification::where('uuid', $notification_uuid)->first();
+            $notification->update(['is_read' => true]);
             Log::info(["View Single Notification" => $notification]);
             return redirect($notification->url);
         } catch (\Exception $exp) {
