@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Events\NewMessageEvent;
+use App\Helpers\NotificationHelper;
 use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
 use App\Models\Contract;
@@ -62,13 +63,22 @@ class OfferController extends Controller
             event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
             $this->createContract($module_offer);
             DB::commit();
+
+            $users= array($module_offer->offer_send_to_id);
+            $title = Contract::NOTIFICATION['CONTRACT_TITLE'].$chat_module->title." started";
+            $body = $chat_module->description;
+            $payload = $chat_module;
+            $url = Contract::NOTIFICATION['CONTRACT_URL'].$module_offer->contract->uuid;
+            $notification_type = Contract::NOTIFICATION['CONTRACT_TYPE'];
+            $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
+            NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
             $notify[] = ['success', 'Offer has been accepted'];
             return back()->withNotify($notify);
         }
         catch (\Throwable $exp) {
             DB::rollBack();
             FacadesLog::error($exp->getMessage());
-            $notify[] = ['error', 'Failled to Accept Offer'];
+            $notify[] = ['error', 'Failed to Accept Offer'];
             return back()->withNotify($notify);
         }
     }

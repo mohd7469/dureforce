@@ -19,7 +19,13 @@ class Contract extends Model
         'Terminated' =>  34,
         'Completed' =>  35
     ];
-    
+
+
+    public const NOTIFICATION = [
+        "CONTRACT_TITLE" => "Your Contract ",
+        "CONTRACT_URL" => "contract_detail/",
+        "CONTRACT_TYPE" => "contract",
+    ];
     public static function scopeWithAll($query){
         return $query->with('offer')->with('status');
     }

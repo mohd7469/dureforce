@@ -184,11 +184,11 @@ class OfferController extends Controller
                 event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
 
                 $users= array($module_offer->offer_send_to_id);
-                $title = ModuleOffer::NOTIFICATION['INVITATION_TITLE'].$job->title;
+                $title = ModuleOffer::NOTIFICATION['OFFER_TITLE'].$job->title;
                 $body = $job->description;
                 $payload = $job;
-                $url = ModuleOffer::NOTIFICATION['INVITATION_URL'].$module_offer->uuid;
-                $notification_type = ModuleOffer::NOTIFICATION['INVITATION_TYPE'];
+                $url = ModuleOffer::NOTIFICATION['OFFER_URL'].$module_offer->uuid;
+                $notification_type = ModuleOffer::NOTIFICATION['OFFER_TYPE'];
                 $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
                 NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
 

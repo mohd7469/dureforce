@@ -1,20 +1,22 @@
 
 <?php
 $user_notifications = \App\Helpers\NotificationHelper::getUserNotification();
-$unread_notifications_count = $user_notifications->where('is_read',0)->count();
+$unread_notifications_count = $user_notifications->where('is_read', 0)->count();
 ?>
 
 
-<span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+<span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true"
+      aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
-                                            <i class="las la-bell icon-lg" ></i>
+                                            <i class="las la-bell icon-lg"></i>
                                              @if( $unread_notifications_count> 0)
                                                 <span class="pulse--primary" style="margin-left: 7px!important;"></span>
                                             @endif
 
                                         </div>
                                     </span>
-<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:270px; margin-left:-150px; overflow-x: hidden;" >
+<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left"
+     style="height: auto;max-height: 300px; width:270px; margin-left:-150px; overflow-x: hidden;">
     <div class="dropdown-menu__header">
         <div class="row">
             <div class="col-md-7 col-lg-7 col-xl-7 col-sm-7 ">
@@ -22,16 +24,17 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
 
             </div>
             <div class="col-md-5 col-lg-5 col-xl-5 col-sm-5 ">
-                <a href="{{ route('notification.list') }}" style="font-size:14px!important; color:#7f007f;"><strong>@lang('View All')</strong></a>
+                <a href="{{ route('notification.list') }}"
+                   style="font-size:14px!important; color:#7f007f;"><strong>@lang('View All')</strong></a>
             </div>
         </div>
-                                                        @if( $unread_notifications_count> 0)
-                                                            <p>@lang('You have') {{ $unread_notifications_count }} @lang('unread notification')</p>
-                                                        @else
-                                                            <p>@lang('No unread notification found')</p>
-                                                        @endif
+        @if( $unread_notifications_count> 0)
+            <p>@lang('You have') {{ $unread_notifications_count }} @lang('unread notification')</p>
+        @else
+            <p>@lang('No unread notification found')</p>
+        @endif
     </div>
-    <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll" >
+    <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll">
         @foreach($user_notifications as $notification)
 
             <a href="{{ route('notification.read',$notification['uuid']) }}" class="dropdown-menu__item">
@@ -116,6 +119,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
         align-items: center;
         overflow: hidden;
     }
+
     .navbar-notifi__left img {
         width: 100%;
         height: 100%;
@@ -141,6 +145,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
         font-size: 0.75rem;
         margin-top: 5px;
     }
+
     .dropdown-menu_notification__header {
         padding: 15px 15px;
         border-bottom: 1px solid #e5e5e5;
@@ -154,6 +159,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
     .dropdown-menu__header p {
         font-size: 0.75rem;
     }
+
     .dropdown-menu__footer {
         border-top: 1px solid #e5e5e5;
     }
@@ -247,6 +253,7 @@ $unread_notifications_count = $user_notifications->where('is_read',0)->count();
         width: 3px !important;
         opacity: 0.15 !important;
     }
+
     .pulse--primary {
         display: block;
         margin-right: 139px;

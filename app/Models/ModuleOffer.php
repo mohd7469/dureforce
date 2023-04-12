@@ -28,9 +28,9 @@ class ModuleOffer extends Model
 
 
     public const NOTIFICATION = [
-        "INVITATION_TITLE" => "You have received an offer for the job ",
-        "INVITATION_URL" => "offer-detail/",
-        "INVITATION_TYPE" => "offer",
+        "OFFER_TITLE" => "You have received an offer for the job ",
+        "OFFER_URL" => "offer-detail/",
+        "OFFER_TYPE" => "offer",
     ];
 
 
