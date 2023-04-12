@@ -22,15 +22,10 @@ class Notification extends BaseModel
         "deleted_at"
     ];
 
-    public const URL = [
-        "INVITATION" => "seller/invitation/listing",
-    ];
-    public const NOTIFICATION_TYPE = [
-        "INVITATION" => "invitation",
-    ];
+
 
     public function scopeOrderByUnread($query){
-        return $query->orderBy('is_read', 'desc');
+        return $query->orderBy('is_read', 'DESC');
     }
 
     public function user()

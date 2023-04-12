@@ -1,34 +1,53 @@
-<span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+
+<?php
+$user_notifications = \App\Helpers\NotificationHelper::getUserNotification();
+$unread_notifications_count = $user_notifications->where('is_read', 0)->count();
+?>
+
+
+<span class="header-user-bell-icon" data-bs-toggle="dropdown" data-display="static" aria-haspopup="true"
+      aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
-                                            <i class="las la-bell icon-lg" ></i>
-                                            <span class="pulse--primary"></span>
+                                            <i class="las la-bell icon-lg"></i>
+                                             @if( $unread_notifications_count> 0)
+                                                <span class="pulse--primary" style="margin-left: 7px!important;"></span>
+                                            @endif
 
                                         </div>
                                     </span>
-<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left" style="height: auto;max-height: 300px; width:220px; overflow-x: hidden;" >
+<div data-spy="scroll" class="dropdown-menu dropdown-menu--md p-0 border-0 box--shadow1 dropdown-menu-left"
+     style="height: auto;max-height: 300px; width:270px; margin-left:-150px; overflow-x: hidden;">
     <div class="dropdown-menu__header">
-        <span class="caption">@lang('Notification')</span>
-        {{--                                                @if($adminNotifications->count() > 0)--}}
-        {{--                                                    <p>@lang('You have') {{ $adminNotifications->count() }} @lang('unread notification')</p>--}}
-        {{--                                                @else--}}
-        {{--                                                    <p>@lang('No unread notification found')</p>--}}
-        {{--                                                @endif--}}
+        <div class="row">
+            <div class="col-md-7 col-lg-7 col-xl-7 col-sm-7 ">
+                <span class="caption">@lang('Notification')</span>
+
+            </div>
+            <div class="col-md-5 col-lg-5 col-xl-5 col-sm-5 ">
+                <a href="{{ route('notification.list') }}"
+                   style="font-size:14px!important; color:#7f007f;"><strong>@lang('View All')</strong></a>
+            </div>
+        </div>
+        @if( $unread_notifications_count> 0)
+            <p>@lang('You have') {{ $unread_notifications_count }} @lang('unread notification')</p>
+        @else
+            <p>@lang('No unread notification found')</p>
+        @endif
     </div>
-    <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll" >
-        @for($i=1; $i<=10; $i++)
-            <a href="#" class="dropdown-menu__item">
+    <div class="dropdown-menu__body scrollable-menu" data-bs-spy="scroll">
+        @foreach($user_notifications as $notification)
+
+            <a href="{{ route('notification.read',$notification['uuid']) }}" class="dropdown-menu__item">
                 <div class="navbar-notifi">
                     <div class="navbar-notifi__right">
-                        <h6 class="notifi__title">Title will be Here</h6>
-                        <span class="time"><i class="far fa-clock"></i> Date will be here</span>
+                        <h6 class="notifi__title">{{$notification['title']}}</h6>
+                        <span class="time"><i class="far fa-clock"></i> {{systemDateTimeFormat($notification['created_at'])}}</span>
                     </div>
                 </div><!-- navbar-notifi end -->
             </a>
-        @endfor
+        @endforeach
     </div>
-    <div class="dropdown-menu__footer">
-        <a href="{{ route('admin.notifications') }}" class="view-all-message">@lang('View all notification')</a>
-    </div>
+
 </div>
 <style>
     .message-notifi {
@@ -100,6 +119,7 @@
         align-items: center;
         overflow: hidden;
     }
+
     .navbar-notifi__left img {
         width: 100%;
         height: 100%;
@@ -125,6 +145,7 @@
         font-size: 0.75rem;
         margin-top: 5px;
     }
+
     .dropdown-menu_notification__header {
         padding: 15px 15px;
         border-bottom: 1px solid #e5e5e5;
@@ -138,6 +159,7 @@
     .dropdown-menu__header p {
         font-size: 0.75rem;
     }
+
     .dropdown-menu__footer {
         border-top: 1px solid #e5e5e5;
     }
@@ -231,6 +253,7 @@
         width: 3px !important;
         opacity: 0.15 !important;
     }
+
     .pulse--primary {
         display: block;
         margin-right: 139px;
@@ -240,7 +263,7 @@
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: #7367f0;
+        background: #7f007f;
         cursor: pointer;
         box-shadow: 0 0 0 rgba(115, 103, 240, 0.9);
         animation: pulse-primary 2s infinite;

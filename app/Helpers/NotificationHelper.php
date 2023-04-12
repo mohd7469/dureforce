@@ -60,12 +60,11 @@ class NotificationHelper
         try {
             $user = auth()->user();
             if ($user) {
-                $notification = Notification::where('user_id', $user->id)->OrderByUnread()->get();
+                $notification = Notification::where('user_id', $user->id)->OrderByUnread()->take(16)->get();
                 Log::info(["Notification"=>$notification]);
                 return $notification;
             }
         } catch (\Exception $exp) {
-            DB::rollback();
             Log::error($exp->getMessage());
             return [];
         }
