@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\LanguageLevel;
+use App\Models\ReasonEndContract;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ class ContractsController extends Controller
         $user=Auth::user();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
         $langLevels=LanguageLevel::where('is_active',1)->get();
-        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels'));
+        $reasons=ReasonEndContract::where('is_active',1)->get();
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels','reasons'));
     }
 }
