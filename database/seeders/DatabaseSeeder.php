@@ -14,22 +14,20 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-//        $this->call(LanguageLevelSeeder::class);
-//        $this->call(AttributeSeeder::class);
-//        $this->call(ModuleSeeder::class);
-//        $this->call(ModuleSeeder::class);
-//        $this->call(SkillCategorySeeder::class);
-//        $this->call(ProposalSeeder::class);
-//        $this->call(ProposalAttachmentSeeder::class);
-//        $this->call(ServiceFeeSeeder::class);
-//        $this->call(DeliveryModesSeeder::class);
-//        $this->call(milestoneSeeder::class);
-//        $this->call(DegreeSeeder::class);
+        //        $this->call(LanguageLevelSeeder::class);
+        //        $this->call(AttributeSeeder::class);
+        //        $this->call(ModuleSeeder::class);
+        //        $this->call(ModuleSeeder::class);
+        //        $this->call(SkillCategorySeeder::class);
+        //        $this->call(ProposalSeeder::class);
+        //        $this->call(ProposalAttachmentSeeder::class);
+        //        $this->call(ServiceFeeSeeder::class);
+        //        $this->call(DeliveryModesSeeder::class);
+        //        $this->call(milestoneSeeder::class);
+        //        $this->call(DegreeSeeder::class);
 
         $this->call(StatusSeeder::class);
         $this->call(TimezonesSeeder::class);
-
-
-
+        $this->call(ReasonEndContractSeeder::class);
     }
 }

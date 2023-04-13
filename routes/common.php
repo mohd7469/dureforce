@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContractsController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OffersController;
 use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
@@ -8,8 +9,9 @@ use App\Http\Controllers\Seller\ServiceController;
 use App\Http\Controllers\Seller\SoftwareController;
 
 Route::middleware(['verified','is-profile-completed','auth'])->group(function () {
-    Route::prefix('notification')->group(function () {
-        Route::get('all', [\App\Http\Controllers\Seller\UserController::class, 'notification'])->name('list');
+    Route::name('notification.')->prefix('notification')->group(function () {
+        Route::get('all', [NotificationController::class, 'notification'])->name('list');
+        Route::get('read/{notification_uuid}', [NotificationController::class, 'read'])->name('read');
 
     });
     Route::prefix('ticket')->group(function () {
@@ -41,6 +43,7 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
 
         Route::get('/contract',  [ContractsController::class,'index'])->name('index');
         Route::get('/contract_detail/{uuid}',  [ContractsController::class,'show'])->name('show');
+        Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
         
     });
 

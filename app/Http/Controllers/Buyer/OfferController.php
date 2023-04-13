@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Events\MessageEditedEvent;
 use App\Events\NewMessageEvent;
+use App\Helpers\NotificationHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\Notifications\SendNotificationsMail;
 use App\Models\ChatMessage;
@@ -181,6 +182,15 @@ class OfferController extends Controller
                 );
 
                 event(new NewMessageEvent($chat_message, $chat_message->user,$chat_module));
+
+                $users= array($module_offer->offer_send_to_id);
+                $title = ModuleOffer::NOTIFICATION['OFFER_TITLE'].$job->title;
+                $body = $job->description;
+                $payload = $job;
+                $url = ModuleOffer::NOTIFICATION['OFFER_URL'].$module_offer->uuid;
+                $notification_type = ModuleOffer::NOTIFICATION['OFFER_TYPE'];
+                $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
+                NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];

@@ -57,15 +57,13 @@ class InviteFreelancerController extends Controller
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
 
             $users= array($request['user_id']);
-            $title = "You have received an invitation to interview for the job ".$job->title;
+            $title = InviteFreelancer::NOTIFICATION['INVITATION_TITLE'].$job->title;
             $body = $job->description;
             $payload = $job;
-            $url = Notification::URL['INVITATION'];
-            $notification_type = Notification::NOTIFICATION_TYPE['INVITATION'];
-
+            $url = InviteFreelancer::NOTIFICATION['INVITATION_URL'].$invitation->uuid;
+            $notification_type = InviteFreelancer::NOTIFICATION['INVITATION_TYPE'];
             $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
-
-            $saved_notification = NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
+            NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
 
             return response()->json(["success" => "Invitation sent Successfully"]);
 
