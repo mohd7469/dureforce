@@ -68,6 +68,15 @@ Route::name('seller.')->group(function () {
                     Route::get('/reject-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'rejectOffer'] )->name('reject');
 
                 });
+
+                Route::name('work-diary.')->prefix('work-diary')->group(function () {
+                   
+                    Route::get('/list',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'index'] )->name('index');
+                    Route::post('/store',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'store'] )->name('store');
+
+                });
+
+
                 Route::name('invitation.')->prefix('invitation')->group(function () {
 
                     Route::get('/listing',  [App\Http\Controllers\Buyer\InviteFreelancerController::class,'userInvitations'] )->name('list');
