@@ -25,7 +25,7 @@ class CreateDayPlanningsTable extends Migration
             $table->unsignedBigInteger('contract_id')->index('contract_id')->nullable();
             $table->unsignedBigInteger('client_id')->index('client_id')->nullable();
             $table->date('planning_date')->nullable();
-            $table->integer('total_day_hours')->nullable();
+            $table->float('total_day_hours')->nullable();
             $this->addCommonDBFields($table);
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('RESTRICT')->onUpdate('RESTRICT');
             $table->foreign('job_id')->references('id')->on('jobs')->onDelete('RESTRICT')->onUpdate('RESTRICT');
