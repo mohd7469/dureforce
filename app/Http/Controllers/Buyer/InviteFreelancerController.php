@@ -88,7 +88,7 @@ class InviteFreelancerController extends Controller
     public function userInvitations(){
 
         try {
-             $invitations = InviteFreelancer::IsActive()->where('user_id',auth()->user()->id)->with('job')->paginate(10);
+             $invitations = InviteFreelancer::IsActive()->where('user_id',auth()->user()->id)->with('job')->orderBy("created_at",'DESC')->paginate(10);
             return view('templates.basic.user.seller.invitation.invite_listing')->with('invitations',$invitations);
 
         } catch (\Exception $exp) {
