@@ -289,7 +289,7 @@
                                                             
                                                         @endif
                                                         
-{{--                                                        <a href="#" class="btn-products-s phire">Hire</a>--}}
+                                                        {{--  <a href="#" class="btn-products-s phire">Hire</a>--}}
                                                     </div>
                                                 </div>
                                             </div>

@@ -77,12 +77,12 @@ class PayMethodController extends Controller
 
         ];
 
-        // $validator = Validator::make($request->all(), $rules, $messages);
-        $data = $request->validate($rules,$messages);
-        // if ($validator->fails()) {
+        $validator = Validator::make($request->all(), $rules, $messages);
+        // $data = $request->validate($rules,$messages);
+        if ($validator->fails()) {
 
-        //     return response()->json(["validation_errors" => $validator->errors()]);
-        // } else {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
             try {
 
                 DB::beginTransaction();
@@ -104,10 +104,7 @@ class PayMethodController extends Controller
                     $userPayment->save();
                     DB::commit();
 
-
-                    $notify[] = ['success', 'User Payment Method Updated Profile.'];
-                    return redirect()->back()->withNotify($notify);
-                    // return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.payment_method_list')]);
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.payment_method_list')]);
 
 
                 } else {
@@ -124,9 +121,7 @@ class PayMethodController extends Controller
                         'is_active' => 1
                     ]);
                     DB::commit();
-                    $notify[] = ['success', 'User Payment Method Updated Successfully'];
-                    return redirect()->back()->withNotify($notify);
-                    // return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' =>  route('buyer.payment_method_list')]);
+                    return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' =>  route('buyer.payment_method_list')]);
 
                 }
                 if (!empty($request->payment_id)) {
@@ -142,7 +137,7 @@ class PayMethodController extends Controller
                 return back()->withNotify($notify);
 
             }
-        // }
+        }
     }
 
     /**
@@ -150,13 +145,13 @@ class PayMethodController extends Controller
      *
      * @return void
      */
-    public function getUserProfile()
+    public function getUserProfile($module_offer_id = null)
     {
         $user = User::WithBuyerAll()->find(auth()->user()->id);
         $user_payment_methods = $user->payments;
         $cities = City::select('id', 'name')->where('country_id', $user->country_id)->orderBy('name', 'ASC')->get();
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
-        return view($this->activeTemplate . 'buyer.payment-method.payment_list', compact('countries', 'user', 'user_payment_methods', 'cities'));
+        return view($this->activeTemplate . 'buyer.payment-method.payment_list', compact('countries', 'user', 'user_payment_methods', 'cities','module_offer_id'));
 
     }
 

@@ -105,7 +105,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="payment_methods" enctype="multipart/form-data">
+                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods" enctype="multipart/form-data">
                     @csrf
                     <div class="container-fluid welcome-body" id="">
                         <div>
@@ -218,7 +218,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods_" enctype="multipart/form-data">
+                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods_" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="container-fluid welcome-body" id="">
@@ -366,7 +366,7 @@
                             </ul>
                             <center><span class="mb-0"> Lean about <a href=""><b>fees</b></a> and <a href=""><b>estimated taxes</b></a></span></center>
                             <br>
-                            <center><a href="#" class="btn navbar-burron">Fund Contract & Hire</a></center>
+                            <center><a href="{{route('buyer.offer.sent',$module_offer_id)}}" class="btn navbar-burron">Fund Contract & Hire</a></center>
                             <center><span>Upwork Payment protection</span></center>
 
                         </div>
@@ -1022,7 +1022,7 @@
 </style>
 
 @push('script')
-    <script>
+    <!-- <script>
         "use strict";
         $(document).ready(function() {
          $('.registerBtn').click(function() {
@@ -1031,7 +1031,231 @@
     });
   
 
-</script>
+</script> -->
+
+<!-- ajax code for validation start -->
+<script>
+        
+        "use strict";
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        var current = 1;
+        var user_payment_methods_form=$('#client_payment_methods');
+        var user_payment_methods_form_=$('#client_payment_methods_');
+        var token= $('input[name=_token]').val();
+        
+        let _countries = [];
+
+        $('document').ready(function() {
+
+            user_payment_methods_form.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserPaymentMethod();
+
+            });
+            user_payment_methods_form_.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                editUserPaymentMethod();
+
+            });
+            
+
+            if (previewImg.length > 0) {
+                previewImg.siblings('p').hide();
+                imgInp.addClass('imgInp-after');
+                $('form .profile-img').css({
+                    "background-color": "transparent"
+                })
+
+            } else {
+
+                previewImg.siblings('p').show();
+                imgInp.removeClass('imgInp-after');
+                $('form .profile-img').css({
+                    "background-color": "#fff"
+                })
+
+            }
+
+            $(".client_payment_method_country_class").on('change',function(){
+
+                getCountryCities($(this).val(),'.client_payment_method_cities_class');
+
+            });
+        });
+
+        function getCountryCities(country_id,select_field_id)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('get-cities')}}",
+                data: {country_id : country_id},
+                success:function(data){
+                    if(data.cities)
+                    {    
+                       
+                        $(select_field_id).empty();
+                        $(select_field_id).append(
+                            `<option>Select City</option>
+                            ${data.cities?.map((city) => {
+                                return ` <option value="${city.id}"> ${city.name}</option>`;
+                        })}`);
+                    }
+                    else{
+                        alert("Wrong Country Id");        
+                    }
+                }
+            }); 
+
+        }
+
+        function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
+        }
+        
+        function formPostProcess(nextTab)
+        {
+
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            // $('#profile','profile2','#profile3','#profile4').removeClass('active');
+            nextTab.click();
+            scrollTop();
+
+        }
+
+        function scrollTop()
+        {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+        }
+        
+        function errorMessages(errors)
+        {
+            $.each(errors, function(i, val) {
+                notify('error', val);
+            });
+        }
+
+        function saveUserPaymentMethod()
+        {
+             let form_data = new FormData(user_payment_methods_form[0]);
+           
+            $.ajax({
+                
+                  type:"POST",
+                  url:"{{route('buyer.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+        function editUserPaymentMethod()
+        {
+            let form_data = new FormData(user_payment_methods_form_[0]);
+            $.ajax({
+                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                  type:"POST",
+                  url:"{{route('buyer.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+                      console.log(response)
+                      if(response.success){
+                        notify('success', response.success);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+            message: message,
+            position: "topRight",
+            });
+        }
+
+        function displayAlertSuccessMessage(message)
+        {
+            iziToast.success({
+            message: message,
+            position: "topRight",
+            });
+        }
+       
+        function isEmpty(value) {
+            var isEmptyObject = function(a) {
+                if (typeof a.length === 'undefined') { // it's an Object, not an Array
+                    var hasNonempty = Object.keys(a).some(function nonEmpty(element) {
+                        return !isEmpty(a[element]);
+                    });
+                    return hasNonempty ? false : isEmptyObject(Object.keys(a));
+                }
+
+                return !a.some(function nonEmpty(element) { // check if array is really not empty as JS thinks
+                    return !isEmpty(element); // at least one element should be non-empty
+                });
+            };
+            return (
+                value == false ||
+                typeof value === 'undefined' ||
+                value == null ||
+                (typeof value === 'object' && isEmptyObject(value))
+            );
+        }
+
+       
+
+    </script>
+<!-- end -->
 
 <script type="text/javascript">
     $(function () {
