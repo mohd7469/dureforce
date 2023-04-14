@@ -55,6 +55,7 @@ class ModuleOffer extends Model
             $model->uuid =  $uuid;
             $model->offer_send_by_id=auth()->user()->id;
             $model->status_id=self::STATUSES['PENDING'];
+            $model->is_active=0;
         });
 
 
