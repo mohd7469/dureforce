@@ -28,6 +28,8 @@ class SecurityHeaders
             $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
             $response->headers->set('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With,X-CSRF-Token');
+            $response->headers->set('X-Frame-Options', 'DENY'); // Set the X-Frame-Options header
+            $response->headers->set('X-Content-Type-Options', 'nosniff'); // Set the X-Content-Type-Options header
 
             $this->removeUnwantedHeaders($this->unwantedHeaders);
         }
