@@ -86,6 +86,15 @@ class PayMethodController extends Controller
             try {
 
                 DB::beginTransaction();
+
+                $user_previous_payments = UserPayment::where('user_id', auth()->user()->id)->get();
+                if ($user_previous_payments) {
+                    foreach ($user_previous_payments as $payment) {
+                        $payment->update(['is_primary' => 0]);
+                    }
+                }
+
+
                 if ($request->update_payment_id) {
 
 
@@ -99,9 +108,11 @@ class PayMethodController extends Controller
                     $userPayment->country_id = $request->country_id;
                     $userPayment->city_id = $request->city_id;
                     $userPayment->address = $request->address;
-                    $userPayment->is_primary = 0;
+                    $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
                     $userPayment->save();
+
+
                     DB::commit();
 
                     return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.payment_method_list')]);
@@ -117,7 +128,7 @@ class PayMethodController extends Controller
                         'city_id' => $request->city_id,
                         'address' => $request->address,
                         'user_id' => auth()->user()->id,
-                        'is_primary' => 0,
+                        'is_primary' => 1,
                         'is_active' => 1
                     ]);
                     DB::commit();
