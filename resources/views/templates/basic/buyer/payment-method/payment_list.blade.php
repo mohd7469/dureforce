@@ -4,7 +4,7 @@
 <div class="container-fluid">
 <div class="main_con_p">
     <div class="prosal-left-con">
-    <h3 class="mb-1 p-0">Hire Arslan Ayoub</h3>
+    <h3 class="mb-1 p-0">Hire {{$offer_user->sendToUser->fullname}}</h3>
     <a href="#" class="mb-4">
             Back to offer details
     </a>
@@ -76,7 +76,7 @@
                                             data-username="{{ $user->username }}"
                                             class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
                                         <form method="POST"
-                                            action="{{ route('buyer.payment.destroy', $payments->id) }}"
+                                            action="{{ route('buyer.payment.destroy', $payments->id,$module_offer_id) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('DELETE')
@@ -107,6 +107,7 @@
             <div class="modal-body">
                 <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="offer_id" value="{{$module_offer_id}}">
                     <div class="container-fluid welcome-body" id="">
                         <div>
                             <div id="company-container" class="company-c-style">
@@ -220,7 +221,7 @@
             <div class="modal-body">
                 <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods_" enctype="multipart/form-data">
                     @csrf
-                    
+                    <input type="hidden" name="offer_id" value="{{$module_offer_id}}">
                     <div class="container-fluid welcome-body" id="">
                     
                         <span class="cmnt pb-4" style="display:none">Complete your profile to search from thousands of skilled freelancers and
@@ -334,16 +335,16 @@
                             <ul class="client_listing-c">
                                 
                                 <li>
-                                    <img src="https://stgdureforcestg.blob.core.windows.net/attachments/641ed040c0ed51679740992.png" alt="client">
+                                    <img src="{{ $offer_user->sendToUser->user_basic->profile_picture ? $offer_user->sendToUser->user_basic->profile_picture:  '/assets/images/job/profile-img.png' }}" alt="client">
                                     <div class="about_client">
-                                        <p class="client_name">Muhammad arslan</p>
-                                        <p class="client_date">Member since Feb 16,2023</p>
+                                        <p class="client_name">{{$offer_user->sendToUser->fullname ?? ''}}</p>
+                                        <p class="client_date">Member since {{date('h:i a',strtotime($offer_user->sendToUser->last_activity_at ?? '')) }}</p>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <i class="fa fa-map-marker"></i> <span class="location_c"> Arifwala, Pakistan</span>
-                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> 08:36 pm local time</span>
+                                    <i class="fa fa-map-marker"></i> <span class="location_c"> {{$offer_user->sendToUser->location }}</span>
+                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ \Carbon\Carbon::now()->format('H:i:s') }} local time</span>
                                 </li>
 
                                 <li>
@@ -367,7 +368,7 @@
                             <center><span class="mb-0"> Lean about <a href=""><b>fees</b></a> and <a href=""><b>estimated taxes</b></a></span></center>
                             <br>
                             <center><a href="{{route('buyer.offer.sent',$module_offer_id)}}" class="btn navbar-burron">Fund Contract & Hire</a></center>
-                            <center><span>Upwork Payment protection</span></center>
+                            <center><span>Dureforce Payment protection</span></center>
 
                         </div>
                   
