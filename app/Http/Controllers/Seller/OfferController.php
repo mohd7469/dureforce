@@ -26,7 +26,9 @@ class OfferController extends Controller
                 'end_date' => $module_offer->expire_at,
                 'status_id'  =>  Contract::STATUSES['In_Progress'],
                 'contract_total_amount' => $module_offer->offer_amount,
+                'contract_title' => $module_offer->contract_title
             ]);
+            
            
         }catch (\Throwable $th) {
             FacadesLog::error($th->getMessage());

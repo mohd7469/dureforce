@@ -1,5 +1,5 @@
 
-{{-- profile modal  --}}
+{{-- Add Tasks Modal  --}}
 <div class="modal fade" id="add_task_model_id" tabindex="-1" role="dialog" aria-labelledby="AddTask" aria-hidden="true">
             
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -22,7 +22,7 @@
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">Planning Date *</label>
-                                    <input type="date" class="form-control" name="planning_date" id="planning_date">
+                                    <input type="date" class="form-control" name="planning_date" id="planning_date" value="{{ isset($day_planning_day) ? $day_planning_day : null}}" {{ isset($day_planning_day) ? 'readonly' : '' }}>
                                 </div>
                             </div>
                         
@@ -52,36 +52,18 @@
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">Start Time *</label>
-                                    <select
-                                        name="start_time"
-                                        class="form-control"
-                                        style="width: 100% !important"
-                                        id="start_time"
-                                        >
-                                        <option value="" disabled>Select Start Time</option>
-                                        @for ($i = 1; $i < 25; $i++)
-                                            <option value="{{$i}}" >{{$i<10 ? 0 : ''}}{{$i}}</option>
-                                        @endfor
-                                    </select>
+                                    <input type="time" name="start_time" id="start_time" pattern="[0-9]{2}:[0-9]{2}" step="1" min="00:00" max="23:59" >
                                 </div>
                             </div>
 
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">End Time *</label>
-                                    <select
-                                        name="end_time"
-                                        class="form-control"
-                                        style="width: 100% !important"
-                                        id="end_time"
-                                        >
-                                        <option value="" disabled>Select End Time</option>
-                                        @for ($i = 1; $i < 25; $i++)
-                                            <option value="{{$i}}" >{{ $i < 10 ? 0 : ''}}{{$i}}</option>
-                                        @endfor
-                                    </select>
+                                    <input type="time" name="end_time" id="end_time" pattern="[0-9]{2}:[0-9]{2}" step="1" min="00:00" max="23:59" >
+                                    
                                 </div>
                             </div>
+
                             @if(Route::currentRouteName() == 'seller.work-diary.index')
                                 <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="form-group">
@@ -94,7 +76,7 @@
                                             >
                                             <option value="" disabled>Select Contract ID</option>
                                             @foreach ($contracts as $contract)
-                                                <option value="{{$contract->id}}">{{$contract->contract_id}}</option>
+                                                <option value="{{$contract->id}}">{{$contract->contract_title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -117,7 +99,7 @@
                                 <div >
                                     
                                     <label class="btn-outline-green" for="uploaded_files"><i class="fa fa-paperclip" aria-hidden="true"></i>Upload Attachments</label>
-                                    <input type="file" name="uploaded_files[]" id="uploaded_files" style="display: none;visibility:none" onchange="writeFileName()" multiple>
+                                    <input type="file" name="uploaded_files[]" id="uploaded_files" style="display: none;visibility:none" onchange="writeFileName()" multiple accept="image/*">
                                     
                                 </div>
 
@@ -154,23 +136,7 @@
 
         let new_task_add_form=$('#new_task_add_form');
         
-        $('.delete_btn').on('click', function () {
-
-            var modal = $('#confirmationModal');
-            modal.find('input[name=job_id]').val($(this).data('id'));
-            modal.modal('show');
-
-        });
-
-        $('#confirmation_btn').on('click', function () {
-
-            uuid=$('#job_id').val();
-            delteJob(uuid);
-            var modal = $('#confirmationModal');
-            modal.modal('hide');
-
-        });
-
+       
         function writeFileName()
         {
             $('#file_name_div').empty();

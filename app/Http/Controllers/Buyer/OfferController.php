@@ -83,10 +83,10 @@ class OfferController extends Controller
 
                 $offer_expire_at=$request_data['offer_expire_at'];
 
-                $proposal=Proposal::with('user')->find($request_data['proposal_id']);
+                $proposal=Proposal::with('user')->with('module')->find($request_data['proposal_id']);
                 $module_offer = new ModuleOffer;
                 $module_offer->description_of_work = $request_data['description'];
-                $module_offer->contract_title = $request_data['contract_title'];
+                $module_offer->contract_title = isset($request_data['contract_title']) ? $request_data['contract_title'] : $proposal->module->title;
                 $module_offer->payment_type = $request_data['payment_type'];
                 $module_offer->proposal_id = $request_data['proposal_id'];
                 $module_offer->offer_send_to_id=$proposal->user->id;
