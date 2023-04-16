@@ -194,7 +194,8 @@ class OfferController extends Controller
 
                 DB::commit();
                 $notify[] = ['success', 'Offer Successfully saved!'];
-                return response()->json(["redirect" => route('buyer.offer.sent',$module_offer->id)]);
+                // return response()->json(["redirect" => route('buyer.offer.sent',$module_offer->id)]);
+                return response()->json(["redirect" => route('buyer.payment_method_list',$module_offer->id)]);
             } catch (\Throwable $exception) {
 
                 DB::rollback();
