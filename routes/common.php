@@ -47,12 +47,18 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
         
     });
+
     Route::name('work-diary.')->prefix('work-diary')->group(function () {
+        
         Route::get('/tasks/{uuid}',  [WorkDiaryController::class,'workDiaryDetail'])->name('detail');
         Route::get('/day_planning/delete/{uuid}',  [WorkDiaryController::class,'delete'])->name('day.planning.delete');
         Route::get('/tasks/delete/{uuid}',  [WorkDiaryController::class,'deleteWorkDiaryTask'])->name('task.delete');
 
+        Route::get('/list/{uuid?}',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'index'] )->name('index');
+        Route::post('/store',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'store'] )->name('store');
+
     });
+
     Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('profile.portfolio.view');
 
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');

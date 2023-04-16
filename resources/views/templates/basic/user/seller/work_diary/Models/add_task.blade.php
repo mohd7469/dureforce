@@ -6,7 +6,7 @@
 
         <div class="modal-content">
 
-            <form action="{{route('seller.work-diary.store')}}"  id="new_task_add_form" enctype="multipart/form-data">
+            <form action="{{route('work-diary.store')}}"  id="new_task_add_form" enctype="multipart/form-data">
 
                 <div class="modal-header">
 
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            @if(Route::currentRouteName() == 'seller.work-diary.index')
+                            @if(Route::currentRouteName() == 'work-diary.index')
                                 <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label for="title">Contract ID</label>
@@ -206,7 +206,7 @@
         }
 
         function AddTask(){
-            let add_task_route="{{route('seller.work-diary.store')}}";
+            let add_task_route="{{route('work-diary.store')}}";
             let form_data = new FormData(new_task_add_form[0]);
             form_data.append('attachments', $('#uploaded_files')[0].files);
             $.ajax({
