@@ -26,7 +26,8 @@ class UserPayment extends Model
         'city_id',
         'address',
         'is_active',
-        'user_id'
+        'user_id',
+        'is_primary'
     ];
 
     protected $casts  = [

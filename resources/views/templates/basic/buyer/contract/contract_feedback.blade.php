@@ -22,12 +22,11 @@
                         <p>This feedback will be kept anonymous and never shared directlt with freelancer</p>
                         <div>
                         <p>Reason for Ending Contract</p>
-                                <select name="reason" class="col-md-4" style="height: 40px"> <option value=""> Select a Reason</option>
-                                    <option value=""> Job Completed Successfully</option>
-                                    <option value=""> Job Cancel Due to Freelancer performance</option>
-                                    <option value=""> Job Cancelled due to Other reasons</option>
-                                    <option value=""> Another reason</option>
+                                <select name="reason" class="col-md-5" style="height: 40px"> <option value=""> Select a Reason</option>
+                                    @foreach($reasons as $reason)
+                                    <option value="{{$reason->id}}"> {{$reason->name}}</option>
 
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -35,7 +34,7 @@
                                         <div class="row" style="margin-left: 10px">
                                         @for ($i = 1; $i <=10; $i++)
                                             <div class="col-md-1 row" >
-                                                    <input class="form-check-input" type="checkbox" id="rating_num" name="rating_num" value = "{{$i}}" onclick="checkedOnClick(this);">
+                                                    <input class="form-check-input" type="radio" id="rating_num" name="rating_num" value = "{{$i}}" onclick="checkedOnClick(this);">
                                                 </div>
                                         @endfor
                                         </div>
@@ -53,33 +52,16 @@
                             <div>
                                 <p>Rate their English Proficiency. (Speaking and Comprehension) </p>
                                 <div>
+                                    @foreach($langLevels as $level)
                                     <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
+
+                                    <input class="form-check-input" type="radio" value="{{$level->id}}}" id="engProf" name="engProf" onclick="engProfCheck(this);">
                                     <label class="form-check-label" for="defaultCheck1">
-                                        Fluent
+                                        {{$level->name}}
                                     </label>
                                     </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            Acceptable
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            Difficult to Understand
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            I don't Speak to this Freelancer
-                                        </label>
-                                    </div>
-
-
-                            </div>
+                                    @endforeach
+                                  </div>
 
                             </div>
 
@@ -349,19 +331,19 @@
                         <ul class="listing_ps">
                             <li><span class="p_fcs" style="font-weight: 500;"><h3>Pay Freelancer</h3></span></li>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
+                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
                                 <label class="form-check-label" for="defaultCheck1">
                                     Pay $6.00
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
+                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
                                 <label class="form-check-label" for="defaultCheck1">
                                     Pay another amount
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
+                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
                                 <label class="form-check-label" for="defaultCheck1">
                                     Pay nothing and request refund
                                 </label>

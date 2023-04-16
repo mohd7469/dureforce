@@ -16,7 +16,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
         Route::view('/contract_detail', 'templates.basic.buyer.contract.contract_details')->name('contract_detail');
 
         // Route::view('/payment_method_list', 'templates.basic.buyer.payment-method.payment_list')->name('contract_detail');
-        Route::get('/payment_method_list',[\App\Http\Controllers\Buyer\PayMethodController::class,'getUserProfile'] )->name('payment_method_list');
+        Route::get('/payment_method_list/{id?}',[\App\Http\Controllers\Buyer\PayMethodController::class,'getUserProfile'] )->name('payment_method_list');
         Route::post('/save-payment-methods', [\App\Http\Controllers\Buyer\PayMethodController::class,'savePaymentMethod'])->name('save.payment.methods');
         Route::get('/buyer-change-payment-status/{id}', [\App\Http\Controllers\Buyer\PayMethodController::class,'buyerstatuschange'])->name('payment.change.status');
         Route::delete('/buyer-payment-destroy/{id}', [\App\Http\Controllers\Buyer\PayMethodController::class,'buyerdestroy'])->name('payment.destroy');
@@ -76,7 +76,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                 });
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
-                Route::get('job-offer-sent/{id}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
+                Route::get('job-offer-sent/{id?}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
                 
                 Route::get('job-offer-send-response', [\App\Http\Controllers\Buyer\OfferController::class,'offerSuccessfullySubmitted'])->name('offer.success.alert');
 
