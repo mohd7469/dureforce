@@ -33,7 +33,7 @@
                         </li>
 
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('seller.work-diary.index')? 'open':''}}">
-                            <a href="{{route('seller.work-diary.index')}}">
+                            <a href="{{route('work-diary.index')}}">
                                 <i class="las la-plus"></i> <span class="title">@lang('Work Diary')</span>
                             </a>
                         </li>

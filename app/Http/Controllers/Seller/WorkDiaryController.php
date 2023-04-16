@@ -25,7 +25,6 @@ class WorkDiaryController extends Controller
     
     public function index($contract_uuid=null){
         try {
-
             $day_plannings=DayPlanning::withAll()->where('created_by',auth()->user()->id);
             if($contract_uuid){
                 $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
@@ -36,6 +35,7 @@ class WorkDiaryController extends Controller
 
             $emptyMessage="Tasks Not Found";
             $timezones = Timezone::select('id','name')->get();
+
             return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'));
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -145,7 +145,7 @@ class WorkDiaryController extends Controller
         
                          }
                     }
-                    $redirect_url = route('seller.work-diary.index');
+                    $redirect_url = route('work-diary.index');
                     if($previousRouteName=="work-diary.detail"){
                         $redirect_url = $previousUrl ;
                     }

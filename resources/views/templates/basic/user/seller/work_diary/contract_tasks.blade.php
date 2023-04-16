@@ -6,9 +6,12 @@
             <div class="row justify-content-center mb-30-none">
                 @include($activeTemplate . 'partials.seller_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 ">
-                    <div class="text-right mt-2 mb-2">
-                        <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
-                    </div>
+                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                        <div class="text-right mt-2 mb-2">
+                            <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                        </div>
+                    @endif
+
                     <div class="table-responsive">
 
                         <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
@@ -19,7 +22,9 @@
                                 <th>@lang('Date')</th>
                                 <th>@lang('Start Time')</th>
                                 <th>@lang('End Time')</th>
-                                <th>@lang('Action')</th>
+                                @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                    <th>@lang('Action')</th>
+                                @endif
 
                             </tr>
                             </thead>
@@ -44,23 +49,24 @@
                                             {{$task->end_time}}
                                         </td>  
 
-                                 
-                                        <td data-label="Action">
-                                            
-                                            {{-- <a href="#">
-                                                <i class="fa fa-eye icon-color" style="margin-right:7px; "></i>
-                                            </a> --}}
-                                            
-                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
-                                                <a href="#" >
-                                                    <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
-                                                </a>
-                                                <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
-                                                    <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
-                                                </a>
-                                            @endif
+                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <td data-label="Action">
+                                                
+                                                {{-- <a href="#">
+                                                    <i class="fa fa-eye icon-color" style="margin-right:7px; "></i>
+                                                </a> --}}
+                                                
+                                                @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
+                                                    <a href="#" >
+                                                        <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                                        <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
+                                                    </a>
+                                                @endif
 
-                                        </td>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @empty
                                     <tr>
