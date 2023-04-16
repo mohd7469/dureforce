@@ -176,7 +176,8 @@
                             <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
                             <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
                             <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">{{ $contract->end_date ? getFormattedDate($contract->end_date,'d-m-Y') : ''}}</span></li>
-                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                            
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract))
                                 <li class="right-navbar-li">
                                     <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                                 </li>     
@@ -195,9 +196,7 @@
                             
                             @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                 <li>
-                                   
-                                        <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendToUser->full_name}}</a></center>
-                                   
+                                    <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendToUser->full_name}}</a></center>
                                 </li>
                             @endif
                         </ul>
@@ -294,8 +293,9 @@
 
             </div>
         </div>
-
-    @include('templates.basic.user.seller.work_diary.Models.add_task',['contract_id'=>$contract->id])
+        @if (isHourlyContract($contract))
+            @include('templates.basic.user.seller.work_diary.Models.add_task',['contract_id'=>$contract->id])
+        @endif
        
 @endsection
 

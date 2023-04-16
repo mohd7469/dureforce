@@ -27,7 +27,7 @@ class Contract extends Model
         "CONTRACT_TYPE" => "contract",
     ];
     public static function scopeWithAll($query){
-        return $query->with('offer')->with('status');
+        return $query->with('offer')->with('status')->with('dayPlanning');
     }
 
     protected static function boot()
@@ -45,8 +45,13 @@ class Contract extends Model
     {
         return $this->belongsTo(ModuleOffer::class, 'module_offer_id')->WithAll();
     }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
+    }
+
+    public function dayPlanning(){
+        return $this->hasMany(DayPlanning::class,'contract_id')->withTrashed();
     }
 }

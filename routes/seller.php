@@ -71,7 +71,7 @@ Route::name('seller.')->group(function () {
 
                 Route::name('work-diary.')->prefix('work-diary')->group(function () {
                    
-                    Route::get('/list',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'index'] )->name('index');
+                    Route::get('/list/{uuid?}',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'index'] )->name('index');
                     Route::post('/store',  [\App\Http\Controllers\Seller\WorkDiaryController::class,'store'] )->name('store');
 
                 });

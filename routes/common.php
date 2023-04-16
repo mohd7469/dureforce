@@ -7,6 +7,7 @@ use App\Http\Controllers\FileUploadController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Seller\ServiceController;
 use App\Http\Controllers\Seller\SoftwareController;
+use App\Http\Controllers\Seller\WorkDiaryController;
 
 Route::middleware(['verified','is-profile-completed','auth'])->group(function () {
     Route::name('notification.')->prefix('notification')->group(function () {
@@ -46,8 +47,12 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
         
     });
+    Route::name('work-diary.')->prefix('work-diary')->group(function () {
+        Route::get('/tasks/{uuid}',  [WorkDiaryController::class,'workDiaryDetail'])->name('detail');
+        Route::get('/day_planning/delete/{uuid}',  [WorkDiaryController::class,'delete'])->name('day.planning.delete');
+        Route::get('/tasks/delete/{uuid}',  [WorkDiaryController::class,'deleteWorkDiaryTask'])->name('task.delete');
 
-    
+    });
     Route::get('/portfolio/view/{uuid}', [\App\Http\Controllers\Seller\ProfileController::class,'getUserProfile'])->name('profile.portfolio.view');
 
     Route::get('/view-user-protfolio/{id?}', 'CommonProfileController@getUserProfile')->name('profile.portfolio');

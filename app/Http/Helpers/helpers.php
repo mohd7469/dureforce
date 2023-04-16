@@ -18,11 +18,13 @@ use App\Models\Rank;
 use App\Models\Advertise;
 use App\Models\BannerBackground;
 use App\Models\Contract;
+use App\Models\DayPlanning;
 use App\Models\Degree;
 use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
 use App\Models\ModuleBanner;
+use App\Models\ModuleOffer;
 use App\Models\Proposal;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -1623,22 +1625,43 @@ function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);
 }
-function getUserContracts(){
+function getUserContracts($uuid=null){
+
     $user=Auth::user();
-    $contracts=Contract::select('id','contract_id')->whereHas('offer',function ($query) use ($user){
-    $last_role_id=getLastLoginRoleId();
-    if ( $last_role_id  == Role::$Freelancer ) {
-        $query->where('offer_send_to_id','=',$user->id);
+    $contracts=Contract::select('id','contract_title');
+    if($uuid){
+
+        $contracts=$contracts->where('uuid',$uuid);
     }
-    else if( $last_role_id == Role::$Client ){
-        $query->where('offer_send_by_id','=',$user->id);
-    }
+
+    $contracts=$contracts->whereHas('offer',function ($query) use ($user){
+
+        $last_role_id=getLastLoginRoleId();
+        if ( $last_role_id  == Role::$Freelancer ) {
+            $query->where('offer_send_to_id','=',$user->id);
+        }
+        else if( $last_role_id == Role::$Client ){
+            $query->where('offer_send_by_id','=',$user->id);
+        }
+        $query->where('payment_type','=',ModuleOffer::PAYMENT_TYPE['HOURLY']);
+
     })->get();
 
-
-    $contracts=$contracts->where('status_id','!=',Contract::STATUSES['Terminated']);
     return $contracts;
 }
+function IsDayPlanningNotApproved($dayPlanning){
+    if($dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
+        return true;
+    }
+    return false;
+}
+function isHourlyContract($contract){
+    if($contract->offer->payment_type== ModuleOffer::PAYMENT_TYPE['HOURLY']){
+        return true;
+    }
+    return false;
+}
+
 function getDaysHoursMinutesSeconds($timestamp){
 
     $end = Carbon::parse($timestamp);

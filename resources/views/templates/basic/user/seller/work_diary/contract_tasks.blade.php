@@ -17,42 +17,45 @@
                             <tr>
                                 <th style="width: 20%">@lang('Job Title')</th>
                                 <th>@lang('Date')</th>
-                                <th>@lang('Total Day Hours')</th>
-                                <th>@lang('Status')</th>
+                                <th>@lang('Start Time')</th>
+                                <th>@lang('End Time')</th>
                                 <th>@lang('Action')</th>
 
                             </tr>
                             </thead>
                             <tbody class="text-center">
-                                @forelse($day_plannings as $key => $day_planning)
-                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$day_planning->uuid}}">
+                                @forelse($work_diary_tasks as $key => $task)
+                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$task->uuid}}">
                                         
                                         <td data-label="@lang('start time')">
-                                            {{ $day_planning->job->title }}
+                                            {{ $task->job->title }}
                                         </td>
 
                                         
                                         <td data-label="@lang('date')">
-                                            {{ getFormattedDate($day_planning->planning_date,'d-m-Y') }}
+                                            {{ getFormattedDate($task->day->planning_date,'d-m-Y') }}
                                         </td>
 
                                         <td>
-                                            {{$day_planning->total_day_hours}}
+                                            {{$task->start_time}}
                                         </td>  
 
-
                                         <td>
-                                            <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
-                                        </td>
-                                                                        
+                                            {{$task->end_time}}
+                                        </td>  
+
+                                 
                                         <td data-label="Action">
                                             
-                                            <a href="{{route('work-diary.detail',$day_planning->uuid)}}">
+                                            {{-- <a href="#">
                                                 <i class="fa fa-eye icon-color" style="margin-right:7px; "></i>
-                                            </a>
+                                            </a> --}}
                                             
                                             @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
-                                                <a href="javascript:void(0)" class="delete_btn" data-id="{{$day_planning->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                                <a href="#" >
+                                                    <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
+                                                </a>
+                                                <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
                                                     <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
                                                 </a>
                                             @endif
@@ -69,8 +72,9 @@
                         </table>
 
                     </div>
-                    
-                    {{$day_plannings->links()}}
+                    @if ($work_diary_tasks->isNotEmpty())
+                        {{$work_diary_tasks->links()}}
+                    @endif
                 </div>
             </div>
         </div>
@@ -83,14 +87,14 @@
     <div class="modal-dialog " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="ModalLabel">@lang('Day Planning Delete Confirmation')</h4>
+                <h4 class="modal-title" id="ModalLabel">@lang('Day Planning Task Delete Confirmation')</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                 </button>
             </div>
                
-            <input type="hidden" name="day_planning_id" id="day_planning_id">
+            <input type="hidden" name="day_planning_task_id" id="day_planning_task_id">
             <div class="modal-body">
-                <p>@lang('Are you sure to delete this day planning')</p>
+                <p>@lang('Are you sure to delete this task')</p>
             </div>
 
             <div class="modal-footer">
@@ -101,8 +105,7 @@
                 
     </div>
 </div>
-
-@include('templates.basic.user.seller.work_diary.Models.add_task')
+@include('templates.basic.user.seller.work_diary.Models.add_task',['contract_id' => $contract->id,'day_planning_day' => $day_planning->planning_date])
 @endsection
 
 
@@ -114,24 +117,23 @@
     $('.delete_btn').on('click', function () {
 
         var modal = $('#confirmationModal');
-        modal.find('input[name=day_planning_id]').val($(this).data('id'));
+        modal.find('input[name=day_planning_task_id]').val($(this).data('id'));
         modal.modal('show');
 
     });
 
     $('#confirmation_btn').on('click', function () {
 
-        uuid=$('#day_planning_id').val();
-        deleteDayPlanning(uuid);
+        uuid=$('#day_planning_task_id').val();
+        deleteDayPlanningTask(uuid);
         var modal = $('#confirmationModal');
         modal.modal('hide');
 
     });
 
-    function deleteDayPlanning(uuid)
+    function deleteDayPlanningTask(uuid)
     {
-        let route = "{{ route('work-diary.day.planning.delete', ':uuid') }}".replace(':uuid', uuid);
-
+        let route = "{{ route('work-diary.task.delete', ':uuid') }}".replace(':uuid', uuid);
         $.ajax({
             type:"GET",
             url:route,
@@ -140,11 +142,10 @@
                 
                 if(data.error){
                     displayAlertMessage(data.error);
-                   
                 }
                 else{
+                  
                     $('#'+uuid).remove();
-                    console.log(data.success);;
                     displaySuccessMessage(data.success);
                 }
             }
