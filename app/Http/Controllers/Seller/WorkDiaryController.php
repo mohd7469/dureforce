@@ -25,6 +25,7 @@ class WorkDiaryController extends Controller
     
     public function index($contract_uuid=null){
         try {
+            
             $day_plannings=DayPlanning::withAll()->where('created_by',auth()->user()->id);
             if($contract_uuid){
                 $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
@@ -45,26 +46,31 @@ class WorkDiaryController extends Controller
     
     public function store(CreateTaskRequest $request){
         try {
-
             $previousUrl = URL::previous();
             $previousRouteName = Route::getRoutes()->match(Request::create($previousUrl))->getName();
             
             $start_time=$request->start_time;
             $end_time=$request->end_time;
+            $already_uploaded_files= json_decode($request->already_uploaded_files,true);
             $worked_hours=0;
             $worked_minutes=0;
             list($st_hours, $st_minutes, $st_seconds) = explode(':', $start_time);
             list($et_hours, $et_minutes, $et_seconds) = explode(':', $end_time);
 
-            $st_hours_minutes=$st_hours*60+$st_minutes;
-            $et_hours_minutes=$et_hours*60+$et_minutes;
-            $diff_minutes = $et_hours_minutes - $st_hours_minutes;
-            $with_minutes_hours=$diff_minutes/60;
+            $st_hours_minutes = $st_hours * 60 + $st_minutes;
+            $et_hours_minutes = $et_hours * 60 + $et_minutes;
+            $diff_minutes     = $et_hours_minutes - $st_hours_minutes;
+
+            $with_minutes_hours=$diff_minutes / 60;
             $worked_hours=intval($with_minutes_hours);
-            $worked_minutes=$diff_minutes%60;
+            $worked_minutes=$diff_minutes % 60 ;
+            $day_planning_task_pre_state=null;
+            if(!is_null($request->task_id)){
+                $day_planning_task_pre_state=DayPlanningTask::find($request->task_id);
+                $day_planning_task_pre_state->delete();
+            }
 
-
-            $existing_day_plannings = DayPlanning::where('planning_date', $request->planning_date)
+            $already_day_plannings = DayPlanning::where('planning_date', $request->planning_date)
                     ->where('contract_id', $request->contract_id)
                     ->whereHas('tasks', function ($query) use ($start_time, $end_time) {
                         $query->where(function ($subquery) use ($start_time, $end_time) {
@@ -80,9 +86,14 @@ class WorkDiaryController extends Controller
                                 ->where('end_time', '<=', $end_time);
                         });
 
-                 })->exists();
+                 })->with('tasks');
+            $existing_day_plannings = $already_day_plannings->exists();
 
             if($existing_day_plannings){
+                if($day_planning_task_pre_state){
+                    // dd($already_day_plannings->get()->toArray());
+                    $day_planning_task_pre_state->restore();
+                }
                 return response()->json(['error' => 'The Entered hours are already added against this day']);
 
             }
@@ -92,21 +103,23 @@ class WorkDiaryController extends Controller
 
                 $contract=Contract::withAll()->find($request->contract_id);
             
-                $day_planning=DayPlanning::updateOrCreate(
-                    [
-                        'contract_id' => $request->contract_id,
-                        'planning_date' => $request->planning_date
-                    ],
-                    [
-                        'job_id' => $contract->offer->proposal->module_id,
-                        'offer_id' => $contract->module_offer_id,
-                        'status_id' => DayPlanning::STATUSES['ApprovalNotYet_Requested'],
-                        'client_id' => $contract->offer->offer_send_by_id,
-    
-                    ]);
+                $day_planning=DayPlanning::updateOrCreate
+                    (
+                        [
+                            'contract_id' => $request->contract_id,
+                            'planning_date' => $request->planning_date
+                        ],
+                        [
+                            'job_id' => $contract->offer->proposal->module_id,
+                            'offer_id' => $contract->module_offer_id,
+                            'status_id' => DayPlanning::STATUSES['ApprovalNotYet_Requested'],
+                            'client_id' => $contract->offer->offer_send_by_id,
+        
+                        ]
+                    );
+
 
                     $day_planning_task=$day_planning->tasks()->create([
-                        
                         'job_id'       => $day_planning->job_id,
                         'contract_id'  => $day_planning->contract_id,
                         'offer_id'     => $day_planning->offer_id,
@@ -119,7 +132,30 @@ class WorkDiaryController extends Controller
                         'time_in_hours' => $worked_hours,
                         'time_in_minutes' => $worked_minutes,
                     ]);
-    
+
+                    if($day_planning_task_pre_state){
+                        $minutes=$day_planning_task_pre_state->time_in_hours*60+$day_planning_task_pre_state->time_in_minutes;
+                        $hours=$minutes/60;
+                        $day_planning = $day_planning_task_pre_state->day;
+                        $day_planning->total_day_hours= $day_planning->total_day_hours- $hours;
+                        $day_planning->save();
+                        $pre_attachments=$day_planning_task_pre_state->attachments;
+                        if($pre_attachments)
+                        {
+                            $pre_attachments->each->delete();
+                            if($already_uploaded_files && count($already_uploaded_files)>0){
+                                foreach ($already_uploaded_files as $key => $already_uploaded_file) {
+                                    $day_planning_task->attachments()->create([
+                                        "name" => $already_uploaded_file['name'],
+                                        "uploaded_name" => $already_uploaded_file['uploaded_name'],
+                                        "url" =>  $already_uploaded_file['url'],
+                                        "type" => $already_uploaded_file['type'],
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+
                     $day_planning->total_day_hours=$day_planning->total_day_hours+$with_minutes_hours;
                     $day_planning->save();
 
@@ -186,7 +222,7 @@ class WorkDiaryController extends Controller
 
         }
     }
-
+    
     public function deleteWorkDiaryTask($uuid){
         try {
 

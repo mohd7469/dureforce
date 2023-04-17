@@ -7,7 +7,7 @@
         <div class="modal-content">
 
             <form action="{{route('work-diary.store')}}"  id="new_task_add_form" enctype="multipart/form-data">
-
+                <input type="hidden" name="task_id" id="task_id">
                 <div class="modal-header">
 
                     <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
@@ -82,15 +82,16 @@
                                     </div>
                                 </div>
                             @else
-                                <input type="hidden" name="contract_id" value="{{$contract_id}}">
+                                <input type="hidden" name="contract_id"  id="contract_id" value="{{$contract_id}}">
                             @endif
                            
+                            <input type="hidden" name="already_uploaded_files" id="already_uploaded_files_id">
 
                             <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
 
                                     <label for="title"> Add Task Details *</label>
-                                <textarea name="description" id=""  rows="5" placeholder="write task description here ..."></textarea>
+                                <textarea name="description" id="description_id"  rows="5" placeholder="write task description here ..."></textarea>
                                 </div>
                             </div>
 
@@ -118,7 +119,7 @@
 
                 <div class="modal-footer">
                 
-                    <button type="button" class="btn btn--info btn-rounded text-white btn-cancel" data-bs-dismiss="modal">@lang('Cancel')</button>
+                    <button type="button" class="btn btn--info btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
                     <button type="submit" class="btn btn--danger btn-rounded text-white btn-save" id="save_btn_id">@lang('Save')</button>
                 </div>
 
@@ -133,7 +134,7 @@
 @push('script')
     <script>
         
-
+        let already_uploaded_files=[];
         let new_task_add_form=$('#new_task_add_form');
         
        
@@ -141,11 +142,15 @@
         {
             $('#file_name_div').empty();
             var number_of_files=$('#uploaded_files').get(0).files.length;
+            if(already_uploaded_files.length > 0){
+                loadDefaultFiles(already_uploaded_files);
+            }
             var form= new FormData();
             for (let index = 0; index < number_of_files; index++) {
                 file=$('#uploaded_files').get(0).files[index];
                 $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
             }
+
 
         }
 
@@ -153,8 +158,20 @@
 
             filename=jQuery(this).attr("id");
             filename = filename.replace(/[^\w]/gi, "_");
-            console.log(filename);
+
+            let for_ar_files=filename.replace(/_/g, ".");
+
+            const keyToRemove = "name";
+            const valueToRemove = for_ar_files;
+            const indexToRemove = already_uploaded_files.findIndex(obj => obj[keyToRemove] === valueToRemove);
+
+            if (indexToRemove !== -1) {
+                already_uploaded_files.splice(indexToRemove, 1);
+                $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
+            }
+
             $('#file_detail_'+filename).remove();
+
             var original_file_name=$(this).attr("data-id");
             const dt = new DataTransfer();
             var number_of_files=$('#uploaded_files').get(0).files.length;
@@ -254,7 +271,11 @@
 
             });
 
+           
+
         });
+
+       
 
     </script>
 @endpush

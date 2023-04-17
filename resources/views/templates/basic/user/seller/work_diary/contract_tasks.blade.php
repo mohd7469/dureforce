@@ -22,6 +22,7 @@
                                 <th>@lang('Date')</th>
                                 <th>@lang('Start Time')</th>
                                 <th>@lang('End Time')</th>
+                                <th>@lang('Attachments')</th>
                                 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                     <th>@lang('Action')</th>
                                 @endif
@@ -48,16 +49,22 @@
                                         <td>
                                             {{$task->end_time}}
                                         </td>  
-
+                                        <td> <!-- Add new cell for attachments -->
+                                            {{-- Loop through attachments and display them --}}
+                                            @foreach($task->attachments as $attachment)
+                                                <a href="{{ $attachment->url }}" target="_blank">
+                                                    {{ $attachment->uploaded_name }}
+                                                </a>
+                                                <br>
+                                            @endforeach
+                                        </td>
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                             <td data-label="Action">
                                                 
-                                                {{-- <a href="#">
-                                                    <i class="fa fa-eye icon-color" style="margin-right:7px; "></i>
-                                                </a> --}}
+                                              
                                                 
                                                 @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
-                                                    <a href="#" >
+                                                    <a href="#"  onclick="editTask({{$task}})">
                                                         <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
                                                     </a>
                                                     <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
@@ -157,6 +164,51 @@
             }
         });  
     }
+
+    $(document).on('click', '.edit_btn', function() {
+        var taskId = $(this).data('id'); 
+        $('#editModal').find('#taskTitle').val(taskData.title);
+        $('#editModal').find('#taskDate').val(taskData.date);
+        $('#editModal').modal('show');
+
+    });
+
+    function loadDefaultFiles(attachments){
+        $('#file_name_div').empty();
+        already_uploaded_files=attachments;
+        $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
+        for (let index = 0; index < already_uploaded_files.length; index++) {
+            file=already_uploaded_files[index];
+            $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.uploaded_name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+        }
+
+    }
+
+    function editTask(task){
+        $('#add_task_model_id').find('#planning_date').val(moment(task.day.planning_date).format('YYYY-MM-DD'));
+        $('#timezone_id').val(task.timezone).trigger('change');
+        $('#add_task_model_id').find('#start_time').val(task.start_time);
+        $('#add_task_model_id').find('#end_time').val(task.end_time);
+        $('#add_task_model_id').find('#contract_id').val(task.contract_id);
+        $('#add_task_model_id').find('#description_id').val(task.description);
+        $('#add_task_model_id').find('#task_id').val(task.id);
+
+        $('#add_task_model_id').modal('show');
+        loadDefaultFiles(task.attachments);
+
+    }
+
+    $(document).on('click', '#cancel_task_btn_id', function(e) {
+        $('#timezone_id').val('').trigger('change');
+        $('#add_task_model_id').find('#start_time').val('');
+        $('#add_task_model_id').find('#end_time').val('');
+        $('#add_task_model_id').find('#description_id').val('');
+        $('#add_task_model_id').find('#task_id').val('');
+        already_uploaded_files=[];
+
+        loadDefaultFiles(already_uploaded_files);
+
+    });
 
 </script>
 
