@@ -57,7 +57,7 @@
                                 @else
 
                                 <form method="GET"
-                                            action="{{ route('buyer.payment.change.status', $payments->id) }}"
+                                            action="{{ route('buyer.payment.change.status',[$payments->id, $module_offer_id]) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('Make Primary')
