@@ -2,8 +2,11 @@
 @section('content')
 <section class="all-sections zero_top_padding">
     <div class="container-fluid">
+
         <div class="section-wrapper ">
+
             <div class="row justify-content-center mb-30-none">
+
                 @include($activeTemplate . 'partials.seller_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
@@ -12,84 +15,115 @@
                         </div>
                     @endif
 
-                    <div class="table-responsive">
+                    <div class="col-md-12  col-lg-12 col-sm-12 col-xs-12">
+                        <div class="table-responsive">
 
-                        <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
-                                    
-                            <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
-                            <tr>
-                                <th style="width: 20%">@lang('Job Title')</th>
-                                <th>@lang('Date')</th>
-                                <th>@lang('Start Time')</th>
-                                <th>@lang('End Time')</th>
-                                <th>@lang('Attachments')</th>
-                                @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
-                                    <th>@lang('Action')</th>
-                                @endif
-
-                            </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                @forelse($work_diary_tasks as $key => $task)
-                                    <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$task->uuid}}">
+                            <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
                                         
-                                        <td data-label="@lang('start time')">
-                                            {{ $task->job->title }}
-                                        </td>
-
-                                        
-                                        <td data-label="@lang('date')">
-                                            {{ getFormattedDate($task->day->planning_date,'d-m-Y') }}
-                                        </td>
-
-                                        <td>
-                                            {{$task->start_time}}
-                                        </td>  
-
-                                        <td>
-                                            {{$task->end_time}}
-                                        </td>  
-                                        <td> <!-- Add new cell for attachments -->
-                                            {{-- Loop through attachments and display them --}}
-                                            @foreach($task->attachments as $attachment)
-                                                <a href="{{ $attachment->url }}" target="_blank">
-                                                    {{ $attachment->uploaded_name }}
-                                                </a>
-                                                <br>
-                                            @endforeach
-                                        </td>
-                                        @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
-                                            <td data-label="Action">
-                                                
-                                              
-                                                
-                                                @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
-                                                    <a href="#"  onclick="editTask({{$task}})">
-                                                        <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
-                                                    </a>
-                                                    <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
-                                                        <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
-                                                    </a>
-                                                @endif
-
+                                <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
+                                <tr>
+                                    <th style="width: 20%">@lang('Job Title')</th>
+                                    <th>@lang('Date')</th>
+                                    <th>@lang('Start Time')</th>
+                                    <th>@lang('End Time')</th>
+                                    <th>@lang('Attachments')</th>
+                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                        <th>@lang('Action')</th>
+                                    @endif
+    
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @forelse($work_diary_tasks as $key => $task)
+                                        <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$task->uuid}}">
+                                            
+                                            <td data-label="@lang('start time')">
+                                                {{ $task->job->title }}
                                             </td>
-                                        @endif
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="100%">{{ __($emptyMessage) }}</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-
-                        </table>
-
+    
+                                            
+                                            <td data-label="@lang('date')">
+                                                {{ getFormattedDate($task->day->planning_date,'d-m-Y') }}
+                                            </td>
+    
+                                            <td>
+                                                {{$task->start_time}}
+                                            </td>  
+    
+                                            <td>
+                                                {{$task->end_time}}
+                                            </td>  
+                                            <td> 
+                                                
+                                                @foreach($task->attachments as $attachment)
+                                                    <a href="{{ $attachment->url }}" target="_blank">
+                                                        {{ $attachment->uploaded_name }}
+                                                    </a>
+                                                    <br>
+                                                @endforeach
+                                            </td>
+                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <td data-label="Action">
+                                                    
+                                                    
+                                                    
+                                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && IsDayPlanningNotApproved($day_planning))
+                                                        <a href="#"  onclick="editTask({{$task}})">
+                                                            <i class="fa fa-edit icon-color" style="margin-right:7px; "></i>
+                                                        </a>
+                                                        <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                                            <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
+                                                        </a>
+                                                    @endif
+    
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="100%">{{ __($emptyMessage) }}</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+    
+                            </table>
+    
+                        </div>
+                        @if ($work_diary_tasks->isNotEmpty())
+                            {{$work_diary_tasks->links()}}
+                        @endif
                     </div>
-                    @if ($work_diary_tasks->isNotEmpty())
-                        {{$work_diary_tasks->links()}}
-                    @endif
+
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 card text-left" >
+                            
+                        <div class="card-header" style="background-color:#EFF4F4">
+                            <strong>{{$day_planning->status->name}}</strong>
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Approval Has been request for (<b>{{$day_planning->contract->contract_title}} </b>) for contract (<b>{{$day_planning->planning_date}} </b>) </h5>
+                            
+                            <form action="">
+
+                                <div class="form-group text-left">
+                                    <label for="exampleFormControlTextarea1">Comment</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" style="min-height:136px !important;"></textarea>
+                                </div>
+
+                                <div class="text-right">
+                                    <a href="#" class="btn btn-primary">Accept</a>
+                                    <a href="#" class="btn btn-primary">Reject</a>
+        
+                                </div>
+                            </form>
+
+                        </div>
+                           
+                    
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
