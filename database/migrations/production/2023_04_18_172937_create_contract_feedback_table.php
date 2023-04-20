@@ -22,9 +22,10 @@ class CreateContractFeedbackTable extends Migration
             $table->id();
             $table->unsignedBigInteger('role_id')->nullable();
             $table->unsignedBigInteger('reason_end_contract_id')->nullable();
-            $table->unsignedBigInteger('reason_end_contract_nr_id')->nullable();
+            $table->unsignedBigInteger('not_recomended_reason_id')->nullable();
             $table->unsignedBigInteger('language_level_id')->nullable();
             $table->unsignedBigInteger('feedback_for_id')->index()->nullable();
+            $table->unsignedBigInteger('contract_id')->index('contract_id')->nullable();
 
             $table->float('recomended_score')->nullable();
             $table->float('skills_score')->nullable();
@@ -40,10 +41,11 @@ class CreateContractFeedbackTable extends Migration
 
 
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('reason_end_contract_id')->references('id')->on('roles');
-            $table->foreign('reason_end_contract_nr_id')->references('id')->on('roles');
+            $table->foreign('reason_end_contract_id')->references('id')->on('reason_end_contracts');
+            $table->foreign('not_recomended_reason_id')->references('id')->on('not_recomended_reasons');
             $table->foreign('language_level_id')->references('id')->on('language_levels');
             $table->foreign('feedback_for_id')->references('id')->on('users')->onDelete('RESTRICT')->onUpdate('RESTRICT');
+            $table->foreign('contract_id')->references('id')->on('contracts')->onDelete('RESTRICT')->onUpdate('RESTRICT');
 
             $this->addCommonDBFields($table);
 
