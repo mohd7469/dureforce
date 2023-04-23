@@ -14,9 +14,9 @@ class AddApprovedHoursInContractsTable extends Migration
     public function up()
     {
         Schema::table('contracts', function (Blueprint $table) {
-            
-            $table->float('approved_hours',2)->nullable()->after('contract_paid_amount');
-            $table->float('total_worked_hours',2)->nullable()->after('contract_paid_amount');
+
+            $table->float('approved_hours')->nullable()->after('contract_paid_amount');
+            $table->float('total_worked_hours')->nullable()->after('contract_paid_amount');
 
         });
     }

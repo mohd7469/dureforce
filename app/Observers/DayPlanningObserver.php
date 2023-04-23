@@ -14,6 +14,7 @@ class DayPlanningObserver
      */
     public function created(DayPlanning $dayPlanning)
     {
+        
         $this->syncHours($dayPlanning,true);
         
     }
@@ -26,7 +27,7 @@ class DayPlanningObserver
      */
     public function updated(DayPlanning $dayPlanning)
     {
-        // $this->syncHours($dayPlanning,);
+        $this->syncHours($dayPlanning,true);
         
     }
 
@@ -71,6 +72,12 @@ class DayPlanningObserver
 
         
         if($is_create){
+            $previous_values=$dayPlanning->getOriginal('total_day_hours');
+            if( ! is_null($previous_values) ){
+                $contract->total_worked_hours = $contract->total_worked_hours - $previous_values;
+                $contract->save();
+            }
+
             $contract->total_worked_hours=$contract->total_worked_hours+$total_day_hours;
         }
         else{

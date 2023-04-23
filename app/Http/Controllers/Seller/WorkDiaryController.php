@@ -25,8 +25,18 @@ class WorkDiaryController extends Controller
     
     public function index($contract_uuid=null){
         try {
+            $last_login_role_id=getLastLoginRoleId();
+            $day_plannings=DayPlanning::withAll();
+            if ($last_login_role_id == Role::$Freelancer) {
+                $day_plannings->where('created_by',auth()->user()->id);
+            }
+            elseif($last_login_role_id == Role::$Client){
+                $day_plannings->where('client_id',auth()->user()->id);
+            }
+            else{
+
+            }
             
-            $day_plannings=DayPlanning::withAll()->where('created_by',auth()->user()->id);
             if($contract_uuid){
                 $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
                 $day_plannings=$day_plannings->where('contract_id',$contract->id);
@@ -103,7 +113,7 @@ class WorkDiaryController extends Controller
 
                 $contract=Contract::withAll()->find($request->contract_id);
             
-                $day_planning=DayPlanning::updateOrCreate
+                $day_planning=DayPlanning::firstOrNew
                     (
                         [
                             'contract_id' => $request->contract_id,
@@ -137,8 +147,8 @@ class WorkDiaryController extends Controller
                         $minutes=$day_planning_task_pre_state->time_in_hours*60+$day_planning_task_pre_state->time_in_minutes;
                         $hours=$minutes/60;
                         $day_planning = $day_planning_task_pre_state->day;
-                        $day_planning->total_day_hours= $day_planning->total_day_hours- $hours;
-                        $day_planning->save();
+                        $day_planning->update(['total_day_hours'=> $day_planning->total_day_hours- $hours]);
+                        // $day_planning->save();
                         $pre_attachments=$day_planning_task_pre_state->attachments;
                         if($pre_attachments)
                         {

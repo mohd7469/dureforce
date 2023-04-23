@@ -9,7 +9,8 @@
 
                 @include($activeTemplate . 'partials.seller_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 ">
-                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                    
+                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && !isApproved($day_planning))
                         <div class="text-right mt-2 mb-2">
                             <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                         </div>
@@ -74,6 +75,9 @@
                                                         <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
                                                             <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
                                                         </a>
+                                                        <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
+                                                            <i class="fa fa-tasks icon-color" style="margin-right:7px; "></i>
+                                                        </a>
                                                     @endif
     
                                                 </td>
@@ -94,33 +98,39 @@
                         @endif
                     </div>
 
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 card text-left" >
+                    @if ( isApprovalRequired($day_planning) && getLastLoginRoleId()==App\Models\Role::$Client)
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 card text-left" >
+                                
+                            <div class="card-header" style="background-color:#EFF4F4">
+                                <strong>{{$day_planning->status->name}}</strong>
+                            </div>
+
+                            <div class="card-body">
+                                <h5 class="card-title">Approval Has been request for (<b>{{$day_planning->contract->contract_title}} </b>) and day planning of (<b>{{$day_planning->planning_date}} </b>) </h5>
+                                
+                                <form action="{{route('buyer.day.planning.status.update')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" value="{{$day_planning->id}}" name="day_planning_id">   
+                                    <div class="form-group text-left">
+                                        <label for="exampleFormControlTextarea1">Comment</label>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" style="min-height:136px !important;" name="comment">{{ old('comment')}}</textarea>
+                                    </div>
+
+                                    <div class="text-right">
+                                        <button type="submit" name="approval_status_code"  value="{{ App\Models\DayPlanning::STATUSES['Rejected']}}"  class="btn btn-danger">Reject</button>
+
+                                        <button type="submit" name="approval_status_code"  value="{{ App\Models\DayPlanning::STATUSES['Approved']}}"  class="btn btn-success">Accept</button>
+            
+                                    </div>
+
+                                </form>
+
+                            </div>
                             
-                        <div class="card-header" style="background-color:#EFF4F4">
-                            <strong>{{$day_planning->status->name}}</strong>
+                        
                         </div>
-
-                        <div class="card-body">
-                            <h5 class="card-title">Approval Has been request for (<b>{{$day_planning->contract->contract_title}} </b>) for contract (<b>{{$day_planning->planning_date}} </b>) </h5>
-                            
-                            <form action="">
-
-                                <div class="form-group text-left">
-                                    <label for="exampleFormControlTextarea1">Comment</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" style="min-height:136px !important;"></textarea>
-                                </div>
-
-                                <div class="text-right">
-                                    <a href="#" class="btn btn-primary">Accept</a>
-                                    <a href="#" class="btn btn-primary">Reject</a>
-        
-                                </div>
-                            </form>
-
-                        </div>
-                           
+                    @endif
                     
-                    </div>
                 </div>
             </div>
 
