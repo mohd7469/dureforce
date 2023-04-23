@@ -3,9 +3,9 @@
 
         <div class="container-fluid">
             <form>
-            <p class="propsal-h" style="margin-left: 50px">End Contract </p>
+            <h3 class="propsal-h" style="margin-left: 40px; margin: 20px">End Contract </h3>
             <div class="main_con_p">
-                <div class="prosal-left-con" style="margin-left: 50px">
+                <div class="prosal-left-con" style="margin-left: 30px">
                     <!---Cover Letter Section Start--->
 
                     <div class="btm-c">
@@ -21,20 +21,23 @@
                         <h3 >Private Feedback</h3>
                         <p>This feedback will be kept anonymous and never shared directlt with freelancer</p>
                         <div>
-                        <p>Reason for Ending Contract</p>
-                                <select name="reason" class="col-md-5" style="height: 40px"> <option value=""> Select a Reason</option>
+                            <p><b>Reason for Ending Contract</b></p>
+                                <select name="reason" id="reason" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()"> <option value=""> Select a Reason</option>
                                     @foreach($reasons as $reason)
-                                    <option value="{{$reason->id}}"> {{$reason->name}}</option>
+                                    <option value="{{$reason->id}}" style="text-align: center; "> {{$reason->name}}</option>
+
 
                                     @endforeach
+                                    <option value="1" style=" height:50px">hsbdchs</option>
+                                    <option value="2" style=" height:50px">dhvbdshD</option>
                                 </select>
                             </div>
-
-                            <p>How likely are you recommend this freelancer to a friend or colleague.</p>
+                            <div style="margin-top: 30px">
+                            <p style="font-weight: 600">How likely are you recommend this freelancer to a friend or colleague.</p>
                                         <div class="row" style="margin-left: 10px">
                                         @for ($i = 1; $i <=10; $i++)
                                             <div class="col-md-1 row" >
-                                                    <input class="form-check-input" type="radio" id="rating_num" name="rating_num" value = "{{$i}}" onclick="checkedOnClick(this);">
+                                                    <input class="form-check-input" type="radio" id="rating_num_{{$i}}" name="rating_num" onclick="reasonsChange();" value = "{{$i}}" onclick="checkedOnClick(this);">
                                                 </div>
                                         @endfor
                                         </div>
@@ -45,12 +48,21 @@
                                                 </div>
                                         @endfor
                                     </div>
-                            <div style="margin-top: 10px">
-                                <p>Tell us more. What did the Freelancer do well. What could have been Better<span>(Optional)</span></p>
+                            </div>
+                        <div id="reason_itom" style="margin-top: 30px; display:none">
+                            <p><b>Reason Items Here</b></p>
+                            <select name="reason" id="reason" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()">
+                                <option value=""> Select a Reason</option>
+
+
+                            </select>
+                        </div>
+                            <div style="margin-top: 30px">
+                                <p style="font-weight: 600;">Tell us more. What did the Freelancer do well. What could have been Better<span>(Optional)</span></p>
                                 <textarea rows="6"></textarea>
                             </div>
-                            <div>
-                                <p>Rate their English Proficiency. (Speaking and Comprehension) </p>
+                            <div style="margin-top: 30px">
+                                <p style="font-weight: 600">Rate their English Proficiency. (Speaking and Comprehension) </p>
                                 <div>
                                     @foreach($langLevels as $level)
                                     <div class="form-check">
@@ -73,35 +85,78 @@
                         <div>
                             <p>This feedback will be share on Freelancer profile after they have feedback left for you</p>
                             <div style="margin-top: 10px">
-                                <div class="col-md-6 col-sm-12 col-lg-6">
+                                <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="rating">
+                                        <label>
+                                            <input type="radio" name="Skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="Skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" nname="Skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="Skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="Skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <label for="">Skills</label>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6 ">
+
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="Skills_rating" value="1" />
+                                            <input type="radio" name="quality_rating" id="qualityone" onclick="valueChange();"  value="0.2" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="Skills_rating" value="2" />
+                                            <input type="radio" name="quality_rating" id="qualitytwo" onclick="valueChange();" value="0.4" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" nname="Skills_rating" value="3" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="Skills_rating" value="4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <input type="radio" name="quality_rating" id="qualitythree" onclick="valueChange();" value="0.6" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="Skills_rating" value="5" />
+                                            <input type="radio" name="quality_rating"  id="qualityfour" onclick="valueChange();" value="0.8" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="quality_rating" id="qualityfive" onclick="valueChange();" value="1.0" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -110,36 +165,39 @@
                                         </label>
                                     </div>
                                 </div>
+                                    <div class="col-md-6"><label for="">Quality of work </label></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
 
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="">Quality of work </label>
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="quality_rating" value="1" />
+                                            <input type="radio" name="availabilty_rating" id="availabiltyone" onclick="valueChange();" value="0.15" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="quality_rating" value="2" />
+                                            <input type="radio" name="availabilty_rating" id="availabiltytwo" onclick="valueChange();" value="0.30" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="quality_rating" value="3" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="quality_rating" value="4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <input type="radio" name="availabilty_rating"  id="availabiltythree" onclick="valueChange();" value="0.45" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="quality_rating" value="5" />
+                                            <input type="radio" name="availabilty_rating"  id="availabiltyfour" onclick="valueChange();" value="0.60" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="availabilty_rating" id="availabiltyfive" onclick="valueChange();" value="0.75" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -148,37 +206,38 @@
                                         </label>
                                     </div>
                                 </div>
+                                    <div class="col-md-6"><label for="">Availabilty </label></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
 
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="">Availabilty </label>
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="availabilty_rating" value="1" />
+                                            <input type="radio" name="schedule_rating" id="scheduleone" onclick="valueChange();" value="0.15" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="availabilty_rating" value="2" />
+                                            <input type="radio" name="schedule_rating" id="scheduletwo" onclick="valueChange();" value="0.30" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="availabilty_rating" value="3" />
+                                            <input type="radio" name="schedule_rating" id="schedulethree" onclick="valueChange();" value="0.45" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="schedule_rating" id="schedulefour" onclick="valueChange();" value="0.60" />
+                                            <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="availabilty_rating" value="4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="availabilty_rating" value="5" />
+                                            <input type="radio" name="schedule_rating" id="schedulefive" onclick="valueChange();" value="0.75" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -187,28 +246,31 @@
                                         </label>
                                     </div>
                                 </div>
+                                    <div class="col-md-6"><label for="">Adherence of Schedule </label></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
 
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="">Adherence of Schedule </label>
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="schedule_rating" value="1" />
+                                            <input type="radio" name="communication_rating" id="communicationone" onclick="valueChange();" value="0.15" />
+
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="schedule_rating" value="2" />
+                                            <input type="radio" name="communication_rating" id="communicationtwo" onclick="valueChange();" value="0.30" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="schedule_rating" value="3" />
+                                            <input type="radio" name="communication_rating" id="communicationthree" onclick="valueChange();" value="0.45" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="schedule_rating" value="4" />
+                                            <input type="radio" name="communication_rating" id="communicationfour" onclick="valueChange();" value="0.60" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -216,7 +278,7 @@
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="schedule_rating" value="5" />
+                                            <input type="radio" name="communication_rating" id="communicationfive" onclick="valueChange();" value="0.75" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -225,37 +287,38 @@
                                         </label>
                                     </div>
                                 </div>
+                                    <div class="col-md-6"><label for="">Communication </label></div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-6">
 
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="">Communication </label>
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="communication_rating" value="1" />
-
+                                            <input type="radio" name="cooperation_rating" id="cooperationone" onclick="valueChange();" value="0.15" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="communication_rating" value="2" />
+                                            <input type="radio" name="cooperation_rating" id="cooperationtwo" onclick="valueChange();" value="0.30" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="communication_rating" value="3" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="communication_rating" value="4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <input type="radio" name="cooperation_rating" id="cooperationthree" onclick="valueChange();" value="0.45" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="communication_rating" value="5" />
+                                            <input type="radio" name="cooperation_rating" id="cooperationfour" onclick="valueChange();" value="0.60" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="cooperation_rating" id="cooperationfive" onclick="valueChange();" value="0.75" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -264,48 +327,15 @@
                                         </label>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6 col-sm-12 col-lg-6">
-                                    <label for="">Cooperation </label>
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" value="1" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" value="2" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" value="3" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" value="4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" value="5" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
+                                    <div class="col-md-6"><label for="">Cooperation </label></div>
                                 </div>
 
                             </div>
-                            <div>
-                                <h4>Total Score: 1.00</h4>
+                            <div class="row">
+                                <div class="col-md-3">
+                                <h4>Total Score: </h4></div>
+                                <div class="col-md-9">
+                                <h4 class="val" id="val">0.00</h4></div>
                             </div>
                             <div>
                                 <p>Share this experience with this Freelancer on Upwork Community</p>
@@ -315,7 +345,6 @@
                         </div>
 
                     </div>
-
                     <div class="btm-c jdc">
 
                         <button class="btn btn-secondary">End Contract</button>
@@ -325,7 +354,7 @@
 
                 </div>
 
-                <div class="prosal-right-con" style="margin-right: 50px">
+                <div class="prosal-right-con" style="margin-right: 30px; margin-top: -8px">
 
                     <div class="p_amount_con">
                         <ul class="listing_ps">
@@ -351,6 +380,9 @@
                         </ul>
                     </div>
                 </div>
+
+
+
         </div>
             </form>
         </div>
@@ -1049,6 +1081,170 @@
             el.checked = true; // Checked clicked checkbox
         }
 
+        function valueChange(){
+            var total=0;
+            var skill=0;
+            var quality=0;
+            var availability=0;
+            var schedule=0;
+            var communication=0;
+            var cooperation=0;
+            if($('#skillone').is(':checked') || $('#skilltwo').is(':checked') || $('#skillthree').is(':checked') || $('#skillfour').is(':checked')  || $('#skillfive').is(':checked')) {
+
+                if ($('#skillone').is(':checked')) {
+                    skill = $('input[id="skillone"]:checked').val();
+                }
+                if ($('#skilltwo').is(':checked')) {
+                    skill = $('input[id="skilltwo"]:checked').val();
+                }
+                if ($('#skillthree').is(':checked')) {
+                    skill = $('input[id="skillthree"]:checked').val();
+
+                }
+                if ($('#skillfour').is(':checked')) {
+                    skill = $('input[id="skillfour"]:checked').val();
+                }
+                if ($('#skillfive').is(':checked')) {
+                    skill = $('input[id="skillfive"]:checked').val();
+                }
+            }
+            //Skill Calculation end
+            if($('#qualityone').is(':checked') || $('#qualitytwo').is(':checked') || $('#qualitythree').is(':checked')|| $('#qualityfour').is(':checked')  ||$('#qualityfive').is(':checked')) {
+
+                if ($('#qualityone').is(':checked')) {
+                    quality = $('input[id="qualityone"]:checked').val();
+                } else if ($('#qualitytwo').is(':checked')) {
+                    quality = $('input[id="qualitytwo"]:checked').val();
+                } else if ($('#qualitythree').is(':checked')) {
+                    quality = $('input[id="qualitythree"]:checked').val();
+                } else if ($('#qualityfour').is(':checked')) {
+                    quality = $('input[id="qualityfour"]:checked').val();
+                } else if ($('#qualityfive').is(':checked')) {
+                    quality = $('input[id="qualityfive"]:checked').val();
+                }
+            }
+            //Quality Calculation end
+            if($('#availabiltyone').is(':checked') || $('#availabiltytwo').is(':checked') || $('#availabiltythree').is(':checked')|| $('#availabiltyfour').is(':checked')  ||$('#availabiltyfive').is(':checked')) {
+
+                if ($('#availabiltyone').is(':checked')) {
+                    availability = $('input[id="availabiltyone"]:checked').val();
+                } else if ($('#availabiltytwo').is(':checked')) {
+                    availability = $('input[id="availabiltytwo"]:checked').val();
+                } else if ($('#availabiltythree').is(':checked')) {
+                    availability = $('input[id="availabiltythree"]:checked').val();
+                } else if ($('#availabiltyfour').is(':checked')) {
+                    availability = $('input[id="availabiltyfour"]:checked').val();
+                } else if ($('#availabiltyfive').is(':checked')) {
+                    availability = $('input[id="availabiltyfive"]:checked').val();
+                }
+            }
+            //Availibility Calculation end
+            if($('#scheduleone').is(':checked') || $('#scheduletwo').is(':checked') || $('#schedulethree').is(':checked')|| $('#schedulefour').is(':checked')  || $('#schedulefive').is(':checked') ){
+                if( $('#scheduleone').is(':checked') ) {
+                    schedule=  $('input[id="scheduleone"]:checked').val();
+                }
+                else if( $('#scheduletwo').is(':checked') ) {
+                    schedule=  $('input[id="scheduletwo"]:checked').val();
+                }
+                else if( $('#schedulethree').is(':checked') ) {
+                    schedule=  $('input[id="schedulethree"]:checked').val();
+                }
+                else if( $('#schedulefour').is(':checked') ) {
+                    schedule=  $('input[id="schedulefour"]:checked').val();
+                }
+                else if( $('#schedulefive').is(':checked') ) {
+                    schedule=  $('input[id="schedulefive"]:checked').val();
+                }
+            }
+            //Schedule Calculation end
+            if($('#communicationone').is(':checked') || $('#communicationtwo').is(':checked') || $('#communicationthree').is(':checked') || $('#communicationfour').is(':checked')  || $('#communicationfive').is(':checked') ) {
+
+                if ($('#communicationone').is(':checked')) {
+                    communication = $('input[id="communicationone"]:checked').val();
+                } else if ($('#communicationtwo').is(':checked')) {
+                    communication = $('input[id="communicationtwo"]:checked').val();
+                } else if ($('#communicationthree').is(':checked')) {
+                    communication = $('input[id="communicationthree"]:checked').val();
+                } else if ($('#communicationfour').is(':checked')) {
+                    communication = $('input[id="communicationfour"]:checked').val();
+                } else if ($('#communicationfive').is(':checked')) {
+                    communication = $('input[id="communicationfive"]:checked').val();
+                }
+            }
+            //communication Calculation end
+            if($('#cooperationone').is(':checked') || $('#cooperationtwo').is(':checked') || $('#cooperationthree').is(':checked') || $('#cooperationfour').is(':checked')  || $('#cooperationfive').is(':checked') ) {
+
+                if ($('#cooperationone').is(':checked')) {
+                    cooperation = $('input[id="cooperationone"]:checked').val();
+                } else if ($('#cooperationtwo').is(':checked')) {
+                    cooperation = $('input[id="cooperationtwo"]:checked').val();
+                } else if ($('#cooperationthree').is(':checked')) {
+                    cooperation = $('input[id="cooperationthree"]:checked').val();
+                } else if ($('#cooperationfour').is(':checked')) {
+                    cooperation = $('input[id="cooperationfour"]:checked').val();
+                } else if ($('#cooperationfive').is(':checked')) {
+                    cooperation = $('input[id="cooperationfive"]:checked').val();
+                }
+            }
+            //communication Calculation end
+            total=(parseFloat(skill)+parseFloat(quality)+parseFloat(availability)+parseFloat(schedule)+parseFloat(communication)+parseFloat(cooperation)).toFixed(2);
+            document.getElementById('val').innerHTML=total;
+
+        }
+
+        function reasonsChange(){
+            var rating=0;
+            var reason = $('#reason').find(":selected").val();
+            const box = document.getElementById('reason_itom');
+
+
+            if ($('#rating_num_1').is(':checked')) {
+                rating=1;
+            }
+            else if($('#rating_num_2').is(':checked')) {
+                rating=2;
+            }
+            else if($('#rating_num_3').is(':checked')) {
+                rating=3;
+            }
+            else if($('#rating_num_4').is(':checked')) {
+                rating=4;
+            }
+            else if($('#rating_num_5').is(':checked')) {
+                rating=5;
+            }
+            else if($('#rating_num_6').is(':checked')) {
+                rating=6;
+            }
+            else if($('#rating_num_7').is(':checked')) {
+                rating=7;
+            }
+            else if($('#rating_num_8').is(':checked')) {
+                rating=8;
+            }
+            else if($('#rating_num_9').is(':checked')) {
+                rating=9;
+            }
+            else if($('#rating_num_10').is(':checked')) {
+                rating=10;
+            }
+            if(rating>=7 && reason!=''){
+                box.style.display = 'none';
+            }
+            else if( rating<7 && reason!=''){
+                box.style.display = 'block';
+            }
+            else if( rating<7 && reason===''){
+                box.style.display = 'none';
+            }
+            else if( rating===0 && reason===''){
+                box.style.display = 'none';
+            }
+            else if( rating>=7 && reason===''){
+                box.style.display = 'none';
+            }
+        }
+
 
     </script>
 
@@ -1103,21 +1299,22 @@
         .rating label .icon {
             float: left;
             color: transparent;
-            margin-left: 3px;
+            margin-left: 50px;
         }
 
         .rating label:last-child .icon {
-            color: #000;
+            color: white;
+            text-shadow: 0 0 2px black;
         }
 
         .rating:not(:hover) label input:checked ~ .icon,
         .rating:hover label:hover input ~ .icon {
-            color: yellow;
+            color: #007F7F;
         }
 
         .rating label input:focus:not(:checked) ~ .icon:last-child {
-            color: #000;
-            text-shadow: 0 0 5px yellow;
+            color: white;
+            text-shadow: 0 0 2px black;
         }
     </style>
 

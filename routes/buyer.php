@@ -4,6 +4,7 @@
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ServiceController;
 use App\Http\Controllers\Buyer\SoftwareController;
+use App\Http\Controllers\Buyer\WorkDiaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,8 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
 
                 });
+                
+                Route::post('approve-day-planning', [WorkDiaryController::class,'approveDayPlanning'])->name('day.planning.status.update');
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
                 Route::get('job-offer-sent/{id?}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
