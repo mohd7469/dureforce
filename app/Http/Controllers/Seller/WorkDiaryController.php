@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\StoreTaskCommentRequest;
 use App\Models\Contract;
 use App\Models\Country;
 use App\Models\DayPlanningTask;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\DayPlanning;
+use App\Models\TaskComment;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -46,14 +48,52 @@ class WorkDiaryController extends Controller
 
             $emptyMessage="Tasks Not Found";
             $timezones = Timezone::select('id','name')->get();
-
-            return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'));
+            $notify[] = ["success","Task comment added successfully"];
+            return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'))->withNotify($notify);
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
-            return redirect()->back()->with(['error' => 'Failled to get day plannings']);
+            $notify[] = ["error","Failled to save task comment"];
+            return redirect()->back()->withNotify($notify);
         }
     }
-    
+    public function taskComments($task_uuid){
+        try {
+            $day_planning_task=DayPlanningTask::where('uuid',$task_uuid)->firstOrFail();
+            $comments=TaskComment::with('user')->orderBy('created_at','desc')->where('day_planning_task_id',$day_planning_task->id)->paginate(10);
+            $emptyMessage="Comments Not Found";
+            return view('templates.basic.user.seller.work_diary.task_comments',compact('comments','day_planning_task','emptyMessage'));
+
+
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->back()->with(['error' => 'Failled to get day plannings task comments']);
+        }
+
+    }
+    public function storetaskComment(StoreTaskCommentRequest $request){
+        try {
+            $data=$request->only('day_planning_task_id','comment');
+            $last_login_role_id=getLastLoginRoleId();
+            $role='';
+            if ($last_login_role_id == Role::$Freelancer) {
+                $role=Role::$FreelancerName;
+            }
+            elseif($last_login_role_id == Role::$Client){
+                $role=Role::$ClientName;
+            }
+            else{
+                $role='';
+            }
+            $data['role']=$role;
+            TaskComment::create($data);
+
+            return redirect()->back()->with(['success' => 'Comment Added Successfully']);
+
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->back()->with(['error' => 'Failled to add day plannings task comment']);
+        }
+    }
     public function store(CreateTaskRequest $request){
         try {
             $previousUrl = URL::previous();
