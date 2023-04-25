@@ -19,27 +19,31 @@
                     <div class="col-md-12  col-lg-12 col-sm-12 col-xs-12">
                         <div class="table-responsive">
 
-                            <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">
+                            <table class="table " style="border: 2px solid #e6eeee !important" id="job-listing">
                                         
-                                <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
+                                <thead class="table-header" style="border-bottom:2px solid #e6eeee !important">
                                 <tr>
                                     <th style="width: 20%">@lang('Job Title')</th>
+                                    <th style="width: 20%">@lang('Description')</th>
+
                                     <th>@lang('Date')</th>
                                     <th>@lang('Start Time')</th>
                                     <th>@lang('End Time')</th>
                                     <th>@lang('Attachments')</th>
-                                    @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
-                                        <th>@lang('Action')</th>
-                                    @endif
+                                    <th>@lang('Action')</th>
     
                                 </tr>
                                 </thead>
-                                <tbody class="text-center">
+                                <tbody >
                                     @forelse($work_diary_tasks as $key => $task)
                                         <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$task->uuid}}">
                                             
-                                            <td data-label="@lang('start time')">
+                                            <td data-label="@lang('title')">
                                                 {{ $task->job->title }}
+                                            </td>
+
+                                            <td data-label="@lang('description')">
+                                                {{ $task->description }}
                                             </td>
     
                                             
@@ -63,7 +67,6 @@
                                                     <br>
                                                 @endforeach
                                             </td>
-                                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                                 <td data-label="Action">
                                                     
                                                     
@@ -75,13 +78,14 @@
                                                         <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
                                                             <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
                                                         </a>
-                                                        <a href="javascript:void(0)" class="delete_btn" data-id="{{$task->uuid}}" data-bs-toggle="modal" data-bs-target="#cancelModal">
-                                                            <i class="fa fa-tasks icon-color" style="margin-right:7px; "></i>
-                                                        </a>
+                                                        
                                                     @endif
+                                                    <a href="{{route('work-diary.day.planning.task.comments',$task->uuid)}}" class="task_comments_btn" >
+                                                        <i class="fa fa-tasks icon-color" style="margin-right:7px; "></i>
+                                                    </a>
     
                                                 </td>
-                                            @endif
+                                            
                                         </tr>
                                     @empty
                                         <tr>
@@ -162,7 +166,9 @@
                 
     </div>
 </div>
+
 @include('templates.basic.user.seller.work_diary.Models.add_task',['contract_id' => $contract->id,'day_planning_day' => $day_planning->planning_date])
+
 @endsection
 
 
@@ -179,6 +185,7 @@
 
     });
 
+  
     $('#confirmation_btn').on('click', function () {
 
         uuid=$('#day_planning_task_id').val();
