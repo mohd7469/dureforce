@@ -7,12 +7,8 @@
 
             <div class="row justify-content-center mb-30-none">
                 
-                @if (getLastLoginRoleId()==App\Models\Role::$Client)
-                    @include($activeTemplate . 'partials.buyer_sidebar')
-                @else
-                    @include($activeTemplate . 'partials.seller_sidebar')
-                    
-                @endif
+                @include('templates.basic.user.seller.work_diary.side_bar')
+
 
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     

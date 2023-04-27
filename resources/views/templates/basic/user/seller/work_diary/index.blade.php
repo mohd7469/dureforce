@@ -4,7 +4,8 @@
     <div class="container-fluid">
         <div class="section-wrapper ">
             <div class="row justify-content-center mb-30-none">
-                @include($activeTemplate . 'partials.seller_sidebar')
+                @include('templates.basic.user.seller.work_diary.side_bar')
+
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     
                     @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
