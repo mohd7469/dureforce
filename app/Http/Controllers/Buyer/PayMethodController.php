@@ -169,8 +169,13 @@ class PayMethodController extends Controller
 
     }
 
-    public function buyerstatuschange($id)
+    public function buyerstatuschange($id,$module_offer_id=null)
     {
+        if(!empty($module_offer_id)){
+            $paymentVerified = ModuleOffer::findOrFail($module_offer_id);
+            $paymentVerified->is_payment_method_selected = 1;
+            $paymentVerified->save();
+        }
         $all_methods = UserPayment::where('user_id',auth()->user()->id)->get();
         foreach($all_methods as $all_method){
             $all_method->is_primary = 0;
