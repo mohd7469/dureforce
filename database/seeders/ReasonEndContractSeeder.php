@@ -15,7 +15,6 @@ class ReasonEndContractSeeder extends Seeder
      */
     public function run()
     {
-
         $reason_end_contract = [
             ['name' => 'Job Completed Successfully', 'role_id' => Role::$Freelancer,'is_active'=>true],
             ['name' => 'Job Completed Successfully', 'role_id' => Role::$Client,'is_active'=>true],
