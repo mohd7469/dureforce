@@ -25,7 +25,7 @@ class CreateTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => 'required|min:'.config('settings.testimonial_min_text_length').'| max:'.config('settings.testimonial_max_text_length'),
+            'description' => 'required|min:'.config('settings.work_diary_task_min_text_length').'| max:'.config('settings.work_diary_task_max_text_length'),
             'timezone_id' => 'required',
             'start_time' => 'required',
             'end_time' => [

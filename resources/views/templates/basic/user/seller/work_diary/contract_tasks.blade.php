@@ -23,12 +23,12 @@
                                 <thead class="table-header" style="border-bottom:2px solid #e6eeee !important">
                                 <tr>
                                     <th style="width: 20%">@lang('Job Title')</th>
-                                    <th style="width: 20%">@lang('Description')</th>
+                                    <th >@lang('Description')</th>
 
                                     <th>@lang('Date')</th>
                                     <th>@lang('Start Time')</th>
                                     <th>@lang('End Time')</th>
-                                    <th>@lang('Attachments')</th>
+                                    <th>@lang('Worked Hours')</th>
                                     <th>@lang('Action')</th>
     
                                 </tr>
@@ -42,7 +42,7 @@
                                             </td>
 
                                             <td data-label="@lang('description')">
-                                                {{ $task->description }}
+                                                {{ substr($task->description,0,15) }}...
                                             </td>
     
                                             
@@ -57,14 +57,10 @@
                                             <td>
                                                 {{$task->end_time}}
                                             </td>  
-                                            <td> 
+                                            <td class="text-center"> 
+                                                {{ number_format(($task->time_in_hours+($task->time_in_minutes/60)),2)}}
                                                 
-                                                @foreach($task->attachments as $attachment)
-                                                    <a href="{{ $attachment->url }}" target="_blank">
-                                                        {{ $attachment->uploaded_name }}
-                                                    </a>
-                                                    <br>
-                                                @endforeach
+                                               
                                             </td>
                                                 <td data-label="Action">
                                                     
