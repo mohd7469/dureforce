@@ -98,4 +98,10 @@ class ModuleOffer extends Model
     {
         return $this->hasone(Contract::class, 'module_offer_id');
     }
+    public function scopePaymentMethodSelected($query){
+        return $query->where('is_payment_method_selected', 1);
+    }
+    public function scopeActive($query){
+        return $query->where('is_payment_method_selected', 1);
+    }
 }
