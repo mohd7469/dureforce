@@ -174,10 +174,14 @@
                             <li class="right-navbar-li"><span>Contract#</span> <span class="p_days">{{ $contract->contract_id }}</span></li>
                             <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">{{ $contract->offer->payment_type }}</span></li>
                             <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
+                            
                             <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
                             <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">{{ $contract->end_date ? getFormattedDate($contract->end_date,'d-m-Y') : ''}}</span></li>
                             
-                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract))
+                            <li class="right-navbar-li"><span>Total Worked Hours:</span> <span class="p_days">{{$contract->total_worked_hours}}</span></li>
+                            <li class="right-navbar-li"><span>Approved Hours:</span> <span class="p_days">{{ $contract->approved_hours }}</span></li>
+                            
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract) )
                                 <li class="right-navbar-li">
                                     <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                                 </li>     

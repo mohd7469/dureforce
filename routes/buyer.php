@@ -4,6 +4,7 @@
 use App\Http\Controllers\Buyer\HomeController;
 use App\Http\Controllers\Buyer\ServiceController;
 use App\Http\Controllers\Buyer\SoftwareController;
+use App\Http\Controllers\Buyer\WorkDiaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +19,7 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
         // Route::view('/payment_method_list', 'templates.basic.buyer.payment-method.payment_list')->name('contract_detail');
         Route::get('/payment_method_list/{id?}',[\App\Http\Controllers\Buyer\PayMethodController::class,'getUserProfile'] )->name('payment_method_list');
         Route::post('/save-payment-methods', [\App\Http\Controllers\Buyer\PayMethodController::class,'savePaymentMethod'])->name('save.payment.methods');
-        Route::get('/buyer-change-payment-status/{id}', [\App\Http\Controllers\Buyer\PayMethodController::class,'buyerstatuschange'])->name('payment.change.status');
+        Route::get('/buyer-change-payment-status/{id}/{module_offer_id?}', [\App\Http\Controllers\Buyer\PayMethodController::class,'buyerstatuschange'])->name('payment.change.status');
         Route::delete('/buyer-payment-destroy/{id}', [\App\Http\Controllers\Buyer\PayMethodController::class,'buyerdestroy'])->name('payment.destroy');
 
         Route::name('basic.')->prefix('buyer')->group(function () {
@@ -74,6 +75,8 @@ Route::name('buyer.')->prefix('buyer')->group(function () {
                     Route::get('job/single-job/{uuid}', [\App\Http\Controllers\Buyer\JobController::class,'singleJob'] )->name('single.view');
 
                 });
+                
+                Route::post('approve-day-planning', [WorkDiaryController::class,'approveDayPlanning'])->name('day.planning.status.update');
 
                 Route::post('job-offer-send', [\App\Http\Controllers\Buyer\OfferController::class,'sendOffer'])->name('offer.save');
                 Route::get('job-offer-sent/{id?}', [\App\Http\Controllers\Buyer\OfferController::class,'offerSent'])->name('offer.sent');
