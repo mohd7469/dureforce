@@ -153,7 +153,7 @@ class WorkDiaryController extends Controller
 
                 $contract=Contract::withAll()->find($request->contract_id);
             
-                $day_planning=DayPlanning::firstOrNew
+                $day_planning=DayPlanning::firstOrCreate
                     (
                         [
                             'contract_id' => $request->contract_id,
