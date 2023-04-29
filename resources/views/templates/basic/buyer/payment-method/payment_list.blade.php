@@ -74,13 +74,13 @@
                                     <div class="d-flex justify-content-center">
                                         <a data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}" data-country_id="{{ $payments->country_id }}" data-payment_city_id="{{ $payments->city_id }}" data-address="{{ $payments->address }}"     
                                             data-username="{{ $user->username }}"
-                                            class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
+                                            class="btn btn-secondary px-icons editPayment"><i class="far fa-edit"></i></a>
                                         <form method="POST"
                                             action="{{ route('buyer.payment.destroy', $payments->id,$module_offer_id) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-secondary icons"
+                                            <button class="btn btn-secondary px-icons"
                                                 onclick="return confirm('Are you sure you want to delete this payment method ?')"
                                                 type="submit">
                                                 <i class="fas fa-trash"></i>
@@ -92,7 +92,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <span>'Any available balance you have will be applied towars your total amount</span>
+                <span>'Any available balance you have will be applied towards your total amount</span>
             </div>
         </div>
          
@@ -384,6 +384,10 @@
 
 
 <style>
+    .px-icons {
+        background-color: #EFF4F4 !important;
+        color: #7F007F !important;
+    }
     .navbar-burron{
         width: 96%;
         font-size: 12px;
