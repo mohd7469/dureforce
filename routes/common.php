@@ -52,6 +52,8 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         
         Route::get('/tasks/{uuid}',  [WorkDiaryController::class,'workDiaryDetail'])->name('detail');
         Route::get('/day_planning/delete/{uuid}',  [WorkDiaryController::class,'delete'])->name('day.planning.delete');
+        Route::get('/day_planning/request_approval/{uuid}',  [WorkDiaryController::class,'RequestApproval'])->name('day.planning.request.approval');
+        
         Route::get('/task/comments/{uuid}',  [WorkDiaryController::class,'taskComments'])->name('day.planning.task.comments');
         Route::post('/task/comments',  [WorkDiaryController::class,'storetaskComment'])->name('day.planning.store.task.comment');
 
