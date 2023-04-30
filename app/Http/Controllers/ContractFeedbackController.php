@@ -16,7 +16,6 @@ class ContractFeedbackController extends Controller
 
     public function store(Request $request)
     {
-        dd($re)
 
 //        try {
             $this->validate($request, [
