@@ -16,22 +16,24 @@ class ContractFeedbackController extends Controller
 
     public function store(Request $request)
     {
+        dd($re)
 
 //        try {
-//            $this->validate($request, [
-//                'reason_end_contract_id' => 'required',
-//                'feedback_for_id' => 'required',
-//                'recomended_score' => 'required',
-//                'skills_score' => 'required',
-//                'contract_id' => 'required',
-//                'quality_of_work_score' => 'required',
-//                'adherence_of_schedule_score' => 'required',
-//                'availability_score' => 'required',
-//                'communication_score' => 'required',
-//                'about' => 'required',
-//                'feedback' => 'required',
-//            ]);
+            $this->validate($request, [
+                'reason_end_contract_id' => 'required',
+                'feedback_for_id' => 'required',
+                'recomended_score' => 'required',
+                'skills_score' => 'required',
+                'contract_id' => 'required',
+                'quality_of_work_score' => 'required',
+                'adherence_of_schedule_score' => 'required',
+                'availability_score' => 'required',
+                'communication_score' => 'required',
+                'about' => 'required',
+                'feedback' => 'required',
+            ]);
             $request_data = $request->all();
+            dd($request_data);
             $user = Auth::user();
             DB::beginTransaction();
             $last_role_id=getLastLoginRoleId();
