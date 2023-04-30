@@ -25,10 +25,10 @@ class TaskComment extends Model
     }
     public static function scopeWithAll($query){
 
-        return $query->with('client')->with('contractTask');
+        return $query->with('user')->with('contractTask');
 
     }
-    public function client()
+    public function user()
     {
         return $this->belongsTo(User::class, 'created_by')->withAll();
     }

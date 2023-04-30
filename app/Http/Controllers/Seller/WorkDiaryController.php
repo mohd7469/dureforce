@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\StoreTaskCommentRequest;
 use App\Models\Contract;
 use App\Models\Country;
 use App\Models\DayPlanningTask;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\DayPlanning;
+use App\Models\TaskComment;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
@@ -25,8 +27,18 @@ class WorkDiaryController extends Controller
     
     public function index($contract_uuid=null){
         try {
+            $last_login_role_id=getLastLoginRoleId();
+            $day_plannings=DayPlanning::withAll();
+            if ($last_login_role_id == Role::$Freelancer) {
+                $day_plannings->where('created_by',auth()->user()->id);
+            }
+            elseif($last_login_role_id == Role::$Client){
+                $day_plannings->where('client_id',auth()->user()->id);
+            }
+            else{
+
+            }
             
-            $day_plannings=DayPlanning::withAll()->where('created_by',auth()->user()->id);
             if($contract_uuid){
                 $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
                 $day_plannings=$day_plannings->where('contract_id',$contract->id);
@@ -36,14 +48,54 @@ class WorkDiaryController extends Controller
 
             $emptyMessage="Tasks Not Found";
             $timezones = Timezone::select('id','name')->get();
-
-            return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'));
+            $notify[] = ["success","Task comment added successfully"];
+            return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'))->withNotify($notify);
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
-            return redirect()->back()->with(['error' => 'Failled to get day plannings']);
+            $notify[] = ["error","Failled to save task comment"];
+            return redirect()->back()->withNotify($notify);
         }
     }
-    
+    public function taskComments($task_uuid){
+        try {
+
+            $day_planning_task=DayPlanningTask::where('uuid',$task_uuid)->firstOrFail();
+            $comments=TaskComment::with('user')->orderBy('created_at','desc')->where('day_planning_task_id',$day_planning_task->id)->paginate(10);
+            $emptyMessage="Comments Not Found";
+            return view('templates.basic.user.seller.work_diary.task_comments',compact('comments','day_planning_task','emptyMessage'));
+
+
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->back()->with(['error' => 'Failled to get day plannings task comments']);
+        }
+
+    }
+    public function storetaskComment(StoreTaskCommentRequest $request){
+        try {
+            $data=$request->only('day_planning_task_id','comment');
+            $last_login_role_id=getLastLoginRoleId();
+            $role='';
+            if ($last_login_role_id == Role::$Freelancer) {
+                $role=Role::$FreelancerName;
+            }
+            elseif($last_login_role_id == Role::$Client){
+                $role=Role::$ClientName;
+            }
+            else{
+                $role='';
+            }
+            $data['role']=$role;
+            TaskComment::create($data);
+
+            return redirect()->back()->with(['success' => 'Comment Added Successfully']);
+
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->back()->with(['error' => 'Failled to add day plannings task comment']);
+        }
+    }
+
     public function store(CreateTaskRequest $request){
         try {
             $previousUrl = URL::previous();
@@ -103,7 +155,7 @@ class WorkDiaryController extends Controller
 
                 $contract=Contract::withAll()->find($request->contract_id);
             
-                $day_planning=DayPlanning::updateOrCreate
+                $day_planning=DayPlanning::firstOrCreate
                     (
                         [
                             'contract_id' => $request->contract_id,
@@ -137,8 +189,8 @@ class WorkDiaryController extends Controller
                         $minutes=$day_planning_task_pre_state->time_in_hours*60+$day_planning_task_pre_state->time_in_minutes;
                         $hours=$minutes/60;
                         $day_planning = $day_planning_task_pre_state->day;
-                        $day_planning->total_day_hours= $day_planning->total_day_hours- $hours;
-                        $day_planning->save();
+                        $day_planning->update(['total_day_hours'=> $day_planning->total_day_hours- $hours]);
+                        // $day_planning->save();
                         $pre_attachments=$day_planning_task_pre_state->attachments;
                         if($pre_attachments)
                         {
@@ -195,6 +247,24 @@ class WorkDiaryController extends Controller
             Log::error($th->getMessage());
             DB::rollback();
             return response()->json(['error' => 'Faiiled to add task. Please try again later']);
+        }
+    }
+
+    public function RequestApproval($day_planning_uuid){
+        try {
+            
+            DayPlanning::where('uuid',$day_planning_uuid)->update([
+                'status_id' =>   DayPlanning::STATUSES['ApprovalRequested']
+            ]);
+            $notify[] = ["success","Day Planning approval requested successfully"];
+            return redirect()->back()->withNotify($notify);
+
+        } catch (\Throwable $th) {
+
+            Log::error($th->getMessage());
+            $notify[] = ["error","Failled to request approval for day planning. Please try again later"];
+            return redirect()->back()->withNotify($notify);
+            
         }
     }
 

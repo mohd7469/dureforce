@@ -4,7 +4,8 @@
     <div class="container-fluid">
         <div class="section-wrapper ">
             <div class="row justify-content-center mb-30-none">
-                @include($activeTemplate . 'partials.seller_sidebar')
+                @include('templates.basic.user.seller.work_diary.side_bar')
+
                 <div class="col-xl-9 col-lg-12 mb-30 ">
                     
                     @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
@@ -46,7 +47,14 @@
 
 
                                         <td>
-                                            <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+                                            @if (IsSendDayPlanningApproval($day_planning) && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <a href="{{route('work-diary.day.planning.request.approval',$day_planning->uuid)}}">
+                                                    <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+                                                </a>
+                                            @else
+                                                <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+
+                                            @endif
                                         </td>
                                                                         
                                         <td data-label="Action">
@@ -60,6 +68,8 @@
                                                     <i class="fa fa-trash icon-color" style="margin-right:7px; "></i>
                                                 </a>
                                             @endif
+
+                                            
 
                                         </td>
                                     </tr>

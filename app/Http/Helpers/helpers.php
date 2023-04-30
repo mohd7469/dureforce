@@ -1649,11 +1649,35 @@ function getUserContracts($uuid=null){
 
     return $contracts;
 }
+function IsSendDayPlanningApproval($dayPlanning){
+    if($dayPlanning->status_id != DayPlanning::STATUSES['ApprovalRequested'] && $dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
+        return true;
+    }
+    return false;
+}
 function IsDayPlanningNotApproved($dayPlanning){
     if($dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
         return true;
     }
     return false;
+}
+function isApprovalRequired($day_planning){
+
+    $approval_statuses=[DayPlanning::STATUSES['ApprovalRequested'],DayPlanning::STATUSES['ResendForApproval']];
+    if(in_array($day_planning->status_id,$approval_statuses)){
+        return true;
+    }
+    return false;
+
+}
+function isApproved($day_planning){
+
+    $approval_statuses=[DayPlanning::STATUSES['Approved']];
+    if(in_array($day_planning->status_id,$approval_statuses)){
+        return true;
+    }
+    return false;
+    
 }
 function isHourlyContract($contract){
     if($contract->offer->payment_type== ModuleOffer::PAYMENT_TYPE['HOURLY']){

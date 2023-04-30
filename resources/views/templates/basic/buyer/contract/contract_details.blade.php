@@ -12,34 +12,36 @@
                         {{$contract->offer->module->description}}
                         </p>
                         <p><a href="{{route('single.view',$contract->offer->module->uuid)}}" class="view_origin">View Original Job Post</a></p>
-                        <p><a href="{{route('proposal.show',$contract->offer->proposal->uuid)}}" class="view_origin">View Original Proposals</a></p>
+                        <p><a href="{{route('proposal.show',$contract->offer->proposal->uuid)}}" class="view_origin">View Original Proposal</a></p>
                     </div>
                     <!---Cover Letter Section End--->
 
 
                     <!---Job DetailsSection Start--->
-                   
-                        <h3 class="heading_proposal jdc">Milestone Timeline</h3>
-                        <div class="btm-c">
+                    @if (!isHourlyContract($contract))
+                    <h3 class="heading_proposal jdc">Milestone Timeline</h3>
+                    <div class="btm-c">
+                      
+                        @if ($contract->offer->moduleMilestones->count() > 0)
                             
-                            @if ($contract->offer->moduleMilestones->count() > 0)
-                                
-                                @foreach ($contract->offer->moduleMilestones as $milestone)
-                                    <p class="posted_date_c">{{$milestone->description}}<p>
-                                    <p class="posted_date_c">${{$milestone->amount}}<p>
-                                    @if($milestone->is_paid)
-                                        <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
-                                    @endif
-                                @endforeach
-                                
-                            @else
-                                <p class="posted_date_c">Pay as Whole Project<p>
-                                <p class="posted_date_c">${{$contract->contract_total_amount}}<p>
-                                <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
-                                
-                            @endif
+                            @foreach ($contract->offer->moduleMilestones as $milestone)
+                                <p class="posted_date_c">{{$milestone->description}}<p>
+                                <p class="posted_date_c">${{$milestone->amount}}<p>
+                                @if($milestone->is_paid)
+                                    <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
+                                @endif
+                            @endforeach
                             
-                        </div>
+                        @else
+                            <p class="posted_date_c">Pay as Whole Project<p>
+                            <p class="posted_date_c">${{$contract->contract_total_amount}}<p>
+                            <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                            
+                        @endif
+                        
+                    </div>
+                    @endif
+                       
                     
                     <!---Job Details Section End--->
 
@@ -173,11 +175,15 @@
                             <li><span class="p_fcs" style="font-weight: 500;">Contract Summary</span></li>
                             <li class="right-navbar-li"><span>Contract#</span> <span class="p_days">{{ $contract->contract_id }}</span></li>
                             <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">{{ $contract->offer->payment_type }}</span></li>
-                            <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">${{$contract->approved_hours * $contract->offer->rate_per_hour }}</span></li>
+                            
                             <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
                             <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">{{ $contract->end_date ? getFormattedDate($contract->end_date,'d-m-Y') : ''}}</span></li>
                             
-                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract))
+                            <li class="right-navbar-li"><span>Total Worked Hours:</span> <span class="p_days">{{$contract->total_worked_hours}}</span></li>
+                            <li class="right-navbar-li"><span>Approved Hours:</span> <span class="p_days">{{ $contract->approved_hours }}</span></li>
+                            
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract) )
                                 <li class="right-navbar-li">
                                     <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                                 </li>     
@@ -191,8 +197,13 @@
                             <li><span class="p_fcs" style="font-weight: 500;">Billing</span></li>
                             <li class="right-navbar-li"><span>Paid Out</span> <span class="p_days">{{$contract->contract_paid_amount}}</span></li>
                             <li class="right-navbar-li"><span>Funded (Escrow Protection) </span> <span class="p_days">$0.00</span></li>
-                            <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{$contract->contract_total_amount}}</span></li>
-                            <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">Hourly</span></li>
+                            @if (isHourlyContract($contract))
+                                <li class="right-navbar-li"><span>Rate Per Hour</span> <span class="p_days">{{  $contract->offer->rate_per_hour}}</span></li>
+                            @else
+                                <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{ $contract->contract_total_amount}}</span></li>
+                            @endif
+                            
+                            <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">{{$contract->offer->payment_type}}</span></li>
                             
                             @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                 <li>

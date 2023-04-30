@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\DayPlanningObserver;
 use App\Traits\DatabaseOperations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,6 +28,8 @@ class DayPlanning extends Model
     {
         
         parent::boot();
+        static::observe(DayPlanningObserver::class);
+
         static::creating(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
@@ -71,5 +74,14 @@ class DayPlanning extends Model
     public function tasks()
     {
         return $this->hasMany(DayPlanningTask::class, 'day_planning_id');
+    }
+
+    public function scopeApprovalsNotYetRequested($query)
+    {
+        return $query->where('status_id',self::STATUSES['ApprovalNotYet_Requested']);
+    }
+    public function scopeApproved($query)
+    {
+        return $query->where('status_id',self::STATUSES['Approved']);
     }
 }

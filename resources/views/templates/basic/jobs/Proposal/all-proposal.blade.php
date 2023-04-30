@@ -23,8 +23,8 @@
                     <form class="card-body tab-content"> 
                         <div class="tab-pane active" id="All_Proposals">
                             <div class="card-text text-center">
-                            <div class="row card-text">
-                                <div class="col-12"></div>
+                                <div class="row card-text">
+                                    <div class="col-12"></div>
                                     <div class="col-md-2">
                                         <h2 class="prosals-h">All Proposals</h2>
                                     </div>
@@ -65,8 +65,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <!--Bio Profile Section Start-->
-                                    @foreach ($proposals as $proposal)
+                                <!--Bio Profile Section Start-->
+                                @foreach ($proposals as $proposal)
                                     <div class="" >
                                         <div class="row biorow">
                                             <div class="col-md-3">
@@ -181,13 +181,11 @@
                                         <hr>
                                     </div>
                                     @endforeach
-
                             </div>
                         </div>
                         <div class="tab-pane" id="Shortlisted">
-
-                                <div class="card-text text-center">
-                                    <div class="row card-text">
+                            <div class="card-text text-center">
+                            <div class="row card-text">
                                         <div class="col-12"></div>
                                         <div class="col-md-2">
                                             <h2 class="prosals-h">Shortlisted Proposals</h2>
@@ -348,10 +346,9 @@
                                                 <!--Skills Section End-->
                                             </div>
                                             <hr>
-                                            @endforeach
                                         </div>
-                                </div>
-
+                                    @endforeach    
+                            </div>
                         </div>
 
                         <div class="tab-pane" id="Messaged">
