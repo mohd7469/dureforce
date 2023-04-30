@@ -1649,6 +1649,12 @@ function getUserContracts($uuid=null){
 
     return $contracts;
 }
+function IsSendDayPlanningApproval($dayPlanning){
+    if($dayPlanning->status_id != DayPlanning::STATUSES['ApprovalRequested'] && $dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
+        return true;
+    }
+    return false;
+}
 function IsDayPlanningNotApproved($dayPlanning){
     if($dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
         return true;

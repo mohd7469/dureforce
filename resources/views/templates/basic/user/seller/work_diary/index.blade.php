@@ -47,7 +47,14 @@
 
 
                                         <td>
-                                            <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+                                            @if (IsSendDayPlanningApproval($day_planning) && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <a href="{{route('work-diary.day.planning.request.approval',$day_planning->uuid)}}">
+                                                    <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+                                                </a>
+                                            @else
+                                                <span class="badge {{$day_planning->status->color}}" >{{$day_planning->status->name}}</span>
+
+                                            @endif
                                         </td>
                                                                         
                                         <td data-label="Action">

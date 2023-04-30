@@ -58,6 +58,7 @@ class WorkDiaryController extends Controller
     }
     public function taskComments($task_uuid){
         try {
+
             $day_planning_task=DayPlanningTask::where('uuid',$task_uuid)->firstOrFail();
             $comments=TaskComment::with('user')->orderBy('created_at','desc')->where('day_planning_task_id',$day_planning_task->id)->paginate(10);
             $emptyMessage="Comments Not Found";
@@ -94,6 +95,7 @@ class WorkDiaryController extends Controller
             return redirect()->back()->with(['error' => 'Failled to add day plannings task comment']);
         }
     }
+
     public function store(CreateTaskRequest $request){
         try {
             $previousUrl = URL::previous();
@@ -153,7 +155,7 @@ class WorkDiaryController extends Controller
 
                 $contract=Contract::withAll()->find($request->contract_id);
             
-                $day_planning=DayPlanning::firstOrNew
+                $day_planning=DayPlanning::firstOrCreate
                     (
                         [
                             'contract_id' => $request->contract_id,
@@ -245,6 +247,24 @@ class WorkDiaryController extends Controller
             Log::error($th->getMessage());
             DB::rollback();
             return response()->json(['error' => 'Faiiled to add task. Please try again later']);
+        }
+    }
+
+    public function RequestApproval($day_planning_uuid){
+        try {
+            
+            DayPlanning::where('uuid',$day_planning_uuid)->update([
+                'status_id' =>   DayPlanning::STATUSES['ApprovalRequested']
+            ]);
+            $notify[] = ["success","Day Planning approval requested successfully"];
+            return redirect()->back()->withNotify($notify);
+
+        } catch (\Throwable $th) {
+
+            Log::error($th->getMessage());
+            $notify[] = ["error","Failled to request approval for day planning. Please try again later"];
+            return redirect()->back()->withNotify($notify);
+            
         }
     }
 

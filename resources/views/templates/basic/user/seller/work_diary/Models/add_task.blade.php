@@ -297,6 +297,12 @@
         font-size: 13px;
         width: 5rem !important;
     }
+    .select2-container--default .select2-selection--multiple {
+        border: 1px solid #e1e7ec;
+        height: 44px !important;
+
+    }
+
     </style>
 @endpush
 
