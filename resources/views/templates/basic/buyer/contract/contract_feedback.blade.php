@@ -2,12 +2,15 @@
 @section('content')
 
         <div class="container-fluid">
-            <form>
+            <form id="form_feedback" method="POST" >
+                @csrf;
             <h3 class="propsal-h" style="margin-left: 40px; margin: 20px">End Contract </h3>
             <div class="main_con_p">
                 <div class="prosal-left-con" style="margin-left: 30px">
                     <!---Cover Letter Section Start--->
-
+                    <input type="hidden" name="contract_id" value="{{$contract->id}}">
+                    <input type="hidden" name="contract_send_by" value="{{$contract->offer->offer_send_to_id}}">
+                    <input type="hidden" name="contract_send_to" value="{{$contract->offer->offer_send_by_id}}">
                     <div class="btm-c">
                         <p class="prop_description">
                             <b>Freelancer</b></p>
@@ -28,8 +31,7 @@
 
 
                                     @endforeach
-                                    <option value="1" style=" height:50px">hsbdchs</option>
-                                    <option value="2" style=" height:50px">dhvbdshD</option>
+
                                 </select>
                             </div>
                             <div style="margin-top: 30px">
@@ -50,16 +52,17 @@
                                     </div>
                             </div>
                         <div id="reason_itom" style="margin-top: 30px; display:none">
-                            <p><b>Reason Items Here</b></p>
-                            <select name="reason" id="reason" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()">
+                            <p><b>What went wrong?</b></p>
+                            <select name="reasonCause" id="reasonCause" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()">
                                 <option value=""> Select a Reason</option>
-
-
+                                @foreach($recomendReason as $recomend)
+                                    <option value="{{$recomend->id}}" style="text-align: center; "> {{$recomend->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                             <div style="margin-top: 30px">
                                 <p style="font-weight: 600;">Tell us more. What did the Freelancer do well. What could have been Better<span>(Optional)</span></p>
-                                <textarea rows="6"></textarea>
+                                <textarea rows="6" name="about" id="about"></textarea>
                             </div>
                             <div style="margin-top: 30px">
                                 <p style="font-weight: 600">Rate their English Proficiency. (Speaking and Comprehension) </p>
@@ -67,7 +70,7 @@
                                     @foreach($langLevels as $level)
                                     <div class="form-check">
 
-                                    <input class="form-check-input" type="radio" value="{{$level->id}}}" id="engProf" name="engProf" onclick="engProfCheck(this);">
+                                    <input class="form-check-input" type="radio" value="{{$level->id}}" id="engProf" name="engProf" onclick="engProfCheck(this);">
                                     <label class="form-check-label" for="defaultCheck1">
                                         {{$level->name}}
                                     </label>
@@ -90,31 +93,31 @@
 
                                     <div class="rating">
                                         <label>
-                                            <input type="radio" name="Skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
+                                            <input type="radio" name="skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" name="Skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
+                                            <input type="radio" name="skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
                                         <label>
-                                            <input type="radio" nname="Skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="Skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
-                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <input type="radio" nname="skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                         </label>
 
                                         <label>
-                                            <input type="radio" name="Skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
+                                            <input type="radio" name="skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
                                             <span class="fa fa-solid fa-star icon "></span>
@@ -338,8 +341,8 @@
                                 <h4 class="val" id="val">0.00</h4></div>
                             </div>
                             <div>
-                                <p>Share this experience with this Freelancer on Upwork Community</p>
-                                <textarea rows="3"></textarea>
+                                <p>Share this experience with this Freelancer on Dureforce Community</p>
+                                <textarea rows="3" id="feeback" name="feedback"></textarea>
                             </div>
                             <p><a href="#" > See an Example of appropriate Feedback</a></p>
                         </div>
@@ -347,7 +350,7 @@
                     </div>
                     <div class="btm-c jdc">
 
-                        <button class="btn btn-secondary">End Contract</button>
+                        <button class="btn btn-secondary" id="endCont" >End Contract</button>
                         <button class="btn ">Cancel</button>
 
                     </div>
@@ -1029,11 +1032,22 @@
 @push('script')
 
     <script>
+
+
         'use strict';
+        let feedback_form=$('#form_feedback');
+        $(document).ready(function() {
+            feedback_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                savefeedback();
+            });
+        });
+
         $('#defaultSearch').on('change', function () {
             this.form.submit();
         });
-
 
         openCity('evt', 'tab1');
 
@@ -1243,7 +1257,36 @@
             else if( rating>=7 && reason===''){
                 box.style.display = 'none';
             }
+
         }
+
+
+        function savefeedback(){
+
+            let form_data = new FormData(feedback_form[0]);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+              type:"POST",
+              url:"{{URL::route('feedback.store')}}",
+              data:  form_data,
+              processData: false,
+              contentType: false,
+              success:function(data){
+                if(data.code === 200){
+                    notify('success', 'Contract Feedback sent Successfully');
+                    window.location.href = "{{URL::route('user.home')}}";
+                 }
+                else{
+                    notify('error', 'An error Occured during Saving');
+                }
+              }
+          });
+
+        }
+
+
 
 
     </script>

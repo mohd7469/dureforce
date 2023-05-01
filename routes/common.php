@@ -45,8 +45,12 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
         Route::get('/contract',  [ContractsController::class,'index'])->name('index');
         Route::get('/contract_detail/{uuid}',  [ContractsController::class,'show'])->name('show');
         Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
-        
-    });
+        Route::get('/loadreason',  [ContractsController::class,'loadReason'])->name('loadReason');
+        });
+
+
+        Route::post('contract/feedback', [\App\Http\Controllers\ContractFeedbackController::class, 'store'])->name('feedback.store');
+
 
     Route::name('work-diary.')->prefix('work-diary')->group(function () {
         
@@ -78,5 +82,5 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
     Route::get('profile/view/{uuid}', 'Buyer\ProfileController@buyerProfile')->name('buyer.profile');
 
     Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
-    
+
 });
