@@ -1262,17 +1262,7 @@
 
 
         function savefeedback(){
-            alert("inside ");
-          /*  var reason = $('#reason').find(":selected").val();
-            var reasonCause = $('#reasonCause').find(":selected").val();
-            var rating= $("input[name='rating_num']:checked").val();
-            var skill= $("input[name='Skills_rating']:checked").val();
-            var quality= $("input[name='quality_rating']:checked").val();
-            var schedule= $("input[name='schedule_rating']:checked").val();
-            var communication= $("input[name='communication_rating']:checked").val();
-            var availibilty= $("input[name='availabilty_rating']:checked").val();
-            var copeartion= $("input[name='cooperation_rating']:checked").val();
-            var about = $("#about").val();*/
+
             let form_data = new FormData(feedback_form[0]);
             $.ajax({
                 headers: {
@@ -1284,13 +1274,13 @@
               processData: false,
               contentType: false,
               success:function(data){
-
-                  if(data.error){
-
-                  }
-                  else{
-
-                  }
+                if(data.code === 200){
+                    notify('success', 'Contract Feedback sent Successfully');
+                    window.location.href = "{{URL::route('user.home')}}";
+                 }
+                else{
+                    notify('error', 'An error Occured during Saving');
+                }
               }
           });
 

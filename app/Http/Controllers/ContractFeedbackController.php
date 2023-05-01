@@ -18,24 +18,44 @@ class ContractFeedbackController extends Controller
     {
 
 //        try {
-            $this->validate($request, [
-                'reason_end_contract_id' => 'required',
-                'feedback_for_id' => 'required',
-                'recomended_score' => 'required',
-                'skills_score' => 'required',
-                'contract_id' => 'required',
-                'quality_of_work_score' => 'required',
-                'adherence_of_schedule_score' => 'required',
-                'availability_score' => 'required',
-                'communication_score' => 'required',
-                'about' => 'required',
-                'feedback' => 'required',
-            ]);
+//            $this->validate($request, [
+//                'reason_end_contract_id' => 'required',
+//                'feedback_for_id' => 'required',
+//                'recomended_score' => 'required',
+//                'skills_score' => 'required',
+//                'contract_id' => 'required',
+//                'quality_of_work_score' => 'required',
+//                'adherence_of_schedule_score' => 'required',
+//                'availability_score' => 'required',
+//                'communication_score' => 'required',
+//                'about' => 'required',
+//                'feedback' => 'required',
+//            ]);
             $request_data = $request->all();
-            dd($request_data);
             $user = Auth::user();
             DB::beginTransaction();
             $last_role_id=getLastLoginRoleId();
+            if(!isset($request_data['skills_rating'])){
+                $request_data['skills_rating']=0;
+            }
+            if(!isset($request_data['quality_rating'])){
+                $request_data['quality_rating']=0;
+            }
+            if(!isset($request_data['schedule_rating'])){
+                $request_data['schedule_rating']=0;
+            }
+            if(!isset($request_data['communication_rating'])){
+                $request_data['communication_rating']=0;
+            }
+            if(!isset($request_data['cooperation_rating'])){
+                $request_data['cooperation_rating']=0;
+            }
+            if(!isset($request_data['availabilty_rating'])){
+                $request_data['availabilty_rating']=0;
+            }
+            if(isset($request_data['rating_num'])){
+                $request_data['rating_num']=0;
+            }
 
             $totalScore = $request_data['skills_rating']+$request_data['quality_rating']+$request_data['schedule_rating']+$request_data['communication_rating']+$request_data['cooperation_rating']+$request_data['availabilty_rating'];
 
@@ -57,9 +77,9 @@ class ContractFeedbackController extends Controller
                 "feedback" => $request_data['feedback'],
 
             ]);
-
-            $notify[] = ['success', 'Your feedback has been sent.'];
-            return redirect()->route('user.home')->withNotify($notify);
+        DB::commit();
+//            return ->withNotify($notify);
+        return response()->json(['code' => 200]);
 
 //        }
 //        catch (\Exception $exp) {
