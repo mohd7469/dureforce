@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\LanguageLevel;
+use App\Models\NotRecomenededReason;
 use App\Models\ReasonEndContract;
 use App\Models\Role;
 use App\Models\Timezone;
@@ -42,9 +43,13 @@ class ContractsController extends Controller
 
     public function  feedback($uuid){
         $user=Auth::user();
+        $last_role_id=getLastLoginRoleId();
+
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
         $langLevels=LanguageLevel::where('is_active',1)->get();
-        $reasons=ReasonEndContract::where('is_active',1)->get();
-        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels','reasons'));
+        $reasons=ReasonEndContract::where('is_active',1)->where('role_id',$last_role_id)->get();
+        $recomendReason=NotRecomenededReason::where('is_active',1)->where('role_id',$last_role_id)->get();
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels','reasons','recomendReason'));
     }
+
 }
