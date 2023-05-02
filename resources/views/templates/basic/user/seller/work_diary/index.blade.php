@@ -20,6 +20,7 @@
                                     
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
+                                <th style="width: 20%">@lang('Contract Title')</th>
                                 <th style="width: 20%">@lang('Job Title')</th>
                                 <th>@lang('Date')</th>
                                 <th>@lang('Total Day Hours')</th>
@@ -32,6 +33,10 @@
                                 @forelse($day_plannings as $key => $day_planning)
                                     <tr class="{{ $key% 2==1 ? 'info-row' : ''}}" id="{{$day_planning->uuid}}">
                                         
+                                        <td data-label="@lang('start time')">
+                                            {{ $day_planning->contract->contract_title }}
+                                        </td>
+
                                         <td data-label="@lang('start time')">
                                             {{ $day_planning->job->title }}
                                         </td>
