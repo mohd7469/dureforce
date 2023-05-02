@@ -55,10 +55,10 @@
     </div>
 @else
     
-    <div class="" >
-        <div id="videoContainer">
+    <div class="" style="width:100%">
+        <div id="videoContainer" >
                                         
-            <iframe width="1041px" height="400px" src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+            <iframe width="100%" height="400px" src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
         </div>
     </div>
 
