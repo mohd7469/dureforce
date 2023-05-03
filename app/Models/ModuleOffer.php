@@ -55,6 +55,7 @@ class ModuleOffer extends Model
             $model->uuid =  $uuid;
             $model->offer_send_by_id=auth()->user()->id;
             $model->status_id=self::STATUSES['PENDING'];
+            $model->is_active=0;
         });
 
 
@@ -96,5 +97,11 @@ class ModuleOffer extends Model
     public function contract()
     {
         return $this->hasone(Contract::class, 'module_offer_id');
+    }
+    public function scopePaymentMethodSelected($query){
+        return $query->where('is_payment_method_selected', 1);
+    }
+    public function scopeActive($query){
+        return $query->where('is_payment_method_selected', 1);
     }
 }

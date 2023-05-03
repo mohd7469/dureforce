@@ -147,7 +147,6 @@
                     </div>
 
                     
-            
                 </div>
                 {{-- uploaded files preview --}}
                 <div>

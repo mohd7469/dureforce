@@ -15,10 +15,16 @@ class ReasonEndContractSeeder extends Seeder
      */
     public function run()
     {
-
         $reason_end_contract = [
             ['name' => 'Job Completed Successfully', 'role_id' => Role::$Freelancer,'is_active'=>true],
+            ['name' => 'JClient no longer needed this work done', 'role_id' => Role::$Freelancer,'is_active'=>true],
+            ['name' => 'I was unable to meet deadline and requirement', 'role_id' => Role::$Freelancer,'is_active'=>true],
+            ['name' => 'Another Reason', 'role_id' => Role::$Freelancer,'is_active'=>true],
+            ['name' => 'I`m not Sure', 'role_id' => Role::$Freelancer,'is_active'=>true],
             ['name' => 'Job Completed Successfully', 'role_id' => Role::$Client,'is_active'=>true],
+            ['name' => 'Job Cancelled due to freelancer performance', 'role_id' => Role::$Client,'is_active'=>true],
+            ['name' => 'Job Cancelled for other Reason', 'role_id' => Role::$Client,'is_active'=>true],
+            ['name' => 'Another Reason', 'role_id' => Role::$Client,'is_active'=>true],
         ];
 
 

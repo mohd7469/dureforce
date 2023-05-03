@@ -4,7 +4,7 @@
 <div class="container-fluid">
 <div class="main_con_p">
     <div class="prosal-left-con">
-    <h3 class="mb-1 p-0">Hire Arslan Ayoub</h3>
+    <h3 class="mb-1 p-0">Hire {{$offer_user->sendToUser->fullname}}</h3>
     <a href="#" class="mb-4">
             Back to offer details
     </a>
@@ -57,7 +57,7 @@
                                 @else
 
                                 <form method="GET"
-                                            action="{{ route('buyer.payment.change.status', $payments->id) }}"
+                                            action="{{ route('buyer.payment.change.status',[$payments->id, $module_offer_id]) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('Make Primary')
@@ -74,13 +74,13 @@
                                     <div class="d-flex justify-content-center">
                                         <a data-bs-toggle="modal" data-bs-target="#editPaymentModel" data-id="{{ $payments->id }}" data-card_number="{{ $payments->card_number }}" data-name_on_card="{{ $payments->name_on_card }}" data-expiration_date="{{ $payments->expiration_date }}"  data-cvv_code="{{ $payments->cvv_code }}" data-country_id="{{ $payments->country_id }}" data-payment_city_id="{{ $payments->city_id }}" data-address="{{ $payments->address }}"     
                                             data-username="{{ $user->username }}"
-                                            class="btn btn-secondary icons editPayment"><i class="far fa-edit"></i></a>
+                                            class="btn btn-secondary px-icons editPayment"><i class="far fa-edit"></i></a>
                                         <form method="POST"
-                                            action="{{ route('buyer.payment.destroy', $payments->id) }}"
+                                            action="{{ route('buyer.payment.destroy', $payments->id,$module_offer_id) }}"
                                             style="margin-left: 2px; width: fit-content">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-secondary icons"
+                                            <button class="btn btn-secondary px-icons"
                                                 onclick="return confirm('Are you sure you want to delete this payment method ?')"
                                                 type="submit">
                                                 <i class="fas fa-trash"></i>
@@ -92,7 +92,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <span>'Any available balance you have will be applied towars your total amount</span>
+                <span>'Any available balance you have will be applied towards your total amount</span>
             </div>
         </div>
          
@@ -105,8 +105,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="payment_methods" enctype="multipart/form-data">
+                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods" enctype="multipart/form-data">
                     @csrf
+                    <input type="hidden" name="offer_id" value="{{$module_offer_id}}">
                     <div class="container-fluid welcome-body" id="">
                         <div>
                             <div id="company-container" class="company-c-style">
@@ -218,9 +219,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('buyer.basic.profile.save.payment.methods') }}" method="POST" id="payment_methods_" enctype="multipart/form-data">
+                <form action="{{ route('buyer.save.payment.methods') }}" method="POST" id="client_payment_methods_" enctype="multipart/form-data">
                     @csrf
-                    
+                    <input type="hidden" name="offer_id" value="{{$module_offer_id}}">
                     <div class="container-fluid welcome-body" id="">
                     
                         <span class="cmnt pb-4" style="display:none">Complete your profile to search from thousands of skilled freelancers and
@@ -334,16 +335,16 @@
                             <ul class="client_listing-c">
                                 
                                 <li>
-                                    <img src="https://stgdureforcestg.blob.core.windows.net/attachments/641ed040c0ed51679740992.png" alt="client">
+                                    <img src="{{ $offer_user->sendToUser->user_basic->profile_picture ? $offer_user->sendToUser->user_basic->profile_picture:  '/assets/images/job/profile-img.png' }}" alt="client">
                                     <div class="about_client">
-                                        <p class="client_name">Muhammad arslan</p>
-                                        <p class="client_date">Member since Feb 16,2023</p>
+                                        <p class="client_name">{{$offer_user->sendToUser->fullname ?? ''}}</p>
+                                        <p class="client_date">Member since {{date('h:i a',strtotime($offer_user->sendToUser->last_activity_at ?? '')) }}</p>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <i class="fa fa-map-marker"></i> <span class="location_c"> Arifwala, Pakistan</span>
-                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> 08:36 pm local time</span>
+                                    <i class="fa fa-map-marker"></i> <span class="location_c"> {{$offer_user->sendToUser->location }}</span>
+                                    &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ \Carbon\Carbon::now()->format('H:i:s') }} local time</span>
                                 </li>
 
                                 <li>
@@ -366,8 +367,8 @@
                             </ul>
                             <center><span class="mb-0"> Lean about <a href=""><b>fees</b></a> and <a href=""><b>estimated taxes</b></a></span></center>
                             <br>
-                            <center><a href="#" class="btn navbar-burron">Fund Contract & Hire</a></center>
-                            <center><span>Upwork Payment protection</span></center>
+                            <center><a href="{{route('buyer.offer.sent',$module_offer_id)}}" class="btn navbar-burron">Fund Contract & Hire</a></center>
+                            <center><span>Dureforce Payment protection</span></center>
 
                         </div>
                   
@@ -383,6 +384,10 @@
 
 
 <style>
+    .px-icons {
+        background-color: #EFF4F4 !important;
+        color: #7F007F !important;
+    }
     .navbar-burron{
         width: 96%;
         font-size: 12px;
@@ -1022,7 +1027,7 @@
 </style>
 
 @push('script')
-    <script>
+    <!-- <script>
         "use strict";
         $(document).ready(function() {
          $('.registerBtn').click(function() {
@@ -1031,7 +1036,231 @@
     });
   
 
-</script>
+</script> -->
+
+<!-- ajax code for validation start -->
+<script>
+        
+        "use strict";
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        var current = 1;
+        var user_payment_methods_form=$('#client_payment_methods');
+        var user_payment_methods_form_=$('#client_payment_methods_');
+        var token= $('input[name=_token]').val();
+        
+        let _countries = [];
+
+        $('document').ready(function() {
+
+            user_payment_methods_form.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                saveUserPaymentMethod();
+
+            });
+            user_payment_methods_form_.submit(function (e) {
+
+                e.preventDefault();
+                e.stopPropagation(); 
+                editUserPaymentMethod();
+
+            });
+            
+
+            if (previewImg.length > 0) {
+                previewImg.siblings('p').hide();
+                imgInp.addClass('imgInp-after');
+                $('form .profile-img').css({
+                    "background-color": "transparent"
+                })
+
+            } else {
+
+                previewImg.siblings('p').show();
+                imgInp.removeClass('imgInp-after');
+                $('form .profile-img').css({
+                    "background-color": "#fff"
+                })
+
+            }
+
+            $(".client_payment_method_country_class").on('change',function(){
+
+                getCountryCities($(this).val(),'.client_payment_method_cities_class');
+
+            });
+        });
+
+        function getCountryCities(country_id,select_field_id)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('get-cities')}}",
+                data: {country_id : country_id},
+                success:function(data){
+                    if(data.cities)
+                    {    
+                       
+                        $(select_field_id).empty();
+                        $(select_field_id).append(
+                            `<option>Select City</option>
+                            ${data.cities?.map((city) => {
+                                return ` <option value="${city.id}"> ${city.name}</option>`;
+                        })}`);
+                    }
+                    else{
+                        alert("Wrong Country Id");        
+                    }
+                }
+            }); 
+
+        }
+
+        function displayErrorMessage(validation_errors)
+        {
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            for (var error in validation_errors) { 
+                var error_message=validation_errors[error];
+
+                $('[name="'+error+'"]').addClass('error-field');
+                $('[id="'+error+'"]').addClass('error-field');
+                $('#'+error).next().addClass('error-field');
+
+                displayAlertMessage(error_message);
+
+            
+            }
+        }
+        
+        function formPostProcess(nextTab)
+        {
+
+            $('input,select,textarea').removeClass('error-field');
+            $('.select2').next().removeClass("error-field");
+            // $('#profile','profile2','#profile3','#profile4').removeClass('active');
+            nextTab.click();
+            scrollTop();
+
+        }
+
+        function scrollTop()
+        {
+            $("html, body").animate({
+                scrollTop: 0
+            }, 500);
+        }
+        
+        function errorMessages(errors)
+        {
+            $.each(errors, function(i, val) {
+                notify('error', val);
+            });
+        }
+
+        function saveUserPaymentMethod()
+        {
+             let form_data = new FormData(user_payment_methods_form[0]);
+           
+            $.ajax({
+                
+                  type:"POST",
+                  url:"{{route('buyer.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+
+                      if(response.success){
+                        notify('success', response.success);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+        function editUserPaymentMethod()
+        {
+            let form_data = new FormData(user_payment_methods_form_[0]);
+            $.ajax({
+                "headers": {'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')},
+                  type:"POST",
+                  url:"{{route('buyer.save.payment.methods')}}",
+                  data: form_data,
+                  processData: false,
+                  contentType: false,
+                  success:function(response){
+                      console.log(response)
+                      if(response.success){
+                        notify('success', response.success);
+                          if(response.redirect_url)
+                          {
+                              window.location.replace(response.redirect_url);
+                          }
+                      }
+                      else if(response.validation_errors){
+                        displayErrorMessage(response.validation_errors);
+                      }
+                      else{
+                        errorMessages(response.errors);
+                      }
+
+                  }
+              });
+        }
+
+        function displayAlertMessage(message)
+        {
+            iziToast.error({
+            message: message,
+            position: "topRight",
+            });
+        }
+
+        function displayAlertSuccessMessage(message)
+        {
+            iziToast.success({
+            message: message,
+            position: "topRight",
+            });
+        }
+       
+        function isEmpty(value) {
+            var isEmptyObject = function(a) {
+                if (typeof a.length === 'undefined') { // it's an Object, not an Array
+                    var hasNonempty = Object.keys(a).some(function nonEmpty(element) {
+                        return !isEmpty(a[element]);
+                    });
+                    return hasNonempty ? false : isEmptyObject(Object.keys(a));
+                }
+
+                return !a.some(function nonEmpty(element) { // check if array is really not empty as JS thinks
+                    return !isEmpty(element); // at least one element should be non-empty
+                });
+            };
+            return (
+                value == false ||
+                typeof value === 'undefined' ||
+                value == null ||
+                (typeof value === 'object' && isEmptyObject(value))
+            );
+        }
+
+       
+
+    </script>
+<!-- end -->
 
 <script type="text/javascript">
     $(function () {

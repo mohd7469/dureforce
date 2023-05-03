@@ -184,6 +184,8 @@ return [
         App\Providers\PusherConfiguration::class,
         App\Providers\RedisCacheConfiguration::class,
         App\Providers\StorageConfigurationProvider::class,
+        Jackiedo\Timezonelist\TimezonelistServiceProvider::class,
+
     ],
 
     /*
@@ -236,6 +238,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Timezonelist' => Jackiedo\Timezonelist\Facades\Timezonelist::class,
 
     ],
 

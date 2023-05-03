@@ -242,6 +242,7 @@
                                                         @endforeach
                                                 </select>
                                             </div>
+                                            
                                         </div>
 
                                         <input type="hidden" value="{{route('buyer.job.validate')}}" id="job_validate_url">

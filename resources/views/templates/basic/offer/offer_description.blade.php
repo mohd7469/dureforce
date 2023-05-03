@@ -80,7 +80,7 @@
                     </li>
                     <li>
                         <p>Start Date</p>
-                        <p>September 1 , 2022</p>
+                        <p>{{getFormattedDate($offer->start_date,'d-m-Y')}}</p>
                     </li>
                     @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
                         <li>

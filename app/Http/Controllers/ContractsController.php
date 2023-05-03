@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\LanguageLevel;
+use App\Models\NotRecomenededReason;
+use App\Models\ReasonEndContract;
 use App\Models\Role;
+use App\Models\Timezone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,12 +35,21 @@ class ContractsController extends Controller
     public function  show($uuid){
         $user=Auth::user();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
-        return view('templates.basic.buyer.contract.contract_details',compact('contract'));
+        $contracts=getUserContracts();
+        $emptyMessage="Tasks Not Found";
+        $timezones = Timezone::select('id','name')->get();
+        return view('templates.basic.buyer.contract.contract_details',compact('contract','emptyMessage','contracts','timezones'));
     }
 
     public function  feedback($uuid){
         $user=Auth::user();
+        $last_role_id=getLastLoginRoleId();
+
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
-        return view('templates.basic.buyer.contract.contract_feedback',compact('contract'));
+        $langLevels=LanguageLevel::where('is_active',1)->get();
+        $reasons=ReasonEndContract::where('is_active',1)->where('role_id',$last_role_id)->get();
+        $recomendReason=NotRecomenededReason::where('is_active',1)->where('role_id',$last_role_id)->get();
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels','reasons','recomendReason'));
     }
+
 }

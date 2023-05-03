@@ -59,6 +59,13 @@ class StatusSeeder extends Seeder
             ["id"=>37, "name"=>"Waiting For Approval", "slug"=>"waiting_approval", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--dark', "module_id"=>null],
             ["id"=>38, "name"=>"Verified", "slug"=>"accepted", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--info', "module_id"=>null],
             ["id"=>39, "name"=>"Rejected", "slug"=>"rejected", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--warning', "module_id"=>null],
+
+            ["id" => 40, "name" => "Approval Not Yet Requested", "slug" => "Approval_Not_Yet_Requested", "type"=>"App\\Models\\DayPlanningTask",    "color" => 'badge--primary',"module_id"=>Module::$Job],
+            ["id" => 41, "name" => "Approval Requested",         "slug"  =>"Approval_Requested", "type"=>"App\\Models\\DayPlanningTask", "color" => 'badge--dark' ,"module_id"=>Module::$Job],
+            ["id" => 42, "name" => "Resend For Approval",        "slug" =>"Resend_For_Approval", "type"=>"App\\Models\\DayPlanningTask", "color" => 'badge--info',"module_id"=>Module::$Job],
+            ["id" => 43, "name" => "Approved", "slug"=>"approved", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--success', "module_id"=>Module::$Job],
+            ["id" => 44, "name" => "Rejected", "slug"=>"rejected", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--warning', "module_id"=>Module::$Job],
+            
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Status::truncate();

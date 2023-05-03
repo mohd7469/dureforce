@@ -5,16 +5,19 @@
                 <div class="dashboard-sidebar-wrapper-inner">
                     <h5 class="menu-header-title">@lang('Buyer Account')</h5>
                     <ul id="sidebar-main-menu" class="sidebar-main-menu">
+                        
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('user.home')?'open':''}} ">
                             <a href="{{route('user.home')}}">
                                 <i class="lab la-buffer"></i> <span class="title">@lang('Buyer Dashboard')</span>
                             </a>
                         </li>
+
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.index') || request()->routeIs('buyer.job.edit') ?'open':''}}">
                             <a href="{{route('buyer.job.index')}}">
                                 <i class="las la-list"></i> <span class="title">@lang('Manage Jobs')</span>
                             </a>
                         </li>
+
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('buyer.job.create')?'open':''}}">
                             <a href="{{route('buyer.job.create')}}">
                                 <i class="las la-plus"></i> <span class="title">@lang('Create Jobs')</span>
@@ -39,6 +42,11 @@
                         <li class="sidebar-single-menu nav-item {{request()->routeIs('user.software.favorite')?'open':''}}">
                             <a href="{{url('coming-soon')}}">
                                 <i class="las la-heart"></i> <span class="title">@lang('Favorite Software')</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-single-menu nav-item {{request()->routeIs('seller.work-diary.index')? 'open':''}}">
+                            <a href="{{route('work-diary.index')}}">
+                                <i class="las la-plus"></i> <span class="title">@lang('Work Diary')</span>
                             </a>
                         </li>
                     </ul>
@@ -109,6 +117,8 @@
                                 <i class="las la-history"></i> <span class="title">@lang('Deposit History')</span>
                             </a>
                         </li>
+
+                        
                     </ul>
                 </div>
             </div>

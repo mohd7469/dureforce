@@ -624,8 +624,14 @@ function pricingFormValidation() {
 }
 
 function validateAddOnRows(element, e) {
- 
+  if (element.find(".add-on-delivery").val() < 1 ) 
+  {
 
+    e.preventDefault();
+    element
+        .find(".add-on-delivery")
+        .after('<span class="error text-danger">Field value should be greater than zero</span>');
+  }
 }
 function deleteAddOnRow(row_id){
     $(row_id).remove();
