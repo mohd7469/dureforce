@@ -48,7 +48,7 @@
                                 </td>
 
                                 <td>
-                                    @if ($payments->status)
+                                    @if ($payments->is_primary == 1)
                                         <span>Primary</span>
                                     @else
                                         <a class="btn btn-outline-secondary btn-primary "
