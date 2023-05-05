@@ -29,7 +29,7 @@ class SoftwareController extends BaseController
             $draftSoftwares = $draftSoftwares->where('user_id', auth()->user()->id)->Status(Software::STATUSES['DRAFT'])->orderBy('created_at','desc');
         }
         else{
-            $softwares = $softwares->Active()->Status(Software::STATUSES['APPROVED']);
+            $softwares = $softwares->Active()->Status(Software::STATUSES['APPROVED'])->orderBy('created_at','desc');
             $draftSoftwares = $draftSoftwares->Active()->Status(Software::STATUSES['DRAFT']);
         }
         $softwares = $softwares->where($this->applyFilters($request))->with('tags', 'user')->paginate(10)->withQueryString();
@@ -58,7 +58,7 @@ class SoftwareController extends BaseController
      */
     public function featured(Request $request)
     {
-        $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->with(['user', 'user.basicProfile', 'tags'])->paginate(getPaginate());;
+        $softwares = Software::Active()->Featured()->whereIn('status_id',[Software::STATUSES['APPROVED'],Software::STATUSES['FEATURED']])->with(['user', 'user.basicProfile', 'tags'])->paginate(getPaginate());
 
         $pageTitle = "Software";
         $emptyMessage = "No data found";

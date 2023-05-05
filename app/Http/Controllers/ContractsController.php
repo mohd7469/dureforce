@@ -23,7 +23,7 @@ class ContractsController extends Controller
             else if( $last_role_id == Role::$Client ){
                 $query->where('offer_send_by_id','=',$user->id);
             }
-        })->get();
+        })->orderBy('created_at','desc')->paginate(10);
 
         $contracts_completed=$contracts->where('status_id',Contract::STATUSES['Completed']);
         $contracts_active=$contracts->where('status_id',Contract::STATUSES['In_Progress']);
