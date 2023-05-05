@@ -74,7 +74,7 @@ class ForgotPasswordController extends Controller
 
         $userIpInfo = getIpInfo();
         $userBrowserInfo = osBrowser();
-        sendEmail($user, 'PASS_RESET_CODE', [
+        sendPasswordResetEmail($user, 'PASS_RESET_CODE', [
             'code' => $code,
             'operating_system' => @$userBrowserInfo['os_platform'],
             'browser' => @$userBrowserInfo['browser'],
@@ -113,7 +113,7 @@ class ForgotPasswordController extends Controller
         $userIpInfo = getIpInfo();
         $userBrowserInfo = osBrowser();
         
-        sendEmail($user, 'PASS_RESET_CODE', [
+        sendPasswordResetEmail($user, 'PASS_RESET_CODE', [
             'code' => $code,
             'operating_system' => @$userBrowserInfo['os_platform'],
             'browser' => @$userBrowserInfo['browser'],
