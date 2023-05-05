@@ -77,7 +77,7 @@
                         tabindex="-1"
                         aria-hidden="true"
                         style="width:100%">
-                        <option value="">Select Skills</option>
+                        <option value=""  disabled>Select Skills</option>
                         @foreach ($skills as $skill)
                            <option value="{{$skill->id}}"  {{in_array($skill->id,$userskills->pluck('id')->toArray()) ? 'selected' :''}}>{{$skill->name}}</option>
                         @endforeach
