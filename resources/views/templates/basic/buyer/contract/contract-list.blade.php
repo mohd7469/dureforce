@@ -56,7 +56,7 @@
                                     </td>
                                 </tr>
                             @endforeach
-                           
+                        {{ paginateLinks($contracts) }}
                     </table>
                 </div>
 
