@@ -81,7 +81,7 @@ class ContractFeedbackController extends Controller
             ]);
 
         $contract=Contract::find($uuid);
-        $contract->status_id = '35';
+        $contract->status_id = Contract::STATUSES['Completed'];
         $contract->updated_at = Carbon::now();
         $contract->save();
 
