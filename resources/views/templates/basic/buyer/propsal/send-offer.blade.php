@@ -119,7 +119,7 @@
 
       <div class="mt-3">
         
-        <h6 class="color-green">Weekly Limit</h6>
+        <h6 class="color-green">Weekly Limit <span class="text-danger">*</span> </h6>
         <p class="text-wrap">Setting a weekly limit is a great way to help ensure you stay on budget.</p>
         
         <div class="form-row">
