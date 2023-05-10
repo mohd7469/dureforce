@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
+
 class ContractFeedbackController extends Controller
 {
 
@@ -33,6 +34,7 @@ class ContractFeedbackController extends Controller
 //            ]);
             $request_data = $request->all();
             $user = Auth::user();
+            $uuid=$request_data['contract_id'];
             DB::beginTransaction();
             $last_role_id=getLastLoginRoleId();
             if(!isset($request_data['skills_rating'])){
@@ -77,8 +79,14 @@ class ContractFeedbackController extends Controller
                 "feedback" => $request_data['feedback'],
 
             ]);
+
+        $contract=Contract::find($uuid);
+        $contract->status_id = Contract::STATUSES['Completed'];
+        $contract->updated_at = Carbon::now();
+        $contract->save();
+
         DB::commit();
-//            return ->withNotify($notify);
+
         return response()->json(['code' => 200]);
 
 //        }
@@ -89,4 +97,5 @@ class ContractFeedbackController extends Controller
 //        }
 
     }
+
 }

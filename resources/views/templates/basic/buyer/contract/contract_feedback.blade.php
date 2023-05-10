@@ -11,6 +11,7 @@
                     <input type="hidden" name="contract_id" value="{{$contract->id}}">
                     <input type="hidden" name="contract_send_by" value="{{$contract->offer->offer_send_to_id}}">
                     <input type="hidden" name="contract_send_to" value="{{$contract->offer->offer_send_by_id}}">
+                    <input type="hidden" name="uuid" value="{{$contract_uuid}}">
                     <div class="btm-c">
                         <p class="prop_description">
                             <b>Freelancer</b></p>

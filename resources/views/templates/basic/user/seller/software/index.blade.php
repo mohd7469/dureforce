@@ -19,7 +19,7 @@
                                                 <th>@lang('Amount Per Hour')</th>
                                                 <th>@lang('Delivery Time')</th>
                                                 <th>@lang('Status')</th>
-                                                <th>@lang('Last Update')</th>
+                                                <th style="    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@lang('Last Update')</th>
                                                 <th>@lang('Views')</th>
                                                 <th>@lang('Actions')</th>
                                             </tr>
@@ -46,7 +46,8 @@
                                                          
                                                         </td>
                                                     <td data-label="@lang('Last Update')">
-                                                        {{showDateTime($software->updated_at)}}
+                                                        {{date('d-m-Y', strtotime($software->updated_at))}}
+{{--                                                        {{showDateTime($software->updated_at)}}--}}
                                                         <br>
                                                         {{diffforhumans($software->updated_at)}}
                                                     </td>

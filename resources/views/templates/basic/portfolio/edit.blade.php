@@ -137,7 +137,7 @@
             <div class="modal-dialog modal-dialog-profile">
                 <div class="modal-content">
                     <div class="modal-header editprofileheader">
-                        <h5 class="modal-title" id="exampleModalLabel">View File Upload GuideLines</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">View File Upload Guidelines</h5>
                         <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body modal-body-profile">
