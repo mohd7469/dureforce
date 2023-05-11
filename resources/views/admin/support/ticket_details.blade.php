@@ -151,7 +151,7 @@
                 <form action="{{route('admin.ticket.comment.store',$support_ticket->ticket_no)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <textarea  placeholder="Add Comment" name="message" class="comment-box"></textarea>
-                    <label for="comment_file" class="btn-atach-m">Attach</label>
+                    <label for="comment_file" class="btn-atach-m" style="width: 130px !important;">Attachment</label>
                     <input type="file" name="comment_attachment" id="comment_file" style="display: none;visibility:none" onchange="writeFileName()">
                     <div >
                         <ul class="list-group" id="file_name_div">

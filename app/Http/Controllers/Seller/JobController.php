@@ -66,6 +66,7 @@ class JobController extends Controller
             $subcategories=SubCategory::where('category_id', $category)->get();
         }
 
+
         return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('tabs',$tabs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle )->with('user_saved_jobs_ids',$user_saved_jobs_ids)->with('user_saved_jobs',$user_saved_jobs);
     }
     public function saveJob($job_id)

@@ -49,7 +49,8 @@ class ContractsController extends Controller
         $langLevels=LanguageLevel::where('is_active',1)->get();
         $reasons=ReasonEndContract::where('is_active',1)->where('role_id',$last_role_id)->get();
         $recomendReason=NotRecomenededReason::where('is_active',1)->where('role_id',$last_role_id)->get();
-        return view('templates.basic.buyer.contract.contract_feedback',compact('contract','langLevels','reasons','recomendReason'));
+
+        return view('templates.basic.buyer.contract.contract_feedback',compact('contract', 'langLevels','reasons','recomendReason'));
     }
 
 }
