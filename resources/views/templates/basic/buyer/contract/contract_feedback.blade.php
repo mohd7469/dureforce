@@ -3,7 +3,7 @@
 
         <div class="container-fluid">
             <form id="form_feedback" method="POST" >
-                @csrf;
+                @csrf
             <h3 class="propsal-h" style="margin-left: 40px; margin: 20px">End Contract </h3>
             <div class="main_con_p">
                 <div class="prosal-left-con" style="margin-left: 30px">
