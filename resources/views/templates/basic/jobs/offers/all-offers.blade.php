@@ -10,10 +10,10 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs" data-bs-tabs="tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">Offers</a>
+                                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#All_Proposals">Offers ({{$pending_offers->count()}})</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{0}})</a>
+                                <a class="nav-link " data-bs-toggle="tab" href="#Shortlisted">Current Hires ({{$accepted_offers->count()}})</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Messaged">Post Hires (0)</a>
@@ -67,7 +67,7 @@
                                 </div>
                                     <!--Bio Profile Section Start-->
                                     
-                                    @foreach ($offers as $offer)
+                                    @foreach ($pending_offers as $offer)
                                        
                                     <div class="" >
                                         
@@ -127,6 +127,10 @@
                                                     <a href="#" class="btn-products-s">Message</a> --}}
                                                     <a href="{{route('seller.profile',$offer->proposal->user->uuid)}}" class="btn-products-s">View Profile</a>
                                                     <a href="{{route('offer.detail',$offer->uuid)}}" class="btn-products-s phire">View Offer</a>
+                                                    <a href="{{route('offer.detail',$offer->uuid)}}" class="btn-products-s phire">View Offer</a>
+                                                    <a class="btn-products-s badge {{$offer->status->color}}" style="color:white !important">{{$offer->status->name}}</a>
+
+
                                                     {{-- <a href="#" class="btn-products-s phire">Hire</a> --}}
                                                 </div>
                                             </div>
@@ -197,11 +201,149 @@
                         </div>
                         <div class="tab-pane" id="Shortlisted">
 
-                            <p class="card-text text-center">
-                                <div class="d-flex align-items-center justify-content-center ">
-                                    <h3 class="display-1 fw-bold">Coming Soon</h3>
+                            <div class="card-text text-center">
+                                <div class="row card-text">
+                                    <div class="col-12"></div>
+                                        <div class="col-md-2">
+                                            <h2 class="prosals-h">Accepted Offers</h2>
+                                        </div>
+                                        <div class="col-md-10 sorting-mbl">
+                                            <div class="row">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <!--Bio Profile Section Start-->
+                                        
+                                        @foreach ($accepted_offers as $offer)
+                                           
+                                        <div class="" >
+                                            
+                                            <div class="row biorow">
+                                                <div class="col-md-3">
+                                                    <div class="row borderleftc">
+                                                        <div class="col-md-4">
+                                                           {{-- @dd($offer->proposal->user->user_basic->profile_picture) --}}
+                                                            <img alt="User Pic" src="{{!empty($offer->proposal->user_basic->profile_picture)? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
+                                                        </div>
+    
+                                                        <div class="col-md-8" style="text-align:left">
+    
+                                                            <h4 class="pname-c"> 
+    
+                                                                {{$offer->proposal->user->fullname}}
+    
+                                                            </h4>
+    
+                                                            <p class="pdesination-c"> {{$offer->proposal->user->job_title}} </p>
+    
+                                                            <p class="plocation"><span style="margin-right: 60px;">{{$offer->proposal->user->location }}</span></p>
+    
+    
+                                                        </div>
+    
+    
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row btns-per">
+                                                        <div class="col-md-4">
+                                                            @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
+                                                                <p class="rateperh">Rate Per Hour</p>
+                                                                <p class="perhourprice">${{$offer->rate_per_hour}} / Per Hour</p>
+                                                            @else
+                                                                <p class="rateperh">Offer Amount</p>
+                                                                <p class="perhourprice">${{$offer->offer_amount}} </p>
+                                                            @endif
+                                                            
+    
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p class="rateperh">Total Earnings</p>
+                                                            <p class="perhourprice">Coming Soon</p>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <p class="rateperh">Job Success Rate</p>
+                                                            <p class="perhourprice">Coming Soon</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="row btns-s">
+    
+                                                        {{-- <a href="" class="btn-products-s">Shortlist</a>
+                                                        <a href="#" class="btn-products-s">Message</a> --}}
+                                                        <a href="{{route('seller.profile',$offer->proposal->user->uuid)}}" class="btn-products-s">View Profile</a>
+                                                        <a href="{{route('offer.detail',$offer->uuid)}}" class="btn-products-s phire">View Offer</a>
+                                                        <a class="btn-products-s badge {{$offer->status->color}}" style="color:white !important">{{$offer->status->name}}</a>
+
+                                                        {{-- <a href="#" class="btn-products-s phire">Hire</a> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--===  Bio Profile Section End ===-->
+                                            <!--Product Description Start-->
+                                            <div class="row p_desription" style="text-align: left;">
+                                                <div class="col-md-12">
+                                                    {{-- @isset($proposal->cover_letter) --}}
+                                                    <p><strong>Message -  </strong>  {{$offer->description_of_work}}</p>
+                                                    {{-- @endisset --}}
+                                                </div>
+                                            </div>
+                                            <!--Product Description End-->
+                                            <!--Skills Section Start-->
+                                            <div class="row skills-c">
+                                                <div class="col-md-6 col-lg-6" style="text-align: left;">
+    
+                                                    {{-- <h2>Has {{count($offer->skill->name)}} relevant skills to your job</h2> --}}
+                                                    @foreach ( $job->skill as $skills) 
+                                                       
+                                                        <ul class="skills-listing">
+                                                            
+                                                            <li>{{$skills->name}} </li>
+                                                            
+    
+                                                        </ul>
+                                                        
+                                                   @endforeach
+                                                </div >
+                                                {{-- @isset($proposal->attachment) --}}
+                                                @if (count($offer->attachments)>0)
+                                                <div class="col-md-6 col-lg-6">
+                                                    <div class="attachment">
+                                                        <div class="service_subtitle2 mt-20 heading-text">
+                                                            @if($offer->attachments->count() > 0)
+                                                            <h2> Attachments</h2>
+                                                            @else
+                                                            <h2> </h2>
+                                                            @endif
+                                                            <div class="row">
+                                                               
+                                                                 @foreach($offer->attachments as $document) 
+                                                                  
+                                                                  <ul class="skills-listing col-lg-4 col-md-4">
+                                                                    <a href="{{$document->url}}" class="btn btn-large "><i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$document->uploaded_name}} </a>
+    
+    
+                                                                </ul>
+                                                                  @endforeach
+                                                        
+    
+                                                            </div>
+    
+                                                        </div>
+                                                    </div>
+    
+                                                </div>
+                                                {{-- @endisset --}}
+                                                @endif
+                                                
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        @endforeach
+    
                                 </div>
-                                </p>
 
                         </div>
                         <div class="tab-pane" id="Messaged">

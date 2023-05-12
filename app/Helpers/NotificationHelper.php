@@ -60,7 +60,7 @@ class NotificationHelper
         try {
             $user = auth()->user();
             if ($user) {
-                $notification = Notification::where('user_id', $user->id)->OrderByUnread()->take(16)->get();
+                $notification = Notification::where('user_id', $user->id)->OnlyUnread()->latest()->take(16)->get();
                 Log::info(["Notification"=>$notification]);
                 return $notification;
             }

@@ -28,6 +28,7 @@ class Notification extends BaseModel
         return $query->orderBy('is_read', 'DESC');
     }
 
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
