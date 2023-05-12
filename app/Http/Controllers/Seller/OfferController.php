@@ -66,7 +66,7 @@ class OfferController extends Controller
             $this->createContract($module_offer);
             DB::commit();
 
-            $users= array($module_offer->offer_send_to_id);
+            $users= array($module_offer->offer_send_by_id);
             $title = Contract::NOTIFICATION['CONTRACT_TITLE'].$chat_module->title." started";
             $body = $chat_module->description;
             $payload = $chat_module;
