@@ -41,7 +41,7 @@
                         <h3 class="heading_proposal jdc">Milestone Timeline</h3>
                         <div class="btm-c">
                         
-                            @if ( !isHourlyContract($contract) )
+                            @if ( $contract->offer->moduleMilestones->count() > 0 )
                                 
                                 @foreach ($contract->offer->moduleMilestones as $milestone)
                                     <p class="posted_date_c">{{$milestone->description}}<p>
@@ -54,7 +54,10 @@
                             @else
                                 <p class="posted_date_c">Pay as Whole Project<p>
                                 <p class="posted_date_c">${{$contract->contract_total_amount}}<p>
-                                <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                                @if ($contract->all_amount_paid_on)
+                                    <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                                    
+                                @endif
                                 
                             @endif
                             
@@ -65,7 +68,7 @@
                     <!---Job Details Section End--->
 
                     <!---Your message and file Terms Start--->
-                    <h3 class="heading_proposal jdc">Messages and Files</h3>
+                    {{-- <h3 class="heading_proposal jdc">Messages and Files</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <ul class="client_listing-c">
@@ -145,13 +148,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     
                     <!---Your message and file Terms End--->
 
 
                     <!---Your Feedback Terms Start--->
-                    <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendbyUser->full_name}}</h3>
+                    {{-- <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendbyUser->full_name}}</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -166,11 +169,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!---Your Proposed Terms End--->
 
                     <!---Your Proposed Terms Start--->
-                    <h3 class="heading_proposal jdc">{{$contract->offer->sendbyUser->full_name}} Feedback for You</h3>
+                    {{-- <h3 class="heading_proposal jdc">{{$contract->offer->sendbyUser->full_name}} Feedback for You</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -182,7 +185,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!---Your Proposed Terms End--->
 
 
