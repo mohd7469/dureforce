@@ -55,6 +55,7 @@ Route::name('seller.')->group(function () {
                 Route::name('proposal.')->group(function () {
 
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
+                    Route::get('/edit-proposal/{job_uuid}/{proposal_uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'editProposal'] )->name('edit');
                     Route::post('/validate-proposal',      [\App\Http\Controllers\Seller\ProposalController::class,'validatePropsal'] )->name('validate');
                     Route::post('proposal-store/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'savePropsal'])->name('store');
                     Route::get('proposal-lists/{type?}',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');

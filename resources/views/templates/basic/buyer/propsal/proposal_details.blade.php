@@ -133,7 +133,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
+                            <!-- <input type="submit" value="Change Terms" class="btn_sbmtrm">  -->
+                            <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">Change Terms</a>
                             <input type="submit" value="Withdraw Proposal" class="btn_withdrw-c">
                         </div>
                     </div>
@@ -646,13 +647,14 @@
         font-size: 14px;
     }
 
-    input.btn_sbmtrm {
+    a.btn_sbmtrm {
         width: 137px;
         height: 35px;
         background: #7F007F;
         border-radius: 5px;
         color: #fff;
-        padding: 4px 0px;
+        /* padding: 4px 0px; */
+        padding: 4px 0px 0px 20px;
         font-size: 14px;
         font-weight: 600;
         margin-right: 1.5%;
@@ -769,7 +771,7 @@
             margin-bottom: 20px;
         }
 
-        input.btn_sbmtrm {
+        a.btn_sbmtrm {
             width: 130px;
         }
 
@@ -809,7 +811,7 @@
             width: 100%;
         }
 
-        input.btn_sbmtrm {
+        a.btn_sbmtrm {
             width: 100%;
             margin-bottom: 11px;
         }
