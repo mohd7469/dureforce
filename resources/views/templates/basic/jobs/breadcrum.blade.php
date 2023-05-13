@@ -31,7 +31,7 @@
             
         @endif
         <a class="breadcrumb__step  {{Route::is('buyer.job.all.proposals') ? 'breadcrumb__step--active':''}} ancortag-class" href="{{route('buyer.job.all.proposals',$job->uuid)}}">Review Proposals ({{getNumberOfPropsals($job->uuid)}})</a>
-        <a class="breadcrumb__step {{Route::is('buyer.job.all.offers') ? 'breadcrumb__step--active':''}} ancortag-class" style="padding-left:-15px !important;" href="{{route('buyer.job.all.offers',$job->uuid)}}">Hire (0)</a>
+        <a class="breadcrumb__step {{Route::is('buyer.job.all.offers') ? 'breadcrumb__step--active':''}} ancortag-class" style="padding-left:-15px !important;" href="{{route('buyer.job.all.offers',$job->uuid)}}">Hire ({{$job->moduleOffer->count()}})</a>
 
     @endif
 
