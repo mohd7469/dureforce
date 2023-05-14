@@ -126,9 +126,9 @@
                            </div>
                            <input type="hidden" name="job_type" id="" value="{{$job->budget_type_id}}">
                            @if ($job->budget_type_id==App\Models\BudgetType::$hourly)
-                              @include('templates.basic.jobs.Proposal.hourly')
+                              @include('templates.basic.jobs.Proposal.update-hourly')
                            @else
-                              @include('templates.basic.jobs.Proposal.fixed',['job' => $job])
+                              @include('templates.basic.jobs.Proposal.update-fixed',['job' => $job])
                               
                            @endif
                         
@@ -149,7 +149,7 @@
                                     {{-- Cover Letter --}}
                                     <div class="form-group">
                                        <label for="cover_letter">Cover Letter*</label>
-                                       <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" ></textarea>
+                                       <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{ $proposal->cover_letter}}</textarea>
                                     </div>
 
                                     {{-- Required documents --}}

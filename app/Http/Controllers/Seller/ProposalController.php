@@ -125,6 +125,7 @@ class ProposalController extends Controller
             $skill_categories = SkillCategory::select('name', 'id')->get();
             //$delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
             $proposal = Proposal::with(['module.user.country', 'attachment', 'milestone', 'delivery_mode'])->where('uuid', $proposal_uuid)->first();
+            // dd($proposal);
             $is_active = 1;
             $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space, DeliveryMode::$Redis_key, $is_active);
             foreach ($skill_categories as $skillCat) {
