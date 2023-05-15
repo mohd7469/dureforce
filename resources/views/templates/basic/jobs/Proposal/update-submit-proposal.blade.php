@@ -191,10 +191,12 @@
                            </div>
                            <div id="outer" class="text-right">
                               <div class="inner">
-                                  <a role="button" href="{{route('seller.jobs.listing')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
+                                  <a role="button" href="{{route('seller.proposal.index')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button>
+                                  <!-- <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button> -->
+                                  <button type="button" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Update Proposal')</button>
+                                  
                               </div>
                           </div>
                         </form>
