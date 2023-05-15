@@ -3,7 +3,7 @@
 
 <section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
-   @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid])
+   @include('templates.basic.jobs.breadcrum',['job_uuid'=>$job->uuid,'total_offers' ])
       <div class="sections-wrapper d-flex flex-wrap justify-content-center cv-container">
         <div class="container network_wrapper col-sm ">
                 <div class="card">

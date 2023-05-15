@@ -33,7 +33,7 @@ class OfferController extends Controller
         $offers = $job->moduleOffer;
         $pending_offers=$offers->whereIn('status_id','!=',ModuleOffer::STATUSES['ACCEPTED']);
         $accepted_offers=$offers->where('status_id',ModuleOffer::STATUSES['ACCEPTED']);
-
+        
 
         $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
     
