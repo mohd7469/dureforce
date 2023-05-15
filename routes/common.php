@@ -54,6 +54,8 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
 
     Route::name('work-diary.')->prefix('work-diary')->group(function () {
         
+        Route::get('/contract-tasks/{uuid}',  [WorkDiaryController::class,'newTasks'])->name('tasks');
+        
         Route::get('/tasks/{uuid}',  [WorkDiaryController::class,'workDiaryDetail'])->name('detail');
         Route::get('/day_planning/delete/{uuid}',  [WorkDiaryController::class,'delete'])->name('day.planning.delete');
         Route::get('/day_planning/request_approval/{uuid}',  [WorkDiaryController::class,'RequestApproval'])->name('day.planning.request.approval');

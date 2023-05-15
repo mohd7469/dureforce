@@ -18,9 +18,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\DayPlanning;
 use App\Models\TaskComment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use PhpParser\Node\Stmt\TryCatch;
 
 class WorkDiaryController extends Controller
 {
@@ -271,6 +273,66 @@ class WorkDiaryController extends Controller
     public function update(){
         
     }
+    private function contractTasksData($contract_uuid,$day){
+        try {
+            $data=[];
+            $day_planning_tasks=collect([]);
+            $data['tasks_in_draft_count_count'] = 0; 
+            $data['tasks_in_progress_count'] =  0; 
+            $data['tasks_in_awating_approval_count'] = 0; 
+            $data['tasks_in_completed_count'] = 0; 
+            $data['total_day_hours'] = '0hrs 0m'; 
+            $data['total_day_hours_dollars'] = '$0'; 
+
+
+
+
+
+            if($contract_uuid){
+                $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
+                $day_plannings=DayPlanning::withAll()->where('contract_id',$contract->id)->whereDate('planning_date','=',$day)->first();
+                if($day_plannings){
+                    $day_planning_tasks=$day_plannings->tasks ? $day_plannings->tasks :collect([]);
+                    $total_hours_minutes=($day_planning_tasks->sum('time_in_hours')*60);
+                    $total_minutes=$day_planning_tasks->sum('time_in_minutes');
+                    $minutes=($total_minutes+$total_hours_minutes)%60;
+                    $hours=intval(($total_minutes+$total_hours_minutes)/60);
+                    $data['total_day_hours'] = $hours.'hrs '.$minutes.'m';
+                    $data['tasks_in_draft_count_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft'])->count(); 
+                    $data['tasks_in_progress_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress'])->count(); 
+                    $data['tasks_in_awating_approval_count'] =$day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval'])->count(); 
+                    $data['tasks_in_completed_count'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed'])->count(); 
+                }
+            }
+            $data['tasks_in_draft']    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
+            $data['tasks_in_progress'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
+            $data['tasks_in_awating_approval'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
+            $data['tasks_in_completed'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
+          return $data;
+
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        
+    }
+    public function newTasks(Request $request, $contract_uuid){
+        try {
+            $today_date=Carbon::now()->format('Y-m-d');
+
+            $data=$this->contractTasksData($contract_uuid,$today_date);
+            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
+
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+            Log::error($th->getMessage());
+            $notify[] = ["error","Failled to get contract tasks"];
+            return redirect()->back()->withNotify($notify);
+
+        }
+    }
+
     public function delete($uuid){
         try {
 
