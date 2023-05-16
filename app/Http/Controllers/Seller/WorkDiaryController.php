@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\DayPlanning;
 use App\Models\TaskComment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request as FacadesRequest;
 use Illuminate\Support\Facades\Route;
@@ -166,7 +167,7 @@ class WorkDiaryController extends Controller
                         [
                             'job_id' => $contract->offer->proposal->module_id,
                             'offer_id' => $contract->module_offer_id,
-                            'status_id' => DayPlanning::STATUSES['ApprovalNotYet_Requested'],
+                            'status_id' => DayPlanning::STATUSES['Draft'],
                             'client_id' => $contract->offer->offer_send_by_id,
         
                         ]
@@ -177,7 +178,7 @@ class WorkDiaryController extends Controller
                         'job_id'       => $day_planning->job_id,
                         'contract_id'  => $day_planning->contract_id,
                         'offer_id'     => $day_planning->offer_id,
-                        'status_id'    => DayPlanning::STATUSES['ApprovalNotYet_Requested'],
+                        'status_id'    => DayPlanning::STATUSES['Draft'],
                         'client_id'    => $day_planning->client_id,
                         'description'  => $request->description,
                         'timezone'     => $request->timezone_id,
@@ -235,15 +236,14 @@ class WorkDiaryController extends Controller
         
                          }
                     }
-                    $redirect_url = route('work-diary.index');
-                    if($previousRouteName=="work-diary.detail"){
-                        $redirect_url = $previousUrl ;
-                    }
+                    $redirect_url = route('work-diary.contract.day.tasks',$day_planning_task->contract->uuid);
+                    log::info($redirect_url);
+                   
                
                 DB::commit();
             }
-
-            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url]);
+            $day=Carbon::now()->format('Y-m-d');
+            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $day, 'uuid' => $day_planning_task->contract->uuid]);
 
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -285,36 +285,61 @@ class WorkDiaryController extends Controller
             $data['total_day_hours_dollars'] = '$0'; 
 
 
-
-
-
             if($contract_uuid){
-                $contract=Contract::where('uuid',$contract_uuid)->firstOrFail();
+
+                $contract = Contract::with('offer')->with('status')->where('uuid',$contract_uuid)->firstOrFail();
+                $rate_per_hour = User::find($contract->offer->offer_send_to_id)->rate_per_hour;
+
                 $day_plannings=DayPlanning::withAll()->where('contract_id',$contract->id)->whereDate('planning_date','=',$day)->first();
                 if($day_plannings){
                     $day_planning_tasks=$day_plannings->tasks ? $day_plannings->tasks :collect([]);
                     $total_hours_minutes=($day_planning_tasks->sum('time_in_hours')*60);
                     $total_minutes=$day_planning_tasks->sum('time_in_minutes');
-                    $minutes=($total_minutes+$total_hours_minutes)%60;
-                    $hours=intval(($total_minutes+$total_hours_minutes)/60);
+                    $all_in_minutes=$total_minutes+$total_hours_minutes;
+                    $minutes=($all_in_minutes)%60;
+                    $hours=intval(($all_in_minutes)/60);
+
                     $data['total_day_hours'] = $hours.'hrs '.$minutes.'m';
+                    $data['total_day_hours_dollars'] = '$'. $all_in_minutes*($rate_per_hour/60); 
+
                     $data['tasks_in_draft_count_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft'])->count(); 
                     $data['tasks_in_progress_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress'])->count(); 
                     $data['tasks_in_awating_approval_count'] =$day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval'])->count(); 
                     $data['tasks_in_completed_count'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed'])->count(); 
                 }
+                $data['contract_uuid']= $contract_uuid;
+
             }
+            
             $data['tasks_in_draft']    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
             $data['tasks_in_progress'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
             $data['tasks_in_awating_approval'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
             $data['tasks_in_completed'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
-          return $data;
+            $data['contract'] = $contract;
+
+            $timezones = Timezone::select('id','name')->get();
+            $data['timezones'] = $timezones;
+            return $data;
 
 
         } catch (\Throwable $th) {
             throw $th;
         }
         
+    }
+    public function contractTasks(Request $request, $contract_uuid){
+        try {
+            $today_date=Carbon::parse($request->day)->format('Y-m-d');
+            $data=$this->contractTasksData($contract_uuid,$today_date);
+            return response()->json(['success' => 'contract day planning data fetched successfully','data'=>$data]);
+
+        } catch (\Throwable $th) {
+
+            DB::rollback();
+            Log::error($th->getMessage());
+            return response()->json(['error' => $th->getMessage()]);
+
+        }
     }
     public function newTasks(Request $request, $contract_uuid){
         try {

@@ -3,8 +3,8 @@
     <div class="row col-md-12 col-lg-12 ">
         
         <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 bor" >
-            <a class="navbar-brand " href="#">All Contracts > Cloud AWS Development</a>
-            <button class="status float-right">Active</button>
+            <a class="navbar-brand " href="#">All Contracts > {{str_limit($contract->contract_title,35)}}</a>
+            <button class="status float-right">{{$contract->status->name}}</button>
         </div>
 
         <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
@@ -54,7 +54,6 @@
             padding: 0px 16px;
             gap: 6px;
             position: absolute;
-            width: 73px;
             height: 30px;
             top: 5px;
             background: #219A21;

@@ -205,11 +205,11 @@
                             <li class="right-navbar-li"><span>Total Worked Hours:</span> <span class="p_days">{{$contract->total_worked_hours}}</span></li>
                             <li class="right-navbar-li"><span>Approved Hours:</span> <span class="p_days">{{ $contract->approved_hours }}</span></li>
                             
-                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract) )
+                            {{-- @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract) )
                                 <li class="right-navbar-li">
                                     <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                                 </li>     
-                            @endif
+                            @endif --}}
                            
                         </ul>
                     </div>

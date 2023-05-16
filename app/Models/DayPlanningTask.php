@@ -13,6 +13,7 @@ class DayPlanningTask extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
+    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount'];
 
     protected static function boot()
     {

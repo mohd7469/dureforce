@@ -13,7 +13,6 @@ class DayPlanning extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
-
     public const STATUSES = [
         'Draft'            =>  40,
         'In_Progress'      =>  41,
@@ -73,7 +72,7 @@ class DayPlanning extends Model
 
     public function tasks()
     {
-        return $this->hasMany(DayPlanningTask::class, 'day_planning_id');
+        return $this->hasMany(DayPlanningTask::class, 'day_planning_id')->with('status');
     }
 
     public function scopeApprovalsNotYetRequested($query)

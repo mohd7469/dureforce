@@ -2,7 +2,12 @@
 @section('content')
 <section class="all-sections zero_top_padding">
     <div class="container-fluid">
-        @include('templates.basic.user.seller.work_diary.tasks_header')
+        @include('templates.basic.user.seller.work_diary.tasks_header' , ['contract' => $data['contract']])
+        @php
+            $contract_id=$data['contract']->id;
+            $timezones=$data['timezones'];
+        @endphp
+        <input type="hidden" value="{{$data['contract_uuid']}}" id="contract_uuid">
 
         <div class="section-wrapper ">
             
@@ -15,13 +20,13 @@
 
                 <div class="col-md-4 col-lg-4 ">
                     
-                    <button type="button" class="btn  btn-floating" onclick="showDate('previous')">
+                    <button type="button" class="btn  btn-floating btn_date" onclick="showDate('previous')" >
                         <i class="fas fa-chevron-left icon"></i>
                       </button>
 
-                    <button class="btn btn-secondary today" onclick="showDate('today')">Today</button>
+                    <button class="btn btn-secondary today btn_date" onclick="showDate('today')">Today</button>
                     
-                    <button type="button" class="btn  btn-floating" onclick="showDate('next')">
+                    <button type="button" class="btn  btn-floating btn_date" onclick="showDate('next')">
                         <i class="fas fa-chevron-right icon"></i>
                       </button>
 
@@ -44,7 +49,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button class="btn-add-task ml-2" type="button">Add Task</button>
+                            <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
                         </div>
                     </form>
                 </div>
@@ -62,7 +67,7 @@
                         <div class="row selected metrics-container">
                         
                             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
-                                <strong>{{$data['tasks_in_draft_count_count']}}</strong>
+                                <strong id="draft_count_id">{{$data['tasks_in_draft_count_count']}}</strong>
                                 
                             </div>
                             <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
@@ -82,8 +87,8 @@
                     <a class="nav-link" data-bs-toggle="tab" href="#in_progress">
                         <div class="row metrics-container">
                             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
-                                <strong>{{$data['tasks_in_progress_count']}}</strong>
-                                
+                                <strong id="in_progress_count_id">{{$data['tasks_in_progress_count']}}</strong>
+                                 
                             </div>
                             <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
                                 <span>Tasks</span><br>
@@ -98,7 +103,7 @@
                     <a class="nav-link" data-bs-toggle="tab" href="#awaiting_approval">
                         <div class="row metrics-container">
                             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2">
-                                <strong>{{$data['tasks_in_awating_approval_count']}}</strong>
+                                <strong id="awaiting_count_id">{{$data['tasks_in_awating_approval_count']}}</strong>
                                 
                             </div>
                             <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
@@ -114,7 +119,7 @@
                     <a class="nav-link" data-bs-toggle="tab" href="#completed">
                         <div class="row metrics-container">
                             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
-                                <strong>{{$data['tasks_in_completed_count']}}</strong>
+                                <strong id="completed_count_id">{{$data['tasks_in_completed_count']}}</strong>
                                 
                             </div>
                             <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
@@ -133,7 +138,7 @@
                     
                     <div class="mp">
                         <span>Day Total</span><br>
-                        <strong class="wh">{{$data['total_day_hours']}}</strong> <span class="mid-line"></span> <strong class="wh">{{$data['total_day_hours_dollars']}}</strong>
+                        <strong class="wh" id="total_day_hours_id">{{$data['total_day_hours']}}</strong> <span class="mid-line"></span> <strong class="wh" id="total_day_amount_id">{{$data['total_day_hours_dollars']}}</strong>
                     </div>
                     
 
@@ -145,7 +150,7 @@
                 
                 <div class="tab-pane active" id="in_draft">
                     
-                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="job-listing">
+                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="in_draft_hours_listing_id">
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -180,7 +185,7 @@
                 </div>
 
                 <div class="tab-pane mt-c" id="in_progress"> 
-                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="job-listing">
+                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="in_progress_hours_listing_id">
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -213,7 +218,7 @@
 
 
                 <div class="tab-pane mt-c" id="awaiting_approval"> 
-                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="job-listing">
+                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="awaiting_approvals_hours_listing_id">
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -244,7 +249,7 @@
                 </div>
 
                 <div class="tab-pane mt-c" id="completed"> 
-                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="job-listing">
+                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="completed_hours_listing_id">
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
@@ -281,13 +286,14 @@
     </div>
 </section>
 
-@endsection
+@include('templates.basic.user.seller.work_diary.Models.add_task')
 
+@endsection
 @push('script')
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-
+    
         $(document).ready(function() {
             $('.nav-link').on('click', function() {
                 $('.nav-link').find('div').removeClass('selected');
@@ -325,8 +331,108 @@
             }
 
             datePicker._flatpickr.setDate(currentDate, false, "D, j M");
+            uuid=$('#contract_uuid').val();
+            getDayPlanning(uuid,currentDate);
+        }
+        
+        
+        function deleteDayPlanning(uuid)
+        {
+            let route = "{{ route('work-diary.day.planning.delete', ':uuid') }}".replace(':uuid', uuid);
+
+            $.ajax({
+                type:"GET",
+                url:route,
+                data: {},
+                success:function(data){
+                    
+                    if(data.error){
+                        displayAlertMessage(data.error);
+                    
+                    }
+                    else{
+                        $('#'+uuid).remove();
+                        console.log(data.success);;
+                        displaySuccessMessage(data.success);
+                    }
+                }
+            });  
+        }
+        function addTableData(table_id,data){
+            console.log(data);
+            $(table_id).empty();
+            data.forEach(object => {
+                $(table_id).append(
+                    `<tr> 
+                        <td>${object.custom_description}</td> 
+                        <td>${object.custom_start_time}</td> 
+                        <td>${object.custom_end_time}</td> 
+                        <td>${object.time_in_hours}h</td> 
+                        <td>${object.custom_task_amount}</td> 
+                        <td><span class="status-btn ${object.status.color}">${object.status.name}</span></td> </tr>`
+
+                );
+            });
+
+        }
+        function addData(data){
+
+            $('#draft_count_id').html(data.tasks_in_draft_count_count);
+            $('#in_progress_count_id').html(data.tasks_in_progress_count);
+            $('#awaiting_count_id').html(data.tasks_in_awating_approval_count);
+            $('#completed_count_id').html(data.tasks_in_completed_count);
+
+            $('#total_day_hours_id').html(data.total_day_hours);
+            $('#total_day_amount_id').html(data.total_day_hours_dollars);
+
+            const in_drft_tasks=data.tasks_in_draft;   
+            const in_progress_tasks=data.tasks_in_progress;   
+            const in_awaiting_approval_tasks=data.tasks_in_awating_approval;   
+            const completed_tasks=data.tasks_in_completed;
+            
+            addTableData('#in_draft_hours_listing_id tbody',in_drft_tasks);
+            addTableData('#in_progress_hours_listing_id tbody',in_progress_tasks);
+            addTableData('#awaiting_approvals_hours_listing_id tbody',in_awaiting_approval_tasks);
+            addTableData('#completed_hours_listing_id tbody',completed_tasks);
+
+
         }
 
+        function getDayPlanning(contract_uuid,currentDate,is_custom=true)
+        {
+            alert("dsfd");
+            if (is_custom) {
+                const year = currentDate.getFullYear();
+                const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                const day = String(currentDate.getDate()).padStart(2, '0');
+                const formatted_date = `${year}-${month}-${day}`;
+            }
+            else{
+                formatted_date=currentDate;
+            }
+           
+
+            let route = "{{ route('work-diary.contract.day.tasks', ':uuid') }}".replace(':uuid', contract_uuid);
+            $.ajax({
+                type:"GET",
+                url:route,
+                data: {
+                    'day' : formatted_date
+                },
+                success:function(data){
+                    
+                    if(data.error){
+                        console.log(data.error);
+                        displayAlertMessage(data.error);
+                    
+                    }
+                    else{
+                        console.log(data.success);
+                        addData(data.data);
+                    }
+                }
+            });  
+        }
     </script>
 
 @endpush
