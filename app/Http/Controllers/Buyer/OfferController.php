@@ -183,12 +183,14 @@ class OfferController extends Controller
     
     public function offerSent($offer_id)
     {
+        
         if(!empty($offer_id)){
             $paymentVerified = ModuleOffer::findOrFail($offer_id);
             $paymentVerified->is_payment_method_selected = 1;
             $paymentVerified->is_active = 1;
             $paymentVerified->save();
         }
+
         try {
             DB::beginTransaction();
             $offer=ModuleOffer::with('module.user','module.user.user_basic','module')->find($offer_id);
