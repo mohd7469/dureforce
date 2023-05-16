@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\DatabaseOperations;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ class DayPlanningTask extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
+    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount'];
 
     protected static function boot()
     {
@@ -31,7 +33,26 @@ class DayPlanningTask extends Model
     public function attachments(){
         return $this->morphMany(Attachment::class,'section');
     }
-
+    public function getCustomStartTimeAttribute()
+    {
+        $time = new DateTime($this->attributes['start_time']);
+        return $time->format('h:i A');
+    }
+    public function getCustomDescriptionAttribute()
+    {
+        return str_limit($this->attributes['description'], 25);
+    }
+    public function getCustomTaskAmountAttribute()
+    {
+        $user_rate_per_hours=User::find($this->attributes['created_by'])->rate_per_hour;
+        $task_amount = (($this->attributes['time_in_hours']*60) + $this->attributes['time_in_minutes']) * ($user_rate_per_hours/60) ; 
+        return '$'.$task_amount;
+    }
+    public function getCustomEndTimeAttribute()
+    {
+        $time = new DateTime($this->attributes['end_time']);
+        return $time->format('h:i A');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by')->withAll();

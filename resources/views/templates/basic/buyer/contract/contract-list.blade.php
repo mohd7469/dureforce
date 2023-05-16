@@ -49,7 +49,7 @@
                                     <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                         class="view_propasal_per">View</a>
                                         @if (isHourlyContract($contract))
-                                            <a href="{{route('work-diary.index',$contract->uuid)}}"
+                                            <a href="{{route('work-diary.tasks',$contract->uuid)}}"
                                                 class="view_propasal_per">Work Diary</a>
                                         @endif
                                         
@@ -88,7 +88,7 @@
                                 <td>
                                     <a href="{{route('contracts.show',$contract->uuid)}}" class="view_propasal_per">View</a>
                                     @if (isHourlyContract($contract))
-                                        <a href="{{route('work-diary.index',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
                                      @endif
                                 </td>
                             </tr>
@@ -126,7 +126,7 @@
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
                                     @if (isHourlyContract($contract))
-                                        <a href="{{route('work-diary.index',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
                                     @endif
                                 </td>
                             </tr>
@@ -163,7 +163,7 @@
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
                                     @if (isHourlyContract($contract))
-                                        <a href="{{route('work-diary.index',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
                                     @endif
                                 </td>
 

@@ -13,15 +13,14 @@ class DayPlanning extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
-
     public const STATUSES = [
-
-        'ApprovalNotYet_Requested'  =>  40,
-        'ApprovalRequested' =>  41,
-        'ResendForApproval' =>  42,
-        'Approved' =>  43,
-        'Rejected' =>  44
-
+        'Draft'            =>  40,
+        'In_Progress'      =>  41,
+        'AwaitingApproval' =>  42,
+        'ResendForApproval'=>  43,
+        'Approved'         =>  44,
+        'Rejected'         =>  45,
+        'Completed'        =>  46,
     ];
 
     protected static function boot()
@@ -73,7 +72,7 @@ class DayPlanning extends Model
 
     public function tasks()
     {
-        return $this->hasMany(DayPlanningTask::class, 'day_planning_id');
+        return $this->hasMany(DayPlanningTask::class, 'day_planning_id')->with('status');
     }
 
     public function scopeApprovalsNotYetRequested($query)
