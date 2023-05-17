@@ -36,7 +36,7 @@ class ProposalController extends Controller
 
     public function __construct()
     {
-        $this->activeTemplate = activeTemplate();c
+        $this->activeTemplate = activeTemplate();
     }
 
     /**
