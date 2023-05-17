@@ -332,7 +332,7 @@
 
             datePicker._flatpickr.setDate(currentDate, false, "D, j M");
             uuid=$('#contract_uuid').val();
-            getDayPlanning(uuid,currentDate);
+            getDayPlanning(uuid,currentDate,true);
         }
         
         
@@ -400,14 +400,16 @@
 
         function getDayPlanning(contract_uuid,currentDate,is_custom=true)
         {
-            alert("dsfd");
+            var formatted_date = null;
+
             if (is_custom) {
                 const year = currentDate.getFullYear();
                 const month = String(currentDate.getMonth() + 1).padStart(2, '0');
                 const day = String(currentDate.getDate()).padStart(2, '0');
-                const formatted_date = `${year}-${month}-${day}`;
+                formatted_date = `${year}-${month}-${day}`;
             }
             else{
+
                 formatted_date=currentDate;
             }
            
