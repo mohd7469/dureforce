@@ -87,4 +87,6 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
 
     Route::get('view-proposal/{uuid}',    [\App\Http\Controllers\Buyer\ProposalController::class,'show'] )->name('proposal.show');
 
+    Route::get('proposal-update/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'changeStatus'])->name('proposal.update');
+
 });

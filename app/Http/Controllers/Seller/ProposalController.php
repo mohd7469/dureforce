@@ -29,6 +29,7 @@ use function imagePath;
 use function response;
 use function uploadAttachments;
 use function view;
+use Carbon\Carbon;
 
 class ProposalController extends Controller
 {
@@ -51,7 +52,6 @@ class ProposalController extends Controller
             $submitted_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['SUBMITTED'])->orderBy('id', 'DESC')->paginate(getPaginate());
             $archived_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ARCHIVED'])->orderBy('id', 'DESC')->paginate(getPaginate());
             $active_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ACTIVE'])->orderBy('id', 'DESC')->paginate(getPaginate());
-
             // dd($proposals);
 
             Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
@@ -83,6 +83,16 @@ class ProposalController extends Controller
 
         }
 
+
+    }
+
+    public function changeStatus($uuid){
+        $proposal=Proposal::find($uuid);
+        $proposal->status_id = Proposal::STATUSES['ARCHIVED'];
+        $proposal->updated_at = Carbon::now();
+        $proposal->save();
+
+        return redirect('/seller/proposal-lists');
 
     }
 

@@ -3,6 +3,7 @@
     @isset($proposal)
         <div class="container-fluid">
             <p class="propsal-h">All Proposals > {{$proposal->module->title}}</p>
+            <input type="hidden" id="proposalId" value="{{$proposal->id}}">
             <div class="main_con_p">
                 <div class="prosal-left-con">
                     <!---Cover Letter Section Start--->
@@ -133,9 +134,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <!-- <input type="submit" value="Change Terms" class="btn_sbmtrm">  -->
-                            <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">Change Terms</a>
-                            <input type="submit" value="Withdraw Proposal" class="btn_withdrw-c">
+                            <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">ChangeTerms</a>
+                            <input type="button" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
@@ -819,6 +819,7 @@
 </style>
 
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
     <script>
         'use strict';
@@ -841,6 +842,28 @@
             }
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+
+        function  confirmDelete() {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Would you want to withdraw proposal?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: ' Yes '
+            }).then((result) => {
+                var id;
+                id=$("#proposalId").val();
+
+                var url = "{{ route('proposal.update', ':id') }}";
+                url = url.replace(':id', id);
+                location.href = url;
+
+            })
+
         }
 
 

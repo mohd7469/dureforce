@@ -36,7 +36,7 @@
 
             <!---Comments Box-->
             <div class="comment-box">
-                <p class="comment-f">Comment</p>
+                <p class="comment-f">Comment <span class="text-danger">*</span></p>
                 <form>
                     <textarea  placeholder="Add Comment" class="comment-box"></textarea>
                     <input type="submit" value="Post Comment" class="btn-postcoment">
