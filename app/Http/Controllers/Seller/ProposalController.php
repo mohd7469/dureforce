@@ -46,22 +46,20 @@ class ProposalController extends Controller
      */
     public function index($type = null)
     {
-       try {
-            $proposalsAll = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id);
-            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(getPaginate());
-            $submitted_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['SUBMITTED'])->orderBy('id', 'DESC')->paginate(getPaginate());
-            $archived_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ARCHIVED'])->orderBy('id', 'DESC')->paginate(getPaginate());
-            $active_proposals = $proposalsAll->where('status_id', Proposal::STATUSES['ACTIVE'])->orderBy('id', 'DESC')->paginate(getPaginate());
-            // dd($proposals);
+        try {
 
+            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(getPaginate());
+            $submitted_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['SUBMITTED'])->orderBy('id', 'DESC')->paginate(getPaginate());
+            $archived_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ARCHIVED'])->orderBy('id', 'DESC')->paginate(getPaginate());
+            $active_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ACTIVE'])->orderBy('id', 'DESC')->paginate(getPaginate());
             Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
             return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
 
-       } catch (\Exception $e) {
-           Log::error($e->getMessage());
-           return response()->json(["error" => "There is a technical error"]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(["error" => "There is a technical error"]);
 
-       }
+        }
 
 
     }
@@ -86,8 +84,9 @@ class ProposalController extends Controller
 
     }
 
-    public function changeStatus($uuid){
-        $proposal=Proposal::find($uuid);
+    public function changeStatus($uuid)
+    {
+        $proposal = Proposal::find($uuid);
         $proposal->status_id = Proposal::STATUSES['ARCHIVED'];
         $proposal->updated_at = Carbon::now();
         $proposal->save();
@@ -127,7 +126,7 @@ class ProposalController extends Controller
         }
     }
 
-    function editProposal($job_uuid,$proposal_uuid)
+    function editProposal($job_uuid, $proposal_uuid)
     {
         // dd($job_uuid.'-'.$proposal_uuid);
         try {
@@ -143,7 +142,7 @@ class ProposalController extends Controller
             }
             $pageTitle = "Proposal";
             Log::info(['Job' => $job]);
-            return view('templates.basic.jobs.Proposal.update-submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes','proposal'));
+            return view('templates.basic.jobs.Proposal.update-submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes', 'proposal'));
 
 
         } catch (\Exception $e) {
@@ -288,13 +287,13 @@ class ProposalController extends Controller
                         'required',
                         'after_or_equal:now',
                         function ($attribute, $value, $fail) use ($request_data) {
-                            $milestoneIndex = (int) substr($attribute, 11, -11);
+                            $milestoneIndex = (int)substr($attribute, 11, -11);
 
                             if ($milestoneIndex > 1) {
-                                $previousMilestoneEndDate = $request_data['milestones'][$milestoneIndex-1]['end_date'];
+                                $previousMilestoneEndDate = $request_data['milestones'][$milestoneIndex - 1]['end_date'];
                                 if ($previousMilestoneEndDate >= $value) {
 
-                                    $fail('The start date of milestone '.$milestoneIndex.' must be after the end date of the previous milestone.');
+                                    $fail('The start date of milestone ' . $milestoneIndex . ' must be after the end date of the previous milestone.');
                                 }
 
                             }
@@ -305,9 +304,9 @@ class ProposalController extends Controller
                         'required',
                         'after_or_equal:milestones.*.start_date', // check that end date is after start date
                         function ($attribute, $value, $fail) use ($request_data) {
-                            $previousMilestoneIndex = (int) substr($attribute, 11, -11);
+                            $previousMilestoneIndex = (int)substr($attribute, 11, -11);
                             if ($previousMilestoneIndex > 1) {
-                                $previousMilestoneEndDate = $request_data['milestones'][$previousMilestoneIndex-1]['end_date'];
+                                $previousMilestoneEndDate = $request_data['milestones'][$previousMilestoneIndex - 1]['end_date'];
                                 if ($previousMilestoneEndDate >= $value) {
                                     $fail('The start date of the next milestone must be after the end date of the previous milestone.');
                                 }
