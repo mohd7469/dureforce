@@ -5,7 +5,7 @@
 <div class="main_con_p">
     <div class="prosal-left-con">
     <h3 class="mb-1 p-0">Hire {{$offer_user->sendToUser->fullname}}</h3>
-    <a href="#" class="mb-4">
+    <a href="{{route('buyer.job.all.offers',$offer_user->module->uuid)}}" class="mb-4">
             Back to offer details
     </a>
     <br>
@@ -384,6 +384,11 @@
 
 
 <style>
+    .setProfile form div button:hover {
+        color: #7f007f;
+        background: none !important;
+        font-weight: 500;
+    }
     .px-icons {
         background-color: #EFF4F4 !important;
         color: #7F007F !important;

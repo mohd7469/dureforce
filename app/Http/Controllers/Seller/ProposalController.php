@@ -127,6 +127,32 @@ class ProposalController extends Controller
         }
     }
 
+    function editProposal($job_uuid,$proposal_uuid)
+    {
+        // dd($job_uuid.'-'.$proposal_uuid);
+        try {
+            $job = Job::where('uuid', $job_uuid)->withAll()->first();
+            $skill_categories = SkillCategory::select('name', 'id')->get();
+            //$delivery_modes = DeliveryMode::Active()->select(['id', 'title'])->get();
+            $proposal = Proposal::with(['module.user.country', 'attachment', 'milestone', 'delivery_mode'])->where('uuid', $proposal_uuid)->first();
+            // dd($proposal);
+            $is_active = 1;
+            $delivery_modes = getRedisData(DeliveryMode::$Model_Name_Space, DeliveryMode::$Redis_key, $is_active);
+            foreach ($skill_categories as $skillCat) {
+                $skills = Skills::where('skill_category_id', $skillCat->id)->groupBy('skill_category_id')->get();
+            }
+            $pageTitle = "Proposal";
+            Log::info(['Job' => $job]);
+            return view('templates.basic.jobs.Proposal.update-submit-proposal', compact('pageTitle', 'job', 'skills', 'delivery_modes','proposal'));
+
+
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(["error" => "There is a technical error"]);
+
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *

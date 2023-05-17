@@ -134,8 +134,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
-                            <input type="" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
+                            <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">ChangeTerms</a>
+                            <input type="button" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
@@ -647,13 +647,14 @@
         font-size: 14px;
     }
 
-    input.btn_sbmtrm {
+    a.btn_sbmtrm {
         width: 137px;
         height: 35px;
         background: #7F007F;
         border-radius: 5px;
         color: #fff;
-        padding: 4px 0px;
+        /* padding: 4px 0px; */
+        padding: 4px 0px 0px 20px;
         font-size: 14px;
         font-weight: 600;
         margin-right: 1.5%;
@@ -770,7 +771,7 @@
             margin-bottom: 20px;
         }
 
-        input.btn_sbmtrm {
+        a.btn_sbmtrm {
             width: 130px;
         }
 
@@ -810,7 +811,7 @@
             width: 100%;
         }
 
-        input.btn_sbmtrm {
+        a.btn_sbmtrm {
             width: 100%;
             margin-bottom: 11px;
         }
@@ -842,72 +843,17 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-       /* function confirmDelete() {
-            console.log('here');
-            swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to recover this imaginary file!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, cancel plx!",
-                    closeOnConfirm: false,
-                    closeOnCancel: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                    } else {
-                        swal("Cancelled", "Your imaginary file is safe :)", "error");
-                    }
-                });
-            /*  swal({
-                  title: "Are you sure?",
-                  text: "You will not be able to recover this imaginary file!",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonClass: "btn-danger",
-                  confirmButtonText: "Yes, delete it!",
-                  cancelButtonText: "No, cancel plx!",
-                  closeOnConfirm: false,
-                  closeOnCancel: false
-              }, /*function (isConfirm) {
-                  if (!isConfirm) return;
-                  $.ajax({
-                      url: "#",
-                      type: "POST",
-                      data: {
-                          id: 5
-                      },
-                      dataType: "html",
-                      success: function () {
-                          swal("Done!", "It was succesfully deleted!", "success");
-                      },
-                      error: function (xhr, ajaxOptions, thrownError) {
-                          swal("Error deleting!", "Please try again", "error");
-                      }
-                  });
-              });
-                  function(isConfirm) {
-                      if (isConfirm) {
-                          swal("Deleted!", "Your imaginary file has been deleted.", "success");
-                      } else {
-                          swal("Cancelled", "Your imaginary file is safe :)", "error");
-                      }
-                  });
 
-        }*/
         function  confirmDelete() {
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                text: "Would you want to withdraw proposal?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: ' Yes '
             }).then((result) => {
                 var id;
                 id=$("#proposalId").val();

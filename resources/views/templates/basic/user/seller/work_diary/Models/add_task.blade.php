@@ -64,7 +64,7 @@
                                 </div>
                             </div>
 
-                            @if(Route::currentRouteName() == 'work-diary.index')
+                            {{-- @if(Route::currentRouteName() == 'work-diary.index')
                                 <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label for="title">Contract ID</label>
@@ -82,8 +82,9 @@
                                     </div>
                                 </div>
                             @else
-                                <input type="hidden" name="contract_id"  id="contract_id" value="{{$contract_id}}">
-                            @endif
+                            @endif --}}
+                            <input type="hidden" name="contract_id"  id="contract_id" value="{{$contract_id}}">
+
                            
                             <input type="hidden" name="already_uploaded_files" id="already_uploaded_files_id">
 
@@ -248,7 +249,8 @@
                         displaySuccessMessage(data.success);
                     }
                     if(data.redirect){
-                        window.location.replace(data.redirect);              
+                        getDayPlanning(data.uuid,data.day,false); 
+                        $('#add_task_model_id').modal('hide');
                     }
                 }
             });  
