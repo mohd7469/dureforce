@@ -86,13 +86,19 @@ class ProposalController extends Controller
 
     }
 
-    public function changeStatus($uuid){
-        $proposal=Proposal::find($uuid);
+    public function changeStatus($id){
+        try{
+        $proposal=Proposal::find($id);
         $proposal->status_id = Proposal::STATUSES['ARCHIVED'];
         $proposal->updated_at = Carbon::now();
         $proposal->save();
 
         return redirect('/seller/proposal-lists');
+    } catch (\Exception $e) {
+    Log::error($e->getMessage());
+    return response()->json(["error" => "There is a technical error"]);
+
+    }
 
     }
 
