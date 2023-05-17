@@ -3,6 +3,7 @@
     @isset($proposal)
         <div class="container-fluid">
             <p class="propsal-h">All Proposals > {{$proposal->module->title}}</p>
+            <input type="hidden" id="proposalId" value="{{$proposal->id}}">
             <div class="main_con_p">
                 <div class="prosal-left-con">
                     <!---Cover Letter Section Start--->
@@ -134,7 +135,7 @@
                         </div>
                         <div class="btns_container-div">
                             <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
-                            <input type="submit" value="Withdraw Proposal" class="btn_withdrw-c">
+                            <input type="" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
@@ -817,6 +818,7 @@
 </style>
 
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
     <script>
         'use strict';
@@ -839,6 +841,83 @@
             }
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+       /* function confirmDelete() {
+            console.log('here');
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel plx!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+            /*  swal({
+                  title: "Are you sure?",
+                  text: "You will not be able to recover this imaginary file!",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Yes, delete it!",
+                  cancelButtonText: "No, cancel plx!",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+              }, /*function (isConfirm) {
+                  if (!isConfirm) return;
+                  $.ajax({
+                      url: "#",
+                      type: "POST",
+                      data: {
+                          id: 5
+                      },
+                      dataType: "html",
+                      success: function () {
+                          swal("Done!", "It was succesfully deleted!", "success");
+                      },
+                      error: function (xhr, ajaxOptions, thrownError) {
+                          swal("Error deleting!", "Please try again", "error");
+                      }
+                  });
+              });
+                  function(isConfirm) {
+                      if (isConfirm) {
+                          swal("Deleted!", "Your imaginary file has been deleted.", "success");
+                      } else {
+                          swal("Cancelled", "Your imaginary file is safe :)", "error");
+                      }
+                  });
+
+        }*/
+        function  confirmDelete() {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                var id;
+                id=$("#proposalId").val();
+
+                var url = "{{ route('proposal.update', ':id') }}";
+                url = url.replace(':id', id);
+                location.href = url;
+
+            })
+
         }
 
 
