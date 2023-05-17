@@ -33,7 +33,7 @@ class Contract extends Model
     protected static function boot()
     {
         parent::boot();
-        static::saving(function ($model)  {
+        static::creating(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
             $model->contract_id=generateUniqueRandomNumber();

@@ -5,7 +5,6 @@
         @include('templates.basic.user.seller.work_diary.tasks_header' , ['contract' => $data['contract']])
         @php
             $contract_id=$data['contract']->id;
-            $timezones=$data['timezones'];
         @endphp
         <input type="hidden" value="{{$data['contract_uuid']}}" id="contract_uuid">
 
@@ -293,7 +292,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    
         $(document).ready(function() {
             $('.nav-link').on('click', function() {
                 $('.nav-link').find('div').removeClass('selected');
@@ -321,18 +319,24 @@
             var datePicker = document.getElementById("datepicker");
             var selectedDate = flatpickr.parseDate(datePicker.value, "D, j M");
             var currentDate = new Date();
+            uuid=$('#contract_uuid').val();
 
             if (action === 'previous') {
                 currentDate.setDate(selectedDate.getDate() - 1);
+                getDayPlanning(uuid,currentDate,true);
+
             } else if (action === 'next') {
                 currentDate.setDate(selectedDate.getDate() + 1);
+                getDayPlanning(uuid,currentDate,true);
+
             } else {
                 currentDate = new Date(); // Today's date
+                getDayPlanning(uuid,currentDate,true);
+
             }
 
             datePicker._flatpickr.setDate(currentDate, false, "D, j M");
-            uuid=$('#contract_uuid').val();
-            getDayPlanning(uuid,currentDate,true);
+            
         }
         
         

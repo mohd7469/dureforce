@@ -236,14 +236,14 @@ class WorkDiaryController extends Controller
         
                          }
                     }
-                    $redirect_url = route('work-diary.contract.day.tasks',$day_planning_task->contract->uuid);
+                    $redirect_url = route('work-diary.contract.day.tasks',$contract->uuid);
                     log::info($redirect_url);
                    
                
                 DB::commit();
             }
             $day=Carbon::now()->format('Y-m-d');
-            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $day, 'uuid' => $day_planning_task->contract->uuid]);
+            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $day, 'uuid' => $contract->uuid]);
 
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -317,8 +317,7 @@ class WorkDiaryController extends Controller
             $data['tasks_in_completed'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
             $data['contract'] = $contract;
 
-            $timezones = Timezone::select('id','name')->get();
-            $data['timezones'] = $timezones;
+           
             return $data;
 
 
@@ -346,6 +345,7 @@ class WorkDiaryController extends Controller
             $today_date=Carbon::now()->format('Y-m-d');
 
             $data=$this->contractTasksData($contract_uuid,$today_date);
+            
             return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {
