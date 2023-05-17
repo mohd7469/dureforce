@@ -27,7 +27,7 @@
                             </div>
                         
 
-                            <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12 ">
+                            {{-- <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12 ">
                                 <div class=" mb-3 select2_element ">
                                     <label for="title">Timezone *</label>
                                     <select
@@ -47,7 +47,7 @@
                                     </select>
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
