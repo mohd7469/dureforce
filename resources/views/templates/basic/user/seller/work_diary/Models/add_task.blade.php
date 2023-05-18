@@ -22,7 +22,7 @@
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">Planning Date *</label>
-                                    <input type="date" class="form-control" name="planning_date" id="planning_date" value="{{ isset($day_planning_day) ? $day_planning_day : null}}" {{ isset($day_planning_day) ? 'readonly' : '' }}>
+                                    <input type="date" class="form-control" name="planning_date" id="planning_date" readonly>
                                 </div>
                             </div>
                         
@@ -246,6 +246,10 @@
                         displayAlertMessage(data.error);
                     }
                     if(data.success){
+                        $('#planning_date').val('');
+                        $('#start_time').val('');
+                        $('#end_time').val('');
+                        $('#description_id').val('');
                         displaySuccessMessage(data.success);
                     }
                     if(data.redirect){
