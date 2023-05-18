@@ -206,7 +206,7 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
         $rules = [
-            'card_number' => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19|gt:0',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code' => 'required|numeric|digits_between:3,4',
             'name_on_card' => 'required',
@@ -403,7 +403,7 @@ class ProfileController extends Controller
     {
 
         $rules = [
-            'card_number' => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19|gt:0',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code' => 'required|numeric|digits_between:3,4',
             'name_on_card' => 'required',
@@ -577,8 +577,8 @@ class ProfileController extends Controller
             'name' => 'required',
             'country_id' => 'required',
             'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:5|max:15',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15|gt:0|not_in:0',
+            'vat' => 'required|string|min:5|max:15|gt:0',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],

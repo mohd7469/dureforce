@@ -183,14 +183,16 @@ class OfferController extends Controller
     
     public function offerSent($offer_id)
     {
+        
+        if(!empty($offer_id)){
+            $paymentVerified = ModuleOffer::findOrFail($offer_id);
+            $paymentVerified->is_payment_method_selected = 1;
+            $paymentVerified->is_active = 1;
+            $paymentVerified->save();
+        }
+
         try {
             DB::beginTransaction();
-            if(!empty($offer_id)){
-                $paymentVerified = ModuleOffer::findOrFail($offer_id);
-                $paymentVerified->is_payment_method_selected = 1;
-                $paymentVerified->is_active = 1;
-                $paymentVerified->save();
-            }
             $offer=ModuleOffer::with('module.user','module.user.user_basic','module')->find($offer_id);
             $user_email = User::where('id',$offer->offer_send_to_id )->first();
             $email_template = EmailTemplate::where('is_active',1)->where('type','offer')->with('attachments')->first();     

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/bootstrap-fileinput.css')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/resources/templates/basic/frontend/css/dropzone.css')}}" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="{{asset('/assets/resources/style/index.css')}}">
     @stack('style-lib')
     @stack('style')
@@ -95,6 +96,7 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/sweet-alert.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
+
 @stack('script-lib')
 @stack('script')
 @include('partials.plugins')

@@ -26,7 +26,6 @@ class CreateTaskRequest extends FormRequest
     {
         return [
             'description' => 'required|min:'.config('settings.work_diary_task_min_text_length').'| max:'.config('settings.work_diary_task_max_text_length'),
-            'timezone_id' => 'required',
             'start_time' => 'required',
             'end_time' => [
                 'required',
