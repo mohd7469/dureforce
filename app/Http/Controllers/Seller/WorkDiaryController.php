@@ -243,7 +243,7 @@ class WorkDiaryController extends Controller
                 DB::commit();
             }
             $day=Carbon::now()->format('Y-m-d');
-            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $day, 'uuid' => $contract->uuid]);
+            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $request->planning_date, 'uuid' => $contract->uuid]);
 
         } catch (\Throwable $th) {
             Log::error($th->getMessage());

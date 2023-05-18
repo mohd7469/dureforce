@@ -301,10 +301,18 @@
                 $(target).addClass('active');
             });
         });
+        function formattedDate(currentDate){
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+            var setmodel_date = `${year}-${month}-${day}`;
+            return setmodel_date;
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             var datePicker = document.getElementById("datepicker");
             var currentDate = new Date();
+
             var flatpickrInstance = flatpickr(datePicker, {
             dateFormat: "D, j M", // Set the desired date format
             defaultDate: currentDate,
@@ -312,6 +320,9 @@
                 datePicker.value = flatpickrInstance.formatDate(selectedDates[0], "D, j M");
             }
             });
+
+            $('#planning_date').val(formattedDate(currentDate));
+
         });
 
         function showDate(action) {
@@ -319,23 +330,24 @@
             var datePicker = document.getElementById("datepicker");
             var selectedDate = flatpickr.parseDate(datePicker.value, "D, j M");
             var currentDate = new Date();
+
             uuid=$('#contract_uuid').val();
 
             if (action === 'previous') {
                 currentDate.setDate(selectedDate.getDate() - 1);
-                getDayPlanning(uuid,currentDate,true);
 
             } else if (action === 'next') {
                 currentDate.setDate(selectedDate.getDate() + 1);
-                getDayPlanning(uuid,currentDate,true);
 
             } else {
                 currentDate = new Date(); // Today's date
-                getDayPlanning(uuid,currentDate,true);
 
             }
-
+            
+            getDayPlanning(uuid,currentDate,true);
             datePicker._flatpickr.setDate(currentDate, false, "D, j M");
+            $('#planning_date').val(formattedDate(currentDate));
+
             
         }
         
@@ -362,6 +374,7 @@
                 }
             });  
         }
+
         function addTableData(table_id,data){
             console.log(data);
             $(table_id).empty();
@@ -379,6 +392,7 @@
             });
 
         }
+
         function addData(data){
 
             $('#draft_count_id').html(data.tasks_in_draft_count_count);
