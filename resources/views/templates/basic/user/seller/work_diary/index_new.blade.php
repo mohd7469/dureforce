@@ -83,6 +83,22 @@
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
+                    <a class="nav-link" data-bs-toggle="tab" href="#awaiting_approval">
+                        <div class="row metrics-container">
+                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2">
+                                <strong id="awaiting_count_id">{{$data['tasks_in_awating_approval_count']}}</strong>
+                                
+                            </div>
+                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                                <span>Tasks</span><br>
+                                <span> Awaiting Approval</span>
+                            </div>
+                            
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#in_progress">
                         <div class="row metrics-container">
                             <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
@@ -98,21 +114,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
-                    <a class="nav-link" data-bs-toggle="tab" href="#awaiting_approval">
-                        <div class="row metrics-container">
-                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2">
-                                <strong id="awaiting_count_id">{{$data['tasks_in_awating_approval_count']}}</strong>
-                                
-                            </div>
-                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
-                                <span>Tasks</span><br>
-                                <span> Awaiting Approval</span>
-                            </div>
-                            
-                        </div>
-                    </a>
-                </div>
+                
 
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#completed">
@@ -159,6 +161,8 @@
                                 <th>@lang('Total Hrs')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Status')</th>
+                                <th>@lang('Action')</th>
+
 
                             </tr>
                         </thead>
@@ -178,6 +182,21 @@
                                     <td>{{$item->time_in_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
+                                    <td>
+                                        @if ($item->status_id == App\Models\DayPlanning::STATUSES['Draft'] && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <form id="hiddenForm" method="GET" action="{{route('work-diary.day.planning.request.approval',$item->uuid)}}" >
+                                                @csrf
+                                                <input type="hidden" name="next_status" value="{{ App\Models\DayPlanning::STATUSES['AwaitingApproval']}}">
+                                                <button type="submit" class="bc" >
+                                                    <span class="badge ra-color" >Submit For Approval</span>
+                                                </button>
+                                            </form>
+                                            
+                                        @else
+                                            <span class="badge {{$item->status->color}}" >{{$item->status->name}}</span>
+
+                                    @endif
+                                    </td>
 
                                 </tr>
                             @endforeach
@@ -188,46 +207,6 @@
                     </table>
 
                 </div>
-
-                <div class="tab-pane mt-c" id="in_progress"> 
-                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="in_progress_hours_listing_id">
-                                    
-                        <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
-                            <tr>
-                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
-                                <th>@lang('Start Time')</th>
-                                <th>@lang('End Time')</th>
-                                <th>@lang('Total Hrs')</th>
-                                <th>@lang('Amount')</th>
-                                <th>@lang('Status')</th>
-
-                            </tr>
-                        </thead>
-
-                        <tbody class="text-center">
-                            @foreach ($data['tasks_in_progress'] as $item)
-                                <tr>
-                                    <td class="tl">
-                                        <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
-                                            fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
-                                        </svg>
-                                        {{$item->custom_description}}
-                                    </td>
-                                    <td>{{$item->custom_start_time}}</td>
-                                    <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
-                                    <td>{{$item->custom_task_amount}}</td>
-                                    <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-                            
-                    </table>
-                </div>
-
-
                 <div class="tab-pane mt-c" id="awaiting_approval"> 
                     <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="awaiting_approvals_hours_listing_id">
                                     
@@ -239,6 +218,8 @@
                                 <th>@lang('Total Hrs')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Status')</th>
+                                <th>@lang('Action')</th>
+
 
                             </tr>
                         </thead>
@@ -258,12 +239,77 @@
                                     <td>{{$item->time_in_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
+                                    <td>
+                                        @if ($item->status_id == App\Models\DayPlanning::STATUSES['AwaitingApproval'] && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <a href="#">
+                                                <span class="badge ra-color" >Remind</span>
+                                            </a>
+                                        @else
+                                            <span class="badge {{$item->status->color}}" >{{$item->status->name}}</span>
+                                        @endif
+                                    </td>
 
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+
+                <div class="tab-pane mt-c" id="in_progress"> 
+                    <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="in_progress_hours_listing_id">
+                                    
+                        <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
+                            <tr>
+                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                <th>@lang('Start Time')</th>
+                                <th>@lang('End Time')</th>
+                                <th>@lang('Total Hrs')</th>
+                                <th>@lang('Amount')</th>
+                                <th>@lang('Status')</th>
+                                <th>@lang('Action')</th>
+
+
+                            </tr>
+                        </thead>
+
+                        <tbody class="text-center">
+                            @foreach ($data['tasks_in_progress'] as $item)
+                                <tr>
+                                    <td class="tl">
+                                        <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
+                                            fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
+                                        </svg>
+                                        {{$item->custom_description}}
+                                    </td>
+                                    <td>{{$item->custom_start_time}}</td>
+                                    <td>{{$item->custom_end_time}}</td>
+                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_task_amount}}</td>
+                                    <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
+                                    <td>
+                                        @if ($item->status_id == App\Models\DayPlanning::STATUSES['In_Progress'] && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <form id="hiddenForm" method="GET" action="{{route('work-diary.day.planning.request.approval',$item->uuid)}}" >
+                                                @csrf
+                                                <input type="hidden" name="next_status" value="{{ App\Models\DayPlanning::STATUSES['Completed']}}">
+                                                <button type="submit" >
+                                                    <span class="badge ra-color" >Mark Completed</span>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="badge {{$item->status->color}}" >{{$item->status->name}}</span>
+                                        @endif
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                        </tbody>
+                            
+                    </table>
+                </div>
+
+                <input type="hidden" name="lastlogin" value="{{getLastLoginRoleId()}}" id="last_login_role_id">
+             
 
                 <div class="tab-pane mt-c" id="completed"> 
                     <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="completed_hours_listing_id">
@@ -276,6 +322,8 @@
                                 <th>@lang('Total Hrs')</th>
                                 <th>@lang('Amount')</th>
                                 <th>@lang('Status')</th>
+                                <th>@lang('Action')</th>
+
 
                             </tr>
                         </thead>
@@ -294,6 +342,15 @@
                                     <td>{{$item->time_in_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
+                                    <td>
+                                        @if ($item->status_id == App\Models\DayPlanning::STATUSES['Completed'] && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                            <a href="#">
+                                                <span class="badge ra-color" >Request Payment</span>
+                                            </a>
+                                        @else
+                                            <span class="badge {{$item->status->color}}" >{{$item->status->name}}</span>
+                                        @endif
+                                    </td>
 
                                 </tr>
                             @endforeach
@@ -315,6 +372,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
+        var STATUSES = {
+            Draft: 40,
+            In_Progress: 41,
+            AwaitingApproval: 42,
+            ResendForApproval: 43,
+            Approved: 44,
+            Rejected: 45,
+            Completed: 46,
+
+        };
+
         $(document).ready(function() {
             $('.nav-link').on('click', function() {
                 $('.nav-link').find('div').removeClass('selected');
@@ -324,6 +392,7 @@
                 $(target).addClass('active');
             });
         });
+
         function formattedDate(currentDate){
             const year = currentDate.getFullYear();
             const month = String(currentDate.getMonth() + 1).padStart(2, '0');
@@ -399,9 +468,72 @@
         }
 
         function addTableData(table_id,data){
+
+            let form='';
+            let last_login_id=$('#last_login_role_id').val();
             console.log(data);
             $(table_id).empty();
             data.forEach(object => {
+                if(table_id ==  '#in_draft_hours_listing_id tbody'){
+                    form='';
+                    if (object.status.slug == 'draft' && last_login_id == 1){
+                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
+                        form=`<form id="hiddenForm" method="GET" action="${status_action_url}" >
+                            @csrf
+                            <input type="hidden" name="next_status" value="${STATUSES['AwaitingApproval']}">
+                            <button type="submit" class="bc">
+                                <span class="badge ra-color" >Submit For Approval</span>
+                            </button>
+                        </form>`;
+                    }                           
+                    else{
+                        form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
+                    }
+            }        
+            else if( table_id=='#in_progress_hours_listing_id tbody'){
+                if (object.status.slug == 'in_progress' && last_login_id == 1){
+                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
+                        form=`<form id="hiddenForm" method="GET" action="${status_action_url}" >
+                            @csrf
+                            <input type="hidden" name="next_status" value="${STATUSES['Completed']}">
+                            <button type="submit" >
+                                <span class="badge ra-color" >Mark Completed</span>
+                            </button>
+                        </form>`;
+                    }                           
+                    else{
+                        form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
+                    }
+
+            }
+            else if( table_id=='#awaiting_approvals_hours_listing_id tbody'){
+                if (object.status.slug == 'awaiting_approval' && last_login_id == 1){
+                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
+                        form=`<a href="#">
+                                    <span class="badge ra-color" >Remind</span>
+                                </a>`;
+                    }                           
+                    else{
+                        form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
+                    }
+                
+            }
+            else{
+                if (object.status.slug == 'completed' && last_login_id == 1){
+                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
+                        form=`<a href="#">
+                                    <span class="badge ra-color" >Request Payment</span>
+                                </a>`;
+                    }                           
+                    else{
+                        form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
+                    }
+
+            }
                 $(table_id).append(
                     `<tr > 
                         <td class="tl">
@@ -416,7 +548,9 @@
                         <td>${object.custom_end_time}</td> 
                         <td>${object.time_in_hours}h</td> 
                         <td>${object.custom_task_amount}</td> 
-                        <td><span class="status-btn ${object.status.color}">${object.status.name}</span></td> </tr>`
+                        <td><span class="status-btn ${object.status.color}">${object.status.name}</span></td> 
+                        <td>${form}</td> 
+                        </tr>`
 
                 );
             });
@@ -530,6 +664,12 @@
     }
     .tl{
         text-align: left !important;
+    }
+    .bc{
+        background: transparent;
+    }
+    .ra-color{
+        background: #7F007F
     }
     .wh{
         padding: 3px;

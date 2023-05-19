@@ -252,19 +252,19 @@ class WorkDiaryController extends Controller
         }
     }
 
-    public function RequestApproval($day_planning_uuid){
+    public function RequestApproval(Request $request,$day_planning_task_uuid){
         try {
             
-            DayPlanning::where('uuid',$day_planning_uuid)->update([
-                'status_id' =>   DayPlanning::STATUSES['ApprovalRequested']
+            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
+                'status_id' =>   $request->next_status
             ]);
-            $notify[] = ["success","Day Planning approval requested successfully"];
+            $notify[] = ["success","Day Planning task status updated successfully"];
             return redirect()->back()->withNotify($notify);
 
         } catch (\Throwable $th) {
 
             Log::error($th->getMessage());
-            $notify[] = ["error","Failled to request approval for day planning. Please try again later"];
+            $notify[] = ["error","Failled to update day planning task status. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
         }
