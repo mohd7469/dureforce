@@ -178,7 +178,7 @@ class WorkDiaryController extends Controller
                         'job_id'       => $day_planning->job_id,
                         'contract_id'  => $day_planning->contract_id,
                         'offer_id'     => $day_planning->offer_id,
-                        'status_id'    => DayPlanning::STATUSES['Draft'],
+                        'status_id'    => $request->action == 'draft' ? DayPlanning::STATUSES['Draft'] : DayPlanning::STATUSES['AwaitingApproval'],
                         'client_id'    => $day_planning->client_id,
                         'description'  => $request->description,
                         'timezone'     => $request->timezone_id,
@@ -283,6 +283,10 @@ class WorkDiaryController extends Controller
             $data['tasks_in_completed_count'] = 0; 
             $data['total_day_hours'] = '0hrs 0m'; 
             $data['total_day_hours_dollars'] = '$0'; 
+            $data['tasks_in_progress']=[];
+            $data['tasks_in_awating_approval']=[];
+            $data['tasks_in_draft']=[];
+            $data['tasks_in_completed']=[];
 
 
             if($contract_uuid){
@@ -312,10 +316,20 @@ class WorkDiaryController extends Controller
             }
             
             $data['tasks_in_draft']    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
-            $data['tasks_in_progress'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
-            $data['tasks_in_awating_approval'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
-            $data['tasks_in_completed'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_progress'][] = $task;
+            }
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_awating_approval'][] = $task;
+            }
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_completed'][] = $task;
+            }
             $data['contract'] = $contract;
+
 
            
             return $data;
