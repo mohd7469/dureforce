@@ -315,7 +315,10 @@ class WorkDiaryController extends Controller
 
             }
             
-            $data['tasks_in_draft']    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
+            $filteredTasks    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_draft'][] = $task;
+            }
             $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
             foreach ($filteredTasks as $task) {
                 $data['tasks_in_progress'][] = $task;
