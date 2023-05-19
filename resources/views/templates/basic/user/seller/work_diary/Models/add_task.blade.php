@@ -22,7 +22,7 @@
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">Planning Date *</label>
-                                    <input type="date" class="form-control" name="planning_date" id="planning_date" readonly>
+                                    <input type="date" class="form-control" name="planning_date" id="planning_date" >
                                 </div>
                             </div>
                         
@@ -224,9 +224,10 @@
 
         }
 
-        function AddTask(){
+        function AddTask(actionValue){
             let add_task_route="{{route('work-diary.store')}}";
             let form_data = new FormData(new_task_add_form[0]);
+            form_data.append('action', actionValue);
             form_data.append('attachments', $('#uploaded_files')[0].files);
             $.ajax({
                 type:"POST",
@@ -247,7 +248,6 @@
                         displayAlertMessage(data.error);
                     }
                     if(data.success){
-                        $('#planning_date').val('');
                         $('#start_time').val('');
                         $('#end_time').val('');
                         $('#description_id').val('');
@@ -255,6 +255,15 @@
                     }
                     if(data.redirect){
                         getDayPlanning(data.uuid,data.day,false); 
+                        var datePicker = document.getElementById("datepicker");
+                        var currentDate = new Date(data.day);
+                        var flatpickrInstance = flatpickr(datePicker, {
+                        dateFormat: "D, j M", 
+                        defaultDate: currentDate,
+                            onClose: function(selectedDates) {
+                                datePicker.value = flatpickrInstance.formatDate(selectedDates[0], "D, j M");
+                            }
+                        });
                         $('#add_task_model_id').modal('hide');
                     }
                 }
@@ -273,8 +282,18 @@
             new_task_add_form.submit(function (e) {
 
                 e.preventDefault();
-                e.stopPropagation(); 
-                AddTask();
+                e.stopPropagation();
+                let actionValue= null; 
+                var clickedButton = $(this).find(':focus');
+                // Determine the value of the action field based on the clicked button
+                if (clickedButton.hasClass('btn-save-draft')) {
+                    actionValue = 'draft';
+                } else if (clickedButton.hasClass('btn-save')) {
+                    actionValue = 'approval';
+                }
+                console.log("button" + actionValue);
+                AddTask(actionValue);
+
 
             });
 
