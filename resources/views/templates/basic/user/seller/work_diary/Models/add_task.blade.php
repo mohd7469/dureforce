@@ -120,8 +120,9 @@
 
                 <div class="modal-footer">
                 
-                    <button type="button" class="btn btn--info btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
-                    <button type="submit" class="btn btn--danger btn-rounded text-white btn-save" id="save_btn_id">@lang('Save')</button>
+                    <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
+                    <button type="submit" class="btn-rounded text-white btn-save-draft" name="action" value="draft" id="save_btn_id">@lang('Save')</button>
+                    <button type="submit" class="btn-rounded text-white btn-save" name="action" value="approval" id="save_btn_id">@lang('Submit for Approval')</button>
                 </div>
 
             </form>
@@ -295,13 +296,25 @@
         color: #fff;
         padding: 6px 2px;
         font-size: 13px;
-        width: 5rem !important;
+        width: 8rem !important;
+
     }
-    .btn-cancel {
-        color:  #7F007F ;
+    .btn-save-draft {
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid #7f007f;
+        color: #7f007f !important;
+        width: 5rem !important;
         padding: 6px 2px;
         font-size: 13px;
+    }
+    .btn-cancel {
+        background-color: transparent;
+        border-radius: 5px;
+        color: #7f007f !important;
         width: 5rem !important;
+        padding: 6px 2px;
+        font-size: 13px;
     }
     .select2-container--default .select2-selection--multiple {
         border: 1px solid #e1e7ec;

@@ -23,6 +23,8 @@ class DayPlanning extends Model
         'Completed'        =>  46,
     ];
 
+    public static $Completed = 46;
+
     protected static function boot()
     {
         
