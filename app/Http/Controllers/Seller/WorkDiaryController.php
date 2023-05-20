@@ -178,7 +178,7 @@ class WorkDiaryController extends Controller
                         'job_id'       => $day_planning->job_id,
                         'contract_id'  => $day_planning->contract_id,
                         'offer_id'     => $day_planning->offer_id,
-                        'status_id'    => DayPlanning::STATUSES['Draft'],
+                        'status_id'    => $request->action == 'draft' ? DayPlanning::STATUSES['Draft'] : DayPlanning::STATUSES['AwaitingApproval'],
                         'client_id'    => $day_planning->client_id,
                         'description'  => $request->description,
                         'timezone'     => $request->timezone_id,
@@ -236,14 +236,14 @@ class WorkDiaryController extends Controller
         
                          }
                     }
-                    $redirect_url = route('work-diary.contract.day.tasks',$day_planning_task->contract->uuid);
+                    $redirect_url = route('work-diary.contract.day.tasks',$contract->uuid);
                     log::info($redirect_url);
                    
                
                 DB::commit();
             }
             $day=Carbon::now()->format('Y-m-d');
-            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $day, 'uuid' => $day_planning_task->contract->uuid]);
+            return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $request->planning_date, 'uuid' => $contract->uuid]);
 
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -252,19 +252,19 @@ class WorkDiaryController extends Controller
         }
     }
 
-    public function RequestApproval($day_planning_uuid){
+    public function RequestApproval(Request $request,$day_planning_task_uuid){
         try {
             
-            DayPlanning::where('uuid',$day_planning_uuid)->update([
-                'status_id' =>   DayPlanning::STATUSES['ApprovalRequested']
+            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
+                'status_id' =>   $request->next_status
             ]);
-            $notify[] = ["success","Day Planning approval requested successfully"];
+            $notify[] = ["success","Day Planning task status updated successfully"];
             return redirect()->back()->withNotify($notify);
 
         } catch (\Throwable $th) {
 
             Log::error($th->getMessage());
-            $notify[] = ["error","Failled to request approval for day planning. Please try again later"];
+            $notify[] = ["error","Failled to update day planning task status. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
         }
@@ -283,6 +283,10 @@ class WorkDiaryController extends Controller
             $data['tasks_in_completed_count'] = 0; 
             $data['total_day_hours'] = '0hrs 0m'; 
             $data['total_day_hours_dollars'] = '$0'; 
+            $data['tasks_in_progress']=[];
+            $data['tasks_in_awating_approval']=[];
+            $data['tasks_in_draft']=[];
+            $data['tasks_in_completed']=[];
 
 
             if($contract_uuid){
@@ -311,14 +315,26 @@ class WorkDiaryController extends Controller
 
             }
             
-            $data['tasks_in_draft']    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
-            $data['tasks_in_progress'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
-            $data['tasks_in_awating_approval'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
-            $data['tasks_in_completed'] = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
+            $filteredTasks    = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_draft'][] = $task;
+            }
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress']); 
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_progress'][] = $task;
+            }
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['AwaitingApproval']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_awating_approval'][] = $task;
+            }
+            $filteredTasks = $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Completed']);
+            foreach ($filteredTasks as $task) {
+                $data['tasks_in_completed'][] = $task;
+            }
             $data['contract'] = $contract;
 
-            $timezones = Timezone::select('id','name')->get();
-            $data['timezones'] = $timezones;
+
+           
             return $data;
 
 
@@ -346,6 +362,7 @@ class WorkDiaryController extends Controller
             $today_date=Carbon::now()->format('Y-m-d');
 
             $data=$this->contractTasksData($contract_uuid,$today_date);
+            
             return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {

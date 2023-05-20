@@ -22,12 +22,12 @@
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label for="title">Planning Date *</label>
-                                    <input type="date" class="form-control" name="planning_date" id="planning_date" value="{{ isset($day_planning_day) ? $day_planning_day : null}}" {{ isset($day_planning_day) ? 'readonly' : '' }}>
+                                    <input type="date" class="form-control" name="planning_date" id="planning_date" >
                                 </div>
                             </div>
                         
 
-                            <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12 ">
+                            {{-- <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12 ">
                                 <div class=" mb-3 select2_element ">
                                     <label for="title">Timezone *</label>
                                     <select
@@ -47,7 +47,7 @@
                                     </select>
 
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-xl-6 col-md-6 col-lg-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
@@ -120,8 +120,9 @@
 
                 <div class="modal-footer">
                 
-                    <button type="button" class="btn btn--info btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
-                    <button type="submit" class="btn btn--danger btn-rounded text-white btn-save" id="save_btn_id">@lang('Save')</button>
+                    <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
+                    <button type="submit" class="btn-rounded text-white btn-save-draft" name="action" value="draft" id="save_btn_id">@lang('Save')</button>
+                    <button type="submit" class="btn-rounded text-white btn-save" name="action" value="approval" id="save_btn_id">@lang('Submit for Approval')</button>
                 </div>
 
             </form>
@@ -223,9 +224,10 @@
 
         }
 
-        function AddTask(){
+        function AddTask(actionValue){
             let add_task_route="{{route('work-diary.store')}}";
             let form_data = new FormData(new_task_add_form[0]);
+            form_data.append('action', actionValue);
             form_data.append('attachments', $('#uploaded_files')[0].files);
             $.ajax({
                 type:"POST",
@@ -246,10 +248,22 @@
                         displayAlertMessage(data.error);
                     }
                     if(data.success){
+                        $('#start_time').val('');
+                        $('#end_time').val('');
+                        $('#description_id').val('');
                         displaySuccessMessage(data.success);
                     }
                     if(data.redirect){
                         getDayPlanning(data.uuid,data.day,false); 
+                        var datePicker = document.getElementById("datepicker");
+                        var currentDate = new Date(data.day);
+                        var flatpickrInstance = flatpickr(datePicker, {
+                        dateFormat: "D, j M", 
+                        defaultDate: currentDate,
+                            onClose: function(selectedDates) {
+                                datePicker.value = flatpickrInstance.formatDate(selectedDates[0], "D, j M");
+                            }
+                        });
                         $('#add_task_model_id').modal('hide');
                     }
                 }
@@ -268,8 +282,18 @@
             new_task_add_form.submit(function (e) {
 
                 e.preventDefault();
-                e.stopPropagation(); 
-                AddTask();
+                e.stopPropagation();
+                let actionValue= null; 
+                var clickedButton = $(this).find(':focus');
+                // Determine the value of the action field based on the clicked button
+                if (clickedButton.hasClass('btn-save-draft')) {
+                    actionValue = 'draft';
+                } else if (clickedButton.hasClass('btn-save')) {
+                    actionValue = 'approval';
+                }
+                console.log("button" + actionValue);
+                AddTask(actionValue);
+
 
             });
 
@@ -291,13 +315,25 @@
         color: #fff;
         padding: 6px 2px;
         font-size: 13px;
-        width: 5rem !important;
+        width: 8rem !important;
+
     }
-    .btn-cancel {
-        color:  #7F007F ;
+    .btn-save-draft {
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid #7f007f;
+        color: #7f007f !important;
+        width: 5rem !important;
         padding: 6px 2px;
         font-size: 13px;
+    }
+    .btn-cancel {
+        background-color: transparent;
+        border-radius: 5px;
+        color: #7f007f !important;
         width: 5rem !important;
+        padding: 6px 2px;
+        font-size: 13px;
     }
     .select2-container--default .select2-selection--multiple {
         border: 1px solid #e1e7ec;
