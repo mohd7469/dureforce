@@ -55,7 +55,11 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                            @else
+                                <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#reports">Generate Report</button>
+                            @endif
                         </div>
                     </form>
                 </div>
