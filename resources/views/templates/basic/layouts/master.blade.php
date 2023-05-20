@@ -94,6 +94,8 @@
 <script src="{{asset($activeTemplateTrue.'frontend/js/main.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'frontend/js/sweet-alert.js')}}"></script>
+<script src="{{asset($activeTemplateTrue.'frontend/js/flat-picker.js')}}"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="{{asset('/assets/resources/js/general.js')}}"></script>
 

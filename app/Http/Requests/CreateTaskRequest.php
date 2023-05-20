@@ -36,7 +36,7 @@ class CreateTaskRequest extends FormRequest
                     }
                 },
             ],
-            'planning_date' => 'required',
+            'planning_date' => 'required|date|after_or_equal:today',
             'contract_id'   => 'required',
         ];
     }

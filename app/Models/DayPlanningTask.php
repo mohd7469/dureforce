@@ -44,9 +44,9 @@ class DayPlanningTask extends Model
     }
     public function getCustomTaskAmountAttribute()
     {
-        $user_rate_per_hours=User::find($this->attributes['created_by'])->rate_per_hour;
+        $user_rate_per_hours=$this->contract->offer->rate_per_hour;
         $task_amount = (($this->attributes['time_in_hours']*60) + $this->attributes['time_in_minutes']) * ($user_rate_per_hours/60) ; 
-        return '$'.$task_amount;
+        return '$'.round($task_amount,2);
     }
     public function getCustomEndTimeAttribute()
     {
