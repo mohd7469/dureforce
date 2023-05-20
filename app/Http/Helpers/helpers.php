@@ -1704,12 +1704,13 @@ function IsSendDayPlanningApproval($dayPlanning){
     }
     return false;
 }
-function IsDayPlanningNotApproved($dayPlanning){
-    if($dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
+function IsDayPlanningNotApproved($dayPlanningtask){
+    if($dayPlanningtask->status_id == DayPlanning::STATUSES['Draft']){
         return true;
     }
     return false;
 }
+
 function isApprovalRequired($day_planning){
 
     $approval_statuses=[DayPlanning::STATUSES['ApprovalRequested'],DayPlanning::STATUSES['ResendForApproval']];

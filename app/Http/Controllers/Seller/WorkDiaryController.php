@@ -252,19 +252,53 @@ class WorkDiaryController extends Controller
         }
     }
 
-    public function RequestApproval($day_planning_uuid){
+    public function RequestApproval(Request $request,$day_planning_task_uuid){
         try {
             
-            DayPlanning::where('uuid',$day_planning_uuid)->update([
-                'status_id' =>   DayPlanning::STATUSES['ApprovalRequested']
+            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
+                'status_id' =>   $request->next_status
             ]);
-            $notify[] = ["success","Day Planning approval requested successfully"];
+            $notify[] = ["success","Day Planning task status updated successfully"];
             return redirect()->back()->withNotify($notify);
 
         } catch (\Throwable $th) {
 
             Log::error($th->getMessage());
-            $notify[] = ["error","Failled to request approval for day planning. Please try again later"];
+            $notify[] = ["error","Failled to update day planning task status. Please try again later"];
+            return redirect()->back()->withNotify($notify);
+            
+        }
+    }
+    public function RequestPaymentApproval($day_planning_task_uuid){
+        try {
+            
+            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
+                'is_payment_requested' =>   true
+            ]);
+            $notify[] = ["success","Day Planning task payment request raised successfully"];
+            return redirect()->back()->withNotify($notify);
+
+        } catch (\Throwable $th) {
+
+            Log::error($th->getMessage());
+            $notify[] = ["error","Failled to update day planning task payment request. Please try again later"];
+            return redirect()->back()->withNotify($notify);
+            
+        }
+    }
+    public function ApprovePayment($day_planning_task_uuid){
+        try {
+            
+            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
+                'is_payment_approved' =>   true
+            ]);
+            $notify[] = ["success","Day Planning task payment apprvoed successfully"];
+            return redirect()->back()->withNotify($notify);
+
+        } catch (\Throwable $th) {
+
+            Log::error($th->getMessage());
+            $notify[] = ["error","Failled to approve day planning task payment request. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
         }
@@ -292,7 +326,7 @@ class WorkDiaryController extends Controller
             if($contract_uuid){
 
                 $contract = Contract::with('offer')->with('status')->where('uuid',$contract_uuid)->firstOrFail();
-                $rate_per_hour = User::find($contract->offer->offer_send_to_id)->rate_per_hour;
+                $rate_per_hour =$contract->offer->rate_per_hour;
 
                 $day_plannings=DayPlanning::withAll()->where('contract_id',$contract->id)->whereDate('planning_date','=',$day)->first();
                 if($day_plannings){
@@ -304,7 +338,7 @@ class WorkDiaryController extends Controller
                     $hours=intval(($all_in_minutes)/60);
 
                     $data['total_day_hours'] = $hours.'hrs '.$minutes.'m';
-                    $data['total_day_hours_dollars'] = '$'. $all_in_minutes*($rate_per_hour/60); 
+                    $data['total_day_hours_dollars'] = '$'. round($all_in_minutes*($rate_per_hour/60),2); 
 
                     $data['tasks_in_draft_count_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['Draft'])->count(); 
                     $data['tasks_in_progress_count'] =  $day_planning_tasks->where('status_id',DayPlanning::STATUSES['In_Progress'])->count(); 
@@ -362,7 +396,6 @@ class WorkDiaryController extends Controller
             $today_date=Carbon::now()->format('Y-m-d');
 
             $data=$this->contractTasksData($contract_uuid,$today_date);
-            
             return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {

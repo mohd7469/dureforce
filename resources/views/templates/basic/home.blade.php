@@ -364,7 +364,7 @@
                                             <a class="btn--post active mr-1 d-inline-block "
                                                href="{{ route('buyer.job.create') }}">Post
                                                 a Job</a>
-                                            <a class="btn--search active" href="{{url('coming-soon')}}">Search Job</a>
+                                            <a class="btn--search active" href="/job-listing">Search Job</a>
                                         </div>
                                         <div class="pt-3">
                                             
