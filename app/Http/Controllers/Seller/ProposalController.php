@@ -251,6 +251,99 @@ class ProposalController extends Controller
         }
     }
 
+    // update proposal
+    function updatePropsal(Request $request, $proposal_id)
+    {
+        // dd($proposal_id);
+        $user = Auth::user();
+        // $job = Job::where('uuid', $job_uuid)->first();
+        $proposal = Proposal::where('id', $proposal_id)->first();
+        $request_data = [];
+        parse_str($request->data, $request_data);
+
+        try {
+            DB::beginTransaction();
+            $proposal->user_id = $user->id;
+            $proposal->delivery_mode_id = $request_data['delivery_mode_id'];
+            $proposal->hourly_bid_rate = isset($request_data['hourly_bid_rate']) ? $request_data['hourly_bid_rate'] : null;
+            $proposal->fixed_bid_amount = isset($request_data['total_project_price']) ? $request_data['total_project_price'] : null;
+            $proposal->bid_type = isset($request_data['bid_type']) ? $request_data['bid_type'] : '';
+            $proposal->start_hour_limit = isset($request_data['start_hour_limit']) ? $request_data['start_hour_limit'] : null;
+            $proposal->end_hour_limit = isset($request_data['end_hour_limit']) ? $request_data['end_hour_limit'] : null;
+            $proposal->cover_letter = $request_data['cover_letter'];
+            $proposal->status_id = Proposal::STATUSES['SUBMITTED'];
+
+            if (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone) {
+
+                $milestones_data = array_values($request_data['milestones']);
+                if (count($milestones_data) > 0) {
+
+                    $milestone = Milestone::where('proposal_id',$proposal_id)->first();
+                    $milestone->delete();
+
+                    $proposal->milestone()->createMany($milestones_data);
+                    $milestones_collection = collect($milestones_data);
+                    $total_amount = $milestones_collection->sum('amount');
+                    $proposal->amount_receive = $total_amount * 0.80;
+
+                }
+
+            } elseif (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$by_project) {
+
+                $proposal->amount_receive = $request_data['total_project_price'] * 0.80;
+                $proposal->project_start_date = $request_data['project_start_date'];
+                $proposal->project_end_date = $request_data['project_end_date'];
+                $proposal->bid_type = 'Project';
+
+            } else {
+                $proposal->amount_receive = $request_data['hourly_bid_rate'] * 0.80;
+
+            }
+            $proposal->save();
+
+
+            if ($request->hasFile('file')) {
+
+                foreach ($request->file as $file) {
+                    $path = imagePath()['attachments']['path'];
+                    try {
+
+                        $milestone = ProposalAttachment::where('proposal_id',$proposal_id)->first();
+                        $milestone->delete();
+    
+                        $filename = uploadAttachments($file, $path);
+
+                        $file_extension = getFileExtension($file);
+                        $url = $path . '/' . $filename;
+                        $proposal_attachment = new ProposalAttachment;
+                        $proposal_attachment->name = $filename;
+                        $proposal_attachment->uploaded_name = $file->getClientOriginalName();
+                        $proposal_attachment->url = $url;
+                        $proposal_attachment->type = $file_extension;
+                        $proposal_attachment->is_published = "Active";
+                        $proposal_attachment->proposal_id = $proposal->id;
+                        $proposal_attachment->save();
+
+                    } catch (\Exception $exp) {
+                        $notify[] = ['error', 'Document could not be uploaded.'];
+                        return back()->withNotify($notify);
+                    }
+
+                }
+            }
+
+            DB::commit();
+            Log::info(["Proposal" => $proposal]);
+
+            return response()->json(["redirect" => route('seller.proposal.index'), "message" => "Proposal submitted"]);
+
+        } catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+    }
+
 
     function validatePropsal(Request $request)
     {
