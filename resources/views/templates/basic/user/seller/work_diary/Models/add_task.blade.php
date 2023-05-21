@@ -254,6 +254,18 @@
                         displaySuccessMessage(data.success);
                     }
                     if(data.redirect){
+                        
+                        var datePicker = document.getElementById("datepicker");
+                        var currentDate = new Date(data.day);
+
+                        var flatpickrInstance = flatpickr(datePicker, {
+                        dateFormat: "D, j M", // Set the desired date format
+                        defaultDate: currentDate,
+                            onClose: function(selectedDates) {
+                                datePicker.value = flatpickrInstance.formatDate(selectedDates[0], "D, j M");
+                            }
+                        });
+
                         getDayPlanning(data.uuid,data.day,false);             
                         $('#add_task_model_id').modal('hide');
                     }

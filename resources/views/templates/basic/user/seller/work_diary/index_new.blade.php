@@ -197,7 +197,7 @@
                                         </td>
                                         <td>{{$item->custom_start_time}}</td>
                                         <td>{{$item->custom_end_time}}</td>
-                                        <td>{{$item->time_in_hours}}h</td>
+                                        <td>{{$item->custom_hours}}h</td>
                                         <td>{{$item->custom_task_amount}}</td>
                                         <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                         <td>
@@ -258,7 +258,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                     <td>
@@ -315,7 +315,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
 
@@ -376,7 +376,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                     <td>
@@ -551,8 +551,10 @@
 
             }
             else if( table_id=='#awaiting_approvals_hours_listing_id tbody'){
+                
+                var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
                 if (object.status.slug == 'awaiting_approval' && last_login_id == 1){
-                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
 
                         form=`<a href="#">
                                     <span class="badge ra-color" >Remind</span>
@@ -599,7 +601,7 @@
                         </td> 
                         <td>${object.custom_start_time}</td> 
                         <td>${object.custom_end_time}</td> 
-                        <td>${object.time_in_hours}h</td> 
+                        <td>${object.custom_hours}h</td> 
                         <td>${object.custom_task_amount}</td> 
                         <td><span class="status-btn ${object.status.color}">${object.status.name}</span></td> 
                         <td>${form}</td> 
