@@ -512,6 +512,16 @@ function baannerForm() {
               position: "topRight",
             });
           }
+        if ($.trim(banner_heading).length > 100) {
+          e.preventDefault();
+          $("#banner_heading").after(
+              '<span class="error text-danger">This field is required</span>'
+          );
+          iziToast.error({
+            message: "Banner Title should not be greater than 100 Characters",
+            position: "topRight",
+          });
+        }
           if ($.trim(banner_intro).length < 1) {
             e.preventDefault();
             $("#banner_detail").after(
@@ -522,6 +532,16 @@ function baannerForm() {
               position: "topRight",
             });
           }
+        if ($.trim(banner_intro).length > 200) {
+          e.preventDefault();
+          $("#banner_detail").after(
+              '<span class="error text-danger">This field is required</span>'
+          );
+          iziToast.error({
+            message: "Banner Introduction Should be greater than 200 Characters",
+            position: "topRight",
+          });
+        }
           if ($('input:radio[name="banner_background_id"]:checked').length < 1) {
             e.preventDefault();
             $("#banner_err").after(
