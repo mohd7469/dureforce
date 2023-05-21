@@ -13,7 +13,7 @@
                      <div>
                         <h2 class="title title-color" >Submit a Proposal</h2>
                      </div>
-                        <form action="{{route('seller.proposal.store',$job->uuid)}}" method="post" id="propsal_form" enctype="multipart/form-data">
+                        <form action="{{route('seller.proposal.update',$proposal->id)}}" method="post" id="propsal_form" enctype="multipart/form-data">
                            @csrf
                            {{-- Job Details--}}
                            <div class="row">
@@ -178,6 +178,19 @@
 
                                              </div>
                                           </div>
+                                          <div class="row">
+                                             <div class="col-md-12">
+                                             @if (!empty($proposal->attachment))
+
+                                                @foreach($proposal->attachment as $decumentUrl)
+                                                      <a href="{{$decumentUrl->url}}" class="btn btn-large pull-right atta attachment-file" download style="margin-top: 7px">
+                                                         <i class="fa fa-paperclip font-style" aria-hidden="true"></i>{{$decumentUrl->uploaded_name}} </a>
+                                                @endforeach
+                                                {{-- <span class="attachment-file"><img src="/assets/images/job/attached.svg"> Screenshot.jpg</span> --}}
+                                             @endif
+                                             </div>
+                                          </div>
+
                                        <small>
                                           Attachments Guideline: You may attach up to 10 files under the size of 25MB each. Include work samples or other documents to support your application. 
                                           Do not attach your résumé — your Dureforce profile is automatically forwarded to the client with your job.
@@ -194,8 +207,8 @@
                                   <a role="button" href="{{route('seller.proposal.index')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
                               </div>
                               <div class="inner">
-                                  <!-- <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button> -->
-                                  <button type="button" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Update Proposal')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button>
+                                  <!-- <button type="button" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Update Proposal')</button> -->
                                   
                               </div>
                           </div>
