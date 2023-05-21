@@ -55,7 +55,11 @@
                                     </ul>
                                 </div>
                             </div>
-                            <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                            @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                            @else
+                                <button class="btn-add-task ml-2" type="button" id="" data-bs-toggle="modal" data-bs-target="#reports">Generate Report</button>
+                            @endif
                         </div>
                     </form>
                 </div>
@@ -193,7 +197,7 @@
                                         </td>
                                         <td>{{$item->custom_start_time}}</td>
                                         <td>{{$item->custom_end_time}}</td>
-                                        <td>{{$item->time_in_hours}}h</td>
+                                        <td>{{$item->custom_hours}}h</td>
                                         <td>{{$item->custom_task_amount}}</td>
                                         <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                         <td>
@@ -254,7 +258,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                     <td>
@@ -311,7 +315,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
 
@@ -372,7 +376,7 @@
                                     </td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
-                                    <td>{{$item->time_in_hours}}h</td>
+                                    <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
                                     <td>
@@ -547,8 +551,10 @@
 
             }
             else if( table_id=='#awaiting_approvals_hours_listing_id tbody'){
+                
+                var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
                 if (object.status.slug == 'awaiting_approval' && last_login_id == 1){
-                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
 
                         form=`<a href="#">
                                     <span class="badge ra-color" >Remind</span>
@@ -595,7 +601,7 @@
                         </td> 
                         <td>${object.custom_start_time}</td> 
                         <td>${object.custom_end_time}</td> 
-                        <td>${object.time_in_hours}h</td> 
+                        <td>${object.custom_hours}h</td> 
                         <td>${object.custom_task_amount}</td> 
                         <td><span class="status-btn ${object.status.color}">${object.status.name}</span></td> 
                         <td>${form}</td> 
