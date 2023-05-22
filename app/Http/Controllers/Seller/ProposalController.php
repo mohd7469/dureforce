@@ -56,7 +56,7 @@ class ProposalController extends Controller
             return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }
@@ -75,7 +75,7 @@ class ProposalController extends Controller
             return view('templates.basic.buyer.propsal.proposal_details')->with('proposal', $proposal);
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
 
             return response()->json(["error" => "There is a technical error"]);
 
@@ -93,7 +93,7 @@ class ProposalController extends Controller
 
         return redirect('/seller/proposal-lists');
     } catch (\Exception $e) {
-    Log::error($e->getMessage());
+        errorLogMessage($e);
     return response()->json(["error" => "There is a technical error"]);
 
     }
@@ -125,7 +125,7 @@ class ProposalController extends Controller
 
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }
@@ -151,7 +151,7 @@ class ProposalController extends Controller
 
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }

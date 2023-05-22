@@ -231,7 +231,7 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
     } catch (\Exception $e) {
-        \Illuminate\Support\Facades\Log::error($e->getMessage());
+        errorLogMessage($e);
 //        error($obj);
     }
     return $filename;
