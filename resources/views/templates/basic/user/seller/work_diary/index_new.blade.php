@@ -342,7 +342,7 @@
                             
                     </table>
                 </div>
-
+                <input type="hidden" value="{{$data['selected_date']}}" id="active_date_id">
                 <input type="hidden" name="lastlogin" value="{{getLastLoginRoleId()}}" id="last_login_role_id">
              
                 {{-- Completed Table --}}
@@ -444,7 +444,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             var datePicker = document.getElementById("datepicker");
-            var currentDate = new Date();
+            var active_date=$('#active_date_id').val();
+            var currentDate = new Date(active_date);
 
             var flatpickrInstance = flatpickr(datePicker, {
             dateFormat: "D, j M", // Set the desired date format
