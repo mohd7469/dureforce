@@ -1849,3 +1849,14 @@ function getBaseUrl(){
     }
 
 }
+
+function errorLogMessage($exception){
+    try {
+        $errorMsg = 'Error on line '.$exception->getLine().' in '.$exception->getFile()." ".$exception->getMessage();
+        return $errorMsg;
+    }
+    catch (\Exception $e){
+        return $exception;
+    }
+
+}
