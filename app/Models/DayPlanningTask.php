@@ -13,7 +13,7 @@ class DayPlanningTask extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
-    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount'];
+    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount','custom_hours'];
 
     protected static function boot()
     {
@@ -41,6 +41,10 @@ class DayPlanningTask extends Model
     public function getCustomDescriptionAttribute()
     {
         return str_limit($this->attributes['description'], 25);
+    }
+    public function getCustomHoursAttribute()
+    {
+        return round(($this->attributes['time_in_hours']*60 + $this->attributes['time_in_minutes'])/60,2);
     }
     public function getCustomTaskAmountAttribute()
     {

@@ -155,7 +155,7 @@
                      <small  class="form-text text-muted">20% Service Fee 
                         {{-- <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                      </small><br>
-                     <span class="pt-2 text-dark" id="system_fee"></span>
+                     <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->fixed_bid_amount*0.20), 2) }}</span>
                   </div>
 
                </div>
