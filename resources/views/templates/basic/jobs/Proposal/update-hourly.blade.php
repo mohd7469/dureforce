@@ -67,7 +67,7 @@
                   <small id="emailHelp" class="form-text text-muted">20% Service Fee 
                      {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                   </small><br>
-                  <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->fixed_bid_amount*0.20), 2) }}</span>
+                  <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->hourly_bid_rate*0.20), 2) }}</span>
                </div>
 
             </div>
@@ -97,7 +97,7 @@
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
 
                            <small  class="form-text text-dark">Min. Hours Per Week *</small>
-                           <input type="integer" class="form-control" step="any" id="start_hour_limit" value="{{ $proposal->project_start_date }}" name="start_hour_limit">
+                           <input type="integer" class="form-control" step="any" id="start_hour_limit" value="{{ $proposal->start_hour_limit }}" name="start_hour_limit">
 
                         </div>
                         <div class="col-md-6 col-lg-6 col-sm12 col-xs-12">
