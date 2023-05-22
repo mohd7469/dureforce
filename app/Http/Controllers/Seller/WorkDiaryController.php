@@ -255,11 +255,19 @@ class WorkDiaryController extends Controller
     public function RequestApproval(Request $request,$day_planning_task_uuid){
         try {
             
-            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
-                'status_id' =>   $request->next_status
-            ]);
+            $today_date=Carbon::now()->format('Y-m-d');
+            $day_planning_task = DayPlanningTask::where('uuid', $day_planning_task_uuid)->first();
+            if ($day_planning_task) {
+                $day_planning_task->status_id = $request->next_status;
+                $day_planning_task->save();
+            }
+            
+            $contract_uuid=$day_planning_task->contract->uuid;
+            $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
+            $data=$this->contractTasksData($contract_uuid,$task_date);
             $notify[] = ["success","Day Planning task status updated successfully"];
-            return redirect()->back()->withNotify($notify);
+
+            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {
 
@@ -269,14 +277,23 @@ class WorkDiaryController extends Controller
             
         }
     }
+
     public function RequestPaymentApproval($day_planning_task_uuid){
         try {
             
-            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
-                'is_payment_requested' =>   true
-            ]);
+           
+            $day_planning_task = DayPlanningTask::where('uuid', $day_planning_task_uuid)->first();
+            if ($day_planning_task) {
+                $day_planning_task->is_payment_requested = true;
+                $day_planning_task->save();
+            }
+
+            $contract_uuid=$day_planning_task->contract->uuid;
+            $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
+            $data=$this->contractTasksData($contract_uuid,$task_date);
+
             $notify[] = ["success","Day Planning task payment request raised successfully"];
-            return redirect()->back()->withNotify($notify);
+            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {
 
@@ -286,15 +303,23 @@ class WorkDiaryController extends Controller
             
         }
     }
+
     public function ApprovePayment($day_planning_task_uuid){
         try {
-            
-            DayPlanningTask::where('uuid',$day_planning_task_uuid)->update([
-                'is_payment_approved' =>   true
-            ]);
-            $notify[] = ["success","Day Planning task payment apprvoed successfully"];
-            return redirect()->back()->withNotify($notify);
+               
+            $day_planning_task = DayPlanningTask::where('uuid', $day_planning_task_uuid)->first();
+            if ($day_planning_task) {
+                $day_planning_task->is_payment_approved = true;
+                $day_planning_task->save();
+            }
+            $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
 
+            $contract_uuid=$day_planning_task->contract->uuid;
+            $data=$this->contractTasksData($contract_uuid,$task_date);
+
+            $notify[] = ["success","Day Planning task payment apprvoed successfully"];
+            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
+            
         } catch (\Throwable $th) {
 
             Log::error($th->getMessage());
@@ -304,9 +329,6 @@ class WorkDiaryController extends Controller
         }
     }
 
-    public function update(){
-        
-    }
     private function contractTasksData($contract_uuid,$day){
         try {
             $data=[];
@@ -330,7 +352,19 @@ class WorkDiaryController extends Controller
 
                 $day_plannings=DayPlanning::withAll()->where('contract_id',$contract->id)->whereDate('planning_date','=',$day)->first();
                 if($day_plannings){
-                    $day_planning_tasks=$day_plannings->tasks ? $day_plannings->tasks :collect([]);
+
+                    $filterd_tasks=[
+                        DayPlanning::STATUSES['In_Progress'],
+                        DayPlanning::STATUSES['AwaitingApproval'],
+                        DayPlanning::STATUSES['Completed'],
+
+                    ];
+
+                    if(getLastLoginRoleId()==Role::$Freelancer){
+                        array_push($filterd_tasks,DayPlanning::STATUSES['Draft']);
+                    }
+
+                    $day_planning_tasks=$day_plannings->tasks ? $day_plannings->tasks->whereIn('status_id',$filterd_tasks) :collect([]);
                     $total_hours_minutes=($day_planning_tasks->sum('time_in_hours')*60);
                     $total_minutes=$day_planning_tasks->sum('time_in_minutes');
                     $all_in_minutes=$total_minutes+$total_hours_minutes;
@@ -367,7 +401,7 @@ class WorkDiaryController extends Controller
             }
             $data['contract'] = $contract;
 
-
+            $data['selected_date']=$day;
            
             return $data;
 
@@ -377,6 +411,7 @@ class WorkDiaryController extends Controller
         }
         
     }
+
     public function contractTasks(Request $request, $contract_uuid){
         try {
             $today_date=Carbon::parse($request->day)->format('Y-m-d');
@@ -391,11 +426,13 @@ class WorkDiaryController extends Controller
 
         }
     }
+
     public function newTasks(Request $request, $contract_uuid){
         try {
             $today_date=Carbon::now()->format('Y-m-d');
 
             $data=$this->contractTasksData($contract_uuid,$today_date);
+
             return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
 
         } catch (\Throwable $th) {
