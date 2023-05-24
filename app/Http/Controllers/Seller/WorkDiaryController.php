@@ -491,7 +491,7 @@ class WorkDiaryController extends Controller
                 $day_planning->save();
                 $task_to_delete->delete();
             DB::commit();
-            return response()->json(['success' => 'Work diary task deleted successfully']);
+            return response()->json(['success' => 'Work diary task deleted successfully','day' => $task_to_delete->day->planning_date, 'uuid' => $task_to_delete->contract->uuid]);
 
 
         } catch (\Throwable $th) {

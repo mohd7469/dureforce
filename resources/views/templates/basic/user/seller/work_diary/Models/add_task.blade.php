@@ -160,7 +160,13 @@
 
 
         }
+        $('.delete_btn').on('click', function () {
+            var existingModal = $('#add_task_model_id');
+            existingModal.modal('hide');
+            var confirmationModal = $('#confirmationModal');
+            confirmationModal.modal('show');
 
+        });
         $(document).on('click', '#cancel_task_btn_id', function(e) {
             makeModelEmpty();
         });
@@ -248,7 +254,6 @@
             $('#add_task_model_id').find('#task_id').val("");
             already_uploaded_files=[];
             $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
-            active_task_uuid = '' ;
             $('#add_task_model_id_title').html(add_task);
             $('#delete_task_btn_id').hide();
 
