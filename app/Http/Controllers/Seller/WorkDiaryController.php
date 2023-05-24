@@ -255,7 +255,7 @@ class WorkDiaryController extends Controller
     public function RequestApproval(Request $request,$day_planning_task_uuid){
         try {
             
-            $today_date=Carbon::now()->format('Y-m-d');
+            
             $day_planning_task = DayPlanningTask::where('uuid', $day_planning_task_uuid)->first();
             if ($day_planning_task) {
                 $day_planning_task->status_id = $request->next_status;
@@ -264,10 +264,9 @@ class WorkDiaryController extends Controller
             
             $contract_uuid=$day_planning_task->contract->uuid;
             $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
-            $data=$this->contractTasksData($contract_uuid,$task_date);
+            
             $notify[] = ["success","Day Planning task status updated successfully"];
-
-            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
+            return redirect()->route('work-diary.tasks',[$contract_uuid,$task_date])->withNotify($notify);
 
         } catch (\Throwable $th) {
 
@@ -290,11 +289,9 @@ class WorkDiaryController extends Controller
 
             $contract_uuid=$day_planning_task->contract->uuid;
             $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
-            $data=$this->contractTasksData($contract_uuid,$task_date);
 
             $notify[] = ["success","Day Planning task payment request raised successfully"];
-            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
-
+            return redirect()->route('work-diary.tasks',[$contract_uuid,$task_date])->withNotify($notify);
         } catch (\Throwable $th) {
 
             Log::error($th->getMessage());
@@ -315,10 +312,10 @@ class WorkDiaryController extends Controller
             $task_date=Carbon::parse($day_planning_task->day->planning_date)->format('Y-m-d');
 
             $contract_uuid=$day_planning_task->contract->uuid;
-            $data=$this->contractTasksData($contract_uuid,$task_date);
-
+           
             $notify[] = ["success","Day Planning task payment apprvoed successfully"];
-            return view('templates.basic.user.seller.work_diary.index_new',compact('data'));
+            return redirect()->route('work-diary.tasks',[$contract_uuid,$task_date])->withNotify($notify);
+
             
         } catch (\Throwable $th) {
 
@@ -326,6 +323,20 @@ class WorkDiaryController extends Controller
             $notify[] = ["error","Failled to approve day planning task payment request. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
+        }
+    }
+
+    public function contractTask($task_uuid){
+        try {
+            
+            $day_planning_task=DayPlanningTask::withAll()->where('uuid',$task_uuid)->firstOrFail();
+            return response()->json(['success' => 'contract day planning data fetched successfully','task'=>$day_planning_task]);
+
+        } catch (\Throwable $th) {
+
+            Log::error($th->getMessage());
+            return response()->json(['error' => "Unable to load contract task detail"]);
+
         }
     }
 
@@ -427,9 +438,10 @@ class WorkDiaryController extends Controller
         }
     }
 
-    public function newTasks(Request $request, $contract_uuid){
+    public function newTasks(Request $request, $contract_uuid,$day=null){
         try {
-            $today_date=Carbon::now()->format('Y-m-d');
+            
+            $today_date=is_null($day) ? Carbon::now()->format('Y-m-d') : Carbon::parse($day)->format('Y-m-d');
 
             $data=$this->contractTasksData($contract_uuid,$today_date);
 
@@ -479,7 +491,7 @@ class WorkDiaryController extends Controller
                 $day_planning->save();
                 $task_to_delete->delete();
             DB::commit();
-            return response()->json(['success' => 'Work diary task deleted successfully']);
+            return response()->json(['success' => 'Work diary task deleted successfully','day' => $task_to_delete->day->planning_date, 'uuid' => $task_to_delete->contract->uuid]);
 
 
         } catch (\Throwable $th) {
