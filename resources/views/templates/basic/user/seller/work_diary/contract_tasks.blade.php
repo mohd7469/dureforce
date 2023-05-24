@@ -231,6 +231,7 @@
     }
 
     function editTask(task){
+        
         $('#add_task_model_id').find('#planning_date').val(moment(task.day.planning_date).format('YYYY-MM-DD'));
         $('#timezone_id').val(task.timezone).trigger('change');
         $('#add_task_model_id').find('#start_time').val(task.start_time);

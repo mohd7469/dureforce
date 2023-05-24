@@ -173,7 +173,7 @@
                                         
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                                 <tr>
-                                    <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                    <th style="width: 20%" class="tl" >@lang('Task Title')</th>
                                     <th>@lang('Est. Start Time')</th>
                                     <th>@lang('Est. End Time')</th>
                                     <th>@lang('Est. Total Hrs')</th>
@@ -188,7 +188,7 @@
                             <tbody class="text-center">
                                 @foreach ($data['tasks_in_draft'] as $item)
                                     <tr>
-                                        <td class="tl">
+                                        <td class="tl"  {!! getLastLoginRoleId() == App\Models\Role::$Freelancer ? "onclick='editTask(\"$item->uuid\")'" : '' !!}> 
                                             <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                                 fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
@@ -249,7 +249,7 @@
                         <tbody class="text-center">
                             @foreach ($data['tasks_in_awating_approval'] as $item)
                                 <tr>
-                                    <td class="tl">
+                                    <td class="tl"{!! getLastLoginRoleId() == App\Models\Role::$Freelancer ? "onclick='editTask(\"$item->uuid\")'" : '' !!}>
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                             fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
@@ -367,6 +367,7 @@
 
                         <tbody class="text-center">
                             @foreach ($data['tasks_in_completed'] as $item)
+                                
                                 <tr>
                                     <td class="tl">
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -410,7 +411,13 @@
 @push('script')
 
 <script>
-    
+
+        var edited_task="";
+        var add_task= "Add Task";
+        var update_task= "Update Task";
+        var active_task_uuid='';
+
+
         var STATUSES = {
             Draft: 40,
             In_Progress: 41,
@@ -516,11 +523,13 @@
             console.log(data);
             $(table_id).empty();
             data.forEach(object => {
+                let edit_event='';
 
                 if(table_id ==  '#in_draft_hours_listing_id tbody'){
                     form='';
                     if (object.status.slug == 'draft' && last_login_id == 1){
                         var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+                        edit_event=`onclick=editTask('${object.uuid}')`;
 
                         form=`<form id="hiddenForm" method="GET" action="${status_action_url}" >
                             @csrf
@@ -536,6 +545,8 @@
             }        
             else if( table_id=='#in_progress_hours_listing_id tbody'){
                 if (object.status.slug == 'in_progress' && last_login_id == 1){
+                    edit_event=`onclick=editTask('${object.uuid}')`;
+
                         var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
 
                         form=`<form id="hiddenForm" method="GET" action="${status_action_url}" >
@@ -592,7 +603,7 @@
             }
                 $(table_id).append(
                     `<tr > 
-                        <td class="tl">
+                        <td class="tl" ${edit_event}>
                             <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path 
                                 d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
@@ -673,6 +684,99 @@
                 }
             });  
         }
+
+        $('.delete_btn').on('click', function () {
+
+            var modal = $('#confirmationModal');
+            modal.find('input[name=day_planning_task_id]').val($(this).data('id'));
+            modal.modal('show');
+
+        });
+
+
+        $('#confirmation_btn').on('click', function () {
+
+            uuid=$('#day_planning_task_id').val();
+            deleteDayPlanningTask(uuid);
+            var modal = $('#confirmationModal');
+            modal.modal('hide');
+
+        });
+
+        function deleteDayPlanningTask(uuid)
+        {
+            let route = "{{ route('work-diary.task.delete', ':uuid') }}".replace(':uuid', uuid);
+            $.ajax({
+                type:"GET",
+                url:route,
+                data: {},
+                success:function(data){
+                    
+                    if(data.error){
+                        displayAlertMessage(data.error);
+                    }
+                    else{
+                    
+                        $('#'+uuid).remove();
+                        displaySuccessMessage(data.success);
+                    }
+                }
+            });  
+        }
+
+        $(document).on('click', '.edit_btn', function() {
+            var taskId = $(this).data('id'); 
+            $('#editModal').find('#taskTitle').val(taskData.title);
+            $('#editModal').find('#taskDate').val(taskData.date);
+            $('#editModal').modal('show');
+
+        });
+
+        function loadDefaultFiles(attachments){
+
+            $('#file_name_div').empty();
+            already_uploaded_files=attachments;
+            $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
+            for (let index = 0; index < already_uploaded_files.length; index++) {
+                file=already_uploaded_files[index];
+                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.uploaded_name+'<span class="badge badge-primary badge-pill delete-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+            }
+
+        }
+
+        function editTask(task_uuid){
+
+            active_task_uuid=task_uuid;
+            $('#add_task_model_id_title').html(update_task);
+            $('#delete_task_btn_id').show();
+            let route = "{{ route('work-diary.contract.day.task', ':uuid') }}".replace(':uuid', task_uuid);
+            $.ajax({
+                type:"GET",
+                url:route,
+                success:function(data){
+                    
+                    if(data.error){
+                        displayAlertMessage(data.error);
+                    }
+                    else{
+
+                        task=data.task;
+                        $('#add_task_model_id').find('#planning_date').val(moment(task.day.planning_date).format('YYYY-MM-DD'));
+                        $('#add_task_model_id').find('#start_time').val(task.start_time);
+                        $('#add_task_model_id').find('#end_time').val(task.end_time);
+                        $('#add_task_model_id').find('#contract_id').val(task.contract_id);
+                        $('#add_task_model_id').find('#description_id').val(task.description);
+                        $('#add_task_model_id').find('#task_id').val(task.id);
+                        $('#add_task_model_id').modal('show');
+                        loadDefaultFiles(task.attachments);
+                    }
+                }
+            });  
+
+           
+
+        }
+
     </script>
 
 @endpush
