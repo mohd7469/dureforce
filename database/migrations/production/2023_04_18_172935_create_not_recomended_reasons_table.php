@@ -13,16 +13,16 @@ class CreateNotRecomendedReasonsTable extends Migration
      */
     public function up()
     {
-        Schema::create('not_recomended_reasons', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('role_id')->nullable();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
-            $table->boolean('is_active')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-            $table->foreign('role_id')->references('id')->on('roles');
-        });
+//        Schema::create('not_recomended_reasons', function (Blueprint $table) {
+//            $table->bigIncrements('id');
+//            $table->unsignedBigInteger('role_id')->nullable();
+//            $table->string('name')->nullable();
+//            $table->string('slug')->nullable();
+//            $table->boolean('is_active')->nullable();
+//            $table->softDeletes();
+//            $table->timestamps();
+//            $table->foreign('role_id')->references('id')->on('roles');
+//        });
     }
 
     /**
@@ -32,6 +32,6 @@ class CreateNotRecomendedReasonsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('not_recomended_reasons');
+//        Schema::dropIfExists('not_recomended_reasons');
     }
 }
