@@ -297,7 +297,7 @@
                     </table>
                 </div>
 
-                 {{-- In Progress Table --}}
+                 {{-- Approved Tasks Table --}}
                  <div class="tab-pane mt-c" id="approved_tasks"> 
                     <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="in_approved_hours_listing_id">
                                     
@@ -309,8 +309,7 @@
                                 <th>@lang('Est. Total Hrs')</th>
                                 <th>@lang('Est. Amount')</th>
                                 <th>@lang('Status')</th>
-                                
-
+                                <th>@lang('Action')</th>
 
                             </tr>
                         </thead>
@@ -330,7 +329,21 @@
                                     <td>{{$item->custom_hours}}h</td>
                                     <td>{{$item->custom_task_amount}}</td>
                                     <td> <span class="status-btn {{$item->status->color}}">{{$item->status->name}}</span></td>
+                                    <td>
+                                        @if ($item->status_id == App\Models\DayPlanning::STATUSES['Approved'] && getLastLoginRoleId()==App\Models\Role::$Freelancer)
+                                                <form id="hiddenForm" method="GET" action="{{route('work-diary.day.planning.request.approval',$item->uuid)}}" >
+                                                    @csrf
+                                                    <input type="hidden" name="next_status" value="{{ App\Models\DayPlanning::STATUSES['In_Progress']}}">
+                                                    <button type="submit" class="bc" >
+                                                        <span class="badge ra-color" >Start Task</span>
+                                                    </button>
+                                                </form>
+                                                
+                                            @else
+                                                <span class="badge {{$item->status->color}}" >{{$item->status->name}}</span>
 
+                                        @endif
+                                    </td>
                                    
 
                                 </tr>
@@ -621,7 +634,24 @@
                     else{
                         form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
                     }
-            }        
+            } 
+            else if(table_id == '#in_approved_hours_listing_id tbody'){
+                    form='';
+                    if (object.status.slug == 'approved' && last_login_id == 1){
+                        var status_action_url = "{{ route('work-diary.day.planning.request.approval', ':uuid') }}".replace(':uuid', object.uuid);
+
+                        form=`<form id="hiddenForm" method="GET" action="${status_action_url}" >
+                            @csrf
+                            <input type="hidden" name="next_status" value="${STATUSES['In_Progress']}">
+                            <button type="submit" class="bc">
+                                <span class="badge ra-color" >Start Task</span>
+                            </button>
+                        </form>`;
+                    }                           
+                    else{
+                        form=`<span class="badge ${object.status.color}" >${object.status.name}</span>`
+                    }
+            }       
             else if( table_id=='#in_progress_hours_listing_id tbody'){
                 if (object.status.slug == 'in_progress' && last_login_id == 1){
                     edit_event=`onclick=editTask('${object.uuid}')`;
