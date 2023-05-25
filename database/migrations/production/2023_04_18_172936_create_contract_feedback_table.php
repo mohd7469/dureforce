@@ -38,8 +38,7 @@ class CreateContractFeedbackTable extends Migration
 
 //            $table->string('about')->nullable();
             $table->string('feedback')->nullable();
-
-
+            
             $table->foreign('role_id')->references('id')->on('roles');
 //            $table->foreign('reason_end_contract_id')->references('id')->on('reason_end_contracts');
 //            $table->foreign('not_recomended_reason_id')->references('id')->on('not_recomended_reasons');
