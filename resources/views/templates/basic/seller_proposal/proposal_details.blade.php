@@ -134,9 +134,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> <a
-                                                                                                 value="Withdraw Proposal"
-                                                                                                 class="btn_withdrw-c" onclick="confirmDelete()"></a>
+                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
+                            <a value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()"></a>
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
