@@ -32,7 +32,7 @@ class StorePortfolioRequest extends FormRequest
             'skills.*' =>'exists:skills,id',
             'project_url' => 'nullable',
             'description' => 'nullable|max:300',
-            'video_url'   => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
+            'video_url' => ['nullable', 'regex:/^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]{11}/i'],
             'project_url' => ['nullable',"regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"]
         ];
     }
