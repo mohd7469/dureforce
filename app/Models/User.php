@@ -8,6 +8,7 @@ use App\Traits\DatabaseOperations;
 use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, HasFactory, HasRoles, DatabaseOperations;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles, DatabaseOperations, SoftDeletes;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;
