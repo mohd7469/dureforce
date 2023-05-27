@@ -15,6 +15,7 @@ class ContractFeedback extends Model
         "not_recomended_reason_id",
         "language_level_id",
         "user_id",
+        "feedback_for_id",
         "recomended_score",
         "skills_score",
         "contract_id",
@@ -26,8 +27,12 @@ class ContractFeedback extends Model
         "total_score",
         "about",
         "feedback",
-        "deleted_at"
+        "deleted_at",
+        "created_by",
+        "updated_by",
+        "deleted_by",
     ];
+
 
     public function contract()
     {

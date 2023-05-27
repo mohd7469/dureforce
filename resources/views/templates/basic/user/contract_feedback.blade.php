@@ -1,230 +1,140 @@
-@extends($activeTemplate.'layouts.frontend')
+@extends($activeTemplate.'layouts.master')
 @section('content')
-    @isset($proposal)
+
         <div class="container-fluid">
-            <p class="propsal-h">All Proposals > {{$proposal->module->title}}</p>
-            <input type="hidden" id="proposalId" value="{{$proposal->id}}">
+            <form id="form_feedback" method="POST" >
+                @csrf
+            <h3 class="propsal-h" style="margin-left: 40px; margin: 20px">End Contract </h3>
             <div class="main_con_p">
-                <div class="prosal-left-con">
+                <div class="prosal-left-con" style="margin-left: 30px">
                     <!---Cover Letter Section Start--->
-                    <h3 class="heading_proposal">Proposal Details</h3>
+                    <input type="hidden" name="contract_id" value="{{$contract->id}}">
+                    <input type="hidden" name="contract_send_by" value="{{$contract->offer->offer_send_to_id}}">
+                    <input type="hidden" name="contract_send_to" value="{{$contract->offer->offer_send_by_id}}">
                     <div class="btm-c">
-                        <p class="heading_cover_l">Cover Letter</p>
-                        <p class="prop_description">{{$proposal->cover_letter}}</p>
-                       
-
-                        @if(count($proposal->attachment)>0)
-                            @if(count($proposal->attachment)>1)
-                                <p class="heading-att">Attachments </p>
-                            @else
-                                <p class="heading-att">Attachment </p>
-                            @endif
-                            @foreach($proposal->attachment as $files)
-                                <span class="attacment_file">{{$files->uploaded_name}}</span>
-                            @endforeach
-                        @endif
+                        <p class="prop_description">
+                            <b>Freelancer</b></p>
+                        <p>{{$userName}}</p>
+                        <p class="prop_description">
+                            <b>Contract Title</b></p>
+                        <p>{{$contract->offer->module->title}}</p>
                     </div>
-                    <!---Cover Letter Section End--->
+                    <div class="btm-c jdc">
+                        <h3 >Public Feedback</h3>
+                        <div>
+                            <p>This feedback will be share on Freelancer profile after they have feedback left for you</p>
+                            <div style="margin-top: 10px">
+                                <div class="row">
+                                <div class="col-md-6">
 
+                                    <div class="rating">
+                                        <label>
+                                            <input type="radio" name="rating" id="skillone" onclick="valueChange();" value="1.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="rating" id="skilltwo" onclick="valueChange();" value="2.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" nname="rating" id="skillthree" onclick="valueChange();" value="3.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
 
-                    <!---Job DetailsSection Start--->
-                    <h3 class="heading_proposal jdc">Job Details</h3>
-                    <div class="btm-c">
-                        <p class="heading_cover_l">{{$proposal->module->title}}</p>
-                        <p class="posted_date_c">Posted on: {{$proposal->module->created_at}}
-                        <p>
-                        <p class="prop_description">{{$proposal->module->description}}</p>
+                                        <label>
+                                            <input type="radio" name="rating" id="skillfour"  onclick="valueChange();" value="4.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
 
-                        <a href="#" class="btn_viewjob">View Job Posting</a>
-
-                    </div>
-                    <!---Job Details Section End--->
-
-
-                    <!---Your Proposed Terms Start--->
-                    <h3 class="heading_proposal jdc">Your Proposed Terms</h3>
-                    <div class="btm-c">
-                        <div class="pt_con">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span class="fm-c"> Proposed Fixed Amount </span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="am_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}} </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pt_con">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <span class="fm-c"> You’ll Recieve </span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span class="am_price">${{$proposal->amount_receive ?? ''}} </span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!---Tabs--->
-                        <div class="milstones_tabs_con">
-                            <div class="mainTabs">
-
-                                <div class="tab">
-                                    
-                                    @if($proposal->bid_type=='Project')
-                                        <button class="tablinks active" >By Project
-                                        </button>
-                                    @endif
-
-                                    @if($proposal->bid_type=='Milestone')
-                                        <button class="tablinks active" >By Milestone</button>
-                                    @endif
-
-                                </div>
-
-                                @if($proposal->bid_type=='Project')
-                                    <div id="tab1" class="tabcontent1" style="display: block;">
-                                        <form>
-                                            <ul class="method_l">
-                                                <li>
-                                                    <p class="lable-c">Project Start Date</p>
-                                                    <input id="datepicker" placeholder="{{$proposal->project_start_date ?? ''}}" readonly>
-                                                </li>
-                                                <li>
-                                                    <p class="lable-c">Project End Date</p>
-                                                    <input id="datepicker" placeholder="{{$proposal->project_end_date ?? ''}}" readonly>
-                                                </li>
-                                            </ul>
-
-                                        </form>
+                                        <label>
+                                            <input type="radio" name="rating" id="skillfive" onclick="valueChange();" value="5.0" />
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                            <span class="fa fa-solid fa-star icon "></span>
+                                        </label>
                                     </div>
-                                @endif
-
-                                @if($proposal->bid_type=='Milestone')
-                                    <div id="tab2" class="tabcontent1" style="display: block;">
-                                        <ul class="method_l method_2">
-                                            @foreach($proposal->milestone as $miles)
-                                            <li>
-                                                <p class="lable-c">Milestone Description</p>
-                                                <input type="text" placeholder="{{$miles->description ?? ''}}" readonly>
-                                            </li>
-                                            <li>
-                                                <p class="lable-c">Start Date</p>
-                                                <input type="datetime" id="datepicker" placeholder="{{$miles->start_date ?? ''}}" readonly>
-                                            </li>
-                                            <li>
-                                                <p class="lable-c">Due Date</p>
-                                                <input id="datepicker" placeholder="{{$miles->end_date ?? ''}}" readonly>
-                                            </li>
-                                            <li>
-                                                <p class="lable-c">Amount</p>
-                                                <input type="text" placeholder="{{$miles->amount ?? ''}}" readonly>
-                                            </li>
-
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-
+                                </div>
 
                             </div>
-
-
+                            <div class="row">
+                                <div class="col-md-3">
+                                <h4>Total Score: </h4></div>
+                                <div class="col-md-9">
+                                <h4 class="val" id="val">0.00</h4></div>
+                            </div>
+                            <div>
+                                <p>Share this experience with this Freelancer on Dureforce Community</p>
+                                <textarea rows="3" id="feeback" name="feedback"></textarea>
+                            </div>
+                            <p><a href="#" > See an Example of appropriate Feedback</a></p>
                         </div>
-                        @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'] )
-                        <div class="btns_container-div">
-                            <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">ChangeTerms</a>
-                            <input type="button" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
-                        </div>
-                        @endif
+
                     </div>
-                    <!---Your Proposed Terms End--->
+                    <div class="btm-c jdc">
 
-
-                </div>
-                <div class="prosal-right-con">
-                    <div class="p_amount_con">
-                        <ul class="listing_ps">
-                            <li><span class="p_fcs">Proposed Amount</span> <span class="p_price">${{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</span></li>
-                            <li><span class="p_fcs">Net Amount</span> <span class="p_price">${{ $proposal->amount_receive ?? '' }}</span></li>
-                            <li><span class="p_fcs">Status</span> 
-                            <!-- <span class="btn_sbmitd">Submitted</span> -->
-                            @if($proposal->status_id == 29)
-                                <span class="badge badge--success badge_color">Submitted</span>
-                            @elseif($proposal->status_id == 30)
-                                <span class="badge badge--info badge_color">Draft</span>
-                            @elseif($proposal->status_id == 31)
-                                <span class="badge badge--primary badge_color">Active</span>
-                            @else
-
-                            @endif
-                            </li>
-                            <li><span class="p_fcs">Job Type</span> <span class="p_pricess">
-                            @if($proposal->module_type == "App\Models\Job")
-                                Job
-                            @elseif($proposal->module_type == "App\Models\Service")
-                                Service
-                            @elseif($proposal->module_type == "App\Models\Software")
-                                Software
-                            @else
-
-                            @endif
-                            </span></li>
-                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">{{ dateDiffInDays($proposal->project_start_date,$proposal->project_end_date) ?? 0 }} Days</span></li>
-                            <li><span class="p_fcs">Mode of Delivery</span> <span class="p_days">{{$proposal->delivery_mode->title ?? ''}}</span></li>
-                        </ul>
-                    </div>
-
-                    <!----About client--->
-                    <div class="about-client-c">
-                        <p class="abt-client">About the Client</p>
-                        <ul class="client_listing-c">
-                            
-                            <li>
-                                <img src="{{ !empty($proposal->user->basicProfile->profile_picture)? $proposal->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="client">
-                                <div class="about_client">
-                                    <p class="client_name">{{$proposal->user->fullname ?? ''}}</p>
-                                    <p class="client_date">Member since {{getYearMonthDays($proposal->module->created_at)}}</p>
-                                </div>
-                            </li>
-
-                            <li>
-                                <i class="fa fa-map-marker"></i> <span class="location_c"> {{isset($proposal->module->user->country->name) ? $proposal->module->user->country->name: ''}}</span>
-                                &nbsp;<i class="fa fa-clock job_count_label_padding"> </i><span class="time_cs"> {{ date('h:i a', strtotime($proposal->module->created_at))}} local time</span>
-                            </li>
-
-                            <li>
-                                <p class="payment_c">Payment method verified</p>
-                                <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating"> 4.98 of 32
-                                    reviews </p>
-                            </li>
-
-                            <li>
-                                <span class="no_jobs">{{getClientJobsCount($proposal->module->user_id)}}</span> <span class="jb_p">Jobs posted</span>
-                            </li>
-
-                            <li>
-                                <span class="no_jobs">{{getClientOpenJobsCount($proposal->module->user_id)}}</span> <span class="jb_p">Open jobs </span>
-                            </li>
-
-                        </ul>
+                        <button class="btn btn-secondary" id="endCont" >End Contract</button>
+                        <button class="btn ">Cancel</button>
 
                     </div>
 
                 </div>
-
-
             </div>
+            </form>
         </div>
-
-    @endisset
+        
 @endsection
 
 
 <style>
-
+    .navbar-burron{
+        width: 96%;
+        font-size: 12px;
+        background-color: #007f7f !important;
+        color: #fff !important;
+        border-radius: 5px !important;
+    }
+    .right-navbar-li{
+        border: none !important;
+    }
+    .file-text{
+        margin: -5px 0 0 0px;
+        font-size: 13px;
+    }
+    .file_heading_proposal {
+        width: 40%;
+        background: #F3F6F6;
+        border-radius: 4px 4px 0px 0px;
+        padding: 17px 25px 17px 20px;
+        font-weight: 600;
+        font-size: 18px !important;
+        line-height: 25px;
+        color: #000000;
+    }
+    .file-size{
+        margin-top: -15px;
+        font-size: 12px;
+        font-weight: initial;
+    }
+    .view_origin{
+        /* View Original Job Post */
+    width: 166px;
+    height: 18px;
+    font-family: 'Mulish';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    /* identical to box height */
+    color: #007F7F;
+    }
     p.propsal-h {
         font-weight: 400;
         font-size: 20px;
@@ -649,14 +559,13 @@
         font-size: 14px;
     }
 
-    a.btn_sbmtrm {
+    input.btn_sbmtrm {
         width: 137px;
         height: 35px;
         background: #7F007F;
         border-radius: 5px;
         color: #fff;
-        /* padding: 4px 0px; */
-        padding: 4px 0px 0px 20px;
+        padding: 4px 0px;
         font-size: 14px;
         font-weight: 600;
         margin-right: 1.5%;
@@ -773,7 +682,7 @@
             margin-bottom: 20px;
         }
 
-        a.btn_sbmtrm {
+        input.btn_sbmtrm {
             width: 130px;
         }
 
@@ -813,7 +722,7 @@
             width: 100%;
         }
 
-        a.btn_sbmtrm {
+        input.btn_sbmtrm {
             width: 100%;
             margin-bottom: 11px;
         }
@@ -821,14 +730,24 @@
 </style>
 
 @push('script')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
 
     <script>
+
+
         'use strict';
+        let feedback_form=$('#form_feedback');
+        $(document).ready(function() {
+            feedback_form.submit(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                savefeedback();
+            });
+        });
+
         $('#defaultSearch').on('change', function () {
             this.form.submit();
         });
-
 
         openCity('evt', 'tab1');
 
@@ -846,29 +765,149 @@
             evt.currentTarget.className += " active";
         }
 
-        function  confirmDelete() {
+        function checkedOnClick(el){
+            // Select all checkboxes by class
+            var checkboxesList = document.getElementsByName("rating_num");
+            for (var i = 0; i < checkboxesList.length; i++) {
+                checkboxesList.item(i).checked = false; // Uncheck all checkboxes
+            }
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Would you want to withdraw proposal?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: ' Yes '
-            }).then((result) => {
-                var id;
-                id=$("#proposalId").val();
+            el.checked = true; // Checked clicked checkbox
+        }
 
-                var url = "{{ route('proposal.update', ':id') }}";
-                url = url.replace(':id', id);
-                location.href = url;
 
-            })
+
+        function valueChange(){
+            var total=0;
+            var skill=0;
+            if($('#skillone').is(':checked') || $('#skilltwo').is(':checked') || $('#skillthree').is(':checked') || $('#skillfour').is(':checked')  || $('#skillfive').is(':checked')) {
+
+                if ($('#skillone').is(':checked')) {
+                    skill = $('input[id="skillone"]:checked').val();
+                }
+                if ($('#skilltwo').is(':checked')) {
+                    skill = $('input[id="skilltwo"]:checked').val();
+                }
+                if ($('#skillthree').is(':checked')) {
+                    skill = $('input[id="skillthree"]:checked').val();
+
+                }
+                if ($('#skillfour').is(':checked')) {
+                    skill = $('input[id="skillfour"]:checked').val();
+                }
+                if ($('#skillfive').is(':checked')) {
+                    skill = $('input[id="skillfive"]:checked').val();
+                }
+            }
+            //Skill Calculation end
+
+
+            //communication Calculation end
+            total=(parseFloat(skill)).toFixed(2);
+            document.getElementById('val').innerHTML=total;
 
         }
 
 
+
+        function savefeedback(){
+
+            let form_data = new FormData(feedback_form[0]);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+              type:"POST",
+              url:"{{URL::route('feedback.storenew')}}",
+              data:  form_data,
+              processData: false,
+              contentType: false,
+              success:function(data){
+                if(data.code === 200){
+                    notify('success', 'Contract Feedback sent Successfully');
+                    window.location.href = "{{URL::route('user.home')}}";
+                 }
+                else{
+                    notify('error', 'An error Occured during Saving');
+                }
+              }
+          });
+
+        }
+
+
+
+
     </script>
+
+    <style>
+        .rating {
+            display: inline-block;
+            position: relative;
+            height: 80px;
+            line-height: 70px;
+            font-size: 50px;
+        }
+
+        .rating label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .rating label:last-child {
+            position: static;
+        }
+
+        .rating label:nth-child(1) {
+            z-index: 5;
+        }
+
+        .rating label:nth-child(2) {
+            z-index: 4;
+        }
+
+        .rating label:nth-child(3) {
+            z-index: 3;
+        }
+
+        .rating label:nth-child(4) {
+            z-index: 2;
+        }
+
+        .rating label:nth-child(5) {
+            z-index: 1;
+        }
+
+        .rating label input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .rating label .icon {
+            float: left;
+            color: transparent;
+            margin-left: 50px;
+        }
+
+        .rating label:last-child .icon {
+            color: white;
+            text-shadow: 0 0 2px black;
+        }
+
+        .rating:not(:hover) label input:checked ~ .icon,
+        .rating:hover label:hover input ~ .icon {
+            color: #007F7F;
+        }
+
+        .rating label input:focus:not(:checked) ~ .icon:last-child {
+            color: white;
+            text-shadow: 0 0 2px black;
+        }
+    </style>
 
 @endpush
