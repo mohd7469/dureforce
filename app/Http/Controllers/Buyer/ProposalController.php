@@ -203,7 +203,7 @@ class ProposalController extends Controller
     {
 
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $proposals = $job->proposal->where('is_shortlisted',false);
+        $proposals = $job->proposal->where('is_shortlisted',false)->whereIn('status_id', [Proposal::STATUSES['SUBMITTED'],Proposal::STATUSES['ACTIVE']]);
         $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
 
         $pageTitle = "Job Proposals";
