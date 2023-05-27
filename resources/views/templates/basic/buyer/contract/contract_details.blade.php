@@ -43,8 +43,18 @@
                             @if ( $contract->offer->moduleMilestones->count() > 0 )
                                 
                                 @foreach ($contract->offer->moduleMilestones as $milestone)
-                                    <p class="posted_date_c">{{$milestone->description}}<p>
-                                    <p class="posted_date_c">${{$milestone->amount}}<p>
+                                    <p class="posted_date_c"> 
+                                        <strong>
+                                            {{$milestone->description}} 
+                                        </strong>
+                                        
+                                       
+                                    <p class="posted_date_c"><strong>${{$milestone->amount}}</strong> 
+                                        @if ($milestone->status)
+                                            <span class="badge  {{$milestone->status->color}}">{{$milestone->status->name}}</span><p>
+                                        @endif    
+                                    <p>
+                                    
                                     @if($milestone->is_paid)
                                         <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
                                     @endif
@@ -153,7 +163,7 @@
 
 
                     <!---Your Feedback Terms Start--->
-                    {{-- <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendbyUser->full_name}}</h3>
+                     <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendToUser->full_name}}</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -168,11 +178,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div> 
                     <!---Your Proposed Terms End--->
 
                     <!---Your Proposed Terms Start--->
-                    {{-- <h3 class="heading_proposal jdc">{{$contract->offer->sendbyUser->full_name}} Feedback for You</h3>
+                    <h3 class="heading_proposal jdc">{{$contract->offer->sendbyUser->full_name}} Feedback for You</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -184,7 +194,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
+                    </div> 
                     <!---Your Proposed Terms End--->
 
 
@@ -325,9 +335,7 @@
 
             </div>
         </div>
-        @if (isHourlyContract($contract))
-            @include('templates.basic.user.seller.work_diary.Models.add_task',['contract_id'=>$contract->id])
-        @endif
+      
        
 @endsection
 
