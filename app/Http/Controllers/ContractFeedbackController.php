@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contract;
 use App\Models\ContractFeedback;
 use App\Models\Job;
+use App\Models\Role;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,39 +104,41 @@ class ContractFeedbackController extends Controller
         try{
             $request_data = $request->all();
             $user = Auth::user();
-            $last_role_id=getLastLoginRoleId();
-            if($last_role_id=='2'){
-                $user_id=$request_data['contract_send_to'];
+            $last_role_id=$user->last_role_activity;
+
+            if($last_role_id == Role::$Freelancer){
+                $feedback_for_id = $request_data['contract_send_to'];
             }
             else{
-                $user_id=$request_data['contract_send_by'];
+                $feedback_for_id = $request_data['contract_send_by'];
             }
-            $contract_id=$request_data['contract_id'];
             DB::beginTransaction();
 
-            $feedback = ContractFeedback::create([
+            $contract=Contract::find($request_data['contract_id']);
+            if ($contract){
+
+             ContractFeedback::create([
                 "role_id" => $last_role_id,
-                "feedback_for_id" => $user_id,
-                "contract_id" => $contract_id,
-                "total_score" => $request_data['rating'],
-                "feedback" => $request_data['feedback'],
+                "feedback_for_id" => $feedback_for_id,
+                "contract_id" => $contract->id,
+                "total_score" => $request_data['rating']  ?? null,
+                "feedback" => $request_data['feedback']  ?? null,
                 "created_by"=> $user->id,
                 "updated_by" => $user->id,
-                "deleted_by" => $user->id,
-
 
             ]);
-            $contract=Contract::find($contract_id);
             $contract->status_id = Contract::STATUSES['Completed'];
             $contract->updated_at = Carbon::now();
             $contract->save();
+
+            }
 
             DB::commit();
             return response()->json(['code' => 200]);
         }
         catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
