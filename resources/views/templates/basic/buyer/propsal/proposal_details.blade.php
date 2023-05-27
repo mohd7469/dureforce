@@ -133,10 +133,12 @@
 
 
                         </div>
+                        @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'] )
                         <div class="btns_container-div">
                             <a href="{{ route('seller.proposal.edit',[$proposal->module->uuid,$proposal->uuid]) }}" class="btn_sbmtrm">ChangeTerms</a>
                             <input type="button" value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()">
                         </div>
+                        @endif
                     </div>
                     <!---Your Proposed Terms End--->
 
