@@ -75,7 +75,6 @@ class JobController extends Controller
         try {
             $pageTitle = "Create Job";
             $data = $this->getJobData();
-            Log::info(["Job create data" => $data]);
             return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
         } catch (\Exception $e) {
@@ -93,7 +92,6 @@ class JobController extends Controller
             $pageTitle = "Manage Job";
             $emptyMessage = "No data found";
             $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
-            Log::info(["All Jobs" => $jobs]);
             return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
         } catch (\Exception $e) {
             errorLogMessage($e);
@@ -149,7 +147,6 @@ class JobController extends Controller
             }
             DB::commit();
             session()->put('notify', ["Job Created Successfully"]);
-            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
@@ -173,7 +170,6 @@ class JobController extends Controller
             $data['documents'] = json_encode($job->documents->toArray());
             $pageTitle = "Job Update";
 
-            Log::info(["Job" => $job]);
             return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
         } catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -233,7 +229,6 @@ class JobController extends Controller
                 $job->documents()->createMany(json_decode($request_data['file'],true));
             }
             DB::commit();
-            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
