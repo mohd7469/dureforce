@@ -119,7 +119,9 @@
                                                     @if ($proposal->offer)
                                                         <a href="{{route('offer.detail',$proposal->offer->uuid)}}" class="btn-products-s">View Offer</a>
                                                     @else
+                                                        @if(!checkOfferAlreadySent($proposal->module_id))
                                                         <a href="{{route('buyer.send.offer',$proposal->uuid)}}" class="btn-products-s">Send Offer</a>
+                                                        @endif
 
                                                     @endif
                                                 </div>
