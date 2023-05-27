@@ -1861,3 +1861,24 @@ function errorLogMessage($exception){
     }
 
 }
+
+
+function checkOfferAlreadySent($job_id){
+    try {
+        $job = Job::where('id',$job_id)->whereHas('moduleOffer', function ($query) {
+            $query->whereIn('status_id', ModuleOffer::OFFER_SENT_STATUSES);
+        })->get();
+
+        if (count($job)>0){
+
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    catch (\Exception $e){
+        return "www.dureforce.com/";
+    }
+}
