@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Proposal extends Model
 {
@@ -30,8 +31,12 @@ class Proposal extends Model
         static::creating(function ($model) {
             $uuid = Str::uuid()->toString();
             $model->uuid = $uuid;
+            $model->updated_at = Carbon::now();
         });
 
+        static::updating(function ($model) {
+            $model->updated_at = Carbon::now();
+        });
     }
     public static function scopeWithAll($query){
 

@@ -15,19 +15,19 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link {{ $type==null ? 'active' : ''}}" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
+                    <a class="nav-link {{ $type==null ? 'active' : ''}}" aria-current="true" data-bs-toggle="tab" href="#all">All ({{count($proposal_count)}})</a>
 
                 </li>
                 <li class="nav-item">
 
-                    <a class="nav-link {{ $type=="submitted_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposals)}})</a>
+                    <a class="nav-link {{ $type=="submitted_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposal_count)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $type=="active_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposals)}})</a>
+                    <a class="nav-link {{ $type=="active_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposal_count)}})</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $type=="archived_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposals)}})</a>
+                    <a class="nav-link {{ $type=="archived_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposal_count)}})</a>
 
                 </li>
                

@@ -14,7 +14,7 @@ class ContractFeedback extends Model
         "reason_end_contract_id",
         "not_recomended_reason_id",
         "language_level_id",
-        "feedback_for_id",
+        "user_id",
         "recomended_score",
         "skills_score",
         "contract_id",

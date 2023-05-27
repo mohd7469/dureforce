@@ -79,7 +79,7 @@ class JobController extends Controller
             return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
 
         }
 
@@ -96,7 +96,7 @@ class JobController extends Controller
             Log::info(["All Jobs" => $jobs]);
             return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
         }
 
     }

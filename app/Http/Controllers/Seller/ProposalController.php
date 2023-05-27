@@ -48,15 +48,21 @@ class ProposalController extends Controller
     {
         try {
 
-            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->paginate(getPaginate());
-            $submitted_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['SUBMITTED'])->orderBy('id', 'DESC')->paginate(getPaginate());
-            $archived_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ARCHIVED'])->orderBy('id', 'DESC')->paginate(getPaginate());
-            $active_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ACTIVE'])->orderBy('id', 'DESC')->paginate(getPaginate());
+            $proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->orderBy('updated_at', 'DESC')->paginate(getPaginate());
+            $submitted_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['SUBMITTED'])->orderBy('updated_at', 'DESC')->paginate(getPaginate());
+            $archived_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ARCHIVED'])->orderBy('updated_at', 'DESC')->paginate(getPaginate());
+            $active_proposals = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ACTIVE'])->orderBy('updated_at', 'DESC')->paginate(getPaginate());
+
+            $proposal_count = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->get();
+            $submitted_proposal_count = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['SUBMITTED'])->get();
+            $archived_proposal_count = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ARCHIVED'])->get();
+            $active_proposal_count = Proposal::with(['module.user', 'status'])->where('user_id', Auth::user()->id)->where('status_id', Proposal::STATUSES['ACTIVE'])->get();
+
             Log::info(["submitted proposals" => $submitted_proposals, "archived proposals" => $archived_proposals, "active_proposals" => $active_proposals]);
-            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type);
+            return view('templates.basic.buyer.propsal.my-proposal-list')->with('proposals', $proposals)->with('archived_proposals', $archived_proposals)->with('submitted_proposals', $submitted_proposals)->with('active_proposals', $active_proposals)->with('type', $type)->with('proposal_count', $proposal_count)->with('submitted_proposal_count', $submitted_proposal_count)->with('archived_proposal_count', $archived_proposal_count)->with('active_proposal_count', $active_proposal_count);
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }
@@ -75,7 +81,7 @@ class ProposalController extends Controller
             return view('templates.basic.buyer.propsal.proposal_details')->with('proposal', $proposal);
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
 
             return response()->json(["error" => "There is a technical error"]);
 
@@ -93,7 +99,7 @@ class ProposalController extends Controller
 
         return redirect('/seller/proposal-lists');
     } catch (\Exception $e) {
-    Log::error($e->getMessage());
+        errorLogMessage($e);
     return response()->json(["error" => "There is a technical error"]);
 
     }
@@ -125,7 +131,7 @@ class ProposalController extends Controller
 
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }
@@ -151,7 +157,7 @@ class ProposalController extends Controller
 
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(["error" => "There is a technical error"]);
 
         }
