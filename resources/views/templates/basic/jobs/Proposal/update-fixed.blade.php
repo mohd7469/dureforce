@@ -64,7 +64,7 @@
              <div class="col-md-3 col-lg-3 col-xl-3 col-sm-6 col-xs-6">
                <label>@lang('Project Start Date')*</label>
                <div class="input-group mb-3">
-               <input type="date" class="form-control" name="project_start_date" value="{{ $proposal->end_hour_limit }}" min="1900-01-01" max="2099-12-31">
+               <input type="date" class="form-control" name="project_start_date" value="{{ $proposal->project_start_date }}" min="1900-01-01" max="2099-12-31">
                </div>
             </div>
 
@@ -155,7 +155,7 @@
                      <small  class="form-text text-muted">20% Service Fee 
                         {{-- <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                      </small><br>
-                     <span class="pt-2 text-dark" id="system_fee"></span>
+                     <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->fixed_bid_amount*0.20), 2) }}</span>
                   </div>
 
                </div>

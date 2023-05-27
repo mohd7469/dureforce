@@ -172,13 +172,7 @@
 
 <script>
 
-    $('.delete_btn').on('click', function () {
-
-        var modal = $('#confirmationModal');
-        modal.find('input[name=day_planning_task_id]').val($(this).data('id'));
-        modal.modal('show');
-
-    });
+  
 
   
     $('#confirmation_btn').on('click', function () {
@@ -231,6 +225,7 @@
     }
 
     function editTask(task){
+        
         $('#add_task_model_id').find('#planning_date').val(moment(task.day.planning_date).format('YYYY-MM-DD'));
         $('#timezone_id').val(task.timezone).trigger('change');
         $('#add_task_model_id').find('#start_time').val(task.start_time);

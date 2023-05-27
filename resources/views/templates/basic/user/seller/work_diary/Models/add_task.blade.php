@@ -10,7 +10,7 @@
                 <input type="hidden" name="task_id" id="task_id">
                 <div class="modal-header">
 
-                    <h5 class="modal-title" id="exampleModalLabel">Add Task</h5>
+                    <h5 class="modal-title" id="add_task_model_id_title">Add Task</h5>
                     <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
 
                 </div>
@@ -119,12 +119,17 @@
                 </div>
 
                 <div class="modal-footer">
-                
-                    <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
-                    <button type="submit" class="btn-rounded text-white btn-save-draft" name="action" value="draft" id="save_btn_id">@lang('Save')</button>
-                    <button type="submit" class="btn-rounded text-white btn-save" name="action" value="approval" id="save_btn_id">@lang('Submit for Approval')</button>
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2 col-xl-2 col-sm-2">
+                            <button type="button" class="text-left delete_btn action-btn" id="delete_task_btn_id" style="display:none"><i class="fa fa-trash" style="color:red"></i></button>
+                        </div>
+                        <div class="col-md-10 col-lg-10 col-xl-10 col-sm-10 d-flex justify-content-end">
+                            <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
+                            <button type="submit" class="btn-rounded text-white btn-save-draft action-btn" name="action" value="draft" id="save_btn_id">@lang('Save')</button>
+                            <button type="submit" class="btn-rounded text-white btn-save  action-btn" name="action" value="approval" id="sub_for_approval_btn_id">@lang('Submit for Approval')</button>
+                        </div>
+                    </div>
                 </div>
-
             </form>
 
         </div>
@@ -155,6 +160,22 @@
 
 
         }
+
+        $('.delete_btn').on('click', function () {
+            var existingModal = $('#add_task_model_id');
+            existingModal.modal('hide');
+            var confirmationModal = $('#confirmationModal');
+            confirmationModal.modal('show');
+
+        });
+
+        $(document).on('click', '#cancel_task_btn_id', function(e) {
+            makeModelEmpty();
+        });
+
+        $('#add_task_model_id').on('hidden.bs.modal', function () {
+            makeModelEmpty();
+        });
 
         $(document).on('click', '.delete-btn', function(e) {
 
@@ -192,6 +213,8 @@
 
         });
 
+        
+
         function displayAlertMessage(message)
         {
             iziToast.error({
@@ -224,6 +247,20 @@
 
         }
 
+        function makeModelEmpty(){
+
+            $('#start_time').val('');
+            $('#end_time').val('');
+            $('#description_id').val('');
+            $('#file_name_div').empty();
+            $('#add_task_model_id').find('#task_id').val("");
+            already_uploaded_files=[];
+            $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
+            $('#add_task_model_id_title').html(add_task);
+            $('#delete_task_btn_id').hide();
+
+        }
+
         function AddTask(actionValue){
             let add_task_route="{{route('work-diary.store')}}";
             let form_data = new FormData(new_task_add_form[0]);
@@ -248,12 +285,22 @@
                         displayAlertMessage(data.error);
                     }
                     if(data.success){
-                        $('#start_time').val('');
-                        $('#end_time').val('');
-                        $('#description_id').val('');
+                        makeModelEmpty();
                         displaySuccessMessage(data.success);
                     }
                     if(data.redirect){
+                        
+                        var datePicker = document.getElementById("datepicker");
+                        var currentDate = new Date(data.day);
+
+                        var flatpickrInstance = flatpickr(datePicker, {
+                        dateFormat: "D, j M", // Set the desired date format
+                        defaultDate: currentDate,
+                            onClose: function(selectedDates) {
+                                datePicker.value = flatpickrInstance.formatDate(selectedDates[0], "D, j M");
+                            }
+                        });
+
                         getDayPlanning(data.uuid,data.day,false);             
                         $('#add_task_model_id').modal('hide');
                     }
@@ -263,13 +310,7 @@
 
         $(document).ready(function() {
         
-            $('#timezone_id').select2({
-                tags: true,
-                maximumSelectionLength: 1,
-                closeOnSelect: true,
-                dropdownParent: $('#add_task_model_id')
-            });
-
+           
             new_task_add_form.submit(function (e) {
 
                 e.preventDefault();
@@ -292,6 +333,8 @@
 
         });
 
+
+
        
 
     </script>
@@ -309,6 +352,17 @@
         width: 8rem !important;
 
     }
+    .modal-footer {
+    display: block !important;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.75rem;
+    border-top: 1px solid #dee2e6;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);
+}
     .btn-save-draft {
         background-color: transparent;
         border-radius: 5px;
@@ -317,6 +371,8 @@
         width: 5rem !important;
         padding: 6px 2px;
         font-size: 13px;
+        margin-right: 15px !important;
+
     }
     .btn-cancel {
         background-color: transparent;

@@ -13,7 +13,7 @@ class DayPlanningTask extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
-    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount'];
+    protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount','custom_hours','is_editable'];
 
     protected static function boot()
     {
@@ -42,6 +42,10 @@ class DayPlanningTask extends Model
     {
         return str_limit($this->attributes['description'], 25);
     }
+    public function getCustomHoursAttribute()
+    {
+        return round(($this->attributes['time_in_hours']*60 + $this->attributes['time_in_minutes'])/60,2);
+    }
     public function getCustomTaskAmountAttribute()
     {
         $user_rate_per_hours=$this->contract->offer->rate_per_hour;
@@ -53,6 +57,14 @@ class DayPlanningTask extends Model
         $time = new DateTime($this->attributes['end_time']);
         return $time->format('h:i A');
     }
+    public function getIsEditableAttribute()
+    {
+        if(getLastLoginRoleId() == Role::$Freelancer){
+            return $this->attributes['status_id'] <= DayPlanning::STATUSES['AwaitingApproval'] ? true : false;
+        }
+        return false;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by')->withAll();

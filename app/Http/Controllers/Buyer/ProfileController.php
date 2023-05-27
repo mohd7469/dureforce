@@ -54,12 +54,10 @@ class ProfileController extends Controller
      */
     public function saveCompany(Request $request)
     {
-    
-
         $rules = [
             'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:4|max:15',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15|gt:0',
+            'vat' => 'required|string|not_in:0|min:4|max:15',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -94,14 +92,18 @@ class ProfileController extends Controller
                 }
 
                 $user->company()->delete();
+                $vatId=$request->get('vat');
+                $vatId=ltrim($vatId,"0");
+                $phone=$request->get('phone');
+                $phone =ltrim($phone,"0");
 
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
-                    'number' => $request->get('phone'),
+                    'number' => $phone,
                     'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
-                    'vat' => $request->get('vat'),
+                    'vat' => $vatId,
                     'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')
@@ -577,8 +579,8 @@ class ProfileController extends Controller
             'name' => 'required',
             'country_id' => 'required',
             'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15|gt:0|not_in:0',
-            'vat' => 'required|string|min:5|max:15|gt:0',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:4|max:15|gt:0',
+            'vat' => 'required|string|not_in:0|min:4|max:15',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -611,14 +613,18 @@ class ProfileController extends Controller
                 }
 
                 $user->company()->delete();
+                $vatId=$request->get('vat');
+                $vatId=ltrim($vatId,"0");
+                $phone=$request->get('phone');
+                $phone =ltrim($phone,"0");
 
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
-                    'number' => $request->get('phone'),
+                    'number' => $phone,
                     'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
-                    'vat' => $request->get('vat'),
+                    'vat' => $vatId,
                     'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')

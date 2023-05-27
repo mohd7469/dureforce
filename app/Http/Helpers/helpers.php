@@ -231,7 +231,7 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
     } catch (\Exception $e) {
-        \Illuminate\Support\Facades\Log::error($e->getMessage());
+        errorLogMessage($e);
 //        error($obj);
     }
     return $filename;
@@ -1846,6 +1846,18 @@ function getBaseUrl(){
     }
     catch (\Exception $e){
         return "www.dureforce.com/";
+    }
+
+}
+
+function errorLogMessage($exception){
+    try {
+        $errorMsg = 'Error on line '.$exception->getLine().' in '.$exception->getFile()." ".$exception->getMessage();
+        Log::error($errorMsg);
+        return true;
+    }
+    catch (\Exception $e){
+        return $exception;
     }
 
 }

@@ -201,7 +201,7 @@ class SubAttributesController extends Controller
 
         } catch (\Exception $e) {
 
-            Log::error($e->getMessage());
+            errorLogMessage($e);
             return response()->json(['error' =>$e->getMessage()]);
 
         }
