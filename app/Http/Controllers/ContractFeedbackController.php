@@ -108,9 +108,12 @@ class ContractFeedbackController extends Controller
 
             if($last_role_id == Role::$Freelancer){
                 $feedback_for_id = $request_data['contract_send_to'];
+                $last_role_id = Role::$Freelancer;
             }
             else{
                 $feedback_for_id = $request_data['contract_send_by'];
+                $last_role_id = Role::$Client;
+
             }
             DB::beginTransaction();
 
