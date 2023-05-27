@@ -64,14 +64,8 @@ class ContractsController extends Controller
         $user=Auth::user();
         $last_role_id=getLastLoginRoleId();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
-        if($last_role_id=='2'){
-            $user_id=$contract->offer->offer_send_to_id;
-        }
-        else{
-            $user_id=$contract->offer->offer_send_by_id;
-        }
-
-//        $feedback=ContractFeedback::WithAll()->
+        $user_id=$contract->offer->offer_send_by_id;
+        
         $userData=User::WithAll()->where('id',$user_id)->first();
         $userName=$userData->first_name." ".$userData->last_name;
         return view('templates.basic.user.contract_feedback',compact('contract', 'userName'));
