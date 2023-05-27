@@ -29,6 +29,7 @@ class ContractFeedback extends Model
         "deleted_at"
     ];
 
+
     public function contract()
     {
         return $this->belongsTo(Contract::class, 'contract_id');

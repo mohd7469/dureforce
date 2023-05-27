@@ -99,4 +99,45 @@ class ContractFeedbackController extends Controller
 
     }
 
+    public function storenew(Request $request){
+        try{
+            $request_data = $request->all();
+            $user = Auth::user();
+            $last_role_id=getLastLoginRoleId();
+            if($last_role_id=='2'){
+                $user_id=$request_data['contract_send_to'];
+            }
+            else{
+                $user_id=$request_data['contract_send_by'];
+            }
+            $contract_id=$request_data['contract_id'];
+            DB::beginTransaction();
+
+            $feedback = ContractFeedback::create([
+                "role_id" => $last_role_id,
+                "feedback_for_id" => $user_id,
+                "contract_id" => $contract_id,
+                "total_score" => $request_data['rating'],
+                "feedback" => $request_data['feedback'],
+                "created_by"=> $user->id,
+                "updated_by" => $user->id,
+                "deleted_by" => $user->id,
+
+
+            ]);
+            $contract=Contract::find($contract_id);
+            $contract->status_id = Contract::STATUSES['Completed'];
+            $contract->updated_at = Carbon::now();
+            $contract->save();
+
+            DB::commit();
+            return response()->json(['code' => 200]);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            return response()->json(["error" => $exp->getMessage()]);
+        }
+    }
+
 }

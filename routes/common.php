@@ -44,12 +44,12 @@ Route::middleware(['verified','is-profile-completed','auth'])->group(function ()
 
         Route::get('/contract',  [ContractsController::class,'index'])->name('index');
         Route::get('/contract_detail/{uuid}',  [ContractsController::class,'show'])->name('show');
-        Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedback'])->name('feedback');
+        Route::get('/contract_feedback/{uuid}',  [ContractsController::class,'feedbacknew'])->name('feedbacknew');
         Route::get('/loadreason',  [ContractsController::class,'loadReason'])->name('loadReason');
         });
 
 
-        Route::post('contract/feedback', [\App\Http\Controllers\ContractFeedbackController::class, 'store'])->name('feedback.store');
+        Route::post('contract/feedback', [\App\Http\Controllers\ContractFeedbackController::class, 'storenew'])->name('feedback.storenew');
 
 
     Route::name('work-diary.')->prefix('work-diary')->group(function () {
