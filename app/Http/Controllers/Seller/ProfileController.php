@@ -83,7 +83,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Experience Added Successfully"], 200);
 
         } catch (\Exception $exp) {
-
+            errorLogMessage($exp);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
 
@@ -127,7 +127,8 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Education Added Successfully"], 200);
 
         } catch (\Exception $exp) {
-            return response()->json(['error' => $exp->getMessage()]);
+            // return response()->json(['error' => $exp->getMessage()]);
+            errorLogMessage($exp);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
 
@@ -163,6 +164,7 @@ class ProfileController extends Controller
                 return response()->json(["success" => "Skills and Rates Updated Successfully",'redirect_url' => route('user.home')]);
             } catch (\Throwable $exception) {
                 DB::rollback();
+                errorLogMessage($exception);
                 $notify[] = ['errors', 'Failled To Save User Skills and Rate .'];
                 return back()->withNotify($notify);
 
@@ -249,7 +251,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Experience Added Successfully"], 200);
 
         } catch (\Exception $exp) {
-
+            errorLogMessage($exp);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
 
@@ -292,7 +294,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Experience Updated Successfully"], 200);
 
         } catch (\Exception $exp) {
-
+            errorLogMessage($exp);
             $notify[] = ['errors', 'Failled To Update Experience.'];
             return back()->withNotify($notify);
 
@@ -337,6 +339,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Education Added Successfully"], 200);
 
         } catch (\Exception $exp) {
+            errorLogMessage($exp);
             return response()->json(['error' => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
@@ -384,7 +387,7 @@ class ProfileController extends Controller
             return response()->json(["success" => "User Education Updated Successfully"], 200);
 
         } catch (\Exception $exp) {
-
+            errorLogMessage($exp);
             return response()->json(['error' => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Addd Experience.'];
             return back()->withNotify($notify);
@@ -457,8 +460,8 @@ class ProfileController extends Controller
             
 
         } catch (\Exception $exp) {
-
-            Log::error(["portfolio" => $exp->getMessage()]);
+            errorLogMessage($exp);
+            // Log::error(["portfolio" => $exp->getMessage()]);
             $notify[] = ['errors', 'Failled To Add Portfolio.'];
             return back()->withNotify($notify);
 
@@ -512,6 +515,7 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
+                errorLogMessage($exception);
                 return response()->json(['error' => $exception->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
@@ -561,7 +565,8 @@ class ProfileController extends Controller
 
         }
         catch (\Exception $exp) {
-            Log::error([" Portfolio Edit " => $exp->getMessage() ]);
+            // Log::error([" Portfolio Edit " => $exp->getMessage() ]);
+            errorLogMessage($exp);
             $notify[] = ['errors', 'Failled To Fetch  Portfolio.'];
             return back()->withNotify($notify);
 
@@ -583,7 +588,8 @@ class ProfileController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollback();
-            Log::info("Error In requestForTestimonial " .$th->getMessage());
+            errorLogMessage($th);
+            // Log::info("Error In requestForTestimonial " .$th->getMessage());
             return response()->json(['error'=>'Failled to generate testimonial request']);
 
         }
@@ -647,7 +653,8 @@ class ProfileController extends Controller
         }
         catch (\Throwable $th) {
             DB::rollback();
-            Log::info("Error In Saving Testimonial Response " .$th->getMessage());
+            errorLogMessage($exp);
+            // Log::info("Error In Saving Testimonial Response " .$th->getMessage());
             $notify[] = ['error', 'Server Error Please try again'];
             return $notify;
 

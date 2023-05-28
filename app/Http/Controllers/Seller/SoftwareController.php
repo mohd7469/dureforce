@@ -37,7 +37,8 @@ class SoftwareController extends Controller
             Log::info(["Software" => $softwares]);
             return view($this->activeTemplate . 'user.seller.software.index', compact('pageTitle', 'softwares', 'emptyMessage'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
     }
@@ -78,7 +79,8 @@ class SoftwareController extends Controller
             ));
 
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -98,7 +100,8 @@ class SoftwareController extends Controller
             return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-2'])->withNotify($notify);
 
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -119,7 +122,8 @@ class SoftwareController extends Controller
             $notify[] = ['success', 'Software Pricing Saved Successfully.'];
             return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -150,7 +154,8 @@ class SoftwareController extends Controller
             $notify[] = ['success', 'Software Banner Saved Successfully.'];
             return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-4'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
     public function storeProposal(SoftwareProposalRequest $request){
@@ -176,7 +181,8 @@ class SoftwareController extends Controller
                 return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
             }
         } catch (\Exception $exp) {
-            Log::error([$exp->getMessage()]);
+            // Log::error([$exp->getMessage()]);
+            errorLogMessage($exp);
         }
 
     }
@@ -202,7 +208,8 @@ class SoftwareController extends Controller
             $notify[] = ['success', 'Software Requirements Saved Successfully.'];
             return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-6'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -231,7 +238,8 @@ class SoftwareController extends Controller
 
             
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
         $software = Software::FindOrFail($request->get('software_id'));
@@ -296,7 +304,8 @@ class SoftwareController extends Controller
             }
             return view($this->activeTemplate . 'software_details', compact('pageTitle', 'software', 'related_softwares', 'emptyMessage','is_software_steps'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -341,7 +350,8 @@ class SoftwareController extends Controller
             return back()->withNotify($notify);
         } catch (\Exception $exp) {
             
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             $notify[] = ['error', 'Failled to delete Software'];
             return redirect()->back()->withNotify($notify);
         }

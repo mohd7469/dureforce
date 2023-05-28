@@ -172,7 +172,8 @@ class OfferController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                Log::info("Error",[$exception->getMessage()]);
+                // Log::info("Error",[$exception->getMessage()]);
+                errorLogMessage($exception);
                 return response()->json(['error' => $exception->getMessage()]);
                 
 
@@ -243,7 +244,8 @@ class OfferController extends Controller
         } 
         catch (\Throwable $exp) {
             DB::rollBack();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             $notify[] = ['error', 'Failled to Send Offer'];
             return back()->withNotify($notify);
         }
@@ -263,6 +265,7 @@ class OfferController extends Controller
             return view('templates.basic.offer.offer_description',compact('offer','last_role_id'));
             
         } catch (\Throwable $th) {
+            errorLogMessage($th);
            return redirect()->back()->withErrors(['Error' => "Failled To Fetch Offer"]);
         }
        
@@ -303,7 +306,8 @@ class OfferController extends Controller
             return back()->withNotify($notify);
         } catch (\Throwable $exp) {
             DB::rollBack();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             $notify[] = ['error', 'Failled to Withdraw Offer'];
             return back()->withNotify($notify);
         }
