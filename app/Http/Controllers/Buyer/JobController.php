@@ -380,8 +380,10 @@ class JobController extends Controller
     public function inviteFreelancer($job_uuid)
     {
         $job = Job::where('uuid', $job_uuid)->with('invited_freelancer')->first();
-
-        $user_ids = $job->invited_freelancer->pluck('user_id');
+        $job_proposal=$job->proposal;
+        $proposal_submitted_user_ids=$job_proposal->pluck('user_id')->toArray();
+        $user_ids = $job->invited_freelancer->pluck('user_id')->toArray();
+        $user_ids = array_merge($user_ids,$proposal_submitted_user_ids);
 
         $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic', 'experiences', 'skills', 'education')->get();
         $invited_freelancers = InviteFreelancer::where('job_id', $job->id)->with('user')->get();
