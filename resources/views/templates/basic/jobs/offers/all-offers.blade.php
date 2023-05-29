@@ -66,7 +66,6 @@
                                     </div>
                                 </div>
                                     <!--Bio Profile Section Start-->
-                                    
                                     @foreach ($pending_offers as $offer)
                                        
                                     <div class="" >
@@ -224,7 +223,7 @@
                                                     <div class="row borderleftc">
                                                         <div class="col-md-4">
                                                            {{-- @dd($offer->proposal->user->user_basic->profile_picture) --}}
-                                                            <img alt="User Pic" src="{{!empty($offer->proposal->user_basic->profile_picture)? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
+                                                            <img alt="User Pic" src="{{$offer->proposal->user->user_basic->profile_picture ? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                         </div>
     
                                                         <div class="col-md-8" style="text-align:left">
@@ -294,18 +293,17 @@
                                             <!--Skills Section Start-->
                                             <div class="row skills-c">
                                                 <div class="col-md-6 col-lg-6" style="text-align: left;">
-    
-                                                    {{-- <h2>Has {{count($offer->skill->name)}} relevant skills to your job</h2> --}}
-                                                    @foreach ( $job->skill as $skills) 
-                                                       
+                                                    <h2>Has {{count($offer->proposal->user->skills)}} relevant skills to your job</h2>
+
+                                                    @foreach($offer->proposal->user->skills as $skill)
+
                                                         <ul class="skills-listing">
-                                                            
-                                                            <li>{{$skills->name}} </li>
-                                                            
-    
+
+                                                            <li>{{$skill->name}} </li>
+
                                                         </ul>
-                                                        
-                                                   @endforeach
+
+                                                    @endforeach
                                                 </div >
                                                 {{-- @isset($proposal->attachment) --}}
                                                 @if (count($offer->attachments)>0)
