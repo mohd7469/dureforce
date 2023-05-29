@@ -69,6 +69,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -82,6 +83,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -93,6 +95,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }

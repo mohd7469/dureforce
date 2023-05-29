@@ -252,7 +252,7 @@ class ProposalController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -345,7 +345,7 @@ class ProposalController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }

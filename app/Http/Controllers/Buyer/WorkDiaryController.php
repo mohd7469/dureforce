@@ -32,7 +32,8 @@ class WorkDiaryController extends Controller
             return redirect()->route('work-diary.index',$day_planning->contract->uuid)->withNotify($notify);
         } catch (\Throwable $th) {
             DB::rollback();
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to update day planning status"];
             return back()->withNotify($notify);
         }
