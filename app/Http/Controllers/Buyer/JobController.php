@@ -151,7 +151,8 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
 
@@ -172,7 +173,8 @@ class JobController extends Controller
 
             return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -233,7 +235,8 @@ class JobController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp]);
         }
 
@@ -277,6 +280,7 @@ class JobController extends Controller
             return $query->get();
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return $e->getMessage();
         }
     }
@@ -291,6 +295,7 @@ class JobController extends Controller
             return $query->get();
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return $e->getMessage();
         }
     }
@@ -361,6 +366,7 @@ class JobController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return response()->json(["error" => "Failed to delete job"]);
 
         }
