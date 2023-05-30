@@ -253,6 +253,7 @@
             $('#end_time').val('');
             $('#description_id').val('');
             $('#file_name_div').empty();
+            $('#uploaded_files').val('');
             $('#add_task_model_id').find('#task_id').val("");
             already_uploaded_files=[];
             $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
