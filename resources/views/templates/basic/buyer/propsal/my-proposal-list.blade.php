@@ -50,7 +50,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? '' }}&nbsp; {{$proposal->module->user->last_name[0] ?? '' }}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">
@@ -106,7 +106,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? ''}} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">
@@ -161,7 +161,7 @@
                                 <tr>
                                     <td>
                                         <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                        <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                        <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? '' }} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                     </td>
                                     <td>
                     <span class="jobtype-per">
@@ -215,7 +215,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? ''}} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">

@@ -76,7 +76,7 @@
                                 <div class="col-md-6">
                                     <label class="mt-4">VAT ID *</label>
                                     <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
-                                        placeholder="3948203"  class="num_filed"/>
+                                        placeholder="3948203"  class="num_filed" onkeypress="return/[0-9\s]/i.test(event.key)"/>
                                 </div>
 
                                  </div>
