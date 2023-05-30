@@ -83,7 +83,7 @@ class Job extends Model
     {
         
         parent::boot();
-        static::saving(function ($model)  {
+        static::creating(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
             $model->job_link = $uuid;
