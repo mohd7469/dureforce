@@ -92,7 +92,7 @@
                     @endforeach
                     </tbody>
                 </table>
-                <span>'Any available balance you have will be applied towards your total amount</span>
+                <span>Any available balance you have will be applied towards your total amount</span>
             </div>
         </div>
          

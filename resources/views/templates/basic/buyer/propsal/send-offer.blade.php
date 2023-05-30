@@ -68,7 +68,7 @@
       
           <h6 class="card-title" id="fixed_payment_option_heading">Pay a Fixed Price</h5>
         
-          <p class="paragraph-alignment">Pay for the Number of Hours Worked on a Project</p>
+          <p class="paragraph-alignment">Pay for the fixed rate decided for Project</p>
           
         </div>
       </div>
