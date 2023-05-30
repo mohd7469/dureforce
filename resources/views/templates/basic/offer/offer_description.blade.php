@@ -85,7 +85,7 @@
                     @if ($offer->payment_type==App\Models\ModuleOffer::PAYMENT_TYPE['HOURLY'])
                         <li>
                             <p>Hourly Rate</p>
-                            <p>$30.00/hr</p>
+                            <p>{{$offer->rate_per_hour}}$/per hour</p>
                         </li>
                     @else
 
@@ -99,7 +99,7 @@
 
                     <li>
                         <p>Weekly Limit</p>
-                        <p>40hrs/week</p>
+                        <p>{{$offer->weekly_limit}}hrs/week</p>
                     </li>
                     <li>
                         <p>Manual time Allowed</p>

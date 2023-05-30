@@ -911,6 +911,8 @@ Thanks,
                     }
                     else if(response.error){
                         displayAlertMessage(response.error);
+                        location.reload();
+
                     }
                     else{
                         errorMessages(response.errors);

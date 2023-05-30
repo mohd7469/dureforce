@@ -150,6 +150,7 @@ class UserController extends Controller
                 return back()->withNotify($notify);
             }
         } catch (\PDOException $e) {
+            errorLogMessage($e);
             $notify[] = ['error', $e->getMessage()];
             return back()->withNotify($notify);
         }
@@ -278,6 +279,7 @@ class UserController extends Controller
                                         'type' => $inVal->type,
                                     ];
                                 } catch (\Exception $exp) {
+                                    errorLogMessage($exp);
                                     $notify[] = ['error', 'Could not upload your ' . $request[$inKey]];
                                     return back()->withNotify($notify)->withInput();
                                 }

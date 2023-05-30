@@ -10,6 +10,7 @@ use App\Models\Job;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\EmailTemplate;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -53,7 +54,10 @@ class InviteFreelancerController extends Controller
             $data['invitation'] = $invitation;
             $data['job'] = $job;
             $data['email_template'] = $email_template;
+            if(Proposal::where('user_id',$request['user_id'])->where('module_id',$job_id)->exists()){
+                return response()->json(["error" => "This user has already submitted proposal for this job."]);
 
+            }
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
 
             $users= array($request['user_id']);
@@ -69,6 +73,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -82,6 +87,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -93,6 +99,7 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }

@@ -24,7 +24,6 @@ class BannerController extends Controller
             $pageTitle = "Manage All Banner";
             $emptyMessage = "No data found";
             $banners = Banner::where('document_type', 'Background')->withAll()->latest()->paginate(getPaginate());
-            Log::info($banners);
             return view('admin.banner.index', compact('pageTitle', 'emptyMessage', 'banners'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -38,7 +37,6 @@ class BannerController extends Controller
         try {
             $pageTitle = "Create Banner";
             $categories = Category::where('is_active',1)->select('id', 'name')->get();
-            Log::info($categories);
             return view('admin.banner.create', compact('pageTitle','categories'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -53,7 +51,6 @@ class BannerController extends Controller
             $banner = Banner::findOrFail($id);
             $categories = Category::where('is_active',1)->select('id', 'name')->get();
             $subCategories = SubCategory::where('category_id',$banner->category_id)->where('is_active',1)->select('id', 'name')->get();
-            Log::info($categories);
             return view('admin.banner.edit', compact('pageTitle','categories','banner','subCategories'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -96,7 +93,6 @@ class BannerController extends Controller
             $banner->subject = $request->subject;
             $banner->save();
             DB::commit();
-            Log::info(["banner" => $banner]);
             $notify[] = ['success', 'Your Banner has been Created.'];
             return redirect()->route('admin.banner.index')->withNotify($notify);
         }catch (\Exception $exp) {
@@ -141,7 +137,6 @@ class BannerController extends Controller
             $banner->type = $file_extension;
             $banner->save();
             DB::commit();
-            Log::info(["banner" => $banner]);
             $notify[] = ['success', 'Your Banner has been Created.'];
             return redirect()->route('admin.banner.index')->withNotify($notify);
         }
@@ -158,7 +153,6 @@ class BannerController extends Controller
         try {
             $pageTitle = "Banner Details";
             $banner = Banner::where('id',$id)->withAll()->first();
-            Log::info(["banner" => $banner]);
             return view('admin.banner.details', compact('pageTitle', 'banner'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -171,7 +165,6 @@ class BannerController extends Controller
     {
         try {
             $sub_category = SubCategory::where('category_id', $request->category)->get();
-            Log::info(["sub_category" => $sub_category]);
             if ($sub_category->isEmpty()) {
                 return response()->json(['error' => "Sub category not available under this category"]);
             } else {
@@ -190,7 +183,6 @@ class BannerController extends Controller
             $pageTitle = "InActive Banner";
             $emptyMessage = "No data found";
             $banners = Banner::where('document_type', 'Background')->where('is_active', 0)->latest()->paginate(getPaginate());
-            Log::info(["banners" => $banners]);
             return view('admin.banner.inactive', compact('pageTitle', 'emptyMessage', 'banners'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -205,7 +197,6 @@ class BannerController extends Controller
             $pageTitle = "Active Banner";
             $emptyMessage = "No data found";
             $banners = Banner::where('document_type', 'Background')->where('is_active', 1)->latest()->paginate(getPaginate());
-            Log::info(["banners" => $banners]);
             return view('admin.banner.active', compact('pageTitle', 'emptyMessage', 'banners'));
         }catch (\Exception $exp) {
             Log::error($exp->getMessage());
@@ -226,7 +217,6 @@ class BannerController extends Controller
             $banner->created_at = Carbon::now();
             $banner->save();
             DB::commit();
-            Log::info(["banner" => $banner]);
             $notify[] = ['success', 'Banner has been Activated'];
             return redirect()->back()->withNotify($notify);
         }catch (\Exception $exp) {
@@ -249,7 +239,6 @@ class BannerController extends Controller
             $banner->created_at = Carbon::now();
             $banner->save();
             DB::commit();
-            Log::info(["banner" => $banner]);
             $notify[] = ['success', 'Banner has been inActive'];
             return redirect()->back()->withNotify($notify);
         }catch (\Exception $exp) {

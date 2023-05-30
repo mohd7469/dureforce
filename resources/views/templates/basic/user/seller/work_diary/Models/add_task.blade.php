@@ -98,7 +98,7 @@
 
                             <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                 
-                                <div >
+                                <div id="files_upload_input_div_id">
                                     
                                     <label class="btn-outline-green" for="uploaded_files"><i class="fa fa-paperclip" aria-hidden="true"></i>Upload Attachments</label>
                                     <input type="file" name="uploaded_files[]" id="uploaded_files" style="display: none;visibility:none" onchange="writeFileName()" multiple accept="image/*">

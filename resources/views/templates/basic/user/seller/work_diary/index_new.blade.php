@@ -895,11 +895,14 @@
                         if(is_edit){
                             $('.action-btn').prop('disabled', false).show();
                             $('form :input').prop('readonly', false).prop('disabled', false);
+                            $('#files_upload_input_div_id').show();
+
 
                         }
                         else{
                             $('.action-btn').prop('disabled', true).hide();
                             $('form :input:not(.btn-cancel,.bc)').prop('readonly', true).prop('disabled', true);
+                            $('#files_upload_input_div_id').hide();
                         }
                     }
                 }

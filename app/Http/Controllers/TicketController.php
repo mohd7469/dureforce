@@ -215,18 +215,11 @@ class TicketController extends Controller
             $notify[] = ['success', 'ticket created successfully!'];
             $mac_address = shell_exec('getmac');
 
-            Log::info(["Ticket" => $ticket]);
-            Log::info(["Request" => $request->all()]);
-            Log::info(["IP" => $request->ip()]);
-            Log::info(["MAC" => $mac_address]);
             return response()->json(['redirect' => route('ticket')]);
 
         }
         catch (\Exception $exp) {
-            Log::error(["Request" => $request->all()]);
-            Log::error(["IP" => $request->ip()]);
-            Log::error(["MAC" => $mac_address]);
-            Log::error(["exception" => $exp->getMessage()]);
+            errorLogMessage($exp);
             $notify[] = ['error', 'Technical error occurred.'];
             return back()->withNotify($notify);
         }
