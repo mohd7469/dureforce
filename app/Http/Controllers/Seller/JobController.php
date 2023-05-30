@@ -78,6 +78,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -92,6 +93,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -105,6 +107,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -122,6 +125,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 

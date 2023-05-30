@@ -145,7 +145,8 @@ class PayMethodController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
+                // return response()->json(['error' => $th->getMessage()]);
+                errorLogMessage($th);
                 $notify[] = ['errors', 'Failled To Update User Payment Method .'];
                 return back()->withNotify($notify);
 

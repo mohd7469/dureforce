@@ -50,7 +50,8 @@ class ServiceController extends Controller
             Log::info(["Services" => $services]);
             return view($this->activeTemplate . 'user.seller.service.index', compact('pageTitle', 'services', 'emptyMessage'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
 
         }
     }
@@ -72,7 +73,8 @@ class ServiceController extends Controller
             Log::info(["Services" => $service, "Related Services" => $related_services]);
             return view($this->activeTemplate . 'service_deatils', compact('pageTitle', 'service', 'selected_skills', 'related_services','emptyMessage'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
 
         }
     }
@@ -116,7 +118,8 @@ class ServiceController extends Controller
             ));
 
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -139,7 +142,8 @@ class ServiceController extends Controller
 
             return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-2'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -160,7 +164,8 @@ class ServiceController extends Controller
             $notify[] = ['success', 'Service Pricing Saved Successfully.'];
             return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
     }
@@ -193,7 +198,8 @@ class ServiceController extends Controller
             $notify[] = ['success', 'Service Banner Saved Successfully.'];
             return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
     
@@ -218,7 +224,8 @@ class ServiceController extends Controller
                 return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
             }
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
     }
@@ -245,7 +252,8 @@ class ServiceController extends Controller
                 return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
             }
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
     }
@@ -275,7 +283,8 @@ class ServiceController extends Controller
             }
 
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
 
         $service = Service::FindOrFail($request->get('service_id'));
@@ -307,7 +316,8 @@ class ServiceController extends Controller
             $notify[] = ['success', 'Image has been deleted.'];
             return back()->withNotify($notify);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -352,7 +362,8 @@ class ServiceController extends Controller
             return back()->withNotify($notify);
 
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             $notify[] = ['error', 'Failled to delete Service'];
             return redirect()->back()->withNotify($notify);
 
@@ -365,7 +376,8 @@ class ServiceController extends Controller
             Mail::to($service->user->email)->send(new serviceaddonMail($service));
             Log::info(["Service email sent to" => $service->user->email]);
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 }

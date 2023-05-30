@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 
 class ContractFeedbackController extends Controller
@@ -102,47 +103,63 @@ class ContractFeedbackController extends Controller
 
     public function storenew(Request $request)
     {
-        try {
-            $request_data = $request->all();
-            $user = Auth::user();
-            $last_role_id = $user->last_role_activity;
-            if ($last_role_id == Role::$Freelancer) {
-                $feedback_for_id = $request_data['contract_send_to'];
-                $role_id = Role::$Client;
+        $rules = [
+            'rating'            => 'required',
+            'feedback'          => 'required|between:0,400'
+        ];
 
-            } else {
+        $messages = [
+            'rating.required' => 'Rating is required',
+            'feedback.required' => 'Feedback is required'
+        ];
 
-                $feedback_for_id = $request_data['contract_send_by'];
-                $role_id = Role::$Freelancer;
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json(["validation_errors" => $validator->errors()]);
+        } else {
+            try {
 
+                $request_data = $request->all();
+                $user = Auth::user();
+                $last_role_id = $user->last_role_activity;
+                if ($last_role_id == Role::$Freelancer) {
+                    $feedback_for_id = $request_data['contract_send_to'];
+                    $role_id = Role::$Client;
+
+                } else {
+
+                    $feedback_for_id = $request_data['contract_send_by'];
+                    $role_id = Role::$Freelancer;
+
+                }
+                DB::beginTransaction();
+
+                $contract = Contract::find($request_data['contract_id']);
+                if ($contract) {
+
+                    ContractFeedback::create([
+                        "role_id" => $role_id,
+                        "feedback_for_id" => $feedback_for_id,
+                        "contract_id" => $contract->id,
+                        "total_score" => $request_data['rating'] ?? null,
+                        "feedback" => $request_data['feedback'] ?? null,
+                        "created_by" => $user->id,
+                        "updated_by" => $user->id,
+
+                    ]);
+                    $contract->status_id = Contract::STATUSES['Completed'];
+                    $contract->updated_at = Carbon::now();
+                    $contract->save();
+
+                }
+
+                DB::commit();
+                return response()->json(['code' => 200]);
+            } catch (\Exception $exp) {
+                DB::rollback();
+                errorLogMessage($exp);
+                return response()->json(["error" => $exp->getMessage()]);
             }
-            DB::beginTransaction();
-
-            $contract = Contract::find($request_data['contract_id']);
-            if ($contract) {
-
-                ContractFeedback::create([
-                    "role_id" => $role_id,
-                    "feedback_for_id" => $feedback_for_id,
-                    "contract_id" => $contract->id,
-                    "total_score" => $request_data['rating'] ?? null,
-                    "feedback" => $request_data['feedback'] ?? null,
-                    "created_by" => $user->id,
-                    "updated_by" => $user->id,
-
-                ]);
-                $contract->status_id = Contract::STATUSES['Completed'];
-                $contract->updated_at = Carbon::now();
-                $contract->save();
-
-            }
-
-            DB::commit();
-            return response()->json(['code' => 200]);
-        } catch (\Exception $exp) {
-            DB::rollback();
-            errorLogMessage($exp);
-            return response()->json(["error" => $exp->getMessage()]);
         }
     }
 

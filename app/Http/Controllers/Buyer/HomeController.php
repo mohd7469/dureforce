@@ -289,6 +289,7 @@ class HomeController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Technical Error";
         }
 

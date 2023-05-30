@@ -68,7 +68,8 @@ class SoftwareController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            Log::error(['Error In Booking Software' => $th->getMessage()]);
+            // Log::error(['Error In Booking Software' => $th->getMessage()]);
+            errorLogMessage($th);
             $notify[] = ['error',"Failled To Book Software"];
             return redirect()->back()->withNotify($notify); 
 
