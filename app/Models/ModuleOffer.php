@@ -10,20 +10,21 @@ use Illuminate\Support\Str;
 
 class ModuleOffer extends Model
 {
-    use HasFactory,SoftDeletes;
-    protected $table="module_offers";
-    public static $EMAIL_TEMPLATE="offer_sent";
+    use HasFactory, SoftDeletes;
+
+    protected $table = "module_offers";
+    public static $EMAIL_TEMPLATE = "offer_sent";
     protected $guarded = ['id'];
 
 
     public const  Fix_Payment_Offer_Type = [
-        'BY_PROJECT' => 'by_project' ,
-        'BY_MILESTONE' =>'by_milestone'  
+        'BY_PROJECT' => 'by_project',
+        'BY_MILESTONE' => 'by_milestone'
     ];
 
     public const PAYMENT_TYPE = [
         'FIXED' => 'Fixed',
-        'HOURLY' =>'Hourly'  
+        'HOURLY' => 'Hourly'
     ];
 
 
@@ -35,27 +36,28 @@ class ModuleOffer extends Model
 
 
     public const STATUSES = [
-        
-        'PENDING'  =>  11,
-        'ACCEPTED' =>  12,
-        'REJECTED' =>  13,
-        'WITHDRAW' =>  14, 
-        'CLOSED'   =>  15, 
-        'EXPIRED'  =>  16, 
+
+        'PENDING' => 11,
+        'ACCEPTED' => 12,
+        'REJECTED' => 13,
+        'WITHDRAW' => 14,
+        'CLOSED' => 15,
+        'EXPIRED' => 16,
 
     ];
 
+    public const OFFER_SENT_STATUSES = [ModuleOffer::STATUSES['PENDING'], ModuleOffer::STATUSES['ACCEPTED'], ModuleOffer::STATUSES['CLOSED'], ModuleOffer::STATUSES['EXPIRED']];
 
     protected static function boot()
     {
-        
+
         parent::boot();
-        static::creating(function ($model)  {
-            $uuid=Str::uuid()->toString();
-            $model->uuid =  $uuid;
-            $model->offer_send_by_id=auth()->user()->id;
-            $model->status_id=self::STATUSES['PENDING'];
-            $model->is_active=0;
+        static::creating(function ($model) {
+            $uuid = Str::uuid()->toString();
+            $model->uuid = $uuid;
+            $model->offer_send_by_id = auth()->user()->id;
+            $model->status_id = self::STATUSES['PENDING'];
+            $model->is_active = 0;
         });
 
 
@@ -65,17 +67,22 @@ class ModuleOffer extends Model
     {
         return $query->with('moduleMilestones')->with('proposal.user')->with('attachments')->with('module')->with('sendToUser')->with('sendbyUser')->with('status')->with('contract');
     }
+
     public function moduleMilestones()
     {
         return $this->hasMany(ModuleOfferMilestone::class, 'module_offer_id');
     }
+
     public function proposal()
     {
         return $this->belongsTo(Proposal::class);
     }
-    public function attachments(){
-        return $this->morphMany(Attachment::class,'section');
+
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'section');
     }
+
     public function module()
     {
         return $this->morphTo('module')->with('category');
@@ -85,23 +92,30 @@ class ModuleOffer extends Model
     {
         return $this->belongsTo(User::class, 'offer_send_to_id')->with('basicProfile');
     }
+
     public function sendbyUser()
     {
         return $this->belongsTo(User::class, 'offer_send_by_id')->with('basicProfile');
     }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
 
     }
+
     public function contract()
     {
         return $this->hasone(Contract::class, 'module_offer_id');
     }
-    public function scopePaymentMethodSelected($query){
+
+    public function scopePaymentMethodSelected($query)
+    {
         return $query->where('is_payment_method_selected', 1);
     }
-    public function scopeActive($query){
+
+    public function scopeActive($query)
+    {
         return $query->where('is_payment_method_selected', 1);
     }
 }

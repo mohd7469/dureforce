@@ -50,7 +50,7 @@ class FeaturesController extends Controller
             // $dod->module_id = 1;
             $feature->save();
             DB::commit();
-            Log::info(["feature" => $feature]);
+            
             
             $notify[] = ['success', 'Your Features detail has been Created.'];
             return redirect()->route('admin.feature.index')->withNotify($notify);
@@ -86,7 +86,7 @@ class FeaturesController extends Controller
             
             $feature->save();
             DB::commit();
-            Log::info(["feature" => $feature]);
+            
             $notify[] = ['success', 'Feature detail has been updated'];
             return redirect()->route('admin.feature.index')->withNotify($notify);
         }
@@ -104,7 +104,7 @@ class FeaturesController extends Controller
             $feature = Features::find($id);
             $feature->delete();
             DB::commit();
-            Log::info(["feature" => $feature]);
+            
             $notify[] = ['success', 'Job Type deleted successfully'];
             return back()->withNotify($notify);
         }
@@ -124,7 +124,7 @@ class FeaturesController extends Controller
             $feature->created_at = Carbon::now();
             $feature->save();
             DB::commit();
-            Log::info(["feature" => $feature]);
+            
             $notify[] = ['success', 'Feature has been Activated'];
             return redirect()->back()->withNotify($notify);
         }
@@ -144,7 +144,7 @@ class FeaturesController extends Controller
             $feature->created_at = Carbon::now();
             $feature->save();
             DB::commit();
-            Log::info(["feature" => $feature]);
+            
             $notify[] = ['success', 'Feature has been inActive'];
             return redirect()->back()->withNotify($notify);
         }

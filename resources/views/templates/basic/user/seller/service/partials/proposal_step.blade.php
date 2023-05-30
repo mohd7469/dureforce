@@ -20,7 +20,7 @@
                             <label for=""><strong class="text-dark">Hourly Rate *</strong></label>
                             <small id="milestones_amount_receive" class="form-text text-muted">Total amount the client will see on your proposal</small>
                             <div class="input-group">
-                                <input type="number" name="hourly_bid_rate" class="form-control" step="any" id="hourly_bid_rate"  min="1" oninput="this.value = Math.abs(this.value)" value="{{old('hourly_bid_rate',$proposal['hourly_bid_rate']) }}" >
+                                <input type="number" name="hourly_bid_rate" class="form-control" step="any" id="hourly_bid_rate"  min="1" oninput="this.value = Math.abs(this.value)" value="{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? $proposal['hourly_bid_rate'] : floatval(@$service->rate_per_hour) ) }}" >
                                 <span class="input-group-text float-end">$</span>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                             <small id="emailHelp" class="form-text text-muted">20% Service Fee 
                                 {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                             </small><br>
-                            <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',(float)$proposal['hourly_bid_rate'])*0.20 }}</span>
+                            <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate'] :  floatval(@$service->rate_per_hour) )*0.20 }}</span>
                         </div>
 
                     </div>
@@ -45,7 +45,7 @@
                             <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                             <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                             <div class="input-group">
-                                <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly value="{{old('hourly_bid_rate',(float)$proposal['hourly_bid_rate']) * 0.80 }}">
+                                <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly value="{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate']  : floatval(@$service->rate_per_hour))   * 0.80 }}">
                                 <span class="input-group-text float-end">$</span>
                             </div>
                             
@@ -110,7 +110,7 @@
                         {{-- Cover Letter --}}
                         <div class="form-group">
                             <label for="cover_letter">Cover Letter*</label>
-                            <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{old('cover_letter',$proposal['cover_letter']) }}</textarea>
+                            <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{config('settings.service_description_prefix')}}{{old('cover_letter',$proposal['cover_letter'] ? $proposal['cover_letter'] : @$service->description) }}</textarea>
                         </div>
             
                         {{-- Required documents --}}
@@ -198,6 +198,7 @@
     <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/proposal_step.css')}}">
 
 @endpush
+
 @push('script-lib')
     <script>
         var file_upload_url="{{route('file.upload') }}";

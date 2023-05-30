@@ -67,6 +67,11 @@ class StatusSeeder extends Seeder
             ["id" => 44, "name" => "Approved", "slug"=>"approved", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--warning', "module_id"=>Module::$Job],
             ["id" => 45, "name" => "Rejected", "slug"=>"rejected", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--danger', "module_id"=>Module::$Job],
             ["id" => 46, "name" => "Completed", "slug"=>"completed", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--success', "module_id"=>Module::$Job],
+
+            ["id"=>47, "name"=>"Pending", "slug"=>"ms_pending", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--primary', "module_id"=>null],
+            ["id"=>48, "name"=>"In Progress", "slug"=>"ms_in_progress", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--dark', "module_id"=>null],
+            ["id"=>49, "name"=>"Completed", "slug"=>"ms_completed", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--success', "module_id"=>null],
+            ["id"=>50, "name"=>"Paid", "slug"=>"ms_paid", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--warning', "module_id"=>null],
             
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');

@@ -114,7 +114,8 @@ class ProfileController extends Controller
 
             } catch (\Throwable $th) {
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
+                errorLogMessage($th);
+                // return response()->json(['error' => $th->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Company .'];
                 return back()->withNotify($notify);
 
@@ -190,7 +191,8 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
+                // return response()->json(['error' => $exception->getMessage()]);
+                errorLogMessage($exception);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
@@ -287,7 +289,8 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
+                //return response()->json(['error' => $th->getMessage()]);
+                errorLogMessage($th);
                 $notify[] = ['errors', 'Failled To Update User Payment Method .'];
                 return back()->withNotify($notify);
 
@@ -390,7 +393,8 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
+                //return response()->json(['error' => $exception->getMessage()]);
+                errorLogMessage($exception);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
@@ -486,6 +490,7 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
+                errorLogMessage($th);
                 return response()->json(['error' => 'Failled To Update User Payment Method .']);
 
             }
@@ -567,6 +572,7 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
+                errorLogMessage($exception);
                 return response()->json(['error' => 'Failled To Save User Profile .']);
             }
         }
@@ -635,6 +641,7 @@ class ProfileController extends Controller
 
             } catch (\Throwable $th) {
                 DB::rollback();
+                errorLogMessage($th);
                 return response()->json(['error' => 'Failled To Save User Company .']);
             }
         }

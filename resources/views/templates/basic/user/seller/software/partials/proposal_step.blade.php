@@ -113,7 +113,7 @@
                            your client will see</small>
                            
                            <div class="input-group">
-                              <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="fixed_bid_amount"  oninput="this.value = Math.abs(this.value)" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount']) }}">
+                              <input type="number" step="any" class="form-control" id="total_milestones_amount"  name="fixed_bid_amount"  oninput="this.value = Math.abs(this.value)" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? $proposal['fixed_bid_amount'] : floatval(@$software->price)) }}">
                               <span class="input-group-text float-end">$</span>
                            </div>
 
@@ -129,7 +129,7 @@
                            {{-- <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                         </small><br>
                         <span class="pt-2 text-dark" id="system_fee">
-                           {{old('fixed_bid_amount',(float)$proposal['fixed_bid_amount'])*0.20 }}
+                           {{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount'] : floatval(@$software->price))*0.20 }}
                         </span>
                      </div>
 
@@ -142,7 +142,7 @@
                         <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                            
                            <div class="input-group">
-                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive" value="{{old('fixed_bid_amount',(float)$proposal['fixed_bid_amount']) * 0.80 }}">
+                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount']: floatval(@$software->price)) * 0.80 }}">
                               <span class="input-group-text float-end">$</span>
                            </div>
                            
@@ -186,7 +186,7 @@
                        {{-- Cover Letter --}}
                        <div class="form-group">
                            <label for="cover_letter">Cover Letter*</label>
-                           <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{old('cover_letter',$proposal['cover_letter']) }}</textarea>
+                           <textarea class="form-control cover-letter" id="cover_letter" rows="20" cols="8" name="cover_letter" >{{config('settings.software_description_prefix')}} {{old('cover_letter',$proposal['cover_letter'] ? $proposal['cover_letter'] : @$software->description) }}</textarea>
                        </div>
            
                        {{-- Required documents --}}

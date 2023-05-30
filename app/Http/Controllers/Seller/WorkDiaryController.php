@@ -54,7 +54,8 @@ class WorkDiaryController extends Controller
             $notify[] = ["success","Task comment added successfully"];
             return view('templates.basic.user.seller.work_diary.index',compact('day_plannings','emptyMessage','contracts','timezones'))->withNotify($notify);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to save task comment"];
             return redirect()->back()->withNotify($notify);
         }
@@ -69,7 +70,8 @@ class WorkDiaryController extends Controller
 
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return redirect()->back()->with(['error' => 'Failled to get day plannings task comments']);
         }
 
@@ -94,7 +96,8 @@ class WorkDiaryController extends Controller
             return redirect()->back()->with(['success' => 'Comment Added Successfully']);
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return redirect()->back()->with(['error' => 'Failled to add day plannings task comment']);
         }
     }
@@ -246,7 +249,8 @@ class WorkDiaryController extends Controller
             return response()->json(['success' => 'Task Added Successfully' , 'redirect' => $redirect_url,'day' => $request->planning_date, 'uuid' => $contract->uuid]);
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             DB::rollback();
             return response()->json(['error' => 'Faiiled to add task. Please try again later']);
         }
@@ -270,7 +274,8 @@ class WorkDiaryController extends Controller
 
         } catch (\Throwable $th) {
 
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to update day planning task status. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
@@ -294,7 +299,8 @@ class WorkDiaryController extends Controller
             return redirect()->route('work-diary.tasks',[$contract_uuid,$task_date])->withNotify($notify);
         } catch (\Throwable $th) {
 
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to update day planning task payment request. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
@@ -319,7 +325,8 @@ class WorkDiaryController extends Controller
             
         } catch (\Throwable $th) {
 
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to approve day planning task payment request. Please try again later"];
             return redirect()->back()->withNotify($notify);
             
@@ -334,7 +341,8 @@ class WorkDiaryController extends Controller
 
         } catch (\Throwable $th) {
 
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return response()->json(['error' => "Unable to load contract task detail"]);
 
         }
@@ -434,6 +442,7 @@ class WorkDiaryController extends Controller
 
 
         } catch (\Throwable $th) {
+            errorLogMessage($th);
             throw $th;
         }
         
@@ -448,7 +457,8 @@ class WorkDiaryController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollback();
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return response()->json(['error' => $th->getMessage()]);
 
         }
@@ -466,7 +476,8 @@ class WorkDiaryController extends Controller
         } catch (\Throwable $th) {
 
             DB::rollback();
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ["error","Failled to get contract tasks"];
             return redirect()->back()->withNotify($notify);
 
@@ -489,7 +500,8 @@ class WorkDiaryController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return response()->json(['error' => 'Failled to delete work diary day planning']);
 
         }
@@ -512,7 +524,8 @@ class WorkDiaryController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return response()->json(['error' => 'Failled to delete work diary task']);
 
         }
@@ -533,7 +546,8 @@ class WorkDiaryController extends Controller
                 return view('templates.basic.user.seller.work_diary.contract_tasks',compact('day_planning','work_diary_tasks','emptyMessage','contracts','timezones','contract'));
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            // Log::error($th->getMessage());
+            errorLogMessage($th);
             return redirect()->back()->with(['error' => 'Failled to get work diary details']);
 
         }

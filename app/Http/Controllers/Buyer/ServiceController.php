@@ -73,7 +73,8 @@ class ServiceController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            Log::error(['Error In Booking Service' => $th->getMessage()]);
+            // Log::error(['Error In Booking Service' => $th->getMessage()]);
+            errorLogMessage($th);
             $notify[] = ['error',"Failled To Book Service"];
             return redirect()->back()->withNotify($notify);
 
