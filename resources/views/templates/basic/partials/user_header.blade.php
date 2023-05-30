@@ -517,7 +517,7 @@
             display:none;
         }
         img {
-            max-width: 70%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -568,7 +568,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -619,7 +619,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -671,7 +671,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
