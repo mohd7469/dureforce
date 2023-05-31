@@ -358,7 +358,7 @@
                                     </figure>
                                     <article class="col-md-6 mt-h" >
                                         <h1 class="heading"><strong>Talent, Skill, & Experience. <br> Freelancing Redefined.</strong></h1>
-                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified <br> freelancers.
+                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified freelancers.
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
