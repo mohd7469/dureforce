@@ -17,7 +17,7 @@ trait AppliesQueryParams
     public function applyFilters(&$request): callable
     {
         return function (Builder $query) use (&$request) {
-
+            $is_software_filter =$request->is_software_filter;
             $query->when($request->get('id'), function (Builder $query, $id) {
                 return $query->where('id', (int)$id);
             });
@@ -29,6 +29,7 @@ trait AppliesQueryParams
                 }
                 return $query->where('category_id', (int)$categoryId);
             });
+
             $query->when($request->get('sub_category_id'), function (Builder $query, $categoryId) {
 
                 if (ArrayHelper::isArray($categoryId)) {
@@ -49,32 +50,27 @@ trait AppliesQueryParams
                 return $query->where('title', 'LIKE', "%{$title}%");
             });
 
-            $query->when($request->get('prices'), function (Builder $query, $prices) {
-
+            $query->when($request->get('prices'), function (Builder $query, $prices) use ($is_software_filter) {
                 $prices = ArrayHelper::stringToArray($prices);
+                if($is_software_filter)
+                    return $query->whereBetween('price',$prices);
 
-//                dd(explode("-", $prices));
-                return $query->where('price', '<', $prices[1])
-                    ->where('price', '>', $prices[0]);
+                else    
+                    return $query->whereBetween('rate_per_hour',$prices);
             });
 
-            $query->when($request->get('delivery_time'), function (Builder $query, $deliveryTime) {
-
+            $query->when($request->get('delivery_time'), function (Builder $query, $deliveryTime) use ($is_software_filter) {
                 $deliveryTime = ArrayHelper::stringToArray($deliveryTime);
+                if($is_software_filter)
+                    return $query->whereBetween('estimated_lead_time', $deliveryTime);
+                else    
+                    return $query->whereBetween('estimated_delivery_time', $deliveryTime);
 
-//                dd(explode("-", $prices));
-                return $query->where('delivery_time', '>', $deliveryTime[1])
-                    ->where('delivery_time', '<', $deliveryTime[0]);
             });
-
 
             $query->when($request->get('rating'), function (Builder $query, $rating) {
-
                 $rating = ArrayHelper::stringToArray($rating);
-//                dd($rating);
-//                dd(explode("-", $prices));
-                return $query->where('rating', '>=', $rating[0])
-                    ->where('rating', '<=', $rating [1]);
+                return ;
             });
         };
     }

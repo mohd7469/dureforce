@@ -16,24 +16,30 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col-xl-12 col-lg-12 form-group">
-                    {{-- <label>@lang('Description')*</label> --}}
+                    <label>@lang('Description')*</label> 
                     <textarea class="form-control bg--gray " placeholder="Do you have preferred styles for your illustration. Please share 3 examples."
-                        name="client_requirements" id="req">{{ old('Tell Your Requirements', @$service->serviceDetail->client_requirements) }}</textarea>
+                        name="client_requirements" id="req">{{ old('Tell Your Requirements', @$service->requirement_for_client) }}</textarea>
                 </div>
 
             </div>
+           
             <br/>
             <br/>
             <br/>
             <hr/>
             <br/>
             <div class="row">
-                <div class="col-md-6 ">
-                    <a class="btn service--btns btn-secondary float-left  mt-20 w-100" href="?view=step-3">@lang('BACK')</a>
+                <div class="col-md-3 ">
+                    <a class="btn service--btns btn-secondary float-left  mt-20 " href="?view=step-4">@lang('BACK')</a>
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-9 text-right">
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
 
-                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 w-100">@lang('SAVE
+
+                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
+                       Preview Service
+                    </button> </a>
+                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 ">@lang('SAVE
                         AND
                         CONTINUE')</button>
                 </div>

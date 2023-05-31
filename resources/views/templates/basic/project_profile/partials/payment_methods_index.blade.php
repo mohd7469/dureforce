@@ -1,7 +1,7 @@
 <div class="setProfile" id="payment-index">
     <div class="container-fluid welcome-body">
         <div class="row">
-            <h1 class="mb-4 p-0">Payment Methods</h1>
+            <h1 class="mb-4 p-0">Payment Methods </h1>
             <div class="col-md-12 cmnt ">
                 <div class="row mb-3">
                     <div class="col-md-8 d-flex align-items-center">
@@ -43,7 +43,7 @@
                                     </figure>
                                     {{ $payments->card_number }}
                                 </td>
-                                <td>Expiry: {{ Carbon\Carbon::parse($payments->expiration_date)->format('m/Y') }}
+                                <td>Expiry: {{ Carbon\Carbon::parse($payments->expiration_date)->format('d/m/Y') }}
                                 </td>
 
                                 <td>
@@ -78,9 +78,21 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class=" p-0">
 
+        <div class=" p-0" style="display:{{ (count(App\Models\UserPayment::where('user_id', auth()->id())->get())>0 || count(App\Models\UserCompany::where('user_id', auth()->id())->get())>0 )? 'block' : 'none'}}" id="go_to_dashboard_div">
+            <div class="col-md-12">
+    
+                <a href="{{route('user.home')}}" class="btn btn-continue m-0 my-2 btn-secondary " id="go_to_dasboard" >
+                    Go To Dashboard
+                </a>
+                    
+               
+
+            </div>
+        </div>
+
+       
     </div>
+    
 </div>
-</div>
+

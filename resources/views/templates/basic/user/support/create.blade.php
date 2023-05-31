@@ -20,7 +20,7 @@
                                     <div class="row justify-content-center">
                                         <div class="form-group col-md-6">
                                             <label for="name">@lang('Name')</label>
-                                            <input type="text" name="name" value="{{@$user->firstname . ' '.@$user->lastname}}" class="form-control form-control-lg" placeholder="@lang('Enter your name')" readonly>
+                                            <input type="text" name="name" value="{{auth()->user()->first_name . ' '.auth()->user()->last_name}}" class="form-control form-control-lg" placeholder="@lang('Enter your name')" readonly>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="email">@lang('Email address')</label>
@@ -48,7 +48,7 @@
                                                     </div>
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input" name="attachments[]" id="inputAttachments"
-                                                            aria-describedby="inputGroupFileAddon01" required="">
+                                                            aria-describedby="inputGroupFileAddon01" required="" >
                                                         <label class="custom-file-label" for="inputGroupFile01">@lang('Choose file')</label>
                                                     </div>
                                                 </div>

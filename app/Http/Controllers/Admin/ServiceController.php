@@ -33,21 +33,35 @@ class ServiceController extends Controller
     {
     	$pageTitle = "Manage Pending Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 0)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 18)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
     public function approved()
     {
     	$pageTitle = "Manage Approved Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 1)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 19)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+    }
+    public function draft()
+    {
+    	$pageTitle = "Manage Draft Service";
+    	$emptyMessage = "No data found";
+    	$services = Service::where('status_id', 17)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
+    }
+    public function underReview()
+    {
+    	$pageTitle = "Manage Under Review Service";
+    	$emptyMessage = "No data found";
+    	$services = Service::where('status_id', 21)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
     public function cancel()
     {
     	$pageTitle = "Manage Cancel Service";
     	$emptyMessage = "No data found";
-    	$services = Service::where('status', 3)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
+    	$services = Service::where('status_id', 20)->with('category', 'user', 'subCategory')->latest()->paginate(getPaginate());
     	return view('admin.service.index', compact('pageTitle', 'emptyMessage', 'services'));
     }
 
@@ -57,15 +71,10 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        
-        if(!$service->creation_status) {
-            $notify[] = ['error', 'Service cannot be approved because it is not complete.'];
-            return back()->withNotify($notify);
-        }
-
-        $service->status = 1;
+        $service->status_id = 19;
         $service->created_at = Carbon::now();
         $service->save();
+
         $notify[] = ['success', 'Service has been approved'];
         return back()->withNotify($notify);
     }
@@ -76,10 +85,49 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        $service->status = 2;
+        $service->status_id = 20;
         $service->created_at = Carbon::now();
         $service->save();
         $notify[] = ['success', 'Service has been canceled'];
+        return back()->withNotify($notify);
+    }
+
+    public function draftBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:services,id'
+        ]);
+        $service = Service::findOrFail($request->id);
+        $service->status_id = 17;
+        $service->created_at = Carbon::now();
+        $service->save();
+        $notify[] = ['success', 'Service has been drafted'];
+        return back()->withNotify($notify);
+    }
+
+    public function underReviewBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:services,id'
+        ]);
+        $service = Service::findOrFail($request->id);
+        $service->status_id = 21;
+        $service->created_at = Carbon::now();
+        $service->save();
+        $notify[] = ['success', 'Service has been under review'];
+        return back()->withNotify($notify);
+    }
+
+    public function pendingBy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:services,id'
+        ]);
+        $service = Service::findOrFail($request->id);
+        $service->status_id = 18;
+        $service->created_at = Carbon::now();
+        $service->save();
+        $notify[] = ['success', 'Service has been under review'];
         return back()->withNotify($notify);
     }
 
@@ -89,7 +137,7 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        $service->featured = 1;
+        $service->is_featured = 1;
         $service->save();
         $notify[] = ['success', 'Include this service featured list'];
         return back()->withNotify($notify);
@@ -101,7 +149,7 @@ class ServiceController extends Controller
             'id' => 'required|exists:services,id'
         ]);
         $service = Service::findOrFail($request->id);
-        $service->featured = 0;
+        $service->is_featured = 0;
         $service->save();
         $notify[] = ['success', 'Remove this service featured list'];
         return back()->withNotify($notify);
@@ -131,15 +179,15 @@ class ServiceController extends Controller
         switch ($scope) {
             case 'approved':
                 $pageTitle .= 'Approved ';
-                $services = $services->where('status', 1);
+                $services = $services->where('status_id', 19);
                 break;
             case 'pending':
                 $pageTitle .= 'Pending ';
-                $services = $services->where('status', 0);
+                $services = $services->where('status_id', 18);
                 break;
             case 'cancel':
                 $pageTitle .= 'Cancel ';
-                $services = $services->where('status', 2);
+                $services = $services->where('status_id', 20);
                 break;
         }
         $services = $services->latest()->paginate(getPaginate());

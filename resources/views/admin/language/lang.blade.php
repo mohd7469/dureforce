@@ -58,6 +58,9 @@
                         </table><!-- table end -->
                     </div>
                 </div>
+                <div class="card-footer py-4">
+                    {{ paginateLinks($languages) }}
+                </div>
             </div><!-- card end -->
         </div>
     </div>

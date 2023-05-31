@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\updateOfferStatus::class,
+        Commands\SendWorkDiaryApprovalCommand::class,
+        Commands\RedisFlushCommand::class,
     ];
 
     /**
@@ -25,6 +27,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('expire_offer_update:status')->daily();
+        $schedule->command('work_diary_approvals:send')->daily();
+
     }
 
     /**

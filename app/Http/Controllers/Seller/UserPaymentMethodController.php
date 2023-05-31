@@ -41,11 +41,11 @@ class UserPaymentMethodController extends Controller
     public function store(Request $request)
     {
         //
-
+        dd("dfdsf");
         $request->validate([
-            'card_number'     => 'required',
-            'expiration_date' => 'required|date',
-            'cvv_code'        => 'required',
+            'card_number'     => 'required|numeric|digits_between:13,19',
+            'expiration_date' => 'required|date|after_or_equal:now',
+            'cvv_code'        => 'required|numeric|digits_between:3,4',
             'name_on_card'    => 'required',
             'country'         => 'required',
             'city'            => 'required',
@@ -114,6 +114,7 @@ class UserPaymentMethodController extends Controller
      */
     public function destroy($id)
     {
+        
         //
         $userPayment = UserPayment::findOrFail($id);
         $userPayment->delete();
@@ -121,16 +122,28 @@ class UserPaymentMethodController extends Controller
         return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
 
+   
+    
+    
+
     public function changeStatus($id)
     {
+        // dd($id);
+        $all_methods = UserPayment::where('user_id',auth()->user()->id)->get();
+        foreach($all_methods as $all_method){
+            $all_method->is_primary = 0;
+            $all_method->save();
+        }
         $userPayment = UserPayment::findOrFail($id);
 
         $userPayment->update([
-            'status' => UserPayment::ACTIVE
+            'is_active' => UserPayment::ACTIVE,
+            'is_primary' => UserPayment::ISPRIMARY
         ]);
 
         $notify[] = ['success', 'Your Payment Method is now changed.'];
         
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        return redirect()->back()->withNotify($notify);
+        // return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
 }

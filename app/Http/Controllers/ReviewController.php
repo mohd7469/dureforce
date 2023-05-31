@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Service;
-use App\Models\Software;
 use App\Models\Booking;
 use App\Models\ReviewRating;
+use App\Models\Service;
+use App\Models\Software\Software;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller

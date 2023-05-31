@@ -40,6 +40,9 @@ return [
     */
 
     'debug' => (bool) env('APP_DEBUG', false),
+    //  'debug' => true,
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -140,6 +143,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        Khsing\World\WorldServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -175,6 +179,12 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        App\Providers\SystemMailConfiguration::class,
+        App\Providers\PusherConfiguration::class,
+        App\Providers\RedisCacheConfiguration::class,
+        App\Providers\StorageConfigurationProvider::class,
+        Jackiedo\Timezonelist\TimezonelistServiceProvider::class,
 
     ],
 
@@ -228,6 +238,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Timezonelist' => Jackiedo\Timezonelist\Facades\Timezonelist::class,
 
     ],
 

@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Software;
-use App\Models\Coupon;
-use App\Models\Booking;
-use App\Models\Transaction;
-use App\Models\GeneralSetting;
-use App\Models\User;
 use App\Models\AdminNotification;
-use App\Models\GatewayCurrency;
-use App\Models\Deposit;
+use App\Models\Booking;
+use App\Models\Coupon;
+use App\Models\GeneralSetting;
+use App\Models\Software\Software;
+use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 

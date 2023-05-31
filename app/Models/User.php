@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
-use App\Notifications\CustomEmailVerification ;
+use App\Models\Software\Software;
+use App\Notifications\CustomEmailVerification;
+use App\Traits\DatabaseOperations;
+use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Cache;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles, DatabaseOperations, SoftDeletes;
 
     const FREELANCER = 1;
     const PROJECT_MANAGER = 2;
@@ -37,6 +42,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
+    
     /**
      * The attributes that should be cast to native types.
      *
@@ -54,6 +60,22 @@ class User extends Authenticatable implements MustVerifyEmail
         'data' => 1
     ];
 
+    public static function scopeWithAll($query){
+
+        return $query->with('categories')->with('languages')->with('basicProfile.city')->with('experiences')->with('education')->with('skills')->with('portfolios')->with('v1languages')->with('v1ProficiencyLevels')->with('testimonials');
+
+    }
+
+    public static function scopeWithBuyerAll($query){
+
+        return $query->with('company')->with('basicProfile')->with('payments')->with('languages');
+
+    }
+
+    public function basicProfile()
+    {
+        return $this->hasOne('App\Models\UserBasic');
+    }
 
     public function login_logs()
     {
@@ -85,14 +107,28 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Software::class)->where('status', 1);
     }
 
+    public function portfolios()
+    {
+        return $this->hasMany(UserPortFolio::class);
+       
+    }
     public function jobs()
     {
-        return $this->hasMany(Job::class)->where('status', 1);
+        // return $this->hasMany(Job::class)->where('status', 1);
+        return $this->hasMany(Job::class);
+    }
+    public function proposal_attachment()
+    {
+        return $this->hasMany(ProposalAttachment::class)->where('status', 1);
+    }
+    public function proposal()
+    {
+        return $this->hasMany(Proposal::class);
     }
 
     public function skills()
     {
-        return $this->hasMany('App\Models\UserSkill');
+        return $this->belongsToMany(Skills::class,'user_skills','user_id','skill_id');
     }
 
     public function education()
@@ -102,7 +138,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function experiences()
     {
-        return $this->hasMany('App\Models\UserExperiences');
+        return $this->hasMany('App\Models\UserExperiences')->with('country');
     }
 
     public function languages()
@@ -110,57 +146,121 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\UserLanguage');
     }
 
+    public function v1languages()
+    {
+        return $this->belongsToMany( WorldLanguage::class,'user_languages','user_id','language_id');
+    }
+    public function v1ProficiencyLevels()
+    {
+        return $this->belongsToMany( LanguageLevel::class,'user_languages','user_id','language_level_id');
+    }
+
     public function rate()
     {
         return $this->hasOne('App\Models\UserRate');
+    }
+
+    public function milestone()
+    {
+        return $this->hasMany(Milestone::class);
     }
 
     public function company()
     {
         return $this->hasOne('App\Models\UserCompany');
     }
-
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category','user_categories');
+    }
     public function payments()
     {
         return $this->hasMany('App\Models\UserPayment');
     }
 
     // SCOPES
-
+    
+    /**
+     * getFullnameAttribute
+     *
+     * @return void
+     */
     public function getFullnameAttribute()
     {
-        return $this->firstname . ' ' . $this->lastname;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+    
+    /**
+     * getJobTitleAttribute
+     *
+     * @return void
+     */
+    public function getJobTitleAttribute()
+    {
+        return $this->basicProfile->designation;
+    }
+    
+    /**
+     * getLocationAttribute
+     *
+     * @return void
+     */
+    // public function getLocationAttribute()
+    // {
+    //     return $this->country->name.', '.$this->basicProfile->city->name;
+    // }
+    public function getLocationAttribute()
+    {
+        $location=null;
+        if(!empty($this->basicProfile->city->name))
+        {
+            $location .=$this->basicProfile->city->name.', ';
+        }
+        if(!empty($this->country->name)){
+            $location.=$this->country->name;
+        }
+        return $location;
+    }
+    
+    /**
+     * getCountryAttribute
+     *
+     * @return void
+     */
+    public function getCountryNameAttribute()
+    {
+        return $this->country->name;
     }
 
-    public function scopeActive()
-    {
-        return $this->where('status', 1);
-    }
+    // public function scopeActive()
+    // {
+    //     return $this->where('status', 1);
+    // }
 
-    public function scopeBanned()
-    {
-        return $this->where('status', 0);
-    }
+    // public function scopeBanned()
+    // {
+    //     return $this->where('status', 0);
+    // }
 
     public function scopeEmailUnverified()
     {
-        return $this->where('ev', 0);
+        return $this->where('email_verified_at', null);
     }
 
-    public function scopeSmsUnverified()
-    {
-        return $this->where('sv', 0);
-    }
+    // public function scopeSmsUnverified()
+    // {
+    //     return $this->where('sv', 0);
+    // }
 
     public function scopeEmailVerified()
     {
-        return $this->where('ev', 1);
+        return $this->where('email_verified_at','!=', null);
     }
 
-    public function scopeSmsVerified()
-    {
-        return $this->where('sv', 1);
-    }
+    // public function scopeSmsVerified()
+    // {
+    //     return $this->where('sv', 1);
+    // }
 
     public function rank()
     {
@@ -196,8 +296,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $firstName = $user->firstname;
-            $lastname = $user->lastname;
+            $firstName = $user->first_name;
+            $lastname = $user->last_name;
             return "$firstName $lastname";
         }
     }
@@ -247,4 +347,45 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return 0;
     }
+    protected static function boot()
+    {
+        
+        parent::boot();
+        static::saving(function ($model)  {
+            $uuid=Str::uuid()->toString();
+            $model->uuid =  $uuid;
+        });
+
+
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+  
+    public function user_basic()
+    {
+        return $this->hasOne(UserBasic::class);
+
+    }
+    public function invitations()
+    {
+        return $this->hasMany(InviteFreelancer::class);
+    }
+    public function save_job()
+    {
+        return $this->belongsToMany(Job::class, 'user_saved_jobs')->orderBy('id','DESC');
+    }
+
+    public function supportTickets()
+    {
+        return $this->hasMany(SupportTicket::class);
+    }
+    public function testimonials()
+    {
+        return $this->hasMany(UserTestimonial::class);
+    }
+
 }   
+//

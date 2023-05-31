@@ -47,7 +47,7 @@
                             @elseif($booking->working_status == 2)
                                 <span class="badge badge--secondary">@lang('Delivered')</span>
                             @elseif($booking->working_status == 3)
-                                <span class="badge badge--danger">@lang('Cancel')</span>
+                                <span class="badge badge--danger">@lang('Canceled')</span>
                             @elseif($booking->working_status == 4)
                                 <span class="badge badge--dark">@lang('In Progress')</span>
                             @elseif($booking->working_status == 5)

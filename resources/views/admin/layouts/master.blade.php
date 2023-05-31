@@ -87,6 +87,7 @@
     })(jQuery);
 </script>
 
+@stack('script-lib')
 @stack('script')
 
 

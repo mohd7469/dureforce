@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Comment;
-use App\Models\Service;
-use App\Models\Software;
-use App\Models\Job;
 use App\Models\CommentReply;
+use App\Models\Job;
+use App\Models\Service;
+use App\Models\Software\Software;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller

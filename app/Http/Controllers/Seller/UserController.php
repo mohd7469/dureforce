@@ -8,19 +8,16 @@ use App\Http\Requests\ProfileEducationRequest;
 use App\Http\Requests\ProfileExperienceRequest;
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
-use App\Models\GeneralSetting;
-use App\Models\Transaction;
-use App\Models\UserSocial;
-use App\Models\WithdrawMethod;
-use App\Models\Withdrawal;
-use App\Models\SubCategory;
 use App\Models\FavoriteItem;
-use App\Models\Service;
-use App\Models\Software;
-use App\Models\Booking;
+use App\Models\GeneralSetting;
 use App\Models\Language;
 use App\Models\LanguageLevel;
+use App\Models\Service;
 use App\Models\Skills;
+use App\Models\SkillSubCategory;
+use App\Models\Software\Software;
+use App\Models\SubCategory;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserCompany;
 use App\Models\UserEducation;
@@ -28,11 +25,15 @@ use App\Models\UserExperiences;
 use App\Models\UserLanguage;
 use App\Models\UserRate;
 use App\Models\UserSkill;
+use App\Models\UserSocial;
+use App\Models\Withdrawal;
+use App\Models\WithdrawMethod;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\Rules\Password;
 
 class UserController extends Controller
@@ -42,23 +43,7 @@ class UserController extends Controller
         $this->activeTemplate = activeTemplate();
     }
 
-    public function home()
-    {
-        $user = Auth::user();
-        $pageTitle = 'Dashboard';
-        $emptyMessage = "No data found";
-        $transactions = Transaction::where('user_id', $user->id)->orderBy('id', 'DESC')->limit(5)->get();
-        $totalService = Service::where('user_id', $user->id)->count();
-        $totalSoftware = Software::where('user_id', $user->id)->count();
-        $totalServiceBooking = Booking::whereHas('service', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('service_id')->count();
-        $totalSoftwareBooking = Booking::whereHas('software', function ($q) use ($user) {
-            $q->where('user_id', $user->id);
-        })->where('status', '!=', '0')->whereNotNull('software_id')->count();
-        $withdrawAmount = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->sum('amount');
-        return view($this->activeTemplate . 'user.seller.dashboard', compact('pageTitle', 'transactions', 'emptyMessage', 'withdrawAmount', 'totalService', 'totalSoftware', 'totalServiceBooking', 'totalSoftwareBooking'));
-    }
+   
 
     public function profile()
     {
@@ -165,6 +150,7 @@ class UserController extends Controller
                 return back()->withNotify($notify);
             }
         } catch (\PDOException $e) {
+            errorLogMessage($e);
             $notify[] = ['error', $e->getMessage()];
             return back()->withNotify($notify);
         }
@@ -293,6 +279,7 @@ class UserController extends Controller
                                         'type' => $inVal->type,
                                     ];
                                 } catch (\Exception $exp) {
+                                    errorLogMessage($exp);
                                     $notify[] = ['error', 'Could not upload your ' . $request[$inKey]];
                                     return back()->withNotify($notify)->withInput();
                                 }
@@ -432,7 +419,17 @@ class UserController extends Controller
 
     public function category(Request $request)
     {
-        $sub_category = SubCategory::where('category_id', $request->category)->get();
+        $sub_category = SubCategory::where('category_id', $request->category)->where('is_active',1)->get();
+        if ($sub_category->isEmpty()) {
+            return response()->json(['error' => "Sub category not available under this category"]);
+        } else {
+            return response()->json($sub_category);
+        }
+    }
+
+    public function skillSubCategory(Request $request)
+    {
+        $sub_category = SkillSubCategory::where('skill_category_id', $request->category)->get();
         if ($sub_category->isEmpty()) {
             return response()->json(['error' => "Sub category not available under this category"]);
         } else {
@@ -678,17 +675,15 @@ class UserController extends Controller
     {
 
 
-        $user = User::findOrFail(auth()->id());
-        $filename = '';
-        // @todo create a seperate request validate class
+        try {
+            $user = User::findOrFail(auth()->id());
+            $filename = '';
 
-        if ($request->hasFile('company_logo')) {
-            $location = imagePath()['profile']['user']['path'];
-            $size = imagePath()['profile']['user']['size'];
-            $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
-        }
-
-        \DB::transaction(function () use($request, $filename, $user) {
+            if ($request->hasFile('company_logo')) {
+                $location = imagePath()['profile']['user']['path'];
+                $size = imagePath()['profile']['user']['size'];
+                $filename = uploadImage($request->company_logo, $location, $size, auth()->user()->image);
+            }
 
             if(empty($filename)) {
                 $filename = $user->company->logo ?? '';
@@ -709,9 +704,28 @@ class UserController extends Controller
                 'linkedin_url' => $request->get('linkedin_url'),
                 'facebook_url' => $request->get('facebook_url')
             ]));
-        });
+        
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        } catch (\Throwable $th) {
 
-        $notify[] = ['success', 'Successfully Updated Profile.'];
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            $notify[] = ['success', 'Successfully Updated Profile.'];
+            return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+            
+        }
+        
     }
+    public function seller_profile(){
+        try {
+            $pageTitle = 'Seller Profile';
+            $skills = Skills::select('id','name')
+                ->get();
+            return   view($this->activeTemplate.'seller.seller_profile',compact('pageTitle','skills'));
+        }
+        catch (\Exception $e){
+            return $e->getMessage();
+        }
+
+    }
+
 }

@@ -2,13 +2,21 @@
 
 namespace App\Models;
 
+use Database\Seeders\SkillCategorySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use phpDocumentor\Reflection\Types\Self_;
 
 class Category extends Model
 {
     use HasFactory;
+    protected $hidden = ['created_at','updated_at','deleted_at'];
+    protected $fillable = ['name','status'];
+
+    public static $Model_Name_Space = "App\Models\Category";
+    public static $Redis_key = "categories";
+    public static $Is_Active = 1;
 
     const ServiceType = 1;
     const SoftwareType = 2;
@@ -23,13 +31,13 @@ class Category extends Model
 
     public static function getByType(int $type)
     {
-        return self::where('type_id', $type)->where('status', self::ACTIVE)->get();
+        return self::where('is_active', self::ACTIVE)->get();
     }
 
     public static function getSubCategories(int $categoryId)
     {
         return SubCategory::where('category_id', $categoryId)
-//            ->where('status', self::ACTIVE)
+            //->where('status', self::ACTIVE)
             ->get();
     }
 
@@ -60,5 +68,18 @@ class Category extends Model
         if ($index !== false) {
             return $types[$index]['name'];
         }
+    }
+
+    public function skill_categories()
+    {
+        return $this->belongsToMany(SkillCategory::class, 'category_attributes');
+    }
+    public function skill()
+    {
+        return $this->belongsToMany(Skills::class, 'category_attributes')->withPivot(['sub_category_id'])->with('skill_categories');
+    }
+    public function sub_categoires()
+    {
+        return $this->belongsToMany(SubCategory::class, 'category_attributes');
     }
 }

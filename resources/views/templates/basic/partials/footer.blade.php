@@ -3,15 +3,16 @@ $content = getContent('footer.content', true);
 $footer_menu = getContent('footer.element', false);
 $socialIcons = getContent('social_icon.element', false);
 @endphp
-<section class="footer-section section--bg pt-60">
+<section class="footer-section section--bg pt-60 mt-20">
     <div class="container-fluid">
         <div class="footer-wrapper open">
             {{-- <div class="footer-toggle"><span class="right-icon"></span><span class="title">@lang('Quick
                     Links') </span>
             </div> --}}
             <div class="text-center footer-heading pb-4">
-                <h2>
-                    This is a heading <br /> for CTA
+                <h2 >
+                    Tap into the right talent to turn your ideas into a reality.
+                    <br />  Let’s Get Started
                 </h2>
             </div>
             <div class="d-flex justify-content-center text-center text-white align-items-center my-2">
@@ -22,7 +23,7 @@ $socialIcons = getContent('social_icon.element', false);
                     </select>
                     <i class="fas fa-search"></i>
                 </div>
-                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('user.job.create') }}">Post a
+                <a class="btn--post btn active mr-1 d-inline-block " href="{{ route('buyer.job.create') }}">Post a
                     Job</a>
             </div>
             <div class="footer-bottom-area">
@@ -37,12 +38,17 @@ $socialIcons = getContent('social_icon.element', false);
                         <div class="footer-widget">
                             <h3 class="title">@lang('NAVIGATION')</h3>
                             <ul class="footer-links">
-                                <li><a href="{{ route('service') }}">@lang('Service')</a></li>
-                                <li><a href="{{ route('software') }}">@lang('Software')</a></li>
-                                <li><a href="{{ route('job') }}">@lang('Job')</a></li>
-                                <li><a href="{{ route('user.login') }}">@lang('Sign In')</a></li>
-                                <li><a href="{{ route('user.register') }}">@lang('Join us')</a></li>
-                                <li><a href="{{ route('contact') }}">@lang('Contact Us')</a></li>
+{{--                                <li><a href="{{ route('service') }}">@lang('Service')</a></li>--}}
+{{--                                <li><a href="{{ route('software') }}">@lang('Software')</a></li>--}}
+{{--                                <li><a href="{{ route('job') }}">@lang('Job')</a></li>--}}
+{{--                                <li><a href="{{ route('user.login') }}">@lang('Sign In')</a></li>--}}
+{{--                                <li><a href="{{ route('user.register') }}">@lang('Join us')</a></li>--}}
+{{--                                <li><a href="{{ route('contact') }}">@lang('Contact Us')</a></li>--}}
+                                <li><a href="#">@lang('Home')</a></li>
+                                <li><a href="#">@lang('How it works')</a></li>
+                                <li><a href="#">@lang('Services we offer')</a></li>
+                                <li><a href="#">@lang('Pricing')</a></li>
+                                <li><a href="#">@lang('About us')</a></li>
 
                             </ul>
                         </div>
@@ -62,15 +68,17 @@ $socialIcons = getContent('social_icon.element', false);
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30">
                         <div class="footer-widget">
-                            <h3 class="title">@lang('LEGEL')</h3>
+                            <h3 class="title">@lang('LEGAL')</h3>
                             <ul class="footer-links">
-                                <li><a href="{{ route('blog') }}">@lang('Blog')</a></li>
-                                @foreach ($footer_menu as $value)
-                                    <li>
-                                        <a
-                                            href="{{ route('footer.menu', [slug($value->data_values->menu), $value->id]) }}">{{ __($value->data_values->menu) }}</a>
-                                    </li>
-                                @endforeach
+                                <li><a href="{{ route('blog') }}">@lang('General Info')</a></li>
+                                <li><a href="{{ route('blog') }}">@lang('Privacy Policy')</a></li>
+                                <li><a href="{{ route('blog') }}">@lang('Terms of Service')</a></li>
+{{--                                @foreach ($footer_menu as $value)--}}
+{{--                                    <li>--}}
+{{--                                        <a--}}
+{{--                                            href="{{ route('footer.menu', [slug($value->data_values->menu), $value->id]) }}">{{ __($value->data_values->menu) }}</a>--}}
+{{--                                    </li>--}}
+{{--                                @endforeach--}}
                             </ul>
                         </div>
                     </div>
@@ -112,7 +120,7 @@ $socialIcons = getContent('social_icon.element', false);
                 </div>
                 <div class="copyright text-center">
                     <span class="powered-by-area text-white">@lang('Powered by getradgjof.is')</span>
-                    <p>@lang('Copyright') © {{ Carbon\Carbon::now()->format('Y') }} @lang('All Rights reserved')</p>
+                    <p> © {{ Carbon\Carbon::now()->format('Y') }} Dure Force All Rights Reserved</p>
                 </div>
 
                 {{-- <div class="powered-by-area text-white">

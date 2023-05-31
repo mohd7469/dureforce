@@ -3,33 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
-use App\Models\Frontend;
-use App\Models\Language;
-use App\Models\Service;
+use App\Models\Advertise;
+use App\Models\Booking;
+use App\Models\Comment;
+use App\Models\Conversation;
 use App\Models\EntityField;
-use App\Models\SupportAttachment;
+use App\Models\Frontend;
+use App\Models\Job;
+use App\Models\JobBiding;
+use App\Models\Language;
+use App\Models\ReviewRating;
+use App\Models\Service;
+use App\Models\Software\Software;
+use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
-use App\Models\Conversation;
-use App\Models\Software;
-use App\Models\Subscriber;
-use App\Models\UserCompany;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Validator;
-use App\Models\Booking;
-use App\Models\JobBiding;
-use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Comment;
-use App\Models\Advertise;
-use App\Models\ReviewRating;
-use App\Models\Job;
-use App\Models\Rank;
-use App\Models\Features;
+use App\Models\UserCompany;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
+use Validator;
 
 
 class SiteController extends Controller
@@ -41,24 +36,22 @@ class SiteController extends Controller
 
     public function index()
     {
+
+
         $pageTitle = "Home";
         $emptyMessage = "No data found";
-        $services =[];
-        $services = Service::Active()->Featured()->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags' => function (HasMany $builder) {
-            $builder->with(['tag' => function (BelongsTo $belongsTo) {
-                $belongsTo->select(['id', 'name']);
-            }]);
-        }])->get();
+        $services = Service::Active()->Featured()->whereIn('status_id', [Service::STATUSES['APPROVED'], Service::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
 
-        
+        $softwares = Software::withAll()->Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
+        $jobs = Job::where('status_id', Job::$Approved)->with(['skill', 'proposal', 'country', 'user', 'category'])->orderBy('created_at', 'DESC')->limit(20)->get();
 
-        $softwares = Software::Active()->Featured()->limit(20)->inRandomOrder()->with(['user', 'user.rank', 'tags'])->get();
 
-        $sellers = User::with('followers')->active()->limit(20)->inRandomOrder()->get();
-
-        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers'));
+        $sellers = User::whereHas(
+            'roles', function ($q) {
+            $q->where('name', 'Freelancer');
+        }
+        )->with('followers', 'basicProfile')->limit(20)->inRandomOrder()->get();
+        return view($this->activeTemplate . 'home', compact('pageTitle', 'services', 'emptyMessage', 'softwares', 'sellers', 'jobs'));
     }
 
     public function service()
@@ -145,7 +138,7 @@ class SiteController extends Controller
         })->where('user_id', $software->user_id)->count();
 
         $attributes = EntityField::with('attributes')->Entity(EntityField::SOFTWARE)->where('status', true)->get();
-        
+
         $activeUser = Auth::user();
         $softwareGetRating = null;
         $softwareUser = User::where('id', $software->user_id)->firstOrFail();

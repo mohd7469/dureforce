@@ -3,7 +3,9 @@
         margin-top: 0px;
         color: #fff;
     }
-
+    .create-service-main .stepwizard-step {
+        width: 16% !important;
+    }
     .stepwizard-row {
         display: table-row;
     }
@@ -75,21 +77,29 @@
             <p></p>
         </div>
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedImage }}"
+            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedBanner }}"
                 disabled="disabled">
                 <i class="fa fa-image"></i>
             </a>
             <h6 class="m-0 py-1 service-step">Banner</h6>
             <p></p>
         </div>
+        
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedRequirements }}"
+            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedProposal }}"
+                disabled="disabled"> <i class="fa fa-money-check-alt"></i></a>
+            <h6 class="m-0 py-1 service-step">Proposal</h6>
+            <p></p>
+        </div>
+
+        <div class="stepwizard-step col-xs-3">
+            <a href="#step-5" type="button" class="btn btn-default btn-circle {{ $completedRequirements }}"
                 disabled="disabled"> <i class="fa fa-list"></i></a>
             <h6 class="m-0 py-1 service-step">Requirements</h6>
             <p></p>
         </div>
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-5" type="button" class="btn btn-default step-review btn-circle {{ $completedReview }}"
+            <a href="#step-6" type="button" class="btn btn-default step-review btn-circle {{ $completedReview }}"
                 disabled="disabled"><i class="fa fa-list"></i></a>
             <h6 class="m-0 py-1 service-step">Review</h6>
             <p></p>

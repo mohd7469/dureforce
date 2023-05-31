@@ -3,7 +3,9 @@
         margin-top: 0px;
         color: #fff;
     }
-
+    .create-service-main .stepwizard-step {
+        width: 16% !important;
+    }
     .stepwizard-row {
         display: table-row;
     }
@@ -75,21 +77,32 @@
             <p></p>
         </div>
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedImage }}"
+            <a href="#step-3" type="button" class="btn btn-default btn-circle {{ $completedBanner }}"
                 disabled="disabled">
                 <i class="fa fa-image"></i>
             </a>
             <h6 class="m-0 py-1 service-step">Banner</h6>
             <p></p>
         </div>
+
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedRequirements }}"
+            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedBanner }}"
+                disabled="disabled">
+                <i class="fa fa-money-check-alt"></i>
+            </a>
+            <h6 class="m-0 py-1 service-step">Proposal</h6>
+            <p></p>
+        </div>
+
+
+        <div class="stepwizard-step col-xs-3">
+            <a href="#step-5" type="button" class="btn btn-default btn-circle {{ $completedRequirements }}"
                 disabled="disabled"> <i class="fa fa-list-ul"></i></a>
             <h6 class="m-0 py-1 service-step">Requirements</h6>
             <p></p>
         </div>
         <div class="stepwizard-step col-xs-3">
-            <a href="#step-5" type="button" class="btn btn-default step-review btn-circle p-0 {{ $completedReview }}"
+            <a href="#step-6" type="button" class="btn btn-default step-review btn-circle p-0 {{ $completedReview }}"
                 disabled="disabled" >
                 <figure>
                     <svg xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 52 52" fill="none" version="1.1" id="svg16" sodipodi:docname="e3cc8dbec771d50fa49b45fb2fcd0fa4.svg">

@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
 @endpush
 @section('content')
+    @guest
     <div class="categories_type_container">
         @include('templates.basic.partials.category._header', [
             'type_id' => \App\Models\Category::ServiceType,
@@ -10,6 +11,8 @@
         ])
 
     </div>
+    @endguest
+    
     <section class="all-sections ">
         <div class="container-fluid p-max-sm-0">
             <div class="sections-wrapper d-flex flex-wrap justify-content-center">
@@ -21,7 +24,7 @@
                                 <section class="hero-banner row section-padding flex-md-row-reverse  be-center">
 
                                     <figure class="col-md-6 text-center ">
-                                        <svg width="650" height="390" viewBox="0 0 696 390" fill="none"
+                                        <svg width="500" height="390" viewBox="0 0 696 390" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d="M100.929 36.1462C196 0.913927 292.628 32.0792 358.136 99.9391C423.668 167.799 561.184 53.0998 634.129 120.845C683.896 167.091 661.106 285.948 592.852 337.449C500.091 407.433 217.966 371.927 156.942 360.023C86.6282 346.291 35.237 304.661 14.3465 254.143C-35.9692 132.384 58.9191 51.7289 100.929 36.1462Z"
@@ -354,16 +357,14 @@
                                         </svg>
                                     </figure>
                                     <article class="col-md-6 mt-h" >
-                                        <h1 class="heading"><strong>Cloud Products Freelancing Platform</strong></h1>
-                                        <p class="para ">Hire the best solution architects to upscale your
-                                            business.
-                                            <br> Boost your career to new heights. Find the best jobs.
+                                        <h1 class="heading"><strong>Talent, Skill, & Experience. <br> Freelancing Redefined.</strong></h1>
+                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified <br> freelancers.
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
-                                               href="{{ route('user.job.create') }}">Post
+                                               href="{{ route('buyer.job.create') }}">Post
                                                 a Job</a>
-                                            <a class="btn--search active" href="#">Search Job</a>
+                                            <a class="btn--search active" href="/job-listing">Search Job</a>
                                         </div>
                                         <div class="pt-3">
                                             
@@ -402,6 +403,14 @@
             @include($activeTemplate . 'home.feature_software', ['softwares' => $softwares])
         </div>
     </section>
+    <section class="all-sections    section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Featured Jobs</h2>
+            </article>
+            @include($activeTemplate . 'home.feature_jobs', ['jobs' => $jobs])
+        </div>
+    </section>
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
@@ -418,7 +427,7 @@
             </article>
             <div class="row">
                 {{-- @for ($l = 0; $l < 4; $l++) --}}
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -436,7 +445,8 @@
                             giving you customized cloud service experience to cater your specific requirements. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -453,7 +463,7 @@
                             our marketplace is only focused on cloud services. </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -475,7 +485,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 row testimonial_card">
+                <div class="col-12 col-md-1"></div>
+                <div class="col-12 col-md-5 row testimonial_card">
                     <div class="col-2">
                         <svg viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="48" cy="48" r="48" fill="#007f7f"/>
@@ -497,15 +508,277 @@
             </div>
         </div>
     </section>
+    <section class="all-sections  bg-grey   section-padding">
+        <div class="container">
+            <article class="default-article">
+                <h2 class="heading">Explore Trending dureforce Publications</h2>
+            </article>
+            @include($activeTemplate . 'home.publications')
+        </div>
+    </section>
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
 <style>
+     @media (max-width: 1400px){
+         .header-short-menu {
+                padding: 0px 10px;
+        }
+        }
+    
+.skills-cont{
+    min-height: 80px !important;
+}
+        .button-review-color {
+            color: #007F7F;
+        }
+        
+        .job-list-price-button {
+            background: #7F007F;
+            font-size: 12px;
+            text-align: center;
+            vertical-align: middle;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%)
+        }
+
+        .btn-skill-job-list {
+
+            background: #007F7F;
+            border-radius: 4px;
+        }
+
+        .btn-sm-job-list {
+            color: white;
+        }
+         .cat-nav{
+            padding: 12px 0px 20px;
+            width: 92.5%;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            }
+        .cat-nav li {
+            margin: -21px 30px;
+            display: inline-table;
+            /* margin: 0 13px; */
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .cat-nav ul{
+            display: inherit;
+        }
+        .sub-nav ul{
+            display: inherit;
+        }
+        .sub-nav {
+            padding: 12px 0px 20px;
+            width: 92.5%;
+
+        }
+        .sub-nav li {
+            margin: 0px 15px;
+            display: inline-table;
+            /* margin: 0 13px; */
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .listing-jb-container{
+            background: #F8FAFA;
+            border: 1px solid #CBDFDF;
+            
+        }
+        .listing-nav-in li a {
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #636060;
+        }
+        .listing-nav-in {
+            text-align: left;
+            display: inline-block;
+            float: left;
+        }
+        .sub-nav{
+            width: 100.5%;
+        }
+        .t-sbh {
+            width: 130px;
+            position: relative;
+            top: 23epx;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            color: #000000;
+            padding-top: 18px;
+            margin-bottom: 10px;
+        }
+        .isub-head-con{
+            width: 100%;
+            display: inline-block;
+            padding: 28px 0px 6px 0px;
+        }
+        .isub-heading{
+            float:left;
+            display: inline-block;
+            width: 30%;
+            font-weight: 600;
+            font-size: 22px;
+            line-height: 28px;
+            color: #000000;
+            padding-left: 11px;
+        }
+        .right-con-isub{
+            float: right;
+            display: inline-block;
+        }
+        span.isub-filter {
+            width: 98px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 5px;
+            float: right;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 18px;
+            color: #007F7F;
+            text-align: center;
+            padding-top: 13px;
+            padding-left: 30px;
+            background: #EFF8F8 url(/assets/images/job/lines.png) no-repeat;
+            background-position: 14px center;
+            cursor: pointer;
+
+        }
+        
+        #custom-search-input {
+            border: solid 1px #E4E4E4;
+            border-radius: 6px;
+            float: right;
+            width: 242px;
+            height: 44px;
+            background: #EFF8F8;
+            border: 1px solid #CBDFDF;
+            border-radius: 6px;
+            margin-right:14px;
+        }
+
+        #custom-search-input input {
+            border: 0;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        #custom-search-input button {
+            margin: 5px 0 0 0;
+            background: none;
+            box-shadow: none;
+            border: 0;
+            color: #666666;
+            padding: 0 8px 0 10px;
+            /* border-left: solid 1px #ccc; */
+            background: url(/assets/images/job/searchicon.png) no-repeat;
+            width: 26px;
+            height: 30px;
+            margin-right: 10px;
+            background-position: center;
+            margin-right: 15px;
+        }
+
+        #custom-search-input button:hover{
+            border: 0;
+            box-shadow: none;
+            border-left: solid 1px #ccc;
+        }
+        li.nav-item.active-c {
+            border-bottom: 2px solid #007F7F;
+        }
+        .intro{border-bottom: 2px solid #007F7F;}
+        /* .ul-margin li:nth-child(1) a{border-bottom: 2px solid #007F7F;} */
+        .intro2{
+            border-bottom: 2px solid #007F7F !important;
+        }
+
+        @media only screen and (max-width:767px){
+            .isub-heading{
+                font-size: 18px !important;
+            }
+            .t-sbh {
+                width: 100%;
+                position: relative;
+                left: 0px;
+                top: 6px;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 18px;
+                color: #000000;
+                text-align: center;
+            }
+        }
+                @media (min-width: 768px){
+                .container {
+                    max-width: 1390px !important;
+                }
+        }
+        
+        .main_nav > :first-child {
+           border-bottom: 2px solid #007F7F!impo;
+        }
+        
     .mt-h{
-
         margin-top: -158px;
-
     }
+    .carousel-item{
+        margin-right: 0;
+        flex: 0 0 25.333333%;
+        display: block;
+        margin-bottom:20px;
+    }
+    .card {
+        margin-left: 7px;
+        margin-right: 26px;
+    }
+    .item-area .footer {
+        padding: 10px 0px 0px 0px;
+        left: 0;
+    }
+    .item-card .rates {
+        background: #7f007f;
+        border-radius: 4px;
+        text-align: center;
+        padding: 5px;
+        color: #fff;
+    }
+    .start-from{
+        font-size: .775em;
+    }
+    @media screen and (min-device-width: 768px)
+        and (max-device-width: 1024px) {
+            .carousel-item{
+            margin-right: 0;
+            flex: 0 0 35.333333%;
+            display: block;
+            margin-bottom:20px;
+        }
+    }
+</style>
+@endpush
+@push('script')
+    <script>
+        "use strict";
+        function submitUserForm() {
+            var response = grecaptcha.getResponse();
+            if (response.length == 0) {
+                document.getElementById('g-recaptcha-error').innerHTML = '<span class="text-danger">@lang("Captcha field is required.")</span>';
+                return false;
+            }
+            return true;
+        }
 </style>
 @endpush
 
@@ -514,6 +787,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <script>
+
         'use strict';
         $('#defaultSearch').on('change', function () {
             this.form.submit();

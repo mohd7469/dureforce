@@ -353,11 +353,11 @@
                                                                     <span>{{ showDateTime($user->created_at, 'd M Y') }}</span>
                                                                 </li>
                                                                 <li><span>@lang('Verified User')</span>
-                                                                    @if ($user->status == 1)
+                                                                   
                                                                         <span class="text--success">@lang('Yes')</span>
-                                                                    @else
+                                                                   
                                                                         <span class="text--success">@lang('No')</span>
-                                                                    @endif
+                                                                   
                                                                 </li>
                                                             </ul>
                                                             </div>

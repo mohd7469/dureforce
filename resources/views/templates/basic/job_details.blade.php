@@ -405,11 +405,11 @@
                                                                 <span>{{ showDateTime($job->user->created_at, 'd M Y') }}</span>
                                                             </li>
                                                             <li><span>@lang('Verified User')</span>
-                                                                @if ($job->user->status == 1)
+                                                             
                                                                     <span class="text--success">@lang('Yes')</span>
-                                                                @else
+                                                               
                                                                     <span class="text--danger">@lang('No')</span>
-                                                                @endif
+                                                     
                                                             </li>
                                                         </ul>
                                                         <div class="widget-btn mt-20">
