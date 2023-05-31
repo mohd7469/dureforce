@@ -490,7 +490,7 @@
                 <p>@lang('Are you sure to delete this task')</p>
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer text-right">
                 <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
                 <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
             </div>
@@ -861,7 +861,8 @@
             $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
             for (let index = 0; index < already_uploaded_files.length; index++) {
                 file=already_uploaded_files[index];
-                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.uploaded_name+'<span class="badge badge-primary badge-pill delete-btn action-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'"><a href="'+file.url+'" download><i class="fa fa-download " style="color:green;margin-right:14px !important"></i>'+file.uploaded_name+'</a><span class="badge badge-primary badge-pill delete-btn action-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span>'+
+                    '</li>');
             }
 
         }
