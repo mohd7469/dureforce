@@ -49,9 +49,11 @@
                     </div>
                 @endforelse
             </div>
-            <div class="card-footer py-4">
+            @if(count($services) > 20)
+            <div class="card-footer py-4 mt-30">
                 {{ paginateLinks($services) }}
             </div>
+            @endif
         </div>
     </section>
 
