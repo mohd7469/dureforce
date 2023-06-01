@@ -22,6 +22,7 @@ class DayPlanningTask extends Model
         static::creating(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
+            $model->task_id=generateUniqueRandomNumber();
         });
 
     }

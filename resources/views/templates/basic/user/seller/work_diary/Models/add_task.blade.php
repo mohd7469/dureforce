@@ -124,7 +124,7 @@
                             <button type="button" class="text-left delete_btn action-btn" id="delete_task_btn_id" style="display:none"><i class="fa fa-trash" style="color:red"></i></button>
                         </div>
                         <div class="col-md-10 col-lg-10 col-xl-10 col-sm-10 d-flex justify-content-end">
-                            <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">@lang('Cancel')</button>
+                            <button type="button" class="btn-rounded text-white btn-cancel" data-bs-dismiss="modal" id="cancel_task_btn_id">{{ getLastLoginRoleId()==App\Models\Role::$Freelancer ? 'Cancel': 'Close' }}</button>
                             <button type="submit" class="btn-rounded text-white btn-save-draft action-btn" name="action" value="draft" id="save_btn_id">@lang('Save')</button>
                             <button type="submit" class="btn-rounded text-white btn-save  action-btn" name="action" value="approval" id="sub_for_approval_btn_id">@lang('Submit for Approval')</button>
                         </div>
@@ -253,6 +253,7 @@
             $('#end_time').val('');
             $('#description_id').val('');
             $('#file_name_div').empty();
+            $('#uploaded_files').val('');
             $('#add_task_model_id').find('#task_id').val("");
             already_uploaded_files=[];
             $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));

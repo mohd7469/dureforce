@@ -203,8 +203,8 @@ class ProposalController extends Controller
     {
 
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $proposals = $job->proposal->where('is_shortlisted',false)->whereIn('status_id', [Proposal::STATUSES['SUBMITTED'],Proposal::STATUSES['ACTIVE']]);
-        $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
+        $proposals = $job ? $job->proposal->where('is_shortlisted',false)->whereIn('status_id', [Proposal::STATUSES['SUBMITTED'],Proposal::STATUSES['ACTIVE']]):collect([]);
+        $short_listed_proposals = $job? $job->proposal->where('is_shortlisted',true):collect([]);
 
         $pageTitle = "Job Proposals";
         return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job','short_listed_proposals'));
