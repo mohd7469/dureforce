@@ -549,7 +549,13 @@
         .btn-skill-job-list {
 
             background: #007F7F;
-            border-radius: 4px;
+            display: inline-block;
+            padding: 0.25em 0.4em;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
         }
 
         .btn-sm-job-list {
@@ -742,6 +748,9 @@
     .card {
         margin-left: 7px;
         margin-right: 26px;
+    }
+    .card-height {
+        height: 420px !important;
     }
     .item-area .footer {
         padding: 10px 0px 0px 0px;
