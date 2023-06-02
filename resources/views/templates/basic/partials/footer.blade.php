@@ -28,13 +28,13 @@ $socialIcons = getContent('social_icon.element', false);
             </div>
             <div class="footer-bottom-area">
                 <div class="row mb-30-none justify-content-around">
-                    {{-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                    {{-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xm-6 mb-30">
                         <div class="footer-widget">
                             <h3 class="title">@lang('About Us')</h3>
                             <p>{{ __(@$content->data_values->heading) }}</p>
                         </div>
                     </div> --}}
-                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30 ">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mobile-view-col mb-30 ">
                         <div class="footer-widget">
                             <h3 class="title">@lang('NAVIGATION')</h3>
                             <ul class="footer-links">
@@ -53,7 +53,7 @@ $socialIcons = getContent('social_icon.element', false);
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mobile-view-col mb-30">
                         <div class="footer-widget">
                             <h3 class="title">@lang('SERVICES')</h3>
                             <ul class="footer-links">
@@ -66,7 +66,7 @@ $socialIcons = getContent('social_icon.element', false);
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mb-30">
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 mobile-view-col mb-30">
                         <div class="footer-widget">
                             <h3 class="title">@lang('LEGAL')</h3>
                             <ul class="footer-links">
@@ -82,7 +82,7 @@ $socialIcons = getContent('social_icon.element', false);
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-30">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mobile-view-col mb-30">
                         <div class="footer-widget">
                             <h3 class="title">@lang('TALK TO US')</h3>
                             {{-- <p>{{ __(@$content->data_values->subscribe_title) }}</p> --}}
