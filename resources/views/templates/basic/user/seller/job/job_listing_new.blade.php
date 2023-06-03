@@ -50,47 +50,47 @@
                                                 </div>
                                             </div>
 
-                                            <div class="sorting-mbl1">
+                                            <!-- <div class="sorting-mbl1"> -->
 
-                                                <select name="Filters" id="Filters">
+                                                <!-- <select name="Filters" id="Filters">
                                                     <option>Filters</option>
                                                     <option>1</option>
                                                     <option>1</option>
                                                     <option>1</option>
                                                     <option>1</option>
-                                                </select>
+                                                </select> -->
 
                                                 <!--Sorting Section Start-->
 
-                                                <select name="Newest" id="bestmatch">
+                                                <!-- <select name="Newest" id="bestmatch">
                                                     <option>Newest</option>
                                                     <option>1</option>
                                                     <option>1</option>
                                                     <option>1</option>
                                                     <option>1</option>
-                                                </select>
+                                                </select> -->
                                                 <!--Sorting Section End-->
 
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
 
                                         <!---Search Filter Container End--->
                                         <!----------- ===== Job Experties Container Start ==== ------------->
                                         <form class="card-body tab-content">
                                             <div class="tab-pane {{$search_job}}" id="Search_tab">
-                                                <p class="jb-found">{{count($jobs)}} jobs found</p>
+                                                <p class="jb-found">{{count($jobCount)}} jobs found</p>
                                                 @foreach($jobs as $job)
                                                 @if(!in_array($job->id, $user_saved_jobs_ids))
                                                     <div class="details-scs">
                                                         {{--                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
                                                         <div class="row">
                                                             <div class="row">
-                                                                <div class="col-md-11 col-lg-11">
+                                                                <div class="col-md-11 col-lg-11 col-sm-11">
                                                                     {{--                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
-                                                                    <a href="{{route('seller.job.jobview',$job->uuid)}}" class="col-md-10 col-lg-10"><strong>{{$job->title}}</strong></a>
+                                                                    <a href="{{route('seller.job.jobview',$job->uuid)}}" ><strong>{{$job->title}}</strong></a>
                                                                     {{--                                                            </a>--}}
                                                                 </div>
-                                                                <div class="col-md-1 col-lg-1" >
+                                                                <div class="col-md-1 col-lg-1 col-sm-1 pull-right" >
                                                                     <?php
                                                                     if(in_array($job->id, $user_saved_jobs_ids)){ ?>
                                                                     <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
@@ -118,10 +118,8 @@
                                                             <div class="col-md-12">
                                                                 <ul class="skills-listing">
                                                                     <?php $count = 0; ?>
-                                                                        @foreach($job->skill as $job_skill)
-                                                                        <?php if($count == 10) break; ?>
+                                                                        @foreach(($job->skill)->slice(0,10) as $job_skill)
                                                                             <li class="mt-2">{{$job_skill->name}}</li>
-                                                                        <?php $count++; ?>
                                                                     @endforeach
                                                                 </ul>
                                                             </div>
@@ -139,7 +137,7 @@
                                                     <!----------- ===== Job Experties Container  ==== ------------->
                                                 @endif    
                                                 @endforeach
-                                                <div class="card-footer py-4">
+                                                <div class="card-footer">
                                                     {{ paginateLinks($jobs) }}
                                                 </div>
                                             </div>
@@ -180,11 +178,8 @@
                                                         <div class="row skills-c">
                                                             <div class="col-md-12">
                                                                 <ul class="skills-listing">
-                                                                    <?php $count = 0; ?>
                                                                     @foreach($job->skill as $job_skill)
-                                                                        <?php if($count == 10) break; ?>
-                                                                        <li class="mt-2">{{$job_skill->name}}</li>
-                                                                        <?php $count++; ?>
+                                                                        <li>{{$job_skill->name}}</li>
                                                                     @endforeach
                                                                 </ul>
                                                             </div>
@@ -290,6 +285,7 @@
     ul.jb-detail-l {
         width: 100%;
         margin-top: 22px;
+        /* display: inline-block; */
         display: inline-block;
     }
     ul.jb-detail-l li {
@@ -613,6 +609,12 @@
         .row.btns-s{
             width: 100% !important;
         }
+        ul.jb-detail-l {
+            width: 100%;
+            margin-top: 22px;
+            /* display: inline-block; */
+            display: grid;
+        }
 
     }
 
@@ -710,6 +712,12 @@
         div#custom-search-input input {
             padding: 10px 0px;
         }
+        ul.jb-detail-l {
+            width: 100%;
+            margin-top: 22px;
+            /* display: inline-block; */
+            display: grid;
+        }
     }
     @media only screen and (max-width:454px){
         div#custom-search-input, .sorting-mbl1 {
@@ -722,6 +730,12 @@
         .sorting-mbl1 {
             width: 100% !important;
             padding: 0px !important;
+        }
+        ul.jb-detail-l {
+            width: 100%;
+            margin-top: 22px;
+            /* display: inline-block; */
+            display: grid;
         }
     }
     @media only screen and (max-width:414px){
