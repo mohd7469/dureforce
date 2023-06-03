@@ -25,7 +25,6 @@ class ClientRequest extends FormRequest
     {
         return [
             //
-            'client_requirements' => 'required|string'
 
         ];
     }
@@ -34,7 +33,6 @@ class ClientRequest extends FormRequest
     public function messages()
     {
         return [
-            'client_requirements.required' => 'Client Requirements are required'
         ];
     }
 }

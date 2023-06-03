@@ -148,9 +148,9 @@
                                 <div class="table-section">
                                     <div class="row justify-content-center">
                                         <div class="col-xl-12" >
-                                            <div class="table-area">
-                                                <table class="custom-table" id="job-listing">
-   
+                                            <div class="table-responsive">
+                                                <table class="table" id="job-listing">
+
                                                     <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                                                     <tr>
                                                         <th style="width: 20%">@lang('Title')</th>
@@ -233,7 +233,7 @@
                                                 </table>
 
                                             </div>
-                                            
+
                                             {{$jobs->links()}}
                                         </div>
                                     </div>

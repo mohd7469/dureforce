@@ -9,7 +9,17 @@ let default_lead_image=$("input[name='default_lead_image_id']");
 let lead_image_div=$('#lead_image_upload_div_id');
 let default_lead_image_div=$('#default_lead_image_div');
 "use strict";
+
+let modules = {
+  
+  job_id: 1,
+  service_id: 2,
+  software_id: 3,
+
+}
+
 $(document).ready(function () {
+  $('.collapse').collapse();
   var service_id=$('#service_id').val();
   add_on_service_row_number=parseInt($('#number_of_add_on_services').val());
   if (service_id) {
@@ -122,32 +132,35 @@ $(document).ready(function () {
 });
 
 function addSteps() {
-  stepsRow.append(`
-  <div id="add-on-service-step"> 
-  <div class="col-12">
+    stepsRow.append(`
+          <div id="add-on-service-step"> 
+            <div class="col-12">
 
-          <button id="removeRow" type="button" class="btn btn-danger" style="float: right;  margin-bottom:1rem"><i class="fa fa-trash"></i></button>
-  </div>
-  <div class="col-xl-12 col-lg-12 form-group" >
-             <label for="">Step Name *</label>
-                <div class="col-xl-12 col-lg-12 form-group">
-                    <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control step2"  />
-                </div>
-                <div>
-                <label for="discription">Step Description *</label>
-                <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control description2"
-                    ></textarea>
-                <br />
-                <br />
+                    <button id="removeRow" type="button" class="btn btn-danger" style="float: right;  margin-bottom:1rem"><i class="fa fa-trash"></i></button>
             </div>
-            </div>
-            </div>
-          
-    `);
+            
+          <div class="col-xl-12 col-lg-12 form-group" >
+              <label for="">Step Name</label>
+                  <div class="col-xl-12 col-lg-12 form-group">
+                      <input type="text" name="steps[]" placeholder="E.g. Initial Requirements" class="form-control step2"  />
+                  </div>
+                  <div>
+                  <label for="discription">Step Description</label>
+                  <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control description2"
+                      ></textarea>
+                  <br />
+                  <br />
+              </div>
+              </div>
+          </div>
+            
+      `);
 }
+
 $(document).on("click", "#removeRow", function () {
   $(this).closest("#add-on-service-step").remove();
 });
+
 function removeExtraService(row) {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
   if (is_confirm) {
@@ -162,6 +175,7 @@ $("#category").on("change", function () {
     url: route,
     data: {
       category: category,
+      module_id: modules.service_id
     },
     success: function (data) {
       var html = "";
@@ -170,12 +184,25 @@ $("#category").on("change", function () {
         html += `<option value="1" selected >${data.error}</option>`;
         $(".mySubCatgry").html(html);
       } else {
+
         $("#subCategorys").empty();
+
         html += `<option value="" selected disabled>Select Sub Category</option>`;
-        $.each(data, function (index, item) {
-          html += `<option value="${item.id}">${item.name}</option>`;
-          $(".mySubCatgry").html(html);
+        $.each(data.sub_category, function (index, item) {
+            html += `<option value="${item.id}">${item.name}</option>`;
+            $(".mySubCatgry").html(html);
         });
+
+        $("#deliverables").empty();
+        html='';
+        html += `<option value="" disabled>Select Deliverables</option>`;
+
+        $.each(data.category_deliverables, function (index, item) {
+            html += `<option value="${item.id}">${item.name}</option>`;
+            $("#deliverables").html(html);
+        });
+
+        
       }
     },
   });
@@ -496,13 +523,13 @@ function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();
     $(".error").remove();
-    if ($.trim(max_no_projects) < 1) {
+    if ($.trim(max_no_projects) < 3 || $.trim(max_no_projects) >10 ) {
       e.preventDefault();
       $("#max_no_projects").after(
-        '<span class="error text-danger">Max no of simultaneous projects should be greater than 0</span>'
+        '<span class="error text-danger">Max no of simultaneous projects should be between [ 3 - 10 ] </span>'
       );
       iziToast.error({
-        message: "Max no of simultaneous projects field is required",
+        message: "Max no of simultaneous projects should be between [ 3 - 10 ]",
         position: "topRight",
       });
     }
@@ -581,50 +608,12 @@ function pricingFormValidation() {
       
     });
 
-    $(".step").each(function () {
-      if ($.trim($(this).val()).length < 1) {
-        e.preventDefault();
-        $(this).after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        showValidationError('step name field is required');
-      }
-    });
-
-    $(".step2").each(function () {
-      if ($.trim($(this).val()).length < 1) {
-        e.preventDefault();
-        $(this).after(
-            '<span class="error text-danger">This field is required</span>'
-        );
-        showValidationError('Add Another step name field is required');
-      }
-    });
-
-    $(".description").each(function () {
-      if ($.trim($(this).val()).length < 1) {
-        e.preventDefault();
-        $(this).after(
-          '<span class="error text-danger">This field is required</span>'
-        );
-        showValidationError('step description field is required');
-      }
-    });
-
-    $(".description2").each(function () {
-      if ($.trim($(this).val()).length < 1) {
-        e.preventDefault();
-        $(this).after(
-            '<span class="error text-danger">This field is required</span>'
-        );
-        showValidationError('Add Another step description field is required');
-      }
-    });
+  
   });
 }
 
 function validateAddOnRows(element, e) {
-  if (element.find(".add-on-delivery").val() < 1 ) 
+  if (element.find(".add-on-delivery").val() != '' && element.find(".add-on-delivery").val() < 1 ) 
   {
 
     e.preventDefault();
@@ -702,20 +691,7 @@ $(document).on("click", "#removecustomRow", function () {
 
 
 function requirementFormValidation() {
-  $(".user-req-form").submit(function (e) {
-    var req = $("#req").val();
-    $(".error").remove();
-    if ($.trim(req) < 1) {
-      e.preventDefault();
-      $("#req").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Description field is required",
-        position: "topRight",
-      });
-    }
-  });
+  
 }
 
 function removeAddOnRow(row) {
