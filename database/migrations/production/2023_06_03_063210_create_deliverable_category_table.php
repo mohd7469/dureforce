@@ -19,7 +19,7 @@ class CreateDeliverableCategoryTable extends Migration
             $table->unsignedBigInteger('category_id')->index();
             $table->unsignedBigInteger('module_id')->index();
             $table->foreign('deliverable_id')->references('id')->on('deliverables');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('sub_categories');
             $table->foreign('module_id')->references('id')->on('modules');
             $table->timestamps();
             $table->softDeletes();
