@@ -8,6 +8,7 @@ use App\Http\Requests\ProfileEducationRequest;
 use App\Http\Requests\ProfileExperienceRequest;
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
+use App\Models\Category;
 use App\Models\FavoriteItem;
 use App\Models\GeneralSetting;
 use App\Models\Language;
@@ -419,12 +420,24 @@ class UserController extends Controller
 
     public function category(Request $request)
     {
-        $sub_category = SubCategory::where('category_id', $request->category)->where('is_active',1)->get();
-        if ($sub_category->isEmpty()) {
-            return response()->json(['error' => "Sub category not available under this category"]);
-        } else {
-            return response()->json($sub_category);
+
+        try {
+            
+            $category=Category::with('subCategory','deliverables')->find($request->category);
+            $sub_category = $category->subCategory->where('is_active',1);
+            $category_deliverables=collect([]);
+            if($request->has('module_id')){
+                $category_deliverables = $category->deliverables;
+            }
+            return response()->json(['sub_category' => $sub_category, 'category_deliverables' => $category_deliverables]);
+
+        } catch (\Throwable $th) {
+
+           return response()->json([ 'error' => $th->getMessage()]);
+
         }
+       
+        
     }
 
     public function skillSubCategory(Request $request)

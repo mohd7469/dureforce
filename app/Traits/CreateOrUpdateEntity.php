@@ -330,7 +330,23 @@ trait CreateOrUpdateEntity {
                 }
                 
                 $this->updateStatus($request,$model);
+                if (!$model->defaultProposal) {
+
+                    $proposal=[
+                        "hourly_bid_rate" => $model->rate_per_hour,
+                        "amount_receive" => ($model->rate_per_hour*0.80),
+                        "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
+                        "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
+                        "delivery_mode_id" => null,
+                        "cover_letter" => $model->description,
+                        "uploaded_files" => json_encode([],true),
+                    ];
+    
+                }
+               
                 DB::commit();
+                $this->saveProposal($proposal,$model,$type);
+
 
             } catch (\Exception $exp) {
                 DB::rollBack();
@@ -345,22 +361,28 @@ trait CreateOrUpdateEntity {
     {
         DB::beginTransaction();
         try {
-
             if( $model->defaultProposal)
             {
                 $model->defaultProposal()->delete();
             }
             
-            $model_default_proposal=$model->defaultProposal()->create($request->all());
+            $model_default_proposal=$model->defaultProposal()->create($request);
             $model_default_proposal->user_id=auth()->user()->id;
             $model_default_proposal->service_fees_id= ServiceFee::find(Module::$Job)->id;
             $model_default_proposal->save();
-            if ($request->has('uploaded_files')) {
-                $prposal_attachments=json_decode($request->uploaded_files,true);
-                $model_default_proposal->attachments()->createMany($prposal_attachments);
+            if (isset($request['uploaded_files']) ) {
+        
+
+                $prposal_attachments=json_decode($request['uploaded_files'],true);
+
+                if(count($prposal_attachments)>0)
+                    $model_default_proposal->attachments()->createMany($prposal_attachments);
             }
+
             DB::commit();
+
             $this->updateStatus($request,$model);
+
             return true;
         } catch (\Throwable $th) {
 
@@ -376,7 +398,8 @@ trait CreateOrUpdateEntity {
         DB::transaction(function () use ($request, $model, $type) {
            
             $model->update([
-                'requirement_for_client' => $request->client_requirements
+                'requirement_for_client' => $request->client_requirements,
+                'is_requirement_for_client_added' => true
             ]);
            
         });
