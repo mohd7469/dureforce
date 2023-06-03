@@ -178,7 +178,7 @@
                                                         <div class="row skills-c">
                                                             <div class="col-md-12">
                                                                 <ul class="skills-listing">
-                                                                    @foreach(($job->skill)->slice(0,10) as $job_skill)
+                                                                    @foreach($job->skill as $job_skill)
                                                                         <li>{{$job_skill->name}}</li>
                                                                     @endforeach
                                                                 </ul>

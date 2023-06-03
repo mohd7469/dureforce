@@ -56,8 +56,9 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        {{ paginateLinks($contracts) }}
+
                     </table>
+                    {{ paginateLinks($contracts) }}
                 </div>
 
                 <div class="listing_table_con card-body tab-pane" id="active_contrat"> 
