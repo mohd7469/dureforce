@@ -39,13 +39,25 @@
             <form method="POST" id="securityFrom" class="password-cs">
                 @csrf
                 <div class="form-label">Old Password</div>
-                <input type="password" name="old_password" placeholder="********">
+                <div class="col-lg-12 form-group">
+                <input type="password" name="old_password" id="old_password" placeholder="********">
+                    <a class="las la-eye input-icon" id="unhideold" onclick="showOldPassword()" style="float: right; margin-right:20px; margin-top: -45px;position: relative;"></a>
+                    <a class="las la-eye-slash input-icon" id="hideold" onclick="showOldPassword()" style="display:none; float: right; margin-right:20px; margin-top: -45px;position: relative;" ></a>
+                </div>
 
                 <div class="form-label">New Password</div>
-                <input type="password" name="new_password" placeholder="********" >
+                <div class="col-lg-12 form-group">
+                <input type="password" name="new_password" id="new_password" placeholder="********" >
+                    <a class="las la-eye input-icon" id="unhidenew" onclick="showNewPassword()" style="float: right; margin-right:20px; margin-top: -45px;position: relative;"></a>
+                    <a class="las la-eye-slash input-icon" id="hidenew" onclick="showNewPassword()" style="display:none; float: right; margin-right:20px; margin-top: -45px;position: relative;" ></a>
+                </div>
 
                 <div class="form-label">Confirm New Password</div>
-                <input type="password" name="password_confirmation" placeholder="********" >
+                <div class="col-lg-12 form-group">
+                <input type="password" name="password_confirmation" id="password_confirmation" placeholder="********" >
+                    <a class="las la-eye input-icon" id="unhideconf" onclick="showConfirmPassword()" style="float: right; margin-right:20px; margin-top: -45px;position: relative;"></a>
+                    <a class="las la-eye-slash input-icon" id="hideconf" onclick="showConfirmPassword()" style="display:none; float: right; margin-right:20px; margin-top: -45px;position: relative;" ></a>
+            </div>
             </form>
         </div>
                <!----============End================--->  
@@ -100,6 +112,44 @@
             
             }
         }
+    function showOldPassword(){
+        let x = document.getElementById("old_password");
+        if (x.type === "password") {
+            x.type = "text";
+            $('#hideold').show();
+            $('#unhideold').hide();
+        } else {
+            x.type = "password";
+            $('#hideold').hide();
+            $('#unhideold').show();
+        }
+    }
+
+    function showNewPassword(){
+        let x = document.getElementById("new_password");
+        if (x.type === "password") {
+            x.type = "text";
+            $('#hidenew').show();
+            $('#unhidenew').hide();
+        } else {
+            x.type = "password";
+            $('#hidenew').hide();
+            $('#unhidenew').show();
+        }
+    }
+
+    function showConfirmPassword(){
+        let x = document.getElementById("password_confirmation");
+        if (x.type === "password") {
+            x.type = "text";
+            $('#hideconf').show();
+            $('#unhideconf').hide();
+        } else {
+            x.type = "password";
+            $('#hideconf').hide();
+            $('#unhideconf').show();
+        }
+    }
 </script>
 
 
@@ -190,7 +240,7 @@ form.password-cs input {
     $(document).ready(function(){
       $("#hide").click(function(){
         $("#info-edit-password ").hide();
-        
+
         $("#info-password").show();
       });
     });

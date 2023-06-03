@@ -180,8 +180,11 @@
                                                         <div class="row skills-c">
                                                             <div class="col-md-12">
                                                                 <ul class="skills-listing">
+                                                                    <?php $count = 0; ?>
                                                                     @foreach($job->skill as $job_skill)
-                                                                        <li>{{$job_skill->name}}</li>
+                                                                        <?php if($count == 10) break; ?>
+                                                                        <li class="mt-2">{{$job_skill->name}}</li>
+                                                                        <?php $count++; ?>
                                                                     @endforeach
                                                                 </ul>
                                                             </div>
