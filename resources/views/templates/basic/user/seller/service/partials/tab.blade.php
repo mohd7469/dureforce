@@ -84,15 +84,17 @@
             <h6 class="m-0 py-1 service-step">Banner</h6>
             <p></p>
         </div>
-
-        <div class="stepwizard-step col-xs-3">
-            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedBanner }}"
-                disabled="disabled">
-                <i class="fa fa-money-check-alt"></i>
-            </a>
-            <h6 class="m-0 py-1 service-step">Proposal</h6>
-            <p></p>
-        </div>
+        @if ($completedReview)
+            <div class="stepwizard-step col-xs-3">
+                <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedProposal }}"
+                    disabled="disabled">
+                    <i class="fa fa-money-check-alt"></i>
+                </a>
+                <h6 class="m-0 py-1 service-step">Proposal</h6>
+                <p></p>
+            </div>
+        @endif
+        
 
 
         <div class="stepwizard-step col-xs-3">

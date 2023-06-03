@@ -10,5 +10,8 @@ return [
     'work_diary_task_min_text_length' => env('WORK_DIRAY_TASK_MIN_TEXT_LENGTH',1),
     'work_diary_task_max_text_length' => env('WORK_DIRAY_TASK_MAX_TEXT_LENGTH',200),
     'service_description_prefix' => env('SERVICE_DESCRIPTION_PREFIX',''),
-    'software_description_prefix' => env('SOFTWARE_DESCRIPTION_PREFIX',''),
+    'software_description_prefix'       => env('SOFTWARE_DESCRIPTION_PREFIX',''),
+    'service_weekly_hours_start_limit'  => env('SERVICE_WEEKLY_HOURS_START_LIMIT',30),
+    'service_weekly_hours_end_limit'    => env('SERVICE_WEEKLY_HOURS_END_LIMIT',40),
+
 ];
