@@ -102,12 +102,8 @@
                     <form class="card-body tab-content">
                         <div class="tab-pane active" id="Jobs_by_Services">
                             <p class="card-text text-center">
-                            <div class="d-flex align-items-center justify-content-center ">
-                                <div class="table-section">
-                                    <div class="row justify-content-center">
-                                        <div class="col-xl-12">
-                                            <div class="table-area">
-                                                <table class="custom-table-new mt-15">
+                            <div class="table-responsive">
+                                                <table class="table">
                                                     <thead>
                                                         <tr>
                                                             <th>@lang('Title')</th>
@@ -213,10 +209,6 @@
                                                 </table>
                                                 {{ $services->links() }}
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             </p>
                         </div>
                         <div class="tab-pane" id="Jobs_by_Software">

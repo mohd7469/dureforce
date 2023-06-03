@@ -886,7 +886,7 @@
                                     </div>
                                     <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label for="title">Message To Client</label>
+                                            <label for="title">Message To Client <span style="font-weight: initial"> (only max 250 characters are allowed)</span></label>
                                             <textarea  class="form-control text_area" name="message_to_client" placeholder="write message for client" id="message_to_client_id"></textarea>
                                         </div>
                                     </div>
