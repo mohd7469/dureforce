@@ -25,7 +25,7 @@ class ReviewRequest extends FormRequest
     {
         return [
             //
-            'max_no_projects' => 'required|string'
+            'max_no_projects' => 'required|integer|min:3|max:10'
 
         ];
     }

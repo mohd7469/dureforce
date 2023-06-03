@@ -6,6 +6,7 @@ use Database\Seeders\SkillCategorySeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Self_;
 
 class Category extends Model
@@ -28,7 +29,9 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class, 'category_id');
     }
-
+    public function scopeWithAll($query){
+        $query->with('subCategory')->with('deliverables');
+    }
     public static function getByType(int $type)
     {
         return self::where('is_active', self::ACTIVE)->get();
@@ -81,5 +84,13 @@ class Category extends Model
     public function sub_categoires()
     {
         return $this->belongsToMany(SubCategory::class, 'category_attributes');
+    }
+    public function allDeliverables()
+    {
+        return $this->belongsToMany(Deliverable::class, 'deliverable_category');
+    }
+    public function deliverables()
+    {
+        return $this->belongsToMany(Deliverable::class, 'deliverable_category')->wherePivot('module_id',request()->module_id);
     }
 }
