@@ -85,12 +85,12 @@
                                                         {{--                                                <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
                                                         <div class="row">
                                                             <div class="row">
-                                                                <div class="col-md-8 col-lg-8 col-sm-8">
+                                                                <div class="col-md-11 col-lg-11 col-sm-11">
                                                                     {{--                                                            <a href="{{route('seller.job.jobview',$job->uuid)}}">--}}
                                                                     <a href="{{route('seller.job.jobview',$job->uuid)}}" ><strong>{{$job->title}}</strong></a>
                                                                     {{--                                                            </a>--}}
                                                                 </div>
-                                                                <div class="col-md-4 col-lg-4 col-sm-4 pull-right" >
+                                                                <div class="col-md-1 col-lg-1 col-sm-1 pull-right" >
                                                                     <?php
                                                                     if(in_array($job->id, $user_saved_jobs_ids)){ ?>
                                                                     <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
