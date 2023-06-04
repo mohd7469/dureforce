@@ -48,6 +48,18 @@
 
 @push('style')
     <style>
+        .card-header:first-child {
+            border-radius: 1px !important;
+        }
+        
+        .custom--card .card-header {
+            background-color: #f8fafa !important;
+            padding: none !important;
+        }
+        .card {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
         .error{
             margin-top: -20px !important;
             margin-bottom: 5px !important;

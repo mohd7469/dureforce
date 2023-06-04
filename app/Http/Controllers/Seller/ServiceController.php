@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\serviceaddonMail;
+use App\Models\Module;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
@@ -90,16 +91,18 @@ class ServiceController extends Controller
             $features = Features::Active()->latest()->get();
 
             $attributes = EntityField::with('attributes')->Entity(EntityField::SERVICE)->where('status', true)->get();
-
+            $service_deliverables =collect([]);
             $service = null;
 
             if ($id) {
                 $service = Service::withAll()->findOrFail($id);
+
+
                 $completedOverview = $service->skills()->count() > 0 ? $completed : $empty;
                 $completedPricing = $service->rate_per_hour > 0 ? $completed : $empty;
                 $completedBanner = $service->banner ? $completed : $empty;
                 $completedProposal = $service->defaultProposal ? $completed : $empty;
-                $completedRequirements = $service->requirement_for_client ? $completed : $empty;
+                $completedRequirements = $service->is_requirement_for_client_added ? $completed : $empty;
                 $completedReview = !empty($service->number_of_simultaneous_projects) ? $completed : $empty;
             }
             Log::info(["Service" => $service]);
@@ -127,6 +130,7 @@ class ServiceController extends Controller
     public function storeOverview(Request $request)
     {
         try {
+            
             $serviceId = $request->get('service_id');
 
             if (!empty($serviceId)) {
@@ -196,7 +200,13 @@ class ServiceController extends Controller
 
             Log::info(["Service" => $service]);
             $notify[] = ['success', 'Service Banner Saved Successfully.'];
-            return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
+            $step='step-4';
+            if(is_null($service->number_of_simultaneous_projects)){
+                $step='step-5';
+
+            }
+            return redirect()->route('user.service.create', ['id' => $service->id, 'view' => $step])->withNotify($notify);
+
         } catch (\Exception $exp) {
             // Log::error($exp->getMessage());
             errorLogMessage($exp);
@@ -205,7 +215,7 @@ class ServiceController extends Controller
     
     public function storeProposal(ServiceProposalRequest $request){
         try {
-
+            
             $serviceId = $request->get('service_id');
             if (empty($serviceId)) {
                 $notify[] = ['error', 'Recently Created Service is missing.'];
@@ -215,7 +225,7 @@ class ServiceController extends Controller
             $service = Service::FindOrFail($serviceId);
 
             if ($service->banner) {
-                $this->saveProposal($request, $service, Attribute::SERVICE);
+                $this->saveProposal($request->all(), $service, Attribute::SERVICE);
                 $notify[] = ['success', 'Service Proposal Saved Successfully.'];
                 Log::info(["Service" => $service]);
                 return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
@@ -241,7 +251,6 @@ class ServiceController extends Controller
             }
 
             $service = Service::FindOrFail($serviceId);
-
             if ($service->defaultProposal) {
                 $this->saveRequirements($request, $service, Attribute::SERVICE);
                 $notify[] = ['success', 'Service Requirements Saved Successfully.'];
@@ -269,7 +278,7 @@ class ServiceController extends Controller
 
             $service = Service::FindOrFail($request->get('service_id'));
 
-            if ($service->requirement_for_client) {
+            if ($service->is_requirement_for_client_added) {
 
                 $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
                 $this->ServiceAddConfirmationMail($service);
