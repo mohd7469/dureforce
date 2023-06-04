@@ -52,11 +52,15 @@ if (!empty($service)) {
 
                                 @if (!empty($service))
 
-                                    @foreach ($service_deliverables as  $item )
+                                    @foreach ($deliverables as  $item )
                                         <option value="{{ $item->id }}" @if(in_array($item->id,$service->deliverable->pluck('id')->toArray())) selected @endif>
                                             {{ __($item->name) }}</option>
                                     @endforeach
-                               
+                                @else
+                                    @foreach ($deliverables as  $item )
+                                        <option value="{{ $item->id }}" >
+                                            {{ __($item->name) }}</option>
+                                    @endforeach
                                 @endif
                            
                         
