@@ -189,6 +189,9 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
                 Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
                 Route::get('/category', 'UserController@category')->name('category');
+                Route::get('/sub-category-deliverables', 'UserController@subCategoryDeliverables')->name('sub.category.deliverables');
+
+                
                 // Route::get('/category', 'UserController@skillSubCategory')->name('category');
 
 

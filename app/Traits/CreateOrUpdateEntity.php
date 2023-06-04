@@ -91,6 +91,7 @@ trait CreateOrUpdateEntity {
     }
     public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
+
          DB::transaction(function () use ($request, $model, $modelId, $type) {
 
             $model->fill($request->all())->save();
@@ -110,10 +111,15 @@ trait CreateOrUpdateEntity {
 
             $model->tags()->attach($tags);
             
-            if($type == Attribute::SERVICE)
+            if($type == Attribute::SERVICE){
+
                 $model->skills()->attach($request->skills);
+                $sub_category_deliverables=json_decode($request->sub_category_deliverable_ids,true);
+                $model->deliverable()->sync($sub_category_deliverables);
+            }
 
             $model->features()->sync($request->features);
+            
 
         });
         if($type == Attribute::SOFTWARE){
