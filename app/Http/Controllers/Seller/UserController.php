@@ -9,6 +9,7 @@ use App\Http\Requests\ProfileExperienceRequest;
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
 use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\FavoriteItem;
 use App\Models\GeneralSetting;
 use App\Models\Language;
@@ -423,16 +424,35 @@ class UserController extends Controller
 
         try {
             
-            $category=Category::with('subCategory','deliverables')->find($request->category);
+            $category=Category::with('subCategory')->find($request->category);
             $sub_category = $category->subCategory->where('is_active',1);
-            $category_deliverables=collect([]);
-            if($request->has('module_id')){
-                $category_deliverables = $category->deliverables;
-            }
-            return response()->json(['sub_category' => $sub_category, 'category_deliverables' => $category_deliverables]);
+            return response()->json(['sub_category' => $sub_category]);
 
         } catch (\Throwable $th) {
+            errorLogMessage($th);
 
+           return response()->json([ 'error' => $th->getMessage()]);
+
+        }
+       
+        
+    }
+    public function subCategoryDeliverables(Request $request)
+    {
+
+        try {
+            $deliverables=Deliverable::latest()->get();
+            $sub_category=SubCategory::with('deliverables')->find($request->sub_category_id);
+            $category_deliverables=collect([]);
+            $category_deliverable_ids=[];
+            if($request->has('module_id')){
+                $category_deliverables = $sub_category->deliverables;
+                $category_deliverable_ids=$sub_category->deliverables->pluck('id');
+            }
+            return response()->json(['category_deliverables' => $category_deliverables,'deliverables' => $deliverables ,'category_deliverable_ids' => $category_deliverable_ids]);
+
+        } catch (\Throwable $th) {
+            errorLogMessage($th);
            return response()->json([ 'error' => $th->getMessage()]);
 
         }

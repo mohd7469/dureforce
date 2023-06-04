@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliverableCategoryTable extends Migration
+class CreateSubCategoryDeliverableTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateDeliverableCategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliverable_category', function (Blueprint $table) {
+        Schema::create('sub_category_deliverable', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('deliverable_id')->index();
-            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('sub_category_id')->index();
             $table->unsignedBigInteger('module_id')->index();
             $table->foreign('deliverable_id')->references('id')->on('deliverables');
-            $table->foreign('category_id')->references('id')->on('sub_categories');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories');
             $table->foreign('module_id')->references('id')->on('modules');
             $table->timestamps();
             $table->softDeletes();
@@ -33,6 +33,6 @@ class CreateDeliverableCategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliverable_category');
+        Schema::dropIfExists('sub_category_deliverable');
     }
 }

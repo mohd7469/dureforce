@@ -19,7 +19,6 @@ let modules = {
 }
 
 $(document).ready(function () {
-  $('.collapse').collapse();
   var service_id=$('#service_id').val();
   add_on_service_row_number=parseInt($('#number_of_add_on_services').val());
   if (service_id) {
@@ -174,8 +173,7 @@ $("#category").on("change", function () {
     type: "GET",
     url: route,
     data: {
-      category: category,
-      module_id: modules.service_id
+      category: category    
     },
     success: function (data) {
       var html = "";
@@ -193,20 +191,47 @@ $("#category").on("change", function () {
             $(".mySubCatgry").html(html);
         });
 
-        $("#deliverables").empty();
-        html='';
-        html += `<option value="" disabled>Select Deliverables</option>`;
-
-        $.each(data.category_deliverables, function (index, item) {
-            html += `<option value="${item.id}">${item.name}</option>`;
-            $("#deliverables").html(html);
-        });
-
-        
       }
     },
   });
 });
+
+$("#sub-category").on("change", function () {
+  var sub_category_id = $(this).val();
+  $.ajax({
+    type: "GET",
+    url: '/user/seller/sub-category-deliverables',
+    data: {
+      sub_category_id: sub_category_id,
+      module_id: modules.service_id
+    },
+    success: function (data) {
+      var html = "";
+      if (data.error) {
+          
+        $("#deliverables").empty();
+        html += `<option value="1" selected >${data.error}</option>`;
+        $(".deliverables").html(html);
+
+      } else {
+
+        html='';
+        let sub_category_deliverables = data.category_deliverable_ids;
+        $('#sub_category_deliverable_ids').val(JSON.stringify(sub_category_deliverables));
+
+        $("#deliverables").empty();
+        html += `<option value="" disabled>Select Deliverables</option>`;
+        $.each(data.deliverables, function (index, item) {
+            html += `<option value="${item.id}" ${sub_category_deliverables.includes(item.id) ? 'selected' : ''}>${item.name}</option>`;
+            $("#deliverables").html(html);
+        });
+
+      }
+    },
+  });
+});
+
+
 
 $(document).on("change", ".custom-file-input", function () {
   var fileName = $(this).val().split("\\").pop();

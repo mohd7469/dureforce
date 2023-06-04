@@ -89,8 +89,5 @@ class Category extends Model
     {
         return $this->belongsToMany(Deliverable::class, 'deliverable_category');
     }
-    public function deliverables()
-    {
-        return $this->belongsToMany(Deliverable::class, 'deliverable_category')->wherePivot('module_id',request()->module_id);
-    }
+   
 }

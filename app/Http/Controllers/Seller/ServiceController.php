@@ -97,7 +97,6 @@ class ServiceController extends Controller
             if ($id) {
                 $service = Service::withAll()->findOrFail($id);
 
-                $service_deliverables=$service->category->allDeliverables()->wherePivot('module_id',Module::$Service)->get();
 
                 $completedOverview = $service->skills()->count() > 0 ? $completed : $empty;
                 $completedPricing = $service->rate_per_hour > 0 ? $completed : $empty;
@@ -118,8 +117,7 @@ class ServiceController extends Controller
                 'completedProposal',
                 'completedRequirements',
                 'completedReview',
-                'service',
-                'service_deliverables'
+                'service'
             ));
 
         } catch (\Exception $exp) {
@@ -132,6 +130,7 @@ class ServiceController extends Controller
     public function storeOverview(Request $request)
     {
         try {
+            
             $serviceId = $request->get('service_id');
 
             if (!empty($serviceId)) {
