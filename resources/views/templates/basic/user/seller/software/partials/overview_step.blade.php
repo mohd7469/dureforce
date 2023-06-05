@@ -1,5 +1,7 @@
 <form role="form"  class="user-profile-form" action="{{ route('user.software.store.overview') }}" method="POST">
     @csrf
+    <input type="hidden" value="" name="sub_category_deliverable_ids" id="sub_category_deliverable_ids">
+
     <div class="card-body">
         <div class="card-form-wrapper">
             <div class="row justify-content-center">

@@ -15,6 +15,13 @@ let lead_image_div=$('#lead_image_upload_div_id');
 let default_lead_image_div=$('#default_lead_image_div');
 
 "use strict";
+let sub_modules = {
+  
+  job_id: 1,
+  service_id: 2,
+  software_id: 3,
+
+}
 $(document).ready(function () {
   
   add_on_service_row_number=parseInt($('#number_of_software_modules').val());
@@ -207,7 +214,7 @@ $("#category").on("change", function () {
       } else {
         $("#subCategorys").empty();
         html += `<option value="" selected disabled>Select Sub Category</option>`;
-        $.each(data, function (index, item) {
+        $.each(data.sub_category, function (index, item) {
           html += `<option value="${item.id}">${item.name}</option>`;
           $(".mySubCatgry").html(html);
         });
@@ -215,6 +222,42 @@ $("#category").on("change", function () {
     },
   });
 });
+
+$("#sub-category").on("change", function () {
+  var sub_category_id = $(this).val();
+  $.ajax({
+    type: "GET",
+    url: '/user/seller/sub-category-deliverables',
+    data: {
+      sub_category_id: sub_category_id,
+      module_id: sub_modules.software_id
+    },
+    success: function (data) {
+      var html = "";
+      if (data.error) {
+          
+        $("#deliverables").empty();
+        html += `<option value="1" selected >${data.error}</option>`;
+        $(".deliverables").html(html);
+
+      } else {
+
+        html='';
+        let sub_category_deliverables = data.category_deliverable_ids;
+        $('#sub_category_deliverable_ids').val(JSON.stringify(sub_category_deliverables));
+
+        $("#deliverables").empty();
+        html += `<option value="" disabled>Select Deliverables</option>`;
+        $.each(data.deliverables, function (index, item) {
+            html += `<option value="${item.id}" ${sub_category_deliverables.includes(item.id) ? 'selected' : ''}>${item.name}</option>`;
+            $("#deliverables").html(html);
+        });
+
+      }
+    },
+  });
+});
+
 $(document).on("change", ".custom-file-input", function () {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -620,13 +663,13 @@ function reviewForm() {
   $(".review-form").submit(function (e) {
     var max_no_projects = $("#max_no_projects").val();
     $(".error").remove();
-    if ($.trim(max_no_projects) < 1) {
+    if ($.trim(max_no_projects) < 3 || $.trim(max_no_projects) >10 ) {
       e.preventDefault();
       $("#max_no_projects").after(
-        '<span class="error text-danger">Max no of simultaneous projects should be greater than 0</span>'
+        '<span class="error text-danger">Max no of simultaneous projects should be between [ 3-10 ]</span>'
       );
       iziToast.error({
-        message: "Max no of simultaneous projects field is required",
+        message: "Max no of simultaneous projects should be between [ 3-10 ]",
         position: "topRight",
       });
     }
@@ -832,18 +875,18 @@ $(document).on("click", "#removecustomRow", function () {
 
 function requirementFormValidation() {
   $(".user-req-form").submit(function (e) {
-    var req = $("#req").val();
-    $(".error").remove();
-    if ($.trim(req) < 1) {
-      e.preventDefault();
-      $("#req").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Description field is required",
-        position: "topRight",
-      });
-    }
+    // var req = $("#req").val();
+    // $(".error").remove();
+    // if ($.trim(req) < 1) {
+    //   e.preventDefault();
+    //   $("#req").after(
+    //     '<span class="error text-danger">This field is required</span>'
+    //   );
+    //   iziToast.error({
+    //     message: "Description field is required",
+    //     position: "topRight",
+    //   });
+    // }
   });
 }
 
