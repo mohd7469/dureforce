@@ -119,44 +119,16 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
-                                            <div class="widget">
-                                                <h3 class="widget-title">@lang('FEATURED SERVICE')</h3>
-                                                <ul class="small-item-list" id="featuredService">
-                                                    @foreach ($fservices as $ser)
-                                                        <li class="small-single-item">
-                                                            <div class="thumb">
-                                                                <img src="{{ getAzureImage('service/' . $ser->image, imagePath()['service']['size']) }}"
-                                                                    alt="@lang('service image')">
-                                                            </div>
-                                                            <div class="content">
-                                                                <h5 class="title"><a
-                                                                        href="{{ route('service.details', [slug($ser->title), encrypt($ser->id)]) }}">{{ __($ser->title) }}</a>
-                                                                </h5>
-                                                                <div class="ratings">
-                                                                    <i class="fas fa-star text--warning"></i>
-                                                                    <span
-                                                                        class="rating">({{ $ser->rating }})</span>
-                                                                    <p
-                                                                        class="author-like d-inline-flex flex-wrap align-items-center ms-2">
-                                                                        <span class="las la-thumbs-up text--base"></span>
-                                                                        ({{ __($ser->likes) }})
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
+                                            
+                                            <div class="alert  keyword-container">
+                                                <h2>Tags</h2>
+                                                <hr>
+                                            @if(!empty(@$blog->data_values->tag))
+                                                @foreach( @$blog->data_values->tag  as $name)
+                                                    <span class="btn btn-secondary btn-xs disabled" >{{__($name)}}</span>
+                                                @endforeach
+                                            @endif
                                             </div>
-                                            <div class="widget-btn text-center">
-                                                @if ($fservices->total() > 4)
-                                                    <a href="javascript:void(0)" class="btn--base readMore" data-page="2"
-                                                        data-link="{{ route('home') }}?page=">@lang('Show More')</a>
-                                                @endif
-                                            </div>
-                                            @include(
-                                                'templates.basic.partials._tag_cloud',
-                                                ['tag_type_id' => \App\Models\Tag::TAG_TYPE_BLOG]
-                                            )
                                         </div>
                                     </div>
                                 </div>
