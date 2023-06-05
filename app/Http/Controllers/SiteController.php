@@ -401,12 +401,12 @@ class SiteController extends Controller
 
     public function blogDetails($id, $slug)
     {
-        $fservices = Service::where('status', 1)->where('featured', 1)->whereHas('category', function ($q) {
-            $q->where('status', 1);
-        })->paginate(getPaginate(4));
+        // $fservices = Service::where('status', 1)->where('featured', 1)->whereHas('category', function ($q) {
+        //     $q->where('status', 1);
+        // })->paginate(getPaginate(4));
         $blog = Frontend::where('id', $id)->where('data_keys', 'blog.element')->firstOrFail();
         $pageTitle = "Blog Details";
-        return view($this->activeTemplate . 'blog_details', compact('blog', 'pageTitle', 'fservices'));
+        return view($this->activeTemplate . 'blog_details', compact('blog', 'pageTitle'));
     }
 
 
