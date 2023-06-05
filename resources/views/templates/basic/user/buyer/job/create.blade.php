@@ -322,10 +322,10 @@
                 else{
                     $("#subCategorys").empty();
                     html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                    $.each(data, function(index, item) {
-                        html += `<option value="${item.id}">${item.name}</option>`;
-                        $(".mySubCatgry").html(html);
-                    });
+                            $.each(data.sub_category, function(index, item) {
+                                html += `<option value="${item.id}">${item.name}</option>`;
+                                $(".mySubCatgry").html(html);
+                            });
                 }
             }
         });

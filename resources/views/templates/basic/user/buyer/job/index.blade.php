@@ -1,11 +1,12 @@
 @extends($activeTemplate.'layouts.master')
 @section('content')
-<section class="all-sections zero_top_padding">
+<section class="all-sections ">
     <div class="container-fluid">
-        <div class="section-wrapper ">
+        <div class="section-wrapper p-4">
             <div class="row justify-content-center mb-30-none">
                 @include($activeTemplate . 'partials.buyer_sidebar')
                 <div class="col-xl-9 col-lg-12 mb-30 ">
+                    <div class="dashboard-sidebar-open"><i class="las la-bars"></i> @lang('Menu')</div>
                     <div class="table-responsive">
 
                         <table class="table text-center " style="border: 2px solid #e6eeee !important" id="job-listing">

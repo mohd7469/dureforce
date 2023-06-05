@@ -329,30 +329,30 @@
         var documents=JSON.parse($('#uploaded_files_input_id').val());
         uploaded_files=documents;
     }
-    function fetchSubCategories(category)
-    {
-        $.ajax({
-            type:"GET",
-            url:"{{route('user.category')}}",
-            data: {category : category},
-            success:function(data){
-                var html = '';
-                if(data.error){
-                    $("#subCategorys").empty(); 
-                    html += `<option value="" selected disabled>${data.error}</option>`;
-                    $(".mySubCatgry").html(html);
-                }
-                else{
-                    $("#subCategorys").empty(); 
-                    html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                    $.each(data, function(index, item) {
-                        html += `<option value="${item.id}">${item.name}</option>`;
+        function fetchSubCategories(category)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('user.category')}}",
+                data: {category : category},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>${data.error}</option>`;
                         $(".mySubCatgry").html(html);
-                    });
+                    }
+                    else{
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                                    $.each(data.sub_category, function(index, item) {
+                                        html += `<option value="${item.id}">${item.name}</option>`;
+                                        $(".mySubCatgry").html(html);
+                                    });
+                    }
                 }
-            }
-        });  
-    }
+            });  
+        }
     function loadSkills(data)
     {
 
