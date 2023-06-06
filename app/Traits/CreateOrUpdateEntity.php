@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\AdminNotification;
 use App\Models\Attribute;
 use App\Models\BannerLogo;
+use App\Models\DeliveryMode;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
 use App\Models\Module;
@@ -342,7 +343,9 @@ trait CreateOrUpdateEntity {
                 $this->updateStatus($request,$model);
                 DB::commit();
                 if (!$model->defaultProposal) {
-                    
+
+                    $deliver_mode=DeliveryMode::where('slug','Weekly-slug')->exists() ? DeliveryMode::where('slug','Weekly-slug')->first()->id : null;
+
                     if($type == Attribute::SERVICE) {
 
                         $proposal=[
@@ -350,7 +353,7 @@ trait CreateOrUpdateEntity {
                             "amount_receive" => ($model->rate_per_hour*0.80),
                             "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
                             "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
-                            "delivery_mode_id" => null,
+                            "delivery_mode_id" => $deliver_mode,
                             "cover_letter" => $model->description,
                             "uploaded_files" => json_encode([],true),
                         ];
@@ -371,7 +374,7 @@ trait CreateOrUpdateEntity {
                                         ],
                                         "fixed_bid_amount" => $model->fixed_bid_amount,
                                         "amount_receive" => ($model->rate_per_hour*0.80),
-                                        "delivery_mode_id" => null,
+                                        "delivery_mode_id" => $deliver_mode,
                                         "cover_letter" => $model->description,
                                         "action" => "continue",
                                         "uploaded_files" => "[]"

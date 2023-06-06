@@ -17,7 +17,7 @@ class="review-form"
             <div class="row ">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>@lang('Maximum number of simultaneous projects')*</label>
-                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->number_of_simultaneous_projects}}">
+                    <input type="number" class="form-control bg--gray" id="max_no_projects"  name="max_no_projects" placeholder="Max no of projects" value="{{@$service->number_of_simultaneous_projects != '' ? @$service->number_of_simultaneous_projects : '3'}}">
                 </div>
 
                 <br>
