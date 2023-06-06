@@ -26,6 +26,15 @@ $(document).ready(function () {
     var sub_category_id=$('#sub-category').val();
     fetchSkills(category_id,sub_category_id,false);
   }
+  $('.btn-link').click(function() {
+    var target = $($(this).data('target'));
+    
+    if (target.hasClass('show')) {
+      target.removeClass('show').addClass('collapsing');
+    } else {
+      target.removeClass('collapsing').addClass('collapse show');
+    }
+  });
   loadActiveTab();
   loadSelect2();
   baannerForm();
@@ -34,7 +43,7 @@ $(document).ready(function () {
   pricingFormValidation();
   requirementFormValidation();
     $('#service_features').select2({
-      tags: true
+      tags: false
     });
   // if (action != "edit") {
   //   if (selector.val() == "1") {

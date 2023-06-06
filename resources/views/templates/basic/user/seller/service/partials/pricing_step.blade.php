@@ -77,99 +77,99 @@ if (!empty($service)) {
                     <div class="card">
                       <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                          <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <button class="btn btn-link btn-block text-left" type="button"  data-target="#collapseOne" aria-controls="collapseOne">
                             Add On Service
                           </button>
                         </h2>
                       </div>
                   
-                      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                      <div id="collapseOne" class="collapsing" aria-labelledby="headingOne" data-parent="#accordionExample">
                         <div class="card-body">
                             @if(count($extraService)>0)
 
-                    @foreach ($extraService as $exKey => $extra)
-                        <div id="add-service-container">
-                            <div class="row add-ons" id="add-on-row-id-{{ $exKey }}">
-                                
-                                <div class="col-xl-4 col-lg-4 form-group">
-                                    <label>Title</label>
-                                    <input type="text"name="service_add_ons[{{$exKey}}][title]" placeholder="Title"  value="{{ $extra->title }}"
-                                        class="form-control add-on-title">
-                                </div>
+                                @foreach ($extraService as $exKey => $extra)
+                                    <div id="add-service-container">
+                                        <div class="row add-ons" id="add-on-row-id-{{ $exKey }}">
+                                            
+                                            <div class="col-xl-4 col-lg-4 form-group">
+                                                <label>Title</label>
+                                                <input type="text"name="service_add_ons[{{$exKey}}][title]" placeholder="Title"  value="{{ $extra->title }}"
+                                                    class="form-control add-on-title">
+                                            </div>
 
-                                <div class="col-xl-4 col-lg-4 form-group">
-                                    <label>@lang('Per Hour Rate')</label>
-                                    <input type="number" class="form-control add_on_price" value="{{ floatval($extra->rate_per_hour) ?: 'Enter add on price' }}"
-                                        name="service_add_ons[{{$exKey}}][rate_per_hour]"  placeholder="@lang('Per hour rate')"
-                                        oninput="this.value = Math.abs(this.value)"
-                                        step="any">
-                                </div>
+                                            <div class="col-xl-4 col-lg-4 form-group">
+                                                <label>@lang('Per Hour Rate')</label>
+                                                <input type="number" class="form-control add_on_price" value="{{ floatval($extra->rate_per_hour) ?: 'Enter add on price' }}"
+                                                    name="service_add_ons[{{$exKey}}][rate_per_hour]"  placeholder="@lang('Per hour rate')"
+                                                    oninput="this.value = Math.abs(this.value)"
+                                                    step="any">
+                                            </div>
 
-                                <div class="col-xl-3 col-lg-3 form-group">
-                                    <label>@lang(' Estimated Delivery Time ')</label>
-                                        <input type="number" class="form-control add-on-delivery" value="{{ $extra->estimated_delivery_time ?: 'Enter delivery' }}"
-                                        name="service_add_ons[{{$exKey}}][estimated_delivery_time]" id="add_on_delivery"  placeholder="@lang('Enter Days')"
-                                        oninput="this.value = Math.abs(this.value)"
-                                        >
-                                </div>
-                                    @if($exKey>0)
-                                        <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
-                                            <button type="button" class="btn btn-danger"
-                                                onclick="deleteAddOnRow($('#add-on-row-id-{{ $exKey }}'))"><i
-                                                    class="fa fa-trash"></i></button>
+                                            <div class="col-xl-3 col-lg-3 form-group">
+                                                <label>@lang(' Estimated Delivery Time ')</label>
+                                                    <input type="number" class="form-control add-on-delivery" value="{{ $extra->estimated_delivery_time ?: 'Enter delivery' }}"
+                                                    name="service_add_ons[{{$exKey}}][estimated_delivery_time]" id="add_on_delivery"  placeholder="@lang('Enter Days')"
+                                                    oninput="this.value = Math.abs(this.value)"
+                                                    >
+                                            </div>
+                                                @if($exKey>0)
+                                                    <div class="col-xl-1 col-lg-1 " style="margin-top:2.4rem">
+                                                        <button type="button" class="btn btn-danger"
+                                                            onclick="deleteAddOnRow($('#add-on-row-id-{{ $exKey }}'))"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    </div>
+                                                @endif
                                         </div>
-                                    @endif
-                            </div>
-                        </div>
-                    @endforeach
+                                    </div>
+                                @endforeach
                     
-                     @else
-                    <div id="add-service-container">
+                            @else
+                                <div id="add-service-container">
 
-                        <div class="row add-ons">
+                                    <div class="row add-ons">
 
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>Title</label>
-                                <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title" onfocusout="validPrice()"/>
-                            </div>
+                                        <div class="col-xl-4 col-lg-4 form-group">
+                                            <label>Title</label>
+                                            <input type="text" name="service_add_ons[0][title]" placeholder="Title" id="extra_title" class="form-control add-on-title" />
+                                        </div>
 
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>@lang('Per Hour Rate')</label>
-                                <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
-                                    placeholder="@lang('Per hour rate')" id="add_on_price" oninput="this.value = Math.abs(this.value)" onfocusout="validPrice()">
-                            </div>
+                                        <div class="col-xl-4 col-lg-4 form-group">
+                                            <label>@lang('Per Hour Rate')</label>
+                                            <input type="number" class="form-control add_on_price" step="any"  name="service_add_ons[0][rate_per_hour]"
+                                                placeholder="@lang('Per hour rate')" id="add_on_price" oninput="this.value = Math.abs(this.value)" >
+                                        </div>
 
-                            <div class="col-xl-4 col-lg-4 form-group">
-                                <label>@lang(' Estimated Delivery Time ')</label>
-                                    <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
-                                    placeholder="@lang('Enter Hours')" oninput="this.value = Math.abs(this.value)" onfocusout="validPrice()">
+                                        <div class="col-xl-4 col-lg-4 form-group">
+                                            <label>@lang(' Estimated Delivery Time ')</label>
+                                                <input type="number" step="any" class="form-control add-on-delivery" id="add_on_delivery" name="service_add_ons[0][estimated_delivery_time]"
+                                                placeholder="@lang('Enter Hours')" oninput="this.value = Math.abs(this.value)" >
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            @endif
+
+                            <div class="row">
+
+                                <div class="col-12 form-group">
+                                    <button class="btn btn-primary" id="add-more-service" type="button"> ADD
+                                        MORE</button>
+                                </div>
                             </div>
                         </div>
-
-                    </div>
-
-                    @endif
-
-                    <div class="row">
-
-                        <div class="col-12 form-group">
-                            <button class="btn btn-primary" id="add-more-service" type="button"> ADD
-                                MORE</button>
-                        </div>
-                    </div>
-                            </div>
                       </div>
                     </div>
                 
                     <div class="card">
                       <div class="card-header" id="headingTwo">
                         <h2 class="mb-0">
-                          <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          <button class="btn btn-link btn-block text-left collapsed" type="button"  data-target="#collapseTwo" aria-controls="collapseTwo">
                             Project Steps
                           </button>
                         </h2>
                       </div>
-                      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                      <div id="collapseTwo" class="collapsing" aria-labelledby="headingTwo" data-parent="#accordionExample">
                         <div class="card-body">
                             <p class="msg-create">List the steps involved in delivering your project</p>
                             <div class="row">
@@ -238,27 +238,29 @@ if (!empty($service)) {
                                 </div>
                             </div>
             
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-3 ">
-                                    <a class="btn service--btns btn-back btn-secondary float-left  mt-20 "
-                                        href="?view=step-1">@lang('BACK')</a>
-                                </div>
-                                <div class="col-md-9 text-right">
-                                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
-            
-                
-                                    <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
-                                       Preview Service
-                                    </button> </a>
-                                    <button type="submit"
-                                        class="btn btn-save-continue btn-primary float-left mt-20 ">@lang('SAVE AND CONTINUE')</button>
-                                </div>
-                            </div>
+                           
+                          
                         </div>
                       </div>
                     </div>
                   
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <a class="btn service--btns btn-back btn-secondary float-left  mt-20 "
+                            href="?view=step-1">@lang('BACK')</a>
+                    </div>
+                    <div class="col-md-9 text-right">
+                        <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+
+    
+                        <a href="{{previewServiceRoute($service)}}"><button class="btn service--btns btn-secondary float-left  mt-20 "  type="button">
+                           Preview Service
+                        </button> </a>
+                        <button type="submit"
+                            class="btn btn-save-continue btn-primary float-left mt-20 ">@lang('SAVE AND CONTINUE')</button>
+                    </div>
                 </div>
 
              

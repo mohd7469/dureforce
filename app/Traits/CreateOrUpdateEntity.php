@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\AdminNotification;
 use App\Models\Attribute;
 use App\Models\BannerLogo;
+use App\Models\DeliveryMode;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
 use App\Models\Module;
@@ -114,14 +115,17 @@ trait CreateOrUpdateEntity {
             if($type == Attribute::SERVICE){
 
                 $model->skills()->attach($request->skills);
-                $sub_category_deliverables=json_decode($request->sub_category_deliverable_ids,true);
-                $model->deliverable()->sync($sub_category_deliverables);
+               
             }
 
             $model->features()->sync($request->features);
             
 
         });
+        
+        $sub_category_deliverables=json_decode($request->sub_category_deliverable_ids,true);
+        $model->deliverable()->sync($sub_category_deliverables);
+
         if($type == Attribute::SOFTWARE){
             $this->updateStatus($request,$model);
         }
@@ -132,6 +136,7 @@ trait CreateOrUpdateEntity {
                 $model->save();
             }
         }
+
         return true;
     }
 
@@ -336,23 +341,53 @@ trait CreateOrUpdateEntity {
                 }
                 
                 $this->updateStatus($request,$model);
+                DB::commit();
                 if (!$model->defaultProposal) {
 
-                    $proposal=[
-                        "hourly_bid_rate" => $model->rate_per_hour,
-                        "amount_receive" => ($model->rate_per_hour*0.80),
-                        "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
-                        "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
-                        "delivery_mode_id" => null,
-                        "cover_letter" => $model->description,
-                        "uploaded_files" => json_encode([],true),
-                    ];
-    
-                }
-               
-                DB::commit();
-                $this->saveProposal($proposal,$model,$type);
+                    $deliver_mode=DeliveryMode::where('slug','Weekly-slug')->exists() ? DeliveryMode::where('slug','Weekly-slug')->first()->id : null;
 
+                    if($type == Attribute::SERVICE) {
+
+                        $proposal=[
+                            "hourly_bid_rate" => $model->rate_per_hour,
+                            "amount_receive" => ($model->rate_per_hour*0.80),
+                            "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
+                            "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
+                            "delivery_mode_id" => $deliver_mode,
+                            "cover_letter" => $model->description,
+                            "uploaded_files" => json_encode([],true),
+                        ];
+        
+                    }
+                    else if($type == Attribute::SOFTWARE) {
+                        
+                        
+                        $proposal=  [  "project_start_date" => null,
+                                        "project_end_date" =>   null,
+                                        "milestones" => [
+                                            [
+                                                "description" => null,
+                                                "start_date" => null,
+                                                "end_date" => null,
+                                                "amount" => null,
+                                            ]
+                                        ],
+                                        "fixed_bid_amount" => $model->fixed_bid_amount,
+                                        "amount_receive" => ($model->rate_per_hour*0.80),
+                                        "delivery_mode_id" => $deliver_mode,
+                                        "cover_letter" => $model->description,
+                                        "action" => "continue",
+                                        "uploaded_files" => "[]"
+                                    ];
+        
+                    }
+                    else{
+
+                    }
+
+                    $this->saveProposal($proposal,$model,$type);
+
+                }
 
             } catch (\Exception $exp) {
                 DB::rollBack();
