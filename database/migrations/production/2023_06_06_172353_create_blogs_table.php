@@ -18,6 +18,7 @@ class CreateBlogsTable extends Migration
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->boolean('is_active')->nullable();
+            $table->boolean('is_featured')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
