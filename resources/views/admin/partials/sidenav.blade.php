@@ -1779,7 +1779,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                <li class="sidebar-menu-item sidebar-dropdown">
+                <!-- <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.blog*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Blogs')</span>
@@ -1796,7 +1796,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
 
 
                 @if (in_array('28', $staffAccess))
