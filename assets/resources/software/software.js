@@ -772,14 +772,26 @@ function pricingFormValidation() {
 }
 
 function validateSoftwareModuleRows(element, e) {
-    if (
-            element.find(".module-title").val() < 1 &&
+          
+          if(
+            element.find(".module-title").val().length < 1 &&
             element.find(".module-title") != "") 
-      {
+          {
             e.preventDefault();
             element
                 .find(".module-title")
                 .after('<span class="error text-danger">This field is required</span>');
+          }
+
+        else if (element.find(".module-title").val().length > 250 )
+        {
+            e.preventDefault();
+            element
+                .find(".module-title")
+                .after('<span class="error text-danger">Max title length is 250 characters </span>');
+        }
+        else{
+
         }
   
         if (
