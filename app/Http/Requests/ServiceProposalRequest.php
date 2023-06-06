@@ -31,7 +31,7 @@ class ServiceProposalRequest extends FormRequest
             'hourly_bid_rate' => 'required|numeric|min:1',
             'amount_receive' => 'required',
             'start_hour_limit' => 'required_with:end_hour_limit|numeric|min:1',
-            'end_hour_limit' => 'required_with:start_hour_limit|numeric|gt:start_hour_limit',
+            'end_hour_limit' => 'required_with:start_hour_limit|numeric|gt:start_hour_limit|max:168',
             'cover_letter' => 'required|string|min:20'
         ];
     }
@@ -43,6 +43,8 @@ class ServiceProposalRequest extends FormRequest
             'end_hour_limit.required_with' => 'Enter max hours field value or make empty min hours field',
             'start_hour_limit.min' => 'Min hours field value must be greater than 0',
             'end_hour_limit.gt' => 'Max hours field value must be greater than min hours field',
+            'end_hour_limit.max' => 'Max hours field value must be less than or equal to 168',
+
 
         ];
     }

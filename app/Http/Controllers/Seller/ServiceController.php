@@ -132,7 +132,6 @@ class ServiceController extends Controller
         try {
             
             $serviceId = $request->get('service_id');
-
             if (!empty($serviceId)) {
                 $service = Service::FindOrFail($serviceId);
             } else {
@@ -192,7 +191,6 @@ class ServiceController extends Controller
             }
 
             $result = $this->saveBanner($request, $service, Attribute::SERVICE, 'service', 'optionalService');
-
             if (!$result) {
                 $notify[] = ['error', 'Some error occured while saving banner.'];
                 return redirect()->back()->withNotify($notify);

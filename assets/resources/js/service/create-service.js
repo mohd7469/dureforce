@@ -43,7 +43,7 @@ $(document).ready(function () {
   pricingFormValidation();
   requirementFormValidation();
     $('#service_features').select2({
-      tags: true
+      tags: false
     });
   // if (action != "edit") {
   //   if (selector.val() == "1") {
