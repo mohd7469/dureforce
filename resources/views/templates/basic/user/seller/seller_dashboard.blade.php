@@ -47,14 +47,14 @@
                         </ul> -->
 
                         <ul class="nav nav-tabs card-header-tabs jbs_nav_s" data-bs-tabs="tabs">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Jobs_by_Services">Jobs by Services</a>
+                            <li class="nav-item bmm">
+                                <a class="nav-link active nb" aria-current="true" data-bs-toggle="tab" href="#Jobs_by_Services">Jobs by Services</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Software">Jobs by Software</a>
+                            <li class="nav-item bmm">
+                                <a class="nav-link nb" data-bs-toggle="tab" href="#Jobs_by_Software">Jobs by Software</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Custom">Jobs by Custom</a>
+                            <li class="nav-item bmm">
+                                <a class="nav-link nb" data-bs-toggle="tab" href="#Jobs_by_Custom">Jobs by Custom</a>
                             </li>
                         </ul>
                        
@@ -145,23 +145,23 @@
                                                                     @if($service->status_id == 19)
                                                                         <span class="badge badge--success">@lang('Approved')</span>
                                                                         <br>
-                                                                        {{diffforhumans($service->created_at)}}
+
                                                                     @elseif($service->status_id == 20)
                                                                         <span class="badge badge--danger">@lang('Canceled')</span>
                                                                         <br>
-                                                                        {{diffforhumans($service->created_at)}}
+
                                                                     @elseif($service->status_id == 18)
                                                                         <span class="badge badge--primary">@lang('Pending')</span>
                                                                         <br>
-                                                                        {{diffforhumans($service->created_at)}}
+
                                                                     @elseif($service->status_id == 17)
                                                                         <span class="badge badge--warning">@lang('Draft')</span>
                                                                         <br>
-                                                                        {{diffforhumans($service->created_at)}}
+
                                                                     @elseif($service->status_id == 21)
                                                                         <span class="badge badge--info">@lang('Under Review')</span>
                                                                         <br>
-                                                                        {{diffforhumans($service->created_at)}}
+                                                                       
                                                                     @endif
                                                                 </td>
                                                                 <td data-label="@lang('Last Update')">
@@ -643,6 +643,7 @@ span.h_jobs_s{
         width: 100%;
         margin-left:0px !important;
     }
+
 }
 @media only screen and (max-width:375px){
 
@@ -666,6 +667,27 @@ ul.jbs_nav_s {
     display: inline-block;
     width: 100%;
 }
+}
+@media only screen and (max-width:480px)  {
+    .bmm{
+        width:95px;
+    }
+    .nav-tabs .nav-link{
+        font-size: 8px;
+    }
+    .jobs_ins_list {
+    padding-left: 0px;
+    }
+    ul.jbs_nav_s {
+        margin-bottom: 20px !important;
+        margin-top: 15px !important;
+    }
+    ul.jbs_nav_s {
+        /* margin-left: 1%; */
+        float: left;
+        display: inline-block;
+        width: 330px !important;
+    }
 }
 </style>
 @endsection
