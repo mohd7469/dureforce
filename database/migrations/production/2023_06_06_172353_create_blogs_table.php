@@ -24,8 +24,8 @@ class CreateBlogsTable extends Migration
 
             $table->boolean('is_featured')->nullable();
             $this->addCommonDBFields($table);
-            $table->softDeletes();
-            $table->timestamps();
+            // $table->softDeletes();
+            // $table->timestamps();
         });
     }
 
