@@ -82,23 +82,23 @@
                 class="fa fa-fw fa-backward"></i>@lang('Go Back')</a>
 @endpush
 
+<style>
+    .select2-container--default .select2-selection--multiple {
+        background-color: white !important;
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        cursor: text !important;
+        padding-bottom: 12px !important;
+        /* padding-right: 0px; */
+        padding-top: 8px !important;
+        margin-left: -14px !important;
+        margin-right: -14px !important;
+    }
+</style>
 
 @push('script-lib')
     <script src="{{ asset('assets/admin/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
 @endpush
-<style>
-    .select2-container--default .select2-selection--multiple {
-        background-color: white;
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        cursor: text;
-        padding-bottom: 12px;
-        /* padding-right: 0px; */
-        padding-top: 8px;
-        margin-left: -14px;
-        margin-right: -14px;
-    }
-</style>
 
 @push('script')
     <script>
