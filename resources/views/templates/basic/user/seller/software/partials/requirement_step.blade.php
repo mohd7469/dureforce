@@ -9,7 +9,7 @@
             
             <div>
                 <h4 class="hdng-create">
-                    Requirements for the client *
+                    Requirements for the client
                 </h4>
 
                 <p class="my-4 msg-create">Tell the client what you need to get started </p>
@@ -18,7 +18,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-xl-12 col-lg-12 form-group">
-                    <label>@lang('Description')*</label> 
+                    <label>@lang('Description')</label> 
                     <textarea class="form-control bg--gray " placeholder="Do you have preferred styles for your illustration. Please share 3 examples."
                         name="client_requirements" id="req">{{ old('Tell Your Requirements', @$software->requirement_for_client) }}</textarea>
                 </div>

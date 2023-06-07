@@ -160,7 +160,6 @@ class FrontendController extends Controller
         $pageTitle = $section->name . ' Items';
         if ($id) {
             $data = Frontend::findOrFail($id);
-           
 
             return view('admin.frontend.element', compact('section', 'key', 'pageTitle', 'data'));
         }

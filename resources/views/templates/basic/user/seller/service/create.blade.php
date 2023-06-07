@@ -48,6 +48,20 @@
 
 @push('style')
     <style>
+     
+     
+        .card-header:first-child {
+            border-radius: 1px !important;
+        }
+        
+        .custom--card .card-header {
+            background-color: #f8fafa !important;
+            padding: none !important;
+        }
+        .card {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
         .error{
             margin-top: -20px !important;
             margin-bottom: 5px !important;
@@ -74,11 +88,24 @@
             padding: 10px 4px;
 
         }
-
+        
         .custom--card .card-body .card-form-wrapper input {
             background-color: #f9f9f9;
             border-radius: 3px;
-            padding: 4px 15px !important;
+        }
+
+        select[name="features[]"].select-container {
+            box-sizing: border-box;
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            vertical-align: middle;
+            padding: -2px;
+            margin-top: 11px;
+        }
+       
+        .custom_input{
+            padding: 10px 15px !important;
         }
         .select2Tag input {
             background-color: transparent !important;
@@ -150,6 +177,14 @@
             display: inline-block !important;
             margin-bottom: 12px;
         }
+        .select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    cursor: text;
+    padding-bottom: 0px !important;
+    padding-right: 0px !important;
+}
     </style>
 @endpush
 

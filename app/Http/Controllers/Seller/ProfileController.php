@@ -653,7 +653,7 @@ class ProfileController extends Controller
         }
         catch (\Throwable $th) {
             DB::rollback();
-            errorLogMessage($exp);
+            errorLogMessage($th);
             // Log::info("Error In Saving Testimonial Response " .$th->getMessage());
             $notify[] = ['error', 'Server Error Please try again'];
             return $notify;

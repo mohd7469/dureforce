@@ -358,7 +358,7 @@
                                     </figure>
                                     <article class="col-md-6 mt-h" >
                                         <h1 class="heading"><strong>Talent, Skill, & Experience. <br> Freelancing Redefined.</strong></h1>
-                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified <br> freelancers.
+                                        <p class="para ">Get instant access to top-tier talent from around the globe. <br>Find your next hire from the largest pool of qualified freelancers.
                                         </p>
                                         <div class="btn-container">
                                             <a class="btn--post active mr-1 d-inline-block "
@@ -511,9 +511,9 @@
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
-                <h2 class="heading">Explore Trending dureforce Publications</h2>
+                <h2 class="heading">Explore Trending Dureforce Publications</h2>
             </article>
-            @include($activeTemplate . 'home.publications')
+            @include($activeTemplate . 'home.publications', ['jobs' => $jobs])
         </div>
     </section>
     @include($activeTemplate . 'partials.end_ad')
@@ -549,7 +549,13 @@
         .btn-skill-job-list {
 
             background: #007F7F;
-            border-radius: 4px;
+            display: inline-block;
+            padding: 0.25em 0.4em;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
         }
 
         .btn-sm-job-list {
@@ -742,6 +748,9 @@
     .card {
         margin-left: 7px;
         margin-right: 26px;
+    }
+    .card-height {
+        height: 420px !important;
     }
     .item-area .footer {
         padding: 10px 0px 0px 0px;

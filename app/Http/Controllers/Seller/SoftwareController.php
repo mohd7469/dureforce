@@ -60,7 +60,7 @@ class SoftwareController extends Controller
                 $completedPricing = $software->price > 0 ? $completed : $empty;
                 $completedBanner = $software->banner ? $completed : $empty;
                 $completedProposal = $software->defaultProposal ? $completed : $empty;
-                $completedRequirements = $software->requirement_for_client ? $completed : $empty;
+                $completedRequirements = $software->is_requirement_for_client_added ? $completed : $empty;
                 $completedReview = $software->number_of_simultaneous_projects > 0 ? $completed : $empty;
 
             }
@@ -150,9 +150,15 @@ class SoftwareController extends Controller
                     return redirect()->back()->withNotify($notify);
                 }
             }
+
             Log::info(["Software" => $software]);
             $notify[] = ['success', 'Software Banner Saved Successfully.'];
-            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-4'])->withNotify($notify);
+            $step='step-4';
+            if(is_null($software->max_no_projects)){
+                $step='step-5';
+
+            }
+            return redirect()->route('user.software.create', ['id' => $software->id, 'view' => $step])->withNotify($notify);
         } catch (\Exception $exp) {
             // Log::error($exp->getMessage());
             errorLogMessage($exp);
@@ -160,7 +166,7 @@ class SoftwareController extends Controller
     }
     public function storeProposal(SoftwareProposalRequest $request){
         try {
-
+           
             $softwareId = $request->get('software_id');
             if (empty($request->get('software_id'))) {
                 $notify[] = ['error', 'Recently Created Software is missing.'];
@@ -171,7 +177,7 @@ class SoftwareController extends Controller
 
             if ($software->banner) {
 
-                $this->saveProposal($request, $software, Attribute::SOFTWARE);
+                $this->saveProposal($request->all(), $software, Attribute::SOFTWARE);
                 $notify[] = ['success', 'Software Proposal Saved Successfully.'];
                 Log::info(["Software" => $software]);
                 return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-5'])->withNotify($notify);
@@ -223,38 +229,31 @@ class SoftwareController extends Controller
 
             $software = Software::FindOrFail($request->get('software_id'));
 
-            if ($software->requirement_for_client) {
+            if ($software->banner && $software->defaultProposal)  {
+                
                 $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
                 Log::info(["Software" => $software]);
                 $notify[] = ['success', 'Software Review Saved Successfully.'];
                 return redirect()->route('user.software.index')->withNotify($notify);
-
                 
             }
-            else{
-                $notify[] = ['error', 'Please complete the previous steps first.'];
-                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-1'])->withNotify($notify);
-            }
+            else if($software->banner && !$software->defaultProposal) {
+                
+                $notify[] = ['error', 'Please complete the proposal steps first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-4'])->withNotify($notify);
 
+            }
+            else if(!$software->banner){
+
+                $notify[] = ['error', 'Please complete the banner steps first.'];
+                return redirect()->route('user.software.create', ['id' => $software->id, 'view' => 'step-3'])->withNotify($notify);
+                
+            }
             
         } catch (\Exception $exp) {
             // Log::error($exp->getMessage());
             errorLogMessage($exp);
-        }
-
-        $software = Software::FindOrFail($request->get('software_id'));
-
-        if($software->requirement_for_client) {
-            $this->saveReview($request, $software, Attribute::SOFTWARE, 'Software', 'software');
-            $notify[] = ['success', 'Software Review Saved Successfully.'];
-            return redirect()->route('user.software.index')->withNotify($notify);
-        }
-        else{
-            $notify[] = ['error', 'Please complete the previous steps first.'];
-            return redirect()->route('user.software.create', ['id'=> $software->id, 'view' => 'step-1'])->withNotify($notify);
-        }
-
-        
+        } 
     }
 
     public function softwareFileDownload($softwareId)

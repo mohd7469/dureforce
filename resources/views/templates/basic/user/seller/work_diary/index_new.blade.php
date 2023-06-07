@@ -187,7 +187,8 @@
                                         
                             <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                                 <tr>
-                                    <th style="width: 20%" class="tl" >@lang('Task Title')</th>
+                                    <th style="width: 10%" class="tl" >@lang('Task ID')</th>
+                                    <th style="width: 10%" class="tl" >@lang('Task Title')</th>
                                     <th>@lang('Est. Start Time')</th>
                                     <th>@lang('Est. End Time')</th>
                                     <th>@lang('Est. Total Hrs')</th>
@@ -202,13 +203,17 @@
                             <tbody class="text-center">
                                 @foreach ($data['tasks_in_draft'] as $item)
                                     <tr id="{{$item->uuid}}">
+
                                         <td class="tl"  {!! getLastLoginRoleId() == App\Models\Role::$Freelancer ? "onclick='editTask(\"$item->uuid\",true)'" : "onclick='editTask(\"$item->uuid\",false)'" !!}> 
                                             <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                                 fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
                                             </svg>
-                                            {{$item->custom_description}}
+                                        {{$item->task_id ?? null}}
+
                                         </td>
+                                        <td>{{$item->custom_description ?? null}}</td>
+
                                         <td>{{$item->custom_start_time}}</td>
                                         <td>{{$item->custom_end_time}}</td>
                                         <td>{{$item->custom_hours}}h</td>
@@ -248,7 +253,8 @@
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
-                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task ID')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task Title')</th>
                                 <th>@lang('Est. Start Time')</th>
                                 <th>@lang('Est. End Time')</th>
                                 <th>@lang('Est. Total Hrs')</th>
@@ -263,13 +269,16 @@
                         <tbody class="text-center">
                             @foreach ($data['tasks_in_awating_approval'] as $item)
                                 <tr id="{{$item->uuid}}">
+
                                     <td class="tl"{!! getLastLoginRoleId() == App\Models\Role::$Freelancer ? "onclick='editTask(\"$item->uuid\",true)'" : "onclick='editTask(\"$item->uuid\",false)'" !!}>
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                             fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
                                         </svg>
-                                        {{$item->custom_description}}
+                                        {{$item->task_id ?? null}}
                                     </td>
+                                    <td>{{$item->custom_description ?? null}}</td>
+
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
                                     <td>{{$item->custom_hours}}h</td>
@@ -303,7 +312,8 @@
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
-                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task ID')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task Title')</th>
                                 <th>@lang('Est. Start Time')</th>
                                 <th>@lang('Est. End Time')</th>
                                 <th>@lang('Est. Total Hrs')</th>
@@ -317,13 +327,17 @@
                         <tbody class="text-center">
                             @foreach ($data['tasks_in_approved'] as $item)
                                 <tr>
+
                                     <td class="tl" onclick="editTask('{{$item->uuid}}', false)">
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                             fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
                                         </svg>
-                                        {{$item->custom_description}}
+                                        {{$item->task_id ?? null}}
+
                                     </td>
+                                    <td>{{$item->custom_description ?? null}}</td>
+
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
                                     <td>{{$item->custom_hours}}h</td>
@@ -359,7 +373,8 @@
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
-                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task ID')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task Title')</th>
                                 <th>@lang('Est. Start Time')</th>
                                 <th>@lang('Est. End Time')</th>
                                 <th>@lang('Est. Total Hrs')</th>
@@ -376,13 +391,16 @@
                         <tbody class="text-center">
                             @foreach ($data['tasks_in_progress'] as $item)
                                 <tr>
+
                                     <td class="tl" onclick="editTask('{{$item->uuid}}', false)">
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" 
                                             fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
                                         </svg>
-                                        {{$item->custom_description}}
+                                        {{$item->task_id ?? null}}
+
                                     </td>
+                                    <td>{{$item->custom_description ?? null}}</td>
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
                                     <td>{{$item->custom_hours}}h</td>
@@ -422,7 +440,8 @@
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
                             <tr>
-                                <th style="width: 20%" class="tl">@lang('Task Title')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task ID')</th>
+                                <th style="width: 10%" class="tl" >@lang('Task Title')</th>
                                 <th>@lang('Est. Start Time')</th>
                                 <th>@lang('Est. End Time')</th>
                                 <th>@lang('Est. Total Hrs')</th>
@@ -440,12 +459,15 @@
                             @foreach ($data['tasks_in_completed'] as $item)
                                 
                                 <tr>
+
                                     <td class="tl" onclick="editTask('{{$item->uuid}}', false)">
                                         <svg width="23" height="16" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M11.4998 22.9584C9.2336 22.9584 7.01825 22.2863 5.13393 21.0273C3.24962 19.7682 1.78098 17.9787 0.913723 15.8849C0.0464687 13.7912 -0.180445 11.4873 0.261678 9.26462C0.7038 7.04192 1.7951 5.00024 3.39758 3.39776C5.00005 1.79528 7.04173 0.703983 9.26443 0.261861C11.4871 -0.180262 13.791 0.0466518 15.8848 0.913906C17.9785 1.78116 19.768 3.2498 21.0271 5.13412C22.2862 7.01843 22.9582 9.23378 22.9582 11.5C22.9582 14.539 21.751 17.4534 19.6021 19.6023C17.4533 21.7511 14.5388 22.9584 11.4998 22.9584ZM11.4998 2.12503C9.64564 2.12503 7.83308 2.67486 6.29137 3.705C4.74966 4.73514 3.54804 6.19931 2.83847 7.91237C2.1289 9.62543 1.94324 11.5104 2.30498 13.329C2.66672 15.1476 3.5596 16.818 4.87072 18.1292C6.18183 19.4403 7.8523 20.3332 9.67087 20.6949C11.4894 21.0566 13.3744 20.871 15.0875 20.1614C16.8006 19.4518 18.2647 18.2502 19.2949 16.7085C20.325 15.1668 20.8748 13.3542 20.8748 11.5C20.8748 9.01362 19.8871 6.62905 18.129 4.8709C16.3708 3.11275 13.9862 2.12503 11.4998 2.12503ZM11.1978 15.3646L17.4478 9.11461L15.9686 7.63544L10.4582 13.1563L8.07276 10.7604L6.59359 12.2396L9.71859 15.3646C9.81543 15.4622 9.93064 15.5397 10.0576 15.5926C10.1845 15.6455 10.3207 15.6727 10.4582 15.6727C10.5957 15.6727 10.7318 15.6455 10.8588 15.5926C10.9857 15.5397 11.1009 15.4622 11.1978 15.3646Z" fill="{{$item->status_id == App\Models\DayPlanning::$Completed ? '#219A21' : 'black'}}"/>
                                         </svg>
-                                        {{$item->custom_description}}
+                                        {{$item->task_id ?? null}}
                                     </td>
+                                    <td>{{$item->custom_description ?? null}}</td>
+
                                     <td>{{$item->custom_start_time}}</td>
                                     <td>{{$item->custom_end_time}}</td>
                                     <td>{{$item->custom_hours}}h</td>
@@ -490,7 +512,7 @@
                 <p>@lang('Are you sure to delete this task')</p>
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer text-right">
                 <button type="button" class="btn btn--info btn-rounded text-white" data-bs-dismiss="modal">@lang('Close')</button>
                 <button type="button" class="btn btn--danger btn-rounded text-white" id="confirmation_btn">@lang('Confirm')</button>
             </div>
@@ -861,7 +883,8 @@
             $('#already_uploaded_files_id').val(JSON.stringify(already_uploaded_files));
             for (let index = 0; index < already_uploaded_files.length; index++) {
                 file=already_uploaded_files[index];
-                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'">'+file.uploaded_name+'<span class="badge badge-primary badge-pill delete-btn action-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span></li>');
+                $('#file_name_div').append('<li class="list-group-item d-flex justify-content-between align-items-center" id="file_detail_'+file.name.replace(/[^\w]/gi, "_")+'"><a href="'+file.url+'" download><i class="fa fa-download " style="color:green;margin-right:14px !important"></i>'+file.uploaded_name+'</a><span class="badge badge-primary badge-pill delete-btn action-btn"  id="'+file.name.replace(/\./g,'_')+'"  data-id="'+file.name+'"><i class="fa fa-trash" style="color:red" ></i></span>'+
+                    '</li>');
             }
 
         }

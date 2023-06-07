@@ -53,6 +53,7 @@ class Service extends Model
         'number_of_simultaneous_projects',
         'is_terms_accepted',
         'is_privacy_accepted',
+        'is_requirement_for_client_added',
         'updated_at',
     ];
 

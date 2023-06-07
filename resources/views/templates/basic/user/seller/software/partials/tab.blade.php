@@ -59,6 +59,28 @@
         background: green !important;
         border-color: green !important;
     }
+    .btn-link{
+        color: #007f7f !important;
+        text-decoration:none !important;
+    }
+
+    .custom-card-body{
+
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+
+    }
+
+    .custom-card-footer{
+
+        margin-left: 12px !important;
+        margin-right:12px !important;
+
+    }
+    .custom--card .card-header {
+    background-color: #f8fafa !important;
+    padding: 0.8rem 1rem;
+}
 
 </style>
 
@@ -85,12 +107,16 @@
             <p></p>
         </div>
         
-        <div class="stepwizard-step col-xs-3">
-            <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedProposal }}"
-                disabled="disabled"> <i class="fa fa-money-check-alt"></i></a>
-            <h6 class="m-0 py-1 service-step">Proposal</h6>
-            <p></p>
-        </div>
+        @if ($completedReview)
+
+            <div class="stepwizard-step col-xs-3">
+                <a href="#step-4" type="button" class="btn btn-default btn-circle {{ $completedProposal }}"
+                    disabled="disabled"> <i class="fa fa-money-check-alt"></i></a>
+                <h6 class="m-0 py-1 service-step">Proposal</h6>
+                <p></p>
+            </div>
+
+        @endif
 
         <div class="stepwizard-step col-xs-3">
             <a href="#step-5" type="button" class="btn btn-default btn-circle {{ $completedRequirements }}"
