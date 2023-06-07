@@ -156,7 +156,7 @@
                                         @if($proposal->budget_type_id == \App\Models\BudgetType::$hourly)
 
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                          Client’s Weekly Hourly Range
+                                          Client’s Hourly Range
                                          <span class="badge badge-primary badge-pill"> {{ '$'.$proposal->hourly_start_range." - $".$proposal->hourly_end_range }} </span>
                                        </li>
                                         @else
