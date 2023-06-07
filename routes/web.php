@@ -311,7 +311,7 @@ Route::middleware('auth')->group(function (){
 Route::get('/change/{lang?}', 'SiteController@changeLanguage')->name('lang');
 Route::get('/cookie/accept', 'SiteController@cookieAccept')->name('cookie.accept');
 Route::get('blog', 'SiteController@blog')->name('blog');
-Route::get('blog/{id}/{slug}', 'SiteController@blogDetails')->name('blog.details');
+Route::get('blog/{id}/{slug?}', 'SiteController@blogDetails')->name('blog.details');
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholder.image');
 
 //Service

@@ -37,8 +37,9 @@
                                 </div>
                             </td>
                             <td data-label="@lang('Image')">
-                                <a class="bannerModal" id="image_url" data-url="" >
-                                    <img src="asset('assets\images\default.png')" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" >
+                                <a class="bannerModal" id="image_url" data-url="{{$blog->attachments[0]->url ?? ''}}" >
+                                    <!-- <img src="asset('assets\images\default.png')" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" > -->
+                                    <img src="{{ isset($blog->attachments[0]->url) ? ($blog->attachments[0]->url) : asset('assets\images\default.png')}}" alt="@lang('Blog Image')" class="b-radius--10" height="50" width="50" >
                                 </a>
                             </td>
                             <td data-label="@lang('Status')">
@@ -95,32 +96,6 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div class="container">
-    <div
-            class="modal fade"
-            id="bannerModal"
-            tabindex="-1"
-            aria-labelledby="emailVerifyLabel"
-            aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <img alt="User Pic" src="" id="profile-image-invite"
-                                             class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- The Modal -->
 <div class="container">
@@ -138,7 +113,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <img alt="User Pic" src="" id="profile-image-invite"
+                                <img alt="User Pic" src="" id="blog-image_"
                                              class=" img-responsive img-card" style="border-radius:10%; width: 100%;height: 100%">
                             </div>
                         </div>
@@ -230,9 +205,9 @@
             var url = $(this).data('url');
             console.log(url);
             if(url != null){
-                $("#profile-image-invite").attr('src',url);
+                $("#blog-image_").attr('src',url);
             }else{
-                $("#profile-image-invite").attr('src','/assets/images/default.png');
+                $("#blog-image_").attr('src','/assets/images/default.png');
             }
             $('#bannerModal').modal('show');
     });

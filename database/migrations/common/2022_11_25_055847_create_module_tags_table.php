@@ -15,7 +15,7 @@ class CreateModuleTagsTable extends Migration
     {
         Schema::create('module_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('uuid')->index('uuid')->unique()->nullable();
+//            $table->uuid('uuid')->index('uuid')->unique()->nullable();
             $table->morphs('module');
             $table->unsignedBigInteger('tag_id')->index()->nullable();
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('RESTRICT')->onUpdate('RESTRICT');

@@ -211,7 +211,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('testimonial/approvedBy', 'TestimonialController@approvedBy')->name('testimonial.approvedBy');
         Route::get('testimonial/details/{id}', 'TestimonialController@details')->name('testimonial.details');
         
-        //Manage blogs
+        //Manage blogsn
         Route::get('blog/index', 'BlogController@index')->name('blog.index');
         Route::get('blog/create', 'BlogController@create')->name('blog.create');
         Route::get('blog/edit/{id}', 'BlogController@edit')->name('blog.edit');
