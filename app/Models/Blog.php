@@ -23,6 +23,11 @@ class Blog extends Model
     {
         return $query->where('is_active',1);
     }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+    }
+
     public function documents()
     {
         return $this->morphMany(Blog::class, 'module');

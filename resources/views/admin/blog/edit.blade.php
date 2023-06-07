@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="form-group">
 
                                 <label>@lang('Tag')*</label>
@@ -46,7 +46,7 @@
                                 </select>
                                 <small>@lang('Tag and enter press')</small>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="row mt-4">
                             <div class="col-md-6">
