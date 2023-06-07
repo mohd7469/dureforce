@@ -50,7 +50,7 @@ class BlogController extends Controller
         
         $blog  = Blog::findOrFail($id);
         $blog->tags()->detach();
-        $user_id = Auth::guard('admin')->user();
+        $user = Auth::guard('admin')->user();
         if ($request->hasFile('image')) {
             try {
                 $file = $request->file('image');
@@ -73,7 +73,7 @@ class BlogController extends Controller
             }
         }
         $blog->title = $request->title;
-        $blog->user_id = $user_id;
+        $blog->user_id = $user ? $user->id : null;
         $blog->description = $request->description;
 
         $tags=collect($request->tag)->map(function ($tag)  {
@@ -169,12 +169,36 @@ class BlogController extends Controller
         $request->validate([
             'id' => 'required|exists:blogs,id'
         ]);
-        $banner = Blog::findOrFail($request->id);
-        $banner->is_active = 0;
-        $banner->created_at = Carbon::now();
-        $banner->save();
+        $blog = Blog::findOrFail($request->id);
+        $blog->is_active = 0;
+        $blog->created_at = Carbon::now();
+        $blog->save();
         $notify[] = ['success', 'Blog has been inActive'];
         return redirect()->back()->withNotify($notify);
+    }
+
+    public function featuredInclude(Request $request)
+    {
+    	$request->validate([
+            'id' => 'required|exists:softwares,id'
+        ]);
+        $blog = Blog::findOrFail($request->id);
+        $blog->is_featured = 1;
+        $blog->save();
+        $notify[] = ['success', 'Included this Software featured list'];
+        return back()->withNotify($notify);
+    }
+
+    public function featuredNotInclude(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:softwares,id'
+        ]);
+        $blog = Blog::findOrFail($request->id);
+        $blog->is_featured = 0;
+        $blog->save();
+        $notify[] = ['success', 'Removed this Software featured list'];
+        return back()->withNotify($notify);
     }
 
 }
