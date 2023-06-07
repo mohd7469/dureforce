@@ -157,7 +157,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('software/download/{id}', 'SoftwareController@softwareFile')->name('software.download');
             Route::get('software/document/{id}', 'SoftwareController@softwareDocument')->name('document.download');
             Route::post('software/destroy/{id}', 'SoftwareController@destroy')->name('software.destroy');
-            Route::post('software/featured/include', 'SoftwareController@featuredInclude')->name('software.featured.include');
+        Route::post('software/featured/include', 'SoftwareController@featuredInclude')->name('software.featured.include');
             Route::post('software/featured/remove', 'SoftwareController@featuredNotInclude')->name('software.featured.remove');
         });
 
@@ -220,6 +220,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/inactiveBy', 'BlogController@inactiveBy')->name('blog.inactiveBy');
         Route::post('blog/activeBy', 'BlogController@activeBy')->name('blog.activeBy');
         Route::get('blog/details/{uuid}', 'BlogController@details')->name('blog.details');
+        Route::post('blog/featured/include', 'BlogController@featuredInclude')->name('blog.featured.include');
+            Route::post('blog/featured/remove', 'BlogController@featuredNotInclude')->name('blog.featured.remove');
         //Email template
         
         //Route::middleware('staffaccess:35')->group(function () {

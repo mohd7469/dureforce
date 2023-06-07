@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Blog extends Model
+class Blog extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $table = 'blogs';
@@ -22,10 +22,19 @@ class Blog extends Model
     ];
     const UPDATED_AT = null;
 
+    public function scopeWithAll($query){
+        $query->with('tags')->with('attachments');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active',1);
     }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+    }
+
     public function documents()
     {
         return $this->morphMany(Blog::class, 'module');

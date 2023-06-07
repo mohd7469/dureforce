@@ -46,7 +46,7 @@ class SiteController extends Controller
         $softwares = Software::withAll()->Active()->Featured()->whereIn('status_id', [Software::STATUSES['APPROVED'], Software::STATUSES['FEATURED']])->limit(20)->inRandomOrder()->with(['user', 'user.basicProfile', 'tags'])->get();
         $jobs = Job::where('status_id', Job::$Approved)->with(['skill', 'proposal', 'country', 'user', 'category'])->orderBy('created_at', 'DESC')->limit(20)->get();
 
-        $blogs = Blog::where('is_active',1)->with('attachments')->limit(20)->get();
+        $blogs = Blog::where('is_active',1)->Featured()->with('attachments')->limit(20)->get();
 
         $sellers = User::whereHas(
             'roles', function ($q) {
