@@ -47,10 +47,10 @@ class CreateJobRequest extends FormRequest
             'file' => 'nullable'
         ];
         if ($this->budget_type_id == BudgetType::$hourly) {
-            $rules['hourly_start_range'] = 'gt:0|required:budget_type_id,' . BudgetType::$hourly;
-            $rules['hourly_end_range'] = 'gte:hourly_start_range|required:budget_type_id,' . BudgetType::$hourly;
+            $rules['hourly_start_range'] = 'gt:0|min:5|max:9999|required:budget_type_id,' . BudgetType::$hourly;
+            $rules['hourly_end_range'] = 'gte:hourly_start_range|max:9999|required:budget_type_id,' . BudgetType::$hourly;
         } elseif ($this->budget_type_id == BudgetType::$fixed) {
-            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed . '|gt:0';
+            $rules['fixed_amount'] = 'required:budget_type_id,' . BudgetType::$fixed . '|gt:0|min:5|max:9999';
         } else {
 
         }

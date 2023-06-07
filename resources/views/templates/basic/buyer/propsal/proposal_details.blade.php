@@ -172,7 +172,7 @@
 
                             @endif
                             </span></li>
-                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">{{ dateDiffInDays($proposal->project_start_date,$proposal->project_end_date) ?? 0 }} Days</span></li>
+{{--                            <li><span class="p_fcs">Proposed Timeline</span> <span class="p_days">{{ dateDiffInDays($proposal->project_start_date,$proposal->project_end_date) ?? 0 }} Days</span></li>--}}
                             <li><span class="p_fcs">Mode of Delivery</span> <span class="p_days">{{$proposal->delivery_mode->title ?? ''}}</span></li>
                         </ul>
                     </div>
