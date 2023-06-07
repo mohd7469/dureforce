@@ -3,9 +3,27 @@
         margin-top: 0px;
         color: #fff;
     }
+    .btn-link{
+        color: #007f7f !important;
+        text-decoration:none !important;
+    }
     .create-service-main .stepwizard-step {
         width: 16% !important;
     }
+    .custom-card-body{
+
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+
+    }
+
+    .custom-card-footer{
+
+        margin-left: 12px !important;
+        margin-right:12px !important;
+
+    }
+
     .stepwizard-row {
         display: table-row;
     }

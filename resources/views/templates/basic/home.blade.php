@@ -511,9 +511,9 @@
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
-                <h2 class="heading">Explore Trending dureforce Publications</h2>
+                <h2 class="heading">Explore Trending Dureforce Publications</h2>
             </article>
-            @include($activeTemplate . 'home.publications')
+            @include($activeTemplate . 'home.publications', ['jobs' => $jobs])
         </div>
     </section>
     @include($activeTemplate . 'partials.end_ad')

@@ -1779,7 +1779,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                <!-- <li class="sidebar-menu-item sidebar-dropdown">
+                <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.blog*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Blogs')</span>
@@ -1796,7 +1796,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 
                             </ul>
                         </div>
-                    </li> -->
+                    </li>
 
 
                 @if (in_array('28', $staffAccess))
@@ -1811,16 +1811,18 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                     $lastSegment = collect(request()->segments())->last();
                                 @endphp
                                 @foreach (getPageSections(true) as $k => $secs)
-                                    @if ($secs['builder'])
-                                        <li
-                                            class="sidebar-menu-item  @if ($lastSegment == $k) active @endif ">
-                                            <a href="{{ route('admin.frontend.sections', $k) }}"
-                                                class="nav-link">
-                                                <i class="menu-icon las la-dot-circle"></i>
-                                                <span class="menu-title">{{ __($secs['name']) }}</span>
-                                            </a>
-                                        </li>
-                                    @endif
+                                    @if($secs['name'] !='Blog Section')
+                                        @if ($secs['builder'])
+                                            <li
+                                                class="sidebar-menu-item  @if ($lastSegment == $k) active @endif ">
+                                                <a href="{{ route('admin.frontend.sections', $k) }}"
+                                                    class="nav-link">
+                                                    <i class="menu-icon las la-dot-circle"></i>
+                                                    <span class="menu-title">{{ __($secs['name']) }}</span>
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endif    
                                 @endforeach
                             </ul>
                         </div>
