@@ -15,7 +15,7 @@
                         <thead>
                         <tr>
                             <th>@lang('Title')</th>
-                            <th>@lang('Description')</th>
+
                             <th>@lang('Image')</th>
                             <th>@lang('Status')</th>
                             <th>@lang('Action')</th>
@@ -28,14 +28,10 @@
                         <tr>
                             <td data-label="@lang('Title')">
                                 <div class="user">
-                                    <span class="name">{{ $blog->title ?? ''}}</span>
+                                    <span class="name">{{ str_limit($blog->title,30) }}</span>
                                 </div>
                             </td>
-                            <td data-label="@lang('Title')">
-                                <div class="user">
-                                    <span class="name">{{__(str_limit($blog->description, 20))}}</span>
-                                </div>
-                            </td>
+
                             <td data-label="@lang('Image')">
                                 <a class="bannerModal" id="image_url" data-url="{{$blog->attachments[0]->url ?? ''}}" >
                                     <!-- <img src="asset('assets\images\default.png')" alt="@lang('Banner Image')" class="b-radius--10" height="50" width="50" > -->
