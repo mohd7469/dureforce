@@ -19,13 +19,12 @@ class CreateBlogsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->string('title')->nullable();
-            $table->longText('description')->nillable();
+            $table->longText('description')->nullable();
             $table->boolean('is_active')->nullable();
 
             $table->boolean('is_featured')->nullable();
             $this->addCommonDBFields($table);
-            // $table->softDeletes();
-            // $table->timestamps();
+
         });
     }
 
