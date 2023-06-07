@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Blog extends Model
+class Blog extends BaseModel
 {
     use HasFactory, SoftDeletes;
     protected $table = 'blogs';
