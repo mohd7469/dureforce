@@ -75,7 +75,6 @@ class ProposalController extends Controller
         try {
 
             $proposal = Proposal::with(['module.user.country', 'attachment', 'milestone', 'delivery_mode'])->where('uuid', $uuid)->first();
-
             // dd($proposal->toArray());
             Log::info(["Proposal" => $proposal]);
             return view('templates.basic.buyer.propsal.proposal_details')->with('proposal', $proposal);
