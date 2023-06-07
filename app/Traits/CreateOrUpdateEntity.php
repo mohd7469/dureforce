@@ -469,7 +469,9 @@ trait CreateOrUpdateEntity {
             $model->update([
                 'number_of_simultaneous_projects' => $request->max_no_projects,
                 'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
-                'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false
+                'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
+                'is_requirement_for_client_added' => true
+
             ]);
             $this->updateStatus($request,$model);
   

@@ -79,7 +79,7 @@
 
                 <div class="col-sm-12  col-xl-4 col-lg-4 col-md-4  form-group pt-4">
                     <label for="features[]">@lang('Included Features')*
-                    <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="software_features" >
+                    <select class="form-control select2 select2-hidden-accessible software_features" multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="software_features" >
                         @if (!empty($software))
                             @foreach ($features as  $item )
                                 <option value="{{ $item->id }}" @if(in_array($item->id,$software->features->pluck('id')->toArray())) selected @endif>
