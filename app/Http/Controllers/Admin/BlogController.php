@@ -110,6 +110,7 @@ class BlogController extends Controller
         $blog->description = $request->description;
         $blog->is_active = 1;
         $blog->is_featured = 0;
+        $blog->save();
 
         $tags=collect($request->tag)->map(function ($tag)  {
             $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
@@ -117,7 +118,7 @@ class BlogController extends Controller
         });
 
         $blog->tags()->attach($tags);
-        $blog->save();
+
         
         if ($request->hasFile('image')) {
         try {
