@@ -24,6 +24,16 @@ let sub_modules = {
 }
 $(document).ready(function () {
   
+  $('.btn-link').click(function() {
+    var target = $($(this).data('target'));
+    
+    if (target.hasClass('show')) {
+      target.removeClass('show').addClass('collapsing');
+    } else {
+      target.removeClass('collapsing').addClass('collapse show');
+    }
+  });
+
   add_on_service_row_number=parseInt($('#number_of_software_modules').val());
   modules=$('#modules').val();
   modules=JSON.parse(modules);
@@ -35,8 +45,8 @@ $(document).ready(function () {
   overviewFormValidation();
   pricingFormValidation();
   requirementFormValidation();
-  $('#service_features').select2({
-    tags: true
+  $('#software_features').select2({
+    tags: false
   });
   
   $('#lead_image_type_id').on('change', function(){
@@ -148,8 +158,7 @@ function addSteps() {
                 <label for="discription">Step Description</label>
                 <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control"
                     ></textarea>
-                <br />
-                <br />
+                
             </div>
             </div>
             </div>
