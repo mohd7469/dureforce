@@ -13,7 +13,15 @@
                     </h3>
                     <div class="footer row">
                      <div class="author_detail col-12 col-md-6">
-                    <span class="author text-capitalize">by Dure Force </span>
+                         @php $admin = \App\Models\Admin::find($blog->user_id);
+                         if ($admin){
+                             $admin_name = $admin->name;
+                         }
+                         else{
+                             $admin_name = "Dureforce";
+                         }
+                         @endphp
+                    <span class="author text-capitalize">By {{ $admin_name}} </span>
                             <span class="delivery">{{diffforhumans($blog->created_at)}}</span> 
                      </div>
                     </div>
