@@ -27,9 +27,9 @@
                                                 <div class="blog-content">
                                                     <div class="blog-content-inner">
                                                         <h3 class="title"><a
-                                                                href="{{ route('blog.details', $blog->id) }}">{{ __($blog->title) }}</a>
+                                                                href="{{ route('blog.details', $blog->id) }}">{{ str_limit(__($blog->title),35) }}</a>
                                                         </h3>
-                                                        <p>{{ str_limit(strip_tags(@$blog->description), 100) }}
+                                                        <p>{{ str_limit(strip_tags(@$blog->description), 70) }}
                                                         </p>
                                                         <div class="blog-btn">
                                                             <a href="{{ route('blog.details', $blog->id) }}"
