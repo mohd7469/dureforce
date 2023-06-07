@@ -15,7 +15,10 @@ class Blog extends Model
     protected $fillable = [
         'title',
         'description',
-        "is_active"
+        "is_active",
+        "user_id",
+        "is_active",
+        "is_featured",
     ];
     const UPDATED_AT = null;
 

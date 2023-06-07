@@ -9,15 +9,23 @@
 
                 <div class="card-body item-area item-card">
                     <h3 class="">
-                        <a href="{{ route('blog.details', $blog->id) }}">{{ __($blog->title) }}</a>
+                        <a href="{{ route('blog.details', $blog->id) }}">{{ str_limit(__($blog->title),38) }}</a>
                     </h3>
                     <div class="footer row">
                      <div class="author_detail col-12 col-md-6">
-                    <span class="author text-capitalize">by Dure Force </span>
+                         @php $admin = \App\Models\Admin::find($blog->user_id);
+                         if ($admin){
+                             $admin_name = $admin->name;
+                         }
+                         else{
+                             $admin_name = "Dureforce";
+                         }
+                         @endphp
+                    <span class="author text-capitalize">By {{ $admin_name}} </span>
                             <span class="delivery">{{diffforhumans($blog->created_at)}}</span> 
                      </div>
                     </div>
-                    <p>{{ str_limit(strip_tags(@$blog->description), 100) }}
+{{--                    <p>{{ str_limit(strip_tags(@$blog->description), 100) }}--}}
                     </p>
                     <div class="blog-btn">
                         <a href="{{ route('blog.details', $blog->id) }}"
@@ -28,7 +36,7 @@
         </div>
     @endforeach
     </div>
-    <span class="seeall"><a href="{{url('coming-soon')}}">See All</a></span>
+    <span class="seeall"><a href="{{url('/blog')}}">See All</a></span>
     <button class="carousel-control-prev carousel-mobile-view" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
