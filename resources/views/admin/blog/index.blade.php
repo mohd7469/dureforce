@@ -18,8 +18,9 @@
 
                             <th>@lang('Image')</th>
                             <th>@lang('Status')</th>
+                            <th>@lang('Featured Item')</th>
+                            <th>@lang('Created At')</th>
                             <th>@lang('Action')</th>
-                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,6 +44,28 @@
                                     <span class="font-weight-normal badge--success">@lang('Active')</span>
                                 @elseif($blog->is_active == 0)
                                     <span class="font-weight-normal badge--danger">@lang('InActice')</span>
+                                @endif
+                            </td>
+                            <td data-label="@lang('Featured Item')">
+                                @if ($blog->is_featured == 1)
+                                    <span
+                                        class="badge badge-success badge-pill font-weight-bold">@lang('Included')</span>
+                                    <a href="javascript:void(0)" class="icon-btn btn--info ml-2 notInclude"
+                                        data-toggle="tooltip" title=""
+                                        data-original-title="@lang('Not Include')"
+                                        data-id="{{ $blog->id }}">
+                                        <i class="las la-arrow-alt-circle-left"></i>
+                                    </a>
+                                @else
+                                    <span
+                                        class="badge badge-warning badge-pill font-weight-bold text-white">@lang('Not
+                                        included')</span>
+                                    <a href="javascript:void(0)"
+                                        class="icon-btn btn--success ml-2 include text-white"
+                                        data-toggle="tooltip" title="" data-original-title="@lang('Include')"
+                                        data-id="{{ $blog->id }}">
+                                        <i class="las la-arrow-alt-circle-right"></i>
+                                    </a>
                                 @endif
                             </td>
                             <td data-label="@lang('Last Update')">
@@ -170,6 +193,59 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="includeFeatured" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Featured Item Include')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.blog.featured.include') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure include this blog featured list?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--danger" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="NotincludeFeatured" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="" lass="modal-title" id="exampleModalLabel">@lang('Featured Item Remove')</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('admin.blog.featured.remove') }}" method="POST">
+                    @csrf
+                    @method('POST')
+                    <input type="hidden" name="id">
+                    <div class="modal-body">
+                        <p>@lang('Are you sure remove this blog featured list?')</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn--danger" data-dismiss="modal">@lang('Close')</button>
+                        <button type="submit" class="btn btn--success">@lang('Confirm')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 <style>
     .disabled{
@@ -207,6 +283,18 @@
             }
             $('#bannerModal').modal('show');
     });
+    $('.include').on('click', function() {
+        var modal = $('#includeFeatured');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
+
+    $('.notInclude').on('click', function() {
+        var modal = $('#NotincludeFeatured');
+        modal.find('input[name=id]').val($(this).data('id'))
+        modal.modal('show');
+    });
 
 </script>
 @endpush
+

@@ -22,10 +22,19 @@ class Blog extends BaseModel
     ];
     const UPDATED_AT = null;
 
+    public function scopeWithAll($query){
+        $query->with('tags')->with('attachments');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active',1);
     }
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'module','module_tags');
+    }
+
     public function documents()
     {
         return $this->morphMany(Blog::class, 'module');
