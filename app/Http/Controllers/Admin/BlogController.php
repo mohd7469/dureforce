@@ -12,8 +12,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\FileTypeValidate;
 use App\Traits\DeleteEntity;
-use Auth;
+// use Auth;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
@@ -22,16 +24,17 @@ class BlogController extends Controller
     	$pageTitle = "Manage All Blog";
     	$emptyMessage = "No data found";
     	$blogs = Blog::with('attachments')->latest()->paginate(getPaginate());
+
     	return view('admin.blog.index', compact('pageTitle', 'emptyMessage', 'blogs'));
     }
     public function create()
     {
-    	$pageTitle = "Blog Banner";
+    	$pageTitle = "Blog Blog";
     	return view('admin.blog.create', compact('pageTitle'));
     }
     public function edit($id)
     {
-    	$pageTitle = "Edit Banner";
+    	$pageTitle = "Edit Blog";
         $blog = Blog::findOrFail($id);
     	return view('admin.blog.edit', compact('pageTitle','blog'));
     }
@@ -44,6 +47,7 @@ class BlogController extends Controller
         ]);
         
         $blog  = Blog::findOrFail($id);
+        $user_id = Auth::guard('admin')->user();
         if ($request->hasFile('image')) {
             try {
                 $file = $request->file('image');
@@ -66,6 +70,7 @@ class BlogController extends Controller
             }
         }
         $blog->title = $request->title;
+        $blog->user_id = $user_id;
         $blog->description = $request->description;
         $blog->save();
         $notify[] = ['success', 'Your Blog has been Created.'];
@@ -78,9 +83,13 @@ class BlogController extends Controller
             'description' => 'required',
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
+        $user_id = Auth::guard('admin')->user();
         $blog = Blog::create([
             'title' => $request->title,
-            'description' => $request->description
+            'user_id' => $user_id,
+            'description' => $request->description,
+            'is_active' => 1,
+            'is_featured' => 1
         ]);
         if ($request->hasFile('image')) {
         try {

@@ -3,19 +3,19 @@
     @php
     \App\Models\GeneralSetting::$showSEOTags = false;
     @endphp
-    <title>DureForce - {{ __($blog->data_values->title) }}</title>
-    <meta itemprop="name" content="{{ __($blog->data_values->title) }}">
-    <meta itemprop="description" content="{{ __($blog->data_values->title) }}">
+    <title>DureForce - {{ __($blog->title) }}</title>
+    <meta itemprop="name" content="{{ __($blog->title) }}">
+    <meta itemprop="description" content="{{ __($blog->title) }}">
     <meta itemprop="image"
-        content="{{ !empty($blog->data_values->blog_image_1)? getImage('assets/images/frontend/blog/' . $blog->data_values->blog_image_1, '728x465'): '' }}">
-    <meta name="title" Content="DureForce - {{ __($blog->data_values->title) }}">
-    <meta name="description" content="{{ __($blog->data_values->title) }}">
+        content="{{ !empty($blog->blog_image_1)? getImage('assets/images/frontend/blog/' . $blog->blog_image_1, '728x465'): '' }}">
+    <meta name="title" Content="DureForce - {{ __($blog->title) }}">
+    <meta name="description" content="{{ __($blog->title) }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ __($blog->data_values->title) }}">
-    <meta property="og:description" content="{{ __($blog->data_values->title) }}">
+    <meta property="og:title" content="{{ __($blog->title) }}">
+    <meta property="og:description" content="{{ __($blog->title) }}">
     <meta property="og:image"
-        content="{{ !empty($blog->data_values->blog_image_1)? getImage('assets/images/frontend/blog/' . $blog->data_values->blog_image_1, '728x465'): '' }}" />
+        content="{{ !empty($blog->blog_image_1)? getImage('assets/images/frontend/blog/' . $blog->blog_image_1, '728x465'): '' }}" />
 @endsection
 @section('content')
     <section class="all-sections pt-3">
@@ -32,42 +32,11 @@
                                                 <div class="blog-thumb">
 
                                                     {{-- ----------Banner---------- --}}
-                                                    <div class="detail-banner"
-                                                        style='background-image: url({{ getImage(imagePath()['logoIcon']['path'] . '/service-banner-bg.png') }})'>
-
-                                                        <div class="banner_header"><img
-                                                                style="max-width: 200px; display: inline-block"
-                                                                src="{{ getImage(imagePath()['logoIcon']['path'] . '/logo.png') }}"
-                                                                alt="{{ __($general->sitename) }}"></div>
-                                                        <div class="content">
-                                                            <div class="row">
-                                                                <div class="col-12 col-sm-6">
-                                                                    <h2 class="heading">
-                                                                        {{ !empty($blog->data_values->banner_heading) ? $blog->data_values->banner_heading : '' }}
-                                                                    </h2>
-                                                                    <p class="para">
-                                                                        {{ !empty($blog->data_values->banner_detail) ? $blog->data_values->banner_detail : '' }}
-                                                                    </p>
-                                                                </div>
-                                                                {{-- <div class=" col- 12 col-sm-6"> --}}
-                                                                {{-- <img alt="{{$blog->data_values->banner_heading}}" --}}
-                                                                {{-- src="{{getAzureImage('service/'.$blog->data_values->blog_image_1, imagePath()['service']['size'])}}"> --}}
-                                                                {{-- </div> --}}
-                                                            </div>
-
-
-                                                        </div>
-                                                        <div class="footer">
-                                                            {{-- @foreach ($model->optionalImage as $value) --}}
-                                                            {{--  --}}{{-- <img title="{{$value->caption}}" --}}
-                                                            {{--  --}}{{-- src="{{getImage('assets/images/optionalService/'.$value->image, imagePath()['optionalService']['size']) }}" --}}
-                                                            {{--  --}}{{-- alt="@lang('item-banner')"> --}}
-                                                            {{-- @endforeach --}}
-                                                        </div>
+                                                    <div class="detail-banner d-block w-100"
+                                                        style='height: 390px;width:auto; background-image: url({{ !empty($blog->attachments[0]->url)? $blog->attachments[0]->url : getImage(imagePath()['logoIcon']['path'] . '/service-banner-bg.png') }})'>
+                                                        <div class="banner_header"></div>
                                                     </div>
                                                     {{-- ----------Banner---------- --}}
-                                                    {{-- <img src="{{  !empty($blog->data_values->blog_image_1) ? getImage('assets/images/frontend/blog/'.$blog->data_values->blog_image_1,'728x465'):""  }}" --}}
-                                                    {{-- alt="@lang('blog')"> --}}
                                                     <div class="blog-date text-center">
                                                         <h3 class="title">
                                                             {{ showDateTime($blog->created_at, 'd') }}</h3>
@@ -77,10 +46,9 @@
                                                 </div>
                                                 <div class="blog-content">
                                                     <div class="blog-content-inner">
-                                                        <h3 class="title">{{ __($blog->data_values->title) }}
+                                                        <h3 class="title">{{ __($blog->title) }}
                                                         </h3>
-                                                        {!! \App\Models\Frontend::parseBlogDescription($blog) !!}
-                                                        {{-- {!! $blog->data_values->description  !!} --}}
+                                                         {!! $blog->description  !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,7 +61,7 @@
                                                             target="__blank"><i class="fab fa-facebook-f"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a href="http://twitter.com/share?url={{ Request::url() }}&text={{ __($blog->data_values->title) }}"
+                                                        <a href="http://twitter.com/share?url={{ Request::url() }}&text={{ __($blog->title) }}"
                                                             target="__blank"><i class="fab fa-twitter"></i></a>
                                                     </li>
                                                     <li>
@@ -120,15 +88,7 @@
                                                 </ul>
                                             </div>
                                             
-                                            <div class="alert  keyword-container">
-                                                <h2>Tags</h2>
-                                                <hr>
-                                            @if(!empty(@$blog->data_values->tag))
-                                                @foreach( @$blog->data_values->tag  as $name)
-                                                    <span class="btn btn-secondary btn-xs disabled" >{{__($name)}}</span>
-                                                @endforeach
-                                            @endif
-                                            </div>
+                                        
                                         </div>
                                     </div>
                                 </div>

@@ -23,7 +23,7 @@
                                 <div class="form-group ">
                                     <label class="form-control-label">@lang('Description')<span class="text-danger">*</span></label>
                                     <!-- <input class="form-control" type="text" name="description" value="{{$blog->description}}"> -->
-                                    <textarea class="form-control" name="description" id="basics" cols="30" rows="10">{!! $blog->description !!}</textarea>
+                                    <textarea class="form-control nicEdit" name="description" id="basics" cols="30" rows="10">{!! $blog->description !!}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -35,6 +35,18 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- <div class="col-md-6">
+                            <div class="form-group">
+
+                                <label>@lang('Tag')*</label>
+                                <select class="form-control select2" name="tag[]" multiple="multiple"
+                                        >
+                                           
+                                </select>
+                                <small>@lang('Tag and enter press')</small>
+                            </div>
+                        </div> -->
 
                         <div class="row mt-4">
                             <div class="col-md-6">
@@ -53,5 +65,30 @@
 
 
 @endsection
+@push('breadcrumb-plugins')
+    <a href="{{ route('admin.blog.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i
+                class="fa fa-fw fa-backward"></i>@lang('Go Back')</a>
+@endpush
 
+@push('script-lib')
+    <script src="{{ asset('assets/admin/js/bootstrap-iconpicker.bundle.min.js') }}"></script>
+@endpush
+
+@push('script')
+    <script>
+
+        (function ($) {
+            "use strict";
+            $('.iconPicker').iconpicker().on('change', function (e) {
+                $(this).parent().siblings('.icon').val(`<i class="${e.icon}"></i>`);
+            });
+        })(jQuery);
+
+        $(document).ready(function () {
+            $('.select2').select2({
+                tags: true
+            });
+        });
+    </script>
+@endpush
 

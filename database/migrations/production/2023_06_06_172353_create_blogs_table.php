@@ -1,11 +1,13 @@
 <?php
 
+use App\Traits\DatabaseOperations;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateBlogsTable extends Migration
 {
+    use DatabaseOperations;
     /**
      * Run the migrations.
      *
@@ -15,12 +17,14 @@ class CreateBlogsTable extends Migration
     {
         Schema::create('blogs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->index()->nullable();
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->boolean('is_active')->nullable();
+
             $table->boolean('is_featured')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
+            $this->addCommonDBFields($table);
+
         });
     }
 
