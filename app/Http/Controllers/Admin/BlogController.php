@@ -83,13 +83,14 @@ class BlogController extends Controller
             'description' => 'required',
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
-        $user_id = Auth::guard('admin')->user();
+        $user = Auth::guard('admin')->user();
+
         $blog = Blog::create([
             'title' => $request->title,
-            'user_id' => $user_id,
+            'user_id' => $user ? $user->id : null,
             'description' => $request->description,
             'is_active' => 1,
-            'is_featured' => 1
+            'is_featured' => 0
         ]);
         if ($request->hasFile('image')) {
         try {
