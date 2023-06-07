@@ -20,16 +20,15 @@ if (!empty($service)) {
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
                 <input type="hidden" name="service_id" value="{{ $service->id ?? '' }}">
-                <input type="hidden" name="number_of_add_on_services" value="{{ count($extraService) }}" id="number_of_add_on_services">
 
-
-                <div class="col-lg-4 form-group">
+               
+                <div class="col-lg-4 ">
                     <label>@lang('Per Hour Rate')*</label>
                     <input type="number" step="any"  class="form-control" name="price"  id="price"  oninput="this.value = Math.abs(this.value)"
                         value="{{ old('price',  floatval(@$service->rate_per_hour) ?: "Enter per hour rate") }}" placeholder="@lang('Enter Eg. $50')"
                        min="0" >
                 </div>
-                <div class="col-lg-4 form-group">
+                <div class="col-lg-4 ">
                     <label>@lang('Estimated Delivery Time')*</label>
                     <input type="number" name="delivery_time" step="1" min="0"  class="form-control mt-1" id="delivery"
                         value="{{ old('delivery_time', @$service->estimated_delivery_time) }}"
@@ -72,23 +71,23 @@ if (!empty($service)) {
                 </div>
 
                
-                <div class="accordion" id="accordionExample">
+                <div class="accordion" id="accordionExample" style="margin-top: -55px !important">
 
                     <div class="card">
                       <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                           <button class="btn btn-link btn-block text-left" type="button"  data-target="#collapseOne" aria-controls="collapseOne">
-                            Add On Service
+                            Add Ons Service
                           </button>
                         </h2>
                       </div>
                   
                       <div id="collapseOne" class="collapsing" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body">
+                        {{-- <div > --}}
                             @if(count($extraService)>0)
 
                                 @foreach ($extraService as $exKey => $extra)
-                                    <div id="add-service-container">
+                                    <div id="add-service-container" class="custom-card-body"> 
                                         <div class="row add-ons" id="add-on-row-id-{{ $exKey }}">
                                             
                                             <div class="col-xl-4 col-lg-4 form-group">
@@ -122,9 +121,10 @@ if (!empty($service)) {
                                         </div>
                                     </div>
                                 @endforeach
-                    
+                                <input type="hidden" name="number_of_add_on_services" value="{{ count($extraService) }}" id="number_of_add_on_services">
+                                
                             @else
-                                <div id="add-service-container">
+                                <div id="add-service-container" class="custom-card-body">
 
                                     <div class="row add-ons">
 
@@ -148,16 +148,19 @@ if (!empty($service)) {
 
                                 </div>
 
+                                <input type="hidden" name="number_of_add_on_services" value="1" id="number_of_add_on_services">
+
+
                             @endif
 
-                            <div class="row">
+                            <div class="row ">
 
-                                <div class="col-12 form-group">
+                                <div class="col-12 form-group custom-card-footer" >
                                     <button class="btn btn-primary" id="add-more-service" type="button"> ADD
                                         MORE</button>
                                 </div>
                             </div>
-                        </div>
+                        {{-- </div> --}}
                       </div>
                     </div>
                 
@@ -170,77 +173,79 @@ if (!empty($service)) {
                         </h2>
                       </div>
                       <div id="collapseTwo" class="collapsing" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class="card-body">
-                            <p class="msg-create">List the steps involved in delivering your project</p>
-                            <div class="row">
-                                <div class="col-lg-12 ">
-                                    <div class="row" id="step-rows">
-                                        <div class="col-xl-12 col-lg-12 form-group p-0">
-                                            <p id="derror"></p>
-                                            @if (!isset($serviceSteps) || $serviceSteps->isEmpty())
-                                                <label for="" class="d-inline-block">Step Name</label>
-                                                <span title="1 Requirement Gathering : Developer /client must identify the exact  requirements of service from start to finish.
-            
-                                                    2 Analyzing :
-                                                    After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
-                                                    (service budget analysis can be done at this time )
-            
-                                                    3 Development :
-                                                    Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
-            
-                                                    4 Testing :
-                                                    In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
-            
-                                                    5 Deployment :
-                                                    Developer will deploy the following service (program /software) as per client’s requirements.">
-                                                    <i class="fa fa-info-circle"></i></span>
-                                                <input type="text" name="steps[]" id="step" placeholder="E.g. Initial Requirements"
-                                                    class="form-control step"
-                                                      />
-                                                <div>
-                                                    <label for="discription">Step Description</label>
-                                                    <textarea type="text" name="description[]" id="discription" placeholder="This is a short description."
-                                                        class="form-control description"></textarea>
-            
-                                                    <br />
+                        {{-- <div class="card-body"> --}}
+                            <div>
+                                <div class="custom-card-body" id="step-rows">
+                                
+                                    <p class="msg-create">List the steps involved in delivering your project</p>
+                                   
+                                    @if (!isset($serviceSteps) || $serviceSteps->isEmpty())
+                                        <label for="" class="d-inline-block">Step Name</label>
+                                        <span title="1 Requirement Gathering : Developer /client must identify the exact  requirements of service from start to finish.
+    
+                                            2 Analyzing :
+                                            After gathering requirements, the developer will forecast the problem and its solution based on the client's requirement.
+                                            (service budget analysis can be done at this time )
+    
+                                            3 Development :
+                                            Now, developers can start developing the different milestones of service offering to the client based on the client’s requirement.
+    
+                                            4 Testing :
+                                            In this phase, developers will investigate and discover programming or development bugs by performing required tests on service.
+    
+                                            5 Deployment :
+                                            Developer will deploy the following service (program /software) as per client’s requirements.">
+                                            <i class="fa fa-info-circle"></i></span>
+                                        <input type="text" name="steps[]" id="step" placeholder="E.g. Initial Requirements"
+                                            class="form-control"
+                                                />
+                                        <div class="mt-2">
+                                            <label for="discription ">Step Description</label>
+                                            <textarea type="text" name="description[]" id="discription" placeholder="This is a short description."
+                                                class="form-control description"></textarea>
+                                            <br>
+    
+                                        </div>
+                                    @else
+                                        @foreach ($serviceSteps as $serviceKey => $item)
+                                            <div id="extra-on-service-row-{{ $serviceKey }}">
+                                                @if ($serviceKey != 0)
+                                                    <div style="float: right; margin-bottom:1rem">
+                                                        <button type="button" class="btn btn-danger"
+                                                            onclick="removeExtraService($('#extra-on-service-row-{{ $serviceKey }}'))"><i
+                                                                class="fa fa-trash"></i></button>
+                                                    </div>
+                                                @endif
+                                                
+                                                <label for="">Step Name </label>
+                                                <input type="text" name="steps[]"
+                                                    id="step-first"
+                                                    placeholder="E.g. Initial Requirements" class="form-control step"
+                                                    value="{{ $item->name }}" />
+
+                                                <div  class="mt-2">
+                                                    <label for="description ">Step Description  </label>
+                                                    <textarea type="text" name="description[]" id="discription-first" placeholder="This is a short description." class="form-control description">{{ $item->description ?? '' }}</textarea>
                                                     <br />
                                                 </div>
-                                            @else
-                                                @foreach ($serviceSteps as $serviceKey => $item)
-                                                    <div id="extra-on-service-row-{{ $serviceKey }}">
-                                                        @if ($serviceKey != 0)
-                                                            <div style="float: right; margin-bottom:1rem">
-                                                                <button type="button" class="btn btn-danger"
-                                                                    onclick="removeExtraService($('#extra-on-service-row-{{ $serviceKey }}'))"><i
-                                                                        class="fa fa-trash"></i></button>
-                                                            </div>
-                                                        @endif
-                                                        <label for="">Step Name </label>
-                                                        <input type="text" name="steps[]"
-                                                            id="step-first"
-                                                            placeholder="E.g. Initial Requirements" class="form-control step"
-                                                            value="{{ $item->name }}" />
-                                                        <div class="mt-2">
-                                                            <label for="description">Step Description  </label>
-                                                            <textarea type="text" name="description[]" id="discription-first" placeholder="This is a short description." class="form-control description">{{ $item->description ?? '' }}</textarea>
-                                                            <br />
-                                                        </div>
-                                                    </div>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <span class="add-new-row" style="cursor: pointer" onclick="addSteps()">
-                                        Add Another
-                                    </span>
-                                    <br />
-                                    <br />
-                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
+    
+                                    
+                            </div>
+                            
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-card-body mb-2">
+                                       
+                                <span class="add-new-row" style="cursor: pointer" onclick="addSteps()">
+                                    Add Another
+                                </span>
+                               
+                            </div>
+                                
                             </div>
             
-                           
-                          
-                        </div>
+                        {{-- </div> --}}
                       </div>
                     </div>
                   

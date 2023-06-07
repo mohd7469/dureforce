@@ -153,6 +153,7 @@ class ServiceController extends Controller
     public function storePricing(PricingRequest $request)
     {
         try {
+
             $serviceId = $request->get('service_id');
 
             if (empty($serviceId)) {
@@ -276,7 +277,7 @@ class ServiceController extends Controller
 
             $service = Service::FindOrFail($request->get('service_id'));
 
-            if ($service->is_requirement_for_client_added) {
+            if ($service->banner && $service->defaultProposal) {
 
                 $this->saveReview($request, $service, Attribute::SERVICE, 'Service', 'service');
                 $this->ServiceAddConfirmationMail($service);
@@ -284,9 +285,14 @@ class ServiceController extends Controller
                 $notify[] = ['success', 'Service Review Saved Successfully.'];
                 return redirect()->route('user.service.index')->withNotify($notify);
 
-            } else {
-                $notify[] = ['error', 'Please complete the requirements steps first.'];
-                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-5'])->withNotify($notify);
+            } else if($service->banner && !$service->defaultProposal) {
+
+                $notify[] = ['error', 'Please complete the proposal steps first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-4'])->withNotify($notify);
+            }
+            else if(!$service->banner){
+                $notify[] = ['error', 'Please complete the banner steps first.'];
+                return redirect()->route('user.service.create', ['id' => $service->id, 'view' => 'step-3'])->withNotify($notify);
             }
 
         } catch (\Exception $exp) {

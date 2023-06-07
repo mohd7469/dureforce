@@ -15,7 +15,7 @@
             </div>
             <div class="col-xl-6 col-lg-6 form-group">
                 <label>@lang('Maximum number of simultaneous projects')*</label>
-                <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->number_of_simultaneous_projects}}">
+                <input type="number" name="max_no_projects" class="form-control bg--gray" id="max_no_projects" placeholder="Max no of projects" value="{{@$software->number_of_simultaneous_projects !='' ? @$software->number_of_simultaneous_projects : '3'}}">
             </div>
             <hr>
             <div class="row mt-2">

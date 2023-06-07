@@ -156,8 +156,7 @@ function addSteps() {
                   <label for="discription">Step Description</label>
                   <textarea type="text" name="description[]" placeholder="This is a short description." class="form-control description2"
                       ></textarea>
-                  <br />
-                  <br />
+                 
               </div>
               </div>
           </div>

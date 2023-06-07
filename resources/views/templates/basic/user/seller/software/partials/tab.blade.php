@@ -59,6 +59,28 @@
         background: green !important;
         border-color: green !important;
     }
+    .btn-link{
+        color: #007f7f !important;
+        text-decoration:none !important;
+    }
+
+    .custom-card-body{
+
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+
+    }
+
+    .custom-card-footer{
+
+        margin-left: 12px !important;
+        margin-right:12px !important;
+
+    }
+    .custom--card .card-header {
+    background-color: #f8fafa !important;
+    padding: 0.8rem 1rem;
+}
 
 </style>
 
