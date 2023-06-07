@@ -22,6 +22,10 @@ class Blog extends Model
     ];
     const UPDATED_AT = null;
 
+    public function scopeWithAll($query){
+        $query->with('tags')->with('attachments');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active',1);

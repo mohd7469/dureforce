@@ -8,6 +8,7 @@ use App\Models\SupportAttachment;
 use App\Models\SupportMessage;
 use App\Models\Blog;
 use App\Models\Status;
+use App\Models\Tag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Rules\FileTypeValidate;
@@ -29,13 +30,14 @@ class BlogController extends Controller
     }
     public function create()
     {
+        $tags = Tag::all();
     	$pageTitle = "Blog Blog";
-    	return view('admin.blog.create', compact('pageTitle'));
+    	return view('admin.blog.create', compact('pageTitle','tags'));
     }
     public function edit($id)
     {
     	$pageTitle = "Edit Blog";
-        $blog = Blog::findOrFail($id);
+        $blog = Blog::with('tags')->findOrFail($id);
     	return view('admin.blog.edit', compact('pageTitle','blog'));
     }
     public function update(Request $request, $id)
@@ -47,6 +49,7 @@ class BlogController extends Controller
         ]);
         
         $blog  = Blog::findOrFail($id);
+        $blog->tags()->detach();
         $user_id = Auth::guard('admin')->user();
         if ($request->hasFile('image')) {
             try {
@@ -72,6 +75,14 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->user_id = $user_id;
         $blog->description = $request->description;
+
+        $tags=collect($request->tag)->map(function ($tag)  {
+            $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
+            return $tag->id;
+        });
+
+        $blog->tags()->attach($tags);
+
         $blog->save();
         $notify[] = ['success', 'Your Blog has been Created.'];
         return redirect()->route('admin.blog.index')->withNotify($notify);
@@ -84,14 +95,30 @@ class BlogController extends Controller
             'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
         $user = Auth::guard('admin')->user();
+        $blog = new Blog();
 
-        $blog = Blog::create([
-            'title' => $request->title,
-            'user_id' => $user ? $user->id : null,
-            'description' => $request->description,
-            'is_active' => 1,
-            'is_featured' => 0
-        ]);
+        // $blog = Blog::create([
+        //     'title' => $request->title,
+        //     'user_id' => $user ? $user->id : null,
+        //     'description' => $request->description,
+        //     'is_active' => 1,
+        //     'is_featured' => 0
+        // ]);
+
+        $blog->title = $request->title;
+        $blog->user_id = $user ? $user->id : null;
+        $blog->description = $request->description;
+        $blog->is_active = 1;
+        $blog->is_featured = 0;
+
+        $tags=collect($request->tag)->map(function ($tag)  {
+            $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
+            return $tag->id;
+        });
+
+        $blog->tags()->attach($tags);
+        $blog->save();
+        
         if ($request->hasFile('image')) {
         try {
                 $file = $request->file('image');

@@ -36,16 +36,22 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
+                        <div class="col-xl-4 col-lg-4 form-group select2Tag">
+                            <label>@lang('Service Tags')*</label>
 
-                                <label>@lang('Tag')*</label>
-                                <select class="form-control select2" name="tag[]" multiple="multiple"
-                                        >
-                                           
-                                </select>
-                                <small>@lang('Tag and enter press')</small>
-                            </div>
+                            <select data-placeholder="Please Select Tags" class="select2 tags" id="tags" name="tag[]"
+                                multiple="multiple" >
+                                {{-- <option selected="" disabled="" class="default-select">@lang('Tag1, Tag2, Tag3')</option> --}}
+
+                                @if ($blog && count($blog->tags)>0)
+                                    @foreach ($tags as $tag)
+                                        <option {{ isSelectedTag($tag->id,$blog->tags)}} > {{ $tag->name }}</option>
+                                    @endforeach
+                                @endif
+
+                            </select>
+                            <div id="error"></div>
+                            {{-- <small>@lang('Tag and enter press')</small> --}}
                         </div>
 
                         <div class="row mt-4">
