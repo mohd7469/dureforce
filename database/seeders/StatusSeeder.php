@@ -59,6 +59,20 @@ class StatusSeeder extends Seeder
             ["id"=>37, "name"=>"Waiting For Approval", "slug"=>"waiting_approval", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--dark', "module_id"=>null],
             ["id"=>38, "name"=>"Verified", "slug"=>"accepted", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--info', "module_id"=>null],
             ["id"=>39, "name"=>"Rejected", "slug"=>"rejected", "type"=>"App\\Models\\UserTestimonial", "color"=>'badge--warning', "module_id"=>null],
+
+            ["id" => 40, "name" => "Draft", "slug" => "draft", "type"=>"App\\Models\\DayPlanningTask",    "color" => 'badge--primary',"module_id"=>Module::$Job],
+            ["id" => 41, "name" => "In Progress", "slug" => "in_progress", "type"=>"App\\Models\\DayPlanningTask",    "color" => 'badge--primary',"module_id"=>Module::$Job],
+            ["id" => 42, "name" => "Awaiting Approval", "slug"  =>"awaiting_approval", "type"=>"App\\Models\\DayPlanningTask", "color" => 'badge--dark' ,"module_id"=>Module::$Job],
+            ["id" => 43, "name" => "Resend For Approval",  "slug" =>"Resend_For_Approval", "type"=>"App\\Models\\DayPlanningTask", "color" => 'badge--info',"module_id"=>Module::$Job],
+            ["id" => 44, "name" => "Approved", "slug"=>"approved", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--warning', "module_id"=>Module::$Job],
+            ["id" => 45, "name" => "Rejected", "slug"=>"rejected", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--danger', "module_id"=>Module::$Job],
+            ["id" => 46, "name" => "Completed", "slug"=>"completed", "type"=>"App\\Models\\DayPlanningTask", "color"=>'badge--success', "module_id"=>Module::$Job],
+
+            ["id"=>47, "name"=>"Pending", "slug"=>"ms_pending", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--primary', "module_id"=>null],
+            ["id"=>48, "name"=>"In Progress", "slug"=>"ms_in_progress", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--dark', "module_id"=>null],
+            ["id"=>49, "name"=>"Completed", "slug"=>"ms_completed", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--success', "module_id"=>null],
+            ["id"=>50, "name"=>"Paid", "slug"=>"ms_paid", "type"=>"App\\Models\\ModuleOfferMilestone", "color"=>'badge--warning', "module_id"=>null],
+            
         ];
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Status::truncate();

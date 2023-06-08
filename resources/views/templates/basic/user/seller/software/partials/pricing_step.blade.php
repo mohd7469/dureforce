@@ -12,6 +12,7 @@
     @csrf
     <div class="card-body">
         <div class="card-form-wrapper">
+            
             <div class="row justify-content-center">
                 
                 <input type="hidden" name="software_id" value="{{ $software->id ?? '' }}">
@@ -189,69 +190,92 @@
                     </div>
                     <hr>
 
-                    <div class="col-xl-12 col-lg-12 col-md-12 form-group m-2">
-                
-                        <div class="row">
-                            
-                            <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
-                                <strong class="hdng-create">Software Providing Steps</strong>
-                                <p class="msg-create">List the steps involved in delivering your project.</p>
-                            </div>
+                   
+                    <div class="accordion" id="accordionExample" >
 
-                            <div class="col-lg-12 ">
+                        <div class="card">
+
+                            <div class="card-header" id="headingOne">
+
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button"  data-target="#collapseOne" aria-controls="collapseOne">
+                                        Software Providing Steps
+                                    </button>
+                                </h2>
+
+                            </div>
+                      
+                          <div id="collapseOne" class="collapsing" aria-labelledby="headingOne" data-parent="#accordionExample">
                                 
-                                <div class="row" id="step-rows">
-                                    <div class="col-xl-12 col-lg-12 form-group p-0 mt-2">
-                                        @if (!isset($softwareSteps) || $softwareSteps->isEmpty())
-                                            <label for="">Step Name</label>
-                                            <input type="text" name="steps[]" id="step"
-                                                   placeholder="E.g. Initial Requirements"
-                                                   class="form-control"/>
-                                            <div class="mt-2">
-                                                <label for="discription">Step Description</label>
-                                                <textarea type="text" name="description[]" id="discription"
-                                                          placeholder="This is a short description."
-                                                          class="form-control"
-                                                ></textarea>
-                                              
-                                              
-                                            </div>
-                                        @else
-                                            @foreach ($softwareSteps as $softwareKey => $item)
-                                                <div id="add-on-software-row-{{ $softwareKey }}">
-                                                    @if ($softwareKey != 0)
-                                                        <div style="float: right; margin-bottom:1rem">
-                                                            <button type="button" class="btn btn-danger"
-                                                                    onclick="removeAddOnRow($('#add-on-software-row-{{ $softwareKey }}'))">
-                                                                <i
-                                                                        class="fa fa-trash"></i></button>
-                                                        </div>
-                                                    @endif
-                                                    <label for="">Step Name </label>
+                                <div >
+                            
+                                    <div class="col-lg-12 ">
+                                        
+                                        <div  id="step-rows" class="custom-card-body">
+                                            <p class="msg-create">List the steps involved in delivering your project.</p>
+
+                                            <div class="col-xl-12 col-lg-12 form-group p-0 mt-2">
+                                                @if (!isset($softwareSteps) || $softwareSteps->isEmpty())
+                                                    <label for="">Step Name</label>
                                                     <input type="text" name="steps[]" id="step"
                                                            placeholder="E.g. Initial Requirements"
-                                                           class="form-control" value="{{ $item->name }}"/>
+                                                           class="form-control"/>
                                                     <div class="mt-2">
-                                                        <label for="description">Step Description</label>
-                                                        <textarea type="text" name="description[]" id="description"
+                                                        <label for="discription">Step Description</label>
+                                                        <textarea type="text" name="description[]" id="discription"
                                                                   placeholder="This is a short description."
                                                                   class="form-control"
-                                                        >{{ $item->description ?? '' }}</textarea>
-                                                       
+                                                        ></textarea>
+                                                      
+                                                      
                                                     </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
+                                                @else
+                                                    @foreach ($softwareSteps as $softwareKey => $item)
+                                                        <div id="add-on-software-row-{{ $softwareKey }}">
+                                                            @if ($softwareKey != 0)
+                                                                <div style="float: right; margin-bottom:1rem">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                            onclick="removeAddOnRow($('#add-on-software-row-{{ $softwareKey }}'))">
+                                                                        <i
+                                                                                class="fa fa-trash"></i></button>
+                                                                </div>
+                                                            @endif
+                                                            <label for="">Step Name </label>
+                                                            <input type="text" name="steps[]" id="step"
+                                                                   placeholder="E.g. Initial Requirements"
+                                                                   class="form-control" value="{{ $item->name }}"/>
+                                                            <div class="mt-2">
+                                                                <label for="description">Step Description</label>
+                                                                <textarea type="text" name="description[]" id="description"
+                                                                          placeholder="This is a short description."
+                                                                          class="form-control"
+                                                                >{{ $item->description ?? '' }}</textarea>
+                                                               
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="custom-card-body">
+                                            <span class="add-new-row  mt-0 add-another"  style="cursor: pointer" onclick="addSteps()">
+                                                Add Another
+                                            </span>
+                                        </div>
+                                        
+                                       
                                     </div>
+        
                                 </div>
-
-                                <span class="add-new-row  mt-0 add-another" style="cursor: pointer" onclick="addSteps()">
-                                    Add Another
-                                </span>
-                               
-                            </div>
-
+                          </div>
+                          
                         </div>
+                        
+                    </div>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 form-group m-2">
+                
+                      
 
                         <div class="row">
                             
@@ -273,6 +297,8 @@
                         </div>
 
                     </div>
+
+                   
 
                 </div>
 

@@ -18,9 +18,9 @@ class SupportTicket extends Model
     protected static function boot()
     {
         parent::boot();
-        Log::info(["Current URL"=>url()->full()]);
-        Log::info(["Previous URL"=>url()->previous()]);
-        Log::info(["Request data"=>\Request::all()]);
+//        Log::info(["Current URL"=>url()->full()]);
+//        Log::info(["Previous URL"=>url()->previous()]);
+//        Log::info(["Request data"=>\Request::all()]);
     }
     
     public function getFullnameAttribute()

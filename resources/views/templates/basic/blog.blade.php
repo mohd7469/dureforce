@@ -13,8 +13,8 @@
                                             <div class="blog-item">
                                                 <div class="blog-thumb">
                                                     <a
-                                                        href="{{ route('blog.details', [$blog->id, slug($blog->data_values->title)]) }}">
-                                                        <img src="{{ !empty($blog->data_values->blog_image_1)? getImage('assets/images/frontend/blog/thumb_' . $blog->data_values->blog_image_1, '728x465'): getImage('assets/images/default.png') }}"
+                                                        href="{{ route('blog.details', $blog->id) }}">
+                                                        <img src="{{ !empty($blog->attachments[0]->url)? $blog->attachments[0]->url : getImage('assets/images/default.png') }}"
                                                             alt="blog">
                                                     </a>
                                                     <div class="blog-date text-center">
@@ -27,12 +27,12 @@
                                                 <div class="blog-content">
                                                     <div class="blog-content-inner">
                                                         <h3 class="title"><a
-                                                                href="{{ route('blog.details', [$blog->id, slug($blog->data_values->title)]) }}">{{ __($blog->data_values->title) }}</a>
+                                                                href="{{ route('blog.details', $blog->id) }}">{{ str_limit(__($blog->title),35) }}</a>
                                                         </h3>
-                                                        <p>{{ str_limit(strip_tags(@$blog->data_values->description), 100) }}
+                                                        <p>{{ str_limit(strip_tags(@$blog->description), 70) }}
                                                         </p>
                                                         <div class="blog-btn">
-                                                            <a href="{{ route('blog.details', [$blog->id, slug($blog->data_values->title)]) }}"
+                                                            <a href="{{ route('blog.details', $blog->id) }}"
                                                                 class="btn--base text-center w-100">@lang('Read More')</a>
                                                         </div>
                                                     </div>

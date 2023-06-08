@@ -24,6 +24,12 @@ class InviteFreelancer extends BaseModel
 
     ];
 
+    public const NOTIFICATION = [
+        "INVITATION_TITLE" => "You have received an invitation to interview for the job ",
+        "INVITATION_URL" => "seller/invitation/invitation_detail/",
+        "INVITATION_TYPE" => "invitation",
+    ];
+
     protected static function boot()
     {
 

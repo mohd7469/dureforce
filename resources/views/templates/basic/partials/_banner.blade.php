@@ -20,8 +20,8 @@
             </div>
             
             <div class="col-12 col-md-7 justify-content-center "  style="text-align: right" >
-                <h1 class="heading font-weight-bold" style="font-size:45px"><strong>{{$model->banner->banner_heading}}</strong></h1>
-                <p class="para" style="font-size: 20px;margin-top:20px">{{$model->banner->banner_introduction}}</p>
+                <h1 class="heading font-weight-bold" style="font-size:45px"><strong>{{__(str_limit($model->banner->banner_heading,100))}}</strong></h1>
+                <p class="para" style="font-size: 20px;margin-top:20px">{{__(str_limit($model->banner->banner_introduction,200))}}</p>
             </div>
       
            
@@ -55,10 +55,10 @@
     </div>
 @else
     
-    <div class="" >
-        <div id="videoContainer">
+    <div class="" style="width:100%">
+        <div id="videoContainer" >
                                         
-            <iframe width="1041px" height="400px" src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
+            <iframe width="100%" height="400px" src="{{getVideoBannerURL($model)}}" title="YouTube video player" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen ></iframe>
         </div>
     </div>
 

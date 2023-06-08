@@ -3,12 +3,12 @@
         @foreach($softwares as $software)
             @if($software->banner != null)
             <div class="carousel-item active ">
-                <div class="card">
+                <div class="card card-height">
                     
                     <div class="img-wrapper">
                         <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
                             @if ($software->banner->banner_type==\App\Models\ModuleBanner::$Video)
-                                <div id="videoContainer" >
+                                <div id="videoContainer"  @if (request()->routeIs('home')) class="videoContainer" @endif >
                                     <iframe src="{{getVideoBannerURL($software)}}" title="Banner Video" frameborder="0" id="preview_video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:345px;height:250px"></iframe>
                                 </div>
                             @else
@@ -24,7 +24,7 @@
                             <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">{{__(str_limit($software->title, 40))}}</a>
                         </h3>
                         <div class="tags-container">
-                            @foreach ($software->tags as $tag)
+                            @foreach (($software->tags)->slice(0, 3) as $tag)
                                 <a href="javascript:void(0)"
                                    class=" grey_badge  custom_badge badge-secondary">{{ __($tag->name) }}</a>
                             @endforeach
@@ -35,12 +35,12 @@
                                 <span class="author text-capitalize pb-1">by
                                     <a href="javascript:void(0)">{{ !empty($software->user->fullname)? $software->user->fullname: '' }}</a>
                                 </span>
-                                <div class="col-12 col-md-12 ">
+                                <!-- <div class="col-12 col-md-12 ">
                                     <a href="{{ $software->uuid ? route('software.view',[$software->uuid]) : '#'}}">
                                     <span class="rates">
                                     <p>Schedule Meeting</p></span>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-5 col-md-4 ">
                             <span class="rates">
@@ -56,11 +56,11 @@
         @endforeach
     </div>
     <span class="seeall"><a href="{{ route('software') }}">See All</a></span>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <button class="carousel-control-prev carousel-mobile-view" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <button class="carousel-control-next carousel-mobile-view" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>

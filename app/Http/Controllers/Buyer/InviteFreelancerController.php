@@ -10,6 +10,7 @@ use App\Models\Job;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\EmailTemplate;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -53,24 +54,26 @@ class InviteFreelancerController extends Controller
             $data['invitation'] = $invitation;
             $data['job'] = $job;
             $data['email_template'] = $email_template;
+            if(Proposal::where('user_id',$request['user_id'])->where('module_id',$job_id)->exists()){
+                return response()->json(["error" => "This user has already submitted proposal for this job."]);
 
+            }
             Mail::to($user_email)->send(new SendNotificationsMail($data,InviteFreelancer::$EMAIL_TEMPLATE));
 
             $users= array($request['user_id']);
-            $title = "You have received an invitation to interview for the job ".$job->title;
+            $title = InviteFreelancer::NOTIFICATION['INVITATION_TITLE'].$job->title;
             $body = $job->description;
             $payload = $job;
-            $url = Notification::URL['INVITATION'];
-            $notification_type = Notification::NOTIFICATION_TYPE['INVITATION'];
-
+            $url = InviteFreelancer::NOTIFICATION['INVITATION_URL'].$invitation->uuid;
+            $notification_type = InviteFreelancer::NOTIFICATION['INVITATION_TYPE'];
             $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
-
-            $saved_notification = NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
+            NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
 
             return response()->json(["success" => "Invitation sent Successfully"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
@@ -84,17 +87,19 @@ class InviteFreelancerController extends Controller
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }
     public function userInvitations(){
 
         try {
-             $invitations = InviteFreelancer::IsActive()->where('user_id',auth()->user()->id)->with('job')->paginate(10);
+             $invitations = InviteFreelancer::IsActive()->where('user_id',auth()->user()->id)->with('job')->orderBy("created_at",'DESC')->paginate(10);
             return view('templates.basic.user.seller.invitation.invite_listing')->with('invitations',$invitations);
 
         } catch (\Exception $exp) {
             DB::rollback();
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
     }

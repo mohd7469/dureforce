@@ -88,7 +88,7 @@
                                 <i class="dropdown-toggle" icon="fa-solid fa-caret-down" data-bs-toggle="dropdown" aria-expanded="false" ></i>
                                 
                                 <ul class="dropdown-menu">
-                                    <li v-if="!message.attachment"><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
+                                    <li v-if="!message.is_attachment"><a class="dropdown-item" href="#" @click="editMessage(message)">Edit</a></li>
                                     <li><a class="dropdown-item" href="#" @click="deleteMessage(message.id)">Delete</a></li>
                                     
                                 </ul>

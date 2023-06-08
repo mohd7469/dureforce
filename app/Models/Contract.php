@@ -19,15 +19,21 @@ class Contract extends Model
         'Terminated' =>  34,
         'Completed' =>  35
     ];
-    
+
+
+    public const NOTIFICATION = [
+        "CONTRACT_TITLE" => "Your Contract ",
+        "CONTRACT_URL" => "contract_detail/",
+        "CONTRACT_TYPE" => "contract",
+    ];
     public static function scopeWithAll($query){
-        return $query->with('offer')->with('status');
+        return $query->with('offer')->with('status')->with('dayPlanning');
     }
 
     protected static function boot()
     {
         parent::boot();
-        static::saving(function ($model)  {
+        static::creating(function ($model)  {
             $uuid=Str::uuid()->toString();
             $model->uuid =  $uuid;
             $model->contract_id=generateUniqueRandomNumber();
@@ -39,8 +45,13 @@ class Contract extends Model
     {
         return $this->belongsTo(ModuleOffer::class, 'module_offer_id')->WithAll();
     }
+
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id');
+    }
+
+    public function dayPlanning(){
+        return $this->hasMany(DayPlanning::class,'contract_id')->withTrashed();
     }
 }

@@ -81,7 +81,7 @@
 <!---Comments Box-->
     @if($support_ticket->status_id != \App\Models\SupportTicket::$Closed)
 <div class="comment-box">
-    <p class="comment-f">Comment</p>
+    <p class="comment-f">Comment <span class="text-danger">*</span></p>
     <form action="{{route('ticket.comment.store',$support_ticket->ticket_no)}}" method="POST" enctype="multipart/form-data">
         @csrf
         <textarea  placeholder="Add Comment" name="message" class="comment-box"></textarea>

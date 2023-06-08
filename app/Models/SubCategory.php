@@ -25,4 +25,8 @@ class SubCategory extends Model
     {
         return $this->belongsToMany(Skills::class, 'category_attributes');
     }
+    public function deliverables()
+    {
+        return $this->belongsToMany(Deliverable::class, 'sub_category_deliverable')->wherePivot('module_id',request()->module_id);
+    }
 }

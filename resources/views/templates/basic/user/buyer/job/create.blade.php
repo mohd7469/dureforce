@@ -242,6 +242,7 @@
                                                         @endforeach
                                                 </select>
                                             </div>
+                                            
                                         </div>
 
                                         <input type="hidden" value="{{route('buyer.job.validate')}}" id="job_validate_url">
@@ -262,7 +263,7 @@
                                                 <a href="{{route('buyer.job.index')}}"> <button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button></a>
                                             </div>
                                             <div class="inner">
-                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Create Job')</button>
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_btn_job">@lang('Create Job')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -321,10 +322,10 @@
                 else{
                     $("#subCategorys").empty();
                     html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                    $.each(data, function(index, item) {
-                        html += `<option value="${item.id}">${item.name}</option>`;
-                        $(".mySubCatgry").html(html);
-                    });
+                            $.each(data.sub_category, function(index, item) {
+                                html += `<option value="${item.id}">${item.name}</option>`;
+                                $(".mySubCatgry").html(html);
+                            });
                 }
             }
         });
@@ -396,7 +397,7 @@
             tags: true
         });
         $('#job_form_data').submit(function (e) {
-            
+            $('#submit_btn_job').attr("disabled", true);
             e.preventDefault();
             var form = $('#job_form_data')[0];
             var form_data = new FormData(form);

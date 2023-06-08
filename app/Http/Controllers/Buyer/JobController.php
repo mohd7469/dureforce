@@ -75,11 +75,10 @@ class JobController extends Controller
         try {
             $pageTitle = "Create Job";
             $data = $this->getJobData();
-            Log::info(["Job create data" => $data]);
             return view($this->activeTemplate . 'user.buyer.job.create', compact('pageTitle', 'data'));
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
 
         }
 
@@ -93,10 +92,9 @@ class JobController extends Controller
             $pageTitle = "Manage Job";
             $emptyMessage = "No data found";
             $jobs = Job::where('user_id', $user->id)->with('dod', 'status', 'proposal')->latest()->paginate(getPaginate());
-            Log::info(["All Jobs" => $jobs]);
             return view($this->activeTemplate . 'user.buyer.job.index', compact('pageTitle', 'emptyMessage', 'jobs'));
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
         }
 
     }
@@ -149,12 +147,12 @@ class JobController extends Controller
             }
             DB::commit();
             session()->put('notify', ["Job Created Successfully"]);
-            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Successfully Saved"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp->getMessage()]);
         }
 
@@ -173,10 +171,10 @@ class JobController extends Controller
             $data['documents'] = json_encode($job->documents->toArray());
             $pageTitle = "Job Update";
 
-            Log::info(["Job" => $job]);
             return view($this->activeTemplate . 'user.buyer.job.edit', compact('pageTitle', 'job', 'data'));
         } catch (\Exception $exp) {
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
         }
     }
 
@@ -233,12 +231,12 @@ class JobController extends Controller
                 $job->documents()->createMany(json_decode($request_data['file'],true));
             }
             DB::commit();
-            Log::info(["Job" => $job]);
             return response()->json(["redirect" => route('buyer.job.index'), "message" => "Job Successfully Updated"]);
 
         } catch (\Exception $exp) {
             DB::rollback();
-            Log::error($exp->getMessage());
+            // Log::error($exp->getMessage());
+            errorLogMessage($exp);
             return response()->json(["error" => $exp]);
         }
 
@@ -282,6 +280,7 @@ class JobController extends Controller
             return $query->get();
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return $e->getMessage();
         }
     }
@@ -296,6 +295,7 @@ class JobController extends Controller
             return $query->get();
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return $e->getMessage();
         }
     }
@@ -366,6 +366,7 @@ class JobController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            errorLogMessage($e);
             return response()->json(["error" => "Failed to delete job"]);
 
         }
@@ -385,8 +386,10 @@ class JobController extends Controller
     public function inviteFreelancer($job_uuid)
     {
         $job = Job::where('uuid', $job_uuid)->with('invited_freelancer')->first();
-
-        $user_ids = $job->invited_freelancer->pluck('user_id');
+        $job_proposal=$job->proposal;
+        $proposal_submitted_user_ids=$job_proposal->pluck('user_id')->toArray();
+        $user_ids = $job->invited_freelancer->pluck('user_id')->toArray();
+        $user_ids = array_merge($user_ids,$proposal_submitted_user_ids);
 
         $freelancers = User::role('Freelancer')->whereNotIn('id', $user_ids)->with('skills', 'education', 'country', 'user_basic', 'experiences', 'skills', 'education')->get();
         $invited_freelancers = InviteFreelancer::where('job_id', $job->id)->with('user')->get();

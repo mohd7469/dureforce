@@ -97,7 +97,7 @@
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
                                                     <a href="{{route('seller.profile',$freelancer->uuid)}}" class="btn-products-s">View Profile</a>
-                                                    <a href="{{url('coming-soon')}}" class="btn-products-s">Hire</a>
+{{--                                                    <a href="{{url('coming-soon')}}" class="btn-products-s">Hire</a>--}}
                                                     <a class="btn-products-s phire inviteJobModal"
                                                                data-bs-toggle="modal"
                                                                onclick="inviteJobModal({{$freelancer}},{{$job}},{{$freelancer->user_basic}},{{$freelancer->country}})">Invite to
@@ -205,7 +205,7 @@
                                             <div class="col-md-4">
                                                 <div class="row btns-s">
                                                     {{-- <div class="col-md-4"><a href="#" class="btn-products-s">Shortlist</a></div> --}}
-                                                    <a href="#" class="btn-products-s phire">Hire</a>
+{{--                                                    <a href="#" class="btn-products-s phire">Hire</a>--}}
                                                 </div>
                                             </div>
                                         </div>
@@ -717,7 +717,13 @@
 
                             <div class="form-group col-lg-12 pt-2">
                                 <label for="exampleFormControlTextarea1">Message* </label>
-                                <textarea class="form-control" name="message" id="textAreaExample1" rows="4"></textarea>
+                                <textarea class="form-control" name="message" id="textAreaExample1" rows="4" >Hi there!
+
+I'm reaching out to invite you to apply for a job that I have posted. I think your skills and experience make you a great candidate for the role. Please take a look at the job post and let me know if you have any questions or would like to submit a proposal.
+
+Thanks,
+{{auth()->user()->fullname}}
+                                </textarea>
                                 <input type="hidden" id="user_id" name="user_id">
 
                             </div>
@@ -905,6 +911,8 @@
                     }
                     else if(response.error){
                         displayAlertMessage(response.error);
+                        location.reload();
+
                     }
                     else{
                         errorMessages(response.errors);

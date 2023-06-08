@@ -93,7 +93,7 @@ class ProposalController extends Controller
             return view($this->activeTemplate .'buyer.propsal.proposal',compact('pageTitle','proposal','user','propsal_attachments','user_skills','job','contract'));
             
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ['error', 'Failled to view proposal'];
             return back()->withNotify($notify);
 
@@ -109,7 +109,7 @@ class ProposalController extends Controller
             $proposal->save();
             return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ['error', 'Failled to shortlist proposal'];
              return back()->withNotify($notify);
         }
@@ -124,7 +124,7 @@ class ProposalController extends Controller
             $proposal->save();
             return redirect()->route('buyer.job.all.proposals',$proposal->job->uuid);
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ['error', 'Failled to remove from shortlist proposal'];
             return back()->withNotify($notify);
         }
@@ -142,7 +142,7 @@ class ProposalController extends Controller
             return view('templates.basic.offers.shortlist',compact('pageTitle','proposals','job','short_listed_proposals'));
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ['error', 'Failled to get shortlisted proposals'];
             return back()->withNotify($notify);
         }
@@ -159,7 +159,7 @@ class ProposalController extends Controller
             return view('templates.basic.buyer.propsal.send-offer',compact('pageTitle','propsal_to_send_offer'));
 
         } catch (\Throwable $th) {
-            Log::error($th->getMessage());
+            errorLogMessage($th);
             $notify[] = ['error', 'Failled to get offer send page'];
             return back()->withNotify($notify);
         }
@@ -203,8 +203,8 @@ class ProposalController extends Controller
     {
 
         $job=Job::withAll()->where('uuid',$job_uuid)->first();
-        $proposals = $job->proposal->where('is_shortlisted',false);
-        $short_listed_proposals = $job->proposal->where('is_shortlisted',true);
+        $proposals = $job ? $job->proposal->where('is_shortlisted',false)->whereIn('status_id', [Proposal::STATUSES['SUBMITTED'],Proposal::STATUSES['ACTIVE']]):collect([]);
+        $short_listed_proposals = $job? $job->proposal->where('is_shortlisted',true):collect([]);
 
         $pageTitle = "Job Proposals";
         return view('templates.basic.jobs.Proposal.all-proposal',compact('pageTitle','proposals','job','short_listed_proposals'));

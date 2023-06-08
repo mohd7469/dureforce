@@ -26,7 +26,7 @@ class JobController extends Controller
      */
     public function index($category = null)
     {
-    
+
         $jobs = Job::where('status_id',Job::$Approved)->with(['skill','proposal','country','user','category'])->orderBy('created_at','DESC')->get();
         
         $categories = Category::with('subCategory')->get();
@@ -57,6 +57,7 @@ class JobController extends Controller
         }else{
         $jobs = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->orderBy('created_at','DESC')->paginate(getPaginate());
         }
+        $jobCount = Job::where('status_id',Job::$Approved)->where('is_private',false)->with(['skill','proposal','country','user','category','project_length'])->get();
         $categories = Category::with('subCategory')->get();
         if($category == null){
             $Categorytitle = Category::where('id',$categories->pluck('id')->first())->first();
@@ -66,7 +67,8 @@ class JobController extends Controller
             $subcategories=SubCategory::where('category_id', $category)->get();
         }
 
-        return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('tabs',$tabs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle )->with('user_saved_jobs_ids',$user_saved_jobs_ids)->with('user_saved_jobs',$user_saved_jobs);
+
+        return view('templates.basic.user.seller.job.job_listing_new')->with('jobs',$jobs)->with('tabs',$tabs)->with('categories', $categories)->with('subcategories', $subcategories)->with('Categorytitle', $Categorytitle )->with('user_saved_jobs_ids',$user_saved_jobs_ids)->with('user_saved_jobs',$user_saved_jobs)->with('jobCount',$jobCount);
     }
     public function saveJob($job_id)
     {
@@ -77,6 +79,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -91,6 +94,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -104,6 +108,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 
@@ -121,6 +126,7 @@ class JobController extends Controller
 
         }
         catch (\Exception $e){
+            errorLogMessage($e);
             return "Some Techinical Error Please contact Support Team";
         }
 

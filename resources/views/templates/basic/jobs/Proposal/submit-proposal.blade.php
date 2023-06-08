@@ -114,11 +114,25 @@
                                     <div class="service_subtitle2" style="padding-top: 2px">
                                        Skills and Expertise
                                     </div>
-                                 
+                                    <div id="limitskills">
+                                    <?php $count = 1; ?>
                                     @foreach($job->skill as $skil)
+                                       <?php if($count > 5) break; ?>
+
                                        <span class="attr">{{$skil->name}}</span>
+                                          <?php $count++; ?>
                                     @endforeach
-                                    
+                                    </div>
+                                    @if (count($job->skill) >5)
+
+                                    <a class="button" id="seemore" onclick="seemore()">See more</a>
+                                    <div id="allskills" style="display:none;">
+                                       @foreach($job->skill as $skil)
+                                          <span class="attr">{{$skil->name}}</span>
+                                       @endforeach
+                                    </div>
+                                    <a class="button" id="seelimit" onclick="seelimit()" style="display: none;">Hide</a>
+                                    @endif
                                  </div>
 
                               </div>
@@ -194,7 +208,7 @@
                                   <a role="button" href="{{route('seller.jobs.listing')}}" class="pl-4 submit-btn  mt-20 w-70 cancel-job-btn ">@lang('Cancel')</a>
                               </div>
                               <div class="inner">
-                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Submit Proposal')</button>
+                                  <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_proposal_btn_id">@lang('Submit Proposal')</button>
                               </div>
                           </div>
                         </form>
@@ -219,7 +233,20 @@
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
-
+   <script>
+      function seemore(){
+        $('#limitskills').css('display','none');
+         $('#allskills').css('display','block');
+         $('#seemore').css('display','none');
+         $('#seelimit').css('display','block');
+      }
+      function seelimit(){
+         $('#limitskills').css('display','block');
+         $('#allskills').css('display','none');
+         $('#seemore').css('display','block');
+         $('#seelimit').css('display','none');
+      }
+   </script>
 @endpush
 
 

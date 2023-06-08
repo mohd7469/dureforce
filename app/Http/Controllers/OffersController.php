@@ -13,7 +13,7 @@ class OffersController extends Controller
         $user=Auth::user();
         $last_role_id=getLastLoginRoleId();
         if ( $last_role_id  == Role::$Freelancer ) {
-            $offers=ModuleOffer::with('module')->where('offer_send_to_id','=',$user->id)->where('is_active',1)->orderBy('id', 'DESC')->paginate(getPaginate());
+            $offers=ModuleOffer::with('module')->where('offer_send_to_id','=',$user->id)->where('is_active',1)->where('is_payment_method_selected',1)->orderBy('id', 'DESC')->paginate(getPaginate());
             $total = count($offers);
         }
         else if( $last_role_id == Role::$Client ){

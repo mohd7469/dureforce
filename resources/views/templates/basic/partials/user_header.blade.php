@@ -330,7 +330,7 @@
                                             </a>
                                         </div>
                                         <div class="header-user-content">
-                                            <span>{{ auth()->user()->username }}</span>
+                                            <span>{{ auth()->user() ? auth()->user()->first_name :' ' }} {{ auth()->user() ? auth()->user()->last_name :' ' }}</span>
                                         </div>
                                         <span class="header-user-icon"><i class="las la-chevron-circle-down"></i></span>
                                     </div>
@@ -517,7 +517,7 @@
             display:none;
         }
         img {
-            max-width: 70%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -568,7 +568,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -619,7 +619,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -671,7 +671,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{

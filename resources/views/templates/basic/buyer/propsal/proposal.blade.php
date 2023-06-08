@@ -20,7 +20,7 @@
                                         <i class="fa fa-chevron-left"></i>
                                     </div>
                                     <div class="d-flex justify-content-end col-sm-10 col-xs-10 col-md-6 col-lg-6 vertical-center-div">
-                                         <span class="margin-right"> Open Proposal in a new window</span><i class="fas fa-external-link-alt" ></i>
+                                         <span class="margin-right"> Open Proposal in a new window</span><a class="fas fa-external-link-alt" onclick="newtab();" ></a>
                                         
                                     </div>
                                     
@@ -111,7 +111,7 @@
 
                                         <div class="profile-border-bottom ">
                                             <b>Hours per week</b><br>
-                                            <b>More than 30 hrs/week</b><br>
+                                            More than 30 hrs/week<br>
                                             <b>{{ $user->languages->count() > 1 ? 'Languages' : 'Language'}}</b><br>
                                             @foreach ($user->languages as $item)
                                             {{getLanaguageName($item->language_id)}}: {{getProficiencyLevelName($item->language_level_id)}}<br>
@@ -181,7 +181,11 @@
 
 </div>
 @include($activeTemplate . 'partials.end_ad')
-
+<script>
+    function newtab(){
+        window.open(window.location);
+    }
+</script>
 @endsection
 @push('style')
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/view-propsal.css')}}">

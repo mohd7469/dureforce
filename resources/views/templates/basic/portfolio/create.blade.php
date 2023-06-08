@@ -84,7 +84,7 @@
         <div class="row mt-2">
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group">
                 <label>Public URL</label>
-                <input type="text" name="project_url" id="detail_project_url" class="form-control" value="{{old('project_url')}}">
+                <input type="text" name="project_url" id="detail_project_url" class="form-control" value="{{old('project_url')}}" placeholder="Add public url">
             </div>
             
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 form-group"> 
@@ -111,7 +111,7 @@
         <div class="modal-dialog modal-dialog-profile">
             <div class="modal-content">
                 <div class="modal-header editprofileheader">
-                    <h5 class="modal-title" id="exampleModalLabel">View File Upload GuideLines</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">View File Upload Guidelines</h5>
                     <button type="button" class="btnclose" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body modal-body-profile">

@@ -10,8 +10,8 @@
                         <div class="table-section">
                             <div class="row justify-content-center">
                                 <div class="col-xl-12">
-                                    <div class="table-area">
-                                        <table class="custom-table-new mt-15">
+                                    <div class="table-responsive">
+                                        <table class="table">
                                             <thead>
                                                 <tr>
                                                     <th>@lang('Title')</th>

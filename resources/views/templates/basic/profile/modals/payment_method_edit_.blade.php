@@ -72,7 +72,6 @@
                                 </div>
         
                                 <div class="col-md-6">
-        
                                     <label class="mt-4">City <span class="imp">*</span></label>
                                     <select
                                         name="city_id"

@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\AdminNotification;
 use App\Models\Attribute;
 use App\Models\BannerLogo;
+use App\Models\DeliveryMode;
 use App\Models\ExtraService;
 use App\Models\ExtraSoftware;
 use App\Models\Module;
@@ -91,6 +92,7 @@ trait CreateOrUpdateEntity {
     }
     public function saveOverview($request, $model, $modelId, $type = Attribute::SERVICE) : bool
     {
+
          DB::transaction(function () use ($request, $model, $modelId, $type) {
 
             $model->fill($request->all())->save();
@@ -110,12 +112,20 @@ trait CreateOrUpdateEntity {
 
             $model->tags()->attach($tags);
             
-            if($type == Attribute::SERVICE)
+            if($type == Attribute::SERVICE){
+
                 $model->skills()->attach($request->skills);
+               
+            }
 
             $model->features()->sync($request->features);
+            
 
         });
+        
+        $sub_category_deliverables=json_decode($request->sub_category_deliverable_ids,true);
+        $model->deliverable()->sync($sub_category_deliverables);
+
         if($type == Attribute::SOFTWARE){
             $this->updateStatus($request,$model);
         }
@@ -126,6 +136,7 @@ trait CreateOrUpdateEntity {
                 $model->save();
             }
         }
+
         return true;
     }
 
@@ -331,6 +342,52 @@ trait CreateOrUpdateEntity {
                 
                 $this->updateStatus($request,$model);
                 DB::commit();
+                if (!$model->defaultProposal) {
+
+                    $deliver_mode=DeliveryMode::where('slug','Weekly-slug')->exists() ? DeliveryMode::where('slug','Weekly-slug')->first()->id : null;
+
+                    if($type == Attribute::SERVICE) {
+
+                        $proposal=[
+                            "hourly_bid_rate" => $model->rate_per_hour,
+                            "amount_receive" => ($model->rate_per_hour*0.80),
+                            "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
+                            "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
+                            "delivery_mode_id" => $deliver_mode,
+                            "cover_letter" => $model->description,
+                            "uploaded_files" => json_encode([],true),
+                        ];
+        
+                    }
+                    else if($type == Attribute::SOFTWARE) {
+                        
+                        
+                        $proposal=  [  "project_start_date" => null,
+                                        "project_end_date" =>   null,
+                                        "milestones" => [
+                                            [
+                                                "description" => null,
+                                                "start_date" => null,
+                                                "end_date" => null,
+                                                "amount" => null,
+                                            ]
+                                        ],
+                                        "fixed_bid_amount" => $model->fixed_bid_amount,
+                                        "amount_receive" => ($model->rate_per_hour*0.80),
+                                        "delivery_mode_id" => $deliver_mode,
+                                        "cover_letter" => $model->description,
+                                        "action" => "continue",
+                                        "uploaded_files" => "[]"
+                                    ];
+        
+                    }
+                    else{
+
+                    }
+
+                    $this->saveProposal($proposal,$model,$type);
+
+                }
 
             } catch (\Exception $exp) {
                 DB::rollBack();
@@ -345,22 +402,28 @@ trait CreateOrUpdateEntity {
     {
         DB::beginTransaction();
         try {
-
             if( $model->defaultProposal)
             {
                 $model->defaultProposal()->delete();
             }
             
-            $model_default_proposal=$model->defaultProposal()->create($request->all());
+            $model_default_proposal=$model->defaultProposal()->create($request);
             $model_default_proposal->user_id=auth()->user()->id;
             $model_default_proposal->service_fees_id= ServiceFee::find(Module::$Job)->id;
             $model_default_proposal->save();
-            if ($request->has('uploaded_files')) {
-                $prposal_attachments=json_decode($request->uploaded_files,true);
-                $model_default_proposal->attachments()->createMany($prposal_attachments);
+            if (isset($request['uploaded_files']) ) {
+        
+
+                $prposal_attachments=json_decode($request['uploaded_files'],true);
+
+                if(count($prposal_attachments)>0)
+                    $model_default_proposal->attachments()->createMany($prposal_attachments);
             }
+
             DB::commit();
+
             $this->updateStatus($request,$model);
+
             return true;
         } catch (\Throwable $th) {
 
@@ -376,7 +439,8 @@ trait CreateOrUpdateEntity {
         DB::transaction(function () use ($request, $model, $type) {
            
             $model->update([
-                'requirement_for_client' => $request->client_requirements
+                'requirement_for_client' => $request->client_requirements,
+                'is_requirement_for_client_added' => true
             ]);
            
         });
@@ -405,7 +469,9 @@ trait CreateOrUpdateEntity {
             $model->update([
                 'number_of_simultaneous_projects' => $request->max_no_projects,
                 'is_terms_accepted' => $request->copyright_notice == "on" ? true : false,
-                'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false
+                'is_privacy_accepted' => $request->privacy_notice == "on" ? true : false,
+                'is_requirement_for_client_added' => true
+
             ]);
             $this->updateStatus($request,$model);
   

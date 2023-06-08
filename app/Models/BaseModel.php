@@ -19,5 +19,12 @@ class BaseModel extends Model
         return $query->where('is_active',1);
 
     }
+    public function scopeOnlyUnread($query){
+        return $query->where('is_read', false);
+    }
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', 1);
+    }
 
 }

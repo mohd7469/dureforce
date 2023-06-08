@@ -55,8 +55,12 @@ Route::name('seller.')->group(function () {
                 Route::name('proposal.')->group(function () {
 
                     Route::get('/create-proposal/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'createProposal'] )->name('create');
+                    Route::get('/edit-proposal/{job_uuid}/{proposal_uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'editProposal'] )->name('edit');
                     Route::post('/validate-proposal',      [\App\Http\Controllers\Seller\ProposalController::class,'validatePropsal'] )->name('validate');
                     Route::post('proposal-store/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'savePropsal'])->name('store');
+                    Route::post('proposal-update/{uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'updatePropsal'])->name('update');
+
+                    // Route::post('proposal-update/{job_uuid}/{proposal_uuid}',   [\App\Http\Controllers\Seller\ProposalController::class,'updatePropsal'])->name('update');
                     Route::get('proposal-lists/{type?}',           [\App\Http\Controllers\Seller\ProposalController::class,'index'])->name('index');
                     Route::get('proposal-detail/{uuid}',           [\App\Http\Controllers\Seller\ProposalController::class,'details'])->name('detail');
 
@@ -68,6 +72,8 @@ Route::name('seller.')->group(function () {
                     Route::get('/reject-offer/{uuid}',  [\App\Http\Controllers\Seller\OfferController::class,'rejectOffer'] )->name('reject');
 
                 });
+
+
                 Route::name('invitation.')->prefix('invitation')->group(function () {
 
                     Route::get('/listing',  [App\Http\Controllers\Buyer\InviteFreelancerController::class,'userInvitations'] )->name('list');
@@ -90,3 +96,4 @@ Route::name('seller.')->group(function () {
         });
     });
 });
+Route::get('proposal-update/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'changeStatus'])->name('proposal.update');

@@ -17,13 +17,17 @@ use App\Models\User;
 use App\Models\Rank;
 use App\Models\Advertise;
 use App\Models\BannerBackground;
+use App\Models\Contract;
+use App\Models\DayPlanning;
 use App\Models\Degree;
 use App\Models\Job;
 use App\Models\Language;
 use App\Models\LanguageLevel;
 use App\Models\ModuleBanner;
+use App\Models\ModuleOffer;
 use App\Models\Proposal;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -227,7 +231,7 @@ function uploadAttachments($file, $location, $size = null, $old = null, $thumb =
             $blobClient->createBlockBlob($container, '/thumb_' . $filename, $thumbcontent);
         }
     } catch (\Exception $e) {
-        \Illuminate\Support\Facades\Log::error($e->getMessage());
+        errorLogMessage($e);
 //        error($obj);
     }
     return $filename;
@@ -892,6 +896,7 @@ function notify($user, $type, $shortCodes = null)
 {
 
     sendEmail($user, $type, $shortCodes);
+    sendPasswordResetEmail($user, $type, $shortCodes);
     sendSms($user, $type, $shortCodes);
 }
 
@@ -924,6 +929,54 @@ function sendEmail($user, $type = null, $shortCodes = [])
     $general = GeneralSetting::first();
 
     $emailTemplate = EmailTemplate::where('act', $type)->where('email_status', 1)->first();
+
+//    if ($general->en != 1 || !$emailTemplate) {
+//        dd($emailTemplate);
+//        return;
+//    }
+
+
+    $message = shortCodeReplacer("{{fullname}}", $user->fullname, $general->email_template);
+    $message = shortCodeReplacer("{{username}}", $user->username, $message);
+    $message = shortCodeReplacer("{{message}}", $emailTemplate->email_body, $message);
+
+    if (empty($message)) {
+        $message = $emailTemplate->email_body;
+    }
+
+    foreach ($shortCodes as $code => $value) {
+        $message = shortCodeReplacer('{{' . $code . '}}', $value, $message);
+    }
+
+    $config = $general->mail_config;
+
+    $emailLog = new EmailLog();
+    $emailLog->user_id = $user->id;
+    $emailLog->mail_sender = $config->name;
+    $emailLog->email_from = $general->sitename . ' ' . $general->email_from;
+    $emailLog->email_to = $user->email;
+    $emailLog->subject = $emailTemplate->subj;
+    $emailLog->message = $message;
+    $emailLog->save();
+
+
+    if ($config->name == 'php') {
+        sendPhpMail($user->email, $user->username, $emailTemplate->subj, $message, $general);
+    } else if ($config->name == 'smtp') {
+        \Mail::to($user->email)->send(new \App\Mail\SendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general));
+        //sendSmtpMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+    } else if ($config->name == 'sendgrid') {
+        sendSendGridMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+    } else if ($config->name == 'mailjet') {
+        sendMailjetMail($config, $user->email, $user->username, $emailTemplate->subj, $message, $general);
+    }
+}
+
+function sendPasswordResetEmail($user, $type = null, $shortCodes = [])
+{
+    $general = GeneralSetting::first();
+
+    $emailTemplate = SmsTemplate::where('act', $type)->where('email_status', 1)->first();
 
 //    if ($general->en != 1 || !$emailTemplate) {
 //        dd($emailTemplate);
@@ -1621,6 +1674,67 @@ function getFormattedDate($date,$format)
 {
     return Carbon::parse($date)->format($format);
 }
+function getUserContracts($uuid=null){
+
+    $user=Auth::user();
+    $contracts=Contract::select('id','contract_title');
+    if($uuid){
+
+        $contracts=$contracts->where('uuid',$uuid);
+    }
+
+    $contracts=$contracts->whereHas('offer',function ($query) use ($user){
+
+        $last_role_id=getLastLoginRoleId();
+        if ( $last_role_id  == Role::$Freelancer ) {
+            $query->where('offer_send_to_id','=',$user->id);
+        }
+        else if( $last_role_id == Role::$Client ){
+            $query->where('offer_send_by_id','=',$user->id);
+        }
+        $query->where('payment_type','=',ModuleOffer::PAYMENT_TYPE['HOURLY']);
+
+    })->get();
+
+    return $contracts;
+}
+function IsSendDayPlanningApproval($dayPlanning){
+    if($dayPlanning->status_id != DayPlanning::STATUSES['ApprovalRequested'] && $dayPlanning->status_id != DayPlanning::STATUSES['Approved']){
+        return true;
+    }
+    return false;
+}
+function IsDayPlanningNotApproved($dayPlanningtask){
+    if($dayPlanningtask->status_id == DayPlanning::STATUSES['Draft']){
+        return true;
+    }
+    return false;
+}
+
+function isApprovalRequired($day_planning){
+
+    $approval_statuses=[DayPlanning::STATUSES['ApprovalRequested'],DayPlanning::STATUSES['ResendForApproval']];
+    if(in_array($day_planning->status_id,$approval_statuses)){
+        return true;
+    }
+    return false;
+
+}
+function isApproved($day_planning){
+
+    $approval_statuses=[DayPlanning::STATUSES['Approved']];
+    if(in_array($day_planning->status_id,$approval_statuses)){
+        return true;
+    }
+    return false;
+    
+}
+function isHourlyContract($contract){
+    if($contract->offer->payment_type== ModuleOffer::PAYMENT_TYPE['HOURLY']){
+        return true;
+    }
+    return false;
+}
 
 function getDaysHoursMinutesSeconds($timestamp){
 
@@ -1734,4 +1848,37 @@ function getBaseUrl(){
         return "www.dureforce.com/";
     }
 
+}
+
+function errorLogMessage($exception){
+    try {
+        $errorMsg = 'Error on line '.$exception->getLine().' in '.$exception->getFile()." ".$exception->getMessage();
+        Log::error($errorMsg);
+        return true;
+    }
+    catch (\Exception $e){
+        return $exception;
+    }
+
+}
+
+
+function checkOfferAlreadySent($job_id){
+    try {
+        $job = Job::where('id',$job_id)->whereHas('moduleOffer', function ($query) {
+            $query->whereIn('status_id', ModuleOffer::OFFER_SENT_STATUSES);
+        })->get();
+
+        if (count($job)>0){
+
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    catch (\Exception $e){
+        return "www.dureforce.com/";
+    }
 }

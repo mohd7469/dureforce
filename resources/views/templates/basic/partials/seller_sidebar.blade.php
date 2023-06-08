@@ -31,6 +31,13 @@
                                 <i class="las la-plus"></i> <span class="title">@lang('Create Software')</span>
                             </a>
                         </li>
+
+                        {{-- <li class="sidebar-single-menu nav-item {{request()->routeIs('seller.work-diary.index')? 'open':''}}">
+                            <a href="{{route('work-diary.index')}}">
+                                <i class="las la-plus"></i> <span class="title">@lang('Work Diary')</span>
+                            </a>
+                        </li> --}}
+
                     </ul>
                     <h5 class="menu-header-title-new">@lang('Sales')</h5>
                     <hr />

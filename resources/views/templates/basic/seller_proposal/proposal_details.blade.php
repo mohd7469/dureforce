@@ -134,9 +134,8 @@
 
                         </div>
                         <div class="btns_container-div">
-                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> <input type="submit"
-                                                                                                 value="Withdraw Proposal"
-                                                                                                 class="btn_withdrw-c">
+                            <input type="submit" value="Change Terms" class="btn_sbmtrm"> 
+                            <a value="Withdraw Proposal" class="btn_withdrw-c" onclick="confirmDelete()"></a>
                         </div>
                     </div>
                     <!---Your Proposed Terms End--->
@@ -788,7 +787,7 @@
 </style>
 
 @push('script')
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert@2.1.2/dist/sweetalert.min.js"></script>
     <script>
         'use strict';
         $('#defaultSearch').on('change', function () {
@@ -811,6 +810,8 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+
+
 
 
     </script>

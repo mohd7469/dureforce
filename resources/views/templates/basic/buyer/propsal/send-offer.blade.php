@@ -68,7 +68,7 @@
       
           <h6 class="card-title" id="fixed_payment_option_heading">Pay a Fixed Price</h5>
         
-          <p class="paragraph-alignment">Pay for the Number of Hours Worked on a Project</p>
+          <p class="paragraph-alignment">Pay for the fixed rate decided for Project</p>
           
         </div>
       </div>
@@ -119,7 +119,7 @@
 
       <div class="mt-3">
         
-        <h6 class="color-green">Weekly Limit</h6>
+        <h6 class="color-green">Weekly Limit <span class="text-danger">*</span> </h6>
         <p class="text-wrap">Setting a weekly limit is a great way to help ensure you stay on budget.</p>
         
         <div class="form-row">

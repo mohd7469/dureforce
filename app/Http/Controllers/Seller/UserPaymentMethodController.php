@@ -128,14 +128,22 @@ class UserPaymentMethodController extends Controller
 
     public function changeStatus($id)
     {
+        // dd($id);
+        $all_methods = UserPayment::where('user_id',auth()->user()->id)->get();
+        foreach($all_methods as $all_method){
+            $all_method->is_primary = 0;
+            $all_method->save();
+        }
         $userPayment = UserPayment::findOrFail($id);
 
         $userPayment->update([
-            'status' => UserPayment::ACTIVE
+            'is_active' => UserPayment::ACTIVE,
+            'is_primary' => UserPayment::ISPRIMARY
         ]);
 
         $notify[] = ['success', 'Your Payment Method is now changed.'];
         
-        return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
+        return redirect()->back()->withNotify($notify);
+        // return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
 }

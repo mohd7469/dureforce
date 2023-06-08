@@ -2,6 +2,7 @@
 
 <form role="form" class="user-profile-form" action="{{ route('user.service.store.overview') }}" method="POST">
     @csrf
+    <input type="hidden" value="" name="sub_category_deliverable_ids" id="sub_category_deliverable_ids">
     <div class="card-body">
         <div class="card-form-wrapper">
             <div class="row justify-content-center">
@@ -15,7 +16,7 @@
                 <div class="col-xl-12 col-lg-12 form-group">
                     <label>@lang('Title')*</label>
                     <input type="text" name="title" id="title_over" maxlength="255" value="{{ old('title', @$service->title) }}"
-                        class="form-control" placeholder="@lang(' E.g. DevOps Service')" >
+                        class="form-control custom_input" placeholder="@lang(' E.g. DevOps Service')" >
 
                 </div>
                 <div class="col-xl-8 col-lg-8 form-group">
@@ -98,7 +99,7 @@
                                     <i class="fa fa-info-circle"></i>
                         </span>
     
-                        <select class="form-control select2 select2-hidden-accessible " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
+                        <select class="form-control feature-select select2 select2-hidden-accessible  " multiple="" data-placeholder="Select Features" style="width: 100%;" tabindex="-1" aria-hidden="true" name="features[]" id="service_features" >
                             @if (!empty($service))
                                 @foreach ($features as  $item )
                                     <option value="{{ $item->id }}" @if(in_array($item->id,$service->features->pluck('id')->toArray())) selected @endif>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBlogsTable extends Migration
+class CreateReasonEndContractsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,18 @@ class CreateBlogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('reason_end_contracts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->nullable();
-            $table->longText('description')->nillable();
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->boolean('is_active')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+
+            $table->foreign('role_id')->references('id')->on('roles');
+
         });
     }
 
@@ -30,6 +35,6 @@ class CreateBlogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('reason_end_contracts');
     }
 }

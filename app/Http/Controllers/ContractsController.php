@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contract;
+use App\Models\ContractFeedback;
+use App\Models\LanguageLevel;
+use App\Models\NotRecomenededReason;
+use App\Models\ReasonEndContract;
 use App\Models\Role;
+use App\Models\Timezone;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,8 +25,7 @@ class ContractsController extends Controller
             else if( $last_role_id == Role::$Client ){
                 $query->where('offer_send_by_id','=',$user->id);
             }
-        })->get();
-
+        })->orderBy('created_at','desc')->paginate(10);
         $contracts_completed=$contracts->where('status_id',Contract::STATUSES['Completed']);
         $contracts_active=$contracts->where('status_id',Contract::STATUSES['In_Progress']);
         $contracts_paused=$contracts->where('status_id',Contract::STATUSES['Terminated']);
@@ -31,6 +36,39 @@ class ContractsController extends Controller
     public function  show($uuid){
         $user=Auth::user();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
-        return view('templates.basic.buyer.contract.contract_details',compact('contract'));
+        $feedback=ContractFeedback::with('contract')->where('contract_id',$contract->id)->first();
+        if(empty($feedback)){
+            $feedbackData='empty';
+        }else{
+            $feedbackData=$feedback->id;
+        }
+        $contracts=getUserContracts();
+        $emptyMessage="Tasks Not Found";
+        $timezones = Timezone::select('id','name')->get();
+        return view('templates.basic.buyer.contract.contract_details',compact('contract','emptyMessage','contracts','timezones','feedbackData'));
     }
+
+    public function  feedback($uuid){
+//        $user=Auth::user();
+//        $last_role_id=getLastLoginRoleId();
+//
+//        $contract=Contract::WithAll()->where('uuid',$uuid)->first();
+//        $langLevels=LanguageLevel::where('is_active',1)->get();
+//        $reasons=ReasonEndContract::where('is_active',1)->where('role_id',$last_role_id)->get();
+//        $recomendReason=NotRecomenededReason::where('is_active',1)->where('role_id',$last_role_id)->get();
+//
+//        return view('templates.basic.buyer.contract.contract_feedback',compact('contract', 'langLevels','reasons','recomendReason'));
+    }
+
+    public function  feedbacknew($uuid){
+        $user=Auth::user();
+        $last_role_id=getLastLoginRoleId();
+        $contract=Contract::WithAll()->where('uuid',$uuid)->first();
+        $user_id=$contract->offer->offer_send_by_id;
+        
+        $userData=User::WithAll()->where('id',$user_id)->first();
+        $userName=$userData->first_name." ".$userData->last_name;
+        return view('templates.basic.user.contract_feedback',compact('contract', 'userName'));
+    }
+
 }

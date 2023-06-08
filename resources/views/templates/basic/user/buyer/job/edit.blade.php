@@ -282,7 +282,7 @@
                                                 <a href="{{route('buyer.job.index')}}"><button type="button" class="pl-4  mt-20 w-70 cancel-job-btn">@lang('Cancel')</button></a>
                                             </div>
                                             <div class="inner">
-                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit-all">@lang('Update Job')</button>
+                                                <button type="submit" class="pl-4 submit-btn mt-20 w-70 cretae-job-btn" id="submit_btn_job">@lang('Update Job')</button>
                                             </div>
                                         </div>
                                     </div>
@@ -329,30 +329,30 @@
         var documents=JSON.parse($('#uploaded_files_input_id').val());
         uploaded_files=documents;
     }
-    function fetchSubCategories(category)
-    {
-        $.ajax({
-            type:"GET",
-            url:"{{route('user.category')}}",
-            data: {category : category},
-            success:function(data){
-                var html = '';
-                if(data.error){
-                    $("#subCategorys").empty(); 
-                    html += `<option value="" selected disabled>${data.error}</option>`;
-                    $(".mySubCatgry").html(html);
-                }
-                else{
-                    $("#subCategorys").empty(); 
-                    html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
-                    $.each(data, function(index, item) {
-                        html += `<option value="${item.id}">${item.name}</option>`;
+        function fetchSubCategories(category)
+        {
+            $.ajax({
+                type:"GET",
+                url:"{{route('user.category')}}",
+                data: {category : category},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>${data.error}</option>`;
                         $(".mySubCatgry").html(html);
-                    });
+                    }
+                    else{
+                        $("#subCategorys").empty(); 
+                        html += `<option value="" selected disabled>@lang('Select Sub Category')</option>`;
+                                    $.each(data.sub_category, function(index, item) {
+                                        html += `<option value="${item.id}">${item.name}</option>`;
+                                        $(".mySubCatgry").html(html);
+                                    });
+                    }
                 }
-            }
-        });  
-    }
+            });  
+        }
     function loadSkills(data)
     {
 
@@ -436,6 +436,8 @@
         $('#job_form_data').submit(function (e) {
             
             e.preventDefault();
+            $('#submit_btn_job').attr("disabled", true);
+
             var form = $('#job_form_data')[0];
             var form_data = new FormData(form);
             form_data.append("file", JSON.stringify(uploaded_files));

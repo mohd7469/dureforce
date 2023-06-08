@@ -42,7 +42,7 @@ class PusherConfiguration extends ServiceProvider
             }
 
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            errorLogMessage($e);
         }
 
 

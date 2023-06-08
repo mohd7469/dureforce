@@ -22,8 +22,8 @@
 
 
             <div class="tab-content">
-                <div class="listing_table_con card-body tab-pane active" id="all">
-                    <table>
+                <div class="listing_table_con card-body tab-pane active table-responsive" id="all">
+                    <table class="table">
                         <thead>
                         <th>Title</th>
                         <th>Status</th>
@@ -48,11 +48,17 @@
                                     </td>
                                     <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                         class="view_propasal_per">View</a>
+                                        @if (isHourlyContract($contract))
+                                            <a href="{{route('work-diary.tasks',$contract->uuid)}}"
+                                                class="view_propasal_per">Work Diary</a>
+                                        @endif
+                                        
                                     </td>
                                 </tr>
                             @endforeach
-                           
+
                     </table>
+                    {{ paginateLinks($contracts) }}
                 </div>
 
                 <div class="listing_table_con card-body tab-pane" id="active_contrat"> 
@@ -80,14 +86,18 @@
                                 <td>
                                     <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
-                                <td><a href="{{route('contracts.show',$contract->uuid)}}"
-                                    class="view_propasal_per">View</a>
+                                <td>
+                                    <a href="{{route('contracts.show',$contract->uuid)}}" class="view_propasal_per">View</a>
+                                    @if (isHourlyContract($contract))
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                     @endif
                                 </td>
                             </tr>
                         @endforeach
                          
                     </table>
                 </div>
+
 
                 <div class="listing_table_con card-body tab-pane " id="pending_contract"> 
                     <table>
@@ -116,6 +126,9 @@
                                 </td>
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
+                                    @if (isHourlyContract($contract))
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -147,9 +160,14 @@
                                 <td>
                                     <p class="job_price">{{$contract->start_date ? getFormattedDate($contract->start_date,'M d,Y') : ''}} - {{ $contract->end_date ? getFormattedDate($contract->end_date,'M d,Y') : ''}}</p>
                                 </td>
+
                                 <td><a href="{{route('contracts.show',$contract->uuid)}}"
                                     class="view_propasal_per">View</a>
+                                    @if (isHourlyContract($contract))
+                                        <a href="{{route('work-diary.tasks',$contract->uuid)}}" class="view_propasal_per">Work Diary</a>
+                                    @endif
                                 </td>
+
                             </tr>
                          @endforeach
                          

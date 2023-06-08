@@ -2,8 +2,26 @@
 @section('content')
 
         <div class="container-fluid">
-            <p class="propsal-h">All Contracts > {{$contract->offer->module->title}} <span> <img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating" style="width: 60px;"></span></p>
-            <div class="main_con_p">
+            <div class="row m-auto">
+                <div class="col-md-10">
+                   <p class="">All Contracts > {{$contract->offer->module->title}} <span> </span></p>
+                </div>
+                <div class="col-md-2">
+
+                    <div class="dropdown">
+                        <a class="btn " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
+                            </svg>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{{route('contracts.feedbacknew',$contract->uuid)}}">@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        <div class="main_con_p">
                 <div class="prosal-left-con">
                     <!---Cover Letter Section Start--->
                     <h3 class="heading_proposal">Job Description</h3>
@@ -12,21 +30,31 @@
                         {{$contract->offer->module->description}}
                         </p>
                         <p><a href="{{route('single.view',$contract->offer->module->uuid)}}" class="view_origin">View Original Job Post</a></p>
-                        <p><a href="{{route('proposal.show',$contract->offer->proposal->uuid)}}" class="view_origin">View Original Proposals</a></p>
+                        <p><a href="{{route('proposal.show',$contract->offer->proposal->uuid)}}" class="view_origin">View Original Proposal</a></p>
                     </div>
                     <!---Cover Letter Section End--->
 
 
                     <!---Job DetailsSection Start--->
-                   
+                    @if (!isHourlyContract($contract))
                         <h3 class="heading_proposal jdc">Milestone Timeline</h3>
                         <div class="btm-c">
-                            
-                            @if ($contract->offer->moduleMilestones->count() > 0)
+                        
+                            @if ( $contract->offer->moduleMilestones->count() > 0 )
                                 
                                 @foreach ($contract->offer->moduleMilestones as $milestone)
-                                    <p class="posted_date_c">{{$milestone->description}}<p>
-                                    <p class="posted_date_c">${{$milestone->amount}}<p>
+                                    <p class="posted_date_c"> 
+                                        <strong>
+                                            {{$milestone->description}} 
+                                        </strong>
+                                        
+                                       
+                                    <p class="posted_date_c"><strong>${{$milestone->amount}}</strong> 
+                                        @if ($milestone->status)
+                                            <span class="badge  {{$milestone->status->color}}">{{$milestone->status->name}}</span><p>
+                                        @endif    
+                                    <p>
+                                    
                                     @if($milestone->is_paid)
                                         <p class="prop_description">Paid on: {{ $milestone->milestone_amount_paid_on ? getFormattedDate($milestone->milestone_amount_paid_on,'M d,Y') : '' }} <p>
                                     @endif
@@ -35,16 +63,21 @@
                             @else
                                 <p class="posted_date_c">Pay as Whole Project<p>
                                 <p class="posted_date_c">${{$contract->contract_total_amount}}<p>
-                                <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                                @if ($contract->all_amount_paid_on)
+                                    <p class="prop_description">Paid on: {{$contract->all_amount_paid_on ? getFormattedDate($contract->all_amount_paid_on,'M d,Y') : '' }} <p>
+                                    
+                                @endif
                                 
                             @endif
                             
                         </div>
+                    @endif
+                       
                     
                     <!---Job Details Section End--->
 
                     <!---Your message and file Terms Start--->
-                    <h3 class="heading_proposal jdc">Messages and Files</h3>
+                    {{-- <h3 class="heading_proposal jdc">Messages and Files</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <ul class="client_listing-c">
@@ -124,13 +157,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     
                     <!---Your message and file Terms End--->
 
 
                     <!---Your Feedback Terms Start--->
-                    <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendbyUser->full_name}}</h3>
+                     <h3 class="heading_proposal jdc">Your Feedback for {{$contract->offer->sendToUser->full_name}}</h3>
                     <div class="btm-c">
                         <div class="pt_con">
                             <div class="row">
@@ -145,7 +178,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <!---Your Proposed Terms End--->
 
                     <!---Your Proposed Terms Start--->
@@ -161,7 +194,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                     <!---Your Proposed Terms End--->
 
 
@@ -171,11 +204,22 @@
                     <div class="p_amount_con">
                         <ul class="listing_ps">
                             <li><span class="p_fcs" style="font-weight: 500;">Contract Summary</span></li>
-                            <li class="right-navbar-li"><span>Contract#</span> <span class="p_days">{{ $contract->contract_id }}</span></li>
+                            <li class="right-navbar-li"><span>Contract ID</span> <span class="p_days">{{ $contract->contract_id }}</span></li>
                             <li class="right-navbar-li"><span>Contract Type</span> <span class="p_days">{{ $contract->offer->payment_type }}</span></li>
-                            <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">$850.00</span></li>
+                            <li class="right-navbar-li"><span>Total Spent</span> <span class="p_days">${{$contract->approved_hours * $contract->offer->rate_per_hour }}</span></li>
+                            
                             <li class="right-navbar-li"><span>Start Date:</span> <span class="p_days">{{getFormattedDate($contract->start_date,'d-m-Y')}}</span></li>
                             <li class="right-navbar-li"><span>End Date:</span> <span class="p_days">{{ $contract->end_date ? getFormattedDate($contract->end_date,'d-m-Y') : ''}}</span></li>
+                            
+                            <li class="right-navbar-li"><span>Total Worked Hours:</span> <span class="p_days">{{$contract->total_worked_hours}}</span></li>
+                            <li class="right-navbar-li"><span>Approved Hours:</span> <span class="p_days">{{ $contract->approved_hours }}</span></li>
+                            
+                            {{-- @if (getLastLoginRoleId()==App\Models\Role::$Freelancer && isHourlyContract($contract) )
+                                <li class="right-navbar-li">
+                                    <button class="submit-btn" data-bs-toggle="modal" data-bs-target="#add_task_model_id">Add Task</button>
+                                </li>     
+                            @endif --}}
+                           
                         </ul>
                     </div>
                     <br>
@@ -184,14 +228,17 @@
                             <li><span class="p_fcs" style="font-weight: 500;">Billing</span></li>
                             <li class="right-navbar-li"><span>Paid Out</span> <span class="p_days">{{$contract->contract_paid_amount}}</span></li>
                             <li class="right-navbar-li"><span>Funded (Escrow Protection) </span> <span class="p_days">$0.00</span></li>
-                            <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{$contract->contract_total_amount}}</span></li>
-                            <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">Hourly</span></li>
+                            @if (isHourlyContract($contract))
+                                <li class="right-navbar-li"><span>Rate Per Hour</span> <span class="p_days">{{  $contract->offer->rate_per_hour}}</span></li>
+                            @else
+                                <li class="right-navbar-li"><span>Project Price</span> <span class="p_days">{{ $contract->contract_total_amount}}</span></li>
+                            @endif
+                            
+                            <li class="right-navbar-li"><span>Mode of Delivery</span> <span class="p_days">{{$contract->offer->payment_type}}</span></li>
                             
                             @if (getLastLoginRoleId()==App\Models\Role::$Client)
                                 <li>
-                                   
-                                        <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendToUser->full_name}}</a></center>
-                                   
+                                    <center><a href="#" class="btn navbar-burron">Re-Hire {{$contract->offer->sendToUser->full_name}}</a></center>
                                 </li>
                             @endif
                         </ul>
@@ -288,7 +335,8 @@
 
             </div>
         </div>
-        
+      
+       
 @endsection
 
 

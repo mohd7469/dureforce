@@ -8,6 +8,8 @@ use App\Http\Requests\ProfileEducationRequest;
 use App\Http\Requests\ProfileExperienceRequest;
 use App\Lib\GoogleAuthenticator;
 use App\Models\AdminNotification;
+use App\Models\Category;
+use App\Models\Deliverable;
 use App\Models\FavoriteItem;
 use App\Models\GeneralSetting;
 use App\Models\Language;
@@ -150,6 +152,7 @@ class UserController extends Controller
                 return back()->withNotify($notify);
             }
         } catch (\PDOException $e) {
+            errorLogMessage($e);
             $notify[] = ['error', $e->getMessage()];
             return back()->withNotify($notify);
         }
@@ -278,6 +281,7 @@ class UserController extends Controller
                                         'type' => $inVal->type,
                                     ];
                                 } catch (\Exception $exp) {
+                                    errorLogMessage($exp);
                                     $notify[] = ['error', 'Could not upload your ' . $request[$inKey]];
                                     return back()->withNotify($notify)->withInput();
                                 }
@@ -417,12 +421,43 @@ class UserController extends Controller
 
     public function category(Request $request)
     {
-        $sub_category = SubCategory::where('category_id', $request->category)->where('is_active',1)->get();
-        if ($sub_category->isEmpty()) {
-            return response()->json(['error' => "Sub category not available under this category"]);
-        } else {
-            return response()->json($sub_category);
+
+        try {
+            
+            $category=Category::with('subCategory')->find($request->category);
+            $sub_category = $category->subCategory->where('is_active',1);
+            return response()->json(['sub_category' => $sub_category]);
+
+        } catch (\Throwable $th) {
+            errorLogMessage($th);
+
+           return response()->json([ 'error' => $th->getMessage()]);
+
         }
+       
+        
+    }
+    public function subCategoryDeliverables(Request $request)
+    {
+
+        try {
+            $deliverables=Deliverable::latest()->get();
+            $sub_category=SubCategory::with('deliverables')->find($request->sub_category_id);
+            $category_deliverables=collect([]);
+            $category_deliverable_ids=[];
+            if($request->has('module_id')){
+                $category_deliverables = $sub_category->deliverables;
+                $category_deliverable_ids=$sub_category->deliverables->pluck('id');
+            }
+            return response()->json(['category_deliverables' => $category_deliverables,'deliverables' => $deliverables ,'category_deliverable_ids' => $category_deliverable_ids]);
+
+        } catch (\Throwable $th) {
+            errorLogMessage($th);
+           return response()->json([ 'error' => $th->getMessage()]);
+
+        }
+       
+        
     }
 
     public function skillSubCategory(Request $request)
@@ -725,17 +760,5 @@ class UserController extends Controller
         }
 
     }
-    public function notification()
-    {
-        try {
 
-            $pageTitle = 'notifications';
-
-            return   view($this->activeTemplate.'user.notification', compact('pageTitle'));
-
-        } catch (\Exception $exp) {
-            $notify[] = ['error', 'There is a technical error in deleting redis data.'];
-            return back()->withNotify($notify);
-        }
-    }
 }

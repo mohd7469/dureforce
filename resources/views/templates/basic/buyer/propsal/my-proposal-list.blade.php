@@ -15,19 +15,19 @@
 
             <ul class="nav nav-tabs card-header-tabs jbs_nav_s allp_nav" data-bs-tabs="tabs">
                 <li class="nav-item">
-                    <a class="nav-link {{ $type==null ? 'active' : ''}}" aria-current="true" data-bs-toggle="tab" href="#all">All</a>
+                    <a class="nav-link {{ $type==null ? 'active' : ''}}" aria-current="true" data-bs-toggle="tab" href="#all">All ({{count($proposal_count)}})</a>
 
                 </li>
                 <li class="nav-item">
 
-                    <a class="nav-link {{ $type=="submitted_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposals)}})</a>
+                    <a class="nav-link {{ $type=="submitted_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#submitted_proposals">Submitted Proposals ({{count($submitted_proposal_count)}})</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $type=="active_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposals)}})</a>
+                    <a class="nav-link {{ $type=="active_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#active_proposals">Active Proposals ({{count($active_proposal_count)}})</a>
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ $type=="archived_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposals)}})</a>
+                    <a class="nav-link {{ $type=="archived_proposals" ? 'active' : ''}}" data-bs-toggle="tab" href="#draft_proposals">Archived Proposals ({{count($archived_proposal_count)}})</a>
 
                 </li>
                
@@ -50,7 +50,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? '' }}&nbsp; {{$proposal->module->user->last_name[0] ?? '' }}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">
@@ -106,7 +106,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? ''}} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">
@@ -158,12 +158,12 @@
                         </thead>
                         @if(isset($archived_proposals) && $archived_proposals->count() > 0)
                         @foreach($archived_proposals as $proposal)
-                            <tr>
-                                <td>
-                                    <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
-                                </td>
-                                <td>
+                                <tr>
+                                    <td>
+                                        <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
+                                        <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? '' }} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    </td>
+                                    <td>
                     <span class="jobtype-per">
                         @if($proposal->module_type == "App\Models\Job")
                             Job
@@ -175,25 +175,25 @@
 
                         @endif
                     </span>
-                                </td>
-                                <td>
-                                    <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
-                                </td>
-                                <td>
-                                    @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
-                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Submitted</span>
-                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
-                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Archived</span>
-                                    @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
-                                        <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Active</span>
-                                    @else
+                                    </td>
+                                    <td>
+                                        <p class="job_price">{{$proposal->hourly_bid_rate ?? $proposal->fixed_bid_amount}}</p>
+                                    </td>
+                                    <td>
+                                        @if($proposal->status_id == App\Models\Proposal::STATUSES['SUBMITTED'])
+                                            <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Submitted</span>
+                                        @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ARCHIVED'])
+                                            <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Archived</span>
+                                        @elseif($proposal->status_id == App\Models\Proposal::STATUSES['ACTIVE'])
+                                            <span class="badge {{$proposal->status ? $proposal->status->color : 'badge--info'}}">Active</span>
+                                        @else
 
-                                    @endif
+                                        @endif
 
-                                </td>
-                                <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
-                                       class="view_propasal_per">View Proposal</a></td>
-                            </tr>
+                                    </td>
+                                    <td><a href="{{ route('seller.proposal.detail',$proposal->uuid) }}"
+                                           class="view_propasal_per">View Proposal</a></td>
+                                </tr>
                         @endforeach
                         @endif
                     </table>
@@ -215,7 +215,7 @@
                             <tr>
                                 <td>
                                     <h2 class="per_heading">{{isset($proposal->module) ? $proposal->module->title: null}}</h2>
-                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name.' '.$proposal->module->user->last_name[0]}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
+                                    <p class="per_jobs_d">Job posted by <span class="per_heading_name">{{$proposal->module->user->first_name ?? ''}} &nbsp; {{$proposal->module->user->last_name[0] ?? ''}}</span> on {{getYearMonthDays($proposal->module->created_at)}}</p>
                                 </td>
                                 <td>
                     <span class="jobtype-per">

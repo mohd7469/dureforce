@@ -339,6 +339,7 @@
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
   border: 1px solid #e1e7ec !important;
+  /* height: 44px !important; */
 }
 
 .select2-container--default .select2-selection--multiple {
@@ -917,6 +918,60 @@
   .header-bottom-area {
     padding: 5px 0;
   }
+  .hero-banner .heading {
+    color: #007f7f;
+    font-size: 15px !important;
+  }
+  .hero-banner .btn--post {
+    background-color: #7f007f;
+    padding: 6px 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #fff;
+    border: 2px solid #7f007f;
+    margin-left: 47px;
+    font-size: 13px;
+  }
+  .hero-banner .btn--search {
+    background-color: #fff;
+    padding: 6px 15px;
+    border-radius: 12px;
+    color: #7f007f;
+    border: 2px solid #7f007f;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .hero-banner .para {
+    font-size: 11px;
+    color: #a5a5a5;
+    inline-size: 210px;
+    overflow-wrap: break-word;
+  }
+  .hero-banner figure svg {
+    width: 40%;
+    height: 150px;
+    margin-left: 210px !important;
+  }
+  .carousel-mobile-view{
+    display: none;
+  }
+  .footer-section .footer-heading h2 {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 40px;
+  }
+  .mobile-view-col{
+    width: auto;
+  }
+  .hvideoContainer iframe{
+    width: 289px !important;
+    height: 200px !important;
+  }
+  #videoContainer iframe{
+    width: 289px !important;
+    height: 200px !important;
+  }
 }
 @media (max-width: 767px) {
   .header-bottom-area .navbar-collapse {
@@ -996,6 +1051,56 @@
 @media only screen and (max-width: 420px) {
   .site-logo img {
     height: 30px;
+  }
+  .hero-banner .heading {
+    color: #007f7f;
+    font-size: 15px !important;
+  }
+  .hero-banner .btn--post {
+    background-color: #7f007f;
+    padding: 6px 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #fff;
+    border: 2px solid #7f007f;
+    margin-left: 47px;
+    font-size: 13px;
+  }
+  .hero-banner .btn--search {
+    background-color: #fff;
+    padding: 6px 15px;
+    border-radius: 12px;
+    color: #7f007f;
+    border: 2px solid #7f007f;
+    font-weight: 500;
+    font-size: 13px;
+  }
+  .hero-banner .para {
+    font-size: 11px;
+    color: #a5a5a5;
+    inline-size: 210px;
+    overflow-wrap: break-word;
+  }
+  .hero-banner figure svg {
+    width: 40%;
+    height: 150px;
+    margin-left: 210px !important;
+  }
+  .carousel-mobile-view{
+    display: none;
+  }
+  .footer-section .footer-heading h2 {
+    color: #fff;
+    font-size: 23px;
+    font-weight: 500;
+    line-height: 40px;
+  }
+  .mobile-view-col{
+    width: auto;
+  }
+  .hvideoContainer iframe{
+    width: 289px !important;
+    height: 200px !important;
   }
 }
 .header-short-menu.sub-short-menu .short-menu {
@@ -2610,7 +2715,6 @@ hr {
   }
 }
 .badge--primary {
-  width: 76px;
   height: 25px;
   background: #DB8343;
   border-radius: 7px;

@@ -15,8 +15,8 @@
             ?>
 
             <div class="tab-content">
-                <div class="listing_table_con card-body tab-pane active" id="all">
-                    <table>
+                <div class="listing_table_con card-body tab-pane active table-responsive" id="all">
+                    <table class="table">
                         <thead>
                         <th>Title</th>
                         <th>Type</th>

@@ -25,7 +25,7 @@ class ReviewRequest extends FormRequest
     {
         return [
             //
-            'max_no_projects' => 'required|string'
+            'max_no_projects' => 'required|integer|min:3|max:10'
 
         ];
     }
@@ -33,7 +33,7 @@ class ReviewRequest extends FormRequest
     public function messages()
     {
         return [
-            'max_no_projects.required' => 'Maximum number of projects is required'
+            'max_no_projects.required' => 'Maximum number of projects is required',
         ];
     }
 }

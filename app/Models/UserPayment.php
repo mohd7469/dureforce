@@ -13,6 +13,7 @@ class UserPayment extends Model
 
 
     const ACTIVE = 1;
+    const ISPRIMARY = 1;
     const IN_ACTIVE = 0;
 
     protected $table = "user_payments";
@@ -26,7 +27,8 @@ class UserPayment extends Model
         'city_id',
         'address',
         'is_active',
-        'user_id'
+        'user_id',
+        'is_primary'
     ];
 
     protected $casts  = [

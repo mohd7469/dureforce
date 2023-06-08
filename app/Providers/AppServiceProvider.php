@@ -75,7 +75,6 @@ class AppServiceProvider extends ServiceProvider
         $viewShare['features'] = Features::Active()->latest()->get();
         $viewShare['deliverables'] = Deliverable::latest()->get();
         $viewShare['delivery_modes'] = DeliveryMode::Active()->latest()->get();
-
         $viewShare['software_module_titles'] = SoftwareDefaultStep::Active()->latest()->get();
 
         $viewShare['tags'] = Tag::Active()->latest()->get();

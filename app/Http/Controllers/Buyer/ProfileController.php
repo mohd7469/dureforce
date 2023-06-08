@@ -54,12 +54,10 @@ class ProfileController extends Controller
      */
     public function saveCompany(Request $request)
     {
-    
-
         $rules = [
             'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:4|max:15',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15|gt:0',
+            'vat' => 'required|string|not_in:0|min:4|max:15|regex:/^[0-9]+$/u',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -94,14 +92,18 @@ class ProfileController extends Controller
                 }
 
                 $user->company()->delete();
+                $vatId=$request->get('vat');
+                $vatId=ltrim($vatId,"0");
+                $phone=$request->get('phone');
+                $phone =ltrim($phone,"0");
 
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
-                    'number' => $request->get('phone'),
+                    'number' => $phone,
                     'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
-                    'vat' => $request->get('vat'),
+                    'vat' => $vatId,
                     'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')
@@ -112,7 +114,8 @@ class ProfileController extends Controller
 
             } catch (\Throwable $th) {
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
+                errorLogMessage($th);
+                // return response()->json(['error' => $th->getMessage()]);
                 $notify[] = ['errors', 'Failled To Save User Company .'];
                 return back()->withNotify($notify);
 
@@ -188,7 +191,8 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
+                // return response()->json(['error' => $exception->getMessage()]);
+                errorLogMessage($exception);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
@@ -206,7 +210,7 @@ class ProfileController extends Controller
     public function savePaymentMethod(Request $request)
     {
         $rules = [
-            'card_number' => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19|gt:0',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code' => 'required|numeric|digits_between:3,4',
             'name_on_card' => 'required',
@@ -285,7 +289,8 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
-                return response()->json(['error' => $th->getMessage()]);
+                //return response()->json(['error' => $th->getMessage()]);
+                errorLogMessage($th);
                 $notify[] = ['errors', 'Failled To Update User Payment Method .'];
                 return back()->withNotify($notify);
 
@@ -388,7 +393,8 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
-                return response()->json(['error' => $exception->getMessage()]);
+                //return response()->json(['error' => $exception->getMessage()]);
+                errorLogMessage($exception);
                 $notify[] = ['errors', 'Failled To Save User Profile .'];
                 return back()->withNotify($notify);
 
@@ -403,7 +409,7 @@ class ProfileController extends Controller
     {
 
         $rules = [
-            'card_number' => 'required|numeric|digits_between:13,19',
+            'card_number' => 'required|numeric|digits_between:13,19|gt:0',
             'expiration_date' => 'required|date|after_or_equal:now',
             'cvv_code' => 'required|numeric|digits_between:3,4',
             'name_on_card' => 'required',
@@ -484,6 +490,7 @@ class ProfileController extends Controller
             } catch (\Throwable $th) {
 
                 DB::rollback();
+                errorLogMessage($th);
                 return response()->json(['error' => 'Failled To Update User Payment Method .']);
 
             }
@@ -565,6 +572,7 @@ class ProfileController extends Controller
             } catch (\Throwable $exception) {
 
                 DB::rollback();
+                errorLogMessage($exception);
                 return response()->json(['error' => 'Failled To Save User Profile .']);
             }
         }
@@ -577,8 +585,8 @@ class ProfileController extends Controller
             'name' => 'required',
             'country_id' => 'required',
             'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'vat' => 'required|string|min:5|max:15',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:4|max:15|gt:0',
+            'vat' => 'required|string|not_in:0|min:4|max:15|regex:/^[0-9]+$/u',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
@@ -611,14 +619,18 @@ class ProfileController extends Controller
                 }
 
                 $user->company()->delete();
+                $vatId=$request->get('vat');
+                $vatId=ltrim($vatId,"0");
+                $phone=$request->get('phone');
+                $phone =ltrim($phone,"0");
 
                 $user->company()->save(new UserCompany([
                     'name' => $request->get('name'),
-                    'number' => $request->get('phone'),
+                    'number' => $phone,
                     'logo' => $url,
                     'email' => $request->get('email'),
                     'country_id' => $request->get('country_id'),
-                    'vat' => $request->get('vat'),
+                    'vat' => $vatId,
                     'website' => $request->get('url'),
                     'linked_url' => $request->get('linkedin_url'),
                     'facebook_url' => $request->get('facebook_url')
@@ -629,6 +641,7 @@ class ProfileController extends Controller
 
             } catch (\Throwable $th) {
                 DB::rollback();
+                errorLogMessage($th);
                 return response()->json(['error' => 'Failled To Save User Company .']);
             }
         }

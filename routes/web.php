@@ -189,6 +189,9 @@ Route::name('user.')->prefix('user')->group(function () {
                 Route::post('/service/delete/{id}', 'ServiceController@destroy')->name('service.destroy');
                 Route::post('/optional/image', 'ServiceController@optionalImageRemove')->name('optional.image');
                 Route::get('/category', 'UserController@category')->name('category');
+                Route::get('/sub-category-deliverables', 'UserController@subCategoryDeliverables')->name('sub.category.deliverables');
+
+                
                 // Route::get('/category', 'UserController@skillSubCategory')->name('category');
 
 
@@ -308,7 +311,7 @@ Route::middleware('auth')->group(function (){
 Route::get('/change/{lang?}', 'SiteController@changeLanguage')->name('lang');
 Route::get('/cookie/accept', 'SiteController@cookieAccept')->name('cookie.accept');
 Route::get('blog', 'SiteController@blog')->name('blog');
-Route::get('blog/{id}/{slug}', 'SiteController@blogDetails')->name('blog.details');
+Route::get('blog/{id}/{slug?}', 'SiteController@blogDetails')->name('blog.details');
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholder.image');
 
 //Service

@@ -248,7 +248,7 @@
                                     <div class="header-user-area d-flex flex-wrap align-items-center justify-content-between">
                                         <span class="header-user-bell-icon"><i class="las la-search icon-lg"></i></span>
 {{--                                        <span class="header-user-bell-icon"><i class="las la-bell icon-lg"></i></span>--}}
-{{--                                        @include($activeTemplate.'partials.notification-dropdown')--}}
+                                        @include($activeTemplate.'partials.notification-dropdown')
                                         <div class="header-user-thumb">
                                             <a href="JavaScript:Void(0);">
                                                 @if(isset(auth()->user()->basicProfile->profile_picture))
@@ -268,7 +268,7 @@
                                     <span data-bs-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                                         <div class="d-flex flex-wrap align-items-center">
                                             <div class="header-user-content">
-                                                <span>{{ auth()->user()->username }}</span>
+                                                <span>{{ auth()->user() ? auth()->user()->first_name :' ' }} {{ auth()->user() ? auth()->user()->last_name :' ' }}</span>
                                             </div>
                                             <span class="header-user-icon"><i class="las la-chevron-circle-down"></i></span>
                                         </div>
@@ -467,7 +467,7 @@
             display:none;
         }
         img {
-            max-width: 70%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -518,7 +518,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -569,7 +569,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
@@ -621,7 +621,7 @@
             display:none;
         }
         img {
-            max-width: 80%;
+            max-width: 100%;
             height: auto;
         }
         .mobile-view-dropdown{
