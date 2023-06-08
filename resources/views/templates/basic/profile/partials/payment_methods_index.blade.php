@@ -94,6 +94,8 @@
         @endif
 
         @include("templates.basic.profile.modals.payment_method_")
+        @include("templates.basic.profile.modals.payment_method_edit_")
+
     </div>
     
 </div>
@@ -110,6 +112,35 @@
 
 </script>
 <script type="text/javascript">
+    
+    function getUserPaymentMethods(id,payment_city_id){
+        
+        let route = "{{ route('buyer.basic.payment.methods') }}";
+
+        $.ajax({
+            type:"GET",
+            url:route,
+            data: {'id':id},
+            success:function(data){
+                
+                if(data.error){
+                    displayAlertMessage(data.error);
+                }
+                else{
+                    let html='';
+                    $("#payment_city_id").empty();
+                    html += `<option value="" selected disabled>Select City</option>`;
+                    $.each(data.payment_method.country.cities, function (index, item) {
+                        html += `<option value="${item.id}">${item.name}</option>`;
+                        $("#payment_city_id").html(html);
+                    });
+                    $(".modal-body #payment_city_id").val(payment_city_id);
+
+                }
+            }
+        });  
+        
+    }
     $(function () {
         $(".editPayment").click(function () {
             var payment_id = $(this).data('id');
@@ -120,17 +151,14 @@
             var country_id = $(this).data('country_id');
             var payment_city_id = $(this).data('payment_city_id');
             var address = $(this).data('address');
-
+            getUserPaymentMethods(payment_id,payment_city_id);
             $(".modal-body #payment_id").val(payment_id);
             $(".modal-body #card_number").val(card_number);
             $(".modal-body #name_on_card").val(name_on_card);
             $(".modal-body #cvv_code").val(cvv_code);
             $(".modal-body #expiration_date").val(expiration_date);
-
             $(".modal-body #sec_country_id").val(country_id);
-            $(".modal-body #payment_city_id").val(payment_city_id);
             $(".modal-body #address").val(address);
-
 
             
            
@@ -169,6 +197,5 @@
 </script>
 @endpush
 
-@include("templates.basic.profile.modals.payment_method_edit_")
 
 
