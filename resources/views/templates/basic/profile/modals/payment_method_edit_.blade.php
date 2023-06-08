@@ -78,13 +78,7 @@
                                         class="form-control select-lang"
                                         id="payment_city_id"
                                             >
-                                            <option value="">Select City</option>
-        
-                                            @foreach ($cities as $city)
-                                                <option value="{{$city->id}}"
-                                                {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
-                                                >{{$city->name}}</option>
-                                            @endforeach
+                                           
                                     </select>
                                     
                                 </div>
