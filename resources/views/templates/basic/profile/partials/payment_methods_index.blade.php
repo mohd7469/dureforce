@@ -94,81 +94,94 @@
         @endif
 
         @include("templates.basic.profile.modals.payment_method_")
+        @include("templates.basic.profile.modals.payment_method_edit_")
+
     </div>
     
 </div>
 
 @push('script')
+
     <script>
         "use strict";
         $(document).ready(function() {
-         $('.registerBtn').click(function() {
-            $("#cod_equipamento").val($(this).attr('data_value'));
+
+            $('.registerBtn').click(function() {
+                $("#cod_equipamento").val($(this).attr('data_value'));
+            }); 
         });
-    });
-  
+    
+    </script>
 
-</script>
-<script type="text/javascript">
-    $(function () {
-        $(".editPayment").click(function () {
-            var payment_id = $(this).data('id');
-            var card_number = $(this).data('card_number');
-            var name_on_card = $(this).data('name_on_card');
-            var cvv_code = $(this).data('cvv_code');
-            var expiration_date = $(this).data('expiration_date');
-            var country_id = $(this).data('country_id');
-            var payment_city_id = $(this).data('payment_city_id');
-            var address = $(this).data('address');
-
-            $(".modal-body #payment_id").val(payment_id);
-            $(".modal-body #card_number").val(card_number);
-            $(".modal-body #name_on_card").val(name_on_card);
-            $(".modal-body #cvv_code").val(cvv_code);
-            $(".modal-body #expiration_date").val(expiration_date);
-
-            $(".modal-body #sec_country_id").val(country_id);
-            $(".modal-body #payment_city_id").val(payment_city_id);
-            $(".modal-body #address").val(address);
-
-
+    <script type="text/javascript">
+    
+        function getUserPaymentMethods(id,payment_city_id){
             
-           
-        })
-    });
-</script>
+            let route = "{{ route('buyer.basic.payment.methods') }}";
+
+            $.ajax({
+                type:"GET",
+                url:route,
+                data: {'id':id},
+                success:function(data){
+                    
+                    if(data.error){
+                        displayAlertMessage(data.error);
+                    }
+                    else{
+                        let html='';
+                        $("#edit_payment_city_id").empty();
+                        html += `<option value="" selected disabled>Select City</option>`;
+                        $.each(data.cities.data, function (index, item) {
+                            html += `<option value="${item.id}">${item.name}</option>`;
+                            $("#edit_payment_city_id").html(html);
+                        });
+                        $(".modal-body #edit_payment_city_id").val(payment_city_id);
+
+                    }
+                }
+            });  
+            
+        }
+
+        $(function () {
+            $(".editPayment").click(function () {
+                var payment_id = $(this).data('id');
+                var card_number = $(this).data('card_number');
+                var name_on_card = $(this).data('name_on_card');
+                var cvv_code = $(this).data('cvv_code');
+                var expiration_date = $(this).data('expiration_date');
+                var country_id = $(this).data('country_id');
+                var payment_city_id = $(this).data('payment_city_id');
+                var address = $(this).data('address');
+                getUserPaymentMethods(payment_id,payment_city_id);
+                $(".modal-body #payment_id").val(payment_id);
+                $(".modal-body #edit_card_number").val(card_number);
+                $(".modal-body #edit_name_on_card").val(name_on_card);
+                $(".modal-body #edit_cvv_code").val(cvv_code);
+                $(".modal-body #edit_expiration_date").val(expiration_date);
+                $(".modal-body #edit_sec_country_id").val(country_id);
+                $(".modal-body #edit_address").val(address);
+
+                
+            
+            })
+        });
+
+    </script>
 
 <script>
-    $("#sec_country_id").on('change',function(){
-        getCountryCities($(this).val(),'#payment_city_id');
+    
+    $("#edit_sec_country_id").on('change',function(){
+        getCountryCities($(this).val(),'#edit_payment_city_id');
     });
-    function getCountryCities(country_id,select_field_id)
-    {
-        $.ajax({
-            type:"GET",
-            url:"{{route('get-cities')}}",
-            data: {country_id : country_id},
-            success:function(data){
-                if(data.cities)
-                {    
-                    
-                    $(select_field_id).empty();
-                    $(select_field_id).append(
-                        `<option>Select City</option>
-                        ${data.cities?.map((city) => {
-                            return ` <option value="${city.id}"> ${city.name}</option>`;
-                    })}`);
-                }
-                else{
-                    alert("Wrong Country Id");        
-                }
-            }
-        }); 
+    
+    
 
-    }
 </script>
 @endpush
 
-@include("templates.basic.profile.modals.payment_method_edit_")
+
+
 
 

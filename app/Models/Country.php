@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Khsing\World\Models\City;
 
 class Country extends Model
 {
@@ -23,6 +24,10 @@ class Country extends Model
     public function user()
     {
         return $this->hasMany(User::class);
+    }
+    public function cities()
+    {
+        return $this->hasMany(City::class);
     }
     public function continent()
     {

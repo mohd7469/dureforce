@@ -105,7 +105,13 @@ trait CreateOrUpdateEntity {
                 $model->tags()->detach();
             }
             
-            $tags=collect($request->tag)->map(function ($tag)  {
+            $pattern = '/#\w+/';
+            $matches = [];
+            $selected_tags=$request->tag;
+            preg_match_all($pattern, $request->description, $matches);
+            $matches=array_merge(...$matches);
+            $all_tags=array_merge($matches,$selected_tags);
+            $tags=collect($all_tags)->map(function ($tag)  {
                 $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
                 return $tag->id;
             });

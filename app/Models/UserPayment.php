@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Country as ModelsCountry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Khsing\World\Models\Country;
 
 class UserPayment extends Model
 {
@@ -40,6 +42,10 @@ class UserPayment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function country()
+    {
+        return $this->belongsTo(ModelsCountry::class);
     }
     
 }
