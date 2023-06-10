@@ -1,5 +1,12 @@
 @php
-$staffAccess = Auth::guard('admin')->user()->staff_access;
+$staff = Auth::guard('admin')->user();
+$staffAccess = [];
+$permissions = $staff->admin_permissions->toArray();
+foreach($permissions as $val)
+{
+    $staffAccess[] =  json_encode($val['pivot']['permission_id']);
+}
+
 @endphp
 <div class="sidebar {{ sidebarVariation()['selector'] }} {{ sidebarVariation()['sidebar'] }} {{ @sidebarVariation()['overlay'] }} {{ @sidebarVariation()['opacity'] }}"
     data-background="{{ getImage('assets/admin/images/sidebar/1.jpg', '400x800') }}">

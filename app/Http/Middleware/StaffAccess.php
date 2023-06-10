@@ -18,7 +18,13 @@ class StaffAccess
     public function handle(Request $request, Closure $next, $access = null)
     {
         $staff =  Auth::guard('admin')->user();
-        $staffAccess = $staff->staff_access;
+        // dd($staff->staff_access);
+        $staffAccess = [];
+        $permissions = $staff->admin_permissions->toArray();
+        foreach($permissions as $val)
+        {
+            $staffAccess[] =  json_encode($val['pivot']['permission_id']);
+        }
         if(in_array($access, $staffAccess))
         {
             return $next($request);
