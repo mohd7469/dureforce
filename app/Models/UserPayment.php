@@ -45,7 +45,7 @@ class UserPayment extends Model
     }
     public function country()
     {
-        return $this->belongsTo(ModelsCountry::class)->with('cities');
+        return $this->belongsTo(ModelsCountry::class);
     }
     
 }
