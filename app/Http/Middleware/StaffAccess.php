@@ -18,7 +18,6 @@ class StaffAccess
     public function handle(Request $request, Closure $next, $access = null)
     {
         $staff =  Auth::guard('admin')->user();
-        dd($staff->admin_permissions->pluck('id'));
         $staffAccess = $staff->staff_access;
         if(in_array($access, $staffAccess))
         {
