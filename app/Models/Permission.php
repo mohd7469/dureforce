@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+    const ADMIN_PERMISSIONS = [
+        "Dashboard"=>1
+    ];
 }
