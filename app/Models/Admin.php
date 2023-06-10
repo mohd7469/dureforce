@@ -32,6 +32,6 @@ class Admin extends Authenticatable
 
     public function admin_permissions()
     {
-        return $this->belongsToMany(Admin::class, 'admin_permissions');
+        return $this->belongsToMany(Admin::class, 'admin_permissions','admin_id','permission_id');
     }
 }

@@ -62,9 +62,9 @@
                                             <div class="form-group form-check">
                                             @foreach($permission as $value)
                                                 <input type="checkbox" class="form-check-input" name="permission[]"
-                                                @if(!empty($staff->staff_access))
-                                                    @forelse($staff->staff_access as $val)
-                                                        @if($val == $value->id)
+                                                @if(!empty($staff_permission))
+                                                    @forelse($staff_permission as $val)
+                                                        @if($val->permission_id == $value->id)
                                                             checked
                                                         @endif 
                                                     @empty
