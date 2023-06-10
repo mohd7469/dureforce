@@ -138,21 +138,18 @@
 @endsection
 @push('style')
     <style>
-        span.select2-selection.select2-selection--multiple {
-            width: 100% !important;
-            padding: 10px !important;
-            border: 1px solid #CBDFDF;
+        .select2-container {
+            z-index: 9999;
         }
-        
+        .select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #CBDFDF;
+    border-radius: 4px;
+    height: 38px !important;
+}
     </style>
 @endpush
-@push('style-lib')
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'frontend/css/select2.min.css') }}">
-@endpush
 
-@push('script-lib')
-    <script src="{{ asset($activeTemplateTrue . 'frontend/js/select2.min.js') }}"></script>
-@endpush
 @push('script')
     <script>
         
@@ -203,10 +200,41 @@
             
             loadProfileBasicsData();
 
-            $('.select2').select2({
-                tags: true
+            // $('#edit_payment_city_id').select2({
+            //     theme: 'bootstrap',
+            //     placeholder: 'Select an option',
+            //     allowClear: true,
+            //     width: '100%'
+            // });
+
+            $('#edit_payment_city_id').select2({
+                tags: false,
+                minimumResultsForSearch: 0,
+                dropdownParent: $('#cities_div'),
+                ajax: {
+                    url: "{{ route('get-cities') }}",
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            country_id: $('#edit_sec_country_id').val()
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data.cities.data, function(item) {
+                                return {
+                                    id: item.id,
+                                    text: item.name
+                                };
+                            })
+                        };
+                    }
+                },
             });
             
+         
+                    
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -297,7 +325,7 @@
                         $(select_field_id).empty();
                         $(select_field_id).append(
                             `<option>Select City</option>
-                            ${data.cities?.map((city) => {
+                            ${data.cities.data?.map((city) => {
                                 return ` <option value="${city.id}"> ${city.name}</option>`;
                         })}`);
                     }
