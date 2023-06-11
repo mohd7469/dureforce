@@ -42,6 +42,31 @@ class Permission extends Model
         'Clear Cache'       => 31,
         'Report and Request'=> 32,
         'Manage Rank'       => 33,
-        'Manage Staff'      => 34
+        'Manage Staff'      => 34,
+        'Lead images'       => 35,
+        'Project Lenght'    => 36,
+        'Email image settings'   => 37,
+        'Software Default'   => 38,
+        'Deliverables'      => 39,
+        'DODS'              => 40,
+        'Delivery Mode'     => 41,
+        'System Credentials'   => 42,
+        'Jobs Type'         => 43,
+        'Budget Type'       => 44,
+        'Degrees'           => 45,
+        'World Countries'   => 46,
+        'World Cities'      => 47,
+        'World Languags'    => 48,
+        'Language Levels'   => 49,
+        'Project Stages'    => 50,
+        'Tags'              => 51,
+        'Blogs'             => 52,
+        'Logs'              => 53,
+        'Flush Redis Data'  => 54,
+        'Technology Logo'   => 55,
+        'Background Banner' => 56,
+        'Manage Attributes' => 57,
+        'Manage Testimonials' => 58
+
     ];
 }
