@@ -9,6 +9,7 @@ class AdminPermission extends Model
 {
     use HasFactory;
 
+    protected $table = 'admin_permissions';
     protected $fillable = [
         'admin_id','permission_id'
     ];
