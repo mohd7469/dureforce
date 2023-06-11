@@ -29,5 +29,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusSeeder::class);
         // $this->call(TimezonesSeeder::class);
         $this->call(ReasonEndContractSeeder::class);
+        $this->call(PermissionSeeder::class);
     }
 }
