@@ -1,5 +1,9 @@
 @php
-$staffAccess = Auth::guard('admin')->user()->staff_access;
+    $staff = Illuminate\Support\Facades\Auth::guard('admin')->user();
+    $staffAccess = \App\Models\AdminPermission::where('admin_id',$staff->id)->get()->pluck('permission_id')->toArray();
+
+        $staffAccess[] =  json_encode($staffAccess);
+
 @endphp
 <div class="sidebar {{ sidebarVariation()['selector'] }} {{ sidebarVariation()['sidebar'] }} {{ @sidebarVariation()['overlay'] }} {{ @sidebarVariation()['opacity'] }}"
     data-background="{{ getImage('assets/admin/images/sidebar/1.jpg', '400x800') }}">

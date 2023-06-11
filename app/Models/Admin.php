@@ -30,4 +30,9 @@ class Admin extends Authenticatable
         'staff_access' => 'object',
     ];
 
+    public function admin_permissions()
+    {
+
+        return $this->belongsToMany(Admin::class, 'admin_permissions','admin_id','permission_id');
+    }
 }
