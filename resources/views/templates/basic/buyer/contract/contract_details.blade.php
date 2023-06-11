@@ -15,7 +15,8 @@
                             </svg>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="{{route('contracts.feedbacknew',$contract->uuid)}}">@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>
+{{--                            <a class="dropdown-item" href="{{route('contracts.feedbacknew',$contract->uuid)}}">@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>--}}
+                            <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal" >@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>
                         </div>
                     </div>
 
@@ -335,8 +336,48 @@
 
             </div>
         </div>
-      
-       
+        // End Contract Modal Confirmation
+{{--        <div class="modal fade" id="myModal" role="dialog">--}}
+{{--            <div class="modal-dialog" role="document">--}}
+{{--                <div class="modal-content">--}}
+{{--                    <div class="modal-header">--}}
+{{--                        <h5 class="modal-title">End Contract</h5>--}}
+{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                            <span aria-hidden="true">&times;</span>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-body">--}}
+{{--                        <p>Are you want to end Contract?</p>--}}
+{{--                        <p>You will be promoted to provide feedback and make any final payments in following steps.</p>--}}
+{{--                    </div>--}}
+{{--                    <div class="modal-footer">--}}
+{{--                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>--}}
+{{--                        <button type="button" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>--}}
+
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+    //End Contract Feedback Form
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">End Contract</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @include('templates.basic.user.contract_feedback_new')
+                        </div>
+
+                </div>
+            </div>
+        </div>
+
 @endsection
 
 
@@ -980,28 +1021,11 @@
 
     <script>
         'use strict';
-        $('#defaultSearch').on('change', function () {
-            this.form.submit();
-        });
-
-
-        openCity('evt', 'tab1');
-
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-
+        $('#myModal').on('hidden.bs.modal', function () {
+            $('#formModal').modal('@show');
+        })
 
     </script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 @endpush

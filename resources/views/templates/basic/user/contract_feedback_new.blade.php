@@ -10,75 +10,76 @@
 
         <p>Reason for ending Contract</p>
         <div>
-            <select name="reason" id="reason" class="form-select" style="height: 40px; border-radius: 7px" onchange="reasonsChange()"> <option value=""> Select a Reason</option>
-
-
+            <select name="reason" id="reason" class="form-select" style="height: 40px; border-radius: 7px" onchange="reasonsChange()" required>
+            <option value="">Select Reason</option>
+            @foreach($reasons as $reason)
+                <option value="{{$reason->id}}">{{$reason->name}}</option>
+            @endforeach
             </select>
         </div>
 
         <div>
             <p><b>Feedback</b></p>
-            <p>how likely you would be recomended this freelancer?</p><p> This will share on seller's profile after they have left feedback for you</p>
-            <div style="margin-top: 10px">
-                <div class="row">
-                    <div class="col-md-6">
+            <p>How likely you would be recomended this freelancer? This will share on seller's profile after they have left feedback for you</p>
 
-                        <div class="rating">
-                            <label>
-                                <input type="radio" name="skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
-                                <span class="fa fa-solid fa-star icon "></span>
-                            </label>
-                            <label>
-                                <input type="radio" name="skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                            </label>
-                            <label>
-                                <input type="radio" nname="skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                            </label>
+                    <div style="margin-top: 10px">
+                        <div class="row">
+                            <div>
 
-                            <label>
-                                <input type="radio" name="skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                            </label>
+                                <div class="rating">
+                                    <label>
+                                        <input type="radio" name="rating" id="skillone" onclick="valueChange();" value="1" />
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="rating" id="skilltwo" onclick="valueChange();" value="2" />
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" nname="rating" id="skillthree" onclick="valueChange();" value="3" />
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                    </label>
 
-                            <label>
-                                <input type="radio" name="skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                                <span class="fa fa-solid fa-star icon "></span>
-                            </label>
+                                    <label>
+                                        <input type="radio" name="rating" id="skillfour"  onclick="valueChange();" value="4" />
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" name="rating" id="skillfive" onclick="valueChange();" value="5" />
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                        <span class="fa fa-solid fa-star icon "></span>
+                                    </label>
+                                </div>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Skills</label>
-                    </div>
-                </div>
 
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <h4>Total Score: </h4></div>
-                <div class="col-md-9">
-                    <h4 class="val" id="val">0.00</h4></div>
-            </div>
-            <div>
-                <p>Share this experience with this Freelancer on Dureforce Community</p>
+                    </div>
+
+                <div class="row">
+
+                    <h5>Total Score: </h5>
+
+                    <h5 class="val" id="val">0</h5></div>
+                </div>
+        <div>
+                <p>Message:</p>
                 <textarea rows="3" id="feeback" name="feedback"></textarea>
             </div>
-            <p><a href="#" > See an Example of appropriate Feedback</a></p>
-        </div>
+        <div style="margin-top: 30px; margin-left: 75%;">
         <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>
-
+        <button type="submit" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>
+        </div>
     </div>
 </form>
 
@@ -140,125 +141,6 @@
         font-weight: 600;
         font-size: 18px !important;
         line-height: 25px;
-        color: #000000;
-    }
-
-    .prosal-left-con {
-        max-width: 868px;
-        width: 70%;
-        display: inline-block;
-        float: left;
-    }
-
-    .main_con_p {
-        width: 100%;
-        display: inline-block;
-    }
-
-    .prosal-right-con {
-        width: 28%;
-        float: right;
-    }
-
-    .btm-c {
-        background: #F8FAFA;
-        border-radius: 0px 0px 0px 0px;
-        padding: 18px 25px;
-        margin-top: -8px;
-    }
-
-    p.heading_cover_l {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        color: #000000;
-        font-family: "Mulish", sans-serif;
-    }
-
-    p.prop_description {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
-        color: #000000;
-        width: 81%;
-    }
-
-    p.heading-att {
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        color: #000000;
-        margin-top: 56px;
-    }
-
-    span.attacment_file {
-        font-size: 14px;
-        line-height: 24px;
-        color: #000000;
-        width: 100%;
-        margin-bottom: 12px;
-        position: relative;
-        padding-left: 30px;
-    }
-
-    span.attacment_file:before {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        content: '';
-        left: 0px;
-        top: 5px;
-        background: url(/assets/images/job/attachment.svg);
-        background-repeat: no-repeat;
-    }
-
-    .jdc {
-        margin-top: 25px;
-    }
-
-    p.posted_date_c {
-        font-weight: 600;
-        font-size: 13px;
-        line-height: 16px;
-        color: #000000;
-        margin-top: 15px;
-    }
-
-    a.btn_viewjob {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 18px;
-        text-align: center;
-        color: #007F7F;
-        background: #FFFFFF;
-        border: 1px solid #007F7F;
-        border-radius: 5px;
-        padding: 11px 25px;
-        margin-top: 30px;
-    }
-
-    .p_amount_con {
-        background: #EEF7F7;
-        border-radius: 4px;
-        padding: 17px 20px;
-    }
-
-    span.p_fcs {
-        font-size: 16px;
-        line-height: 20px;
-        color: #000000;
-        float: left;
-        width: 50%;
-        display: inline-block;
-    }
-
-    span.p_price {
-        float: right;
-        text-align: right;
-        display: inline-block;
-        width: 40%;
-        font-size: 16px;
-        line-height: 20px;
         color: #000000;
     }
 
@@ -734,25 +616,7 @@
             });
         });
 
-        $('#defaultSearch').on('change', function () {
-            this.form.submit();
-        });
 
-        openCity('evt', 'tab1');
-
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
 
         function checkedOnClick(el){
             // Select all checkboxes by class
@@ -764,34 +628,11 @@
             el.checked = true; // Checked clicked checkbox
         }
 
-        function engProfCheck(el){
-            // Select all checkboxes by class
-            var checkboxesList = document.getElementsByName("engProf");
-            for (var i = 0; i < checkboxesList.length; i++) {
-                checkboxesList.item(i).checked = false; // Uncheck all checkboxes
-            }
 
-            el.checked = true; // Checked clicked checkbox
-        }
-
-        function checkPayFreelancer(el){
-            // Select all checkboxes by class
-            var checkboxesList = document.getElementsByName("payFree");
-            for (var i = 0; i < checkboxesList.length; i++) {
-                checkboxesList.item(i).checked = false; // Uncheck all checkboxes
-            }
-
-            el.checked = true; // Checked clicked checkbox
-        }
 
         function valueChange(){
             var total=0;
             var skill=0;
-            var quality=0;
-            var availability=0;
-            var schedule=0;
-            var communication=0;
-            var cooperation=0;
             if($('#skillone').is(':checked') || $('#skilltwo').is(':checked') || $('#skillthree').is(':checked') || $('#skillfour').is(':checked')  || $('#skillfive').is(':checked')) {
 
                 if ($('#skillone').is(':checked')) {
@@ -812,142 +653,14 @@
                 }
             }
             //Skill Calculation end
-            if($('#qualityone').is(':checked') || $('#qualitytwo').is(':checked') || $('#qualitythree').is(':checked')|| $('#qualityfour').is(':checked')  ||$('#qualityfive').is(':checked')) {
 
-                if ($('#qualityone').is(':checked')) {
-                    quality = $('input[id="qualityone"]:checked').val();
-                } else if ($('#qualitytwo').is(':checked')) {
-                    quality = $('input[id="qualitytwo"]:checked').val();
-                } else if ($('#qualitythree').is(':checked')) {
-                    quality = $('input[id="qualitythree"]:checked').val();
-                } else if ($('#qualityfour').is(':checked')) {
-                    quality = $('input[id="qualityfour"]:checked').val();
-                } else if ($('#qualityfive').is(':checked')) {
-                    quality = $('input[id="qualityfive"]:checked').val();
-                }
-            }
-            //Quality Calculation end
-            if($('#availabiltyone').is(':checked') || $('#availabiltytwo').is(':checked') || $('#availabiltythree').is(':checked')|| $('#availabiltyfour').is(':checked')  ||$('#availabiltyfive').is(':checked')) {
 
-                if ($('#availabiltyone').is(':checked')) {
-                    availability = $('input[id="availabiltyone"]:checked').val();
-                } else if ($('#availabiltytwo').is(':checked')) {
-                    availability = $('input[id="availabiltytwo"]:checked').val();
-                } else if ($('#availabiltythree').is(':checked')) {
-                    availability = $('input[id="availabiltythree"]:checked').val();
-                } else if ($('#availabiltyfour').is(':checked')) {
-                    availability = $('input[id="availabiltyfour"]:checked').val();
-                } else if ($('#availabiltyfive').is(':checked')) {
-                    availability = $('input[id="availabiltyfive"]:checked').val();
-                }
-            }
-            //Availibility Calculation end
-            if($('#scheduleone').is(':checked') || $('#scheduletwo').is(':checked') || $('#schedulethree').is(':checked')|| $('#schedulefour').is(':checked')  || $('#schedulefive').is(':checked') ){
-                if( $('#scheduleone').is(':checked') ) {
-                    schedule=  $('input[id="scheduleone"]:checked').val();
-                }
-                else if( $('#scheduletwo').is(':checked') ) {
-                    schedule=  $('input[id="scheduletwo"]:checked').val();
-                }
-                else if( $('#schedulethree').is(':checked') ) {
-                    schedule=  $('input[id="schedulethree"]:checked').val();
-                }
-                else if( $('#schedulefour').is(':checked') ) {
-                    schedule=  $('input[id="schedulefour"]:checked').val();
-                }
-                else if( $('#schedulefive').is(':checked') ) {
-                    schedule=  $('input[id="schedulefive"]:checked').val();
-                }
-            }
-            //Schedule Calculation end
-            if($('#communicationone').is(':checked') || $('#communicationtwo').is(':checked') || $('#communicationthree').is(':checked') || $('#communicationfour').is(':checked')  || $('#communicationfive').is(':checked') ) {
-
-                if ($('#communicationone').is(':checked')) {
-                    communication = $('input[id="communicationone"]:checked').val();
-                } else if ($('#communicationtwo').is(':checked')) {
-                    communication = $('input[id="communicationtwo"]:checked').val();
-                } else if ($('#communicationthree').is(':checked')) {
-                    communication = $('input[id="communicationthree"]:checked').val();
-                } else if ($('#communicationfour').is(':checked')) {
-                    communication = $('input[id="communicationfour"]:checked').val();
-                } else if ($('#communicationfive').is(':checked')) {
-                    communication = $('input[id="communicationfive"]:checked').val();
-                }
-            }
             //communication Calculation end
-            if($('#cooperationone').is(':checked') || $('#cooperationtwo').is(':checked') || $('#cooperationthree').is(':checked') || $('#cooperationfour').is(':checked')  || $('#cooperationfive').is(':checked') ) {
-
-                if ($('#cooperationone').is(':checked')) {
-                    cooperation = $('input[id="cooperationone"]:checked').val();
-                } else if ($('#cooperationtwo').is(':checked')) {
-                    cooperation = $('input[id="cooperationtwo"]:checked').val();
-                } else if ($('#cooperationthree').is(':checked')) {
-                    cooperation = $('input[id="cooperationthree"]:checked').val();
-                } else if ($('#cooperationfour').is(':checked')) {
-                    cooperation = $('input[id="cooperationfour"]:checked').val();
-                } else if ($('#cooperationfive').is(':checked')) {
-                    cooperation = $('input[id="cooperationfive"]:checked').val();
-                }
-            }
-            //communication Calculation end
-            total=(parseFloat(skill)+parseFloat(quality)+parseFloat(availability)+parseFloat(schedule)+parseFloat(communication)+parseFloat(cooperation)).toFixed(2);
+            total= skill+"/5";
             document.getElementById('val').innerHTML=total;
 
         }
 
-        function reasonsChange(){
-            var rating=0;
-            var reason = $('#reason').find(":selected").val();
-            const box = document.getElementById('reason_itom');
-
-
-            if ($('#rating_num_1').is(':checked')) {
-                rating=1;
-            }
-            else if($('#rating_num_2').is(':checked')) {
-                rating=2;
-            }
-            else if($('#rating_num_3').is(':checked')) {
-                rating=3;
-            }
-            else if($('#rating_num_4').is(':checked')) {
-                rating=4;
-            }
-            else if($('#rating_num_5').is(':checked')) {
-                rating=5;
-            }
-            else if($('#rating_num_6').is(':checked')) {
-                rating=6;
-            }
-            else if($('#rating_num_7').is(':checked')) {
-                rating=7;
-            }
-            else if($('#rating_num_8').is(':checked')) {
-                rating=8;
-            }
-            else if($('#rating_num_9').is(':checked')) {
-                rating=9;
-            }
-            else if($('#rating_num_10').is(':checked')) {
-                rating=10;
-            }
-            if(rating>=7 && reason!=''){
-                box.style.display = 'none';
-            }
-            else if( rating<7 && reason!=''){
-                box.style.display = 'block';
-            }
-            else if( rating<7 && reason===''){
-                box.style.display = 'none';
-            }
-            else if( rating===0 && reason===''){
-                box.style.display = 'none';
-            }
-            else if( rating>=7 && reason===''){
-                box.style.display = 'none';
-            }
-
-        }
 
 
         function savefeedback(){
@@ -958,7 +671,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
               type:"POST",
-              url:"{{URL::route('feedback.store')}}",
+              url:"{{URL::route('feedback.storenew')}}",
               data:  form_data,
               processData: false,
               contentType: false,
@@ -984,7 +697,7 @@
         .rating {
             display: inline-block;
             position: relative;
-            height: 80px;
+            height: 30px;
             line-height: 70px;
             font-size: 50px;
         }
@@ -1031,7 +744,7 @@
         .rating label .icon {
             float: left;
             color: transparent;
-            margin-left: 50px;
+            margin-left: 20px;
         }
 
         .rating label:last-child .icon {
