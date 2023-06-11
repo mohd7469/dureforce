@@ -17,14 +17,10 @@ class StaffAccess
      */
     public function handle(Request $request, Closure $next, $access = null)
     {
-        $staff =  Auth::guard('admin')->user();
-        // dd($staff->staff_access);
-        $staffAccess = [];
-        $permissions = $staff->admin_permissions->toArray();
-        foreach($permissions as $val)
-        {
-            $staffAccess[] =  json_encode($val['pivot']['permission_id']);
-        }
+        $staff = Auth::guard('admin')->user();
+        $staffAccess = \App\Models\AdminPermission::where('admin_id',$staff->id)->get()->pluck('permission_id')->toArray();
+
+        $staffAccess[] =  json_encode($staffAccess);
         if(in_array($access, $staffAccess))
         {
             return $next($request);
