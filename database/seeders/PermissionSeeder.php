@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Permission;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PermissionSeeder extends Seeder
 {
@@ -14,7 +16,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('permissions')->truncate();
+
         $permissions = [
             ["id"=> 1, 'name' => 'Dashboard', 'guard_name' => 'manage-users', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'),],
             ["id"=> 2, 'name' => 'Service Booking', 'guard_name' => 'service-booking', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'),],
@@ -54,7 +56,12 @@ class PermissionSeeder extends Seeder
 
         ];
 
-        Permission::insert($permissions);
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Permission::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+        foreach( $permissions as $permission){
+            Permission::create($permission);
+        }
 
     }
 }
