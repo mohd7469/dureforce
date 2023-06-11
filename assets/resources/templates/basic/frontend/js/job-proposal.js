@@ -200,6 +200,9 @@ $(function() {
       if(total_cost<0){
         displayAlertMessage("Project Cost should be greater than $0 ");
         $(this).val("");
+      }else if(total_cost> 9999){
+          displayAlertMessage("Project Cost should not be greater than $9999 ");
+          $(this).val("");
       }
       else{
 
