@@ -105,12 +105,14 @@ class ContractFeedbackController extends Controller
     {
         $rules = [
             'rating'            => 'required',
-            'feedback'          => 'required|between:0,400'
+            'feedback'          => 'required|between:0,400',
+            'reason'            =>'required'
         ];
 
         $messages = [
             'rating.required' => 'Rating is required',
-            'feedback.required' => 'Feedback is required'
+            'feedback.required' => 'Feedback is required',
+            'reason.required'   => 'Reason is required'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -141,6 +143,7 @@ class ContractFeedbackController extends Controller
                         "role_id" => $role_id,
                         "feedback_for_id" => $feedback_for_id,
                         "contract_id" => $contract->id,
+                        'reason_end_contract_id'=> $request_data['reason'] ?? null,
                         "total_score" => $request_data['rating'] ?? null,
                         "feedback" => $request_data['feedback'] ?? null,
                         "created_by" => $user->id,

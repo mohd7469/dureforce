@@ -56,14 +56,14 @@ class OfferController extends Controller
         ];
         if ($request_data['payment_type']==ModuleOffer::PAYMENT_TYPE['HOURLY']) {
             
-            $rules ['rate_per_hour' ] = 'required|numeric|min:1';
+            $rules ['rate_per_hour' ] = 'required|numeric|min:1|max:9999';
             $rules ['weekly_limit' ] = 'required|numeric|min:1';
             $rules ['contract_title' ] = 'required';
             $rules ['start_date' ] = 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y');
 
         } else {
             if ($request_data['fix_payment_offer_type']==ModuleOffer::Fix_Payment_Offer_Type['BY_PROJECT']) {
-                $rules ['offer_ammount' ] = 'required|numeric|min:1';
+                $rules ['offer_ammount' ] = 'required|numeric|min:1|max:9999';
             } else if ($request_data['fix_payment_offer_type'] == ModuleOffer::Fix_Payment_Offer_Type['BY_MILESTONE']) {
     
                 $rules['milestone'] = 'required|array';

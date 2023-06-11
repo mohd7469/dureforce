@@ -12,6 +12,7 @@ use App\Models\Timezone;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\FeedbackReason;
 
 class ContractsController extends Controller
 {
@@ -42,10 +43,18 @@ class ContractsController extends Controller
         }else{
             $feedbackData=$feedback->id;
         }
+
+        $last_role_id = $user->last_role_activity;
+        if ($last_role_id == Role::$Freelancer) {
+            $reasons=FeedbackReason::where('is_active',1)->where('role_id',Role::$Freelancer)->get();
+        } else {
+            $reasons=FeedbackReason::where('is_active',1)->where('role_id',Role::$Client)->get();
+         }
+        
         $contracts=getUserContracts();
         $emptyMessage="Tasks Not Found";
         $timezones = Timezone::select('id','name')->get();
-        return view('templates.basic.buyer.contract.contract_details',compact('contract','emptyMessage','contracts','timezones','feedbackData'));
+        return view('templates.basic.buyer.contract.contract_details',compact('contract','reasons', 'emptyMessage','contracts','timezones','feedbackData'));
     }
 
     public function  feedback($uuid){
