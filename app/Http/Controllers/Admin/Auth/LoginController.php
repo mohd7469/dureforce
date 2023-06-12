@@ -116,9 +116,9 @@ class LoginController extends Controller
     }
 
 
-    public function authenticated(Request $request, $user)
-    {
+    // public function authenticated(Request $request, $user)
+    // {
 
-        return authorizeAdmin($user->staff_access);
-    }
+    //     return authorizeAdmin($user->staff_access);
+    // }
 }
