@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\Admin;
 use App\Models\AdminPermission;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class StaffController extends Controller
 {
@@ -46,13 +47,14 @@ class StaffController extends Controller
         $staff->password = Hash::make($request->password);
         $staff->save();
         $staff->admin_permissions()->sync($request->permission);
-        notify($staff, 'STAFF_CREATE', [
-            'password' => $request->password,
-            'email' => $request->email,
-            'username' => $request->username
-        ]);
+//        notify($staff, 'STAFF_CREATE', [
+//            'password' => $request->password,
+//            'email' => $request->email,
+//            'username' => $request->username
+//        ]);
         $notify[] = ['success', 'Staff has been created.'];
-        return back()->withNotify($notify);
+        $url = '/admin/staff/index';
+        return Redirect::to($url)->withNotify($notify);
     }
 
     public function edit($id)
