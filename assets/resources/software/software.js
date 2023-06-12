@@ -439,16 +439,16 @@ function overviewFormValidation() {
 
     $(".error").remove();
 
-    if ($("#tags :selected").length < 1) {
-      e.preventDefault();
-      $("#error").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Tags filed is required",
-        position: "topRight",
-      });
-    }
+    // if ($("#tags :selected").length < 1) {
+    //   e.preventDefault();
+    //   $("#error").after(
+    //     '<span class="error text-danger">This field is required</span>'
+    //   );
+    //   iziToast.error({
+    //     message: "Tags filed is required",
+    //     position: "topRight",
+    //   });
+    // }
 
     if ($.trim(title1).length < 1) {
       e.preventDefault();
