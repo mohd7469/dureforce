@@ -8,6 +8,7 @@ use App\Models\Permission;
 use App\Models\Admin;
 use App\Models\AdminPermission;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 class StaffController extends Controller
 {
@@ -52,7 +53,8 @@ class StaffController extends Controller
 //            'username' => $request->username
 //        ]);
         $notify[] = ['success', 'Staff has been created.'];
-        return back()->withNotify($notify);
+        $url = '/admin/staff/index';
+        return Redirect::to($url)->withNotify($notify);
     }
 
     public function edit($id)
