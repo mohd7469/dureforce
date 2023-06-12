@@ -9,6 +9,9 @@ use App\Models\Admin;
 use App\Models\AdminPermission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class StaffController extends Controller
 {
@@ -112,5 +115,44 @@ class StaffController extends Controller
         $notify[] = ['success', 'The staff has been deleted'];
         return back()->withNotify($notify);
 
+    }
+
+    public function activeBy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Admin::where('id',$request->id)->first();
+            $staff->status = 1;
+            $staff->save();
+            DB::commit();
+            Log::info(["staff" => $staff]);
+            $notify[] = ['success', 'Staff status has been Activated'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+                return back()->withNotify($notify);
+        }
+    }
+    public function inActiveBy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Admin::findOrFail($request->id);
+            $staff->status = 0;
+            $staff->save();
+            DB::commit();
+            Log::info(["staff" => $staff]);
+            $notify[] = ['success', 'Staff status has been inActive'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 }
