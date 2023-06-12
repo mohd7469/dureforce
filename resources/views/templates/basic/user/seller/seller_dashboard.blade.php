@@ -58,16 +58,16 @@
                             </li>
                         </ul>
                        
-                        <div class="f-container">
-                            <div name="Filters" id="Filters"> </div>
+                        <!-- <div class="f-container"> -->
+                            <!-- <div name="Filters" id="Filters"> </div> -->
                             
-                            <ul class="filter-drop-dw">
-                            <li>
+                            <!-- <ul class="filter-drop-dw"> -->
+                            <!-- <li>
                                 <div class="form-check">
-                                <!-- <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something"> -->
+                                <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
                                 <label class="form-check-label" for="check1">Coming soon</label>
                               </div>
-                            </li>
+                            </li> -->
                             <!-- <li>
                                 <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
@@ -86,10 +86,10 @@
                                 <label class="form-check-label" for="check4">Onhold (0)</label>
                               </div>
                             </li> -->
-                            </ul>
+                            <!-- </ul> -->
                 
                         
-                        </div>
+                        <!-- </div> -->
                         <div class="search_con_cs">
                             <form>
                                 <input type="search" placeholder="Search" class="search_input">
@@ -165,7 +165,7 @@
                                                                     @endif
                                                                 </td>
                                                                 <td data-label="@lang('Last Update')">
-                                                                    {{ showDateTime($service->updated_at) }}
+                                                                    <span style="width: 170px !important;">{{ showDateTime($service->updated_at) }}</span>
                                                                     <br>
                                                                     {{ diffforhumans($service->updated_at) }}
                                                                 </td>
@@ -609,10 +609,11 @@ input.search_input {
     padding: 4px 16px;
     }   
 .search_con_cs {
-    width: 55%;
+    width: 95%;
     height: 34px;
 }
 input.search_btnc{
+    width: 59% !important;
     background-position: 60% 29%;
 }
 #Filters{
