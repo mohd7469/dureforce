@@ -27,31 +27,35 @@ class SoftwareController extends Controller
            
             $user=auth()->user();
             $software=Software::with('defaultProposal.attachments')->where('uuid',$uuid)->firstOrFail();
-            $job=Job::updateOrCreate(
+            if($software->isBooked()){
+                $notify[] = ['error',"Software Already Booked"];
+                return redirect()->back()->withNotify($notify);
+            }
+
+            $job=Job::create(
                 [
                     "user_id"   => $user->id,
                     "module_id" => $software->id,
                     "module_type" => get_class($software),
-                ],
-                [
-                "job_type_id"   => JobType::$OneTime,
-                "country_id"    =>  $software->user->country_id,
-                "category_id"   => $software->category_id,
-                "sub_category_id" => $software->sub_category_id ,
-                "rank_id"       => null ,
-                "project_stage_id"  => null ,
-                "budget_type_id"    => BudgetType::$fixed ,
-                "title"     =>   $software->title,
-                "description"   => $software->description ,
-                "fixed_amount"  => $software->price ,
-                "hourly_start_range"    => null ,
-                "hourly_end_range"  => null ,
-                "project_length_id" => null ,
-                "expected_start_date"   => Carbon::now(),
-                "status_id" => Job::$Approved,
-                "is_private" => true,
+                    "job_type_id"   => JobType::$OneTime,
+                    "country_id"    =>  $software->user->country_id,
+                    "category_id"   => $software->category_id,
+                    "sub_category_id" => $software->sub_category_id ,
+                    "rank_id"       => null ,
+                    "project_stage_id"  => null ,
+                    "budget_type_id"    => BudgetType::$fixed ,
+                    "title"     =>   $software->title,
+                    "description"   => $software->description ,
+                    "fixed_amount"  => $software->price ,
+                    "hourly_start_range"    => null ,
+                    "hourly_end_range"  => null ,
+                    "project_length_id" => null ,
+                    "expected_start_date"   => Carbon::now(),
+                    "status_id" => Job::$Approved,
+                    "is_private" => true,
 
-            ]);
+                ]
+            );
             $software_proposal_attachments=$software->defaultProposal->attachments;
             $software_proposal=$software->defaultProposal->toArray();
             $software_proposal['bid_type'] = Proposal::$by_project;
