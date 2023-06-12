@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ChatMessage;
 use App\Models\Contract;
 use App\Models\ModuleOffer;
+use App\Models\Proposal;
 use BeyondCode\QueryDetector\Outputs\Log;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,16 +41,29 @@ class OfferController extends Controller
         try{
             DB::beginTransaction();
             $module_offer=ModuleOffer::with('module')->where('uuid',$uuid)->first();
+            
             if($module_offer->status_id!=ModuleOffer::STATUSES['PENDING']){
                 $notify[] = ['error', 'Offer cannot be accepted'];
                 return back()->withNotify($notify);
 
             }
+
             ModuleOffer::where('uuid',$uuid)->update([
                 'status_id'  => ModuleOffer::STATUSES['ACCEPTED']
             ]);
-            
+
             $chat_module=$module_offer->module;
+
+            
+            Proposal::where('module_id',$chat_module->id)
+                ->where('module_type',getObjectNameSpace($chat_module))
+                ->where('id','<>',$module_offer->proposal_id)
+                ->update(['status_id' => Proposal::STATUSES['ARCHIVED']]);
+            
+            Proposal::where('id',$module_offer->proposal_id)->update(['status_id' => Proposal::STATUSES['ACTIVE']]);
+
+           
+
             $chat_message=ChatMessage::Create([
                 'send_to_id'    => $module_offer->offer_send_by_id,
                 'module_id'     => $chat_module->id,
@@ -74,6 +88,10 @@ class OfferController extends Controller
             $notification_type = Contract::NOTIFICATION['CONTRACT_TYPE'];
             $notification_data = NotificationHelper::generateNotificationData($title,$body,$payload,$url,$notification_type);
             NotificationHelper::GENERATENOTIFICATION($notification_data,$users);
+            
+            
+                
+
             $notify[] = ['success', 'Offer has been accepted'];
             return back()->withNotify($notify);
         }

@@ -1862,6 +1862,11 @@ function errorLogMessage($exception){
 
 }
 
+function getObjectNameSpace($object){
+    $className = get_class($object);
+    return $className;
+}
+
 
 function checkOfferAlreadySent($job_id){
     try {
