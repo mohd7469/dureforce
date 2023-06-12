@@ -112,21 +112,23 @@
                                                         <div id="form_attributes">
 
                                                         </div>
+                                                        @if ($service->serviceSteps->isNotEmpty())
+                                                            <div class="sep-solid"></div>
+                                                            <div class="service_subtitle2 mt-20">
+                                                                Steps
+                                                            </div>
+                                                            <div class="sep-solid"></div>
+                                                            <div class="simpletext">
+                                                                @if ($service->serviceSteps->isNotEmpty())
+                                                                    @foreach ($service->serviceSteps as $serviceKey => $item)
+                                                                        <h5> {{ $item->name }} </h5>
+                                                                        {{ $item->description }}
 
-                                                        <div class="sep-solid"></div>
-                                                        <div class="service_subtitle2 mt-20">
-                                                            Steps
-                                                        </div>
-                                                        <div class="sep-solid"></div>
-                                                        <div class="simpletext">
-                                                            @if ($service->serviceSteps->isNotEmpty())
-                                                                @foreach ($service->serviceSteps as $serviceKey => $item)
-                                                                    <h5> {{ $item->name }} </h5>
-                                                                    {{ $item->description }}
-
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        @endif
+                                                       
                                                     </div>
                                                 </div>
                                                 @if ($service->addOns->isNotEmpty())

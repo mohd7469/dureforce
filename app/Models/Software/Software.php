@@ -212,12 +212,12 @@ class Software extends Model
     
     public function Job()
     {
-        return $this->morphOne(Job::class,'module');
+        return $this->morphMany(Job::class,'module');
     }
 
     function isBooked(){
         $user=auth()->user();
-        return $this->Job()->where('user_id',$user->id)->exists() ? true:false;
+        return $this->Job()->where('user_id',$user->id)->whereIn('status_id',[Job::$Pending,Job::$Approved])->exists() ? true:false;
         
     }
 }
