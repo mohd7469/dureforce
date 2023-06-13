@@ -81,6 +81,11 @@
     background-color: #f8fafa !important;
     padding: 0.8rem 1rem;
 }
+@media only screen and (max-width:683px){
+        .create-service-main .stepwizard-step {
+        width: 30% !important;
+    }
+}
 
 </style>
 
