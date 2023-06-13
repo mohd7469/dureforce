@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::namespace('Auth')->group(function () {
         Route::get('/', 'LoginController@showLoginForm')->name('login');
-        Route::post('/', 'LoginController@login')->name('login');
+        Route::post('/', 'LoginController@login')->name('login')->middleware('is-admin-active');
         Route::get('logout', 'LoginController@logout')->name('logout');
         // Admin Password Reset
         Route::get('password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.reset');
@@ -414,6 +414,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('staff/create', 'StaffController@create')->name('staff.create');
             Route::post('staff/store', 'StaffController@store')->name('staff.store');
             Route::get('staff/edit/{id}', 'StaffController@edit')->name('staff.edit');
+            Route::post('staff/inactiveBy', 'StaffController@inActiveBy')->name('staff.inactive');
+            Route::post('staff/activeBy', 'StaffController@activeBy')->name('staff.active');
             Route::post('staff/update/{id}', 'StaffController@update')->name('staff.update');
             Route::post('staff/delete/', 'StaffController@delete')->name('staff.delete');
         });

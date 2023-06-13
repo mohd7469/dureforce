@@ -92,6 +92,7 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'is-freelancer' => \App\Http\Middleware\IsFreelancerMiddleware::class,
         'is-client' => \App\Http\Middleware\IsClientMiddleware::class,
+        'is-admin-active' => \App\Http\Middleware\Admin\CheckAdminActiveMiddleware::class,
 
 
     ];

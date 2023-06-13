@@ -110,9 +110,20 @@ trait CreateOrUpdateEntity {
             $selected_tags=$request->tag;
             preg_match_all($pattern, $request->description, $matches);
             
+           
+
+
+
             if (!empty($matches)) {
                 $matches = array_merge(...$matches);
-                $all_tags = array_merge($matches, $selected_tags ?? []);
+                $modifiedMatches = [];
+
+                foreach ($matches as $match) {
+                    $modifiedMatch = str_replace('#', '', $match);
+                    $modifiedMatches[] = $modifiedMatch;
+                }
+
+                $all_tags = array_merge($modifiedMatches, $selected_tags ?? []);
             } else {
                 $all_tags = $selected_tags ?? [];
             }
