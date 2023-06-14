@@ -106,7 +106,6 @@
 .default-border-radius, .avatar-card {
   border-radius: 22px;
 }
-
 .custom_badge {
   display: inline-block;
   padding: 0.25em 0.4em;
@@ -320,6 +319,10 @@
     display: list-item;
     margin-right: 27px;
     float: left;
+  }
+  .message-empty{
+    width: 18rem;
+    margin-left: 291px !important;
   }
 }
 
@@ -908,15 +911,27 @@
   .header-bottom-area {
     padding: 0 30px;
   }
+  .message-empty{
+    width: 18rem;
+    margin-left: 291px !important;
+  }
 }
 @media only screen and (max-width: 991px) {
   .header-bottom-area {
     padding: 5px 20px;
   }
+  .message-empty{
+    width: 18rem;
+    margin-left: 291px !important;
+  }
 }
 @media only screen and (max-width: 575px) {
   .header-bottom-area {
     padding: 5px 0;
+  }
+  .message-empty{
+    width: 18rem;
+    margin-left: 20px !important;
   }
   .hero-banner .heading {
     color: #007f7f;
@@ -1051,6 +1066,10 @@
 @media only screen and (max-width: 420px) {
   .site-logo img {
     height: 30px;
+  }
+  .message-empty{
+    width: 18rem;
+    margin-left: 20px !important;
   }
   .hero-banner .heading {
     color: #007f7f;
