@@ -199,42 +199,11 @@
         $('document').ready(function() {
             
             loadProfileBasicsData();
-
-            // $('#edit_payment_city_id').select2({
-            //     theme: 'bootstrap',
-            //     placeholder: 'Select an option',
-            //     allowClear: true,
-            //     width: '100%'
-            // });
-
-            $('#edit_payment_city_id').select2({
-                tags: false,
-                minimumResultsForSearch: 0,
-                dropdownParent: $('#cities_div'),
-                ajax: {
-                    url: "{{ route('get-cities') }}",
-                    dataType: 'json',
-                    data: function(params) {
-                        return {
-                            search: params.term,
-                            country_id: $('#edit_sec_country_id').val()
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: $.map(data.cities.data, function(item) {
-                                return {
-                                    id: item.id,
-                                    text: item.name
-                                };
-                            })
-                        };
-                    }
-                },
-            });
-            
+ 
+            initializeSelect2($('#location_city_id'), $('#basic_cities_id'), '#country_id');
+            initializeSelect2($('#payment_method_cities'), $('#add_payment_cities_div'), '#payment_method_country_id');
+            initializeSelect2($('#edit_payment_city_id'), $('#cities_div'), '#edit_sec_country_id');
          
-                    
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -311,6 +280,36 @@
                 getCountryCities(country_id,'#payment_method_cities');
             });
         });
+
+
+        function initializeSelect2(element, dropdownParent, countryIdSelector) {
+            element.select2({
+                tags: false,
+                minimumResultsForSearch: 0,
+                dropdownParent: dropdownParent,
+                ajax: {
+                url: "{{ route('get-cities') }}",
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                    search: params.term,
+                    country_id: $(countryIdSelector).val()
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                    results: $.map(data.cities.data, function(item) {
+                        return {
+                        id: item.id,
+                        text: item.name
+                        };
+                    })
+                    };
+                }
+                }
+            });
+        }
+
 
         function getCountryCities(country_id,select_field_id)
         {
