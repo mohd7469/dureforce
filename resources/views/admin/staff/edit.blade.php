@@ -50,34 +50,40 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="row">
                                         <div class="col-12">
                                             <label class="font-weight-bold">@lang('Staff Permission') <span class="text-danger">*</span></label>
                                         </div>
+                                        <div class="col-12" style="margin-left: 20px;">
+                                            <input type="checkbox" class="form-check-input" id="selectAllPermissions">
+                                            <label class="form-check-label" for="selectAllPermissions">Select All</label>
+                                            <br>
+                                        </div>
                                         @foreach($permissions->chunk(8) as $permission)
+
                                         <div class="col-lg-3">
                                             <div class="form-group form-check">
-                                            @foreach($permission as $value)
-                                                <input type="checkbox" class="form-check-input" name="permission[]"
-                                                @if(!empty($staff_permission))
-                                                    @forelse($staff_permission as $val)
-                                                        @if($val->permission_id == $value->id)
-                                                            checked
-                                                        @endif 
-                                                    @empty
-                                                    @endforelse
-                                                @endif
-                                                value="{{$value->id}}" id="{{$value->id}}">
-                                                <label class="form-check-label" for="{{$value->id}}">{{$value->name}}</label>
-                                                <br>
-                                            @endforeach
+
+                                                    @foreach($permission as $value)
+                                                        <input type="checkbox" class="form-check-input permission-checkbox" name="permission[]" value="{{$value->id}}" id="{{$value->id}}"
+                                                               @if(!empty($staff_permission))
+                                                                   @foreach($staff_permission as $val)
+                                                                       @if($val->permission_id == $value->id)
+                                                                           checked
+                                                                @endif
+                                                                @endforeach
+                                                                @endif>
+                                                        <label class="form-check-label" for="{{$value->id}}">{{$value->name}}</label>
+                                                        <br>
+                                                    @endforeach
                                             </div>
                                         </div>
                                         @endforeach
+
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -106,6 +112,22 @@
                 $('#message').html('<i class="las la-info-circle"></i> Password Does Not Matched').css('color', 'red');
         });
     })(jQuery)
+</script>
+<script>
+    // Get the "Select All" checkbox element
+    var selectAllCheckbox = document.getElementById('selectAllPermissions');
+
+    // Get all the permission checkboxes
+    var permissionCheckboxes = document.getElementsByClassName('permission-checkbox');
+
+    // Add a change event listener to the "Select All" checkbox
+    selectAllCheckbox.addEventListener('change', function() {
+        // Iterate over each permission checkbox
+        for (var i = 0; i < permissionCheckboxes.length; i++) {
+            // Set the checked property of each checkbox to match the "Select All" checkbox
+            permissionCheckboxes[i].checked = selectAllCheckbox.checked;
+        }
+    });
 </script>
 @endpush
 
