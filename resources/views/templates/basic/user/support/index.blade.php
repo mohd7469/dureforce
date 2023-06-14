@@ -7,7 +7,7 @@
                     <div class="second-section-con">
                         <div class="all-s"> All Support Tickets</div>
                         <a href="{{route('ticket.create')}}"  class="cnt-btn">Create New Ticket</a>
-                        <div class="f-container">
+                        <!-- <div class="f-container">
                             <div name="Filters" id="Filters"></div>
 
                             <ul class="filter-drop-dw">
@@ -42,7 +42,7 @@
                             </ul>
 
 
-                        </div>
+                        </div> -->
 
                     </div>
                     <!---Second Section End----->
@@ -397,6 +397,11 @@
         @media only screen and (max-width: 767px) {
             .all-s {
                 font-size: 13px;
+            }
+        }
+        @media only screen and (max-width:683px){
+            .sub {
+                width: 200px !important;
             }
         }
     </style>

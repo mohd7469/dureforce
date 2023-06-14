@@ -77,6 +77,11 @@
         background: #007f7f !important;
         border-color: green !important;
     }
+    @media only screen and (max-width:683px){
+        .create-service-main .stepwizard-step {
+        width: 30% !important;
+    }
+}
 
 </style>
 
