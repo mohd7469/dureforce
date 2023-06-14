@@ -198,6 +198,27 @@ input::-webkit-inner-spin-button {
         box-shadow: 0 0 5px #333;
         z-index: -1;
         }
+        @media only screen and (max-width:683px){
+            .text-right {
+                text-align: left !important;
+            }
+            .create-service-main .softwar-save-draft--btns {
+                background-color: #f8fafa;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #7f007f;
+                width: 115px !important;
+            }
+            .create-service-main .btn-save-continue {
+                background-color: #7f007f;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #fff;
+                padding: 10px 4px;
+                font-size: 12px;
+                width: 81px !important;
+            }
+        }
     </style>
 @endpush
 
