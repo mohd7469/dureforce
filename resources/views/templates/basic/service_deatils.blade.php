@@ -173,7 +173,7 @@
                                                                 <div class="left">
                                                                     <div class="thumb">
                                                                         <img src="{{ !empty($service->user->basicProfile->profile_picture)? $service->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}"
-                                                                             alt="{{ __($service->user->username) }}">
+                                                                             alt="{{ __($service->user->username ?? '') }}">
                                                                     </div>
                                                                     <div class="content mt-15">
                                                                         <h4 class="name">
@@ -185,10 +185,10 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="right btn-area mb-10">
-                                                                    <a href="{{ route('seller.profile', $service->user->uuid) }}"
+                                                                    <a href="{{ route('seller.profile', $service->user->uuid ?? '') }}"
                                                                        class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                    <a href="{{  route('profile.portfolio', $service->user->uuid) }}"
+                                                                    <a href="{{  route('profile.portfolio', $service->user->uuid ?? '') }}"
                                                                        class="standard-btn">@lang('View Portfolio')</a>
                                                                 </div>
                                                             </div>

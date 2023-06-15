@@ -135,7 +135,7 @@
         <div class="card-body msg_card_body d-flex" v-else>
             <div v-if="!messages.length" class="row justify-content-center align-self-center text-center">
                 
-                <div class="card text-center" style="width: 18rem;margin-left: 291px">
+                <div class="card text-center message-empty">
                     <div class="card-body">
                       <h5 class="card-title">Messages Not Found</h5>
                       <p class="card-text">There is no chat with this user click refresh button if you want to reload</p>
