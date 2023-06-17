@@ -42,7 +42,7 @@
                                     <a href="{{route('seller.proposal.create',$InviteFreelancer->job->uuid)}}"
                                         class="accept-invitation mr-15">Accept Invitation</a>
                                     <a href="#"
-                                        class="decline-invitation mr-15">Decline Invitation</a>
+                                        class="decline-invitation">Decline Invitation</a>
                             </li>
                         </ul>
                     </div>

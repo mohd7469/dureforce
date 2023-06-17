@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\ServiceAttributeController;
 
 use Illuminate\Http\Request;
@@ -27,7 +28,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
     Route::middleware('admin')->group(function () {
 
         Route::get('flush-redis-db', 'AdminController@flushRedisDb')->name('profile');
-
 
 
         Route::get('profile', 'AdminController@profile')->name('profile');
@@ -157,7 +157,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('software/download/{id}', 'SoftwareController@softwareFile')->name('software.download');
             Route::get('software/document/{id}', 'SoftwareController@softwareDocument')->name('document.download');
             Route::post('software/destroy/{id}', 'SoftwareController@destroy')->name('software.destroy');
-        Route::post('software/featured/include', 'SoftwareController@featuredInclude')->name('software.featured.include');
+            Route::post('software/featured/include', 'SoftwareController@featuredInclude')->name('software.featured.include');
             Route::post('software/featured/remove', 'SoftwareController@featuredNotInclude')->name('software.featured.remove');
         });
 
@@ -197,7 +197,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('banner/details/{uuid}', 'BannerController@details')->name('banner.details');
             Route::get('banner/category', 'BannerController@category')->name('banner.category');
             Route::post('banner/destroy/{id}', 'BannerController@destroy')->name('banner.destroy');
- 
+
         });
 
 
@@ -210,7 +210,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('testimonial/closedBy', 'TestimonialController@closedBy')->name('testimonial.closedBy');
         Route::post('testimonial/approvedBy', 'TestimonialController@approvedBy')->name('testimonial.approvedBy');
         Route::get('testimonial/details/{id}', 'TestimonialController@details')->name('testimonial.details');
-        
+
         //Manage blogsn
         Route::get('blog/index', 'BlogController@index')->name('blog.index');
         Route::get('blog/create', 'BlogController@create')->name('blog.create');
@@ -221,29 +221,29 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('blog/activeBy', 'BlogController@activeBy')->name('blog.activeBy');
         Route::get('blog/details/{uuid}', 'BlogController@details')->name('blog.details');
         Route::post('blog/featured/include', 'BlogController@featuredInclude')->name('blog.featured.include');
-            Route::post('blog/featured/remove', 'BlogController@featuredNotInclude')->name('blog.featured.remove');
+        Route::post('blog/featured/remove', 'BlogController@featuredNotInclude')->name('blog.featured.remove');
         //Email template
-        
+
         //Route::middleware('staffaccess:35')->group(function () {
-            //Manage banner
-            Route::get('email/index', 'EmailController@index')->name('email.index');
-            Route::get('email/create', 'EmailController@emailCreate')->name('email.create');
-            Route::post('email/store', 'EmailController@store')->name('email.store');
-            
-            Route::get('email/edit/{id}', 'EmailController@editdetails')->name('email.edit');
-            Route::post('email/inactiveBy', 'EmailController@inActiveBy')->name('email.inactive');
-            Route::post('email/activeBy', 'EmailController@activeBy')->name('email.active');
-            Route::post('email/update/{id}', 'EmailController@emailupdate')->name('email.update');
-            Route::get('/email/delete/{id}', 'EmailController@delete')->name('email.delete');
-          
- 
+        //Manage banner
+        Route::get('email/index', 'EmailController@index')->name('email.index');
+        Route::get('email/create', 'EmailController@emailCreate')->name('email.create');
+        Route::post('email/store', 'EmailController@store')->name('email.store');
+
+        Route::get('email/edit/{id}', 'EmailController@editdetails')->name('email.edit');
+        Route::post('email/inactiveBy', 'EmailController@inActiveBy')->name('email.inactive');
+        Route::post('email/activeBy', 'EmailController@activeBy')->name('email.active');
+        Route::post('email/update/{id}', 'EmailController@emailupdate')->name('email.update');
+        Route::get('/email/delete/{id}', 'EmailController@delete')->name('email.delete');
+
+
         //  });
         Route::get('soft/index', 'SoftwareDefaultStepController@index')->name('soft.index');
         Route::get('soft/create', 'SoftwareDefaultStepController@softCreate')->name('soft.create');
         Route::post('soft/store', 'SoftwareDefaultStepController@store')->name('soft.store');
         Route::get('soft/edit/{id}', 'SoftwareDefaultStepController@editdetails')->name('soft.edit');
         Route::post('soft/inactiveBy', 'SoftwareDefaultStepController@inActiveBy')->name('soft.inactive');
-            Route::post('soft/activeBy', 'SoftwareDefaultStepController@activeBy')->name('soft.active');
+        Route::post('soft/activeBy', 'SoftwareDefaultStepController@activeBy')->name('soft.active');
         Route::post('soft/update/{id}', 'SoftwareDefaultStepController@softupdate')->name('soft.update');
         Route::get('/soft/delete/{id}', 'SoftwareDefaultStepController@delete')->name('soft.delete');
         //Software Template
@@ -276,66 +276,66 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('type/activeBy', 'JobTypeController@activeBy')->name('type.active');
         Route::post('type/update/{id}', 'JobTypeController@update')->name('type.update');
         Route::get('/type/delete/{id}', 'JobTypeController@delete')->name('type.delete');
-          //Feature route
-          Route::get('feature/index', 'FeaturesController@index')->name('feature.index');
-          Route::get('feature/create', 'FeaturesController@Create')->name('feature.create');
-          Route::post('feature/store', 'FeaturesController@store')->name('feature.store');
-          Route::get('feature/edit/{id}', 'FeaturesController@editdetails')->name('feature.edit');
-          Route::post('feature/inactiveBy', 'FeaturesController@inActiveBy')->name('feature.inactive');
-          Route::post('feature/activeBy', 'FeaturesController@activeBy')->name('feature.active');
-          Route::post('feature/update/{id}', 'FeaturesController@update')->name('feature.update');
-          Route::get('/feature/delete/{id}', 'FeaturesController@delete')->name('feature.delete');
-           //Degree route
-           Route::get('degree/index', 'DegreeController@index')->name('degree.index');
-           Route::get('degree/create', 'DegreeController@Create')->name('degree.create');
-           Route::post('degree/store', 'DegreeController@store')->name('degree.store');
-           Route::get('degree/edit/{id}', 'DegreeController@editdetails')->name('degree.edit');
-           Route::post('degree/inactiveBy', 'DegreeController@inActiveBy')->name('degree.inactive');
-           Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
-           Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
-           Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
-           //World Language route
-           Route::get('world-language/index', 'WorldLanguageController@index')->name('world.language.index');
-           Route::get('world-language/create', 'WorldLanguageController@Create')->name('world.language.create');
-           Route::post('world-language/store', 'WorldLanguageController@store')->name('world.language.store');
-           Route::get('world-language/edit/{id}', 'WorldLanguageController@editdetails')->name('world.language.edit');
-           Route::post('world-language/update/{id}', 'WorldLanguageController@update')->name('world.language.update');
-           Route::get('/world-language/delete/{id}', 'WorldLanguageController@delete')->name('world.language.delete');
+        //Feature route
+        Route::get('feature/index', 'FeaturesController@index')->name('feature.index');
+        Route::get('feature/create', 'FeaturesController@Create')->name('feature.create');
+        Route::post('feature/store', 'FeaturesController@store')->name('feature.store');
+        Route::get('feature/edit/{id}', 'FeaturesController@editdetails')->name('feature.edit');
+        Route::post('feature/inactiveBy', 'FeaturesController@inActiveBy')->name('feature.inactive');
+        Route::post('feature/activeBy', 'FeaturesController@activeBy')->name('feature.active');
+        Route::post('feature/update/{id}', 'FeaturesController@update')->name('feature.update');
+        Route::get('/feature/delete/{id}', 'FeaturesController@delete')->name('feature.delete');
+        //Degree route
+        Route::get('degree/index', 'DegreeController@index')->name('degree.index');
+        Route::get('degree/create', 'DegreeController@Create')->name('degree.create');
+        Route::post('degree/store', 'DegreeController@store')->name('degree.store');
+        Route::get('degree/edit/{id}', 'DegreeController@editdetails')->name('degree.edit');
+        Route::post('degree/inactiveBy', 'DegreeController@inActiveBy')->name('degree.inactive');
+        Route::post('degree/activeBy', 'DegreeController@activeBy')->name('degree.active');
+        Route::post('degree/update/{id}', 'DegreeController@update')->name('degree.update');
+        Route::get('/degree/delete/{id}', 'DegreeController@delete')->name('degree.delete');
+        //World Language route
+        Route::get('world-language/index', 'WorldLanguageController@index')->name('world.language.index');
+        Route::get('world-language/create', 'WorldLanguageController@Create')->name('world.language.create');
+        Route::post('world-language/store', 'WorldLanguageController@store')->name('world.language.store');
+        Route::get('world-language/edit/{id}', 'WorldLanguageController@editdetails')->name('world.language.edit');
+        Route::post('world-language/update/{id}', 'WorldLanguageController@update')->name('world.language.update');
+        Route::get('/world-language/delete/{id}', 'WorldLanguageController@delete')->name('world.language.delete');
 
-           //World cities route
-           Route::get('world-city/index', 'WorldCitiesController@index')->name('world.city.index');
-           Route::get('world-city/create', 'WorldCitiesController@Create')->name('world.city.create');
-           Route::post('world-city/store', 'WorldCitiesController@store')->name('world.city.store');
-           Route::get('world-city/edit/{id}', 'WorldCitiesController@editdetails')->name('world.city.edit');
-           Route::post('world-city/update/{id}', 'WorldCitiesController@update')->name('world.city.update');
-           Route::get('/world-city/delete/{id}', 'WorldCitiesController@delete')->name('world.city.delete');
-            //World cities route
-            Route::get('world-country/index', 'WorldCountriesController@index')->name('world.country.index');
-            Route::get('world-country/create', 'WorldCountriesController@Create')->name('world.country.create');
-            Route::post('world-country/store', 'WorldCountriesController@store')->name('world.country.store');
-            Route::get('world-country/edit/{id}', 'WorldCountriesController@editdetails')->name('world.country.edit');
-            Route::post('world-country/update/{id}', 'WorldCountriesController@update')->name('world.country.update');
-            Route::get('/world-country/delete/{id}', 'WorldCountriesController@delete')->name('world.country.delete');
+        //World cities route
+        Route::get('world-city/index', 'WorldCitiesController@index')->name('world.city.index');
+        Route::get('world-city/create', 'WorldCitiesController@Create')->name('world.city.create');
+        Route::post('world-city/store', 'WorldCitiesController@store')->name('world.city.store');
+        Route::get('world-city/edit/{id}', 'WorldCitiesController@editdetails')->name('world.city.edit');
+        Route::post('world-city/update/{id}', 'WorldCitiesController@update')->name('world.city.update');
+        Route::get('/world-city/delete/{id}', 'WorldCitiesController@delete')->name('world.city.delete');
+        //World cities route
+        Route::get('world-country/index', 'WorldCountriesController@index')->name('world.country.index');
+        Route::get('world-country/create', 'WorldCountriesController@Create')->name('world.country.create');
+        Route::post('world-country/store', 'WorldCountriesController@store')->name('world.country.store');
+        Route::get('world-country/edit/{id}', 'WorldCountriesController@editdetails')->name('world.country.edit');
+        Route::post('world-country/update/{id}', 'WorldCountriesController@update')->name('world.country.update');
+        Route::get('/world-country/delete/{id}', 'WorldCountriesController@delete')->name('world.country.delete');
 
-           //Budget Type route
-           Route::get('budget-type/index', 'BudgetTypeController@index')->name('budget.type.index');
-           Route::get('budget-type/create', 'BudgetTypeController@Create')->name('budget.type.create');
-           Route::post('budget-type/store', 'BudgetTypeController@store')->name('budget.type.store');
-           Route::get('budget-type/edit/{id}', 'BudgetTypeController@editdetails')->name('budget.type.edit');
-           Route::post('budget-type/inactiveBy', 'BudgetTypeController@inActiveBy')->name('budget.type.inactive');
-           Route::post('budget-type/activeBy', 'BudgetTypeController@activeBy')->name('budget.type.active');
-           Route::post('budget-type/update/{id}', 'BudgetTypeController@update')->name('budget.type.update');
-           Route::get('/budget-type/delete/{id}', 'BudgetTypeController@delete')->name('budget.type.delete');
+        //Budget Type route
+        Route::get('budget-type/index', 'BudgetTypeController@index')->name('budget.type.index');
+        Route::get('budget-type/create', 'BudgetTypeController@Create')->name('budget.type.create');
+        Route::post('budget-type/store', 'BudgetTypeController@store')->name('budget.type.store');
+        Route::get('budget-type/edit/{id}', 'BudgetTypeController@editdetails')->name('budget.type.edit');
+        Route::post('budget-type/inactiveBy', 'BudgetTypeController@inActiveBy')->name('budget.type.inactive');
+        Route::post('budget-type/activeBy', 'BudgetTypeController@activeBy')->name('budget.type.active');
+        Route::post('budget-type/update/{id}', 'BudgetTypeController@update')->name('budget.type.update');
+        Route::get('/budget-type/delete/{id}', 'BudgetTypeController@delete')->name('budget.type.delete');
 
-           //Language Lavel route
-           Route::get('language-level/index', 'LanguageLevelsController@index')->name('language.level.index');
-           Route::get('language-level/create', 'LanguageLevelsController@Create')->name('language.level.create');
-           Route::post('language-level/store', 'LanguageLevelsController@store')->name('language.level.store');
-           Route::get('language-level/edit/{id}', 'LanguageLevelsController@editdetails')->name('language.level.edit');
-           Route::post('language-level/inactiveBy', 'LanguageLevelsController@inActiveBy')->name('language.level.inactive');
-           Route::post('language-level/activeBy', 'LanguageLevelsController@activeBy')->name('language.level.active');
-           Route::post('language-level/update/{id}', 'LanguageLevelsController@update')->name('language.level.update');
-           Route::get('/language-level/delete/{id}', 'LanguageLevelsController@delete')->name('language.level.delete');
+        //Language Lavel route
+        Route::get('language-level/index', 'LanguageLevelsController@index')->name('language.level.index');
+        Route::get('language-level/create', 'LanguageLevelsController@Create')->name('language.level.create');
+        Route::post('language-level/store', 'LanguageLevelsController@store')->name('language.level.store');
+        Route::get('language-level/edit/{id}', 'LanguageLevelsController@editdetails')->name('language.level.edit');
+        Route::post('language-level/inactiveBy', 'LanguageLevelsController@inActiveBy')->name('language.level.inactive');
+        Route::post('language-level/activeBy', 'LanguageLevelsController@activeBy')->name('language.level.active');
+        Route::post('language-level/update/{id}', 'LanguageLevelsController@update')->name('language.level.update');
+        Route::get('/language-level/delete/{id}', 'LanguageLevelsController@delete')->name('language.level.delete');
         //Tag route
         Route::get('tag/index', 'TagController@index')->name('tag.index');
         Route::get('tag/create', 'TagController@Create')->name('tag.create');
@@ -378,7 +378,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('techlogo/details/{uuid}', 'TechnologyLogoController@details')->name('techlogo.details');
             Route::get('techlogo/category', 'TechnologyLogoController@category')->name('techlogo.category');
             Route::post('techlogo/destroy/{id}', 'TechnologyLogoController@destroy')->name('techlogo.destroy');
- 
+
         });
 
         //Manage lead images logo
@@ -406,7 +406,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::get('projectLength/details/{uuid}', 'ProjectLengthController@details')->name('projectLength.details');
         Route::get('projectLength/category', 'ProjectLengthController@category')->name('projectLength.category');
         Route::post('projectLength/destroy/{id}', 'ProjectLengthController@destroy')->name('projectLength.destroy');
-        
+
 
         Route::middleware('staffaccess:34')->group(function () {
             // Manage Staff
@@ -551,36 +551,36 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('sub/category/activeBy', 'CategoryController@activeBy')->name('category.subcategory.activeBy');
             Route::post('sub/category/inactiveBy', 'CategoryController@inactiveBy')->name('category.subcategory.inactiveBy');
             Route::post('sub/category/update', 'CategoryController@subCategoryUpdate')->name('category.subcategory.update');
-        
+
             Route::get('/category/delete/{id}', 'CategoryController@delete')->name('category.delete');
             Route::get('/sub/category/delete/{id}', 'CategoryController@deleteSubCategory')->name('category.subcategory.delete');
         });
 
         // skill category
         Route::get('skill/category/index', 'SkillCategoryController@index')->name('skill.category.index');
-          Route::get('skill/category/create', 'SkillCategoryController@Create')->name('skill.category.create');
-          Route::post('skill/category/store', 'SkillCategoryController@store')->name('skill.category.store');
-          Route::get('skill/category/edit/{id}', 'SkillCategoryController@editdetails')->name('skill.category.edit');
-          Route::post('skill/category/update/{id}', 'SkillCategoryController@update')->name('skill.category.update');
-          Route::get('/skill/category/delete/{id}', 'SkillCategoryController@delete')->name('skill.category.delete');
+        Route::get('skill/category/create', 'SkillCategoryController@Create')->name('skill.category.create');
+        Route::post('skill/category/store', 'SkillCategoryController@store')->name('skill.category.store');
+        Route::get('skill/category/edit/{id}', 'SkillCategoryController@editdetails')->name('skill.category.edit');
+        Route::post('skill/category/update/{id}', 'SkillCategoryController@update')->name('skill.category.update');
+        Route::get('/skill/category/delete/{id}', 'SkillCategoryController@delete')->name('skill.category.delete');
 
         // sub attribute
         Route::get('sub/attribute/index', 'SubAttributesController@index')->name('sub.attribute.index');
-          Route::get('sub/attribute/create', 'SubAttributesController@Create')->name('sub.attribute.create');
-          Route::post('sub/attribute/store', 'SubAttributesController@store')->name('sub.attribute.store');
-          Route::get('sub/attribute/edit/{id}', 'SubAttributesController@editdetails')->name('sub.attribute.edit');
-          Route::post('sub/attribute/active', 'SubAttributesController@activeBy')->name('sub.attribute.active');
-          Route::post('sub/attribute/inactive', 'SubAttributesController@inactiveBy')->name('sub.attribute.inactive');
-          Route::post('sub/attribute/update/{id}', 'SubAttributesController@update')->name('sub.attribute.update');
-          Route::get('/sub/attribute/delete/{id}', 'SubAttributesController@delete')->name('sub.attribute.delete');  
+        Route::get('sub/attribute/create', 'SubAttributesController@Create')->name('sub.attribute.create');
+        Route::post('sub/attribute/store', 'SubAttributesController@store')->name('sub.attribute.store');
+        Route::get('sub/attribute/edit/{id}', 'SubAttributesController@editdetails')->name('sub.attribute.edit');
+        Route::post('sub/attribute/active', 'SubAttributesController@activeBy')->name('sub.attribute.active');
+        Route::post('sub/attribute/inactive', 'SubAttributesController@inactiveBy')->name('sub.attribute.inactive');
+        Route::post('sub/attribute/update/{id}', 'SubAttributesController@update')->name('sub.attribute.update');
+        Route::get('/sub/attribute/delete/{id}', 'SubAttributesController@delete')->name('sub.attribute.delete');
 
-          // Skills
+        // Skills
         Route::get('skill/index', 'SkillController@index')->name('skill.index');
         Route::get('skill/create', 'SkillController@Create')->name('skill.create');
         Route::post('skill/store', 'SkillController@store')->name('skill.store');
         Route::get('skill/edit/{id}', 'SkillController@editdetails')->name('skill.edit');
         Route::post('skill/update/{id}', 'SkillController@update')->name('skill.update');
-        Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');  
+        Route::get('/skill/delete/{id}', 'SkillController@delete')->name('skill.delete');
         Route::get('skill/attribute', 'SkillController@attribute')->name('skill.attribute');
 
         // Category Attribute
@@ -589,7 +589,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('category/attribute/store', 'CategoryAttributeController@store')->name('category.attribute.store');
         Route::get('category/attribute/edit/{id}', 'CategoryAttributeController@editdetails')->name('category.attribute.edit');
         Route::post('category/attribute/update/{id}', 'CategoryAttributeController@update')->name('category.attribute.update');
-        Route::get('/category/attribute/delete/{id}', 'CategoryAttributeController@delete')->name('category.attribute.delete');  
+        Route::get('/category/attribute/delete/{id}', 'CategoryAttributeController@delete')->name('category.attribute.delete');
         Route::get('category/attribute/attribute', 'CategoryAttributeController@attribute')->name('category.attribute.attribute');
 
         //Email Creditional Route
@@ -597,7 +597,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('credential/store', 'SystemCredentialController@store')->name('credential.store');
         Route::post('credential/activeBy', 'SystemCredentialController@activeBy')->name('credential.activeBy');
         Route::post('credential/inactiveBy', 'SystemCredentialController@inactiveBy')->name('credential.inactiveBy');
-         
+
         Route::post('credential/update', 'SystemCredentialController@update')->name('credential.update');
         Route::get('/credential/delete/{id}', 'SystemCredentialController@delete')->name('credential.delete');
 
@@ -616,17 +616,15 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('pusher-credential/inactiveBy', 'PusherSystemCredentialController@inactiveBy')->name('pusher.credential.inactiveBy');
         Route::post('pusher-credential/update', 'PusherSystemCredentialController@update')->name('pusher.credential.update');
         Route::get('/pusher-credential/delete/{id}', 'PusherSystemCredentialController@delete')->name('pusher.credential.delete');
-        
-         //Storage Creditional Route
-         Route::get('storage-credential', 'StorageSystemCredentialController@index')->name('storage.credential.index');
-         Route::post('storage-credential/store', 'StorageSystemCredentialController@store')->name('storage.credential.store');
-         Route::post('storage-credential/activeBy', 'StorageSystemCredentialController@activeBy')->name('storage.credential.activeBy');
-         Route::post('storage-credential/inactiveBy', 'StorageSystemCredentialController@inactiveBy')->name('storage.credential.inactiveBy');
-         Route::post('storage-credential/update', 'StorageSystemCredentialController@update')->name('storage.credential.update');
-         Route::get('/storage-credential/delete/{id}', 'StorageSystemCredentialController@delete')->name('storage.credential.delete');
-         
-     
-      
+
+        //Storage Creditional Route
+        Route::get('storage-credential', 'StorageSystemCredentialController@index')->name('storage.credential.index');
+        Route::post('storage-credential/store', 'StorageSystemCredentialController@store')->name('storage.credential.store');
+        Route::post('storage-credential/activeBy', 'StorageSystemCredentialController@activeBy')->name('storage.credential.activeBy');
+        Route::post('storage-credential/inactiveBy', 'StorageSystemCredentialController@inactiveBy')->name('storage.credential.inactiveBy');
+        Route::post('storage-credential/update', 'StorageSystemCredentialController@update')->name('storage.credential.update');
+        Route::get('/storage-credential/delete/{id}', 'StorageSystemCredentialController@delete')->name('storage.credential.delete');
+
 
         // Route::middleware('staffaccess:12')->group(function () {
         //     //features

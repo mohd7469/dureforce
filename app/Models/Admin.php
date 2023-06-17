@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class Admin extends Authenticatable
 {
@@ -29,6 +30,17 @@ class Admin extends Authenticatable
     protected $casts = [
         'staff_access' => 'object',
     ];
+
+    protected static function boot()
+    {
+
+        parent::boot();
+        static::creating(function ($model)  {
+            $model->status = 1;
+        });
+
+
+    }
 
     public function admin_permissions()
     {
