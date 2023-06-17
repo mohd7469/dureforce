@@ -149,16 +149,18 @@
         
       </div>
         <hr>
-        <h6 class="color-green">Description</h5>
-        <h6 class="mt-3">Related Job Listing</h5>
-        <h6 class="mt-3 color-green">Full Stack Developer<span class="color-black ml-2">(#100183394)</span></h5>
-      
+        <h6 class="color-green">Description</h6>
+        <h6 class="mt-3">Related Job Listing</h6>
+
+        @if(!empty($propsal_to_send_offer->user))
+        <h6 class="mt-3 color-green">{{$propsal_to_send_offer->user->basicProfile ? $propsal_to_send_offer->user->basicProfile->designation : " "}}</h6>
+        @endif
         <div class="mt-5">
             <div class="form-row">
               <div class="col-6">
                
                 <label><h6>Contract Title</h6></label>
-                <input type="text" class="form-control" placeholder="Full Stack Developer" name="contract_title">
+                <input type="text" class="form-control" placeholder="Enter Contract Title" name="contract_title">
                
               </div>
               
