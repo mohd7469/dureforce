@@ -13,6 +13,7 @@ class DayPlanningTask extends Model
 {
     use HasFactory,SoftDeletes,DatabaseOperations;
     protected $guarded = ['id'];
+
     protected $appends = ['custom_description','custom_start_time','custom_end_time','custom_task_amount','custom_hours','is_editable'];
 
     protected static function boot()
@@ -28,7 +29,15 @@ class DayPlanningTask extends Model
     }
 
     public static function scopeWithAll($query){
-        return $query->with('client')->with('attachments')->with('user')->with('status')->with('job')->with('offer')->with('contract')->with('notes')->with('day');
+        return $query->with('client')
+        ->with('attachments')
+        ->with('user')
+        ->with('status')
+        ->with('job')
+        ->with('offer')
+        ->with('contract')
+        ->with('notes')
+        ->with('day');
     }
 
     public function attachments(){
@@ -52,6 +61,7 @@ class DayPlanningTask extends Model
         $user_rate_per_hours=$this->contract->offer->rate_per_hour;
         $task_amount = (($this->attributes['time_in_hours']*60) + $this->attributes['time_in_minutes']) * ($user_rate_per_hours/60) ; 
         return '$'.round($task_amount,2);
+        
     }
     public function getCustomEndTimeAttribute()
     {
