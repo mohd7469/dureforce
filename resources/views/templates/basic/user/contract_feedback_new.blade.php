@@ -77,7 +77,7 @@
                 <textarea rows="3" id="feeback" name="feedback" placeholder="Write feedback for the seller"></textarea>
             </div>
         <div style="margin-top: 30px; margin-left: 75%;">
-        <button type="button" class="btn btn-light" data-dismiss="form">Cancel</button>
+        <button type="button" class="btn btn-light" onclick="hidemodal()">Cancel</button>
         <button type="submit" class="btn btn-primary" > Continue</button>
         </div>
     </div>
