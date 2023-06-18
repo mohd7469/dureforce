@@ -207,7 +207,34 @@ input::-webkit-inner-spin-button {
                 border-radius: 5px;
                 border: 1px solid #7f007f;
                 color: #7f007f;
-                width: 115px !important;
+                width: 100px !important;
+                font-size: 11px;
+            }
+            .create-service-main .service--btns {
+                background-color: #f8fafa;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #7f007f;
+                width: 100px !important;
+                font-size: 11px;
+            }
+            .create-service-main a.btn.btn-circle.btn-default:before {
+                top: 19px;
+                position: absolute;
+                content: " ";
+                left: 76%;
+                width: 53%;
+                border-bottom: 3px solid #8cc2c2;
+                z-index: 0;
+            }
+            .create-service-main label {
+                color: #000;
+                display: inherit;
+            }
+            .create-service-main .service-step {
+                color: #58a7a7;
+                font-size: 11px;
+                font-weight: 500;
             }
             .create-service-main .btn-save-continue {
                 background-color: #7f007f;

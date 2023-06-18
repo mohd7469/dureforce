@@ -218,7 +218,7 @@
 
                     <hr/>
                     <div class="row">
-                        <div class="col-md-5 ">
+                        <div class="col-md-5 " style="margin-left: -10px;">
                             <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 "
                                 href="?view=step-2" type="button">@lang('BACK')</a>
                         </div>
