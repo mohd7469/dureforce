@@ -10,9 +10,13 @@ class ServiceFee extends Model
     use HasFactory;
     protected $fillable = ['title','slug','fee','is_active','created_by','updated_by','module_id'];
 
-
     public function module()
     {
         return $this->belongsTo(Module::class, 'module_id');
     }
+    public function scopeActive($query)
+    {
+        return $query->where('is_active',1);
+    }
+
 }

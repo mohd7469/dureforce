@@ -17,7 +17,7 @@
         </div>
 
       @endif
-
+        <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
         <div class="card-body p-0 d-flex align-items-center">
          
             <div class="image-div">
@@ -432,9 +432,14 @@
           var milestone_amount=$(this).val();
           total_amount=total_amount+parseFloat(milestone_amount);
         });
+        let service_fee=$('#system_service_fee_id').val();
+        let user_percentage=(100-service_fee)/100;
+        let service_fee_percentage=service_fee/100;
+
         $('#total_milestones_amount').val(total_amount);
-        $('#milestones_amount_receive').val(financial(total_amount*0.80));
-        $('#system_fee').html('$'+financial(total_amount*0.20));
+        $('#milestones_amount_receive').val(financial(total_amount*user_percentage));
+        $('#system_fee').html('$'+financial(total_amount*service_fee_percentage));
+        
     }
     
     function submitOffer()

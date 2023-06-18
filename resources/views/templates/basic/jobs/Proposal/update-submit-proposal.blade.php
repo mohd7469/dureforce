@@ -3,6 +3,8 @@
 <section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
       <div class="sections-wrapper d-flex flex-wrap justify-content-center">
+         <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
+
          <article class="main-section">
             <div class="section-inner">
                <div class="item-section item-details-section">
