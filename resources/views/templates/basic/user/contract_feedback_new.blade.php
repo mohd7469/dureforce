@@ -74,11 +74,11 @@
                 </div>
         <div>
                 <p>Message:</p>
-                <textarea rows="3" id="feeback" name="feedback"></textarea>
+                <textarea rows="3" id="feeback" name="feedback" placeholder="Write feedback for the seller"></textarea>
             </div>
         <div style="margin-top: 30px; margin-left: 75%;">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>
+        <button type="button" class="btn btn-light" data-dismiss="form">Cancel</button>
+        <button type="submit" class="btn btn-primary" > Continue</button>
         </div>
     </div>
 </form>
