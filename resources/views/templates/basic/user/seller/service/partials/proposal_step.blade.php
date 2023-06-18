@@ -7,9 +7,15 @@
         if(is_string($files)){
             $files=json_decode($files);
         }
+
+        $service_fee=getSystemServiceFee();
+        $user_percentage=(100-$service_fee)/100;
+        $service_fee_percentage=$service_fee/100;
+
     @endphp
     <div class="card-body">
         <div class="card-form-wrapper">
+            <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
             <div class="row justify-content-center">
                 {{-- Bidding Rate --}}
                 <div class="row section-end-line">
@@ -31,10 +37,10 @@
                     
                         <div class="form-group pt-3">
                             <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                            <small id="emailHelp" class="form-text text-muted">20% Service Fee 
+                            <small id="emailHelp" class="form-text text-muted">{{$service_fee}}% Service Fee 
                                 {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                             </small><br>
-                            <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate'] :  floatval(@$service->rate_per_hour) )*0.20 }}</span>
+                            <span class="pt-2 text-dark" id="system_fee">{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate'] :  floatval(@$service->rate_per_hour) )* $service_fee_percentage }}</span>
                         </div>
 
                     </div>
@@ -45,7 +51,7 @@
                             <label for=""><strong class="text-dark">You’ll Recieve *</strong></label>
                             <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                             <div class="input-group">
-                                <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly value="{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate']  : floatval(@$service->rate_per_hour))   * 0.80 }}">
+                                <input type="number"  class="form-control" id="amount_receive" aria-describedby="emailHelp" name="amount_receive" step="any" readonly value="{{old('hourly_bid_rate',$proposal['hourly_bid_rate'] ? (float)$proposal['hourly_bid_rate']  : floatval(@$service->rate_per_hour))   * $user_percentage }}">
                                 <span class="input-group-text float-end">$</span>
                             </div>
                             

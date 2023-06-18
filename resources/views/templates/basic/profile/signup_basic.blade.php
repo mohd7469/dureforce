@@ -50,8 +50,17 @@
     $content = getContent('breadcrumbs.content', true);
 
     @endphp
-    
+    @php
+   
+
+      $service_fee=getSystemServiceFee();
+      $user_percentage=(100-$service_fee)/100;
+      $service_fee_percentage=$service_fee/100;
+   
+    @endphp
+
     <section class="account-section bg-overlay-white bg_img">
+        <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
         <div class="container">
             <div id="viewport">
                 <div class="row justify-content-center">
@@ -314,8 +323,12 @@
             });
 
             rate_per_hour.on('focusout', function(){
+                
+                let service_fee=$('#system_service_fee_id').val();
+                let user_percentage=(100-service_fee)/100;
+                let service_fee_percentage=service_fee/100;
 
-                var fee=rate_per_hour.val()*0.20;
+                var fee=rate_per_hour.val() * service_fee_percentage;
                 system_fee.html('$'+financial(fee));
 
             });

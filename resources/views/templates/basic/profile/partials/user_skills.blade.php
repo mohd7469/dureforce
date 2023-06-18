@@ -1,4 +1,5 @@
 <div class="setProfile" id="user-skills">
+   
    <form action="{{ route('seller.profile.skills.save') }}" method="POST" class="user-skills-form" id="skills_save_form">
       @csrf
       <div class="container-fluid welcome-body px-5">
@@ -45,7 +46,7 @@
                         <small  class="form-text text-muted">20% Service Fee 
                            {{-- <a href="#" class="link-space">Explain this</a> --}}
                         </small><br>
-                        <span class="pt-2 text-dark" id="system_fee">${{auth()->user()->rate_per_hour*0.20 }}</span>
+                        <span class="pt-2 text-dark" id="system_fee">${{auth()->user()->rate_per_hour*$service_fee_percentage }}</span>
                      </div>
                   </div>
                </div>

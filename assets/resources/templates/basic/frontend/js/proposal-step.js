@@ -1,6 +1,11 @@
 var token= $('input[name=_token]').val();
 var myDropzone='';
 var row_id=1;
+
+let service_fee=$('#system_service_fee_id').val();
+let user_percentage=(100-service_fee)/100;
+let service_fee_percentage=service_fee/100;
+
 'use strict';
 var uploaded_files=Array();
 Dropzone.autoDiscover = false;
@@ -173,8 +178,8 @@ $(function() {
       }
       else{
 
-        $('#amount_receive').val(financial(rate_per_hour*0.80));
-        $('#system_fee').html('$'+financial(rate_per_hour*0.20));
+        $('#amount_receive').val(financial(rate_per_hour*user_percentage));
+        $('#system_fee').html('$'+financial(rate_per_hour*service_fee_percentage));
 
       }
     });
@@ -189,11 +194,12 @@ $(function() {
       }
       else{
 
-        $('#milestones_amount_receive').val(financial(total_cost*0.80));
-        $('#system_fee').html('$'+financial(total_cost*0.20));
+        $('#milestones_amount_receive').val(financial(total_cost*user_percentage));
+        $('#system_fee').html('$'+financial(total_cost*service_fee_percentage));
 
 
       }
+      
     });
 
     //milestones sum
@@ -202,12 +208,15 @@ $(function() {
     });
   
 });
+
 function addFile(file){
+
   $('#file_name_div').append('<tr><td>'+file.uploaded_name+'</td><td class="text-center">'+file.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td><td class="text-center">'+
   '<a href="'+file.url+'" download><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-download"  ></i></span></a></td></tr>');
   $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
 
 }
+
 function calculateMilestoneAmountSum()
 {
     var total_amount=0;
@@ -216,8 +225,8 @@ function calculateMilestoneAmountSum()
       total_amount=total_amount+parseFloat(milestone_amount);
     });
     $('#total_milestones_amount').val(total_amount);
-    $('#milestones_amount_receive').val(financial(total_amount*0.80));
-    $('#system_fee').html('$'+financial(total_amount*0.20));
+    $('#milestones_amount_receive').val(financial(total_amount*user_percentage));
+    $('#system_fee').html('$'+financial(total_amount*service_fee_percentage));
 
 
 }

@@ -21,6 +21,7 @@
         <p class="sbheading-c">All Support Tickets >  <strong>Create New Ticket</strong></p>
         
     </div>
+    <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
     
      <div class="card-body" >
         <div class="row">

@@ -382,6 +382,11 @@ trait CreateOrUpdateEntity {
                 
                 $this->updateStatus($request,$model);
                 DB::commit();
+
+                $service_fee_percentage=getSystemServiceFee();
+                $user_percentage=(100-$service_fee_percentage)/100;
+                $service_fee_percentage=$service_fee_percentage/100;
+
                 if (!$model->defaultProposal) {
 
                     $deliver_mode=DeliveryMode::where('slug','Weekly-slug')->exists() ? DeliveryMode::where('slug','Weekly-slug')->first()->id : null;
@@ -390,7 +395,7 @@ trait CreateOrUpdateEntity {
 
                         $proposal=[
                             "hourly_bid_rate" => $model->rate_per_hour,
-                            "amount_receive" => ($model->rate_per_hour*0.80),
+                            "amount_receive" => ($model->rate_per_hour * $user_percentage),
                             "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
                             "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
                             "delivery_mode_id" => $deliver_mode,
@@ -413,7 +418,7 @@ trait CreateOrUpdateEntity {
                                             ]
                                         ],
                                         "fixed_bid_amount" => $model->fixed_bid_amount,
-                                        "amount_receive" => ($model->rate_per_hour*0.80),
+                                        "amount_receive" => ($model->rate_per_hour * $user_percentage),
                                         "delivery_mode_id" => $deliver_mode,
                                         "cover_letter" => $model->description,
                                         "action" => "continue",
