@@ -33,21 +33,21 @@ class SupportTicketController extends Controller
     public function openTickets()
     {
 
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Open)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Open)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function closedTicket()
     {
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Closed)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Closed)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function onHoldTicket()
     {
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$OnHold)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$OnHold)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
