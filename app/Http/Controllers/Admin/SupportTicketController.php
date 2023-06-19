@@ -72,7 +72,9 @@ class SupportTicketController extends Controller
         ]);
         if ($request->hasFile('comment_attachment')) {
             try {
-                foreach ($request->file('comment_attachment') as $file) {
+
+                $file = $request->file('comment_attachment');
+
                     $path = imagePath()['attachments']['path'];
             
                     $filename = uploadAttachments($file, $path);
@@ -89,7 +91,8 @@ class SupportTicketController extends Controller
 
                     ]);
 
-                 }
+
+
             }
         catch (\Exception $exp) {
             $notify[] = ['error', 'Document could not be uploaded.'];
