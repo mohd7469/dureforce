@@ -29,7 +29,7 @@
             <hr/>
             <br/>
             <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-md-3 " style="margin-left: -10px;">
                     <a class="btn service--btns btn-secondary float-left  mt-20 " href="?view=step-4">@lang('BACK')</a>
                 </div>
                 <div class="col-md-9 text-right">

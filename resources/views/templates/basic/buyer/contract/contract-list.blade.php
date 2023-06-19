@@ -396,6 +396,17 @@
                 margin-top: 18px;
             }
         }
+        @media only screen and (max-width:683px){
+            .nav-tabs .nav-link {
+                padding: 5px 13px !important;
+                border: 0 !important;
+                border-bottom: 1px solid transparent !important;
+                color: #606975 !important;
+                font-weight: 500 !important;
+                font-size: 9px !important;
+                background-color: transparent !important;
+            }
+        }
     </style>
 
 @push('script')
