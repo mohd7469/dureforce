@@ -7,9 +7,9 @@
             <button class="status float-right">{{$contract->status->name}}</button>
         </div>
 
-        <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
+        <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 moile-view-nav-link">
 
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
+            <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ">
                 <li class="nav-item ">
                 <a class="nav-link" href="#">Job Summary <span class="sr-only"></span></a>
                 </li>
@@ -19,6 +19,11 @@
                 <li class="nav-item">
                 <a class="nav-link ">Payments</a>
                 </li>
+            </ul> -->
+            <ul class="list-inline mr-auto mt-2 mb-2 mt-lg-0 ">
+                <li class="list-inline-item"><a href="#">Job Summary</a></li>
+                <li class="list-inline-item"><a href="#">Tasks</a></li>
+                <li class="list-inline-item"><a href="#">Payments</a></li>
             </ul>
             
                 
@@ -75,6 +80,11 @@
         }
         .bb{
             border-bottom: 2px solid #DCEDED
+        }
+        @media only screen and (max-width:683px){
+            .moile-view-nav-link {
+                text-align: center !important;
+            }
         }
     </style>
 @endpush

@@ -3,10 +3,10 @@
 
         <div class="container-fluid">
             <div class="row m-auto">
-                <div class="col-md-10">
-                   <p class="">All Contracts > {{$contract->offer->module->title}} <span> </span></p>
+                <div class="col-md-7">
+                   All Contracts > {{$contract->offer->module->title}} 
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 moile-view-icons">
 
                     <div class="dropdown">
                         <a class="btn " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -14,7 +14,7 @@
                                 <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
                             </svg>
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-menu moile-view-icons-dropdown" aria-labelledby="dropdownMenuLink">
 {{--                            <a class="dropdown-item" href="{{route('contracts.feedbacknew',$contract->uuid)}}">@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>--}}
                             <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal" >@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>
                         </div>
@@ -995,6 +995,21 @@
 
         p.propsal-h {
             font-size: 16px;
+        }
+    }
+
+    @media only screen and (max-width:683px){
+        .moile-view-icons {
+            width: 11px !important;
+            margin-top: -26px !important;
+            margin-left: 325px !important;
+        }
+        .moile-view-icons-dropdown{
+            position: absolute;
+            transform: translate3d(-5px, 28px, 0px);
+            top: 0px;
+            left: -60 !important;
+            will-change: transform;
         }
     }
 
