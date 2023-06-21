@@ -57,7 +57,7 @@ class OfferController extends Controller
         if ($request_data['payment_type']==ModuleOffer::PAYMENT_TYPE['HOURLY']) {
             
             $rules ['rate_per_hour' ] = 'required|numeric|min:1|max:9999';
-            $rules ['weekly_limit' ] = 'required|numeric|min:1';
+            $rules ['weekly_limit' ] = 'required|numeric|min:1|max:1000';
             $rules ['contract_title' ] = 'required';
             $rules ['start_date' ] = 'nullable|after_or_equal:' . Carbon::now()->format('d-m-Y');
 
