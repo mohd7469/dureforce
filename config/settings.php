@@ -13,5 +13,7 @@ return [
     'software_description_prefix'       => env('SOFTWARE_DESCRIPTION_PREFIX',''),
     'service_weekly_hours_start_limit'  => env('SERVICE_WEEKLY_HOURS_START_LIMIT',30),
     'service_weekly_hours_end_limit'    => env('SERVICE_WEEKLY_HOURS_END_LIMIT',40),
+    'is_system_fee'    => env('IS_SYSTEM_FEE',0),
+
 
 ];

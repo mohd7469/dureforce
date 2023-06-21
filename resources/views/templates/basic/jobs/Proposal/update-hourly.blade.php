@@ -1,6 +1,15 @@
  {{-- Proposal Terms --}}
  <div class="row">
-                        
+          
+   @php
+   
+
+   $service_fee=getSystemServiceFee();
+   $user_percentage=(100-$service_fee)/100;
+   $service_fee_percentage=$service_fee/100;
+
+@endphp
+
     <div class="card  mb-3" style="padding:0px;border:none">
        
        {{-- card header --}}
@@ -67,7 +76,7 @@
                   <small id="emailHelp" class="form-text text-muted">20% Service Fee 
                      {{-- <a href="#" class="link-space " style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                   </small><br>
-                  <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->hourly_bid_rate*0.20), 2) }}</span>
+                  <span class="pt-2 text-dark" id="system_fee">${{ round(($proposal->hourly_bid_rate*$service_fee_percentage), 2) }}</span>
                </div>
 
             </div>

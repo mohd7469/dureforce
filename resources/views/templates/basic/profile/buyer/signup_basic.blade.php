@@ -320,7 +320,7 @@
                 success:function(data){
                     if(data.cities)
                     {    
-                       
+                        
                         $(select_field_id).empty();
                         $(select_field_id).append(
                             `<option>Select City</option>

@@ -47,7 +47,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('entity-attributes/store', 'EntityFieldController@store')->name('entity-attributes.store');
         Route::post('entity-attributes/update', 'EntityFieldController@update')->name('entity-attributes.update');
 
-        Route::middleware('staffaccess:1')->group(function () {
+
             Route::get('dashboard', 'AdminController@dashboard')->name('dashboard');
 
 
@@ -56,19 +56,18 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('notification/read/{id}', 'AdminController@notificationRead')->name('notification.read');
             Route::get('notifications/read-all', 'AdminController@readAll')->name('notifications.readAll');
 
-        });
 
-        Route::middleware('staffaccess:29')->group(function () {
+
             Route::get('system-info', 'AdminController@systemInfo')->name('system.info');
-        });
 
-        Route::middleware('staffaccess:32')->group(function () {
+
+
             //Report Bugs
             Route::get('request-report', 'AdminController@requestReport')->name('request.report');
             Route::post('request-report', 'AdminController@reportSubmit');
-        });
 
-        Route::middleware('staffaccess:9')->group(function () {
+
+
             // Users Manager
             Route::get('users', 'ManageUsersController@allUsers')->name('users.all');
             Route::get('users/active', 'ManageUsersController@activeUsers')->name('users.active');
@@ -103,18 +102,14 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('users/job/{id}', 'ManageUsersController@userJob')->name('users.job');
             Route::get('users/service/booking/{id}', 'ManageUsersController@userServiceBooking')->name('users.service.booking');
             Route::get('users/software/purchases/{id}', 'ManageUsersController@userSoftwareBuy')->name('users.software.purchases');
-        });
 
-        Route::middleware('staffaccess:18')->group(function () {
             // Subscriber
             Route::get('subscriber', 'SubscriberController@index')->name('subscriber.index');
             Route::get('subscriber/send-email', 'SubscriberController@sendEmailForm')->name('subscriber.sendEmail');
             Route::post('subscriber/remove', 'SubscriberController@remove')->name('subscriber.remove');
             Route::post('subscriber/send-email', 'SubscriberController@sendEmail')->name('subscriber.sendEmail');
 
-        });
 
-        Route::middleware('staffaccess:5')->group(function () {
             //Manage Service
             Route::get('service', 'ServiceController@index')->name('service.index');
             Route::get('service/details/{id}', 'ServiceController@details')->name('service.details');
@@ -135,9 +130,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('service/{scope}/search', 'ServiceController@search')->name('service.search');
             Route::post('service/destroy/{id}', 'ServiceController@destroy')->name('service.destroy');
 
-        });
-
-        Route::middleware('staffaccess:6')->group(function () {
             //Manage Software
             Route::get('software/index', 'SoftwareController@index')->name('software.index');
             Route::get('software/pending', 'SoftwareController@pending')->name('software.pending');
@@ -159,9 +151,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('software/destroy/{id}', 'SoftwareController@destroy')->name('software.destroy');
             Route::post('software/featured/include', 'SoftwareController@featuredInclude')->name('software.featured.include');
             Route::post('software/featured/remove', 'SoftwareController@featuredNotInclude')->name('software.featured.remove');
-        });
 
-        Route::middleware('staffaccess:7')->group(function () {
             //Manage Job
 
             Route::get('job/index', 'JobController@index')->name('job.index');
@@ -181,9 +171,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('job/category', 'JobController@jobCategory')->name('job.category');
             Route::get('job/{scope}/search', 'JobController@search')->name('job.search');
             Route::post('job/destroy/{id}', 'JobController@destroy')->name('job.destroy');
-        });
         // background banner
-        Route::middleware('staffaccess:33')->group(function () {
             //Manage banner
             Route::get('banner/index', 'BannerController@index')->name('banner.index');
             Route::get('banner/create', 'BannerController@bannerCreate')->name('banner.create');
@@ -198,7 +186,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('banner/category', 'BannerController@category')->name('banner.category');
             Route::post('banner/destroy/{id}', 'BannerController@destroy')->name('banner.destroy');
 
-        });
 
 
         //testimonil
@@ -364,7 +351,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('deliver/update/{id}', 'DeliverModeController@update')->name('deliver.update');
         Route::get('/deliver/delete/{id}', 'DeliverModeController@delete')->name('deliver.delete');
         // background technology logo
-        Route::middleware('staffaccess:34')->group(function () {
             //Manage technology logo
             Route::get('techlogo/index', 'TechnologyLogoController@index')->name('techlogo.index');
             Route::get('techlogo/create', 'TechnologyLogoController@bannerCreate')->name('techlogo.create');
@@ -379,7 +365,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('techlogo/category', 'TechnologyLogoController@category')->name('techlogo.category');
             Route::post('techlogo/destroy/{id}', 'TechnologyLogoController@destroy')->name('techlogo.destroy');
 
-        });
 
         //Manage lead images logo
         Route::get('leadImages/index', 'LeadImagesController@index')->name('leadImages.index');
@@ -408,7 +393,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('projectLength/destroy/{id}', 'ProjectLengthController@destroy')->name('projectLength.destroy');
 
 
-        Route::middleware('staffaccess:34')->group(function () {
             // Manage Staff
             Route::get('staff/index', 'StaffController@index')->name('staff.index');
             Route::get('staff/create', 'StaffController@create')->name('staff.create');
@@ -418,9 +402,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('staff/activeBy', 'StaffController@activeBy')->name('staff.active');
             Route::post('staff/update/{id}', 'StaffController@update')->name('staff.update');
             Route::post('staff/delete/', 'StaffController@delete')->name('staff.delete');
-        });
 
-        Route::middleware('staffaccess:13')->group(function () {
             // Deposit Gateway
             Route::name('gateway.')->prefix('gateway')->group(function () {
                 // Automatic Gateway
@@ -441,9 +423,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
                 Route::post('manual/activate', 'ManualGatewayController@activate')->name('manual.activate');
                 Route::post('manual/deactivate', 'ManualGatewayController@deactivate')->name('manual.deactivate');
             });
-        });
 
-        Route::middleware('staffaccess:14')->group(function () {
             // DEPOSIT SYSTEM
             Route::name('deposit.')->prefix('deposit')->group(function () {
                 Route::get('/', 'DepositController@deposit')->name('list');
@@ -460,9 +440,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
                 Route::get('date-search/{scope}', 'DepositController@dateSearch')->name('dateSearch');
 
             });
-        });
 
-        Route::middleware('staffaccess:15')->group(function () {
             // WITHDRAW SYSTEM
             Route::name('withdraw.')->prefix('withdraw')->group(function () {
                 Route::get('pending', 'WithdrawalController@pending')->name('pending');
@@ -486,9 +464,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
                 Route::post('method/activate', 'WithdrawMethodController@activate')->name('method.activate');
                 Route::post('method/deactivate', 'WithdrawMethodController@deactivate')->name('method.deactivate');
             });
-        });
 
-        Route::middleware('staffaccess:2')->group(function () {
             //Service Booking
             Route::get('service/booking', 'ServiceBookingController@index')->name('booking.service.index');
             Route::get('service/booking/details/{id}', 'ServiceBookingController@details')->name('booking.service.details');
@@ -502,17 +478,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('service/booking/payment', 'ServiceBookingController@payment')->name('booking.service.payment');
             Route::get('service/booking/{scope}/search', 'ServiceBookingController@search')->name('booking.service.search');
             Route::get('service/booking/work/delivery/{id}', 'ServiceBookingController@workDeliveryDownload')->name('work.delivery.download');
-        });
 
-        Route::middleware('staffaccess:3')->group(function () {
             // Sales Software
             Route::get('software/sales', 'BuySoftwareController@index')->name('sales.software.index');
             Route::get('software/file/download/{id}', 'BuySoftwareController@softwareFileDownload')->name('software.file.download');
             Route::get('software/document/download/{id}', 'BuySoftwareController@softwareDocumentFile')->name('software.document.download');
             Route::get('sales/software/search', 'BuySoftwareController@search')->name('sales.software.search');
-        });
 
-        Route::middleware('staffaccess:4')->group(function () {
             // Hire Employ
             Route::get('hire/employees', 'HireEmployController@index')->name('hire.index');
             Route::get('work/completed', 'HireEmployController@completed')->name('hire.completed');
@@ -524,24 +496,18 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('hire/file/download/{id}', 'HireEmployController@workFileDownload')->name('hire.work.file.download');
             Route::post('employees/payment', 'HireEmployController@payment')->name('employ.payment');
             Route::get('hire/employees/{scope}/search', 'HireEmployController@search')->name('hire.search');
-        });
 
-        Route::middleware('staffaccess:33')->group(function () {
             //Rank
             Route::get('rank', 'RankController@index')->name('rank.index');
             Route::post('rank/store', 'RankController@store')->name('rank.store');
             Route::post('rank/update', 'RankController@update')->name('rank.update');
-        });
 
-        Route::middleware('staffaccess:10')->group(function () {
             // Coupon
             Route::get('coupon', 'CouponController@index')->name('coupon.index');
             Route::post('coupon/store', 'CouponController@store')->name('coupon.store');
             Route::post('coupon/update', 'CouponController@update')->name('coupon.update');
             Route::post('coupon/delete', 'CouponController@delete')->name('coupon.delete');
-        });
 
-        Route::middleware('staffaccess:11')->group(function () {
             //Category
             Route::get('category', 'CategoryController@index')->name('category.index');
             Route::post('category/store', 'CategoryController@store')->name('category.store');
@@ -554,7 +520,6 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
 
             Route::get('/category/delete/{id}', 'CategoryController@delete')->name('category.delete');
             Route::get('/sub/category/delete/{id}', 'CategoryController@deleteSubCategory')->name('category.subcategory.delete');
-        });
 
         // skill category
         Route::get('skill/category/index', 'SkillCategoryController@index')->name('skill.category.index');
@@ -633,25 +598,20 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         //     Route::post('features/update', 'FeaturesController@update')->name('features.update');
         // });
 
-        Route::middleware('staffaccess:8')->group(function () {
             // Advertisement
             Route::get('ads/index', 'AdvertisementController@index')->name('ads.index');
             Route::post('ads/store', 'AdvertisementController@store')->name('ads.store');
             Route::get('ads/edit/{id}', 'AdvertisementController@edit')->name('ads.edit');
             Route::post('ads/update/{id}', 'AdvertisementController@update')->name('ads.update');
             Route::post('ads/delete', 'AdvertisementController@delete')->name('ads.delete');
-        });
 
-        Route::middleware('staffaccess:17')->group(function () {
             // Report
             Route::get('report/transaction', 'ReportController@transaction')->name('report.transaction');
             Route::get('report/transaction/search', 'ReportController@transactionSearch')->name('report.transaction.search');
             Route::get('report/login/history', 'ReportController@loginHistory')->name('report.login.history');
             Route::get('report/login/ipHistory/{ip}', 'ReportController@loginIpHistory')->name('report.login.ipHistory');
             Route::get('report/email/history', 'ReportController@emailHistory')->name('report.email.history');
-        });
 
-        Route::middleware('staffaccess:16')->group(function () {
             // Admin Support
 //            Route::get('tickets', 'SupportTicketController@tickets')->name('ticket');
             Route::get('tickets', 'SupportTicketController@index')->name('ticket');
@@ -667,9 +627,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('ticket/reply/{id}', 'SupportTicketController@ticketReplySend')->name('ticket.reply');
             Route::get('ticket/download/{ticket}', 'SupportTicketController@ticketDownload')->name('ticket.download');
             Route::post('ticket/delete', 'SupportTicketController@ticketDelete')->name('ticket.delete');
-        });
 
-        Route::middleware('staffaccess:22')->group(function () {
             // Language Manager
             Route::get('/language', 'LanguageController@langManage')->name('language.manage');
             Route::post('/language', 'LanguageController@langStore')->name('language.manage.store');
@@ -681,48 +639,33 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::post('language/store/key/{id}', 'LanguageController@storeLanguageJson')->name('language.store.key');
             Route::post('language/delete/key/{id}', 'LanguageController@deleteLanguageJson')->name('language.delete.key');
             Route::post('language/update/key/{id}', 'LanguageController@updateLanguageJson')->name('language.update.key');
-        });
 
 
-        Route::middleware('staffaccess:19')->group(function () {
 
             // General Setting
             Route::get('general-setting', 'GeneralSettingController@index')->name('setting.index');
             Route::post('general-setting', 'GeneralSettingController@update')->name('setting.update');
-        });
 
-        Route::middleware('staffaccess:31')->group(function () {
             Route::get('optimize', 'GeneralSettingController@optimize')->name('setting.optimize');
-        });
 
-        Route::middleware('staffaccess:20')->group(function () {
             // Logo-Icon
             Route::get('setting/logo-icon', 'GeneralSettingController@logoIcon')->name('setting.logo.icon');
             Route::post('setting/logo-icon', 'GeneralSettingController@logoIconUpdate')->name('setting.logo.icon');
-        });
 
-        Route::middleware('staffaccess:30')->group(function () {
             //Custom CSS
             Route::get('custom-css', 'GeneralSettingController@customCss')->name('setting.custom.css');
             Route::post('custom-css', 'GeneralSettingController@customCssSubmit');
-        });
 
-        Route::middleware('staffaccess:26')->group(function () {
             //Cookie
             Route::get('cookie', 'GeneralSettingController@cookie')->name('setting.cookie');
             Route::post('cookie', 'GeneralSettingController@cookieSubmit');
-        });
 
-        Route::middleware('staffaccess:21')->group(function () {
             // Plugin
             Route::get('extensions', 'ExtensionController@index')->name('extensions.index');
             Route::post('extensions/update/{id}', 'ExtensionController@update')->name('extensions.update');
             Route::post('extensions/activate', 'ExtensionController@activate')->name('extensions.activate');
             Route::post('extensions/deactivate', 'ExtensionController@deactivate')->name('extensions.deactivate');
-        });
 
-
-        Route::middleware('staffaccess:24')->group(function () {
             // Email Setting
             Route::get('email-template/global', 'EmailTemplateController@emailTemplate')->name('email.template.global');
             Route::post('email-template/global', 'EmailTemplateController@emailTemplateUpdate')->name('email.template.global');
@@ -732,10 +675,8 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('email-template/{id}/edit', 'EmailTemplateController@edit')->name('email.template.edit');
             Route::post('email-template/{id}/update', 'EmailTemplateController@update')->name('email.template.update');
             Route::post('email-template/send-test-mail', 'EmailTemplateController@sendTestMail')->name('email.template.test.mail');
-        });
         //
 
-        Route::middleware('staffaccess:25')->group(function () {
             // SMS Setting
             Route::get('sms-template/global', 'SmsTemplateController@smsTemplate')->name('sms.template.global');
             Route::post('sms-template/global', 'SmsTemplateController@smsTemplateUpdate')->name('sms.template.global');
@@ -745,22 +686,17 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             Route::get('sms-template/edit/{id}', 'SmsTemplateController@edit')->name('sms.template.edit');
             Route::post('sms-template/update/{id}', 'SmsTemplateController@update')->name('sms.template.update');
             Route::post('email-template/send-test-sms', 'SmsTemplateController@sendTestSMS')->name('sms.template.test.sms');
-        });
 
-        Route::middleware('staffaccess:23')->group(function () {
             // SEO
             Route::get('seo', 'FrontendController@seoEdit')->name('seo');
-        });
 
 
-        Route::middleware('staffaccess:27')->group(function () {
             Route::name('frontend.')->prefix('frontend')->group(function () {
                 Route::get('templates', 'FrontendController@templates')->name('templates');
                 Route::post('templates', 'FrontendController@templatesActive')->name('templates.active');
             });
-        });
-        Route::middleware('staffaccess:28')->group(function () {
-            // Frontend
+
+        // Frontend
             Route::name('frontend.')->prefix('frontend')->group(function () {
                 Route::get('frontend-sections/{key}', 'FrontendController@frontendSections')->name('sections');
                 Route::post('frontend-content/{key}', 'FrontendController@frontendContent')->name('sections.content');
@@ -770,6 +706,5 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
             });
         });
     });
-});
 
 

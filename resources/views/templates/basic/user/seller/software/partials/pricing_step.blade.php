@@ -279,13 +279,13 @@
 
                         <div class="row">
                             
-                            <div class="col-md-6 m-0 p-0">
-                                <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                            <div class="col-md-6 m-0 p-0" style="margin-left: 13px !important;">
+                                <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100 back-button"
                                    href="?view=step-1" type="button">@lang('BACK')</a>
                             </div>
 
                             <div class="col-md-6 text-right">
-                                <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                                <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100 back-button"
                                         href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
             
                                 <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">

@@ -206,7 +206,7 @@
                                                                     {{-- <br> --}}
                                                                     {{-- {{diffforhumans($job->updated_at)}} --}}
                                                                 </td>
-                                                                <td data-label="Action">
+                                                                <td data-label="Action" style="display: flex">
                                                                     {{--  @if($job->status->slug != 'approved')  --}}
                                                                     {{-- {{route('buyer.job.edit', [slug($job->title), $job->id])}} --}}
 
