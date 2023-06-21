@@ -97,3 +97,11 @@
   width: 230px;
   text-align: center;
 }
+
+@media only screen and (max-width: 1124px) {
+  .ancortag-class{
+    width: 50%;
+    text-align: center;
+    font-size: 10px;
+  }
+}
