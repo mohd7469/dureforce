@@ -85,6 +85,12 @@
             .moile-view-nav-link {
                 text-align: center !important;
             }
+            .datepicker-button {
+                border: none !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                background: transparent !important;
+            }
         }
     </style>
 @endpush

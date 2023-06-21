@@ -76,7 +76,7 @@
                 <p>Message:</p>
                 <textarea rows="3" id="feeback" name="feedback" placeholder="Write feedback for the seller"></textarea>
             </div>
-        <div style="margin-top: 30px; margin-left: 75%;">
+        <div style="margin-top: 30px;">
         <button type="button" class="btn btn-light" onclick="hidemodal()">Cancel</button>
         <button type="submit" class="btn btn-primary" > Continue</button>
         </div>
