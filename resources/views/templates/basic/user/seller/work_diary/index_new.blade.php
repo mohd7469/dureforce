@@ -10,12 +10,12 @@
 
         <div class="section-wrapper ">
             
-            <div class="row align-items-center bbs" style="height:80px">
+            <div class="row align-items-center bbs">
                 
                 <div class="col-md-2 col-lg-2">
                     <div class="d-inline-flex align-items-center">
                         <input type="text" id="datepicker" class="datepicker-button" style="padding-right: 0;">
-                        <span style="margin-left: -57px !important;">
+                        <span class="date-picker-icon">
                           <svg width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1.55012 0H8.71012C9.02012 0 9.27012 0.25 9.27012 0.56C9.27012 0.71 9.21012 0.85 9.11012 0.95L5.53012 4.53C5.31012 4.75 4.96012 4.75 4.74012 4.53L1.16012 0.95C0.940117 0.73 0.940117 0.38 1.16012 0.16C1.27012 0.06 1.41012 0 1.55012 0Z" fill="#898989"/>
                           </svg>
@@ -24,7 +24,7 @@
                         
                 </div>
 
-                <div class="col-md-4 col-lg-4 ">
+                <div class="col-md-4 col-lg-4 today-buttons">
                     
                     <button type="button" class="btn  btn-floating btn_date" onclick="showDate('previous')" >
                         <i class="fas fa-chevron-left icon"></i>
@@ -942,6 +942,9 @@
 
 @push('style')
     <style>
+        .date-picker-icon{
+            margin-left: -57px !important;
+        }
         .search{
             background: #FFFFFF;
             border: 1px solid #CBDFDF;
@@ -1074,6 +1077,18 @@
     }
     a.active strong{
         color: white
+    }
+
+    @media only screen and (max-width:683px){
+        .date-picker-icon{
+            margin-left: -34px !important;
+        }
+        .metrics-container {
+            background: #D0E2E2 !important;
+            border-radius: 6px !important;
+            height: 100px !important; 
+            padding-top: 7px !important;
+        }
     }
    
 </style>
