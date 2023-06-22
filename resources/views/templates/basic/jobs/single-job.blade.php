@@ -211,8 +211,8 @@
 @endsection
 
 @push('script')
-<script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+<script src="{{asset('js/job.view.js')}}"></script>
 
 @endpush
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('css/job_view.css')}}">
+<link rel="stylesheet" href="{{asset('css/breadcrum.css')}}">

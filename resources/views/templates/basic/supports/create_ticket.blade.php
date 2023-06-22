@@ -108,13 +108,13 @@
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
+   <script src="{{asset('js/job-proposal.js')}}"></script>
 
 
 @endpush
 @push('style')
 
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
+<link rel="stylesheet" href="{{asset('css/job_proposal.css')}}">
 <style>
     .back{
         background: #ffffff;

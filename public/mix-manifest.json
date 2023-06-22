@@ -1,4 +1,18 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/create-service.js": "/js/create-service.js",
+    "/js/create-software.js": "/js/create-software.js",
+    "/js/job-proposal.js": "/js/job-proposal.js",
+    "/js/job.view.js": "/js/job.view.js",
+    "/js/create_job.js": "/js/create_job.js",
+    "/js/proposal-step.js": "/js/proposal-step.js",
+    "/css/app.css": "/css/app.css",
+    "/css/all-proposal.css": "/css/all-proposal.css",
+    "/css/breadcrum.css": "/css/breadcrum.css",
+    "/css/create_job.css": "/css/create_job.css",
+    "/css/view-propsal.css": "/css/view-propsal.css",
+    "/css/testimonial_response.css": "/css/testimonial_response.css",
+    "/css/send-offer.css": "/css/send-offer.css",
+    "/css/job_view.css": "/css/job_view.css",
+    "/css/job_proposal.css": "/css/job_proposal.css"
 }

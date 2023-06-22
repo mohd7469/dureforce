@@ -334,13 +334,13 @@
 
 @push('style-lib')
 
-    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
+    <link rel="stylesheet" href="{{asset('css/job_proposal.css')}}">
 
 @endpush
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+   <script src="{{asset('js/create_job.js')}}"></script>
 
 
 @endpush
