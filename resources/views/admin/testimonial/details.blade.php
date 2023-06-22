@@ -447,6 +447,6 @@
     <a href="{{ route('admin.testimonial.index') }}" class="btn btn-sm btn--primary box--shadow1 text--small"><i class="la la-fw la-backward"></i>@lang('Go Back')</a>
 @endpush
 @push('script')
-<script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+<script src="{{asset('js/job.view.js')}}"></script>
 @endpush
 <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/admin_job_view.css')}}">

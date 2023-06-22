@@ -351,7 +351,7 @@
 
 @endsection
 @push('style')
-  <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
+  <link rel="stylesheet" href="{{asset('css/send-offer.css')}}">
 @endpush
 @push('script')
 <script type="text/javascript">
