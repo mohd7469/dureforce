@@ -188,6 +188,6 @@
 </script>
 @endsection
 @push('style')
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/view-propsal.css')}}">
+<link rel="stylesheet" href="{{asset('css/view-propsal.css')}}">
 @endpush
 

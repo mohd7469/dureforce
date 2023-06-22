@@ -259,7 +259,7 @@
     <script>
         let route = "{{ route('user.category') }}";
     </script>
-    <script src="{{ asset('/assets/resources/js/service/create-service.js') }}"></script>
+    <script src="{{ asset('js/create-service.js') }}"></script>
     <script>
 
         function fetchSubCategories(category)
