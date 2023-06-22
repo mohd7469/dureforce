@@ -363,7 +363,7 @@
 @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-<link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
+<link href="{{ asset('css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     ul.skills-listing li {
@@ -710,7 +710,7 @@ a.btn-products-s {
 }
 
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('css/breadcrum.css')}}">
 
 @push('script')
 <script>
