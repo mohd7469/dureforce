@@ -386,7 +386,19 @@
         </div>
     </div>
 @endsection
-
+@push('style')
+<style>
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: #CBDFDF !important;
+}
+@media only screen and (max-width:683px){
+    .banner-mobile-view{
+        display: none !important;
+    }
+}
+</style>
+    
+@endpush
 @push('script')
     <script>
         $(document).ready(function () {

@@ -33,21 +33,21 @@ class SupportTicketController extends Controller
     public function openTickets()
     {
 
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Open)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Open)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function closedTicket()
     {
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Closed)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$Closed)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
 
     public function onHoldTicket()
     {
-        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$OnHold)->with(['status','priority','supportMessage'])->get();
+        $tickets = SupportTicket::orderBy('id','desc')->where('status_id',SupportTicket::$OnHold)->with(['status','priority','supportMessage'])->paginate(15);
         $pageTitle = "Support Tickets";
         return view('admin.support.index', compact( 'pageTitle','tickets'));
     }
@@ -60,46 +60,56 @@ class SupportTicketController extends Controller
         ],
             ['message.required'=>"Comment field is required"]
         );
-        $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+        try {
+            DB::beginTransaction();
 
-        $user = auth()->guard('admin')->user();
+
+            $support_ticket = SupportTicket::where('ticket_no', '=', $ticket_no)->first();
+
+            $user = auth()->guard('admin')->user();
 
 
-        $message =SupportMessage::create([
-            "admin_id"=>$user->id,
-            "support_ticket_id"=>$support_ticket->id,
-            "message"=>$request['message'],
-        ]);
-        if ($request->hasFile('comment_attachment')) {
-            try {
-                foreach ($request->file('comment_attachment') as $file) {
-                    $path = imagePath()['attachments']['path'];
-            
-                    $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
-                    $url = $path . '/' . $filename;
-                    $uploaded_name = $file->getClientOriginalName();
-                    $message->attachments()->create([
+            $message = SupportMessage::create([
+                "admin_id" => $user->id,
+                "support_ticket_id" => $support_ticket->id,
+                "message" => $request['message'],
+            ]);
+            if ($request->hasFile('comment_attachment')) {
 
-                        'name' => $filename,
-                        'uploaded_name' => $uploaded_name,
-                        'url'           => $url,
-                        'type' =>$file_extension,
-                        'is_published' =>1
+                $file = $request->file('comment_attachment');
 
-                    ]);
+                $path = imagePath()['attachments']['path'];
 
-                 }
+                $filename = uploadAttachments($file, $path);
+                $file_extension = getFileExtension($file);
+                $url = $path . '/' . $filename;
+                $uploaded_name = $file->getClientOriginalName();
+                $message->attachments()->create([
+
+                    'name' => $filename,
+                    'uploaded_name' => $uploaded_name,
+                    'url' => $url,
+                    'type' => $file_extension,
+                    'is_published' => 1
+
+                ]);
+
+
             }
+
+            DB::commit();
+
+
+            $notify[] = ['success', 'Comment added successfully!'];
+            return redirect()->route('admin.ticket.view',$ticket_no);
+        }
         catch (\Exception $exp) {
+            DB::rollback();
             $notify[] = ['error', 'Document could not be uploaded.'];
             return back()->withNotify($notify);
         }
 
 
-        }
-        $notify[] = ['success', 'Comment added successfully!'];
-        return redirect()->route('admin.ticket.view',$ticket_no);
     }
 
     public function ticketReply($id)

@@ -146,7 +146,7 @@
                                                 <div class="item-details-thumb-area2">
                                                     
                                                     <div class="service_subtitle3">
-                                                        About {{ __($software->user->username) }}
+                                                        About {{ __($software->user->username ?? '') }}
                                                         <span><i class="fa fa-regular fa fa-star"></i> 4.5 ({{ $software->reviewCount->count() }} Reviews)</span>
                                                     </div>
                                                     
@@ -155,7 +155,7 @@
                                                             <div class="left">
                                                                 <div class="thumb">
                                                                     <img src="{{ !empty($software->user->basicProfile->profile_picture)? $software->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}"
-                                                                        alt="{{ __($software->user->username) }}">
+                                                                        alt="{{ __($software->user->username ?? '') }}">
                                                                 </div>
                                                                 <div class="content mt-15">
                                                                     <h4 class="name">
@@ -168,10 +168,10 @@
                                                             </div>
                                                             <div class="right btn-area mb-10">
 
-                                                                <a href="{{ route('seller.profile', $software->user->uuid) }}"
+                                                                <a href="{{ route('seller.profile', $software->user->uuid ?? '') }}"
                                                                 class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                <a href="{{  route('profile.portfolio', $software->user->uuid) }}"
+                                                                <a href="{{  route('profile.portfolio', $software->user->uuid ?? '') }}"
                                                                     class="standard-btn">@lang('View Portfolio')</a>
                                                                     
                                                             </div>
@@ -290,7 +290,7 @@
 
                             @if ($related_softwares && (getLastLoginRoleId()==App\Models\Role::$Client))
                                 
-                                
+                                <br>
                                 <div class="row justify-content-center">
                                     <!--<div class="col-xl-12">-->
                                     <div class="col-xl-12" >
@@ -369,6 +369,11 @@
 <style>
 .table>:not(:last-child)>:last-child>* {
     border-bottom-color: #CBDFDF !important;
+}
+@media only screen and (max-width:683px){
+    .banner-mobile-view{
+        display: none !important;
+    }
 }
 </style>
     

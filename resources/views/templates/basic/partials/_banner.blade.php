@@ -19,7 +19,7 @@
                      src="{{getLeadImageUrl($model)}}" style="height: 100%;width:100%">
             </div>
             
-            <div class="col-12 col-md-7 justify-content-center "  style="text-align: right" >
+            <div class="col-12 col-md-7 justify-content-center banner-mobile-view"  style="text-align: right" >
                 <h1 class="heading font-weight-bold" style="font-size:45px"><strong>{{__(str_limit($model->banner->banner_heading,100))}}</strong></h1>
                 <p class="para" style="font-size: 20px;margin-top:20px">{{__(str_limit($model->banner->banner_introduction,200))}}</p>
             </div>

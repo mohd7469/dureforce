@@ -336,38 +336,37 @@
 
             </div>
         </div>
-        // End Contract Modal Confirmation
-{{--        <div class="modal fade" id="myModal" role="dialog">--}}
-{{--            <div class="modal-dialog" role="document">--}}
-{{--                <div class="modal-content">--}}
-{{--                    <div class="modal-header">--}}
-{{--                        <h5 class="modal-title">End Contract</h5>--}}
-{{--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                            <span aria-hidden="true">&times;</span>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-body">--}}
-{{--                        <p>Are you want to end Contract?</p>--}}
-{{--                        <p>You will be promoted to provide feedback and make any final payments in following steps.</p>--}}
-{{--                    </div>--}}
-{{--                    <div class="modal-footer">--}}
-{{--                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>--}}
-{{--                        <button type="button" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>--}}
-
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
-    //End Contract Feedback Form
 
         <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">End Contract</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you want to end Contract?</p>
+                        <p>You will be promoted to provide feedback and make any final payments in following steps.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="formshow()" data-dismiss="modal"> Continue</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal form fade" id="formModal" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">End Contract</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" onclick="hidemodal();">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -1021,11 +1020,13 @@
 
     <script>
         'use strict';
-        $('#myModal').on('hidden.bs.modal', function () {
-            $('#formModal').modal('@show');
-        })
+        function formshow(){
+            $('#formModal').modal('toggle');
+        }
+        function hidemodal(){
+            $('#formModal').modal('hide');
+        }
 
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 @endpush

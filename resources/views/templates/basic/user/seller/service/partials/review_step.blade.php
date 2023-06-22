@@ -55,7 +55,7 @@ class="review-form"
                 <br>
                 <hr/>
             <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-md-3 " style="margin-left: -10px;">
                     <a class="btn service--btns btn-secondary float-left  mt-20 "
                         href="?view=step-5">@lang('BACK')</a>
                 </div>
