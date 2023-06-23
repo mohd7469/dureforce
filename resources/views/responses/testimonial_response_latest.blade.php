@@ -305,7 +305,7 @@
 
 @push('style-lib')
 
-    <link rel="stylesheet" href="{{asset('css/testimonial_response.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/testimonial_response.css')}}">
 
 @endpush
 

@@ -186,7 +186,7 @@
 @endsection
 
 @push('script')
-<script src="{{asset('js/job.view.js')}}"></script>
+<script src="{{asset('public/js/job.view.js')}}"></script>
 @endpush
 <style>
 .container {

@@ -210,7 +210,7 @@
         var file_upload_url="{{route('file.upload') }}";
     </script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('js/proposal-step.js')}}"></script>
+   <script src="{{asset('public/js/proposal-step.js')}}"></script>
 
 
 @endpush
