@@ -263,6 +263,6 @@ input::-webkit-inner-spin-button {
     <script>
         let route = "{{ route('user.category') }}";
     </script>
-    <script src="{{ asset('js/create-software.js') }}"></script>
+    <script src="{{ asset('public/js/create-software.js') }}"></script>
     
 @endpush
