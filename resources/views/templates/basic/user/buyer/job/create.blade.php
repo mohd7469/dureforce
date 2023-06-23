@@ -283,7 +283,7 @@
 @push('style-lib')
 
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('css/create_job.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/create_job.css')}}">
 
 @endpush
 
@@ -291,7 +291,7 @@
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset($activeTemplateTrue.'frontend/js/nicEdit.js')}}"></script>
-    <script src="{{asset('js/create_job.js')}}"></script>
+    <script src="{{asset('public/js/create_job.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 
 <script>

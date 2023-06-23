@@ -948,7 +948,7 @@
         }
     }
 </style>
-<link rel="stylesheet" href="{{asset('css/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 @push('script')
 

@@ -256,7 +256,7 @@
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-    <link href="{{ asset('css/all-proposal.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     .img-card{
@@ -645,7 +645,7 @@
         }
     }
 </style>
-<link rel="stylesheet" href="{{asset('css/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 
 

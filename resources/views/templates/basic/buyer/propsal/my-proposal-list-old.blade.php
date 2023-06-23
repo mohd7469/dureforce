@@ -153,7 +153,7 @@
 
 @endsection
 @push('style')
-    <link rel="stylesheet" href="{{asset('css/view-propsal.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/view-propsal.css')}}">
 @endpush
 <style>
     .card {
