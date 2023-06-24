@@ -38,7 +38,21 @@
                                     </td>
                                     <td>
                                         <span class="badge {{$contract->status->color}}" >{{$contract->status->name}}</span>
-                                            <p class="rating-c"><img src="/assets/images/job/rating-c.png" alt="Rating" class="contract-rating"> </p>
+                                            <p class="rating-c">
+                                                @php
+                                                    $score=$contract->feedbacks->first() ? $contract->feedbacks->first()->total_score:0;
+                                                @endphp
+                                                @for ($index=0;$index<5;$index++)
+                                                    
+                                                    @if ($index < $score)
+                                                        <i class="fa fa-solid fa-star testmonials-review-star"></i>
+                                                    @else
+                                                        <i class="fa fa-solid fa-star review-star"></i>
+                                                    @endif
+                                                
+                                                @endfor
+
+                                            </p>
                                     </td>
                                     <td>
                                         <p class="job_price">${{$contract->contract_total_amount ?? 0}}</p>
@@ -182,6 +196,15 @@
 @endsection
 
     <style>
+        .testmonials-review-star{
+            padding: 1px;
+            color: #F09959;
+        }
+        .review-star{
+            padding: 1px;
+            color: rgb(215, 212, 212);
+        }
+
         .contract-rating{
             width: 60px;
             margin-left: 10px;

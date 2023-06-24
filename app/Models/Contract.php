@@ -54,4 +54,8 @@ class Contract extends Model
     public function dayPlanning(){
         return $this->hasMany(DayPlanning::class,'contract_id')->withTrashed();
     }
+    public function feedbacks(){
+        return $this->hasMany(ContractFeedback::class, 'contract_id')
+        ->where('feedback_for_id', auth()->user()->id);
+    }
 }

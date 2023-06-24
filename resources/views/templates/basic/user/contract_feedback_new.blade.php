@@ -37,7 +37,7 @@
                                         <span class="fa fa-solid fa-star icon "></span>
                                     </label>
                                     <label>
-                                        <input type="radio" nname="rating" id="skillthree" onclick="valueChange();" value="3" />
+                                        <input type="radio" name="rating" id="skillthree" onclick="valueChange();" value="3" />
                                         <span class="fa fa-solid fa-star icon "></span>
                                         <span class="fa fa-solid fa-star icon "></span>
                                         <span class="fa fa-solid fa-star icon "></span>
@@ -76,9 +76,12 @@
                 <p>Message:</p>
                 <textarea rows="3" id="feeback" name="feedback" placeholder="Write feedback for the seller"></textarea>
             </div>
-        <div style="margin-top: 30px;">
-        <button type="button" class="btn btn-light" onclick="hidemodal()">Cancel</button>
-        <button type="submit" class="btn btn-primary" > Continue</button>
+        <div style="margin-top: 30px;text-align:right !important">
+
+            <button type="button" class="btn-rounded  btn-cancel action-btn"  data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-rounded text-white btn-save-draft  action-btn" >Continue</button>
+
+      
         </div>
     </div>
 </form>
