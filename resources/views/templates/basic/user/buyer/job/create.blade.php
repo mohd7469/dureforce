@@ -305,7 +305,11 @@
 
 <script>
 
+    function loadFiles()
+    {
 
+    }
+    
     function fetchSubCategories(category)
     {
         $.ajax({
@@ -390,31 +394,7 @@
     }
     Dropzone.autoDiscover = false;
     "use strict";
-    $(document).ready(function() {
-
-
-        $('.select2').select2({
-            tags: true
-        });
-        $('#job_form_data').submit(function (e) {
-            $('#submit_btn_job').attr("disabled", true);
-            e.preventDefault();
-            var form = $('#job_form_data')[0];
-            var form_data = new FormData(form);
-            form_data.append("file", JSON.stringify(uploaded_files));
-            submitCreateFormData(form_data);
-
-        });
-        $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
-      
-            let file_index=$(this).closest("tr").index();
-            uploaded_files.splice(file_index, 1);
-            $(this).closest("tr").remove();
-            $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
-
-        });
-
-    });
+   
 
 
     bkLib.onDomLoaded(function() {

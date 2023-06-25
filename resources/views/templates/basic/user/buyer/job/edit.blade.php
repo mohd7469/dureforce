@@ -323,12 +323,13 @@
 
 @push('script')
 <script>
-    var action_url="{{route('file.upload') }}";
-    function loadFiles()
-    {
-        var documents=JSON.parse($('#uploaded_files_input_id').val());
-        uploaded_files=documents;
-    }
+        var action_url="{{route('file.upload') }}";
+        function loadFiles()
+        {
+            var documents=JSON.parse($('#uploaded_files_input_id').val());
+            uploaded_files=documents;
+        }
+        
         function fetchSubCategories(category)
         {
             $.ajax({
@@ -353,107 +354,82 @@
                 }
             });  
         }
-    function loadSkills(data)
-    {
+        function loadSkills(data)
+        {
 
-        var selected_skills=$('#job_skills').val();
-        selected_skills=(selected_skills.split(','));
-        selected_skills=selected_skills.map(Number);
+            var selected_skills=$('#job_skills').val();
+            selected_skills=(selected_skills.split(','));
+            selected_skills=selected_skills.map(Number);
 
-        $('#form_attributes').empty();
-        for (var main_category in data) { //heading main
+            $('#form_attributes').empty();
+            for (var main_category in data) { //heading main
+                
+                var all_sub_categories=data[main_category];
+                var main_category_id=genRand(5);
             
-            var all_sub_categories=data[main_category];
-            var main_category_id=genRand(5);
-        
-            $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
-            for (var sub_category_enum in all_sub_categories) { //front end backend 
+                $('#form_attributes').append('<h4 class="pb-3">Job Attributes</h4> <div class="row" id="'+main_category_id+'"><h5>'+main_category+'</h5>');
+                for (var sub_category_enum in all_sub_categories) { //front end backend 
 
-                var skills=all_sub_categories[sub_category_enum];
-                var sub_category_id=genRand(5);
+                    var skills=all_sub_categories[sub_category_enum];
+                    var sub_category_id=genRand(5);
 
-                $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
-                for (var skill_index in skills) {
+                    $('#'+main_category_id).append('<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12"><div class="card custom-card  pt-3" style="padding-left: 23px"><div class="card-headder"><h5>'+sub_category_enum+'</h5></div><div class="card-body custom-padding mt-3"><div class="inline" id="'+sub_category_id+'">')
+                    for (var skill_index in skills) {
+                        
+                        var skill_id=skills[skill_index].id;
+                        var skill_name=skills[skill_index].name;
+                        $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[]" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
+
+
+                    }
                     
-                    var skill_id=skills[skill_index].id;
-                    var skill_name=skills[skill_index].name;
-                    $('#'+sub_category_id).append('<div class="form-group custom-check-group px-2"> <input class="attrs-checkbox-back" type="checkbox" name="skills[]" id="'+skill_id+'" value="'+skill_id+'" '+isChecked(skill_id,selected_skills)+'> <label for="'+skill_id+'" class="services-checks value">'+skill_name+'</label> </div>');
-
-
                 }
-                
+                $('#'+main_category_id).append('<div/></div>');
             }
-            $('#'+main_category_id).append('<div/></div>');
+            $('#form_attributes').append('</div>');
+
+
         }
-        $('#form_attributes').append('</div>');
 
-
-    }
-    function fetchSkills(category,sub_category=''){
-        $.ajax({
-            type:"GET",
-            url:"{{route('job.skills')}}",
-            data: {category_id : category,sub_category_id:sub_category},
-            success:function(data){
-                var html = '';
-                if(data.error){
-                
+        function fetchSkills(category,sub_category=''){
+            $.ajax({
+                type:"GET",
+                url:"{{route('job.skills')}}",
+                data: {category_id : category,sub_category_id:sub_category},
+                success:function(data){
+                    var html = '';
+                    if(data.error){
+                    
+                    }
+                    else{
+                        loadSkills(data);
+                        console.log(data);
+                    
+                    }
                 }
-                else{
-                    loadSkills(data);
-                    console.log(data);
-                
-                }
-            }
-        });  
+            });  
 
-    }
+        }
 
-    const genRand = (len) => {
+        const genRand = (len) => {
 
-        return Math.random().toString(36).substring(2,len+2);
+            return Math.random().toString(36).substring(2,len+2);
 
-    }
+        }
            
-    function isChecked(skill_id,selected_skills){
+        function isChecked(skill_id,selected_skills){
 
-        if(selected_skills.includes(skill_id))
-            return 'checked';
-        else
-            return '';
-    }
+            if(selected_skills.includes(skill_id))
+                return 'checked';
+            else
+                return '';
+        }
     
    
     Dropzone.autoDiscover = false;
     "use strict";
     
-    $(document).ready(function() {
-        $('.select2').select2({
-            tags: true
-        });
-        loadFiles();
-
-        $('#job_form_data').submit(function (e) {
-            
-            e.preventDefault();
-            $('#submit_btn_job').attr("disabled", true);
-
-            var form = $('#job_form_data')[0];
-            var form_data = new FormData(form);
-            form_data.append("file", JSON.stringify(uploaded_files));
-            submitCreateFormData(form_data);
-
-        });
-        
-        $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
-      
-            let file_index=$(this).closest("tr").index();
-            uploaded_files.splice(file_index, 1);
-            $(this).closest("tr").remove();
-            $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
-
-        });
-    });
+    
 
     bkLib.onDomLoaded(function() {
         $( ".nicEdit" ).each(function( index ) {

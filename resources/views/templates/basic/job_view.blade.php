@@ -350,4 +350,15 @@
         /*border: 2px solid #7F007F;*/
         /*border-radius: 5px;*/
     }
+    @media only screen and (max-width:683px){
+        .float-right {
+            float: left !important;
+        }
+        p.job_staus {
+            font-weight: 600;
+            font-size: 11px;
+            line-height: 18px;
+            color: #000;
+        }
+    }
 </style>
