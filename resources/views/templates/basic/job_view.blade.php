@@ -320,7 +320,7 @@
 @endsection
 
 @push('script')
-    <script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+    <script src="{{asset('public/js/job.view.js')}}"></script>
     <script>
         function copyJobLink() {
             // Get the text field
@@ -340,7 +340,7 @@
         }
     </script>
 @endpush
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_view.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/job_view.css')}}">
 
 <style>
     a.view_propasal_per {
@@ -349,5 +349,16 @@
         /*padding: 6px;*/
         /*border: 2px solid #7F007F;*/
         /*border-radius: 5px;*/
+    }
+    @media only screen and (max-width:683px){
+        .float-right {
+            float: left !important;
+        }
+        p.job_staus {
+            font-weight: 600;
+            font-size: 11px;
+            line-height: 18px;
+            color: #000;
+        }
     }
 </style>

@@ -138,21 +138,18 @@
 @endsection
 @push('style')
     <style>
-        span.select2-selection.select2-selection--multiple {
-            width: 100% !important;
-            padding: 10px !important;
-            border: 1px solid #CBDFDF;
+        .select2-container {
+            z-index: 9999;
         }
-        
+        .select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #CBDFDF;
+    border-radius: 4px;
+    height: 38px !important;
+}
     </style>
 @endpush
-@push('style-lib')
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'frontend/css/select2.min.css') }}">
-@endpush
 
-@push('script-lib')
-    <script src="{{ asset($activeTemplateTrue . 'frontend/js/select2.min.js') }}"></script>
-@endpush
 @push('script')
     <script>
         
@@ -202,11 +199,11 @@
         $('document').ready(function() {
             
             loadProfileBasicsData();
-
-            $('.select2').select2({
-                tags: true
-            });
-            
+ 
+            initializeSelect2($('#location_city_id'), $('#basic_cities_id'), '#country_id');
+            initializeSelect2($('#payment_method_cities'), $('#add_payment_cities_div'), '#payment_method_country_id');
+            initializeSelect2($('#edit_payment_city_id'), $('#cities_div'), '#edit_sec_country_id');
+         
             user_basic_form.submit(function (e) {
                 e.preventDefault();
                 e.stopPropagation(); 
@@ -284,6 +281,36 @@
             });
         });
 
+
+        function initializeSelect2(element, dropdownParent, countryIdSelector) {
+            element.select2({
+                tags: false,
+                minimumResultsForSearch: 0,
+                dropdownParent: dropdownParent,
+                ajax: {
+                url: "{{ route('get-cities') }}",
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                    search: params.term,
+                    country_id: $(countryIdSelector).val()
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                    results: $.map(data.cities.data, function(item) {
+                        return {
+                        id: item.id,
+                        text: item.name
+                        };
+                    })
+                    };
+                }
+                }
+            });
+        }
+
+
         function getCountryCities(country_id,select_field_id)
         {
             $.ajax({
@@ -293,11 +320,11 @@
                 success:function(data){
                     if(data.cities)
                     {    
-                       
+                        
                         $(select_field_id).empty();
                         $(select_field_id).append(
                             `<option>Select City</option>
-                            ${data.cities?.map((city) => {
+                            ${data.cities.data?.map((city) => {
                                 return ` <option value="${city.id}"> ${city.name}</option>`;
                         })}`);
                     }

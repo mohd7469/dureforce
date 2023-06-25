@@ -2,6 +2,8 @@
 @section('content')
 <section class="all-sections pt-3">
    <div class="container-fluid p-max-sm-0">
+      <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
+      
       <div class="sections-wrapper d-flex flex-wrap justify-content-center">
          <article class="main-section">
             <div class="section-inner">
@@ -226,13 +228,13 @@
 
 @push('style-lib')
 
-    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/job_proposal.css')}}">
 
 @endpush
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
+   <script src="{{asset('public/js/job-proposal.js')}}"></script>
    <script>
       function seemore(){
         $('#limitskills').css('display','none');

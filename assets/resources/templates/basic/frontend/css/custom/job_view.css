@@ -270,7 +270,6 @@ color: #58a7a8 !important;
       font-size: 22px;
       line-height: 28px;
       color: #000;
-      / margin-bottom: 20px; /
       padding: 10px 10px 18px 10px;
       display: inline-block;
    }
@@ -287,7 +286,6 @@ color: #58a7a8 !important;
    .item-details-tag ul li a {
       padding: 3px 30px !important;
       font-size: 14px;
-      / line-height: 15px; /
    }
    p.job_staus {
       font-weight: 600;

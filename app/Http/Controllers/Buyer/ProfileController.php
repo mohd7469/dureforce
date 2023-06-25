@@ -321,6 +321,20 @@ class ProfileController extends Controller
 
     }
 
+    public function getPaymentMethods(Request $request){
+        try {
+
+            $id=$request->id;
+            $payment=UserPayment::findOrFail($id);
+            $cities = City::where('country_id', $payment->country_id)->where('id',$payment->city_id)->paginate(10);
+            return response()->json(['success' => 'Payment Method Fetched Successfully', 'payment_method' =>$payment,'cities' =>$cities]);
+
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Failled to fetch payment method']);
+
+        }
+    }
+
     public function buyerProfile($uuid='')
     {
 

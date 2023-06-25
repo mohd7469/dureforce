@@ -191,7 +191,11 @@ class ProposalController extends Controller
                 "status_id" => Proposal::STATUSES['SUBMITTED'],
             ]);
 
-
+            $service_fee_percentage=getSystemServiceFee();
+            $user_percentage=(100-$service_fee_percentage)/100;
+            $service_fee_percentage=$service_fee_percentage/100;
+    
+            
             if (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone) {
 
                 $milestones_data = array_values($request_data['milestones']);
@@ -200,19 +204,19 @@ class ProposalController extends Controller
                     $proposal->milestone()->createMany($milestones_data);
                     $milestones_collection = collect($milestones_data);
                     $total_amount = $milestones_collection->sum('amount');
-                    $proposal->amount_receive = $total_amount * 0.80;
+                    $proposal->amount_receive = $total_amount * $user_percentage;
 
                 }
 
             } elseif (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$by_project) {
 
-                $proposal->amount_receive = $request_data['total_project_price'] * 0.80;
+                $proposal->amount_receive = $request_data['total_project_price'] * $user_percentage;
                 $proposal->project_start_date = $request_data['project_start_date'];
                 $proposal->project_end_date = $request_data['project_end_date'];
                 $proposal->bid_type = 'Project';
 
             } else {
-                $proposal->amount_receive = $request_data['hourly_bid_rate'] * 0.80;
+                $proposal->amount_receive = $request_data['hourly_bid_rate'] * $user_percentage;
 
             }
             $proposal->save();
@@ -278,6 +282,10 @@ class ProposalController extends Controller
             $proposal->cover_letter = $request_data['cover_letter'];
             $proposal->status_id = Proposal::STATUSES['SUBMITTED'];
 
+            $service_fee_percentage=getSystemServiceFee();
+            $user_percentage=(100-$service_fee_percentage)/100;
+            $service_fee_percentage=$service_fee_percentage/100;
+
             if (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$bid_type_milestone) {
 
                 $milestones_data = array_values($request_data['milestones']);
@@ -289,19 +297,19 @@ class ProposalController extends Controller
                     $proposal->milestone()->createMany($milestones_data);
                     $milestones_collection = collect($milestones_data);
                     $total_amount = $milestones_collection->sum('amount');
-                    $proposal->amount_receive = $total_amount * 0.80;
+                    $proposal->amount_receive = $total_amount * $user_percentage;
 
                 }
 
             } elseif (isset($request_data['bid_type']) && $request_data['bid_type'] == Proposal::$by_project) {
 
-                $proposal->amount_receive = $request_data['total_project_price'] * 0.80;
+                $proposal->amount_receive = $request_data['total_project_price'] * $user_percentage;
                 $proposal->project_start_date = $request_data['project_start_date'];
                 $proposal->project_end_date = $request_data['project_end_date'];
                 $proposal->bid_type = 'Project';
 
             } else {
-                $proposal->amount_receive = $request_data['hourly_bid_rate'] * 0.80;
+                $proposal->amount_receive = $request_data['hourly_bid_rate'] * $user_percentage;
 
             }
             $proposal->save();

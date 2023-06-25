@@ -2,6 +2,61 @@ var token= $('input[name=_token]').val();
 var myDropzone='';
 var uploaded_files=Array();
 
+
+$(document).ready(function() {
+    
+    $('.select2').select2({
+        tags: true
+    });
+    loadFiles();
+
+    $('#job_form_data').submit(function (e) {
+        
+        e.preventDefault();
+        $('#submit_btn_job').attr("disabled", true);
+
+        var form = $('#job_form_data')[0];
+        var form_data = new FormData(form);
+        form_data.append("file", JSON.stringify(uploaded_files));
+        submitCreateFormData(form_data);
+
+    });
+    
+    $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
+  
+        let file_index=$(this).closest("tr").index();
+        uploaded_files.splice(file_index, 1);
+        $(this).closest("tr").remove();
+        $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+
+    });
+});
+$(document).ready(function() {
+
+
+    $('.select2').select2({
+        tags: true
+    });
+    $('#job_form_data').submit(function (e) {
+        $('#submit_btn_job').attr("disabled", true);
+        e.preventDefault();
+        var form = $('#job_form_data')[0];
+        var form_data = new FormData(form);
+        form_data.append("file", JSON.stringify(uploaded_files));
+        submitCreateFormData(form_data);
+
+    });
+    $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
+  
+        let file_index=$(this).closest("tr").index();
+        uploaded_files.splice(file_index, 1);
+        $(this).closest("tr").remove();
+        $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+
+    });
+
+});
+
 function submitCreateFormData(form_data)
 {
     var action_url=$("#job_form_data").attr('action');

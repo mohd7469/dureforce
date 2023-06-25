@@ -30,7 +30,7 @@ class OverviewRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable|exists:sub_categories,id',
             'features' => 'required|array|exists:features,id',
-            'tag' => 'required|array',
+            'tag' => 'nullable|array',
             'description' => 'required',
         ];
     }

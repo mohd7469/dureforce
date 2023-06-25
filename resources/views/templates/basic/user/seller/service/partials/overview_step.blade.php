@@ -133,11 +133,9 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-6 text-right">
-                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 " href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
-
-                    <button type="submit" class="btn btn-save-continue btn-primary float-left mt-20 m-3 mb-0 ">@lang('SAVE AND CONTINUE')</button>
+                <div class="col-md-12">
+                    <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 overview_back" href="{{route('user.service.index')}}" type="button">@lang('Cancel')</a>
+                    <button type="submit" class="btn btn-save-continue btn-primary float-right mt-20 m-3 mb-0 ">@lang('SAVE AND CONTINUE')</button>
                 </div>
             </div>
 

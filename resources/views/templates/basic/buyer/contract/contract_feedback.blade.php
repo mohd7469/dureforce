@@ -1,397 +1,86 @@
-@extends($activeTemplate.'layouts.master')
-@section('content')
-
-        <div class="container-fluid">
-            <form id="form_feedback" method="POST" >
-                @csrf
-            <h3 class="propsal-h" style="margin-left: 40px; margin: 20px">End Contract </h3>
-            <div class="main_con_p">
-                <div class="prosal-left-con" style="margin-left: 30px">
-                    <!---Cover Letter Section Start--->
-                    <input type="hidden" name="contract_id" value="{{$contract->id}}">
-                    <input type="hidden" name="contract_send_by" value="{{$contract->offer->offer_send_to_id}}">
-                    <input type="hidden" name="contract_send_to" value="{{$contract->offer->offer_send_by_id}}">
-                    <div class="btm-c">
-                        <p class="prop_description">
-                            <b>Freelancer</b></p>
-                        <p>Name Here</p>
-                        <p class="prop_description">
-                            <b>Contract Title</b></p>
-                        <p>{{$contract->offer->module->title}}</p>
-                    </div>
-
-                    <div class="btm-c jdc">
-                        <h3 >Private Feedback</h3>
-                        <p>This feedback will be kept anonymous and never shared directlt with freelancer</p>
-                        <div>
-                            <p><b>Reason for Ending Contract</b></p>
-                                <select name="reason" id="reason" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()"> <option value=""> Select a Reason</option>
-                                    @foreach($reasons as $reason)
-                                    <option value="{{$reason->id}}" style="text-align: center; "> {{$reason->name}}</option>
+<form id="form_feedback" method="POST" >
+    @csrf
+    <div>
+        <!---Cover Letter Section Start--->
+        <input type="hidden" name="contract_id" value="{{$contract->id}}">
+        <input type="hidden" name="contract_send_by" value="{{$contract->offer->offer_send_to_id}}">
+        <input type="hidden" name="contract_send_to" value="{{$contract->offer->offer_send_by_id}}">
 
 
-                                    @endforeach
 
-                                </select>
-                            </div>
-                            <div style="margin-top: 30px">
-                            <p style="font-weight: 600">How likely are you recommend this freelancer to a friend or colleague.</p>
-                                        <div class="row" style="margin-left: 10px">
-                                        @for ($i = 1; $i <=10; $i++)
-                                            <div class="col-md-1 row" >
-                                                    <input class="form-check-input" type="radio" id="rating_num_{{$i}}" name="rating_num" onclick="reasonsChange();" value = "{{$i}}" onclick="checkedOnClick(this);">
-                                                </div>
-                                        @endfor
-                                        </div>
-                                    <div class="row" style="margin-left: 10px; margin-top: 10px ">
-                                        @for ($i = 1; $i <=10; $i++)
-                                            <div class="col-md-1 row">
-                                                    {{$i}}
-                                                </div>
-                                        @endfor
-                                    </div>
-                            </div>
-                        <div id="reason_itom" style="margin-top: 30px; display:none">
-                            <p><b>What went wrong?</b></p>
-                            <select name="reasonCause" id="reasonCause" class="col-md-5" style="height: 40px; border-radius: 7px" onchange="reasonsChange()">
-                                <option value=""> Select a Reason</option>
-                                @foreach($recomendReason as $recomend)
-                                    <option value="{{$recomend->id}}" style="text-align: center; "> {{$recomend->name}}</option>
-                                @endforeach
-                            </select>
+        <p>Reason for ending Contract</p>
+        <div>
+            <select name="reason" id="reason" class="form-select" style="height: 40px; border-radius: 7px" onchange="reasonsChange()"> <option value=""> Select a Reason</option>
+
+
+            </select>
+        </div>
+
+        <div>
+            <p><b>Feedback</b></p>
+            <p>how likely you would be recomended this freelancer?</p><p> This will share on seller's profile after they have left feedback for you</p>
+            <div style="margin-top: 10px">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="rating">
+                            <label>
+                                <input type="radio" name="skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
+                                <span class="fa fa-solid fa-star icon "></span>
+                            </label>
+                            <label>
+                                <input type="radio" name="skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                            </label>
+                            <label>
+                                <input type="radio" nname="skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                            </label>
+
+                            <label>
+                                <input type="radio" name="skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                            </label>
+
+                            <label>
+                                <input type="radio" name="skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                                <span class="fa fa-solid fa-star icon "></span>
+                            </label>
                         </div>
-                            <div style="margin-top: 30px">
-                                <p style="font-weight: 600;">Tell us more. What did the Freelancer do well. What could have been Better<span>(Optional)</span></p>
-                                <textarea rows="6" name="about" id="about"></textarea>
-                            </div>
-                            <div style="margin-top: 30px">
-                                <p style="font-weight: 600">Rate their English Proficiency. (Speaking and Comprehension) </p>
-                                <div>
-                                    @foreach($langLevels as $level)
-                                    <div class="form-check">
-
-                                    <input class="form-check-input" type="radio" value="{{$level->id}}" id="engProf" name="engProf" onclick="engProfCheck(this);">
-                                    <label class="form-check-label" for="defaultCheck1">
-                                        {{$level->name}}
-                                    </label>
-                                    </div>
-                                    @endforeach
-                                  </div>
-
-                            </div>
-
-                        </div>
-
-
-                    <div class="btm-c jdc">
-                        <h3 >Public Feedback</h3>
-                        <div>
-                            <p>This feedback will be share on Freelancer profile after they have feedback left for you</p>
-                            <div style="margin-top: 10px">
-                                <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="skills_rating" id="skillone" onclick="valueChange();" value="0.2" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="skills_rating" id="skilltwo" onclick="valueChange();" value="0.4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" nname="skills_rating" id="skillthree" onclick="valueChange();" value="0.6" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="skills_rating" id="skillfour"  onclick="valueChange();" value="0.8" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="skills_rating" id="skillfive" onclick="valueChange();" value="1.0" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="">Skills</label>
-                                </div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-6 ">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="quality_rating" id="qualityone" onclick="valueChange();"  value="0.2" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="quality_rating" id="qualitytwo" onclick="valueChange();" value="0.4" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="quality_rating" id="qualitythree" onclick="valueChange();" value="0.6" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="quality_rating"  id="qualityfour" onclick="valueChange();" value="0.8" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="quality_rating" id="qualityfive" onclick="valueChange();" value="1.0" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="col-md-6"><label for="">Quality of work </label></div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="availabilty_rating" id="availabiltyone" onclick="valueChange();" value="0.15" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="availabilty_rating" id="availabiltytwo" onclick="valueChange();" value="0.30" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="availabilty_rating"  id="availabiltythree" onclick="valueChange();" value="0.45" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="availabilty_rating"  id="availabiltyfour" onclick="valueChange();" value="0.60" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="availabilty_rating" id="availabiltyfive" onclick="valueChange();" value="0.75" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="col-md-6"><label for="">Availabilty </label></div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="schedule_rating" id="scheduleone" onclick="valueChange();" value="0.15" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="schedule_rating" id="scheduletwo" onclick="valueChange();" value="0.30" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="schedule_rating" id="schedulethree" onclick="valueChange();" value="0.45" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="schedule_rating" id="schedulefour" onclick="valueChange();" value="0.60" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="schedule_rating" id="schedulefive" onclick="valueChange();" value="0.75" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="col-md-6"><label for="">Adherence of Schedule </label></div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="communication_rating" id="communicationone" onclick="valueChange();" value="0.15" />
-
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="communication_rating" id="communicationtwo" onclick="valueChange();" value="0.30" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="communication_rating" id="communicationthree" onclick="valueChange();" value="0.45" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="communication_rating" id="communicationfour" onclick="valueChange();" value="0.60" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="communication_rating" id="communicationfive" onclick="valueChange();" value="0.75" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="col-md-6"><label for="">Communication </label></div>
-                                </div>
-                                <div class="row">
-                                <div class="col-md-6">
-
-                                    <div class="rating">
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" id="cooperationone" onclick="valueChange();" value="0.15" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" id="cooperationtwo" onclick="valueChange();" value="0.30" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" id="cooperationthree" onclick="valueChange();" value="0.45" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" id="cooperationfour" onclick="valueChange();" value="0.60" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-
-                                        <label>
-                                            <input type="radio" name="cooperation_rating" id="cooperationfive" onclick="valueChange();" value="0.75" />
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                            <span class="fa fa-solid fa-star icon "></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                    <div class="col-md-6"><label for="">Cooperation </label></div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                <h4>Total Score: </h4></div>
-                                <div class="col-md-9">
-                                <h4 class="val" id="val">0.00</h4></div>
-                            </div>
-                            <div>
-                                <p>Share this experience with this Freelancer on Dureforce Community</p>
-                                <textarea rows="3" id="feeback" name="feedback"></textarea>
-                            </div>
-                            <p><a href="#" > See an Example of appropriate Feedback</a></p>
-                        </div>
-
                     </div>
-                    <div class="btm-c jdc">
-
-                        <button class="btn btn-secondary" id="endCont" >End Contract</button>
-                        <button class="btn ">Cancel</button>
-
-                    </div>
-
-                </div>
-
-                <div class="prosal-right-con" style="margin-right: 30px; margin-top: -8px">
-
-                    <div class="p_amount_con">
-                        <ul class="listing_ps">
-                            <li><span class="p_fcs" style="font-weight: 500;"><h3>Pay Freelancer</h3></span></li>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Pay $6.00
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Pay another amount
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" value="" id="Don'tSpeak" name="payFree" onclick="checkPayFreelancer(this);">
-                                <label class="form-check-label" for="defaultCheck1">
-                                    Pay nothing and request refund
-                                </label>
-                            </div>
-                        </ul>
+                    <div class="col-md-6">
+                        <label for="">Skills</label>
                     </div>
                 </div>
 
-
-
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <h4>Total Score: </h4></div>
+                <div class="col-md-9">
+                    <h4 class="val" id="val">0.00</h4></div>
+            </div>
+            <div>
+                <p>Share this experience with this Freelancer on Dureforce Community</p>
+                <textarea rows="3" id="feeback" name="feedback"></textarea>
+            </div>
+            <p><a href="#" > See an Example of appropriate Feedback</a></p>
         </div>
-            </form>
-        </div>
-        
-@endsection
+        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="formshow()" data-toggle="form" data-target="#myform"> Continue</button>
 
+    </div>
+</form>
 
 <style>
     .navbar-burron{

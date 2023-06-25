@@ -78,10 +78,13 @@
                         </div>
 
                     </div>
+                    
                     <div class="btm-c jdc">
 
                         <button class="btn btn-secondary" id="endCont" >End Contract</button>
                         <button class="btn ">Cancel</button>
+
+                       
 
                     </div>
 
