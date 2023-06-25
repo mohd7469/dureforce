@@ -37,6 +37,7 @@ class ContractsController extends Controller
     public function  show($uuid){
         $user=Auth::user();
         $contract=Contract::WithAll()->where('uuid',$uuid)->first();
+        $user_feedback=$contract->user_feedback->first();
         $feedback=ContractFeedback::with('contract')->where('contract_id',$contract->id)->first();
         if(empty($feedback)){
             $feedbackData='empty';
@@ -54,7 +55,7 @@ class ContractsController extends Controller
         $contracts=getUserContracts();
         $emptyMessage="Tasks Not Found";
         $timezones = Timezone::select('id','name')->get();
-        return view('templates.basic.buyer.contract.contract_details',compact('contract','reasons', 'emptyMessage','contracts','timezones','feedbackData'));
+        return view('templates.basic.buyer.contract.contract_details',compact('contract','reasons', 'emptyMessage','contracts','timezones','feedbackData','user_feedback'));
     }
 
     public function  feedback($uuid){
