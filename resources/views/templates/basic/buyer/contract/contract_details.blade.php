@@ -22,38 +22,44 @@
                                         <a class="nav-link" href="#">Payments</a>
                                     </li>
                                 </ul>
+
+                                @if (empty($user_feedback))
                         
-                                <div class="moile-view-icons">
-                                    <div class="dropdown">
-                                        <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_12558_9588)">
-                                                    <path d="M20.3506 11.9795C19.2364 11.9795 18.33 12.8859 18.33 14.0001C18.33 15.1143 19.2364 16.0207 20.3506 16.0207C21.4647 16.0207 22.3712 15.1143 22.3712 14.0001C22.3712 12.8859 21.4647 11.9795 20.3506 11.9795Z" fill="#007F7F"/>
-                                                    <path d="M7.64952 11.9795C6.53536 11.9795 5.62891 12.8859 5.62891 14.0001C5.62891 15.1143 6.53536 16.0207 7.64952 16.0207C8.76369 16.0207 9.67014 15.1143 9.67014 14.0001C9.67014 12.8859 8.76369 11.9795 7.64952 11.9795Z" fill="#007F7F"/>
-                                                    <path d="M14 11.9795C12.8858 11.9795 11.9794 12.8859 11.9794 14.0001C11.9794 15.1143 12.8858 16.0207 14 16.0207C15.1142 16.0207 16.0206 15.1143 16.0206 14.0001C16.0206 12.8859 15.1142 11.9795 14 11.9795Z" fill="#007F7F"/>
-                                                    <path d="M23.8995 4.10047C21.2552 1.45629 17.7395 0 14 0C10.2605 0 6.74477 1.45629 4.10047 4.10047C1.45629 6.74477 0 10.2605 0 14C0 17.7395 1.45629 21.2552 4.10047 23.8995C6.74477 26.5437 10.2605 28 14 28C17.7395 28 21.2552 26.5437 23.8995 23.8995C26.5437 21.2552 28 17.7395 28 14C28 10.2605 26.5437 6.74477 23.8995 4.10047ZM14 26.268C7.23537 26.268 1.73196 20.7646 1.73196 14C1.73196 7.23537 7.23537 1.73196 14 1.73196C20.7646 1.73196 26.268 7.23537 26.268 14C26.268 20.7646 20.7646 26.268 14 26.268Z" fill="#007F7F"/>
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_12558_9588">
-                                                        <rect width="28" height="28" fill="white"/>
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>
-                                        </a>
-                                        <div class="dropdown-menu moile-view-icons-dropdown dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                    <div class="moile-view-icons">
+                                        <div class="dropdown">
+                                            <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_12558_9588)">
+                                                        <path d="M20.3506 11.9795C19.2364 11.9795 18.33 12.8859 18.33 14.0001C18.33 15.1143 19.2364 16.0207 20.3506 16.0207C21.4647 16.0207 22.3712 15.1143 22.3712 14.0001C22.3712 12.8859 21.4647 11.9795 20.3506 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M7.64952 11.9795C6.53536 11.9795 5.62891 12.8859 5.62891 14.0001C5.62891 15.1143 6.53536 16.0207 7.64952 16.0207C8.76369 16.0207 9.67014 15.1143 9.67014 14.0001C9.67014 12.8859 8.76369 11.9795 7.64952 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M14 11.9795C12.8858 11.9795 11.9794 12.8859 11.9794 14.0001C11.9794 15.1143 12.8858 16.0207 14 16.0207C15.1142 16.0207 16.0206 15.1143 16.0206 14.0001C16.0206 12.8859 15.1142 11.9795 14 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M23.8995 4.10047C21.2552 1.45629 17.7395 0 14 0C10.2605 0 6.74477 1.45629 4.10047 4.10047C1.45629 6.74477 0 10.2605 0 14C0 17.7395 1.45629 21.2552 4.10047 23.8995C6.74477 26.5437 10.2605 28 14 28C17.7395 28 21.2552 26.5437 23.8995 23.8995C26.5437 21.2552 28 17.7395 28 14C28 10.2605 26.5437 6.74477 23.8995 4.10047ZM14 26.268C7.23537 26.268 1.73196 20.7646 1.73196 14C1.73196 7.23537 7.23537 1.73196 14 1.73196C20.7646 1.73196 26.268 7.23537 26.268 14C26.268 20.7646 20.7646 26.268 14 26.268Z" fill="#007F7F"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_12558_9588">
+                                                            <rect width="28" height="28" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </a>
+
+                                            <div class="dropdown-menu moile-view-icons-dropdown " aria-labelledby="dropdownMenuLink">
+                                                
+                                                @if($feedbackData == 'empty') 
+
+                                                    <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal">End Contract</a>
+
+                                                @else
+
+                                                    <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#formModal"> Give Feedback</a>
+
+                                                @endif
+                                            </div>
                                             
-                                            @if($feedbackData == 'empty') 
-
-                                                <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal">End Contract</a>
-
-                                            @else
-
-                                                <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#formModal"> Give Feedback</a>
-
-                                            @endif
                                         </div>
                                     </div>
-                                </div>
+                                @endif
+                                
                             </div>
                         </div>
                         
@@ -432,6 +438,15 @@
     .border-bt{
         border-bottom: 2px solid #007F7F;
     }
+    .dropdown-menu.show {
+    pointer-events: auto;
+    -webkit-transform: scale(1) translateY(0);
+    -ms-transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    margin-left: -91px !important;
+}
 
     .bor{
                         
@@ -590,6 +605,7 @@
     .main_con_p {
         width: 100%;
         display: inline-block;
+        margin-top: 20px !important ;
     }
 
     .prosal-right-con {

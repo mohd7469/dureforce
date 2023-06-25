@@ -58,4 +58,8 @@ class Contract extends Model
         return $this->hasMany(ContractFeedback::class, 'contract_id')
         ->where('feedback_for_id', auth()->user()->id);
     }
+    public function user_feedback(){
+        return $this->hasMany(ContractFeedback::class, 'contract_id')
+        ->where('created_by', auth()->user()->id);
+    }
 }

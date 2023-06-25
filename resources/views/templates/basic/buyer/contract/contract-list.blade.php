@@ -197,11 +197,11 @@
 
     <style>
         .testmonials-review-star{
-            padding: 1px;
+            padding: 0px !important;
             color: #F09959;
         }
         .review-star{
-            padding: 1px;
+            padding: 0px;
             color: rgb(215, 212, 212);
         }
 
