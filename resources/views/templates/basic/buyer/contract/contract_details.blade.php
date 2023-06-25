@@ -3,24 +3,75 @@
 
         <div class="container-fluid">
             <div class="row m-auto">
-                <div class="col-md-7">
-                   All Contracts > {{$contract->offer->module->title}} 
-                </div>
-                <div class="col-md-2 moile-view-icons">
-
-                    <div class="dropdown">
-                        <a class="btn " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"></path>
-                            </svg>
-                        </a>
-                        <div class="dropdown-menu moile-view-icons-dropdown" aria-labelledby="dropdownMenuLink">
-{{--                            <a class="dropdown-item" href="{{route('contracts.feedbacknew',$contract->uuid)}}">@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>--}}
-                            <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal" >@if($feedbackData == 'empty') End Contract @else Give Feedback @endif</a>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light bb">
+    
+                    <div class="row col-md-12 col-lg-12 ">
+                        
+                        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 bor" >
+                            <a class="navbar-brand " href="#">All Contracts > {{str_limit($contract->contract_title,35)}}</a>
+                            <button class="status float-right">{{$contract->status->name}}</button>
                         </div>
-                    </div>
+                
+                        <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 moile-view-nav-link">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <ul class="list-inline mb-0">
+                                    <li class="list-inline-item">
+                                        <a class="nav-link" href="#">Contract Summary <span class="sr-only"></span></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="nav-link" href="#">Payments</a>
+                                    </li>
+                                </ul>
 
-                </div>
+                                @if (empty($user_feedback))
+                        
+                                    <div class="moile-view-icons">
+                                        <div class="dropdown">
+                                            <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_12558_9588)">
+                                                        <path d="M20.3506 11.9795C19.2364 11.9795 18.33 12.8859 18.33 14.0001C18.33 15.1143 19.2364 16.0207 20.3506 16.0207C21.4647 16.0207 22.3712 15.1143 22.3712 14.0001C22.3712 12.8859 21.4647 11.9795 20.3506 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M7.64952 11.9795C6.53536 11.9795 5.62891 12.8859 5.62891 14.0001C5.62891 15.1143 6.53536 16.0207 7.64952 16.0207C8.76369 16.0207 9.67014 15.1143 9.67014 14.0001C9.67014 12.8859 8.76369 11.9795 7.64952 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M14 11.9795C12.8858 11.9795 11.9794 12.8859 11.9794 14.0001C11.9794 15.1143 12.8858 16.0207 14 16.0207C15.1142 16.0207 16.0206 15.1143 16.0206 14.0001C16.0206 12.8859 15.1142 11.9795 14 11.9795Z" fill="#007F7F"/>
+                                                        <path d="M23.8995 4.10047C21.2552 1.45629 17.7395 0 14 0C10.2605 0 6.74477 1.45629 4.10047 4.10047C1.45629 6.74477 0 10.2605 0 14C0 17.7395 1.45629 21.2552 4.10047 23.8995C6.74477 26.5437 10.2605 28 14 28C17.7395 28 21.2552 26.5437 23.8995 23.8995C26.5437 21.2552 28 17.7395 28 14C28 10.2605 26.5437 6.74477 23.8995 4.10047ZM14 26.268C7.23537 26.268 1.73196 20.7646 1.73196 14C1.73196 7.23537 7.23537 1.73196 14 1.73196C20.7646 1.73196 26.268 7.23537 26.268 14C26.268 20.7646 20.7646 26.268 14 26.268Z" fill="#007F7F"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_12558_9588">
+                                                            <rect width="28" height="28" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </a>
+
+                                            <div class="dropdown-menu moile-view-icons-dropdown " aria-labelledby="dropdownMenuLink">
+                                                
+                                                @if($feedbackData == 'empty') 
+
+                                                    <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#myModal">End Contract</a>
+
+                                                @else
+
+                                                    <a class="dropdown-item" id="endContract" data-toggle="modal" data-target="#formModal"> Give Feedback</a>
+
+                                                @endif
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                @endif
+                                
+                            </div>
+                        </div>
+                        
+                
+                    </div>
+                     
+                </nav>
+                
+               
+
+              
+               
             </div>
         <div class="main_con_p">
                 <div class="prosal-left-con">
@@ -340,10 +391,10 @@
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-modal" >
                         <h5 class="modal-title">End Contract</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                            
                         </button>
                     </div>
                     <div class="modal-body">
@@ -351,8 +402,11 @@
                         <p>You will be promoted to provide feedback and make any final payments in following steps.</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="formshow()" data-dismiss="modal"> Continue</button>
+                        <button  class="btn-rounded  btn-cancel action-btn"  data-dismiss="modal">Cancel</button>
+                        <button  class="btn-rounded text-white btn-save-draft  action-btn" onclick="formshow()" data-dismiss="modal">Continue</button>
+
+                        {{-- <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button> --}}
+                        {{-- <button type="button" class="btn btn-primary" onclick="formshow()" data-dismiss="modal"> Continue</button> --}}
 
                     </div>
                 </div>
@@ -363,10 +417,10 @@
         <div class="modal form fade" id="formModal" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-modal">
                         <h5 class="modal-title">End Contract</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" onclick="hidemodal();">&times;</span>
+                        <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                            
                         </button>
                     </div>
                     <div class="modal-body">
@@ -381,6 +435,106 @@
 
 
 <style>
+    .border-bt{
+        border-bottom: 2px solid #007F7F;
+    }
+    .dropdown-menu.show {
+    pointer-events: auto;
+    -webkit-transform: scale(1) translateY(0);
+    -ms-transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    visibility: visible;
+    margin-left: -91px !important;
+}
+
+    .bor{
+                        
+        border-right: 3px solid #C7DEDE;
+        padding-left: 30px !important;
+
+    }
+    .container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        width: 100%;
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+        margin-right: auto;
+        margin-left: auto;
+        }
+        .navbar{
+            min-height: 75px !important
+        }
+        .status {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 16px;
+            gap: 6px;
+            position: absolute;
+            height: 30px;
+            top: 5px;
+            background: #219A21;
+            border-radius: 20px;
+            position: relative;
+        }
+        .nav-item{
+            height: 20px;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            color: #515151;
+        }
+        .sr-only{
+            height: 0px;
+            left: 0px;
+            border: 1px solid #C7DEDE;
+        }
+        .bb{
+            border-bottom: 2px solid #DCEDED
+        }
+        @media only screen and (max-width:683px){
+            .moile-view-nav-link {
+                text-align: center !important;
+            }
+            .datepicker-button {
+                border: none !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                background: transparent !important;
+            }
+        }
+
+.btn-close{
+    color: #808285;
+    background-color: transparent;
+}
+.bg-modal{
+    background-color: #EDEDED !important;
+}
+.btn-save-draft {
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid #7f007f;
+        background-color: #7f007f !important;
+        color: white;
+        width: 5rem !important;
+        padding: 6px 2px;
+        font-size: 13px;
+        margin-right: 15px !important;
+
+    }
+    .btn-cancel {
+        background-color: transparent;
+        border-radius: 5px;
+        border: 1px solid #7f007f;
+        color: #7f007f !important;
+        width: 5rem !important;
+        padding: 6px 2px;
+        font-size: 13px;
+    }
+
     .navbar-burron{
         width: 96%;
         font-size: 12px;
@@ -451,6 +605,7 @@
     .main_con_p {
         width: 100%;
         display: inline-block;
+        margin-top: 20px !important ;
     }
 
     .prosal-right-con {
