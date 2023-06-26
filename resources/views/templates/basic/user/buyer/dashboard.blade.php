@@ -653,7 +653,7 @@ ul.jbs_nav_s li a {
     /* margin-left: 1%; */
     float: left;
     display: inline-block;
-    width: 84%;
+    width: 100%;
 }  
 
 .jobs_ins_list {
@@ -663,7 +663,7 @@ ul.jbs_nav_s li a {
     margin-top:20px;
 }
 ul.jbs_nav_s li{
-    margin-left:4%;
+    margin-left:1%;
 }
 input.search_input {
     width: 75%;

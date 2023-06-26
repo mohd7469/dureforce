@@ -233,7 +233,7 @@ input::-webkit-inner-spin-button {
             }
             .create-service-main .service-step {
                 color: #58a7a7;
-                font-size: 11px;
+                font-size: 10px;
                 font-weight: 500;
             }
             .create-service-main .btn-save-continue {
