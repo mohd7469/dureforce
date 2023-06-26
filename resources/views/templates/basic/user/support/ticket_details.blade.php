@@ -487,7 +487,39 @@
     .userlist:nth-child(2) .userprofile {
         margin-left: -21px;
     }
-
+    @media only screen and (max-width:683px){
+    p.datec-s {
+        float: left !important;
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        color: #000000;
+        width: 160px !important;
+        padding-top: 0px;
+        margin-right: 1%;
+    }
+    input.btn-postcoment {
+        width: 120px;
+        height: 40px;
+        /* left: 1123px; */
+        /* top: 1142px; */
+        background: #7F007F;
+        border-radius: 5px;
+        text-align: center;
+        color: #fff;
+        font-size: 14px;
+        font-family: 'Mulish';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        padding: 0px;
+        float: right;
+        margin-top: -50px !important;
+    }
+}
     </style>
 
 @endpush

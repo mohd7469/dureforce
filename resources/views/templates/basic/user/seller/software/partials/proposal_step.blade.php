@@ -277,7 +277,24 @@
    </div>
  
 </form>
-
+<style>
+   @media only screen and (max-width:683px){
+   .dz-message {
+      text-align: center !important;
+      position: relative !important;
+      top: -50% !important;
+      left: 0% !important;
+   }
+   .upload_icon {
+      position: absolute !important;
+      left: 0% !important;
+      right: 0% !important;
+      top: 54% !important;
+      bottom: 22% !important;
+      text-align: center !important;
+   }
+}
+</style>
 @push('style-lib')
 
    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/proposal_step.css')}}">
