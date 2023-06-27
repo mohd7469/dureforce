@@ -43,7 +43,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Best match" id="bestmatch">
                                                         <option>Best match</option>
                                                         <option>1</option>
@@ -51,9 +51,9 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                                 <!--Sorting Section End-->
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -61,7 +61,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -137,15 +137,14 @@
 
                                                     <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
 
-                                                    @foreach($proposal->user->skills as $skill)
 
                                                         <ul class="skills-listing">
-
+                                                            @foreach($proposal->user->skills as $skill)
                                                             <li>{{$skill->name}} </li>
+                                                            @endforeach
 
                                                         </ul>
 
-                                                    @endforeach
                                                 </div >
                                                 <div class="col-md-6 col-lg-6">
                                                     <div class="attachment">

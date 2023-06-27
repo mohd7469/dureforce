@@ -180,7 +180,17 @@ p.sort-p {
     position: relative;
     left: 23px;
 }
-
+.proposal-profile-contect{
+    float: left !important;
+}
+@media only screen and (max-width:683px){
+    .proposal-profile-contect{
+        float: center !important;
+    }
+    .nav-tabs .nav-link{
+        font-size: 11px !important;
+    }
+}
 @media only screen and (max-width:1200px){
     /* a.btn-products-s {
     border: 1px solid #7F007F;
