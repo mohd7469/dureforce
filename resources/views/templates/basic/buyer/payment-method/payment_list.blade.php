@@ -205,7 +205,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-continue btn-secondary">Save</button>
+                            <button type="submit" class="btn btn-continue btn-secondary" style="background-color: #7f007f !important;color: #fff !important;">Save</button>
                         </div>
                         
                     </div>
@@ -330,7 +330,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-continue btn-secondary">Update</button>
+                            <button type="submit" class="btn btn-continue btn-secondary" style="background-color: #7f007f !important;color: #fff !important;">Update</button>
                         </div>
                         
                     </div>
