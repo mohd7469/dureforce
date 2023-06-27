@@ -24,7 +24,7 @@
                         
                 </div>
 
-                <div class="col-md-4 col-lg-4 today-buttons">
+                <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 today-buttons">
                     
                     <button type="button" class="btn  btn-floating btn_date" onclick="showDate('previous')" >
                         <i class="fas fa-chevron-left icon"></i>
@@ -39,7 +39,7 @@
                     
                 </div>
 
-                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2">
+                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12 mt-2 mobile-view-search">
                     <form class="form-inline my-2 my-lg-0">
                         <div class="offset-md-5 input-group">
                             <input class="search" type="search" placeholder="Search" aria-label="Search">
@@ -77,11 +77,11 @@
                             
                             <div class="row selected metrics-container">
                             
-                                <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 num_task mt-2 ">
                                     <strong id="draft_count_id">{{$data['tasks_in_draft_count_count']}}</strong>
                                     
                                 </div>
-                                <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                                <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 ">
                                     
                                     <span>Tasks</span><br>
                                     <span>In Draft</span>
@@ -101,11 +101,11 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#awaiting_approval">
                         <div class="row {{ getLastLoginRoleId() == App\Models\Role::$Client ? 'selected ' : '' }} metrics-container">
-                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2">
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 num_task mt-2">
                                 <strong id="awaiting_count_id">{{$data['tasks_in_awating_approval_count']}}</strong>
                                 
                             </div>
-                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 ">
                                 <span>Tasks</span><br>
                                 <span> {{getLastLoginRoleId() == App\Models\Role::$Freelancer ? 'Awaiting Approval' : 'Pending Approval'}}</span>
                             </div>
@@ -117,11 +117,11 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#approved_tasks">
                         <div class="row  metrics-container">
-                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2">
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 num_task mt-2">
                                 <strong id="approved_count_id">{{$data['tasks_in_approved_count']}}</strong>
                                 
                             </div>
-                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 ">
                                 <span>Tasks</span><br>
                                 <span> Approved </span>
                             </div>
@@ -133,11 +133,11 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#in_progress">
                         <div class="row metrics-container">
-                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 num_task mt-2 ">
                                 <strong id="in_progress_count_id">{{$data['tasks_in_progress_count']}}</strong>
                                  
                             </div>
-                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 ">
                                 <span>Tasks</span><br>
                                 <span> In Progress</span>
                             </div>
@@ -151,11 +151,11 @@
                 <div class="col-md-2 col-lg-2 col-xl-2 col-sm-12 col-xs-12 ">
                     <a class="nav-link" data-bs-toggle="tab" href="#completed">
                         <div class="row metrics-container">
-                            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3 num_task mt-2 ">
+                            <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2 num_task mt-2 ">
                                 <strong id="completed_count_id">{{$data['tasks_in_completed_count']}}</strong>
                                 
                             </div>
-                            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-9 ">
+                            <div class="col-md-10 col-lg-10 col-sm-10 col-xs-10 ">
                                 <span>Tasks</span><br>
                                 <span>Completed</span>
                             </div>
@@ -435,7 +435,7 @@
                 <input type="hidden" name="lastlogin" value="{{getLastLoginRoleId()}}" id="last_login_role_id">
              
                 {{-- Completed Table --}}
-                <div class="tab-pane mt-c" id="completed"> 
+                <div class="tab-pane mt-c table-responsive" id="completed"> 
                     <table class="table text-center " style="border: 2px solid #e6eeee !important;" id="completed_hours_listing_id">
                                     
                         <thead class="table-header text-center" style="border-bottom:2px solid #e6eeee !important">
@@ -1078,13 +1078,79 @@
     a.active strong{
         color: white
     }
+    .offset-md-5 {
+        margin-left: 38.666667% !important;
+    }
 
     @media only screen and (max-width:683px){
         .date-picker-icon{
             margin-left: -34px !important;
         }
+        .table-header {
+            background: #EFF4F4;
+            border: 1px solid #D0E2E2;
+            font-size: 8px !important;;
+        }
+        .f-container{
+            display: none !important;
+        }
+        .input-group {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            width: auto !important;
+        }
+        .offset-md-5 {
+            margin-left: 19.666667% !important;
+        }
+        .mobile-view-search{
+            margin-left: -43px !important;
+        }
+        .text-center {
+            text-align: center!important;
+            font-size: 8px !important;
+        }
+        .status {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0px 16px;
+            gap: 6px;
+            position: absolute;
+            height: 30px;
+            top: 5px;
+            font-size: 12px !important;
+            background: #219A21;
+            border-radius: 20px;
+            position: relative;
+        }
+        .search {
+            background: #FFFFFF;
+            border: 1px solid #CBDFDF;
+            border-radius: 6px;
+            width: 200px !important;
+        }
+        .today-buttons{
+            margin-top: -57px !important;
+            margin-left: 184px !important;
+            width: 223px !important;
+        }
+        .total-day-hours {
+            background: #FFF4FF;
+            border: 1px dashed #A394A3;
+            border-radius: 6px;
+            height: 61px;
+            width: 380px !important;;
+            margin-left: 16px !important;;
+        }
+        .navbar-brand {
+            font-size: 0.7rem !important;
+            font-weight: 800 !important;
+        }
         .metrics-container {
-            background: #D0E2E2 !important;
+            /* background: #D0E2E2 !important; */
             border-radius: 6px !important;
             height: 100px !important; 
             padding-top: 7px !important;

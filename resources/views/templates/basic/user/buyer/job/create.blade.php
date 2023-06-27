@@ -278,7 +278,24 @@
     </div>
 </section>
 @endsection
-
+<style>
+    @media only screen and (max-width:683px){
+        .dropzone .dz-message {
+            margin: 0em 0 !important;
+        }
+        .upload_inner_arrow {
+        position: absolute;
+        left: 48.15% !important;
+        right: 32.52%;
+        top: 38.12%;
+        bottom: 3.78%;
+    }
+    .inline {
+        display: contents !important;
+        float: left !important;
+    }
+}
+</style>
 
 @push('style-lib')
 

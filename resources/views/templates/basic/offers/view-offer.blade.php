@@ -40,7 +40,7 @@
                                                            
                                                         </div>
                                                     </div>       
-                                                    <div class="col-md-4">
+                                                    <!-- <div class="col-md-4">
                                                     
                                                         <form>
                                                             <select name="Best match" id="bestmatch">
@@ -51,12 +51,12 @@
                                                                 <option>1</option>
                                                             </select>
                                                         </form>
-                                                    </div>
+                                                    </div> -->
                                                
                                             
                                          <!--Sorting Section End-->
 
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                         <form>
                                             <select name="Filters" id="Filters">
                                                 <option>Filters</option>
@@ -66,7 +66,7 @@
                                                 <option>1</option>
                                             </select>
                                         </form>
-                                        </div>
+                                        </div> -->
 
                                        </div>
                                     </div>

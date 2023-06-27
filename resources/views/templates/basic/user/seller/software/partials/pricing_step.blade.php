@@ -279,7 +279,7 @@
 
                         <div class="row">
                             
-                            <div class="col-md-6 m-0 p-0" style="margin-left: 13px !important;">
+                            <div class="col-md-6 m-0 p-0">
                                 <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100 back-button"
                                    href="?view=step-1" type="button">@lang('BACK')</a>
                             </div>
