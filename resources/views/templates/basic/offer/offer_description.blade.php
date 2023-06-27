@@ -55,7 +55,7 @@
 
             <!---Contact Details Section Start-->
             <div class="offer-contactinfo-s">
-                <p class="offer-title"> Contact Details</p>
+                <p class="offer-title"> Contract details</p>
 
                 <ul class="offer-cnt-info">
                     <li>

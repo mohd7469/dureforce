@@ -1,1 +1,208 @@
-(()=>{var e=$("input[name=_token]").val(),t="",o=1;Dropzone.autoDiscover=!1;var l=$("#system_service_fee_id").val(),a=(100-l)/100,s=l/100;function i(e){iziToast.error({message:e,position:"topRight"})}function n(e){for(var t in $("#submit_proposal_btn_id").attr("disabled",!1),$("input,select,textarea").removeClass("error-field"),e){var o=e[t];$('[name="'+t+'"]').addClass("error-field"),$('[id="'+t+'"]').addClass("error-field"),$("#"+t).next().addClass("error-field"),i(o)}}function r(e){return Number.parseFloat(e).toFixed(2)}$((function(){var l="",c=$("#propsal_form").attr("action");new Dropzone("#demo-upload",{url:c,autoProcessQueue:!1,parallelUploads:4,dictDefaultMessage:"your custom message",thumbnailHeight:60,thumbnailWidth:60,maxFiles:4,uploadMultiple:!0,maxFilesize:3,acceptedFiles:".jpg,.png,.jpeg,.docx,.pdf",filesizeBase:1e3,addRemoveLinks:!0,init:function(){this.on("sendingmultiple",(function(t,o,a){a.append("_token",e),a.append("data",l)})),this.on("complete",(function(e,t,o){})),this.on("successmultiple",(function(e,t){t.error&&n(t.error),t.redirect&&window.location.replace(t.redirect)})),t=this,$("#propsal_form").submit((function(o){$("#submit_proposal_btn_id").attr("disabled",!0),l=$(this).serialize(),o.preventDefault(),o.stopPropagation();$.ajax({type:"POST",url:"/seller/validate-proposal",data:{data:l,_token:e},success:function(o){o.validated?t.getQueuedFiles().length>0?t.processQueue():function(t){var o=$("#propsal_form").attr("action");$.ajax({type:"POST",url:o,data:{data:t,_token:e},success:function(e){console.log(e),e.error?n(e.error):window.location.replace(e.redirect)}})}(l):(o.redirect&&window.location.replace(o.redirect),n(o.error))}})}))},thumbnail:function(e,t){if(e.previewElement){e.previewElement.classList.remove("dz-file-preview");for(var o=e.previewElement.querySelectorAll("[data-dz-thumbnail]"),l=0;l<o.length;l++){var a=o[l];a.alt=e.name,a.src=t}setTimeout((function(){e.previewElement.classList.add("dz-image-preview")}),1)}}});$("#defaultSearch").on("change",(function(){this.form.submit()})),$("#milestone_btn").click((function(){o+=1,$("#milestiones").append('<div class="row" id="milestone'+o+'"><div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12"><label>Description*</label><input type="text" name="milestones['+o+'][description]" maxlength="255" value="" class="form-control"  id="milestones.'+o+'.description"></div><div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4"><label>Start Date*</label><div class="input-group mb-3"><input type="date" class="form-control" name="milestones['+o+'][start_date]" value="" id="milestones.'+o+'.start_date" ></div></div><div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4"><label>Due Date*</label><div class="input-group mb-3"><input type="date" class="form-control" name="milestones['+o+'][end_date]" value=""  id="milestones.'+o+'.end_date" ></div></div><div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4"><label>Amount*</label><div class="input-group"><input type="number" class="form-control milestones_amount" name="milestones['+o+'][amount]" maxlength="255" value=""  id="milestones.'+o+'.amount" oninput="this.value = Math.abs(this.value)"> <span class="input-group-text float-end">$</span></div></div><div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" ><Button class="btn btn-danger " id="delete_btn'+o+'" onclick="removerow('+o+')"><i class="fa fa-trash"></i></button> </div></div>')})),$("#hourly_bid_rate").focusout((function(){var e=$(this).val();e<0?(i("Rate Per hour should be greater than $0 "),$(this).val("")):($("#amount_receive").val(r(e*a)),$("#system_fee").html("$"+r(e*s)))})),$("#total_milestones_amount").focusout((function(){var e=$(this).val();e<0?(i("Project Cost should be greater than $0 "),$(this).val("")):e>9999?(i("Project Cost should not be greater than $9999 "),$(this).val("")):($("#milestones_amount_receive").val(r(e*a)),$("#system_fee").html("$"+r(e*s)))})),$(document).on("focusout",".milestones_amount",(function(){var e;e=0,$(".milestones_amount").each((function(){var t=$(this).val();e+=parseFloat(t)})),$("#total_milestones_amount").val(e),$("#milestones_amount_receive").val(r(e*a)),$("#system_fee").html("$"+r(e*s))}))}))})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**********************************************************************!*\
+  !*** ./assets/resources/templates/basic/frontend/js/job-proposal.js ***!
+  \**********************************************************************/
+var token = $('input[name=_token]').val();
+var myDropzone = '';
+var row_id = 1;
+'use strict';
+Dropzone.autoDiscover = false;
+var service_fee = $('#system_service_fee_id').val();
+var user_percentage = (100 - service_fee) / 100;
+var service_fee_percentage = service_fee / 100;
+function displayAlertMessage(message) {
+  iziToast.error({
+    message: message,
+    position: "topRight"
+  });
+}
+function displayErrorMessage(validation_errors) {
+  $('#submit_proposal_btn_id').attr("disabled", false);
+  $('input,select,textarea').removeClass('error-field');
+  for (var error in validation_errors) {
+    var error_message = validation_errors[error];
+    $('[name="' + error + '"]').addClass('error-field');
+    $('[id="' + error + '"]').addClass('error-field');
+    $('#' + error).next().addClass('error-field');
+    displayAlertMessage(error_message);
+  }
+}
+function financial(x) {
+  return Number.parseFloat(x).toFixed(2);
+}
+function submitProposal(data) {
+  var action_url = $("#propsal_form").attr('action');
+  $.ajax({
+    type: "POST",
+    url: action_url,
+    data: {
+      data: data,
+      _token: token
+    },
+    success: function success(data) {
+      var html = '';
+      console.log(data);
+      if (data.error) {
+        displayErrorMessage(data.error);
+      } else {
+        window.location.replace(data.redirect);
+      }
+    }
+  });
+}
+function displayInfoAlertMessage(message) {
+  iziToast.info({
+    "class": "wait",
+    message: message,
+    position: "center",
+    timeOut: 50000,
+    extendedTimeOut: 0
+  });
+}
+$(function () {
+  var form_data = '';
+  var action_url = $("#propsal_form").attr('action');
+  var dropzone = new Dropzone('#demo-upload', {
+    url: action_url,
+    autoProcessQueue: false,
+    parallelUploads: 4,
+    dictDefaultMessage: "your custom message",
+    thumbnailHeight: 60,
+    thumbnailWidth: 60,
+    maxFiles: 4,
+    uploadMultiple: true,
+    maxFilesize: 3,
+    acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+    filesizeBase: 1000,
+    addRemoveLinks: true,
+    init: function init() {
+      this.on("sendingmultiple", function (file, xhr, formData) {
+        formData.append("_token", token);
+        formData.append("data", form_data);
+      });
+      this.on("complete", function (file, xhr, formData) {});
+      this.on("successmultiple", function (files, response) {
+        if (response.error) {
+          displayErrorMessage(response.error);
+        }
+        if (response.redirect) window.location.replace(response.redirect);
+      });
+      myDropzone = this;
+      $("#propsal_form").submit(function (event) {
+        $('#submit_proposal_btn_id').attr("disabled", true);
+        form_data = $(this).serialize();
+        event.preventDefault();
+        event.stopPropagation();
+        var validate_url = '/seller/validate-proposal';
+        $.ajax({
+          type: "POST",
+          url: validate_url,
+          data: {
+            data: form_data,
+            _token: token
+          },
+          success: function success(data) {
+            if (data.validated) {
+              if (myDropzone.getQueuedFiles().length > 0) {
+                myDropzone.processQueue();
+              } else {
+                submitProposal(form_data);
+              }
+            } else {
+              if (data.redirect) {
+                window.location.replace(data.redirect);
+              }
+              displayErrorMessage(data.error);
+            }
+          }
+        });
+      });
+    },
+    thumbnail: function thumbnail(file, dataUrl) {
+      if (file.previewElement) {
+        file.previewElement.classList.remove("dz-file-preview");
+        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+        for (var i = 0; i < images.length; i++) {
+          var thumbnailElement = images[i];
+          thumbnailElement.alt = file.name;
+          thumbnailElement.src = dataUrl;
+        }
+        setTimeout(function () {
+          file.previewElement.classList.add("dz-image-preview");
+        }, 1);
+      }
+    }
+  });
+  $('#defaultSearch').on('change', function () {
+    this.form.submit();
+  });
+  $("#milestone_btn").click(function () {
+    addRow();
+  });
+
+  //hourly bid rate
+  $("#hourly_bid_rate").focusout(function () {
+    var rate_per_hour = $(this).val();
+    if (rate_per_hour < 0) {
+      displayAlertMessage("Rate Per hour should be greater than $0 ");
+      $(this).val("");
+    } else {
+      $('#amount_receive').val(financial(rate_per_hour * user_percentage));
+      $('#system_fee').html('$' + financial(rate_per_hour * service_fee_percentage));
+    }
+  });
+  $("#total_milestones_amount").focusout(function () {
+    var total_cost = $(this).val();
+    if (total_cost < 0) {
+      displayAlertMessage("Project Cost should be greater than $0 ");
+      $(this).val("");
+    } else if (total_cost > 9999) {
+      displayAlertMessage("Project Cost should not be greater than $9999 ");
+      $(this).val("");
+    } else {
+      $('#milestones_amount_receive').val(financial(total_cost * user_percentage));
+      $('#system_fee').html('$' + financial(total_cost * service_fee_percentage));
+    }
+  });
+
+  //milestones sum
+  $(document).on('focusout', '.milestones_amount', function () {
+    calculateMilestoneAmountSum();
+  });
+});
+function calculateMilestoneAmountSum() {
+  var total_amount = 0;
+  $(".milestones_amount").each(function () {
+    var milestone_amount = $(this).val();
+    total_amount = total_amount + parseFloat(milestone_amount);
+  });
+  $('#total_milestones_amount').val(total_amount);
+  $('#milestones_amount_receive').val(financial(total_amount * user_percentage));
+  $('#system_fee').html('$' + financial(total_amount * service_fee_percentage));
+}
+function removerow(row) {
+  var div_to_remove = '#milestone' + row;
+  $(div_to_remove).remove();
+}
+function addRow() {
+  var div_to_add_row = '#milestiones';
+  row_id += 1;
+  $(div_to_add_row).append('<div class="row" id="milestone' + row_id + '">' + '<div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-xs-12">' + '<label>Description*</label>' + '<input type="text" name="milestones[' + row_id + '][description]" maxlength="255" value="" class="form-control"  id="milestones.' + row_id + '.description">' + '</div>' + '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">' + '<label>Start Date*</label>' + '<div class="input-group mb-3">' + '<input type="date" class="form-control" name="milestones[' + row_id + '][start_date]" value="" id="milestones.' + row_id + '.start_date" >' + '</div>' + '</div>' + '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">' + '<label>Due Date*</label>' + '<div class="input-group mb-3">' + '<input type="date" class="form-control" name="milestones[' + row_id + '][end_date]" value=""  id="milestones.' + row_id + '.end_date" >' + '</div>' + '</div>' + '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4">' + '<label>Amount*</label>' + '<div class="input-group"><input type="number" class="form-control milestones_amount" name="milestones[' + row_id + '][amount]" maxlength="255" value=""  id="milestones.' + row_id + '.amount" oninput="this.value = Math.abs(this.value)"> <span class="input-group-text float-end">$</span></div>' + '</div>' + '<div class="col-md-2 col-lg-2 col-xl-2 col-sm-4 col-xs-4 pt-custom" >' + '<Button class="btn btn-danger " id="delete_btn' + row_id + '" onclick="removerow(' + row_id + ')"><i class="fa fa-trash"></i></button> ' + '</div>' + '</div>');
+}
+function byMilestone() {
+  if (!$(this).is(':checked')) {
+    $('#by_project_section').addClass('d-none');
+    $('#by_milestone_section').removeClass('d-none');
+    $('#total_milestones_amount').attr("readonly", true);
+  }
+}
+function byProject() {
+  if (!$(this).is(':checked')) {
+    $('#by_milestone_section').addClass('d-none');
+    $('#by_project_section').removeClass('d-none');
+    $('#total_milestones_amount').attr("readonly", false);
+  }
+}
+/******/ })()
+;
