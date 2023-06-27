@@ -1,1 +1,182 @@
-(()=>{function e(e,r){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){if("undefined"==typeof Symbol||!(Symbol.iterator in Object(e)))return;var r=[],n=!0,a=!1,i=void 0;try{for(var o,l=e[Symbol.iterator]();!(n=(o=l.next()).done)&&(r.push(o.value),!t||r.length!==t);n=!0);}catch(e){a=!0,i=e}finally{try{n||null==l.return||l.return()}finally{if(a)throw i}}return r}(e,r)||function(e,r){if(!e)return;if("string"==typeof e)return t(e,r);var n=Object.prototype.toString.call(e).slice(8,-1);"Object"===n&&e.constructor&&(n=e.constructor.name);if("Map"===n||"Set"===n)return Array.from(e);if("Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return t(e,r)}(e,r)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function t(e,t){(null==t||t>e.length)&&(t=e.length);for(var r=0,n=new Array(t);r<t;r++)n[r]=e[r];return n}var r=$("input[name=_token]").val(),n=Array();function a(e){var t=$("#job_form_data").attr("action");$.ajax({type:"POST",url:t,headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},data:e,processData:!1,contentType:!1,success:function(e){e.errors?($("#submit_btn_job").attr("disabled",!1),console.log(e),function(e){for(var t in $("input,select,textarea").removeClass("error-field"),$(".select2").next().removeClass("error-field"),e){var r=e[t];$('[name="'+t+'"]').addClass("error-field"),$("#"+t).next().addClass("error-field"),i(r)}}(e.errors)):window.location.replace(e.redirect)}})}function i(e){iziToast.error({message:e,position:"topRight"})}$(document).ready((function(){$(".select2").select2({tags:!0}),loadFiles(),$("#job_form_data").submit((function(e){e.preventDefault(),$("#submit_btn_job").attr("disabled",!0);var t=$("#job_form_data")[0],r=new FormData(t);r.append("file",JSON.stringify(n)),a(r)})),$("#uploaded_file_table_id").on("click","#DeleteButton",(function(){var e=$(this).closest("tr").index();n.splice(e,1),$(this).closest("tr").remove(),$("#uploaded_files_input_id").val(JSON.stringify(n))}))})),$(document).ready((function(){$(".select2").select2({tags:!0}),$("#job_form_data").submit((function(e){$("#submit_btn_job").attr("disabled",!0),e.preventDefault();var t=$("#job_form_data")[0],r=new FormData(t);r.append("file",JSON.stringify(n)),a(r)})),$("#uploaded_file_table_id").on("click","#DeleteButton",(function(){var e=$(this).closest("tr").index();n.splice(e,1),$(this).closest("tr").remove(),$("#uploaded_files_input_id").val(JSON.stringify(n))}))})),$((function(){new Dropzone("#demo-upload",{url:action_url,autoProcessQueue:!0,parallelUploads:1,dictDefaultMessage:"your custom message",thumbnailHeight:120,thumbnailWidth:120,maxFiles:6,uploadMultiple:!1,acceptedFiles:".jpg,.png,.jpeg,.docx,.pdf",filesizeBase:1e3,addRemoveLinks:!1,headers:{"X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr("content")},init:function(){this.on("addedfile",(function(e){})),this.on("sending",(function(e,t,n){n.append("_token",r)})),this.on("error",(function(t,r){this.removeFile(t);var n=r.errors;Object.entries(n).forEach((function(t){var r=e(t,2);r[0];i(r[1])}))})),this.on("success",(function(e,t){this.removeFile(e),n.push(t.uploaded_file),function(e){$("#file_name_div").append("<tr><td>"+e.uploaded_name+'</td><td class="text-center">'+e.type+'</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td><td class="text-center"><a href="'+e.url+'" download><span class="badge badge-primary badge-pill guide-lines-lbl"><i class="fa fa-download "></i></span></a></td></tr>'),$("#uploaded_files_input_id").val(JSON.stringify(n))}(t.uploaded_file)})),this.on("complete",(function(e,t,r){})),this},thumbnail:function(e,t){if(e.previewElement){e.previewElement.classList.remove("dz-file-preview");for(var r=e.previewElement.querySelectorAll("[data-dz-thumbnail]"),n=0;n<r.length;n++){var a=r[n];a.alt=e.name,a.src=t}setTimeout((function(){e.previewElement.classList.add("dz-image-preview")}),1)}}})}))})();
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!********************************************************************!*\
+  !*** ./assets/resources/templates/basic/frontend/js/create_job.js ***!
+  \********************************************************************/
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+var token = $('input[name=_token]').val();
+var myDropzone = '';
+var uploaded_files = Array();
+$(document).ready(function () {
+  $('.select2').select2({
+    tags: true
+  });
+  loadFiles();
+  $('#job_form_data').submit(function (e) {
+    e.preventDefault();
+    $('#submit_btn_job').attr("disabled", true);
+    var form = $('#job_form_data')[0];
+    var form_data = new FormData(form);
+    form_data.append("file", JSON.stringify(uploaded_files));
+    submitCreateFormData(form_data);
+  });
+  $("#uploaded_file_table_id").on("click", "#DeleteButton", function () {
+    var file_index = $(this).closest("tr").index();
+    uploaded_files.splice(file_index, 1);
+    $(this).closest("tr").remove();
+    $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+  });
+});
+$(document).ready(function () {
+  $('.select2').select2({
+    tags: true
+  });
+  $('#job_form_data').submit(function (e) {
+    $('#submit_btn_job').attr("disabled", true);
+    e.preventDefault();
+    var form = $('#job_form_data')[0];
+    var form_data = new FormData(form);
+    form_data.append("file", JSON.stringify(uploaded_files));
+    submitCreateFormData(form_data);
+  });
+  $("#uploaded_file_table_id").on("click", "#DeleteButton", function () {
+    var file_index = $(this).closest("tr").index();
+    uploaded_files.splice(file_index, 1);
+    $(this).closest("tr").remove();
+    $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+  });
+});
+function submitCreateFormData(form_data) {
+  var action_url = $("#job_form_data").attr('action');
+  $.ajax({
+    type: "POST",
+    url: action_url,
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: form_data,
+    processData: false,
+    contentType: false,
+    success: function success(data) {
+      var html = '';
+      if (data.errors) {
+        $('#submit_btn_job').attr("disabled", false);
+        console.log(data);
+        displayErrorMessage(data.errors);
+      } else {
+        window.location.replace(data.redirect);
+      }
+    }
+  });
+}
+function displayAlertMessage(message) {
+  iziToast.error({
+    message: message,
+    position: "topRight"
+  });
+}
+function displayErrorMessage(validation_errors) {
+  $('input,select,textarea').removeClass('error-field');
+  $('.select2').next().removeClass("error-field");
+  for (var error in validation_errors) {
+    var error_message = validation_errors[error];
+    $('[name="' + error + '"]').addClass('error-field');
+    $('#' + error).next().addClass('error-field');
+    displayAlertMessage(error_message);
+  }
+}
+function displaySuccessMessage() {
+  $("#job_form_data").before('<div class="alert alert-success" id="alert-success"><button type="button" class="close" data-dismiss="alert">×</button><i class="icon-exclamation-sign"></i>Job Created Successfully</div>');
+}
+function displayInfoAlertMessage(message) {
+  iziToast.info({
+    "class": "wait",
+    message: message,
+    position: "center",
+    timeOut: 50000,
+    extendedTimeOut: 0
+  });
+}
+$(function () {
+  var dropzone = new Dropzone('#demo-upload', {
+    url: action_url,
+    autoProcessQueue: true,
+    parallelUploads: 1,
+    dictDefaultMessage: "your custom message",
+    thumbnailHeight: 120,
+    thumbnailWidth: 120,
+    maxFiles: 6,
+    uploadMultiple: false,
+    acceptedFiles: ".jpg,.png,.jpeg,.docx,.pdf",
+    filesizeBase: 1000,
+    addRemoveLinks: false,
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    init: function init() {
+      this.on("addedfile", function (file) {
+        var _this = this;
+      });
+      this.on("sending", function (file, xhr, formData) {
+        formData.append("_token", token);
+      });
+      this.on("error", function (file, response) {
+        var _this = this;
+        _this.removeFile(file);
+        var errors = response.errors;
+        Object.entries(errors).forEach(function (_ref) {
+          var _ref2 = _slicedToArray(_ref, 2),
+            key = _ref2[0],
+            value = _ref2[1];
+          displayAlertMessage(value);
+        });
+      });
+      this.on("success", function (file, response) {
+        var _this = this;
+        _this.removeFile(file);
+        uploaded_files.push(response.uploaded_file);
+        addFile(response.uploaded_file);
+      });
+      this.on("complete", function (file, xhr, formData) {});
+      myDropzone = this;
+    },
+    thumbnail: function thumbnail(file, dataUrl) {
+      if (file.previewElement) {
+        file.previewElement.classList.remove("dz-file-preview");
+        var images = file.previewElement.querySelectorAll("[data-dz-thumbnail]");
+        for (var i = 0; i < images.length; i++) {
+          var thumbnailElement = images[i];
+          thumbnailElement.alt = file.name;
+          thumbnailElement.src = dataUrl;
+        }
+        setTimeout(function () {
+          file.previewElement.classList.add("dz-image-preview");
+        }, 1);
+      }
+    }
+  });
+});
+function addFile(file) {
+  $('#file_name_div').append('<tr><td>' + file.uploaded_name + '</td><td class="text-center">' + file.type + '</td><td class="text-center" id="DeleteButton"><span class="badge badge-primary badge-pill delete-btn"  ><i class="fa fa-trash" style="color:red" ></i></span></td><td class="text-center">' + '<a href="' + file.url + '" download><span class="badge badge-primary badge-pill guide-lines-lbl"><i class="fa fa-download "></i></span></a></td></tr>');
+  $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
+}
+function switchBudgetFileds(budget_type) {
+  if (budget_type == 2) {
+    $('#budget_amount').show();
+    $('.weekly_range').hide();
+    $('.budget_type').removeClass('col-xl-4 col-lg-4 col-md-4');
+    $('.budget_type').addClass('col-xl-6 col-lg-6 col-md-6');
+  } else {
+    $('.weekly_range').show();
+    $('#budget_amount').hide();
+    $('.budget_type').removeClass('col-xl-6 col-lg-6 col-md-6');
+    $('.budget_type').addClass('col-xl-4 col-lg-4 col-md-4');
+  }
+}
+/******/ })()
+;

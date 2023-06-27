@@ -31,7 +31,7 @@ class BlogController extends Controller
     public function create()
     {
         $tags = Tag::all();
-    	$pageTitle = "Blog Blog";
+    	$pageTitle = "Add Blog";
     	return view('admin.blog.create', compact('pageTitle','tags'));
     }
     public function edit($id)
@@ -45,7 +45,7 @@ class BlogController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
-            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
+            'image' => ['required','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
         
         $blog  = Blog::findOrFail($id);
@@ -92,7 +92,7 @@ class BlogController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
-            'image' => ['nullable','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
+            'image' => ['required','image',new FileTypeValidate(['jpg','jpeg','png','PNG','JPG','JPEG'])]
         ]);
         $user = Auth::guard('admin')->user();
         $blog = new Blog();

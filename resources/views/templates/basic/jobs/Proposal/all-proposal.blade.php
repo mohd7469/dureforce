@@ -43,7 +43,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                     <select name="Best match" id="bestmatch">
                                                         <option>Best match</option>
                                                         <option>1</option>
@@ -51,9 +51,9 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                            </div>
+                                            </div> -->
                                             <!--Sorting Section End-->
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -61,7 +61,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@
                                                         <img alt="User Pic" src="{{ !empty($proposal->user->user_basic->profile_picture)? $proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
-                                                    <div class="col-md-8" style="text-align:left">
+                                                    <div class="col-md-8 proposal-profile-contect">
 
                                                         <h4 class="pname-c">
                                                             {{$proposal->user ? $proposal->user->full_name : ''}}
@@ -144,15 +144,15 @@
 
                                                 <h2>Has {{count($proposal->user ? $proposal->user->skills : collect([]))}} relevant skills to your job</h2>
 
-                                                @foreach($proposal->user->skills as $skill)
 
                                                     <ul class="skills-listing">
+                                                        @foreach($proposal->user->skills as $skill)
 
                                                         <li>{{$skill->name}} </li>
+                                                        @endforeach
 
                                                     </ul>
 
-                                                @endforeach
                                             </div >
 
                                             @if( isset($proposal->attachment) AND $proposal->attachment->count() > 0 )
@@ -207,7 +207,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Best match" id="bestmatch">
                                                         <option>Best match</option>
                                                         <option>1</option>
@@ -215,9 +215,9 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                                 <!--Sorting Section End-->
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -225,7 +225,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -239,7 +239,7 @@
                                                              <img alt="User Pic" src="{{ !empty($short_listed_proposal->user->user_basic->profile_picture)? $short_listed_proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                         </div>
 
-                                                        <div class="col-md-8" style="text-align:left">
+                                                        <div class="col-md-8 proposal-profile-contect">
 
                                                             <h4 class="pname-c">
 
@@ -309,15 +309,13 @@
 
                                                     <h2>Has {{count($short_listed_proposal->user->skills)}} relevant skills to your job</h2>
 
-                                                    @foreach($short_listed_proposal->user->skills as $skill)
 
                                                         <ul class="skills-listing">
-
+                                                            @foreach($short_listed_proposal->user->skills as $skill)
                                                             <li>{{$skill->name}} </li>
-
+                                                            @endforeach
                                                         </ul>
 
-                                                    @endforeach
                                                 </div >
                                                 @isset($short_listed_proposal->attachment)
                                                     <div class="col-md-6 col-lg-6">
@@ -437,7 +435,12 @@ a.btn-products-s {
 div#custom-search-input {
     
     position: relative;
-    top: -16px;
+    top: -7px;
+}
+div#custom-search-input span.input-group-btn {
+    position: relative;
+    top: 15px !important;
+    right: 10px;
 }
 .col-md-10.sorting-mbl {
     text-align: right;
