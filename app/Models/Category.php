@@ -44,6 +44,11 @@ class Category extends Model
             ->get();
     }
 
+    public function module()
+    {
+        return $this->hasOne(Module::class,'id','module_id');
+    }
+
     public static function types(): array
     {
         return [

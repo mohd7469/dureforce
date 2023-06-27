@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Rules\FileTypeValidate;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Module;
 use App\Models\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -16,10 +17,10 @@ class CategoryController extends Controller
     public function index()
     {
         $pageTitle = "Category list";
+        $modules = Module::select('id', 'name')->get();
         $emptyMessage = "No data found";
-        $categorys = Category::with('subCategory')->latest()->paginate(getPaginate());
-        
-        return view('admin.category.index', compact('categorys', 'pageTitle', 'emptyMessage'));
+        $categorys = Category::with('subCategory','module')->latest()->paginate(getPaginate());
+        return view('admin.category.index', compact('categorys', 'pageTitle', 'emptyMessage','modules'));
     }
 
     public function store(Request $request)
@@ -33,6 +34,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->type_id = 1;
         $category->is_active = $request->is_active ? 1 : 0;
+        $category->module_id = $request->module;
         $category->save();
         $notify[] = ['success', 'Category has been created'];
         storeRedisData(Category::$Model_Name_Space,Category::$Redis_key,Category::$Is_Active);
@@ -50,6 +52,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->type_id = $request->type_id;
         $category->is_active = $request->is_active ? 1 : 0;
+        $category->module_id = $request->module;
         $category->save();
         $notify[] = ['success', 'Category has been updated'];
         storeRedisData(Category::$Model_Name_Space,Category::$Redis_key,Category::$Is_Active);
