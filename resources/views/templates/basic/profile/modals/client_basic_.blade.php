@@ -314,7 +314,7 @@
                 </div> --}}
 
                 <div class="modal-footer pb-4 pt-4">
-                  <button type="button" class="btn   btn-secondary c-canel" data-bs-dismiss="modal">Cancle</button>
+                  <button type="button" class="btn   btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" class="btn btn-continue  btn-secondary">Save</button>
                </div>
              </form>

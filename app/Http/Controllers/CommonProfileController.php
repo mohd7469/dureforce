@@ -238,7 +238,7 @@ class CommonProfileController extends Controller
         $request_data = $request->all();
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string',
+            'designation' => 'required|string|max:100|min:5',
             'about' => 'required|string',
             'rate' => 'required|gt:0',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',

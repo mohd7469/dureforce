@@ -146,7 +146,7 @@ class ProfileController extends Controller
         $rules = [
             'skills' => 'required|array|max:15|min:5',
             'skills.*' => 'exists:skills,id',
-            'hourly_rate' => 'required|gt:0',
+            'hourly_rate' => 'required|gt:0|max:999',
 
         ];
         $validator = Validator::make($request->all(), $rules);
