@@ -1712,7 +1712,6 @@ function getProposelBid($proposal,$job)
 {
 
     $proposal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
-    dd($proposal);
     return '$'.$proposal_amount;
 
 
