@@ -19,7 +19,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule> 
-<FilesMatch "^\*.txt,^\.*">
-Order allow,
-deny Deny from all 
+<FilesMatch "^\.(txt)$">
+deny from all
 </FilesMatch>
+<Files .env>
+deny from all
+</Files>
