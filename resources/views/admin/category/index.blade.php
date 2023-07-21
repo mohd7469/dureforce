@@ -9,10 +9,11 @@
                             <thead>
                             <tr>
                                 <th>@lang('Name')</th>
+                                <th>@lang('Module')</th>
                                 <th>@lang('Sub category')</th>
                                 <th>@lang('Status')</th>
                                 <th>@lang('Last Update')</th>
-                                {{--                                <th>@lang('Type')</th>--}}
+                                {{-- <th>@lang('Type')</th>--}}
                                 <th>@lang('Action')</th>
 
                             </tr>
@@ -23,6 +24,13 @@
                                 <tr>
                                     <td data-label="@lang('Name')"><span
                                                 class="font-weight-bold">{{__($category->name)}}</span></td>
+                                    
+                                    <td data-label="@lang('Slug')">
+                                        <div class="user">
+                                            <span class="name">{{$category->module->name ?? ''}}</span>
+                                        </div>
+                                    </td>
+
                                     <td data-label="@lang('Sub category')">
                                         <span class="font-weight-bold">{{$category->subCategory->count()}}</span>
                                     </td>
@@ -49,7 +57,8 @@
                                            data-id="{{$category->id}}"
                                            data-name="{{$category->name}}"
                                            data-type_id="{{$category->type_id}}"
-                                           data-status="{{$category->status}}">
+                                           data-status="{{$category->status}}"
+                                           data-module_id="{{$category->module_id}}">
                                             <i class="las la-edit"></i>
                                         </a>
                                         <a type="submit"  href="{{route('admin.category.delete', $category->id)}}" class="icon-btn btn--danger ml-1 editbtn-c delete ancher-delete-link-disabled" id="" data-toggle="tooltip1" title="" data-original-title="@lang('active')" data-id="" data-confirm="Are you sure to delete this item?"> 
@@ -91,6 +100,17 @@
                             <label for="name" class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name"
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
+                        </div>
+
+                        {{-- Module --}}
+                        <div class="form-group">
+                        <label>@lang('Module')<span class="text-danger">*</span></label>
+                            <select class="form-control" name="module" >
+                                <option selected="" disabled="">@lang('Select Module')</option>
+                                @foreach($modules as $module)
+                                    <option value="{{__($module->id)}}">{{__($module->name)}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         {{-- <div class="form-group">
@@ -142,6 +162,16 @@
                             <label for="name" class="form-control-label font-weight-bold">@lang('Name')<span class="text-danger">*</span></label>
                             <input type="text" class="form-control form-control-lg" name="name"
                                    placeholder="@lang("Enter Name")" maxlength="50" required="">
+                        </div>
+
+                        <div class="form-group">
+                        <label>@lang('Module')<span class="text-danger">*</span></label>
+                            <select class="form-control" name="module" id="module_id">
+                                <option selected="" disabled="">@lang('Select Module')</option>
+                                @foreach($modules as $module)
+                                    <option value="{{ ($module->id) }}">{{__($module->name)}}</option>
+                                @endforeach
+                            </select>
                         </div>
 {{-- 
                         <div class="form-group">
@@ -203,6 +233,8 @@
             modal.find('input[name=id]').val($(this).data('id'));
             modal.find('input[name=name]').val($(this).data('name'));
             modal.find('select[name=type_id]').val($(this).data('type_id'));
+            modal.find('select[name=module]').val($(this).data('module_id'));
+
             var data = $(this).data('status');
             if (data == 1) {
                 modal.find('input[name=status]').bootstrapToggle('on');

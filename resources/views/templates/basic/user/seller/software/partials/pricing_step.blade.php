@@ -258,7 +258,7 @@
                                             </div>
                                         </div>
                                         <div class="custom-card-body">
-                                            <span class="add-new-row  mt-0 add-another"  style="cursor: pointer" onclick="addSteps()">
+                                            <span class="add-new-row  mt-0 add-another"  style="cursor: pointer" id="another_step_id">
                                                 Add Another
                                             </span>
                                         </div>
