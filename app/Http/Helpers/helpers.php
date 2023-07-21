@@ -1710,9 +1710,9 @@ function getDegreetitle($obj)
 
 function getProposelBid($proposal,$job)
 {
-    $propsal_amount='';
-    $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
-    return '$'.$propsal_amount;
+
+    $proposal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
+    return '$'.$proposal_amount;
 
 
 }

@@ -96,5 +96,4 @@ Route::name('seller.')->group(function () {
         });
     });
 });
-Route::get('proposal-update/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'
-ngeStatus'])->name('proposal.update');
+Route::get('proposal-update/{uuid}',  [\App\Http\Controllers\Seller\ProposalController::class,'changeStatus'])->name('proposal.update');

@@ -1,6 +1,5 @@
 @extends($activeTemplate.'layouts.frontend')
 @section('content')
-@dd(130)
     @isset($proposal)
         <div class="container-fluid">
             <p class="propsal-h">All Proposals > {{$proposal->module->title}}</p>

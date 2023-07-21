@@ -518,7 +518,7 @@ class ProfileController extends Controller
 
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string',
+            'designation' => 'required|string|max:100|min:5',
             'country_id' => 'required',
             'about' => 'required|string',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',

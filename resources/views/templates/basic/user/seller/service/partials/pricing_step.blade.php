@@ -234,10 +234,9 @@ if (!empty($service)) {
     
                                     
                             </div>
-                            
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 custom-card-body mb-2">
                                        
-                                <span class="add-new-row" style="cursor: pointer" onclick="addSteps()">
+                                <span class="add-new-row" style="cursor: pointer" id="another_step_id">
                                     Add Another
                                 </span>
                                
