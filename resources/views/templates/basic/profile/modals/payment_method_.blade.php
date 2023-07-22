@@ -68,21 +68,13 @@
                                         </select>
                                 </div>
          
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="add_payment_cities_div">
         
                                     <label class="mt-4">City <span class="imp">*</span></label>
-                                    <select
-                                        name="city_id"
-                                        class="form-control select-lang"
-                                        id="payment_method_cities"
-                                            >
-                                            <option value="">Select City</option>
-        
-                                            @foreach ($cities as $city)
-                                                <option value="{{$city->id}}"
-                                                {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
-                                                >{{$city->name}}</option>
-                                            @endforeach
+                                    <select class="form-control select-lang select2" id="payment_method_cities"  name="city_id" style="width: 100%;" >
+                           
+                                        <option value=""> Select City </option>
+
                                     </select>
                                     
                                 </div>

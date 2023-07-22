@@ -84,32 +84,29 @@
                         </select>
                      </div>
                      {{-- City --}}
-                     <div class="col-md-6">
+                     <div class="col-md-6" id="basic_cities_id">
                         <label class="mt-4"
                            >City
                         <span class="imp"
                            >*</span
                            ></label
                            >
-                        <select
-                           name="city_id"
-                           class="form-control select-lang"
-                           id="location_city_id"
-                           >
-                           <option
-                              value=""
-                              >
-                              Select Location
-                           </option>
+                        
+
+                        <select class="form-control select-lang select2" id="location_city_id"  name="city_id" style="width: 100%;" >
+                           
+                           <option value=""> Select City </option>
                            @foreach ($cities as $city)
-                           <option
-                           value="{{$city->id}}"
-                           {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
-                           >
-                           {{$city->name}}
-                           </option>
+                                 <option
+                                 value="{{$city->id}}"
+                                 {{ $city->id == $basicProfile->city_id ? 'selected' : '' }}
+                                 >
+                                 {{$city->name}}
+                                 </option>
                            @endforeach
+
                         </select>
+
                      </div>
                    
                   <div class="col-md-12">
@@ -317,7 +314,7 @@
                 </div> --}}
 
                 <div class="modal-footer pb-4 pt-4">
-                  <button type="button" class="btn   btn-secondary c-canel" data-bs-dismiss="modal">Cancle</button>
+                  <button type="button" class="btn   btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
                   <button type="submit" class="btn btn-continue  btn-secondary">Save</button>
                </div>
              </form>

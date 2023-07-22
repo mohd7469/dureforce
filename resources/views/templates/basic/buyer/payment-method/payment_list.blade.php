@@ -164,7 +164,15 @@
                                             </select>
                                     </div>
             
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="cities_div">
+                                        <label class="mt-4">City <span class="imp">*</span></label>
+                                        <select class="form-control select-lang select2" id="list_edit_payment_city_id"  name="city_id" style="width: 100%;" >
+                                           
+                                            <!-- Add more options here -->
+                                        </select>
+                                    </div>
+
+                                    {{-- <div class="col-md-6">
             
                                         <label class="mt-4">City <span class="imp">*</span></label>
                                         <select
@@ -181,7 +189,7 @@
                                                 @endforeach
                                         </select>
                                         
-                                    </div>
+                                    </div> --}}
             
                                     <div class="col-md-12">
                                         <label class="mt-4">Street Address <span class="imp">*</span></label>
@@ -197,7 +205,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-continue btn-secondary">Save</button>
+                            <button type="submit" class="btn btn-continue btn-secondary" style="background-color: #7f007f !important;color: #fff !important;">Save</button>
                         </div>
                         
                     </div>
@@ -259,7 +267,7 @@
                                         <label class="mt-4">Country <span class="imp">*</span></label>
                                         <select
                                                 name="country_id"
-                                                class="form-control select-lang client_payment_method_country_class"
+                                                class="form-control select-lang "
                                                 id="edit_payment_country_id"
                                                 >
                                                 <option
@@ -282,7 +290,15 @@
                                             </select>
                                     </div>
             
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" id="edit_cities_div">
+                                        <label class="mt-4">City <span class="imp">*</span></label>
+                                        <select class="form-control select-lang select2" id="edit_payment_city_id"  name="city_id" style="width: 100%;" >
+                                           
+                                            <!-- Add more options here -->
+                                        </select>
+                                    </div>
+
+                                    {{-- <div class="col-md-6">
             
                                         <label class="mt-4">City <span class="imp">*</span></label>
                                         <select
@@ -299,7 +315,7 @@
                                                 @endforeach
                                         </select>
                                         
-                                    </div>
+                                    </div> --}}
             
                                     <div class="col-md-12">
                                         <label class="mt-4">Street Address <span class="imp">*</span></label>
@@ -314,7 +330,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary c-canel" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-continue btn-secondary">Update</button>
+                            <button type="submit" class="btn btn-continue btn-secondary" style="background-color: #7f007f !important;color: #fff !important;">Update</button>
                         </div>
                         
                     </div>
@@ -688,7 +704,19 @@
         line-height: 16px;
         color: #007F7F;
     }
-
+    .select2-container--default .select2-selection--single {
+        background-color: #fff !important; 
+        border: 1px solid #e1e7ec !important;
+        border-radius: 4px;
+        height: 45px !important;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 10px !important;
+    right: 1px;
+    width: 20px;
+}
     p.payment_c {
         font-weight: 600;
         font-size: 14px;
@@ -1029,6 +1057,13 @@
             margin-bottom: 11px;
         }
     }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 28px;
+    top: 47px;
+    margin-top: 6px !important;
+}
 </style>
 
 @push('script')
@@ -1058,6 +1093,20 @@
 
         $('document').ready(function() {
 
+            $('#edit_payment_country_id').on('change',function(){
+               getCountryCities($(this).val(),'#edit_payment_city_id');
+
+            });
+
+            $(".client_payment_method_country_class").on('change',function(){
+               
+               getCountryCities($(this).val(),'#list_edit_payment_city_id');
+
+           });
+           
+            initializeSelect2($('#list_edit_payment_city_id'), $('#cities_div'), '#client_payment_method_country_id');
+            initializeSelect2($('#edit_payment_city_id'), $('#edit_cities_div'), '#edit_payment_country_id');
+
             user_payment_methods_form.submit(function (e) {
 
                 e.preventDefault();
@@ -1065,6 +1114,8 @@
                 saveUserPaymentMethod();
 
             });
+            
+
             user_payment_methods_form_.submit(function (e) {
 
                 e.preventDefault();
@@ -1090,13 +1141,40 @@
                 })
 
             }
+            
+           
 
-            $(".client_payment_method_country_class").on('change',function(){
-
-                getCountryCities($(this).val(),'.client_payment_method_cities_class');
-
-            });
+           
         });
+        
+        function initializeSelect2(element, dropdownParent, countryIdSelector) {
+            
+            element.select2({
+                tags: false,
+                minimumResultsForSearch: 0,
+                dropdownParent: dropdownParent,
+                ajax: {
+                url: "{{ route('get-cities') }}",
+                dataType: 'json',
+                data: function(params) {
+                    return {
+                    search: params.term,
+                    country_id: $(countryIdSelector).val()
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                    results: $.map(data.cities.data, function(item) {
+                        return {
+                        id: item.id,
+                        text: item.name
+                        };
+                    })
+                    };
+                }
+                }
+            });
+        }
 
         function getCountryCities(country_id,select_field_id)
         {
@@ -1111,7 +1189,7 @@
                         $(select_field_id).empty();
                         $(select_field_id).append(
                             `<option>Select City</option>
-                            ${data.cities?.map((city) => {
+                            ${data.cities.data?.map((city) => {
                                 return ` <option value="${city.id}"> ${city.name}</option>`;
                         })}`);
                     }
@@ -1268,6 +1346,34 @@
 <!-- end -->
 
 <script type="text/javascript">
+     function getUserPaymentMethods(id,payment_city_id){
+            
+            let route = "{{ route('buyer.basic.payment.methods') }}";
+
+            $.ajax({
+                type:"GET",
+                url:route,
+                data: {'id':id},
+                success:function(data){
+                    
+                    if(data.error){
+                        displayAlertMessage(data.error);
+                    }
+                    else{
+                        let html='';
+                        $("#edit_payment_city_id").empty();
+                        html += `<option value="" selected disabled>Select City</option>`;
+                        $.each(data.cities.data, function (index, item) {
+                            html += `<option value="${item.id}">${item.name}</option>`;
+                            $("#edit_payment_city_id").html(html);
+                        });
+                        $(".modal-body #edit_payment_city_id").val(payment_city_id);
+
+                    }
+                }
+            });  
+            
+        }
     $(function () {
         $(".editPayment").click(function () {
             var payment_id = $(this).data('id');
@@ -1278,7 +1384,7 @@
             var country_id = $(this).data('country_id');
             var payment_city_id = $(this).data('payment_city_id');
             var address = $(this).data('address');
-
+            getUserPaymentMethods(payment_id,payment_city_id);
             $(".modal-body #payment_id").val(payment_id);
             $(".modal-body #card_number").val(card_number);
             $(".modal-body #name_on_card").val(name_on_card);
@@ -1286,7 +1392,6 @@
             $(".modal-body #expiration_date").val(expiration_date);
 
             $(".modal-body #edit_payment_country_id").val(country_id);
-            $(".modal-body #edit_payment_city_id").val(payment_city_id);
             $(".modal-body #address").val(address);
 
 
@@ -1313,7 +1418,7 @@
                     $(select_field_id).empty();
                     $(select_field_id).append(
                         `<option>Select City</option>
-                        ${data.cities?.map((city) => {
+                        ${data.cities.data?.map((city) => {
                             return ` <option value="${city.id}"> ${city.name}</option>`;
                     })}`);
                 }

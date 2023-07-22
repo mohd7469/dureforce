@@ -11,13 +11,13 @@
                 <span :class="user.send_to_user.is_session_active ? 'online_icon': 'offline'"></span>
             </div>
 
-            <div class="col-md-6 ">
+            <div class="col-md-6 mobile-view-middile-section">
                 <b class="user-font-size">{{user.send_to_user.first_name}} {{user.send_to_user.last_name}}</b><br/>
                 <span class="user-font-size" v-if="user.module">{{user.module.title}}</span>
                 
             </div>
 
-            <div class="col-md-4 ">
+            <div class="col-md-4 mobile-view-last-section">
                 <span class="user-font-size" v-if="user.send_to_user.last_login_at">{{formattedDate(user.send_to_user.last_login_at)}}</span></br>
                 <span :class="user.model_color">{{user.model}}</span>
 
@@ -131,6 +131,32 @@
         margin-top: calc(var(--bs-gutter-y) * -1);
         margin-right: -12px !important;
         margin-left: -24px !important;
+    }
+     @media only screen and (max-width:683px){
+        .div-diemension{
+            max-height: 660px !important;
+            min-height: 250px !important;
+            overflow: overlay !important;
+        }
+        .offline[data-v-ef8bd22e] {
+            position: relative;
+            height: 10px;
+            width: 10px;
+            background-color: #c23616;
+            border-radius: 50%;
+            border: 1.5px solid white;
+            left: -14px !important;
+            top: -14px !important;
+        }
+        .mobile-view-middile-section{
+            padding-left: 67px !important;
+            margin-top: -45px !important;
+            width: 249px !important;
+        }
+        .mobile-view-last-section{
+            padding-left: 223px !important;
+            margin-top: -54px !important;
+        }
     }
 
 

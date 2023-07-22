@@ -44,19 +44,19 @@
                                                         </div>
                                                         </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                         <select name="Best match" id="bestmatch">
                                                             <option>Best match</option>
 
                                                         </select>
-                                                </div>
-                                                <div class="col-md-4">
+                                                </div> -->
+                                                <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>Coming soon</option>
 
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             </div>
                                     </div>
@@ -69,7 +69,7 @@
                                                     <div class="col-md-4">
                                                     <img alt="User Pic" src="{{ !empty($freelancer->user_basic->profile_picture)? $freelancer->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
-                                                    <div class="col-md-8" style="text-align:left">
+                                                    <div class="col-md-8 profile-contect">
                                                         <h4 class="pname-c"> 
                                                         {{$freelancer->first_name}} {{ $freelancer->last_name }}
                                                             </h4>
@@ -144,7 +144,7 @@
                                                         </div>
                                                         </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                         <select name="Best match" id="bestmatch">
                                                             <option>Best match</option>
                                                             <option>1</option>
@@ -152,8 +152,8 @@
                                                             <option>1</option>
                                                             <option>1</option>
                                                         </select>
-                                                </div>
-                                                <div class="col-md-4">
+                                                </div> -->
+                                                <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -161,7 +161,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +223,7 @@
                                                 <h2>Has {{count($invited_freelancers->user->skills)}} relevant skills to your job</h2>
                                                 <ul class="skills-listing">
 
-                                                @foreach ($invited_freelancers->user->skills as $skill )
+                                                    @foreach ($invited_freelancers->user->skills as $skill )
                                                     <li>{{$skill->name}}</li>
                                                     @endforeach
                                                     
@@ -256,7 +256,7 @@
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-    <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     .img-card{
@@ -645,7 +645,7 @@
         }
     }
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 
 

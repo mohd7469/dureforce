@@ -26,6 +26,7 @@ use App\Models\LanguageLevel;
 use App\Models\ModuleBanner;
 use App\Models\ModuleOffer;
 use App\Models\Proposal;
+use App\Models\ServiceFee;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -365,17 +366,27 @@ function getVideoBannerURL($model,$type='preview_video'){
 
 }
 function getServiceFee($software){
+
+    $service_fee_percentage=getSystemServiceFee();
+    $user_percentage=(100-$service_fee_percentage)/100;
+    $service_fee_percentage=$service_fee_percentage/100;
+
     if($software){
         if($software->modules){
-            return $software->modules->sum('start_price')*0.20;
+            return $software->modules->sum('start_price')*$service_fee_percentage;
         }
     }
     return '';
 }
 function getSoftwareFee($software){
+
+    $service_fee_percentage=getSystemServiceFee();
+    $user_percentage=(100-$service_fee_percentage)/100;
+    $service_fee_percentage=$service_fee_percentage/100;
+
     if($software){
         if($software->modules){
-            return $software->modules->sum('start_price')*0.80;
+            return $software->modules->sum('start_price')*$user_percentage;
         }
     }
     return '';
@@ -1111,6 +1122,49 @@ function getPaginate($paginate = 20)
 {
     return $paginate;
 }
+function getSystemServiceFee(){
+
+    if(config('settings.is_system_fee')){
+        return getSystemChargesFees();
+    }
+    else{
+        return getUserServiceFee();
+    }
+
+}
+function getSystemChargesFees(){
+    $service_fee=ServiceFee::where('slug','system-fee')->active()->first();
+    if($service_fee ){
+        if($service_fee->fee > 100)
+        {
+            return 100;
+        }
+        else{
+            return $service_fee->fee;
+        }
+    }
+    else{
+        return 0;
+    }
+}
+function getUserServiceFee(){
+
+    $service_fee_id=Auth::user()->service_fee_id;
+    $service_fee=ServiceFee::find($service_fee_id)->active()->first();
+    if($service_fee ){
+        if($service_fee->fee > 100)
+        {
+            return 100;
+        }
+        else{
+            return $service_fee->fee;
+        }
+    }
+    else{
+        return 0;
+    }
+    
+}
 
 function paginateLinks($data, $design = 'admin.partials.paginate')
 {
@@ -1656,9 +1710,9 @@ function getDegreetitle($obj)
 
 function getProposelBid($proposal,$job)
 {
-    $propsal_amount='';
-    $propsal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
-    return '$'.$propsal_amount;
+
+    $proposal_amount=$job->budget_type_id == \App\Models\BudgetType::$hourly ?  $proposal->hourly_bid_rate.'/hr' : $proposal->fixed_bid_amount;
+    return '$'.$proposal_amount;
 
 
 }
@@ -1860,6 +1914,11 @@ function errorLogMessage($exception){
         return $exception;
     }
 
+}
+
+function getObjectNameSpace($object){
+    $className = get_class($object);
+    return $className;
 }
 
 

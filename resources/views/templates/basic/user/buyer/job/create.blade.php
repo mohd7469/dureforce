@@ -278,12 +278,29 @@
     </div>
 </section>
 @endsection
-
+<style>
+    @media only screen and (max-width:683px){
+        .dropzone .dz-message {
+            margin: 0em 0 !important;
+        }
+        .upload_inner_arrow {
+        position: absolute;
+        left: 48.15% !important;
+        right: 32.52%;
+        top: 38.12%;
+        bottom: 3.78%;
+    }
+    .inline {
+        display: contents !important;
+        float: left !important;
+    }
+}
+</style>
 
 @push('style-lib')
 
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'frontend/css/select2.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/create_job.css')}}">
+    <link rel="stylesheet" href="{{asset('public/css/create_job.css')}}">
 
 @endpush
 
@@ -291,7 +308,7 @@
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset($activeTemplateTrue.'frontend/js/nicEdit.js')}}"></script>
-    <script src="{{asset('/assets/resources/templates/basic/frontend/js/create_job.js')}}"></script>
+    <script src="{{asset('public/js/create_job.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
 
 <script>
@@ -305,7 +322,11 @@
 
 <script>
 
+    function loadFiles()
+    {
 
+    }
+    
     function fetchSubCategories(category)
     {
         $.ajax({
@@ -390,31 +411,7 @@
     }
     Dropzone.autoDiscover = false;
     "use strict";
-    $(document).ready(function() {
-
-
-        $('.select2').select2({
-            tags: true
-        });
-        $('#job_form_data').submit(function (e) {
-            $('#submit_btn_job').attr("disabled", true);
-            e.preventDefault();
-            var form = $('#job_form_data')[0];
-            var form_data = new FormData(form);
-            form_data.append("file", JSON.stringify(uploaded_files));
-            submitCreateFormData(form_data);
-
-        });
-        $("#uploaded_file_table_id").on("click", "#DeleteButton", function() {
-      
-            let file_index=$(this).closest("tr").index();
-            uploaded_files.splice(file_index, 1);
-            $(this).closest("tr").remove();
-            $('#uploaded_files_input_id').val(JSON.stringify(uploaded_files));
-
-        });
-
-    });
+   
 
 
     bkLib.onDomLoaded(function() {

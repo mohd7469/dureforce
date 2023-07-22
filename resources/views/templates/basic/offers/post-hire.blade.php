@@ -40,7 +40,7 @@
                                                            
                                                         </div>
                                                     </div>       
-                                                    <div class="col-md-4">
+                                                    <!-- <div class="col-md-4">
                                                     
                                                         <form>
                                                             <select name="Best match" id="bestmatch">
@@ -51,12 +51,12 @@
                                                                 <option>1</option>
                                                             </select>
                                                         </form>
-                                                    </div>
+                                                    </div> -->
                                                
                                             
                                          <!--Sorting Section End-->
 
-                                        <div class="col-md-4">
+                                        <!-- <div class="col-md-4">
                                         <form>
                                             <select name="Filters" id="Filters">
                                                 <option>Filters</option>
@@ -66,7 +66,7 @@
                                                 <option>1</option>
                                             </select>
                                         </form>
-                                        </div>
+                                        </div> -->
 
                                        </div>
                                     </div>
@@ -180,7 +180,7 @@
 @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-<link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
+<link href="{{ asset('public/css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     /*******/
@@ -546,7 +546,7 @@ p.plocation:before {
 }
 }
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 @push('script')
 

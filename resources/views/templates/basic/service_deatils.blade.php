@@ -112,21 +112,23 @@
                                                         <div id="form_attributes">
 
                                                         </div>
+                                                        @if ($service->serviceSteps->isNotEmpty())
+                                                            <div class="sep-solid"></div>
+                                                            <div class="service_subtitle2 mt-20">
+                                                                Steps
+                                                            </div>
+                                                            <div class="sep-solid"></div>
+                                                            <div class="simpletext">
+                                                                @if ($service->serviceSteps->isNotEmpty())
+                                                                    @foreach ($service->serviceSteps as $serviceKey => $item)
+                                                                        <h5> {{ $item->name }} </h5>
+                                                                        {{ $item->description }}
 
-                                                        <div class="sep-solid"></div>
-                                                        <div class="service_subtitle2 mt-20">
-                                                            Steps
-                                                        </div>
-                                                        <div class="sep-solid"></div>
-                                                        <div class="simpletext">
-                                                            @if ($service->serviceSteps->isNotEmpty())
-                                                                @foreach ($service->serviceSteps as $serviceKey => $item)
-                                                                    <h5> {{ $item->name }} </h5>
-                                                                    {{ $item->description }}
-
-                                                                @endforeach
-                                                            @endif
-                                                        </div>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        @endif
+                                                       
                                                     </div>
                                                 </div>
                                                 @if ($service->addOns->isNotEmpty())
@@ -171,7 +173,7 @@
                                                                 <div class="left">
                                                                     <div class="thumb">
                                                                         <img src="{{ !empty($service->user->basicProfile->profile_picture)? $service->user->basicProfile->profile_picture: getImage('assets/images/default.png') }}"
-                                                                             alt="{{ __($service->user->username) }}">
+                                                                             alt="{{ __($service->user->username ?? '') }}">
                                                                     </div>
                                                                     <div class="content mt-15">
                                                                         <h4 class="name">
@@ -183,10 +185,10 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="right btn-area mb-10">
-                                                                    <a href="{{ route('seller.profile', $service->user->uuid) }}"
+                                                                    <a href="{{ route('seller.profile', $service->user->uuid ?? '') }}"
                                                                        class="standard-btn mr-15">@lang('View Profile')</a>
 
-                                                                    <a href="{{  route('profile.portfolio', $service->user->uuid) }}"
+                                                                    <a href="{{  route('profile.portfolio', $service->user->uuid ?? '') }}"
                                                                        class="standard-btn">@lang('View Portfolio')</a>
                                                                 </div>
                                                             </div>
@@ -384,7 +386,19 @@
         </div>
     </div>
 @endsection
-
+@push('style')
+<style>
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: #CBDFDF !important;
+}
+@media only screen and (max-width:683px){
+    .banner-mobile-view{
+        display: none !important;
+    }
+}
+</style>
+    
+@endpush
 @push('script')
     <script>
         $(document).ready(function () {

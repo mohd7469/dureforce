@@ -43,7 +43,7 @@
                                                     </div>
                                                 </div>
                                             </div> --}}
-                                            {{-- <div class="col-md-4">
+                                            <!-- {{-- <div class="col-md-4">
                                                     <select name="Best match" id="bestmatch">
                                                         <option>Best match</option>
                                                         <option>1</option>
@@ -51,9 +51,9 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                            </div> --}}
+                                            </div> --}} -->
                                             <!--Sorting Section End-->
-                                            {{-- <div class="col-md-4">
+                                            <!-- {{-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -61,7 +61,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                            </div> --}}
+                                            </div> --}} -->
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                                         <img alt="User Pic" src="{{!empty($offer->proposal->user_basic->profile_picture)? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                     </div>
 
-                                                    <div class="col-md-8" style="text-align:left">
+                                                    <div class="col-md-8 proposal-profile-contect">
 
                                                         <h4 class="pname-c"> 
 
@@ -226,7 +226,7 @@
                                                             <img alt="User Pic" src="{{$offer->proposal->user->user_basic->profile_picture ? $offer->proposal->user->user_basic->profile_picture: getImage('assets/images/default.png') }}" id="profile-image1" class="img-circle img-responsive" style="border-radius:50%; width: 85px;height: 85px"> 
                                                         </div>
     
-                                                        <div class="col-md-8" style="text-align:left">
+                                                        <div class="col-md-8 proposal-profile-contect">
     
                                                             <h4 class="pname-c"> 
     
@@ -363,7 +363,7 @@
 @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-<link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
+<link href="{{ asset('public/css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     ul.skills-listing li {
@@ -710,7 +710,7 @@ a.btn-products-s {
 }
 
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 @push('script')
 <script>

@@ -26,7 +26,7 @@
 
                 <div class="offerleftc">
                     <div class="offer-profilecon">
-                        <div class="offer-left"><img src="{{ $offer->sendToUser->user_basic->profile_picture ? $offer->sendToUser->user_basic->profile_picture:  '/assets/images/job/profile-img.png' }}" alt="img" style="border-radius: 50%;height:100px;width:100px"></div>
+                        <div class="offer-left"><img src="{{ $offer->sendToUser->user_basic->profile_picture ? $offer->sendToUser->user_basic->profile_picture:  '/assets/images/job/profile-img.png' }}" id="userImg" alt="img" style=""></div>
                         <div class="offerrightc">
                             <h4 class="offer-pname"> {{$offer->sendToUser->fullname}}</h4>
                             <p class="offer-pdesti">{{$offer->sendToUser->job_title}}</p>
@@ -55,7 +55,7 @@
 
             <!---Contact Details Section Start-->
             <div class="offer-contactinfo-s">
-                <p class="offer-title"> Contact Details</p>
+                <p class="offer-title"> Contract details</p>
 
                 <ul class="offer-cnt-info">
                     <li>
@@ -345,6 +345,18 @@
             }
             ul.offer-cnt-info li{
                 width: 100%;
+            }
+        }
+        #userImg{
+            border-radius: 50%;
+            height:100px;
+            width:100px;
+        }
+        @media only screen and (max-width: 1124px) {
+            #userImg{
+                border-radius: 50%;
+                height: auto;
+                width: auto;
             }
         }
     </style>

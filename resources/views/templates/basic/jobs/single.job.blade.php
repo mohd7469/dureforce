@@ -186,7 +186,7 @@
 @endsection
 
 @push('script')
-<script src="{{asset('/assets/resources/templates/basic/frontend/js/job.view.js')}}"></script>
+<script src="{{asset('public/js/job.view.js')}}"></script>
 @endpush
 <style>
 .container {
@@ -391,5 +391,16 @@ color: #58a7a8 !important;
     padding-top: 6px;
     width: 68px;
     padding-left: 8px;
+}
+@media only screen and (max-width:683px){
+    .float-right {
+        float: left !important;
+    }
+    p.job_staus {
+        font-weight: 600;
+        font-size: 11px;
+        line-height: 18px;
+        color: #000;
+    }
 }
 </style>

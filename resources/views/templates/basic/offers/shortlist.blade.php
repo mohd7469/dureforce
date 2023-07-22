@@ -43,7 +43,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Best match" id="bestmatch">
                                                         <option>Best match</option>
                                                         <option>1</option>
@@ -51,9 +51,9 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                                 <!--Sorting Section End-->
-                                                <div class="col-md-4">
+                                                <!-- <div class="col-md-4">
                                                     <select name="Filters" id="Filters">
                                                         <option>Filters</option>
                                                         <option>1</option>
@@ -61,7 +61,7 @@
                                                         <option>1</option>
                                                         <option>1</option>
                                                     </select>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -137,15 +137,14 @@
 
                                                     <h2>Has {{count($proposal->user->skills)}} relevant skills to your job</h2>
 
-                                                    @foreach($proposal->user->skills as $skill)
 
                                                         <ul class="skills-listing">
-
+                                                            @foreach($proposal->user->skills as $skill)
                                                             <li>{{$skill->name}} </li>
+                                                            @endforeach
 
                                                         </ul>
 
-                                                    @endforeach
                                                 </div >
                                                 <div class="col-md-6 col-lg-6">
                                                     <div class="attachment">
@@ -190,7 +189,7 @@
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
-    <link href="{{ asset('assets/templates/basic/frontend/css/custom/all-proposal.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/all-proposal.css') }}" rel="stylesheet">
 @endpush
 <style>
     .nav-link.active {
@@ -532,7 +531,7 @@
         }
     }
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 @push('script')
     <script>

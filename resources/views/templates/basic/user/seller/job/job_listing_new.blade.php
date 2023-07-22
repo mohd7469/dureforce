@@ -93,10 +93,10 @@
                                                                 <div class="col-md-1 col-lg-1 col-sm-1 pull-right" >
                                                                     <?php
                                                                     if(in_array($job->id, $user_saved_jobs_ids)){ ?>
-                                                                    <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                                    <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart mobile-view-heart-icon" style="color: #7F007F; "></i>
 
                                                                         <?php } else { ?>
-                                                                        <a href="{{route('seller.jobs.save.listing',$job->id)}}" ><i class="far fa-heart" style="color: #7F007F; "></i></a>
+                                                                        <a href="{{route('seller.jobs.save.listing',$job->id)}}" ><i class="far fa-heart mobile-view-heart-icon" style="color: #7F007F; "></i></a>
                                                                     <?php }?>
                                                                 </div>
 
@@ -156,7 +156,7 @@
                                                                     {{--                                                            </a>--}}
                                                                 </div>
                                                                 <div class="col-md-1 col-lg-1" >
-                                                                    <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" ><i class="fas fa-heart" style="color: #7F007F; "></i>
+                                                                    <a href="{{route('seller.jobs.remove.saved.listing',$job->id)}}" class="mobile-view-saved-heart-icon"><i class="fas fa-heart " style="color: #7F007F; "></i>
                                                                     </a>
                                                                 </div>
 
@@ -942,13 +942,24 @@
         }
     }
 
+    @media only screen and (max-width:683px){
+        .mobile-view-heart-icon{
+            margin-left: 260px !important;
+            margin-top: -20px !important;
+        }
+        .mobile-view-saved-heart-icon{
+            margin-left: 263px !important;
+            margin-top: -20px !important;
+        }
+    }
+
     @media (min-width: 576px){
         .container {
             max-width: 100% !important;
         }
     }
 </style>
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/breadcrum.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/breadcrum.css')}}">
 
 @push('script')
 

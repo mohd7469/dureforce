@@ -178,13 +178,70 @@
             margin-bottom: 12px;
         }
         .select2-container--default .select2-selection--multiple {
-    background-color: white;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    cursor: text;
-    padding-bottom: 0px !important;
-    padding-right: 0px !important;
-}
+            background-color: white;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            cursor: text;
+            padding-bottom: 0px !important;
+            padding-right: 0px !important;
+        }
+        @media only screen and (max-width:683px){
+            .text-right {
+                text-align: left !important;
+                display: contents !important;
+            }
+            .overview_back{
+                width: 100px !important;
+                font-size: 14px;
+            }
+            .create-service-main .softwar-save-draft--btns {
+                background-color: #f8fafa;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #7f007f;
+                width: 100px !important;
+                font-size: 11px;
+            }
+            .create-service-main .btn-save-continue {
+                background-color: #7f007f;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #fff;
+                padding: 10px 4px;
+                font-size: 9px;
+                width: 101px !important;
+            }
+
+            .create-service-main .service--btns {
+                background-color: #f8fafa;
+                border-radius: 5px;
+                border: 1px solid #7f007f;
+                color: #7f007f;
+                width: 100px !important;
+                font-size: 9px;
+                height: 32px;
+                margin-right: 5px !important;
+            }
+            .create-service-main a.btn.btn-circle.btn-default:before {
+                top: 19px;
+                position: absolute;
+                content: " ";
+                left: 76%;
+                width: 53%;
+                border-bottom: 3px solid #8cc2c2;
+                z-index: 0;
+            }
+            .create-service-main label {
+                color: #000;
+                display: inherit;
+            }
+            .create-service-main .service-step {
+                color: #58a7a7;
+                font-size: 10px;
+                font-weight: 500;
+            }
+            
+        }
     </style>
 @endpush
 
@@ -202,7 +259,7 @@
     <script>
         let route = "{{ route('user.category') }}";
     </script>
-    <script src="{{ asset('/assets/resources/js/service/create-service.js') }}"></script>
+    <script src="{{ asset('public/js/create-service.js') }}"></script>
     <script>
 
         function fetchSubCategories(category)

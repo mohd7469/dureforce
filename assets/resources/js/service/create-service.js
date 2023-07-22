@@ -168,6 +168,11 @@ $(document).on("click", "#removeRow", function () {
   $(this).closest("#add-on-service-step").remove();
 });
 
+$(document).on("click", "#another_step_id", function () {
+  addSteps();
+});
+
+
 function removeExtraService(row) {
   let is_confirm = confirm(`Are you sure you want to remove field ?`);
   if (is_confirm) {
@@ -365,16 +370,16 @@ function overviewFormValidation() {
 
     $(".error").remove();
 
-    if ($("#tags :selected").length < 1) {
-      e.preventDefault();
-      $("#error").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Tags filed is required",
-        position: "topRight",
-      });
-    }
+    // if ($("#tags :selected").length < 1) {
+    //   e.preventDefault();
+    //   $("#error").after(
+    //     '<span class="error text-danger">This field is required</span>'
+    //   );
+    //   iziToast.error({
+    //     message: "Tags filed is required",
+    //     position: "topRight",
+    //   });
+    // }
 
     if ($.trim(title1).length < 1) {
       e.preventDefault();
@@ -679,7 +684,7 @@ function addOnServiceRow() {
               
           </div>  
           
-          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#add-on-row-id-`+add_on_service_row_number+`')">
+          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1 row-id" style="margin-top:2.4rem" >
             <button  type="button" class="btn btn-danger" ><i class="fa fa-trash"></i></button>
           </div>
 
@@ -693,6 +698,16 @@ $(document).on("click", "#removeRow", function () {
       $(this).closest("#add-on-service-row").remove();
     }
 });
+
+$(document).on("click", ".row-id", function () {
+  $(this).parent('.add-ons').first().remove();
+  add_on_service_row_number-=1;
+
+});
+
+
+
+
 
 // function addOnServiceRowcustom() {
 //   return `<div class="row add-ons" id="add-on-customservice-row">

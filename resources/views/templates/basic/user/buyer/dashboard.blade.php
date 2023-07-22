@@ -60,18 +60,18 @@
                         </ul> -->
 
                         <ul class="nav nav-tabs card-header-tabs jbs_nav_s" data-bs-tabs="tabs">
-                            <li class="nav-item">
+                            <li class="nav-item bmm">
                                 <a class="nav-link active" aria-current="true" data-bs-toggle="tab" href="#Jobs_by_Status">Jobs by Status</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item bmm">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Type">Jobs by Type</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item bmm">
                                 <a class="nav-link" data-bs-toggle="tab" href="#Jobs_by_Contract">Jobs by Contract</a>
                             </li>
                         </ul>
                        
-                        <div class="f-container ">
+                        <!-- <div class="f-container ">
                             <div name="Filters" id="Filters"> </div>
                             
                             <ul class="filter-drop-dw mr-3">
@@ -79,11 +79,11 @@
                                 <li>
                                     
                                     <div class="form-check">
-                                        <!-- <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something"> -->
+                                        <input type="checkbox" class="form-check-input" id="check1" name="option2" value="something">
                                         <label class="form-check-label" for="check1">Coming soon</label>
                                     </div>
 
-                                </li>
+                                </li> -->
                             
                                 <!-- <li>
                                     <div class="form-check">
@@ -129,10 +129,10 @@
                                     <label class="form-check-label" for="check4">Published (15)</label>
                                 </div>
                                 </li> -->
-                            </ul>
+                            <!-- </ul>
                 
                         
-                        </div>
+                        </div> -->
                         <div class="search_con_cs">
                             <form>
                                 <input type="search" placeholder="Search" class="search_input">
@@ -206,7 +206,7 @@
                                                                     {{-- <br> --}}
                                                                     {{-- {{diffforhumans($job->updated_at)}} --}}
                                                                 </td>
-                                                                <td data-label="Action">
+                                                                <td data-label="Action" style="display: flex">
                                                                     {{--  @if($job->status->slug != 'approved')  --}}
                                                                     {{-- {{route('buyer.job.edit', [slug($job->title), $job->id])}} --}}
 
@@ -629,6 +629,12 @@ input.search_input {
     }
 }
 @media only screen and (max-width:683px){
+.bmm{
+    width:95px;
+}
+.nav-tabs .nav-link {
+    font-size: 8px;
+}
     p.card_h-c {
     font-size: 11px;
 }
@@ -644,10 +650,10 @@ ul.jbs_nav_s li a {
     font-size: 16px;
     }   
     ul.jbs_nav_s {
-    margin-left: 1%;
+    /* margin-left: 1%; */
     float: left;
     display: inline-block;
-    width: 84%;
+    width: 100%;
 }  
 
 .jobs_ins_list {
@@ -657,7 +663,7 @@ ul.jbs_nav_s li a {
     margin-top:20px;
 }
 ul.jbs_nav_s li{
-    margin-left:4%;
+    margin-left:1%;
 }
 input.search_input {
     width: 75%;
@@ -665,10 +671,11 @@ input.search_input {
     padding: 4px 16px;
     }   
 .search_con_cs {
-    width: 55%;
+    width: 95%;
     height: 34px;
 }
 input.search_btnc{
+    width: 59% !important;
     background-position: 60% 29%;
     margin-top: 0px;
 }

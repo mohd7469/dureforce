@@ -3,7 +3,10 @@ var myDropzone='';
 var row_id=1;
 'use strict';
 Dropzone.autoDiscover = false;
-  
+
+let service_fee=$('#system_service_fee_id').val();
+let user_percentage=(100-service_fee)/100;
+let service_fee_percentage=service_fee/100;
 
 function displayAlertMessage(message)
 {
@@ -186,9 +189,10 @@ $(function() {
         $(this).val("");
       }
       else{
+       
 
-        $('#amount_receive').val(financial(rate_per_hour*0.80));
-        $('#system_fee').html('$'+financial(rate_per_hour*0.20));
+        $('#amount_receive').val(financial(rate_per_hour*user_percentage));
+        $('#system_fee').html('$'+financial(rate_per_hour*service_fee_percentage));
 
       }
     });
@@ -200,12 +204,14 @@ $(function() {
       if(total_cost<0){
         displayAlertMessage("Project Cost should be greater than $0 ");
         $(this).val("");
+      }else if(total_cost> 9999){
+          displayAlertMessage("Project Cost should not be greater than $9999 ");
+          $(this).val("");
       }
       else{
 
-        $('#milestones_amount_receive').val(financial(total_cost*0.80));
-        $('#system_fee').html('$'+financial(total_cost*0.20));
-
+        $('#milestones_amount_receive').val(financial(total_cost*user_percentage));
+        $('#system_fee').html('$'+financial(total_cost*service_fee_percentage));
 
       }
     });
@@ -225,8 +231,8 @@ function calculateMilestoneAmountSum()
       total_amount=total_amount+parseFloat(milestone_amount);
     });
     $('#total_milestones_amount').val(total_amount);
-    $('#milestones_amount_receive').val(financial(total_amount*0.80));
-    $('#system_fee').html('$'+financial(total_amount*0.20));
+    $('#milestones_amount_receive').val(financial(total_amount*user_percentage));
+    $('#system_fee').html('$'+financial(total_amount*service_fee_percentage));
 
 
 }

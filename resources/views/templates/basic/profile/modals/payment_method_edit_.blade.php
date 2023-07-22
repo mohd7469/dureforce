@@ -22,12 +22,12 @@
                                 <input type="hidden" name="update_payment_id" id="payment_id" value="">
                                 <div class="col-md-12">
                                     <label class="mt-4">Cardholder’s Name *  </label>
-                                    <input type="text" name="name_on_card" id="name_on_card" value="name_on_card"
+                                    <input type="text" name="name_on_card" id="edit_name_on_card" value="name_on_card"
                                         placeholder="Tidal Wave Inc." >
                                 </div>
                                 <div class="col-md-12">
                                     <label class="mt-4">Card Number *  </label>
-                                    <input type="text" name="card_number" id="card_number" value="card_number"
+                                    <input type="text" name="card_number" id="edit_card_number" value="card_number"
                                         placeholder="Tidal Wave Inc."  value="" placeholder=""
                                         >
                                 </div>
@@ -35,21 +35,21 @@
                                     
                                 <div class="col-md-6">
                                     <label class="mt-4">Expiry Date *</label>
-                                    <input type="date" name="expiration_date" id="expiration_date"
+                                    <input type="date" name="expiration_date" id="edit_expiration_date"
                                     value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
                                     placeholder="" required   min="1900-01-01" max="2099-12-31"/>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="mt-4">CVV * </label>
-                                    <input type="text" name="cvv_code" id="cvv_code" required  />
+                                    <input type="text" name="cvv_code" id="edit_cvv_code" required  />
                                 </div>
                                   <div class="col-md-6">
                                     <label class="mt-4">Country <span class="imp">*</span></label>
                                     <select
                                             name="country_id"
                                             class="form-control select-lang"
-                                            id="sec_country_id"
+                                            id="edit_sec_country_id"
                                             >
                                             <option
                                                 value=""
@@ -71,27 +71,19 @@
                                         </select>
                                 </div>
         
-                                <div class="col-md-6">
+                                
+        
+                                <div class="col-md-6" id="cities_div">
                                     <label class="mt-4">City <span class="imp">*</span></label>
-                                    <select
-                                        name="city_id"
-                                        class="form-control select-lang"
-                                        id="payment_city_id"
-                                            >
-                                            <option value="">Select City</option>
-        
-                                            @foreach ($cities as $city)
-                                                <option value="{{$city->id}}"
-                                                {{ $city->id == @$userPayment->city_id ? 'selected' : '' }}
-                                                >{{$city->name}}</option>
-                                            @endforeach
+                                    <select class="form-control select-lang select2" id="edit_payment_city_id"  name="city_id" style="width: 100%;" >
+                                       
+                                        <!-- Add more options here -->
                                     </select>
-                                    
                                 </div>
-        
+
                                 <div class="col-md-12">
                                     <label class="mt-4">Street Address <span class="imp">*</span></label>
-                                    <input type="text" name="address" placeholder="" id="address"  value="{{ old('address', @$userPayment->address) }}"
+                                    <input type="text" name="address" placeholder="" id="edit_address"  value="{{ old('address', @$userPayment->address) }}"
                                    
                                     
                                         required/>

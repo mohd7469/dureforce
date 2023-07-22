@@ -173,7 +173,11 @@ class CommonProfileController extends Controller
     {
         try {
 
-            $cities=City::select('id', 'name')->where('country_id', $request->country_id)->orderBy('name', 'ASC')->get();
+            $cities=City::select('id', 'name','name as text')->where('country_id', $request->country_id)->orderBy('name', 'ASC');
+            if ($request->has('search') && $request->search != '') {
+                $cities=$cities->where('name', 'like', '%' . $request->search . '%');
+            }
+            $cities=$cities->paginate(10);
             return response()->json(['cities' => $cities]);
         }
         catch (\Throwable $th) {
@@ -234,7 +238,7 @@ class CommonProfileController extends Controller
         $request_data = $request->all();
         $rules = [
             'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string',
+            'designation' => 'required|string|max:100|min:5',
             'about' => 'required|string',
             'rate' => 'required|gt:0',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',

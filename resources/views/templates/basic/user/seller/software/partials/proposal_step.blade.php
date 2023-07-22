@@ -7,11 +7,16 @@
         if(is_string($files)){
             $files=json_decode($files);
         }
+
+        $service_fee=getSystemServiceFee();
+        $user_percentage=(100-$service_fee)/100;
+        $service_fee_percentage=$service_fee/100;
+
     @endphp
    <div class="card-body">
        <div class="card-form-wrapper">
            <div class="row justify-content-center">
-               
+               <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
                {{-- payment  mode  --}}
                {{-- <div class="row section-end-line text-dark pt-3 pb-1">
                   
@@ -125,11 +130,11 @@
                      
                      <div class="form-group pt-3">
                         <label for="" ><strong class="text-dark">Dureforce Service Fee</strong></label>
-                        <small  class="form-text text-muted">20% Service Fee 
+                        <small  class="form-text text-muted">{{$service_fee}}% Service Fee 
                            {{-- <a href="#" class="link-space" style="color: #007F7F; margin-left: 80px;">Explain this</a> --}}
                         </small><br>
                         <span class="pt-2 text-dark" id="system_fee">
-                           {{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount'] : floatval(@$software->price))*0.20 }}
+                           {{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount'] : floatval(@$software->price))*$service_fee_percentage }}
                         </span>
                      </div>
 
@@ -142,7 +147,7 @@
                         <small  class="form-text text-muted">The estimated amount you'll receive after service fees</small>
                            
                            <div class="input-group">
-                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount']: floatval(@$software->price)) * 0.80 }}">
+                              <input type="number" class="form-control"  aria-describedby="emailHelp " name="amount_receive" step="any" readonly id="milestones_amount_receive" value="{{old('fixed_bid_amount',$proposal['fixed_bid_amount'] ? (float)$proposal['fixed_bid_amount']: floatval(@$software->price)) * $user_percentage }}">
                               <span class="input-group-text float-end">$</span>
                            </div>
                            
@@ -251,11 +256,11 @@
 
             <div class="row">
                <div class="col-md-6">
-                  <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                  <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100 back-button"
                      href="?view=step-3" type="button">@lang('BACK')</a>
                </div>
                <div class="col-md-6 text-right">
-                  <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100"
+                  <a class="stepwizard-step service--btns btn btn-secondary float-left  mt-20 w-100 back-button"
                            href="{{route('user.software.index')}}" type="button">@lang('Cancel')</a>
 
                   <button class="btn softwar-save-draft--btns btn-secondary float-left  mt-20 w-100"  name="action" type="submit" value="save_project">
@@ -272,18 +277,36 @@
    </div>
  
 </form>
-
+<style>
+   @media only screen and (max-width:683px){
+   .dz-message {
+      text-align: center !important;
+      position: relative !important;
+      top: -50% !important;
+      left: 0% !important;
+   }
+   .upload_icon {
+      position: absolute !important;
+      left: 0% !important;
+      right: 0% !important;
+      top: 54% !important;
+      bottom: 22% !important;
+      text-align: center !important;
+   }
+}
+</style>
 @push('style-lib')
 
    <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/proposal_step.css')}}">
 
 @endpush
 @push('script-lib')
+
    <script>
       var file_upload_url="{{route('file.upload') }}";
    </script>
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/proposal-step.js')}}"></script>
+   <script src="{{asset('public/js/proposal-step.js')}}"></script>
 
 
 @endpush

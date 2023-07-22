@@ -43,7 +43,7 @@
                                 
                             </div>
                             <div class="col-lg-6 form-group text-center">
-                                <button type="submit" class="float-left" data-bs-dismiss="modal">Cancle</button>
+                                <button type="submit" class="float-left" data-bs-dismiss="modal">Cancel</button>
                                 <button type="submit" class="submit-btn w-80 float-right">Withdraw Offer</button>
                             </div>
                         </div>

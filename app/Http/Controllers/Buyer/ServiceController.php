@@ -26,15 +26,16 @@ class ServiceController extends Controller
            
             $user=auth()->user();
             $service=Service::with('defaultProposal.attachments')->with('skills')->with('deliverable')->where('uuid',$uuid)->firstOrFail();
-            
-            $job=Job::updateOrCreate(
+            if($service->isBooked()){
+                $notify[] = ['error',"Service Already Booked"];
+                return redirect()->back()->withNotify($notify);
+            }
+            $job=Job::create(
+                
                 [
-                    "user_id"   => $user->id,
-                    "module_id" => $service->id,
-                    "module_type" => get_class($service),
-
-                ],
-                [
+                "user_id"   => $user->id,
+                "module_id" => $service->id,
+                "module_type" => get_class($service),
                 "job_type_id"   => JobType::$OneTime,
                 "country_id"    => $service->user->country_id,
                 "category_id"   => $service->category_id,

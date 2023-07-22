@@ -105,7 +105,30 @@ trait CreateOrUpdateEntity {
                 $model->tags()->detach();
             }
             
-            $tags=collect($request->tag)->map(function ($tag)  {
+            $pattern = '/#\w+/';
+            $matches = [];
+            $selected_tags=$request->tag;
+            preg_match_all($pattern, $request->description, $matches);
+            
+           
+
+
+
+            if (!empty($matches)) {
+                $matches = array_merge(...$matches);
+                $modifiedMatches = [];
+
+                foreach ($matches as $match) {
+                    $modifiedMatch = str_replace('#', '', $match);
+                    $modifiedMatches[] = $modifiedMatch;
+                }
+
+                $all_tags = array_merge($modifiedMatches, $selected_tags ?? []);
+            } else {
+                $all_tags = $selected_tags ?? [];
+            }
+
+            $tags=collect($all_tags)->map(function ($tag)  {
                 $tag=Tag::updateOrCreate(['name' => $tag],['slug' => $tag,'is_active' => true]);
                 return $tag->id;
             });
@@ -182,11 +205,11 @@ trait CreateOrUpdateEntity {
             } else {
               $model->softwareSteps()->delete();
               $model->modules()->delete();
-              if (!empty($request->module_title)) 
+             
+                $modules=[];
+                foreach ($request->get('module_title') as $key => $value) 
                 {
-                    $modules=[];
-                    foreach ($request->get('module_title') as $key => $value) 
-                    {
+                    if(isset($value) || isset($request->get('module_description')[$key]) || isset($request->get('module_price')[$key]) || isset($request->get('module_delivery')[$key]) ){
                         $modules[] = new SoftwareStep([
                             'name' => $value,
                             'is_manual_title' => $this->isManualTitle($value),
@@ -195,31 +218,48 @@ trait CreateOrUpdateEntity {
                             'estimated_lead_time' => $request->get('module_delivery')[$key],
                         ]);
                     }
+                    
+                }
+                if(count($modules) > 0){
                     $model->modules()->saveMany($modules);
-                }   
+                }
+                
 
             }
 
             if (!empty($request->steps)) {
                 $steps = [];
                 foreach ($request->get('steps') as $key => $value) {
-                    if($type == Attribute::SERVICE) {
-                        $steps[] = new ServiceProjectStep([
-                            'name' => $value,
-                            'description' => $request->get('description')[$key]
-                        ]);
-                    } else {
-                        $steps[] = new SoftwareProvidingStep([
-                            'name' => $value,
-                            'description' => $request->get('description')[$key]
-                        ]);
+
+                    if(isset($value) || isset($request->get('description')[$key])){
+
+                        if($type == Attribute::SERVICE) {
+                        
+                            $steps[] = new ServiceProjectStep([
+                                'name' => $value,
+                                'description' => $request->get('description')[$key]
+                            ]);
+                        } else {
+                            $steps[] = new SoftwareProvidingStep([
+                                'name' => $value,
+                                'description' => $request->get('description')[$key]
+                            ]);
+                        }
                     }
+                    
                 }
                 if($type == Attribute::SERVICE) {
-                    $model->serviceSteps()->saveMany($steps);
+                    $model->serviceSteps()->delete();
+                    if(count($steps) > 0 ){
+                        $model->serviceSteps()->saveMany($steps);
+
+                    }
                 } else {
-                   
-                    $model->softwareSteps()->saveMany($steps);
+                    $model->softwareSteps()->delete();
+                    if(count($steps) > 0 ){
+                        $model->softwareSteps()->saveMany($steps);
+
+                    }
 
                     
                 }
@@ -342,6 +382,11 @@ trait CreateOrUpdateEntity {
                 
                 $this->updateStatus($request,$model);
                 DB::commit();
+
+                $service_fee_percentage=getSystemServiceFee();
+                $user_percentage=(100-$service_fee_percentage)/100;
+                $service_fee_percentage=$service_fee_percentage/100;
+
                 if (!$model->defaultProposal) {
 
                     $deliver_mode=DeliveryMode::where('slug','Weekly-slug')->exists() ? DeliveryMode::where('slug','Weekly-slug')->first()->id : null;
@@ -350,7 +395,7 @@ trait CreateOrUpdateEntity {
 
                         $proposal=[
                             "hourly_bid_rate" => $model->rate_per_hour,
-                            "amount_receive" => ($model->rate_per_hour*0.80),
+                            "amount_receive" => ($model->rate_per_hour * $user_percentage),
                             "start_hour_limit" => config('settings.service_weekly_hours_start_limit'),
                             "end_hour_limit" => config('settings.service_weekly_hours_end_limit'),
                             "delivery_mode_id" => $deliver_mode,
@@ -373,7 +418,7 @@ trait CreateOrUpdateEntity {
                                             ]
                                         ],
                                         "fixed_bid_amount" => $model->fixed_bid_amount,
-                                        "amount_receive" => ($model->rate_per_hour*0.80),
+                                        "amount_receive" => ($model->rate_per_hour * $user_percentage),
                                         "delivery_mode_id" => $deliver_mode,
                                         "cover_letter" => $model->description,
                                         "action" => "continue",

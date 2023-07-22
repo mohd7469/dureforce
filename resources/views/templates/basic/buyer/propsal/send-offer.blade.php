@@ -17,7 +17,7 @@
         </div>
 
       @endif
-
+        <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
         <div class="card-body p-0 d-flex align-items-center">
          
             <div class="image-div">
@@ -149,16 +149,18 @@
         
       </div>
         <hr>
-        <h6 class="color-green">Description</h5>
-        <h6 class="mt-3">Related Job Listing</h5>
-        <h6 class="mt-3 color-green">Full Stack Developer<span class="color-black ml-2">(#100183394)</span></h5>
-      
+        <h6 class="color-green">Description</h6>
+        <h6 class="mt-3">Related Job Listing</h6>
+
+        @if(!empty($propsal_to_send_offer->user))
+        <h6 class="mt-3 color-green">{{$propsal_to_send_offer->user->basicProfile ? $propsal_to_send_offer->user->basicProfile->designation : " "}}</h6>
+        @endif
         <div class="mt-5">
             <div class="form-row">
               <div class="col-6">
                
                 <label><h6>Contract Title</h6></label>
-                <input type="text" class="form-control" placeholder="Full Stack Developer" name="contract_title">
+                <input type="text" class="form-control" placeholder="Enter Contract Title" name="contract_title">
                
               </div>
               
@@ -349,7 +351,7 @@
 
 @endsection
 @push('style')
-  <link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/send-offer.css')}}">
+  <link rel="stylesheet" href="{{asset('public/css/send-offer.css')}}">
 @endpush
 @push('script')
 <script type="text/javascript">
@@ -430,9 +432,14 @@
           var milestone_amount=$(this).val();
           total_amount=total_amount+parseFloat(milestone_amount);
         });
+        let service_fee=$('#system_service_fee_id').val();
+        let user_percentage=(100-service_fee)/100;
+        let service_fee_percentage=service_fee/100;
+
         $('#total_milestones_amount').val(total_amount);
-        $('#milestones_amount_receive').val(financial(total_amount*0.80));
-        $('#system_fee').html('$'+financial(total_amount*0.20));
+        $('#milestones_amount_receive').val(financial(total_amount*user_percentage));
+        $('#system_fee').html('$'+financial(total_amount*service_fee_percentage));
+        
     }
     
     function submitOffer()

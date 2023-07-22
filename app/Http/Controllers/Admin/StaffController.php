@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Permission;
 use App\Models\Admin;
+use App\Models\AdminPermission;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class StaffController extends Controller
 {
@@ -41,25 +46,28 @@ class StaffController extends Controller
         $staff->name = $request->name;
         $staff->username = $request->username;
         $staff->email = $request->email;
-        $staff->staff_access = $request->permission;
         $staff->show_password = encrypt($request->password);
         $staff->password = Hash::make($request->password);
         $staff->save();
-        notify($staff, 'STAFF_CREATE', [
-            'password' => $request->password,
-            'email' => $request->email,
-            'username' => $request->username
-        ]);
+        $staff->admin_permissions()->sync($request->permission);
+//        notify($staff, 'STAFF_CREATE', [
+//            'password' => $request->password,
+//            'email' => $request->email,
+//            'username' => $request->username
+//        ]);
         $notify[] = ['success', 'Staff has been created.'];
-        return back()->withNotify($notify);
+        $url = '/admin/staff/index';
+        return Redirect::to($url)->withNotify($notify);
     }
 
     public function edit($id)
     {
+
     	$pageTitle = "Staff Update";
     	$permissions = Permission::all();
     	$staff = Admin::findOrFail($id);
-    	return view('admin.staff.edit', compact('pageTitle', 'staff', 'permissions'));
+    	$staff_permission = AdminPermission::where('admin_id',$id)->get();
+    	return view('admin.staff.edit', compact('pageTitle', 'staff', 'permissions','staff_permission'));
     }
 
     public function update(Request $request, $id)
@@ -71,19 +79,22 @@ class StaffController extends Controller
             'permission' => 'required|array',
             'password' => 'nullable|min:6|confirmed'
         ]);
-        $staff = Admin::where('id', $id)->where('status', 0)->first();
-        if(!$staff)
-        {
-            $notify[] = ['error', "Super Admin can't be update"];
-            return back()->withNotify($notify);
-        }
+        AdminPermission::where('admin_id',$id)->delete();
+        $staff = Admin::where('id', $id)->first();
+        // if(!$staff)
+        // {
+        //     $notify[] = ['error', "Super Admin can't be update"];
+        //     return back()->withNotify($notify);
+        // }
         $staff->name = $request->name;
         $staff->username = $request->username;
         $staff->email = $request->email;
-        $staff->staff_access = $request->permission;
         $staff->show_password = $request->password ?  encrypt($request->password) : $staff->show_password;
         $staff->password = $request->password ? Hash::make($request->password) : $staff->password;
         $staff->save();
+        // dd($request->all());
+
+        $staff->admin_permissions()->sync($request->permission);
         $notify[] = ['success', 'Staff has been updated.'];
         return back()->withNotify($notify);
     }
@@ -104,5 +115,44 @@ class StaffController extends Controller
         $notify[] = ['success', 'The staff has been deleted'];
         return back()->withNotify($notify);
 
+    }
+
+    public function activeBy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Admin::where('id',$request->id)->first();
+            $staff->status = 1;
+            $staff->save();
+            DB::commit();
+            Log::info(["staff" => $staff]);
+            $notify[] = ['success', 'Staff status has been Activated'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+                return back()->withNotify($notify);
+        }
+    }
+    public function inActiveBy(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $staff = Admin::findOrFail($request->id);
+            $staff->status = 0;
+            $staff->save();
+            DB::commit();
+            Log::info(["staff" => $staff]);
+            $notify[] = ['success', 'Staff status has been inActive'];
+            return redirect()->back()->withNotify($notify);
+        }
+        catch (\Exception $exp) {
+            DB::rollback();
+            Log::error($exp->getMessage());
+            $notify[] = ['error', 'An error occured'];
+            return back()->withNotify($notify);
+        }
     }
 }

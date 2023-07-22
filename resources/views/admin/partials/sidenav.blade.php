@@ -1,5 +1,10 @@
 @php
-$staffAccess = Auth::guard('admin')->user()->staff_access;
+    $staff = Illuminate\Support\Facades\Auth::guard('admin')->user();
+    $staffAccessData = \App\Models\AdminPermission::where('admin_id',$staff->id)->get()->pluck('permission_id')->toArray();
+    foreach($staffAccessData as $data)
+    {
+        $staffAccess[] = json_encode($data);
+    }
 @endphp
 <div class="sidebar {{ sidebarVariation()['selector'] }} {{ sidebarVariation()['sidebar'] }} {{ @sidebarVariation()['overlay'] }} {{ @sidebarVariation()['opacity'] }}"
     data-background="{{ getImage('assets/admin/images/sidebar/1.jpg', '400x800') }}">
@@ -16,7 +21,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
 
         <div class="sidebar__menu-wrapper" id="sidebar__menuWrapper">
             <ul class="sidebar__menu">
-                @if (in_array('1', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Dashboard'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.dashboard') }}">
                         <a href="{{ route('admin.dashboard') }}" class="nav-link ">
                             <i class="menu-icon las la-home"></i>
@@ -25,7 +30,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('9', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Logs'], $staffAccess))
                     <li class="sidebar-menu-item">
                         <a href="/admin/dureforce_admin/log-viewer" class="{{ menuActive('admin.users*', 3) }}">
                             <i class="menu-icon las la-users"></i>
@@ -36,7 +41,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('9', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage User'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.users*', 3) }}">
                             <i class="menu-icon las la-users"></i>
@@ -138,7 +143,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
 
 
-
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Testimonials'], $staffAccess))
                         <li class="sidebar-menu-item sidebar-dropdown">
                             <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
                                 <i class="menu-icon las la-tasks"></i>
@@ -219,8 +224,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                                 </ul>
                             </div>
                         </li>
+                        @endif
 
-                @if (in_array('7', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage job'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.job*', 3) }}">
                             <i class="menu-icon las la-tasks"></i>
@@ -305,7 +311,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('16', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Support Ticket'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.ticket*', 3) }}">
                             <i class="menu-icon la la-ticket"></i>
@@ -372,7 +378,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('2', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Service Booking'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.booking.service*', 3) }}">
                             <i class="menu-icon las la-shopping-bag"></i>
@@ -443,7 +449,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('3', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Sales Software'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.sales.software.index') }}">
                         <a href="{{ route('admin.sales.software.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.sales.software.index') }}">
@@ -454,7 +460,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
 
 
-                @if (in_array('4', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Hire Employ'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.hire*', 3) }}">
                             <i class="menu-icon las la-user-secret"></i>
@@ -509,7 +515,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </div>
                     </li>
                 @endif
-
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Attributes'], $staffAccess))
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.service-attributes.index') }}">
                         <i class="menu-icon lab la-servicestack"></i>
@@ -538,8 +544,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
 
-                @if (in_array('5', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Service'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.service*', 3) }}">
                             <i class="menu-icon lab la-servicestack"></i>
@@ -634,7 +641,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('6', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Software'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.software*', 3) }}">
                             <i class="menu-icon  lab la-gitlab"></i>
@@ -729,7 +736,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('34', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Staff'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.staff*', 3) }}">
                             <i class="menu-icon las la-user-lock"></i>
@@ -756,7 +763,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('8', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['All Advertises'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.ads.index') }}">
                         <a href="{{ route('admin.ads.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.ads.index') }}">
@@ -766,7 +773,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('33', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Rank'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.rank.index') }}">
                         <a href="{{ route('admin.rank.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.rank.index') }}">
@@ -776,7 +783,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('10', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Setup Coupon'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.coupon.index') }}">
                         <a href="{{ route('admin.coupon.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.coupon.index') }}">
@@ -786,7 +793,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('11', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Category'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.category*', 3) }}">
                             <i class="menu-icon las la-bible"></i>
@@ -850,7 +857,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                {{-- @if (in_array('12', $staffAccess))
+                {{-- @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Features'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.features.index') }}">
                         <a href="{{ route('admin.features.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.features.index') }}">
@@ -860,7 +867,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif --}}
 
-                @if (in_array('13', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Payment Gateways'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.gateway*', 3) }}">
                             <i class="menu-icon las la-credit-card"></i>
@@ -887,7 +894,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('14', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Deposits'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.deposit*', 3) }}">
                             <i class="menu-icon las la-credit-card"></i>
@@ -945,7 +952,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('15', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Withdrawals'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.withdraw*', 3) }}">
                             <i class="menu-icon la la-bank"></i>
@@ -1004,7 +1011,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
 
 
-                @if (in_array('17', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Report'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.report*', 3) }}">
                             <i class="menu-icon la la-list"></i>
@@ -1041,7 +1048,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
 
 
-                @if (in_array('18', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Subscribers'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.subscriber.index') }}">
                         <a href="{{ route('admin.subscriber.index') }}" class="nav-link"
                             data-default-url="{{ route('admin.subscriber.index') }}">
@@ -1055,7 +1062,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 <li class="sidebar__menu-header">@lang('Module Settings')</li>
 
                 <!-- background Banner -->
-                @if (in_array('32', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Background Banner'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.banner*', 3) }}">
                             <i class="menu-icon la la-mobile"></i>
@@ -1111,7 +1118,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
                           
                 <!-- Technology logo -->
-                @if (in_array('33', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Technology Logo'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.techlogo*', 3) }}">
                             <i class="menu-icon la la-mobile"></i>
@@ -1168,6 +1175,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 @endif
                 <!-- End Technology logo -->
                 <!-- lead images -->
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Lead images'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.leadImages*', 3) }}">
                             <i class="menu-icon la la-mobile"></i>
@@ -1215,9 +1223,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                 <!-- End lead images -->
 
                 <!-- lead Project Lenght -->
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Project Lenght'], $staffAccess))
                 <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.projectLength*', 3) }}">
                             <i class="menu-icon la la-mobile"></i>
@@ -1265,9 +1275,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                 <!-- End lead images -->
 
-                {{-- @if (in_array('34', $staffAccess)) --}}
+                {{-- @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Email image settings'], $staffAccess)) --}}
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.email*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1315,6 +1326,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 {{-- @endif --}}
                 <!-- End email template -->
                 {{-- asdc --}}
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Software Default'], $staffAccess))
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.soft*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1338,7 +1350,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                 {{-- Deliveable crud  --}}
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Deliverables'], $staffAccess))
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.deliverable*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1357,8 +1371,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                 {{-- end deleverable --}}
                  {{-- DoDS crud  --}}
+                 @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['DODS'], $staffAccess))
                  <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.dod*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1377,8 +1393,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                  {{-- end DoDS --}}
                   {{-- Deliver Mode crud  --}}
+                  @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Delivery Mode'], $staffAccess))
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.deliver*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1397,10 +1415,12 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                    {{-- End Deliver Mode crud  --}}
                    
                    
                 {{-- System All Admin Creditional Mode crud  --}}
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['System Credentials'], $staffAccess))
                 <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.credential*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1438,9 +1458,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                   {{-- End Admin all Creditional Mode crud  --}}
 
                    {{-- Job Type Mode crud  --}}
+                   @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Jobs Type'], $staffAccess))
                    <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.type*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1459,8 +1481,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                    {{-- End Job Type Mode crud  --}}
                    {{-- Feature Mode crud  --}}
+                   @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Features'], $staffAccess))
                    <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.feature*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1479,8 +1503,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                    {{-- End Feature Mode crud  --}}
                    {{-- Budget Mode crud  --}}
+                   @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Budget Type'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.budget.type*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1499,8 +1525,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                     {{-- End Budget Mode crud  --}}
                     {{-- Degree Mode crud  --}}
+                    @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Degrees'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.degree*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1519,8 +1547,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                     {{-- End Degree Mode crud  --}}
                     {{-- World countries Mode crud  --}}
+                    @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['World Countries'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.world.country*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1539,7 +1569,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                     {{-- World cities Mode crud  --}}
+                    @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['World Cities'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.world.city*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1558,9 +1590,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                     {{-- End World cities Mode crud  --}}
 
                     {{-- World Languag Mode crud  --}}
+                    @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['World Languags'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.world.language*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1579,9 +1613,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                     {{-- End World language Mode crud  --}}
 
                        {{-- Language Level Mode crud  --}}
+                    @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Language Levels'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.language.level*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1600,9 +1636,11 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                    @endif
                        {{-- End Language Level Mode crud  --}}   
                   
                   {{-- Project Stage Mode crud  --}}
+                  @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Project Stages'], $staffAccess))
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.project*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1621,8 +1659,10 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                   {{-- End Project Stage Mode crud  --}}
                   {{-- Tag Crud --}}
+                  @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Tags'], $staffAccess))
                   <li class="sidebar-menu-item sidebar-dropdown">
                     <a href="javascript:void(0)" class="{{ menuActive('admin.tag*', 3) }}">
                         <i class="menu-icon las la-life-ring"></i>
@@ -1641,12 +1681,13 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </ul>
                     </div>
                 </li>
+                @endif
                   {{-- End Tag Crud --}}
 
                    {{-- category Mode crud  --}}
                 <li class="sidebar__menu-header">@lang('Settings')</li>
 
-                @if (in_array('19', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['General Setting'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.index') }}">
                         <a href="{{ route('admin.setting.index') }}" class="nav-link">
                             <i class="menu-icon las la-life-ring"></i>
@@ -1655,7 +1696,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('20', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Logo & Favicon'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.logo.icon') }}">
                         <a href="{{ route('admin.setting.logo.icon') }}" class="nav-link">
                             <i class="menu-icon las la-images"></i>
@@ -1664,7 +1705,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('21', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Extensions'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.extensions.index') }}">
                         <a href="{{ route('admin.extensions.index') }}" class="nav-link">
                             <i class="menu-icon las la-cogs"></i>
@@ -1673,7 +1714,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('22', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Language'], $staffAccess))
                     <li
                         class="sidebar-menu-item  {{ menuActive(['admin.language.manage', 'admin.language.key']) }}">
                         <a href="{{ route('admin.language.manage') }}" class="nav-link"
@@ -1684,7 +1725,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('23', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Seo Manager'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.seo') }}">
                         <a href="{{ route('admin.seo') }}" class="nav-link">
                             <i class="menu-icon las la-globe"></i>
@@ -1693,7 +1734,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('24', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Email Manager'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.email.template*', 3) }}">
                             <i class="menu-icon la la-envelope-o"></i>
@@ -1727,7 +1768,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('25', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['SMS Manager'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.sms.template*', 3) }}">
                             <i class="menu-icon la la-mobile"></i>
@@ -1759,7 +1800,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('26', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['CDPR Cookie'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.cookie') }}">
                         <a href="{{ route('admin.setting.cookie') }}" class="nav-link">
                             <i class="menu-icon las la-cookie-bite"></i>
@@ -1770,7 +1811,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
 
                 <li class="sidebar__menu-header">@lang('Frontend Manager')</li>
 
-                @if (in_array('27', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Templates'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.frontend.templates') }}">
                         <a href="{{ route('admin.frontend.templates') }}" class="nav-link ">
                             <i class="menu-icon la la-html5"></i>
@@ -1778,8 +1819,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </a>
                     </li>
                 @endif
-
-                <li class="sidebar-menu-item sidebar-dropdown">
+                 
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Blogs'], $staffAccess))
+                    <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.blog*', 3) }}">
                             <i class="menu-icon las la-life-ring"></i>
                             <span class="menu-title">@lang('Blogs')</span>
@@ -1797,9 +1839,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </ul>
                         </div>
                     </li>
+                @endif
 
-
-                @if (in_array('28', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Manage Section'], $staffAccess))
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)" class="{{ menuActive('admin.frontend.sections*', 3) }}">
                             <i class="menu-icon la la-html5"></i>
@@ -1831,7 +1873,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                 
                 <li class="sidebar__menu-header">@lang('Extra')</li>
 
-                @if (in_array('29', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['System Information'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.system.info') }}">
                         <a href="{{ route('admin.system.info') }}" class="nav-link"
                             data-default-url="{{ route('admin.system.info') }}">
@@ -1841,7 +1883,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('30', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Custom CSS'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.custom.css') }}">
                         <a href="{{ route('admin.setting.custom.css') }}" class="nav-link">
                             <i class="menu-icon lab la-css3-alt"></i>
@@ -1850,7 +1892,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                     </li>
                 @endif
 
-                @if (in_array('31', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Clear Cache'], $staffAccess))
                     <li class="sidebar-menu-item {{ menuActive('admin.setting.optimize') }}">
                         <a href="{{ route('admin.setting.optimize') }}" class="nav-link">
                             <i class="menu-icon las la-broom"></i>
@@ -1858,7 +1900,7 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                         </a>
                     </li>
                 @endif
-                    @if (in_array('9', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Flush Redis Data'], $staffAccess))
                         <li class="sidebar-menu-item">
                             <a href="/admin/flush-redis-db" class="{{ menuActive('admin.users*', 3) }}">
                                 <i class="menu-icon las la-users"></i>
@@ -1867,9 +1909,9 @@ $staffAccess = Auth::guard('admin')->user()->staff_access;
                             </a>
 
                         </li>
-                    @endif
+                @endif
 
-                @if (in_array('32', $staffAccess))
+                @if (in_array(\App\Models\Permission::ADMIN_PERMISSIONS['Report and Request'], $staffAccess))
                     <li class="sidebar-menu-item  {{ menuActive('admin.request.report') }}">
                         <a href="{{ route('admin.request.report') }}" class="nav-link"
                             data-default-url="{{ route('admin.request.report') }}">

@@ -7,9 +7,9 @@
         
         <script>
             "use strict";
-            notify("{{$msg[0] }}","{{ __($msg[1]) }}");
+            // notify("{{$msg[0] }}","{{ __($msg[1]) }}");
 
-            // iziToast.{{ $msg[0] }}({message:"{{ __($msg[1]) }}", position: "topRight"}); 
+            iziToast.{{ $msg[0] }}({message:"{{ __($msg[1]) }}", position: "topRight"}); 
         </script>
     @endforeach
 
@@ -22,24 +22,27 @@
         $errors = $collection->unique();
     @endphp
 
-    <script>
-        "use strict";
-        @foreach ($errors as $error)
-        iziToast.error({
-            message: '{{ __($error) }}',
-            position: "topRight"
-        });
-        @endforeach
-    </script>
-
-@endif
-
 <script>
+    
     "use strict";
+
     function notify(status,message) {
         iziToast[status]({
             message: message,
             position: "topRight"
         });
     }
-</script>
+
+    @foreach ($errors as $error)
+
+        iziToast.error({
+            message: '{{ __($error) }}',
+            position: "topRight"
+        });
+
+    @endforeach
+    </script>
+
+@endif
+
+

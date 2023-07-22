@@ -439,16 +439,16 @@ function overviewFormValidation() {
 
     $(".error").remove();
 
-    if ($("#tags :selected").length < 1) {
-      e.preventDefault();
-      $("#error").after(
-        '<span class="error text-danger">This field is required</span>'
-      );
-      iziToast.error({
-        message: "Tags filed is required",
-        position: "topRight",
-      });
-    }
+    // if ($("#tags :selected").length < 1) {
+    //   e.preventDefault();
+    //   $("#error").after(
+    //     '<span class="error text-danger">This field is required</span>'
+    //   );
+    //   iziToast.error({
+    //     message: "Tags filed is required",
+    //     position: "topRight",
+    //   });
+    // }
 
     if ($.trim(title1).length < 1) {
       e.preventDefault();
@@ -869,7 +869,7 @@ function addSoftwareModuleRow() {
                     placeholder="Enter Hours">
         </div>
 
-          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1" style="margin-top:2.4rem" onclick="deleteAddOnRow('#software-module-row-`+add_on_service_row_number+`')">
+          <div class ="col-xl-1 col-lg-1 col-sm-12 col-xs-12 col-md-1 row-id" style="margin-top:2.4rem" >
             <button  type="button" class="btn btn-danger" ><i class="fa fa-trash"></i></button>
           </div>
         <hr>
@@ -884,6 +884,15 @@ $(document).on("click", "#removeRow", function () {
     }
 });
 
+$(document).on("click", "#another_step_id", function () {
+  addSteps();
+});
+
+$(document).on("click", ".row-id", function () {
+  $(this).parent('.software-module').first().remove();
+  add_on_service_row_number-=1;
+
+});
 
 
 $(document).on("click", "#removecustomRow", function () {

@@ -14,6 +14,7 @@ class Contract extends Model
     protected $hidden = ['created_at','updated_at','deleted_at'];
     protected $guarded = ['id'];
 
+    public const SELLER_BUYER_SUBMITTED_FEEDBACK = 2;
     public const STATUSES = [
         'In_Progress'  =>  33,
         'Terminated' =>  34,
@@ -27,7 +28,7 @@ class Contract extends Model
         "CONTRACT_TYPE" => "contract",
     ];
     public static function scopeWithAll($query){
-        return $query->with('offer')->with('status')->with('dayPlanning');
+        return $query->with('offer')->with('status')->with('dayPlanning')->with('feedback.user');
     }
 
     protected static function boot()
@@ -54,4 +55,16 @@ class Contract extends Model
     public function dayPlanning(){
         return $this->hasMany(DayPlanning::class,'contract_id')->withTrashed();
     }
+    public function feedbacks(){
+        return $this->hasMany(ContractFeedback::class, 'contract_id')
+        ->where('feedback_for_id', auth()->user()->id);
+    }
+    public function user_feedback(){
+        return $this->hasMany(ContractFeedback::class, 'contract_id')
+        ->where('created_by', auth()->user()->id);
+    }
+    public function feedback(){
+        return $this->hasMany(ContractFeedback::class, 'contract_id');
+    }
+
 }

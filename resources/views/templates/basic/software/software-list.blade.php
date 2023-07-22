@@ -377,6 +377,17 @@
                 margin-top: 18px;
             }
         }
+        @media only screen and (max-width:683px){
+            .nav-tabs .nav-link {
+                padding: 5px 15px;
+                border: 0;
+                border-bottom: 1px solid transparent;
+                color: #606975;
+                font-weight: 500;
+                font-size: 9px !important;
+                background-color: transparent;
+            }
+        }
     </style>
 
 @push('script')

@@ -21,6 +21,7 @@
         <p class="sbheading-c">All Support Tickets >  <strong>Create New Ticket</strong></p>
         
     </div>
+    <input type="hidden" value="{{getSystemServiceFee()}}" id="system_service_fee_id">
     
      <div class="card-body" >
         <div class="row">
@@ -107,13 +108,13 @@
 @push('script-lib')
 
    <script src="{{asset('/assets/resources/templates/basic/frontend/js/dropzone.js')}}"></script>
-   <script src="{{asset('/assets/resources/templates/basic/frontend/js/job-proposal.js')}}"></script>
+   <script src="{{asset('public/js/job-proposal.js')}}"></script>
 
 
 @endpush
 @push('style')
 
-<link rel="stylesheet" href="{{asset('assets/resources/templates/basic/frontend/css/custom/job_proposal.css')}}">
+<link rel="stylesheet" href="{{asset('public/css/job_proposal.css')}}">
 <style>
     .back{
         background: #ffffff;

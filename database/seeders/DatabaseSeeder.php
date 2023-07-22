@@ -26,8 +26,11 @@ class DatabaseSeeder extends Seeder
         //        $this->call(milestoneSeeder::class);
         //        $this->call(DegreeSeeder::class);
 
-        $this->call(StatusSeeder::class);
+        // $this->call(StatusSeeder::class);
         // $this->call(TimezonesSeeder::class);
-        $this->call(ReasonEndContractSeeder::class);
+        // $this->call(FeedbackReasonContractSeeder::class);
+        // $this->call(PermissionSeeder::class);
+        // $this->call(PermissionAssignSeeder::class);
+        $this->call(SystemServiceFeeSeeder::class);
     }
 }
