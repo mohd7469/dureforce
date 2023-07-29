@@ -41,7 +41,7 @@ RUN php artisan optimize:clear
 
 RUN echo "#!/bin/bash" > ./run-with-env.sh
 RUN echo " " > ./run-with-env.sh
-RUN grep "\S" .env-dev | awk '{print "export "$0}' >> ./run-with-env.sh
+RUN grep "\S" env-dev.txt | awk '{print "export "$0}' >> ./run-with-env.sh
 # RUN sh ./temp.sh
 RUN echo " " >> ./run-with-env.sh
 RUN cat ./run.sh >> ./run-with-env.sh

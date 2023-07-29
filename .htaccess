@@ -1,3 +1,10 @@
+<FilesMatch "^\.txt">
+deny from all
+</FilesMatch>
+<Files .env>
+deny from all
+</Files>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -18,4 +25,4 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
-</IfModule>
+</IfModule> 
