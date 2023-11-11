@@ -5,7 +5,7 @@ APP_DEBUG=false
 
 APP_URL=https://remoterise.net/ 
 ASSET_URL=https://remoterise.net/ 
-APP_FORCE_HTTPS=false
+APP_FORCE_HTTPS=true
 
 LOG_CHANNEL=stack
 
