@@ -1,10 +1,10 @@
 APP_NAME=Laravel
-APP_ENV=local
+APP_ENV=Production
 APP_KEY=base64:HjbkHgkCQqmXL1K/hr4Ma24Itw2QcZglZlqUZ7D4rRs=
-APP_DEBUG=true
+APP_DEBUG=false
 
-APP_URL=https://azapp-dureforce-production.azurewebsites.net 
-ASSET_URL=https://azapp-dureforce-production.azurewebsites.net 
+APP_URL=https://remoterise.net/ 
+ASSET_URL=https://remoterise.net/ 
 APP_FORCE_HTTPS=false
 
 LOG_CHANNEL=stack
