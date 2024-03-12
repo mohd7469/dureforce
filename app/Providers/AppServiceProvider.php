@@ -59,9 +59,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        LogViewer::auth(function ($request) {
-            return Auth::guard('admin')->user();
-        });
+//        LogViewer::auth(function ($request) {
+//            return Auth::guard('admin')->user();
+//        });
 
         $activeTemplate = activeTemplate();
         $general = GeneralSetting::first();
