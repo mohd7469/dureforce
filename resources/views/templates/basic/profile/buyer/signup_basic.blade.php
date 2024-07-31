@@ -681,7 +681,7 @@
                   success:function(response){
 
                       if(response.success){
-                        notify('success', response.success);
+                        // notify('success', response.success);
                         $('#clientBasicModal').modal('hide');
                         formPostProcess(experienceTab);
                         location.reload();

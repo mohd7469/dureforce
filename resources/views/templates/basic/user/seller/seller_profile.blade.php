@@ -1486,7 +1486,7 @@
             success:function(response){
 
                 if(response.success){
-                    notify('success', response.success);
+                    // notify('success', response.success);
                     $('#editprofile').modal('hide');
                     location.reload();
                 

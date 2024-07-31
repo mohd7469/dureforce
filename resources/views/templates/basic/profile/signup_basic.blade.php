@@ -710,7 +710,7 @@
                   success:function(response){
 
                       if(response.success){
-                        notify('success', response.success);
+                        // notify('success', response.success);
                         formPostProcess(experienceTab);
                       }
                       else if(response.validation_errors){
