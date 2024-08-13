@@ -87,7 +87,7 @@
                   >{{ $basicProfile->about }}</textarea>
             </div>
             {{-- location --}}
-            <div class="col-md-12">
+            <div class="col-md-12" hidden>
                <label class="mt-4"
                   >City
                <span class="imp"

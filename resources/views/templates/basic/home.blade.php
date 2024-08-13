@@ -395,7 +395,8 @@
             @include($activeTemplate . 'home.feature_services', ['services' => $services])
         </div>
     </section>
-    <section class="all-sections    section-padding">
+    @if(!empty($softwares))
+    <section class="all-sections section-padding">
         <div class="container">
             <article class="default-article">
                 <h2 class="heading">Featured Custom Software</h2>
@@ -403,14 +404,18 @@
             @include($activeTemplate . 'home.feature_software', ['softwares' => $softwares])
         </div>
     </section>
-    <section class="all-sections    section-padding">
-        <div class="container">
-            <article class="default-article">
-                <h2 class="heading">Featured Jobs</h2>
-            </article>
-            @include($activeTemplate . 'home.feature_jobs', ['jobs' => $jobs])
-        </div>
-    </section>
+@endif
+@if(!empty($jobs))
+<section class="all-sections section-padding">
+    <div class="container">
+        <article class="default-article">
+            <h2 class="heading">Featured Jobs</h2>
+        </article>
+        @include($activeTemplate . 'home.feature_jobs', ['jobs' => $jobs])
+    </div>
+</section>
+@endif
+
     <section class="all-sections  bg-grey   section-padding">
         <div class="container">
             <article class="default-article">
@@ -508,7 +513,8 @@
             </div>
         </div>
     </section>
-    <section class="all-sections  bg-grey   section-padding">
+    @if(!empty($jobs))
+    <section class="all-sections bg-grey section-padding">
         <div class="container">
             <article class="default-article">
                 <h2 class="heading">Explore Trending Dureforce Publications</h2>
@@ -516,6 +522,8 @@
             @include($activeTemplate . 'home.publications', ['jobs' => $jobs])
         </div>
     </section>
+@endif
+
     @include($activeTemplate . 'partials.end_ad')
 @endsection
 @push('style')
@@ -788,8 +796,9 @@
             }
             return true;
         }
-</style>
+    </script>
 @endpush
+
 
 @push('script')
     <script type="text/javascript"

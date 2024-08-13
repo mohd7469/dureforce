@@ -48,7 +48,9 @@
                                     <h5 class="my-3 text-center">{{$user->job_title}}</h5>
                                     <div class="text-center">
                                         <p class="short-text"><i class="fa fa-map-marker-alt"></i> {{$user->location}}</p>
-                                        <p class="short-text"><i class="fa fa-clock"></i> {{ date('h:i a', strtotime($user->last_activity_at))}} Local time</p>
+                                   {{--     <p class="short-text"><i class="fa fa-clock"></i> {{ date('h:i a', strtotime($user->last_activity_at))}} Local time</p>--}}
+                                   <p class="short-text"><i class="fa fa-clock"></i> <span id="local-time">Loading...</span> Local time</p>
+
                                         {{--                                  edit profile modal--}}
                                         @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
                                         <div class="d-flex mt-5">
@@ -62,11 +64,17 @@
                                     
 
                                     <div class="article">
-                                    <p>{{ !empty($user->basicProfile->about) ? $user->basicProfile->about : ""}}</p>
+                               <!--     <p>{{ !empty($user->basicProfile->about) ? $user->basicProfile->about : ""}}</p> -->
                                         {{--                                        <a id="clickme">Read more</a>--}}
 
                                     </div>
-                                   <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
+                                    <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
+                                        <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
+                                            <h5>Rate</h5>
+                                            <span class="profile-span-date">${{$user->rate_per_hour}} / hr</span>
+                                        </div>
+                                    </div>
+                            <!--       <div class="row profile-data  d-flex align-items-center justify-content-center mb-2">
                                             <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
                                                 <h5>Rate</h5>
                                                 <span class="profile-span-date">${{$user->rate_per_hour}} / hr</span>
@@ -76,7 +84,7 @@
                                                 <span class="profile-span-date">5 Years</span>
                                             </div>
                                             <div class="sep-solid"></div>
-                                            <!-- Force next columns to break to new line -->
+                                            
                                             <div class="w-100"></div>
                                             <div class="col-6 col-xl-6" style="border-right: 1px solid #c5e0e0;">
                                                 <h5>Total Jobs</h5>
@@ -97,7 +105,7 @@
                                                 </h5>
                                                 <span class="profile-span-date">4/5</span>
                                             </div>
-                                        </div>
+                                        </div>-->
                                        <div class="col-xl-12 mb-4">
                                         <strong>Core Skills & Expertise</strong>
                                         <div class="tags-container">
@@ -127,9 +135,9 @@
                                 <div class="container upper-tab">
                                     <!-- Nav tabs -->
                                     <ul class="nav ">
-                                        <li class="nav-item">
+                                    <!--    <li class="nav-item">
                                             <a class="nav-link {{ \Route::is('seller.profile') || \Route::is('seller.profile.view') ? 'active' : '' }}" data-bs-toggle="tab" href="#msg">Work History</a>
-                                        </li>
+                                        </li> -->
                                         <li class="nav-item">
                                             <a class="nav-link" data-bs-toggle="tab" href="#Exp">Experience</a>
                                         </li>
@@ -148,7 +156,7 @@
                             </div>
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane container {{ \Route::is('seller.profile') || \Route::is('seller.profile.view') ? 'active' : 'fade' }}" id="msg">
+                   <!--       <div class="tab-pane container {{ \Route::is('seller.profile') || \Route::is('seller.profile.view') ? 'active' : 'fade' }}" id="msg" >
                                     <div class="container col-sm ">
                                             <div class="inner-tab">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -241,10 +249,10 @@
                                                 </div>
                                            </div>
                                     </div>
-                                </div>
+                                </div> -->
                             
                                 {{-- experience tab --}}
-                            <div class="tab-pane container fade " id="Exp">
+                            <div class="tab-pane container active " id="Exp">
                                 <div class="container mt-5 mb-5">
                                     <div class="row section-heading-border justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"> <b>My Experience</b></div>
@@ -1178,7 +1186,24 @@
 
     <script src="{{asset($activeTemplateTrue.'frontend/js/select2.min.js')}}"></script>
     <script src="{{asset('/assets/resources/templates/basic/frontend/js/seller_profile.js')}}"></script>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function updateTime() {
+                var now = new Date();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                var strTime = hours + ':' + minutes + ' ' + ampm;
+                document.getElementById('local-time').textContent = strTime;
+            }
+            updateTime(); // Update the time immediately
+            setInterval(updateTime, 60000); // Update the time every minute
+        });
+    </script>
+    
 <script>
 
     "use strict";

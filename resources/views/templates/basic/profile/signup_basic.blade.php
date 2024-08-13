@@ -694,7 +694,19 @@
                 }
             });
         }
-
+        function notify(type, message) {
+    if (type === 'success') {
+        iziToast.success({
+            message: message,
+            position: "topRight",
+        });
+    } else if (type === 'error') {
+        iziToast.error({
+            message: message,
+            position: "topRight",
+        });
+    }
+}
         function saveUserBasic() {
             var profile_file=$('input[type=file]')[0].files[0];
             let form_data = new FormData(user_basic_form[0]);
