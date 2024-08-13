@@ -359,6 +359,30 @@
                 width: auto;
             }
         }
+        @media only screen and (max-width:683px){
+            a.offer-width {
+                font-size: 12px;
+                border: 1px solid #7f007f;
+                padding: 8px 5px;
+                font-weight: 600;
+                border-radius: 4px;
+                margin: 0px 6px;
+                line-height: 18px;
+                text-align: center;
+                color: #7F007F;
+            }
+            p.offer-title {
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 28px;
+                text-align: left;
+                color: #000000;
+            }
+            #userImg {
+                height: 74px;
+                width: 74px;
+            }
+        }
     </style>
 @endpush
 @push('script')

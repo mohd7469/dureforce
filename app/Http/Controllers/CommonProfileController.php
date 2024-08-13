@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\TryCatch;
 
 class CommonProfileController extends Controller
 {
@@ -325,5 +326,18 @@ class CommonProfileController extends Controller
     {
         $pageTitle='Chat Container';
         return Inertia::render('Chat/HelloComponent',['pageTitle' =>$pageTitle]);
+    }
+
+    public function SwitchProfile(){
+        try {
+            $user=auth()->user();
+            $user->last_role_activity  =  ($user->last_role_activity == Role::$Freelancer) ? Role::$Client: Role::$Freelancer;
+            $user->save();
+            return redirect()->route('user.home');
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+           Log::error("Error In Switch Profile :".$th->getMessage());
+        }
+       
     }
 }
