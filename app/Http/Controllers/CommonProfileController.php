@@ -94,7 +94,7 @@ class CommonProfileController extends Controller
             'designation' => 'required|string',
             'about' => 'required|string',
             'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'city_id' => 'required|exists:world_cities,id',
+            'city_id' => 'nullable|exists:world_cities,id',
             'languages' => 'required|array',
             'languages.*.language_level_id' => 'required',
             'languages.*.language_id' => 'required|exists:world_languages,id',

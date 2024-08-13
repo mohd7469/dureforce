@@ -90,7 +90,7 @@
                                     >
                                     <label
                                        class="mt-4"
-                                       >Location
+                                       >Country
                                        <span
                                           class="imp"
                                           >*</span

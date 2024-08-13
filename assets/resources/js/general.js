@@ -1,4 +1,4 @@
-// todo should move this into seprate file only for search
+// search.js
 var data = [
   {
     id: 1,
@@ -25,32 +25,6 @@ var data = [
     searchText: null,
   },
 ];
-(function($) {
-
-  $(".sub-nav").on('scroll', function() {
-    $val = $(this).scrollLeft();
-
-    if($(this).scrollLeft() + $(this).innerWidth()>=$(this)[0].scrollWidth){
-      $(".nav-next").hide();
-    } else {
-      $(".nav-next").show();
-    }
-
-    if($val == 0){
-      $(".nav-prev").hide();
-    } else {
-      $(".nav-prev").show();
-    }
-  });
-  console.log( 'init-scroll: ' + $(".nav-next").scrollLeft() );
-  $(".nav-next").on("click", function(){
-    $(".sub-nav").animate( { scrollLeft: '+=460' }, 200);
-
-  });
-  $(".nav-prev").on("click", function(){
-    $(".sub-nav").animate( { scrollLeft: '-=460' }, 200);
-  });
-})(jQuery);
 
 $(document).ready(function () {
   $(".search-select-header").select2({
@@ -59,17 +33,19 @@ $(document).ready(function () {
     placeholder: "Search",
     matcher: matchStart,
   });
+
+  $(".search-select-header").on("select2:select", function (e) {
+    var data = e.params.data;
+    console.log(data);
+    window.location = `${data.url}?title=${data.searchText}`;
+  });
+
+  setCatgoryNameIntoFilter();
 });
 
-$(".search-select-header").on("select2:select", function (e) {
-  var data = e.params.data;
-  console.log(data);
-  window.location = `${data.url}?title=${data.searchText}`;
-});
-
-function matchStart(option, data) {
-  if (option.term) {
-    data.searchText = option.term;
+function matchStart(params, data) {
+  if (params.term) {
+    data.searchText = params.term;
   } else {
     data.searchText = data.heading;
   }
@@ -90,9 +66,6 @@ function formatState(state) {
   return $state;
 }
 
-$(document).ready(function () {
-  setCatgoryNameIntoFilter();
-});
 function setCatgoryNameIntoFilter() {
   var urlParams = new URLSearchParams(window.location.search);
 
@@ -100,19 +73,3 @@ function setCatgoryNameIntoFilter() {
     $("#category_search_selected").text(urlParams.get("category_name"));
   }
 }
-function showPassword(){
-  var x = document.getElementById("password");
-  if (x.type === "password") {
-    x.type = "text";
-    $('#hide').show();
-    $('#unhide').hide();
-  } else {
-    x.type = "password";
-    $('#hide').hide();
-    $('#unhide').show();
-  }
-}
-// $(".select2-custom").select2({
-//   placeholder:'Type Skills and Enter press',
-//   allowClear: true
-// });
