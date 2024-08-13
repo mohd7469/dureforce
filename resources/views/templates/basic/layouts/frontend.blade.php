@@ -111,42 +111,34 @@
 @include('partials.plugins')
 @include('partials.notify')
 <script>
-
     (function ($) {
         "use strict";
+    
+        // Language Selection
         $(".langSel").on("change", function () {
             window.location.href = "{{route('home')}}/change/" + $(this).val();
         });
-
+    
+        // Favorite Service
         $(document).on("click", ".loveHeartAction", function () {
             let id = $(this).data('serviceid');
-            $.ajax({
-                headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}",},
-                url: "{{ route('user.favorite.service') }}",
-                method: "POST",
-                dataType: "json",
-                data: {id: id},
-                success: function (response) {
-                    if (response.success) {
-                        notify('success', response.success);
-                    } else {
-                        $.each(response, function (i, val) {
-                            notify('error', val);
-                        });
-                    }
-                }
-            });
+            handleFavorite("{{ route('user.favorite.service') }}", id);
         });
-
-
+    
+        // Favorite Software
         $(document).on("click", ".loveHeartActionSoftware", function () {
             let id = $(this).data('softwareid');
+            handleFavorite("{{ route('user.favorite.software') }}", id);
+        });
+    
+        // Handle Favorite Function
+        function handleFavorite(url, id) {
             $.ajax({
-                headers: {"X-CSRF-TOKEN": "{{ csrf_token() }}",},
-                url: "{{ route('user.favorite.software') }}",
+                headers: { "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+                url: url,
                 method: "POST",
                 dataType: "json",
-                data: {id: id},
+                data: { id: id },
                 success: function (response) {
                     if (response.success) {
                         notify('success', response.success);
@@ -157,273 +149,58 @@
                     }
                 }
             });
-        });
+        }
+    
+        // Initialize Carousels
+        function initializeCarousel(elementId, slidesToShow) {
+            var carouselElement = document.querySelector(elementId);
+            if (!carouselElement) return;
+    
+            if (window.matchMedia("(min-width: 768px)").matches) {
+                var carousel = new bootstrap.Carousel(carouselElement, {
+                    interval: false,
+                });
+    
+                var carouselInner = $(elementId + " .carousel-inner");
+                var carouselWidth = carouselInner[0].scrollWidth;
+                var cardWidth = $(elementId + " .carousel-item").width();
+                var scrollPosition = 0;
+    
+                $(elementId + " .carousel-control-next").on("click", function () {
+                    if (scrollPosition < carouselWidth - cardWidth * slidesToShow) {
+                        scrollPosition += cardWidth;
+                        carouselInner.animate({ scrollLeft: scrollPosition }, 600);
+                    }
+                });
+    
+                $(elementId + " .carousel-control-prev").on("click", function () {
+                    if (scrollPosition > 0) {
+                        scrollPosition -= cardWidth;
+                        carouselInner.animate({ scrollLeft: scrollPosition }, 600);
+                    }
+                });
+            } else {
+                $(carouselElement).addClass("slide");
+            }
+        }
+    
+        // Initialize all carousels
+        initializeCarousel("#carouselFeatureServices", 3);
+        initializeCarousel("#carouselFeatureJobs", 3);
+        initializeCarousel("#carouselFeatureSoftware", 3);
+        initializeCarousel("#carouselPublications", 3);
+        initializeCarousel("#carouselUserProfile", 3);
+    
+        // Special handling for wider screens
+        if (window.matchMedia("(min-width: 1280px)").matches) {
+            initializeCarousel("#carouselFeatureServices", 4);
+            initializeCarousel("#carouselFeatureSoftware", 4);
+            initializeCarousel("#carouselPublications", 4);
+            initializeCarousel("#carouselUserProfile", 4);
+        }
+    
     })(jQuery);
-
-    var multipleCardCarouselServices = document.querySelector(
-        "#carouselFeatureServices"
-    );
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarouselServices, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselFeatureServices .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 3) {
-                scrollPosition += cardWidth;
-                $("#carouselFeatureServices .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselFeatureServices .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselFeatureServices .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }
-    var multipleCardCarouselJobs = document.querySelector(
-        "#carouselFeatureJobs"
-    );
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarouselJobs, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselFeatureJobs .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 3) {
-                scrollPosition += cardWidth;
-                $("#carouselFeatureJobs .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselFeatureJobs .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselFeatureJobs .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }
-    if (window.matchMedia("(min-width: 1280px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarouselServices, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselFeatureServices .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 4) {
-                scrollPosition += cardWidth;
-                $("#carouselFeatureServices .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselFeatureServices .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselFeatureServices .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }else {
-        $(multipleCardCarouselServices).addClass("slide");
-    }
-    // second card home page
-    var multipleCardCarouselSoftware = document.querySelector(
-        "#carouselFeatureSoftware"
-    );
-    if (window.matchMedia("(min-width: 768px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarouselSoftware, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselFeatureSoftware .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 3) {
-                scrollPosition += cardWidth;
-                $("#carouselFeatureSoftware .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselFeatureSoftware .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselFeatureSoftware .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }
-    if (window.matchMedia("(min-width: 1280px)").matches) {
-        var carousel = new bootstrap.Carousel(multipleCardCarouselSoftware, {
-            interval: false,
-        });
-        var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-        var cardWidth = $(".carousel-item").width();
-        var scrollPosition = 0;
-        $("#carouselFeatureSoftware .carousel-control-next").on("click", function () {
-            if (scrollPosition < carouselWidth - cardWidth * 4) {
-                scrollPosition += cardWidth;
-                $("#carouselFeatureSoftware .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-        $("#carouselFeatureSoftware .carousel-control-prev").on("click", function () {
-            if (scrollPosition > 0) {
-                scrollPosition -= cardWidth;
-                $("#carouselFeatureSoftware .carousel-inner").animate(
-                    { scrollLeft: scrollPosition },
-                    600
-                );
-            }
-        });
-    }else {
-        $(multipleCardCarouselSoftware).addClass("slide");
-    }
-    // end second card
-    // third card home page
-        var multipleCardCarouselPublications = document.querySelector(
-        "#carouselPublications"
-        );
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            var carousel = new bootstrap.Carousel(multipleCardCarouselPublications, {
-                interval: false,
-            });
-            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-            var cardWidth = $(".carousel-item").width();
-            var scrollPosition = 0;
-            $("#carouselPublications .carousel-control-next").on("click", function () {
-                if (scrollPosition < carouselWidth - cardWidth * 3) {
-                    scrollPosition += cardWidth;
-                    $("#carouselPublications .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            $("#carouselPublications .carousel-control-prev").on("click", function () {
-                if (scrollPosition > 0) {
-                    scrollPosition -= cardWidth;
-                    $("#carouselPublications .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-        }
-        if (window.matchMedia("(min-width: 1280px)").matches) {
-            var carousel = new bootstrap.Carousel(multipleCardCarouselPublications, {
-                interval: false,
-            });
-            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-            var cardWidth = $(".carousel-item").width();
-            var scrollPosition = 0;
-            $("#carouselPublications .carousel-control-next").on("click", function () {
-                if (scrollPosition < carouselWidth - cardWidth * 4) {
-                    scrollPosition += cardWidth;
-                    $("#carouselPublications .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            $("#carouselPublications .carousel-control-prev").on("click", function () {
-                if (scrollPosition > 0) {
-                    scrollPosition -= cardWidth;
-                    $("#carouselPublications .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-        }else {
-            $(multipleCardCarouselPublications).addClass("slide");
-        }
-    // end third card
-    // fourth card home page
-        var multipleCardCarouselUserProfile = document.querySelector(
-        "#carouselUserProfile"
-        );
-        if (window.matchMedia("(min-width: 768px)").matches) {
-            var carousel = new bootstrap.Carousel(multipleCardCarouselUserProfile, {
-                interval: false,
-            });
-            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-            var cardWidth = $(".carousel-item").width();
-            var scrollPosition = 0;
-            $("#carouselUserProfile .carousel-control-next").on("click", function () {
-                if (scrollPosition < carouselWidth - cardWidth * 3) {
-                    scrollPosition += cardWidth;
-                    $("#carouselUserProfile .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            $("#carouselUserProfile .carousel-control-prev").on("click", function () {
-                if (scrollPosition > 0) {
-                    scrollPosition -= cardWidth;
-                    $("#carouselUserProfile .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-        }
-        if (window.matchMedia("(min-width: 1280px)").matches) {
-            var carousel = new bootstrap.Carousel(multipleCardCarouselUserProfile, {
-                interval: false,
-            });
-            var carouselWidth = $(".carousel-inner")[0].scrollWidth;
-            var cardWidth = $(".carousel-item").width();
-            var scrollPosition = 0;
-            $("#carouselUserProfile .carousel-control-next").on("click", function () {
-                if (scrollPosition < carouselWidth - cardWidth * 4) {
-                    scrollPosition += cardWidth;
-                    $("#carouselUserProfile .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            $("#carouselUserProfile .carousel-control-prev").on("click", function () {
-                if (scrollPosition > 0) {
-                    scrollPosition -= cardWidth;
-                    $("#carouselUserProfile .carousel-inner").animate(
-                        { scrollLeft: scrollPosition },
-                        600
-                    );
-                }
-            });
-            // end fourth card
-        }else {
-            $(multipleCardCarouselUserProfile).addClass("slide");
-        }
-</script>
+    </script>
 
 <style>
     .keyword-container .badge {
