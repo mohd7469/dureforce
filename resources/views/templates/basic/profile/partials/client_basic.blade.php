@@ -28,7 +28,7 @@
                         <label class="mt-4"
                         >Designation
                             <span class="imp"
-                            >*</span
+                            ></span
                             ></label
                         >
                         <input
@@ -44,7 +44,7 @@
                     <label class="mt-4"
                     >About You
                         <span class="imp"
-                        >*</span
+                        ></span
                         ></label
                     >
                     <textarea
@@ -56,9 +56,9 @@
                     >{{ $basicProfile->about }}</textarea>
                 </div>
                 {{-- location --}}
-                <div class="col-md-12">
+           <!--     <div class="col-md-12">
                     <label class="mt-4"
-                    >City
+                    >City 
                         <span class="imp"
                         >*</span
                         ></label
@@ -86,7 +86,7 @@
 
                         @endforeach
                     </select>
-                </div>
+                </div> -->
                 {{-- phone --}}
                 <div class="col-md-12">
                     <label class="mt-4"
@@ -104,7 +104,7 @@
                     />
                 </div>
                 {{-- language row --}}
-                <div
+           <!--     <div
                         class="language-container row"
                         id="language-row"
                         style="
@@ -283,16 +283,16 @@
                         {{-- --- --}}
                     @endif
 
-                </div>
+                </div> -->
                 {{-- add another language btn --}}
-                <button
+             <!--   <button
                         type="button"
                         class="my-2"
                         id="add-language"
                         onclick="addMoreLanguages()"
                 >
                     Add another
-                </button>
+                </button> -->
 
             </div>
         </div>

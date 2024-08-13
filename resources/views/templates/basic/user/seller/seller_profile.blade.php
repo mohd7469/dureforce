@@ -615,7 +615,7 @@
 
                                 <div class="col-xl-12">
 
-                                    <div class="form-group">
+                                   <div class="form-group">
                                         <label for="title">Location *</label>
                                         <select class="form-control" name="city_id" id="">
                                             <option value="">Select City</option>
@@ -624,7 +624,7 @@
                                             @endforeach
                                         </select>
                                     
-                                    </div>
+                                    </div> 
 
                                     <div class="col-xl-12">
                                         <div class="form-group">

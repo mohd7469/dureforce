@@ -91,15 +91,14 @@ class CommonProfileController extends Controller
     {
         $request_data = $request->all();
         $rules = [
-            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string',
-            'about' => 'required|string',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'designation' => 'nullable|string',
+            'about' => 'nullable|string',
+            'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
             'city_id' => 'nullable|exists:world_cities,id',
-            'languages' => 'required|array',
-            'languages.*.language_level_id' => 'required',
-            'languages.*.language_id' => 'required|exists:world_languages,id',
-
+            'languages' => 'nullable|array',
+            'languages.*.language_level_id' => 'nullable|required_with:languages.*.language_id',
+            'languages.*.language_id' => 'nullable|exists:world_languages,id|required_with:languages.*.language_level_id',
         ];
         $messages =[
             'designation.required'     => 'Designation is required',
