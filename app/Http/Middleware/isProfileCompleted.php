@@ -23,7 +23,7 @@ class isProfileCompleted
         if (Auth::check()) {
             $user = auth()->user();
 
-            if (in_array(Role::$ClientName, $user->getRoleNames()->toArray())) {
+            if (getLastLoginRoleId()==Role::$Client) {
 
                 if ($user->getLanguagesMoreThanOneCount() > 0  && $user->getCompaniesMoreThanOneCount() > 0) {
                     return $next($request);
@@ -33,14 +33,12 @@ class isProfileCompleted
                 }
             }
 
-            elseif (in_array(Role::$FreelancerName, $user->getRoleNames()->toArray())) {
+            elseif (getLastLoginRoleId()==Role::$Freelancer) {
                 if ($user->getLanguagesMoreThanOneCount() > 0 && $user->getExperienceMoreThanOneCount() > 0 && $user->getSkillsMoreThanOneCount() > 0 && $user->getEduationMoreThanOneCount() > 0) {
                     return $next($request);
                 } else {
                     $notify[] = ['error', 'Please complete your profile first.'];
                     return redirect()->route('user.basic.profile', ['view' => 'step-1'])->withNotify($notify);
-                    // dd("dad");
-
                 }
             }
         }
