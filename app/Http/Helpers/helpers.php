@@ -1612,8 +1612,15 @@ function getUserRoleId()
 
 function getLastLoginRoleId()
 {
-    $user=auth()->user();
-    return $user->last_role_activity;
+    $user = auth()->user();
+    
+    // Check if the user is authenticated
+    if ($user) {
+        return $user->last_role_activity;
+    }
+
+    // If there is no authenticated user, return an empty value or null
+    return null;
 }
 function getLastLoginRoleName()
 {

@@ -2,6 +2,7 @@
     <div class="carousel-inner">
     @foreach($sellers as $seller)
         <div class="carousel-item ">
+   
             <div class="card user_profile_card  bg-gray">
                     <div class="image-holder">
                         <figure>
@@ -14,7 +15,11 @@
                                 alt="Card image cap">
                         @endif
                             <figcaption>
-                                <span class="name">{{ !empty($seller->fullname)? $seller->fullname: '' }}</span>
+                                <span class="name">
+                                    <a href="{{ route('user.public', ['id' => $seller->id]) }}" class="card-link">
+                                        {{ !empty($seller->fullname) ? $seller->fullname : '' }}
+                                    </a>
+                                </span>
                                     <span>{{ !empty($seller->location)? $seller->location: '' }}</span>
                             </figcaption>
                         </figure>
