@@ -197,9 +197,13 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getJobTitleAttribute()
     {
-        return $this->basicProfile->designation;
+        // Check if the basicProfile relationship exists and if the designation property is set
+        if ($this->basicProfile && $this->basicProfile->designation) {
+            return $this->basicProfile->designation;
+        } else {
+            return null; // or return a default value, such as 'N/A'
+        }
     }
-    
     /**
      * getLocationAttribute
      *
