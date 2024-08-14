@@ -87,6 +87,7 @@ Route::view('/ticket-details', 'templates.basic.supports.ticket_details');
 
 
 Route::get('hello', [\App\Http\Controllers\CommonProfileController::class,'hello'])->name('hello');
+Route::get('/user/public/{id}', [\App\Http\Controllers\ServiceController::class, 'getUserProfile'])->name('user.public');
 
 Route::view('/portfolio', 'templates.basic.portfolio.index');
 

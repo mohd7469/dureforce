@@ -180,6 +180,7 @@ class ProfileController extends Controller
      */
     public function getUserProfile(Request $request ,$uuid='')
     {
+ 
         $pageTitle = 'Seller Profile';
         $is_active = 1;
         $user = User::withAll()->find(auth()->user()->id);

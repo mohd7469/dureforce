@@ -7,7 +7,25 @@ use App\Models\Service;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
-
+use App\Models\WorldLanguage;
+use App\Rules\PhoneNumberValidate;
+use App\Models\UserEducation;
+use App\Models\UserExperiences;
+use App\Models\UserBasic;
+use App\Models\Category;
+use App\Models\Country;
+use App\Models\Degree;
+use App\Models\LanguageLevel;
+use App\Models\Skills;
+use App\Models\UserSkill;
+use Khsing\World\Models\Country as ModelsCountry;
+use App\Models\User;
+use Khsing\World\Models\City;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
+use PhpParser\Node\Stmt\TryCatch;
 class ServiceController extends BaseController
 {
     /**
@@ -121,4 +139,64 @@ class ServiceController extends BaseController
     {
         //
     }
+
+    public function getUserProfile($id = null)
+    {
+        try {
+            $pageTitle = 'Seller Profile';
+    
+            // Retrieve the user by ID. No authentication check, as this is for public access.
+            $user = User::withAll()->where('id', $id)->firstOrFail();
+    
+            // Retrieve necessary data
+            $skills = Skills::select('id', 'name')->get();
+            $userskills = $user->skills;
+            $basicProfile = $user->basicProfile;
+            $user_languages = $user->languages;
+            $cities = City::select('id', 'name')->where('country_id', $user->country_id)->get();
+            $languages = WorldLanguage::select('id', 'iso_language_name')->get();
+            $language_levels = LanguageLevel::select('id', 'name')->get();
+            $countries = Country::select('id', 'name')->get();
+            $user_experience = $user->experiences;
+            $user_education = $user->education;
+            $user_portfolios = $user->portfolios;
+            $categories = Category::select('id', 'name')->get();
+            $degrees = Degree::select('id', 'title')->get();
+    
+            // Check user role to retrieve testimonials
+            if (getLastLoginRoleId() == Role::$Freelancer) {
+                $testimonials = $user->testimonials;
+            } else {
+                $testimonials = $user->testimonials()->Approved();
+            }
+    
+            // Return the view with the gathered data
+            return view($this->activeTemplate . 'user.seller.seller_profile', compact(
+                'pageTitle', 
+                'userskills', 
+                'degrees', 
+                'countries', 
+                'language_levels', 
+                'languages', 
+                'skills', 
+                'user', 
+                'user_experience', 
+                'user_education', 
+                'user_portfolios', 
+                'categories', 
+                'basicProfile', 
+                'cities', 
+                'user_languages', 
+                'testimonials'
+            ));
+        } catch (\Throwable $th) {
+            // Log the error
+            Log::error("Error in getUserProfile: ", ['error' => $th->getMessage()]);
+            
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'Unable to load profile.');
+        }
+    }
+    
+
 }

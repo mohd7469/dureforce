@@ -603,35 +603,40 @@
                                     <div class="form-group">
                                         <label for="title">Phone *</label>
                                         <input
-                                                type="number"
-                                                name="phone_number"
-                                                placeholder=""
-                                                id="phone"
-                                                step="any"
-                                                value ="{{$basicProfile->phone_number}}"
-                                            />
+                                            type="number"
+                                            name="phone_number"
+                                            placeholder=""
+                                            id="phone"
+                                            step="any"
+                                            value="{{ isset($basicProfile->phone_number) ? $basicProfile->phone_number : '' }}"
+                                        />
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-xl-12">
 
-                                   <div class="form-group">
+                                    <div class="form-group">
                                         <label for="title">Location *</label>
                                         <select class="form-control" name="city_id" id="">
                                             <option value="">Select City</option>
                                             @foreach ($cities as $city)
-                                                <option value="{{$city->id}}" {{$basicProfile->city_id==$city->id ? 'selected' : ''}}>{{$city->name}}</option>
+                                                <option value="{{ $city->id }}" {{ isset($basicProfile->city_id) && $basicProfile->city_id == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}
+                                                </option>
                                             @endforeach
                                         </select>
+                                    </div>
                                     
-                                    </div> 
-
                                     <div class="col-xl-12">
                                         <div class="form-group">
-                                            <label for="title">About  *</label>
-                                            <textarea type="text" class="form-control" name="about" cols="4"  style="min-height: 90px !important">{{$basicProfile->about}}</textarea>
+                                            <label for="title">About *</label>
+                                            <textarea type="text" class="form-control" name="about" cols="4" style="min-height: 90px !important">
+                                                {{ isset($basicProfile->about) ? $basicProfile->about : '' }}
+                                            </textarea>
                                         </div>
                                     </div>
+                                    
 
                                     <div class="col-xl-12">
                                         <div class="form-group">
