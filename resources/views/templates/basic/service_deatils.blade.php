@@ -241,8 +241,12 @@
 
                                                 <div class="widget-btn- mt-20">
                                                     @if (getLastLoginRoleId()==App\Models\Role::$Freelancer)
-                                                        <a href="{{ route('user.service.create', [$service->id])}}"
-                                                           class="standard-btn mr-15">@lang('Edit Service')</a>
+                                                    @if(Auth::check() && Auth::user()->id === $service->user_id)
+                                                    <a href="{{ route('user.service.create', [$service->id])}}" class="standard-btn mr-15">
+                                                        @lang('Edit Service')
+                                                    </a>
+                                                @endif
+                                                
                                                     @else
                                                         
                                                         

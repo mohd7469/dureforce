@@ -34,7 +34,7 @@
                                                 </li>
                                                 <li class="nav-item">
                                                     <a class="nav-link" data-bs-toggle="tab"
-                                                    href="#My_jobs_tab">My Jobs (5)</a>
+                                                    href="#My_jobs_tab">My Jobs(0) </a>
                                                 </li>
                                             </ul>
                                         </div>

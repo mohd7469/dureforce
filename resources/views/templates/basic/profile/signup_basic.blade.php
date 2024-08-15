@@ -707,35 +707,34 @@
         });
     }
 }
-        function saveUserBasic() {
-            var profile_file=$('input[type=file]')[0].files[0];
-            let form_data = new FormData(user_basic_form[0]);
-            form_data.append('profile_picture', profile_file);
-            // var form_data = user_basic_form.serialize();
-            console.log(form_data);
-            $.ajax({
-                  type:"POST",
-                  url:"{{route('user.profile.basics.save')}}",
-                  data: form_data,
-                  processData: false,
-                contentType: false,
-                  success:function(response){
+function saveUserBasic() {
+    var profile_file = $('input[type=file]')[0].files[0];
+    let form_data = new FormData(user_basic_form[0]);
 
-                      if(response.success){
-                        notify('success', response.success);
-                        formPostProcess(experienceTab);
-                      }
-                      else if(response.validation_errors){
-                        displayErrorMessage(response.validation_errors);
-                      }
-                      else{
-                        notify('error', response.error);
-                      }
+    // Only append the profile picture if a file is selected
+    if (profile_file) {
+        form_data.append('profile_picture', profile_file);
+    }
 
-                  }
-              });
-             
+    console.log(form_data);
+    $.ajax({
+        type: "POST",
+        url: "{{route('user.profile.basics.save')}}",
+        data: form_data,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+            if (response.success) {
+                notify('success', response.success);
+                formPostProcess(experienceTab);
+            } else if (response.validation_errors) {
+                displayErrorMessage(response.validation_errors);
+            } else {
+                notify('error', response.error);
+            }
         }
+    });
+}
 
         function saveUserPaymentMethod()
         {
