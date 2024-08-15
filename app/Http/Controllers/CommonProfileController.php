@@ -89,6 +89,7 @@ class CommonProfileController extends Controller
      */
     public function saveUserBasics(Request $request)
     {
+       
         $request_data = $request->all();
         $rules = [
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
@@ -100,68 +101,64 @@ class CommonProfileController extends Controller
             'languages.*.language_level_id' => 'nullable|required_with:languages.*.language_id',
             'languages.*.language_id' => 'nullable|exists:world_languages,id|required_with:languages.*.language_level_id',
         ];
-        $messages =[
-            'designation.required'     => 'Designation is required',
-            'about.required' => 'About is required',
-            'phone_number.required'        => 'Phone No is required',
-            'city_id.required'    => 'City is required',
-            'languages.required'    => 'Please Select Language',
-            'languages.*.language_level_id.required'    => 'Please Select Proficiency Level',
-            'languages.*.language_id.required'    => 'Please Select at least one Language',
-
-        ];
-        
+    
+        // Add extra rules if the user is a Freelancer
         if (getLastLoginRoleId() == Role::$Freelancer) {
-           
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
+       
+        $validator = Validator::make($request_data, $rules);
 
-        $validator = Validator::make($request_data, $rules,$messages);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
+            
             try {
-
                 DB::beginTransaction();
-
+                
                 $user = auth()->user();
+                
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                        'city_id' => $request_data['city_id'],
-                        'designation' => $request_data['designation'],
-                        'about' => $request_data['about'],
-                        'phone_number' => $request_data['phone_number'],
-                    ]);
-                $user->languages()->delete();
-                $user->languages()->createMany($request_data['languages']);
+                        'city_id' => $request_data['city_id'] ?? null,
+                    'designation' => $request_data['designation'] ?? '',
+                    'about' => $request_data['about'] ?? '',
+                    'phone_number' => $request_data['phone_number'] ?? '',
+                    ]
+                );
+              
+                if (!empty($request_data['languages'])) {
+                    $user->languages()->delete();
+                    $user->languages()->createMany($request_data['languages']);
+                }
+             
                 if (getLastLoginRoleId() == Role::$Freelancer) {
                     $user->categories()->sync($request_data['category_id']);
                 }
-
-                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
-
+            
+                // Handle profile picture upload
+                if ($request->hasFile('profile_picture')) {
                     $path = imagePath()['attachments']['path'];
-                    $file = $request->profile_picture;
+                    $file = $request->file('profile_picture');
                     $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
                     $url = $path . '/' . $filename;
                     $user->basicProfile()->update(['profile_picture' => $url]);
-
                 }
+    
                 $user->save();
-
+    
                 DB::commit();
                 return response()->json(["success" => "User Basics Updated Successfully"]);
-
+    
             } catch (\Throwable $exception) {
-
                 DB::rollback();
-                return response()->json(['error' => 'Failled To Save User Profile' ]);
+                return response()->json(['error' => 'Failed To Save User Profile']);
             }
         }
     }
+    
 
     /**
      * getCities

@@ -35,19 +35,20 @@
                           
                         </div>
                         <div class="col-md-12">
-                            <label class="mt-4">Company Phone*  </label>
-                            <input type="number" step="any" name="phone" value="{{ old('name', @$user->company->number) }}" value=""
-                                placeholder=""  />
+                            <label class="mt-4">Company Phone</label>
+                            <input type="number" step="any" name="phone" value="{{ old('phone', $user->company->number ?? '') }}" placeholder="" />
                         </div>
+                        
                         <div class="col-md-12">
                             
                             <div class="col-md-12">
-                                <label class="mt-4">Company Email Address* </label>
-                                <input type="text" name="email"  value="{{ old('name', @$user->company->email) }}"placeholder="" />
+                                <label class="mt-4">Company Email Address</label>
+                                <input type="text" name="email" value="{{ old('email', $user->company->email ?? '') }}" placeholder="" />
                             </div>
+                            
                             <div class="col-md-12">
                                 
-                                <label class="mt-4">Location  </label>
+                                <label class="mt-4">Country  </label>
                                 <select
                                     name="country_id"
                                     class="form-control select-lang"
@@ -74,11 +75,10 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label class="mt-4">Company VAT*  </label>
-                                <input type="text" id="company-vat" value="{{ old('name', @$user->company->vat) }}" name="vat"
-                                    placeholder=""  />
+                                <label class="mt-4">Company VAT </label>
+                                <input type="text" id="company-vat" value="{{ old('vat', $user->company->vat ?? '') }}" name="vat"
+                                    placeholder="" />
                             </div>
-
                             <div class="col-md-12">
                                 <label class="mt-4">Company Website </label>
                                 <input type="text" id="company-website" value="{{ old('name', @$user->company->website) }}" name="url"

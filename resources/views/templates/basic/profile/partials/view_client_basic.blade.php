@@ -88,7 +88,7 @@
         
                       <div class="cp-info-container">
                         <div class="cp-info-box">
-                            <p class="cp--jbh">Location</p>
+                            <p class="cp--jbh">Country</p>
                             <p class="cp-jt">
 
                                 @foreach ($countries as $country)
@@ -128,7 +128,7 @@
                          </div>
 
                         <div class="cp-info-box">
-                           <p class="cp--jbh">Language</p>
+                           <p class="cp--jbh">Country</p>
                            @foreach ($user_v1languages as $language )
                               <p class="cp-jt">{{$language->iso_language_name }}</p>
                            @endforeach

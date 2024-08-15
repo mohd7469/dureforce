@@ -598,9 +598,9 @@ class ProfileController extends Controller
         $rules = [
             'name' => 'required',
             'country_id' => 'required',
-            'email' => 'email',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:4|max:15|gt:0',
-            'vat' => 'required|string|not_in:0|min:4|max:15|regex:/^[0-9]+$/u',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:4|max:15|gt:0',
+            'vat' => 'nullable|string|not_in:0|min:4|max:15|regex:/^[0-9]+$/u',
             'url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'linkedin_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],
             'facebook_url' => ['nullable', "regex:/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i"],

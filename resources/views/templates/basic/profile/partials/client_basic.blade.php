@@ -8,20 +8,18 @@
 
             <h1 class="mb-4">{{auth()->user() ? auth()->user()->first_name.' '. auth()->user()->last_name : null}}</h1>
             <span class="cmnt pb-4">
-                Complete your profile to join our global community of freelancers and start
-                selling
-                your
-                service
-                to growing network of businesses.
+                We're thrilled to have you on board. To help you find the best technical profiles that match your job needs, please take a moment to complete your profile.
             </span>
             <div>
                 <label class="mt-4">Profile Picture</label>
-                <div class="profile-img col-md-12" action="">
+                <div class="profile-img col-md-12">
                     <input type="file" name="profile_picture" id="img-upload" accept="image/png, image/gif, image/jpeg"
-                           class="imgInp" onchange="previewFile(this)"
-                           title=""/>
-                    <image class="card-img-top image-ui" width="100" height="100" id="preview-img" src="{{ !empty($basicProfile->profile_picture)? $basicProfile->profile_picture: getImage('assets/images/default.png') }}" alt="">
+                           class="imgInp" onchange="previewFile(this)" title=""/>
+                    <img class="card-img-top image-ui" width="100" height="100" id="preview-img" 
+                         src="{{ $basicProfile->profile_picture ?? getImage('assets/images/default.png') }}" 
+                         alt="Profile Picture">
                 </div>
+                
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12">
@@ -92,7 +90,7 @@
                     <label class="mt-4"
                     >Phone
                         <span class="imp"
-                        >*</span
+                        ></span
                         ></label
                     >
                     <input

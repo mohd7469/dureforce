@@ -1196,7 +1196,7 @@
                             <label class="mt-4">Company Email Address* </label>
                             <input type="text" name="email" value="" placeholder="">
                             <div class="col-md-12">
-                                <label class="mt-4">Location  </label>
+                                <label class="mt-4">Country  </label>
                                 <input type="text" id="company-location" name="location" value="" placeholder="City, Country">
                             </div>
                             <div class="col-md-12">
