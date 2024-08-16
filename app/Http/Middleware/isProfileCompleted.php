@@ -25,16 +25,17 @@ class isProfileCompleted
 
             if (getLastLoginRoleId()==Role::$Client) {
 
-                if ($user->getLanguagesMoreThanOneCount() >= 0  && $user->getCompaniesMoreThanOneCount() >=0) {
+               // if ($user->getLanguagesMoreThanOneCount() > 0  && $user->getCompaniesMoreThanOneCount() > 0) {
+                if ($user->getCompaniesMoreThanOneCount() > 0) {
                     return $next($request);
                 } else {
-                    $notify[] = ['error', 'Please complete your profile first testing.'];
+                    $notify[] = ['error', 'Please complete your profile first.'];
                     return redirect()->route('user.basic.profile', ['view' => 'step-1'])->withNotify($notify);
                 }
             }
 
             elseif (getLastLoginRoleId()==Role::$Freelancer) {
-                if ($user->getLanguagesMoreThanOneCount() >= 0 && $user->getExperienceMoreThanOneCount() > 0 && $user->getSkillsMoreThanOneCount() > 0 && $user->getEduationMoreThanOneCount() > 0) {
+                if ($user->getLanguagesMoreThanOneCount() > 0 && $user->getExperienceMoreThanOneCount() > 0 && $user->getSkillsMoreThanOneCount() > 0 && $user->getEduationMoreThanOneCount() > 0) {
                     return $next($request);
                 } else {
                     $notify[] = ['error', 'Please complete your profile first.'];
