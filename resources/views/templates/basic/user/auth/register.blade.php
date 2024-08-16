@@ -59,15 +59,16 @@
                                 <small class="text-danger usernameExist"></small>
                             </div>
 
-                            <div class="col-lg-12 form-group">
-                                <select name="country" id="country" class="form-control form--control">
-                                    <option value="">Select country</option>
-                                    @foreach($countries as $key => $country)
-
-                                        <option value="{{ $country->id }}">{{ __($country->name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div> 
+                       <div class="col-lg-12 form-group">
+    <select name="country" id="country" class="form-control form--control">
+        <option value="">Select country</option>
+        @foreach($countries as $key => $country)
+            <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}>
+                {{ __($country->name) }}
+            </option>
+        @endforeach
+    </select>
+</div>
 
 
                             <div class="col-lg-6 form-group hover-input-popup">
@@ -92,18 +93,18 @@
                             <h5 class="text-center mb-4"><b>I want to</b></h5>
                             <div class="col-lg-12 form-group">
                                 <div class="btn-group justify-content-center" role="group" style="width: 100%" aria-label="Basic radio toggle button group">
-                                 <div>
-                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Freelancer}}" id="btnradio1" autocomplete="off" checked>
-                                    <label class="btn btn-outline-secondary btn-freelance" for="btnradio1">@lang('Work As A Freelancer')</label>
+                                    <div>
+                                        <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Freelancer}}" id="btnradio1" autocomplete="off" {{ old('role') == \App\Models\Role::$Freelancer ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-secondary btn-freelance" for="btnradio1">@lang('Work As A Freelancer')</label>
+                                    </div>
+                                    <div>
+                                        <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Client}}" id="btnradio2" autocomplete="off" {{ old('role') == \App\Models\Role::$Client ? 'checked' : '' }}>
+                                        <label class="btn btn-outline-secondary btn-hire" for="btnradio2">@lang('Hire For A Project')</label>
+                                    </div>
+                                    {{-- <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off"> --}}
+                                    {{-- <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label> --}}
                                 </div>
-                                <div>
-
-                                    <input type="radio" class="btn-check" name="role" value="{{\App\Models\Role::$Client}}" id="btnradio2" autocomplete="off">
-                                    <label class="btn btn-outline-secondary btn-hire" for="btnradio2">@lang('Hire For A Project')</label>
-                                </div>
-                                {{--                                    <input type="radio" class="btn-check" name="type" value="3" id="btnradio3" autocomplete="off">--}}
-                                {{--                                    <label class="btn btn-outline-secondary" for="btnradio3">@lang('Both')</label>--}}
-                                  </div>
+                                
                             </div>
 
 
