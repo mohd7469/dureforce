@@ -421,42 +421,61 @@ class ProfileController extends Controller
 
     public function buyersavePaymentMethod(Request $request)
     {
-
         $rules = [
             'card_number' => 'required|numeric|digits_between:13,19|gt:0',
-            'expiration_date' => 'required|date|after_or_equal:now',
+            'expiration_date' => [
+                'required',
+                'date_format:Y-m',
+                function($attribute, $value, $fail) {
+                    $expirationDate = \DateTime::createFromFormat('Y-m', $value);
+                    if (!$expirationDate) {
+                        $fail('The expiration date is not valid.');
+                    }
+    
+                    $expirationDate->setDate($expirationDate->format('Y'), $expirationDate->format('m'), 1);
+                    if ($expirationDate < now()) {
+                        $fail('The expiration date must be in the future.');
+                    }
+                },
+            ],
             'cvv_code' => 'required|numeric|digits_between:3,4',
             'name_on_card' => 'required',
             'country_id' => 'required|exists:world_countries,id',
             'city_id' => 'required|exists:world_cities,id',
             'address' => 'required',
         ];
-
+    
+        // Custom validation messages
         $messages = [
             'card_number.required' => 'Card Number is required',
             'expiration_date.required' => 'Expiration Date is required',
             'cvv_code.required' => 'CVV Code is required',
             'name_on_card.required' => 'Name on Card is required',
             'street_address.required' => 'Street Address is required',
-            'country_id' => 'Country is required',
-            'city_id' => 'City is required',
-
+            'country_id.required' => 'Country is required',
+            'country_id.exists' => 'Selected Country is invalid',
+            'city_id.required' => 'City is required',
+            'city_id.exists' => 'Selected City is invalid',
         ];
-
+    
         $validator = Validator::make($request->all(), $rules, $messages);
-
+    
         if ($validator->fails()) {
-
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
             try {
-
                 DB::beginTransaction();
+    
                 if ($request->update_payment_id) {
                     $userPayment = UserPayment::find($request->update_payment_id);
-
+    
                     $userPayment->card_number = $request->card_number;
-                    $userPayment->expiration_date = $request->expiration_date;
+    
+                    // Convert expiration date to full date with the first day of the month
+                    $expirationDate = \DateTime::createFromFormat('Y-m', $request->expiration_date);
+                    $expirationDate->setDate($expirationDate->format('Y'), $expirationDate->format('m'), 1);
+                    $userPayment->expiration_date = $expirationDate->format('Y-m-d');
+    
                     $userPayment->cvv_code = $request->cvv_code;
                     $userPayment->name_on_card = $request->name_on_card;
                     $userPayment->country_id = $request->country_id;
@@ -466,21 +485,18 @@ class ProfileController extends Controller
                     $userPayment->is_primary = 1;
                     $userPayment->is_active = 1;
                     $userPayment->save();
+    
                     DB::commit();
-
-                    $notify[] = ['success', 'User Payment Method Updated Profile.'];
-
-
-                    // return response()->json(['success'=> 'User Payment Method Updated Successfully','redirect_url' =>route('buyer.basic.profile',[ 'profile' => 'step-3'])]);
+    
                     return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.basic.profile', ['profile' => 'step-1'])]);
-
-                    // return redirect()->route('buyer.basic.profile',[ 'profile' => 'step-1'])->withNotify($notify);
-
-
+    
                 } else {
+                    $expirationDate = \DateTime::createFromFormat('Y-m', $request->expiration_date);
+                    $expirationDate->setDate($expirationDate->format('Y'), $expirationDate->format('m'), 1);
+    
                     $userPayment = UserPayment::create([
                         'card_number' => $request->card_number,
-                        'expiration_date' => $request->expiration_date,
+                        'expiration_date' => $expirationDate->format('Y-m-d'),
                         'cvv_code' => $request->cvv_code,
                         'name_on_card' => $request->name_on_card,
                         'country_id' => $request->country_id,
@@ -490,57 +506,51 @@ class ProfileController extends Controller
                         'is_primary' => 1,
                         'is_active' => 1
                     ]);
-
+    
                     DB::commit();
-
+    
                     return response()->json(['success' => 'User Payment Method Updated Successfully', 'redirect_url' => route('buyer.basic.profile', ['profile' => 'step-1'])]);
-
+    
                 }
-                if (!empty($request->payment_id)) {
-                    $userPayment = UserPayment::findOrFail($request->payment_id);
-                    $userPayment->delete();
-                }
-
+    
             } catch (\Throwable $th) {
-
                 DB::rollback();
                 errorLogMessage($th);
-                return response()->json(['error' => 'Failled To Update User Payment Method .']);
-
+                return response()->json(['error' => 'Failed to Update User Payment Method.']);
             }
         }
     }
-
+    
     public function buyersaveUserBasics(Request $request)
     {
-
         $request_data = $request->all();
-
+    
         $rules = [
-            'profile_picture ' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'designation' => 'required|string|max:100|min:5',
+           // 'profile_picture' => 'nullable|sometimes|image|mimes:jpeg,png,jpg|max:2048',
+            'designation' => 'nullable|string|max:100|min:5',
             'country_id' => 'required',
-            'about' => 'required|string',
-            'phone_number' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
-            'city_id' => 'required|exists:world_cities,id',
-            'languages' => 'required|array',
-            'languages.*.language_id' => 'required|exists:world_languages,id',
-            'languages.*.language_level_id' => 'required|exists:language_levels,id',
+            'about' => 'nullable|string',
+            'phone_number' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:7|max:15',
+            'city_id' => 'nullable|exists:world_cities,id',
+            'languages' => 'nullable|array',
+            'languages.*.language_id' => 'nullable|exists:world_languages,id',
+            'languages.*.language_level_id' => 'nullable|exists:language_levels,id',
         ];
-        
+        if ($request->hasFile('profile_picture')) {
+            $rules['profile_picture'] = 'image|mimes:jpeg,png,jpg|max:2048';
+        }
         if (getLastLoginRoleId() == Role::$Freelancer) {
             $rules['category_id'] = 'required|array';
             $rules['category_id.*'] = 'exists:categories,id';
         }
-
+    
         $validator = Validator::make($request_data, $rules);
         if ($validator->fails()) {
             return response()->json(["validation_errors" => $validator->errors()]);
         } else {
             try {
-
                 DB::beginTransaction();
-
+    
                 $user = auth()->user();
                 if ($request->email) {
                     $user1 = User::find(auth()->user()->id);
@@ -548,49 +558,46 @@ class ProfileController extends Controller
                     $user1->country_id = $request->country_id;
                     $user1->save();
                 }
-
-
+    
                 $user->basicProfile()->updateOrCreate(
                     ['user_id' => $user->id],
-
                     [
-                        'city_id' => $request_data['city_id'],
-                        'designation' => $request_data['designation'],
-                        'about' => $request_data['about'],
-                        'phone_number' => $request_data['phone_number'],
-
-
-                    ]);
+                        'city_id' => $request_data['city_id'] ?? null,
+                        'designation' => $request_data['designation'] ?? null,
+                        'about' => $request_data['about'] ?? null,
+                        'phone_number' => $request_data['phone_number'] ?? null,
+                    ]
+                );
+    
                 $user->languages()->delete();
-                $user->languages()->createMany($request_data['languages']);
+                if (!empty($request_data['languages'])) {
+                    $user->languages()->createMany($request_data['languages']);
+                }
+    
                 if (in_array('Freelancer', auth()->user()->getRoleNames()->toArray())) {
                     $user->categories()->sync($request_data['category_id']);
                 }
-
-                if ($request->has('profile_picture') && $request->profile_picture != 'undefined') {
-
+    
+                if ($request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()) {
                     $path = imagePath()['attachments']['path'];
-                    $file = $request->profile_picture;
+                    $file = $request->file('profile_picture');
                     $filename = uploadAttachments($file, $path);
-                    $file_extension = getFileExtension($file);
                     $url = $path . '/' . $filename;
                     $user->basicProfile()->update(['profile_picture' => $url]);
-
                 }
+    
                 $user->save();
-
                 DB::commit();
                 return response()->json(["success" => "User Basics Updated Successfully", 'redirect_url' => route('user.basic.profile', ['profile' => 'step-1'])]);
-
-
-            } catch (\Throwable $exception) {
-
+            } catch (\Throwable$exception) {
                 DB::rollback();
                 errorLogMessage($exception);
-                return response()->json(['error' => 'Failled To Save User Profile .']);
+                return response()->json(['error' => 'Failed To Save User Profile.']);
             }
         }
     }
+    
+    
 
     public function buyersaveCompany(Request $request)
     {

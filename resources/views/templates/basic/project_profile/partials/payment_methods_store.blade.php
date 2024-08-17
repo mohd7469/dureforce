@@ -46,17 +46,17 @@ $cities = Khsing\World\Models\City::where('country_id',@$userPayment->country_id
 
                         <div class="row">
                             <div class="col-md-6">
-                                <label class="mt-4">Expiration Date <span
-                                        class="imp">*</span></label>
-                                <input type="date" name="expiration_date" 
-                                    value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder=""  />
+                                <label class="mt-4">Expiration Date <span class="imp">*</span></label>
+                                <input type="month" name="expiration_date" 
+                                    value="{{ old('expiration_date', @$userPayment->expiration_date ? \Carbon\Carbon::parse($userPayment->expiration_date)->format('Y-m') : '') }}"
+                                    placeholder="MM/YYYY" required />
                             </div>
                             <div class="col-md-6">
                                 <label class="mt-4">CVV Code <span class="imp">*</span></label>
-                                <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder=""  />
+                                <input type="password" name="cvv_code"
+                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" maxlength="4" />
                             </div>
+                            
                         </div>
                         
                         <div class="col-md-12">

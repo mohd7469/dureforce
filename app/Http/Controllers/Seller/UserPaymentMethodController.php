@@ -40,11 +40,24 @@ class UserPaymentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd("dfdsf");
+        // Validate the input data
         $request->validate([
             'card_number'     => 'required|numeric|digits_between:13,19',
-            'expiration_date' => 'required|date|after_or_equal:now',
+            'expiration_date' => [
+                'required',
+                'regex:/^(0[1-9]|1[0-2])\/[0-9]{4}$/',
+                function($attribute, $value, $fail) {
+                    $expirationDate = \DateTime::createFromFormat('m/Y', $value);
+                    if (!$expirationDate) {
+                        $fail('The expiration date is not valid.');
+                    }
+    
+                    $expirationDate->setDate($expirationDate->format('Y'), $expirationDate->format('m'), 1);
+                    if ($expirationDate < now()) {
+                        $fail('The expiration date must be in the future.');
+                    }
+                },
+            ],
             'cvv_code'        => 'required|numeric|digits_between:3,4',
             'name_on_card'    => 'required',
             'country'         => 'required',
@@ -57,20 +70,30 @@ class UserPaymentMethodController extends Controller
             'name_on_card.required'    => 'Name on Card is required',
             'street_address.required'  => 'Street Address is required'
         ]);
-
+    
+        // Create or update the user payment information
         $userPayment = new UserPayment();
-
-        if(! empty($request->payment_id)) {
+    
+        if(!empty($request->payment_id)) {
             $userPayment = UserPayment::findOrFail($request->payment_id);
             $userPayment->delete();
         }
-
+    
+        // Convert expiration date to full date with the first day of the month
+        $expirationDate = \DateTime::createFromFormat('m/Y', $request->expiration_date);
+        $expirationDate->setDate($expirationDate->format('Y'), $expirationDate->format('m'), 1);
+        $userPayment->expiration_date = $expirationDate->format('Y-m-d');
+    
+        // Save the rest of the form data
         $userPayment->user_id = auth()->id();
-        $userPayment->fill($request->except(['_token']))->save();
+        $userPayment->fill($request->except(['_token', 'expiration_date']))->save();
+    
+        // Notify the user and redirect
         $notify[] = ['success', 'Successfully Updated Profile.'];
         
         return redirect()->route('user.basic.profile', ['view' => 'step-3'])->withNotify($notify);
     }
+    
 
     /**
      * Display the specified resource.

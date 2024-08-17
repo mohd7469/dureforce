@@ -319,7 +319,7 @@
 
             $('#payment_method_country_id').on('change', function(){
                 var country_id = $(this).val();
-                getCountryCities(country_id);
+                getCountryCities(country_id,'#payment_method_cities');
             });
 
             rate_per_hour.on('focusout', function(){
@@ -334,10 +334,25 @@
             });
 
         });
+
+        function notify(type, message) {
+    if (type === 'success') {
+        iziToast.success({
+            message: message,
+            position: "topRight",
+        });
+    } else if (type === 'error') {
+        iziToast.error({
+            message: message,
+            position: "topRight",
+        });
+    }
+}
+
         function financial(x) {
             return Number.parseFloat(x).toFixed(2);
         }
-        function getCountryCities(country_id)
+        function getCountryCities(country_id,select_field_id)
         {
             $.ajax({
                 type:"GET",
@@ -346,16 +361,16 @@
                 success:function(data){
                     if(data.cities)
                     {    
-                       
-                        $('#payment_method_cities').empty();
-                        $('#payment_method_cities').append(
+                        
+                        $(select_field_id).empty();
+                        $(select_field_id).append(
                             `<option>Select City</option>
-                            ${data.cities?.map((city) => {
+                            ${data.cities.data?.map((city) => {
                                 return ` <option value="${city.id}"> ${city.name}</option>`;
                         })}`);
                     }
                     else{
-                        alert("Wrong Country Id");            
+                        alert("Wrong Country Id");        
                     }
                 }
             }); 
@@ -694,19 +709,7 @@
                 }
             });
         }
-        function notify(type, message) {
-    if (type === 'success') {
-        iziToast.success({
-            message: message,
-            position: "topRight",
-        });
-    } else if (type === 'error') {
-        iziToast.error({
-            message: message,
-            position: "topRight",
-        });
-    }
-}
+
 function saveUserBasic() {
     var profile_file = $('input[type=file]')[0].files[0];
     let form_data = new FormData(user_basic_form[0]);
@@ -735,7 +738,6 @@ function saveUserBasic() {
         }
     });
 }
-
         function saveUserPaymentMethod()
         {
             let form_data = new FormData(user_payment_methods_form[0]);

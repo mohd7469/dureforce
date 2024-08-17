@@ -30,18 +30,20 @@
                                 </div>
                                 <div class="row">
                                     
-                                <div class="col-md-6">
-                                    <label class="mt-4">Expiry Date *</label>
-                                    <input type="date" name="expiration_date"
-                                    value="{{ old('expiration_date', @$userPayment->expiration_date) }}"
-                                    placeholder="" required   min="1900-01-01" max="2099-12-31"/>
-                                </div>
+                                    <div class="col-md-6">
+                                        <label class="mt-4">Expiration Date <span class="imp">*</span></label>
+                                        <input type="month" name="expiration_date" 
+                                            value="{{ old('expiration_date', @$userPayment->expiration_date ? \Carbon\Carbon::parse($userPayment->expiration_date)->format('Y-m') : '') }}"
+                                            placeholder="MM/YYYY" required />
+                                    </div>
+                                    
 
-                                <div class="col-md-6">
-                                    <label class="mt-4">CVV * </label>
-                                    <input type="text" name="cvv_code"
-                                    value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" required  />
-                                </div>
+                                    <div class="col-md-6">
+                                        <label class="mt-4">CVV Code <span class="imp">*</span></label>
+                                        <input type="password" name="cvv_code"
+                                            value="{{ old('cvv_code', @$userPayment->cvv_code) }}" placeholder="" maxlength="4" />
+                                    </div>
+                                    
                                 <div class="col-md-6">
                                     <label class="mt-4">Country <span class="imp">*</span></label>
                                     <select

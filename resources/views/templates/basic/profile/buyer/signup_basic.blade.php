@@ -697,7 +697,19 @@
               });
              
         }
-
+        function notify(type, message) {
+    if (type === 'success') {
+        iziToast.success({
+            message: message,
+            position: "topRight",
+        });
+    } else if (type === 'error') {
+        iziToast.error({
+            message: message,
+            position: "topRight",
+        });
+    }
+}
         function saveUserPaymentMethod()
         {
              let form_data = new FormData(user_payment_methods_form[0]);
