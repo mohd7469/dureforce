@@ -1,0 +1,38 @@
+name: Compile SCSS on Push
+
+on:
+  push:
+    branches:
+      - main  # Change this if your default branch has a different name
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Sass
+        run: npm install -g sass
+
+      - name: Find and Compile SCSS Files
+        run: |
+          for dir in home-*; do
+            if [[ -d "$dir" && -f "$dir/felan-theme.scss" ]]; then
+              sass "$dir/felan-theme.scss" "$dir/felan-theme.css"
+            fi
+          done
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-compiled SCSS files" || echo "No changes to commit"
+          git push
