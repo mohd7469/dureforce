@@ -23,11 +23,18 @@ jobs:
 
       - name: Find and Compile SCSS Files
         run: |
+          changes_made=false
           for dir in home-*; do
             if [[ -d "$dir" && -f "$dir/felan-theme.scss" ]]; then
-              sass "$dir/felan-theme.scss" "$dir/felan-theme.css"
+              echo "Compiling $dir/felan-theme.scss"
+              sass "$dir/felan-theme.scss" "$dir/felan-theme.css" || exit 1
+              changes_made=true
             fi
           done
+          if [ "$changes_made" = false ]; then
+            echo "No SCSS files to compile"
+            exit 0
+          fi
 
       - name: Commit and Push Changes
         env:
