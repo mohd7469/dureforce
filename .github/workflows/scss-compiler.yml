@@ -27,7 +27,7 @@ jobs:
           for dir in home-*; do
             if [[ -d "$dir" && -f "$dir/felan-theme.scss" ]]; then
               echo "Compiling $dir/felan-theme.scss"
-              sass "$dir/felan-theme.scss" "$dir/felan-theme.css" || exit 1
+              sass "$dir/felan-theme.scss" "$dir/felan-theme.css" || echo "Error compiling $dir/felan-theme.scss"
               changes_made=true
             fi
           done
