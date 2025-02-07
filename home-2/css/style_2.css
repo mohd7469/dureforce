@@ -1,0 +1,290 @@
+/*!
+Theme Name:Felan Child
+Theme URI: https://felan.ricetheme.com/
+Author: RiceTheme
+Author URI: https://ricetheme.com/
+Description: This is a child theme of Felan
+Template: felan
+Version: 1.0.0
+Requires at least: 5.0
+Tested up to: 5.4
+Requires PHP: 7.4
+License URI: https://choosealicense.com/licenses/gpl-2.0/
+Text Domain:felanchild
+Tags: editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+*/
+
+.edit-project .project-fields-thumbnail .media-item-actions,
+.edit-project #felan_gallery_thumbs .media-item-actions{
+	display: none;
+}
+
+
+.demo-sign-in {
+    font-size: 15px;
+    padding: 15px 20px;
+    background-color: #edf2f1;
+    margin-bottom: 24px;
+    border-radius: 8px;
+}
+
+.demo-sign-in p {
+    margin-bottom: 0 !important;
+}
+
+.demo-sign-in p:first-child {
+    margin-bottom: 5px;
+}
+
+.demo-sign-in span {
+    color: var(--felan-color-accent);
+    font-weight: 500;
+}
+.page-id-5191 header.site-header{
+    border-bottom: 0;
+}
+.jobs-status-inner{
+	display: flex;
+	align-items: center;
+}
+.felan-jobs-item .categories-warpper{
+	flex-wrap: wrap;
+}
+.felan-jobs-item,
+.felan-company-item.layout-grid{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+.felan-jobs-item > div:nth-last-child(3),
+.felan-company-item.layout-grid > div:nth-last-child(3){
+	flex: 1;
+}
+.archive-layout .filter-warpper .sort-by{
+	height: auto !important;
+	padding: 0;
+	margin-left: 4px;
+	width: 79px !important;  
+}
+.archive-layout .archive-filter-top .form-archive-top-filter .felan-select2{
+	-webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none; 
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.archive-layout .inner-filter .entry-filter .locations-filter .felan-select2{
+    width: 100% !important;
+    height: 48px !important;
+     padding-left: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.felan-link-help{
+    list-style: none;
+    padding-left: 0;
+    position: fixed;
+    top: 50%;
+    z-index: 9;
+    margin-bottom: 0;
+    transform: translateY(-50%);
+    right: 0;
+    border-radius: 4px 0 0 4px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+}
+
+.felan-link-help li a{
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    background-color: #fff;
+    text-align: center;
+    display: block;
+    cursor: pointer;
+    position: relative;
+}
+
+.felan-link-help li:first-child a{
+    border-top-left-radius: 4px;
+}
+
+.felan-link-help li:last-child a{
+    border-bottom-left-radius: 4px;
+}
+
+.felan-link-help li a:hover{
+    background-color: var(--felan-color-accent);
+    color: #fff;
+}
+
+.felan-link-help li + li{
+    border-top: 1px solid #eaeaea;
+}
+
+.felan-link-help .felan-tooltip {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.7);
+    position: absolute;
+    background-color: #fff;
+    font-size: 14px;
+    margin: 0;
+    padding: 0 20px;
+    line-height: 35px;
+    right: 10px;
+    top: 4px;
+    border-radius: 3px;
+    white-space: nowrap;
+    box-shadow: 0 5px 40px rgba(0, 0, 0, 0.07), 0 0 3px -1px rgba(83, 45, 245, 0.15);
+    transition: all 0.3s cubic-bezier(0.64, -0.09, 0.13, 1.15);
+    color: var(--felan-color-accent);
+}
+
+.felan-link-help .felan-tooltip span {
+    display: block;
+    position: absolute;
+    right: -5px;
+    top: 12px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid #fff;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+}
+
+.felan-link-help a:hover .felan-tooltip {
+    opacity: 1;
+    right: 60px;
+    visibility: visible;
+    transform: scale(1);
+}
+.project-content .project-proposal .felan-button{
+	    white-space: nowrap;
+}
+.felan-jobs-item.layout-list .jobs-archive-center{
+	flex-wrap: wrap;
+	gap: 8px;
+}
+.felan-jobs-item.layout-list .jobs-archive-center ul{
+	flex-wrap: wrap;
+	gap: 8px;
+}
+.filter-canvas:not(.map-right) .inner-content.layout-list .area-archive .felan-jobs-item.layout-list .jobs-archive-center{
+	flex-direction: column;
+    align-items: unset;
+}
+.account .user-show a.avatar {
+    display: flex;
+    align-items: center;
+}
+.page-dashboard #wrapper{
+    width: 100%;
+}
+.site-search button:disabled{
+    background-color: unset;
+}
+.site-header.header-light .icon-search i{
+    color: #fff;
+}
+.site-search form{
+    background: #fff;
+}
+.site-search form input::-webkit-input-placeholder { /* Chrome, Safari, Opera */
+  color: #555555;
+}
+
+.site-search form input::-moz-placeholder { /* Firefox 19+ */
+  color: #555555;
+}
+
+.site-search form input:-ms-input-placeholder { /* IE 10+ */
+  color: #555555;
+}
+
+.site-search form input::-ms-input-placeholder { /* Edge */
+  color: #555555;
+}
+
+.site-search form input::placeholder { /* Standard */
+  color: #555555;
+}
+.site-search .search-icon{
+    padding-left: 8px;
+    display: flex;
+}
+.site-search form input{
+    padding-left: 8px;
+}
+.site-search .search-icon svg{
+    width: 18px;
+}
+.right-header > .felan-notification{
+    margin-right: 20px;
+}
+.felan-top-bar{
+    z-index: 4;
+    position: relative;
+}
+.content-categories-tabs .btn-readmore a{
+    color: #111;
+}
+.elementor-sub-item.elementor-item-active,
+.elementor-sub-item:focus{
+    background-color: unset !important;
+}
+.elementor-nav-menu ul.list-all-categories,
+.elementor-nav-menu ul.sub-all-categories{
+    display: block !important;
+} 
+.felan-description-details h5{
+	font-size: 20px;
+} 
+.felan-description-details h6{
+	font-size: 18px;
+}
+.block-archive-inner.layout-01 .info-apply .days, .block-archive-inner.layout-02 .info-apply .days, .block-archive-inner.layout-03 .info-apply .days, .block-archive-inner.layout-04 .info-apply .days, .block-archive-inner.layout-layout-full .info-apply .days, table.ui-datepicker-calendar{
+    white-space: nowrap;
+}
+.site-layout.info-left.has-sidebar #primary{
+        max-width: calc(100% - 600px);
+}
+.felan-form-single-popup .block-archive-inner .felan-jobs-header-top .section-sticky {
+    display: none;
+}
+.felan_breadcrumb{
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.project-head-details .head-left{
+  margin-top: 0;
+}
+.project-head-details .head-left .page-breadcrumb{
+  margin-bottom: 0;
+}
+.section-sticky .title-wapper h1{
+    font-size: 18px;
+}
+.section-sticky .info-apply .felan-button.button-block{
+  width: auto;
+  font-size: 14px;
+      padding: 6px 12px;
+}
+.elementor-widget-felan-account{
+    z-index: 2;
+}
+.right-header .account:hover .user-control, .elementor-widget-felan-account .account:hover .user-control{
+    padding-top: 0;
+}
+body.single-freelancer .main-content,
+body.single-company .main-content{
+    padding-top: 10px;
+}
+@media (max-width: 991px) {
+    .page-dashboard .site-footer{
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+header.site-header .account {margin-left: 0 !important}
