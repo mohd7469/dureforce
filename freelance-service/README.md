@@ -1,3 +1,0 @@
-- css - same as ./home-2/css
-- js - required
-- 

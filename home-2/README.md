@@ -1,3 +1,0 @@
-- css - required
-- js - required
-- felan-theme.scss - felan-theme.css
