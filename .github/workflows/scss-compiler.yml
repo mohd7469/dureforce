@@ -24,6 +24,8 @@ jobs:
       - name: Find and Compile SCSS Files
         run: |
           changes_made=false
+          
+          # Compile SCSS files in home-* directories
           for dir in home-*; do
             if [[ -d "$dir" && -f "$dir/felan-theme.scss" ]]; then
               echo "Compiling $dir/felan-theme.scss"
@@ -31,6 +33,21 @@ jobs:
               changes_made=true
             fi
           done
+          
+          # Compile SCSS files in loader/ directory
+          for dir in loader; do
+            if [[ -d "$dir" ]]; then
+              for file in "$dir"/*.scss; do
+                if [[ -f "$file" ]]; then
+                  output_file="${file%.scss}.css"
+                  echo "Compiling $file"
+                  sass "$file" "$output_file" || echo "Error compiling $file"
+                  changes_made=true
+                fi
+              done
+            fi
+          done
+
           if [ "$changes_made" = false ]; then
             echo "No SCSS files to compile"
             exit 0
