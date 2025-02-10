@@ -8,6 +8,7 @@
     </div>
 </div>
 */
+
 .app-preloader {
   position: fixed !important;
   left: 0 !important;
@@ -39,5 +40,3 @@
     transform: rotate(1turn);
   }
 }
-
-/*# sourceMappingURL=app-loader.css.map */
