@@ -27,20 +27,12 @@
         text-align: center !important;
 
         .loader {
-            width: 35px !important;
+            width: 40px !important;
             aspect-ratio: 1 !important;
             border-radius: 50% !important;
             border: 5px solid lightblue !important;
             border-right-color: purple !important;
             animation: l2 0.7s infinite linear !important;
-        }
-
-        img {
-            position: absolute !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            text-align: center !important;
         }
     }
 }
