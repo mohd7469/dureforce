@@ -1,0 +1,12 @@
+open laragon terminal
+go to D:\laravel\database
+
+Export db command from Azure to local machine
+
+mysqldump --column-statistics=0 -h dureforce.mysql.database.azure.com -u dureforce_admin -p dureforce_staging > azure_dump.sql
+pass: $N8a4jcMbCbFr-b
+
+Import db command from Local machine into into laragon
+
+mysql -h 127.0.0.1 -u root -p durdb < azure_dump.sql
+pass: ""
